@@ -45,43 +45,45 @@
 
 ### Top-level fields
 
-- `name`: Plugin identifier (lower-case, hyphen-delimited), used as the plugin folder name and the manifest `name`.
-- `version`: Plugin semantic version (for example `1.2.0`); use your release versioning scheme and bump when behavior or schema changes.
-- `description`: One-line description shown in listings; keep concise and user-facing.
-- `author`: Object with publisher identity.
-  - `name`: Display name of the plugin author or team.
-  - `email`: Contact email for maintainer questions.
+- `name`: Plugin identifier (kebab-case, no spaces). Required if `plugin.json` is provided and used as manifest name and component namespace.
+- `version`: Plugin semantic version.
+- `description`: Short purpose summary.
+- `author`: Publisher identity object.
+  - `name`: Author or team name.
+  - `email`: Contact email.
   - `url`: Author/team homepage or profile URL.
-- `homepage`: Public documentation page or overview URL for this plugin.
-- `repository`: Source code or distribution repo URL.
-- `license`: SPDX-style license string (for example `MIT`).
-- `keywords`: Array of search/indexing keywords.
-- `skills`: Relative path to the plugin skills directory; example in canonical spec is `./skills/`.
-- `hooks`: Relative path to hook configuration; example is `./hooks.json`.
-- `mcpServers`: Relative path to MCP configuration; example is `./mcp.json`.
-- `apps`: Relative path to app configuration; example is `./app.json`.
-- `interface`: Required block that drives the plugin catalog/UX metadata.
+- `homepage`: Documentation URL for plugin usage.
+- `repository`: Source code URL.
+- `license`: License identifier (for example `MIT`, `Apache-2.0`).
+- `keywords`: Search/discovery tags.
+- `skills`: Relative path to skill directories/files.
+- `hooks`: Hook config path.
+- `mcpServers`: MCP config path.
+- `apps`: App manifest path for plugin integrations.
+- `interface`: Interface/UX metadata block for plugin presentation.
 
 ### `interface` fields
 
 - `displayName`: User-facing title shown for the plugin.
-- `shortDescription`: Brief subtitle used in compact plugin cards.
+- `shortDescription`: Brief subtitle used in compact views.
 - `longDescription`: Longer description used on details screens.
-- `developerName`: Human-readable developer/publisher name.
+- `developerName`: Human-readable publisher name.
 - `category`: Plugin category bucket.
-- `capabilities`: Supported high-level plugin capabilities, as a string list.
-  - Use the capabilities from your actual implementation; the sample uses `["Interactive", "Write"]`.
+- `capabilities`: Capability list from implementation.
 - `websiteURL`: Public website for the plugin.
 - `privacyPolicyURL`: Privacy policy URL.
 - `termsOfServiceURL`: Terms of service URL.
 - `defaultPrompt`: Starter prompt shown in composer/UX context.
-- `brandColor`: Theme color for the plugin card in hex format (example: `#3B82F6`).
+- `brandColor`: Theme color for the plugin card.
 - `composerIcon`: Path to icon asset.
-  - Prefer PNG/WebP-compatible image path string.
-  - In the example, this lives under `./assets/icon.png`.
 - `logo`: Path to logo asset.
-  - Prefer PNG/WebP-compatible image path string.
-  - In the example, this lives under `./assets/logo.png`.
 - `screenshots`: List of screenshot asset paths.
-  - Screenshot entries must be PNG filenames and stored under `./assets/` (for example `./assets/screenshot1.png`).
+  - Screenshot entries must be PNG filenames and stored under `./assets/`.
   - Keep file paths relative to plugin root.
+
+### Path conventions and defaults
+
+- Path values should be relative and begin with `./`.
+- `skills`, `hooks`, and `mcpServers` are supplemented on top of default component discovery; they do not replace defaults.
+- Custom path values must follow the plugin root convention and naming/namespacing rules.
+- This repo’s scaffold writes `.codex-plugin/plugin.json`; treat that as the manifest location this skill generates.
