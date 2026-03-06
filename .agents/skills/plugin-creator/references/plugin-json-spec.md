@@ -45,39 +45,39 @@
 
 ### Top-level fields
 
-- `name`: Plugin identifier (kebab-case, no spaces). Required if `plugin.json` is provided and used as manifest name and component namespace.
-- `version`: Plugin semantic version.
-- `description`: Short purpose summary.
-- `author`: Publisher identity object.
-  - `name`: Author or team name.
-  - `email`: Contact email.
-  - `url`: Author/team homepage or profile URL.
-- `homepage`: Documentation URL for plugin usage.
-- `repository`: Source code URL.
-- `license`: License identifier (for example `MIT`, `Apache-2.0`).
-- `keywords`: Search/discovery tags.
-- `skills`: Relative path to skill directories/files.
-- `hooks`: Hook config path.
-- `mcpServers`: MCP config path.
-- `apps`: App manifest path for plugin integrations.
-- `interface`: Interface/UX metadata block for plugin presentation.
+- `name` (`string`): Plugin identifier (kebab-case, no spaces). Required if `plugin.json` is provided and used as manifest name and component namespace.
+- `version` (`string`): Plugin semantic version.
+- `description` (`string`): Short purpose summary.
+- `author` (`object`): Publisher identity.
+  - `name` (`string`): Author or team name.
+  - `email` (`string`): Contact email.
+  - `url` (`string`): Author/team homepage or profile URL.
+- `homepage` (`string`): Documentation URL for plugin usage.
+- `repository` (`string`): Source code URL.
+- `license` (`string`): License identifier (for example `MIT`, `Apache-2.0`).
+- `keywords` (`array` of `string`): Search/discovery tags.
+- `skills` (`string`): Relative path to skill directories/files.
+- `hooks` (`string`): Hook config path.
+- `mcpServers` (`string`): MCP config path.
+- `apps` (`string`): App manifest path for plugin integrations.
+- `interface` (`object`): Interface/UX metadata block for plugin presentation.
 
 ### `interface` fields
 
-- `displayName`: User-facing title shown for the plugin.
-- `shortDescription`: Brief subtitle used in compact views.
-- `longDescription`: Longer description used on details screens.
-- `developerName`: Human-readable publisher name.
-- `category`: Plugin category bucket.
-- `capabilities`: Capability list from implementation.
-- `websiteURL`: Public website for the plugin.
-- `privacyPolicyURL`: Privacy policy URL.
-- `termsOfServiceURL`: Terms of service URL.
-- `defaultPrompt`: Starter prompt shown in composer/UX context.
-- `brandColor`: Theme color for the plugin card.
-- `composerIcon`: Path to icon asset.
-- `logo`: Path to logo asset.
-- `screenshots`: List of screenshot asset paths.
+- `displayName` (`string`): User-facing title shown for the plugin.
+- `shortDescription` (`string`): Brief subtitle used in compact views.
+- `longDescription` (`string`): Longer description used on details screens.
+- `developerName` (`string`): Human-readable publisher name.
+- `category` (`string`): Plugin category bucket.
+- `capabilities` (`array` of `string`): Capability list from implementation.
+- `websiteURL` (`string`): Public website for the plugin.
+- `privacyPolicyURL` (`string`): Privacy policy URL.
+- `termsOfServiceURL` (`string`): Terms of service URL.
+- `defaultPrompt` (`string`): Starter prompt shown in composer/UX context.
+- `brandColor` (`string`): Theme color for the plugin card.
+- `composerIcon` (`string`): Path to icon asset.
+- `logo` (`string`): Path to logo asset.
+- `screenshots` (`array` of `string`): List of screenshot asset paths.
   - Screenshot entries must be PNG filenames and stored under `./assets/`.
   - Keep file paths relative to plugin root.
 
