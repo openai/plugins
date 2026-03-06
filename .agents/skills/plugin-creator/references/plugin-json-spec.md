@@ -40,3 +40,41 @@
   }
 }
 ```
+
+## Field guide
+
+### Top-level fields
+
+- `name`: Plugin identifier (lower-case, hyphen-delimited), used as the plugin folder name and the manifest `name`.
+- `version`: Plugin semantic version.
+- `description`: One-line description shown in listings.
+- `author`: Object with publisher identity.
+  - `name`: Display name of the plugin author or team.
+  - `email`: Contact email for maintainer questions.
+  - `url`: Author/team homepage or profile URL.
+- `homepage`: Public documentation page or overview URL for this plugin.
+- `repository`: Source code or distribution repo URL.
+- `license`: SPDX-style license string (for example `MIT`).
+- `keywords`: Array of search/indexing keywords.
+- `skills`: Relative path to the plugin skills directory.
+- `hooks`: Relative path to hook configuration.
+- `mcpServers`: Relative path to MCP configuration.
+- `apps`: Relative path to app configuration.
+- `interface`: Required block that drives the plugin catalog/UX metadata.
+
+### `interface` fields
+
+- `displayName`: User-facing title shown for the plugin.
+- `shortDescription`: Brief subtitle used in compact plugin cards.
+- `longDescription`: Longer description used on details screens.
+- `developerName`: Human-readable developer/publisher name.
+- `category`: Plugin category.
+- `capabilities`: Supported high-level plugin capabilities.
+- `websiteURL`: Public website for the plugin.
+- `privacyPolicyURL`: Privacy policy URL.
+- `termsOfServiceURL`: Terms of service URL.
+- `defaultPrompt`: Starter prompt shown in composer/UX context.
+- `brandColor`: Theme color for the plugin card.
+- `composerIcon`: Path to icon asset.
+- `logo`: Path to logo asset.
+- `screenshots`: List of screenshot asset paths.
