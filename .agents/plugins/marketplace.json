@@ -1,0 +1,14 @@
+{
+    "name": "openai-curated",
+    "plugins":
+    [
+        {
+            "name": "linear",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/linear"
+            }
+        }
+    ]
+}
