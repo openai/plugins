@@ -48,8 +48,8 @@ def build_plugin_json(plugin_name: str) -> dict:
         "keywords": ["[TODO: keyword1]", "[TODO: keyword2]"],
         "skills": "[TODO: ./skills/]",
         "hooks": "[TODO: ./hooks.json]",
-        "mcpServers": "[TODO: ./mcp.json]",
-        "apps": "[TODO: ./app.json]",
+        "mcpServers": "[TODO: ./.mcp.json]",
+        "apps": "[TODO: ./.app.json]",
         "interface": {
             "displayName": "[TODO: Plugin Display Name]",
             "shortDescription": "[TODO: Short description for subtitle]",

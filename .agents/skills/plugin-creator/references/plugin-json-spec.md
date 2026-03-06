@@ -16,8 +16,8 @@
   "keywords": ["keyword1", "keyword2"],
   "skills": "./skills/",
   "hooks": "./hooks.json",
-  "mcpServers": "./mcp.json",
-  "apps": "./app.json",
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Plugin Display Name",
     "shortDescription": "Short description for subtitle",
