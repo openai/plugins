@@ -1,3 +1,3 @@
-# Agent Plugins
+# Plugins
 
-TODO - add readme contents
+This repository contains a curated collection of plugins.
