@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plugin Creator"
+  short_description: "Scaffold plugin manifests and structure"
+  default_prompt: "Use $plugin-creator to scaffold a plugin with placeholder plugin.json and structure."
