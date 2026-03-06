@@ -1,0 +1,41 @@
+{
+  "name": "linear",
+  "version": "1.2.0",
+  "description": "Manage issues, projects, and team workflows in Linear from Codex.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://linear.app/integrations/codex-mcp",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "linear",
+    "issues",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks.json",
+  "mcpServers": "./.mcp.json",
+  "apps": "./app.json",
+  "interface": {
+    "displayName": "Linear",
+    "shortDescription": "Manage Linear issues in Codex",
+    "longDescription": "Use Codex with Linear to triage, create, and update issues, projects, and team workflows directly from task prompts.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://linear.app/",
+    "privacyPolicyURL": "https://linear.app/privacy",
+    "termsOfServiceURL": "https://linear.app/terms",
+    "defaultPrompt": "Use Linear context to triage or update relevant issues for this task, with clear next actions.",
+    "brandColor": "#222326",
+    "composerIcon": "./assets/linear-small.svg",
+    "logo": "./assets/linear.png",
+    "screenshots": []
+  }
+}

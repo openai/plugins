@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "linear": {
+      "type": "streamable_http",
+      "url": "https://mcp.linear.app/mcp"
+    }
+  }
+}
