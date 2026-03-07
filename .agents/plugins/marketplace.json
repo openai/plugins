@@ -9,6 +9,14 @@
                 "source": "local",
                 "path": "./plugins/linear"
             }
+        },
+        {
+            "name": "google-calendar",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/google-calendar"
+            }
         }
     ]
 }

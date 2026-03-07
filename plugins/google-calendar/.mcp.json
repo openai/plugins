@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "google-calendar": {
+      "type": "streamable_http",
+      "url": "https://gcal.mintmcp.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "google-calendar",
+  "version": "1.2.0",
+  "description": "Connect Codex to Google Calendar for scheduling, availability, and event management.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.mintmcp.com/google-calendar",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "google-calendar",
+    "calendar",
+    "scheduling",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks.json",
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Google Calendar",
+    "shortDescription": "Manage Google Calendar events in Codex",
+    "longDescription": "Use Codex with Google Calendar to check availability, list calendars, and create, update, or delete events directly from task prompts.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://workspace.google.com/products/calendar/",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "defaultPrompt": "Use Google Calendar to find availability this week and schedule, update, or cancel the right event.",
+    "brandColor": "#4285F4",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}
