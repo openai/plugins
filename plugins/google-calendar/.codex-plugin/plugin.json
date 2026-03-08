@@ -17,7 +17,6 @@
     "productivity"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks.json",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Google Calendar",
