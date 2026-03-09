@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Google Calendar",
     "shortDescription": "Manage Google Calendar events and schedules",
-    "longDescription": "Use Codex with Google Calendar to check availability, list calendars, and create, update, or delete events directly from task prompts.",
+    "longDescription": "Use Google Calendar to check availability, list calendars, and create, update, or delete events directly from task prompts.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [
