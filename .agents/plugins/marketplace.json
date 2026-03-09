@@ -17,6 +17,38 @@
                 "source": "local",
                 "path": "./plugins/google-calendar"
             }
+        },
+        {
+            "name": "gmail",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/gmail"
+            }
+        },
+        {
+            "name": "google-docs",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/google-docs"
+            }
+        },
+        {
+            "name": "google-sheets",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/google-sheets"
+            }
+        },
+        {
+            "name": "slack",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/slack"
+            }
         }
     ]
 }
