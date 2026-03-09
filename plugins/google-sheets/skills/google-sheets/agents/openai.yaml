@@ -1,0 +1,7 @@
+interface:
+  display_name: "Google Sheets"
+  short_description: "Inspect ranges, formulas, and edit plans"
+  icon_small: "./assets/google-sheets-small.svg"
+  icon_large: "./assets/google-sheets.svg"
+  brand_color: "#0F9D58"
+  default_prompt: "Use $google-sheets to inspect a range, suggest a formula, or plan an exact edit."

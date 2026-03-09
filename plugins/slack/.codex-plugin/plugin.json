@@ -1,0 +1,39 @@
+{
+  "name": "slack",
+  "version": "0.1.0",
+  "description": "Work with Slack using the configured Slack app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://slack.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "slack",
+    "chat",
+    "collaboration"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Slack",
+    "shortDescription": "Read and manage Slack",
+    "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://slack.com/",
+    "privacyPolicyURL": "https://slack.com/privacy-policy",
+    "termsOfServiceURL": "https://slack.com/terms-of-service/user",
+    "defaultPrompt": "Use Slack context to summarize unread activity, draft replies, or help me prepare channel updates.",
+    "brandColor": "#611F69",
+    "composerIcon": "./assets/slack-small.svg",
+    "logo": "./assets/slack.svg",
+    "screenshots": []
+  }
+}

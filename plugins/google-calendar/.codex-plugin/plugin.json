@@ -1,7 +1,7 @@
 {
   "name": "google-calendar",
   "version": "1.2.0",
-  "description": "Connect Codex to Google Calendar for scheduling, availability, and event management.",
+  "description": "Connect Google Calendar for scheduling, availability, and event management.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",

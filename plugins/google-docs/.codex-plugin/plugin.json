@@ -1,0 +1,39 @@
+{
+  "name": "google-docs",
+  "version": "0.1.0",
+  "description": "Work with Google Docs using the configured Google Docs app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://workspace.google.com/products/docs/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "google-docs",
+    "documents",
+    "google"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Google Docs",
+    "shortDescription": "Work with Google Docs",
+    "longDescription": "Use Google Docs to summarize documents, draft edits, and organize written work through the connected Google Docs app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://workspace.google.com/products/docs/",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "defaultPrompt": "Use Google Docs context to summarize a document, draft revisions, or help me organize written content.",
+    "brandColor": "#1A73E8",
+    "composerIcon": "./assets/google-docs-small.svg",
+    "logo": "./assets/google-docs.svg",
+    "screenshots": []
+  }
+}
