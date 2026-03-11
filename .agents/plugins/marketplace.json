@@ -8,7 +8,10 @@
             {
                 "source": "local",
                 "path": "./plugins/linear"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "google-calendar",
@@ -16,7 +19,10 @@
             {
                 "source": "local",
                 "path": "./plugins/google-calendar"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "gmail",
@@ -24,7 +30,10 @@
             {
                 "source": "local",
                 "path": "./plugins/gmail"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "google-docs",
@@ -32,7 +41,10 @@
             {
                 "source": "local",
                 "path": "./plugins/google-docs"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "google-sheets",
@@ -40,7 +52,10 @@
             {
                 "source": "local",
                 "path": "./plugins/google-sheets"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "slack",
@@ -48,7 +63,10 @@
             {
                 "source": "local",
                 "path": "./plugins/slack"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         }
     ]
 }
