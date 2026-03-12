@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scaffold a plugin directory and create a placeholder .codex-plugin/plugin.json."""
+"""Scaffold a plugin directory and optionally update repo-root marketplace.json."""
 
 from __future__ import annotations
 
@@ -7,10 +7,17 @@ import argparse
 import json
 import re
 from pathlib import Path
+from typing import Any
 
 
 MAX_PLUGIN_NAME_LENGTH = 64
 DEFAULT_PLUGIN_PARENT = Path(__file__).resolve().parents[4] / "plugins"
+DEFAULT_MARKETPLACE_PATH = Path(__file__).resolve().parents[2] / "plugins" / "marketplace.json"
+DEFAULT_INSTALL_POLICY = "AVAILABLE"
+DEFAULT_AUTH_POLICY = "ON_INSTALL"
+DEFAULT_CATEGORY = "Productivity"
+VALID_INSTALL_POLICIES = {"NOT_AVAILABLE", "AVAILABLE", "INSTALLED_BY_DEFAULT"}
+VALID_AUTH_POLICIES = {"ON_INSTALL", "ON_USE"}
 
 
 def normalize_plugin_name(plugin_name: str) -> str:
@@ -73,6 +80,73 @@ def build_plugin_json(plugin_name: str) -> dict:
     }
 
 
+def build_marketplace_entry(
+    plugin_name: str,
+    install_policy: str,
+    auth_policy: str,
+    category: str,
+) -> dict[str, Any]:
+    return {
+        "name": plugin_name,
+        "source": {
+            "source": "local",
+            "path": f"./plugins/{plugin_name}",
+        },
+        "installPolicy": install_policy,
+        "authPolicy": auth_policy,
+        "category": category,
+    }
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    with path.open() as handle:
+        return json.load(handle)
+
+
+def build_default_marketplace() -> dict[str, Any]:
+    return {
+        "name": "[TODO: marketplace-name]",
+        "plugins": [],
+    }
+
+
+def update_marketplace_json(
+    marketplace_path: Path,
+    plugin_name: str,
+    install_policy: str,
+    auth_policy: str,
+    category: str,
+    force: bool,
+) -> None:
+    if marketplace_path.exists():
+        payload = load_json(marketplace_path)
+    else:
+        payload = build_default_marketplace()
+
+    if not isinstance(payload, dict):
+        raise ValueError(f"{marketplace_path} must contain a JSON object.")
+
+    plugins = payload.setdefault("plugins", [])
+    if not isinstance(plugins, list):
+        raise ValueError(f"{marketplace_path} field 'plugins' must be an array.")
+
+    new_entry = build_marketplace_entry(plugin_name, install_policy, auth_policy, category)
+
+    for index, entry in enumerate(plugins):
+        if isinstance(entry, dict) and entry.get("name") == plugin_name:
+            if not force:
+                raise FileExistsError(
+                    f"Marketplace entry '{plugin_name}' already exists in {marketplace_path}. "
+                    "Use --force to overwrite that entry."
+                )
+            plugins[index] = new_entry
+            break
+    else:
+        plugins.append(new_entry)
+
+    write_json(marketplace_path, payload, force=True)
+
+
 def write_json(path: Path, data: dict, force: bool) -> None:
     if path.exists() and not force:
         raise FileExistsError(f"{path} already exists. Use --force to overwrite.")
@@ -107,6 +181,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--with-assets", action="store_true", help="Create assets/ directory")
     parser.add_argument("--with-mcp", action="store_true", help="Create .mcp.json placeholder")
     parser.add_argument("--with-apps", action="store_true", help="Create .app.json placeholder")
+    parser.add_argument(
+        "--with-marketplace",
+        action="store_true",
+        help="Create or update repo-root .agents/plugins/marketplace.json",
+    )
+    parser.add_argument(
+        "--marketplace-path",
+        default=str(DEFAULT_MARKETPLACE_PATH),
+        help="Path to marketplace.json (defaults to <repo>/.agents/plugins/marketplace.json)",
+    )
+    parser.add_argument(
+        "--install-policy",
+        default=DEFAULT_INSTALL_POLICY,
+        choices=sorted(VALID_INSTALL_POLICIES),
+        help="Marketplace installPolicy value",
+    )
+    parser.add_argument(
+        "--auth-policy",
+        default=DEFAULT_AUTH_POLICY,
+        choices=sorted(VALID_AUTH_POLICIES),
+        help="Marketplace authPolicy value",
+    )
+    parser.add_argument(
+        "--category",
+        default=DEFAULT_CATEGORY,
+        help="Marketplace category value",
+    )
     parser.add_argument("--force", action="store_true", help="Overwrite existing files")
     return parser.parse_args()
 
@@ -151,8 +252,21 @@ def main() -> None:
             args.force,
         )
 
+    if args.with_marketplace:
+        marketplace_path = Path(args.marketplace_path).expanduser().resolve()
+        update_marketplace_json(
+            marketplace_path,
+            plugin_name,
+            args.install_policy,
+            args.auth_policy,
+            args.category,
+            args.force,
+        )
+
     print(f"Created plugin scaffold: {plugin_root}")
     print(f"plugin manifest: {plugin_json_path}")
+    if args.with_marketplace:
+        print(f"marketplace manifest: {marketplace_path}")
 
 
 if __name__ == "__main__":

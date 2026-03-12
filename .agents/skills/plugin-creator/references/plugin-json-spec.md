@@ -87,3 +87,52 @@
 - `skills`, `hooks`, and `mcpServers` are supplemented on top of default component discovery; they do not replace defaults.
 - Custom path values must follow the plugin root convention and naming/namespacing rules.
 - This repo’s scaffold writes `.codex-plugin/plugin.json`; treat that as the manifest location this skill generates.
+
+# Marketplace JSON sample spec
+
+`marketplace.json` always lives at `<repo-root>/.agents/plugins/marketplace.json`.
+
+```json
+{
+  "name": "openai-curated",
+  "plugins": [
+    {
+      "name": "linear",
+      "source": {
+        "source": "local",
+        "path": "./plugins/linear"
+      },
+      "installPolicy": "AVAILABLE",
+      "authPolicy": "ON_INSTALL",
+      "category": "Productivity"
+    }
+  ]
+}
+```
+
+## Marketplace field guide
+
+### Top-level fields
+
+- `name` (`string`): Marketplace identifier or catalog name.
+- `plugins` (`array`): Ordered plugin entries. This order determines how Codex renders plugins.
+
+### Plugin entry fields
+
+- `name` (`string`): Plugin identifier. Match the plugin folder name and `plugin.json` `name`.
+- `source` (`object`): Plugin source descriptor.
+  - `source` (`string`): Use `local` for this repo workflow.
+  - `path` (`string`): Relative plugin path, always `./plugins/<plugin-name>`.
+- `installPolicy` (`string`): Availability policy. Always include it.
+  - Allowed values: `NOT_AVAILABLE`, `AVAILABLE`, `INSTALLED_BY_DEFAULT`
+  - Default for new entries: `AVAILABLE`
+- `authPolicy` (`string`): Authentication timing policy. Always include it.
+  - Allowed values: `ON_INSTALL`, `ON_USE`
+  - Default for new entries: `ON_INSTALL`
+- `category` (`string`): Display category bucket. Always include it.
+
+### Marketplace generation rules
+
+- Always include `installPolicy`, `authPolicy`, and `category` on every generated or updated plugin entry.
+- Append new entries unless the user explicitly requests reordering.
+- Replace an existing entry for the same plugin only when overwrite is intentional.

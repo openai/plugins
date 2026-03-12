@@ -1,6 +1,6 @@
 ---
 name: plugin-creator
-description: Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, and baseline placeholders you can edit before publishing or testing.
+description: Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, and baseline placeholders you can edit before publishing or testing. Use when Codex needs to create a new local plugin, add optional plugin structure, or generate or update repo-root `.agents/plugins/marketplace.json` entries for plugin ordering and availability metadata.
 ---
 
 # Plugin Creator
@@ -19,11 +19,18 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py <plugin-nam
 
 2. Open `<plugin-path>/.codex-plugin/plugin.json` and replace `[TODO: ...]` placeholders.
 
-3. Generate/adjust optional companion folders as needed:
+3. Generate or update the repo marketplace entry when the plugin should appear in Codex UI ordering:
+
+```bash
+# marketplace.json always lives at <repo-root>/.agents/plugins/marketplace.json
+python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin --with-marketplace
+```
+
+4. Generate/adjust optional companion folders as needed:
 
 ```bash
 python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin --path <parent-plugin-directory> \
-  --with-skills --with-hooks --with-scripts --with-assets --with-mcp --with-apps
+  --with-skills --with-hooks --with-scripts --with-assets --with-mcp --with-apps --with-marketplace
 ```
 
 `<parent-plugin-directory>` is the directory where the plugin folder `<plugin-name>` will be created (for example `~/code/plugins`).
@@ -33,6 +40,7 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Creates plugin root at `/<parent-plugin-directory>/<plugin-name>/`.
 - Always creates `/<parent-plugin-directory>/<plugin-name>/.codex-plugin/plugin.json`.
 - Fills the manifest with the full schema shape, placeholder values, and the complete `interface` section.
+- Creates or updates `<repo-root>/.agents/plugins/marketplace.json` when `--with-marketplace` is set.
 - `<plugin-name>` is normalized using skill-creator naming rules:
   - `My Plugin` → `my-plugin`
   - `My--Plugin` → `my-plugin`
@@ -46,16 +54,55 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
   - `.mcp.json`
   - `.app.json`
 
+## Marketplace workflow
+
+- `marketplace.json` always lives at `<repo-root>/.agents/plugins/marketplace.json`.
+- Treat plugin order in `plugins[]` as render order in Codex. Append new entries unless a user explicitly asks to reorder the list.
+- Each generated marketplace entry must include all of:
+  - `installPolicy`
+  - `authPolicy`
+  - `category`
+- Default new entries to:
+  - `installPolicy: "AVAILABLE"`
+  - `authPolicy: "ON_INSTALL"`
+- Override defaults only when the user explicitly specifies another allowed value.
+- Allowed `installPolicy` values:
+  - `NOT_AVAILABLE`
+  - `AVAILABLE`
+  - `INSTALLED_BY_DEFAULT`
+- Allowed `authPolicy` values:
+  - `ON_INSTALL`
+  - `ON_USE`
+- The generated entry shape is:
+
+```json
+{
+  "name": "plugin-name",
+  "source": {
+    "source": "local",
+    "path": "./plugins/plugin-name"
+  },
+  "installPolicy": "AVAILABLE",
+  "authPolicy": "ON_INSTALL",
+  "category": "Productivity"
+}
+```
+
+- Use `--force` only when intentionally replacing an existing marketplace entry for the same plugin name.
+- If `<repo-root>/.agents/plugins/marketplace.json` does not exist yet, create it with a top-level `"name"` placeholder and a `plugins` array, then add the new entry.
+
 ## Required behavior
 
 - Outer folder name and `plugin.json` `"name"` are always the same normalized plugin name.
 - Do not remove required structure; keep `.codex-plugin/plugin.json` present.
 - Keep manifest values as placeholders until a human or follow-up step explicitly fills them.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
+- When generating marketplace entries, always write `installPolicy`, `authPolicy`, and `category` even if their values are defaults.
+- Keep marketplace `source.path` relative to repo root as `./plugins/<plugin-name>`.
 
 ## Reference to exact spec sample
 
-For the exact canonical sample JSON, including the full `interface` block, use:
+For the exact canonical sample JSON for both plugin manifests and marketplace entries, use:
 
 - `references/plugin-json-spec.md`
 
