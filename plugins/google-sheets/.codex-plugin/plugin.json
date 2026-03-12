@@ -33,7 +33,7 @@
     "defaultPrompt": "Use Google Sheets context to analyze spreadsheet data, suggest formulas, or help me update a sheet.",
     "brandColor": "#0F9D58",
     "composerIcon": "./assets/google-sheets-small.svg",
-    "logo": "./assets/google-sheets.svg",
+    "logo": "./assets/google-sheets.png",
     "screenshots": []
   }
 }

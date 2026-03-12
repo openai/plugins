@@ -33,7 +33,7 @@
     "defaultPrompt": "Use Google Docs context to summarize a document, draft revisions, or help me organize written content.",
     "brandColor": "#1A73E8",
     "composerIcon": "./assets/google-docs-small.svg",
-    "logo": "./assets/google-docs.svg",
+    "logo": "./assets/google-docs.png",
     "screenshots": []
   }
 }

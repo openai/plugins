@@ -33,7 +33,7 @@
     "defaultPrompt": "Use Gmail context to summarize my inbox, draft replies, or help me process email threads.",
     "brandColor": "#EA4335",
     "composerIcon": "./assets/gmail-small.svg",
-    "logo": "./assets/gmail.svg",
+    "logo": "./assets/gmail.png",
     "screenshots": []
   }
 }

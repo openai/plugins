@@ -33,7 +33,7 @@
     "defaultPrompt": "Use Slack context to summarize unread activity, draft replies, or help me prepare channel updates.",
     "brandColor": "#611F69",
     "composerIcon": "./assets/slack-small.svg",
-    "logo": "./assets/slack.svg",
+    "logo": "./assets/slack.png",
     "screenshots": []
   }
 }
