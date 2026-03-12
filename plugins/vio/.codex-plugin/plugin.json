@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://www.vio.com/privacy-policy",
     "termsOfServiceURL": "https://www.vio.com/terms-of-use",
     "defaultPrompt": [
-      "Vio show me hotels in Barcelona, 16-18 November for two"
+      "Show hotels in Barcelona, 16-18 November for two"
     ],
     "screenshots": []
   }
