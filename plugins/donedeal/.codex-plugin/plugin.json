@@ -1,0 +1,27 @@
+{
+  "name": "donedeal",
+  "version": "2.0.0",
+  "description": "Find the most new & used cars",
+  "author": {
+    "name": "Distilled",
+    "url": "www.donedeal.ie"
+  },
+  "homepage": "www.donedeal.ie",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "DoneDeal",
+    "shortDescription": "Find the most new & used cars",
+    "longDescription": "Find the exact car you need - and you’ll love to drive - with DoneDeal + ChatGPT.\n'@DoneDeal, find me an automatic hybrid for around €50k in Dublin from a trusted car dealer'\nDone.\n\nWhether you're buying your first car, upgrading the family runaround, or looking for something a bit special, you can search DoneDeal in ChatGPT using simple, conversational prompts such as: 'Show me SUVs with a big boot', 'What’s available in Dublin right now?' or 'Show me cars under €60,000 near me.'\n\nWhy It’s Different\n- The DoneDeal app is home to the widest selection of both new and used cars available for sale from dealerships and private sellers in Ireland\n- Is deeply integrated with DoneDeal’s live inventory with unique car data.\n- Understands Irish car-buying context\n- Replaces friction-heavy filters with conversation\n- Ask Feature to help you learn, compare and see similar cars",
+    "developerName": "Distilled",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "www.donedeal.ie",
+    "privacyPolicyURL": "https://hello.donedeal.ie/hc/en-us/articles/201251721-Privacy-Cookie-Policies",
+    "termsOfServiceURL": "https://hello.donedeal.ie/hc/en-us/articles/201251761-Terms-Conditions-of-Use-of-DoneDeal",
+    "defaultPrompt": "@DoneDeal Show me SUV's from Dealerships",
+    "screenshots": []
+  }
+}

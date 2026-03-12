@@ -1,0 +1,27 @@
+{
+  "name": "autoscout24",
+  "version": "2.0.0",
+  "description": "Automobile buying and leasing",
+  "author": {
+    "name": "AutoScout24 GmbH",
+    "url": "https://www.autoscout24.com"
+  },
+  "homepage": "https://www.autoscout24.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "AutoScout24",
+    "shortDescription": "Automobile buying and leasing",
+    "longDescription": "AutoScout24 - Europe’s Largest Automotive Marketplace!\n\nAutoScout24 gives you access to more than 2 million new and used vehicles from private sellers and trusted dealerships. Whether you’re searching for a compact city car, a premium sedan, an electric vehicle, or a spacious SUV, you’ll find plenty of options — and easily browse listings from both private sellers and professional dealers. Find your next car on AutoScout24.",
+    "developerName": "AutoScout24 GmbH",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.autoscout24.com",
+    "privacyPolicyURL": "https://www.autoscout24.com/company/privacy/",
+    "termsOfServiceURL": "https://www.autoscout24.com/company/agb/",
+    "defaultPrompt": "I'm looking for a family car for less than 30k€ near Berlin",
+    "screenshots": []
+  }
+}

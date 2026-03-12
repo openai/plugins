@@ -1,0 +1,25 @@
+{
+  "name": "adobe-express",
+  "version": "v1.0.0",
+  "description": "Design posts, flyers, and more",
+  "author": {
+    "url": "https://www.adobe.com/express/"
+  },
+  "homepage": "https://www.adobe.com/express/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Adobe Express",
+    "shortDescription": "Design posts, flyers, and more",
+    "longDescription": "Design posts, flyers, and more",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.adobe.com/express/",
+    "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
+    "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
+    "defaultPrompt": "@Adobe Express let's make a birthday party invitation",
+    "screenshots": []
+  }
+}

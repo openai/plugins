@@ -1,0 +1,24 @@
+{
+  "name": "monday-com",
+  "version": "1.0.0",
+  "description": "Manage work in monday.com",
+  "author": {
+    "url": "https://monday.com"
+  },
+  "homepage": "https://monday.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Monday.com",
+    "shortDescription": "Manage work in monday.com",
+    "longDescription": "Manage work in monday.com",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://monday.com",
+    "privacyPolicyURL": "https://monday.com/l/privacy/privacy-policy/",
+    "defaultPrompt": "@Monday.com what's the marketing campaign status?",
+    "screenshots": []
+  }
+}

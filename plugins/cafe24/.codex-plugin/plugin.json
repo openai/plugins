@@ -1,0 +1,27 @@
+{
+  "name": "cafe24",
+  "version": "2.0.0",
+  "description": "Search, explore, and shop",
+  "author": {
+    "name": "cafe24",
+    "url": "https://www.cafe24.com"
+  },
+  "homepage": "https://www.cafe24.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Cafe24",
+    "shortDescription": "Search, explore, and shop",
+    "longDescription": "Search for products as easily as texting a friend.\nJust tell us what you want—style, price, store, anything—and we’ll find it for you in seconds.\nShopping made simple, the way it should be.",
+    "developerName": "cafe24",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.cafe24.com",
+    "privacyPolicyURL": "https://www.cafe24.com/agreement/privacy-policy.html",
+    "termsOfServiceURL": "https://m-img.cafe24.com/images/terms/app/chatGPT_cafe24.html",
+    "defaultPrompt": "@Cafe24 Find men’s casual leather jackets for fall",
+    "screenshots": []
+  }
+}

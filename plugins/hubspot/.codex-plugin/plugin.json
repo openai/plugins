@@ -1,0 +1,27 @@
+{
+  "name": "hubspot",
+  "version": "2.0.0",
+  "description": "Insights to action in HubSpot",
+  "author": {
+    "name": "HubSpot",
+    "url": "https://www.hubspot.com/"
+  },
+  "homepage": "https://www.hubspot.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "HubSpot",
+    "shortDescription": "Insights to action in HubSpot",
+    "longDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations. Read from and write to deals, contacts, companies, tickets, engagements, and other objects you have permission to access. Prepare reports, update deal stages, log calls and emails, create tasks, or review pipeline details before meetings. Use it for quick updates in chat or comprehensive CRM management, all grounded in your actual HubSpot data. Learn more: https://knowledge.hubspot.com/integrations/connect-your-hubspot-account-to-chatgpt",
+    "developerName": "HubSpot",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.hubspot.com/",
+    "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
+    "termsOfServiceURL": "https://legal.hubspot.com/terms-of-service",
+    "defaultPrompt": "@HubSpot create a follow-up task to schedule a meeting with Brightlane",
+    "screenshots": []
+  }
+}

@@ -1,53 +1,1467 @@
 {
     "name": "openai-curated",
-    "plugins":
-    [
+    "plugins": [
         {
             "name": "linear",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/linear"
             }
         },
         {
             "name": "google-calendar",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/google-calendar"
             }
         },
         {
             "name": "gmail",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/gmail"
             }
         },
         {
             "name": "google-docs",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/google-docs"
             }
         },
         {
             "name": "google-sheets",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/google-sheets"
             }
         },
         {
             "name": "slack",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/slack"
+            }
+        },
+        {
+            "name": "accuweather",
+            "source": {
+                "source": "local",
+                "path": "./plugins/accuweather"
+            }
+        },
+        {
+            "name": "ace-knowledge-graph",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ace-knowledge-graph"
+            }
+        },
+        {
+            "name": "ace-quiz-maker",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ace-quiz-maker"
+            }
+        },
+        {
+            "name": "adobe-acrobat",
+            "source": {
+                "source": "local",
+                "path": "./plugins/adobe-acrobat"
+            }
+        },
+        {
+            "name": "adobe-express",
+            "source": {
+                "source": "local",
+                "path": "./plugins/adobe-express"
+            }
+        },
+        {
+            "name": "adobe-photoshop",
+            "source": {
+                "source": "local",
+                "path": "./plugins/adobe-photoshop"
+            }
+        },
+        {
+            "name": "agentforce-sales",
+            "source": {
+                "source": "local",
+                "path": "./plugins/agentforce-sales"
+            }
+        },
+        {
+            "name": "airtable",
+            "source": {
+                "source": "local",
+                "path": "./plugins/airtable"
+            }
+        },
+        {
+            "name": "all-accor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/all-accor"
+            }
+        },
+        {
+            "name": "almanac-by-passby",
+            "source": {
+                "source": "local",
+                "path": "./plugins/almanac-by-passby"
+            }
+        },
+        {
+            "name": "alpaca",
+            "source": {
+                "source": "local",
+                "path": "./plugins/alpaca"
+            }
+        },
+        {
+            "name": "alpic",
+            "source": {
+                "source": "local",
+                "path": "./plugins/alpic"
+            }
+        },
+        {
+            "name": "amore-mall",
+            "source": {
+                "source": "local",
+                "path": "./plugins/amore-mall"
+            }
+        },
+        {
+            "name": "angi",
+            "source": {
+                "source": "local",
+                "path": "./plugins/angi"
+            }
+        },
+        {
+            "name": "anypdf-your-pdf-converter",
+            "source": {
+                "source": "local",
+                "path": "./plugins/anypdf-your-pdf-converter"
+            }
+        },
+        {
+            "name": "apartment-list",
+            "source": {
+                "source": "local",
+                "path": "./plugins/apartment-list"
+            }
+        },
+        {
+            "name": "app-6944c5105438",
+            "source": {
+                "source": "local",
+                "path": "./plugins/app-6944c5105438"
+            }
+        },
+        {
+            "name": "apple-music",
+            "source": {
+                "source": "local",
+                "path": "./plugins/apple-music"
+            }
+        },
+        {
+            "name": "asana",
+            "source": {
+                "source": "local",
+                "path": "./plugins/asana"
+            }
+        },
+        {
+            "name": "atlassian-rovo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/atlassian-rovo"
+            }
+        },
+        {
+            "name": "atlys",
+            "source": {
+                "source": "local",
+                "path": "./plugins/atlys"
+            }
+        },
+        {
+            "name": "autoscout24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/autoscout24"
+            }
+        },
+        {
+            "name": "autotrader",
+            "source": {
+                "source": "local",
+                "path": "./plugins/autotrader"
+            }
+        },
+        {
+            "name": "autotrader-2",
+            "source": {
+                "source": "local",
+                "path": "./plugins/autotrader-2"
+            }
+        },
+        {
+            "name": "awesome-slides",
+            "source": {
+                "source": "local",
+                "path": "./plugins/awesome-slides"
+            }
+        },
+        {
+            "name": "b12-website-generator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/b12-website-generator"
+            }
+        },
+        {
+            "name": "bankrate",
+            "source": {
+                "source": "local",
+                "path": "./plugins/bankrate"
+            }
+        },
+        {
+            "name": "beautiful-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/beautiful-ai"
+            }
+        },
+        {
+            "name": "bible",
+            "source": {
+                "source": "local",
+                "path": "./plugins/bible"
+            }
+        },
+        {
+            "name": "biorender",
+            "source": {
+                "source": "local",
+                "path": "./plugins/biorender"
+            }
+        },
+        {
+            "name": "bodi",
+            "source": {
+                "source": "local",
+                "path": "./plugins/bodi"
+            }
+        },
+        {
+            "name": "booking-com",
+            "source": {
+                "source": "local",
+                "path": "./plugins/booking-com"
+            }
+        },
+        {
+            "name": "botlab",
+            "source": {
+                "source": "local",
+                "path": "./plugins/botlab"
+            }
+        },
+        {
+            "name": "botpress",
+            "source": {
+                "source": "local",
+                "path": "./plugins/botpress"
+            }
+        },
+        {
+            "name": "brand24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/brand24"
+            }
+        },
+        {
+            "name": "brex",
+            "source": {
+                "source": "local",
+                "path": "./plugins/brex"
+            }
+        },
+        {
+            "name": "busbud",
+            "source": {
+                "source": "local",
+                "path": "./plugins/busbud"
+            }
+        },
+        {
+            "name": "cafe24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cafe24"
+            }
+        },
+        {
+            "name": "canva",
+            "source": {
+                "source": "local",
+                "path": "./plugins/canva"
+            }
+        },
+        {
+            "name": "carfax",
+            "source": {
+                "source": "local",
+                "path": "./plugins/carfax"
+            }
+        },
+        {
+            "name": "cargurus",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cargurus"
+            }
+        },
+        {
+            "name": "carmax",
+            "source": {
+                "source": "local",
+                "path": "./plugins/carmax"
+            }
+        },
+        {
+            "name": "cars24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cars24"
+            }
+        },
+        {
+            "name": "circleback",
+            "source": {
+                "source": "local",
+                "path": "./plugins/circleback"
+            }
+        },
+        {
+            "name": "clay",
+            "source": {
+                "source": "local",
+                "path": "./plugins/clay"
+            }
+        },
+        {
+            "name": "clickup",
+            "source": {
+                "source": "local",
+                "path": "./plugins/clickup"
+            }
+        },
+        {
+            "name": "cloudinary",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cloudinary"
+            }
+        },
+        {
+            "name": "common-room",
+            "source": {
+                "source": "local",
+                "path": "./plugins/common-room"
+            }
+        },
+        {
+            "name": "conductor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/conductor"
+            }
+        },
+        {
+            "name": "cottages",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cottages"
+            }
+        },
+        {
+            "name": "coupler-io",
+            "source": {
+                "source": "local",
+                "path": "./plugins/coupler-io"
+            }
+        },
+        {
+            "name": "coursera",
+            "source": {
+                "source": "local",
+                "path": "./plugins/coursera"
+            }
+        },
+        {
+            "name": "coveo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/coveo"
+            }
+        },
+        {
+            "name": "cruise-critic",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cruise-critic"
+            }
+        },
+        {
+            "name": "cube",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cube"
+            }
+        },
+        {
+            "name": "daloopa",
+            "source": {
+                "source": "local",
+                "path": "./plugins/daloopa"
+            }
+        },
+        {
+            "name": "datacamp",
+            "source": {
+                "source": "local",
+                "path": "./plugins/datacamp"
+            }
+        },
+        {
+            "name": "dealpilot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dealpilot"
+            }
+        },
+        {
+            "name": "dewa",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dewa"
+            }
+        },
+        {
+            "name": "docket",
+            "source": {
+                "source": "local",
+                "path": "./plugins/docket"
+            }
+        },
+        {
+            "name": "donedeal",
+            "source": {
+                "source": "local",
+                "path": "./plugins/donedeal"
+            }
+        },
+        {
+            "name": "doordash",
+            "source": {
+                "source": "local",
+                "path": "./plugins/doordash"
+            }
+        },
+        {
+            "name": "dow-jones-factiva",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dow-jones-factiva"
+            }
+        },
+        {
+            "name": "dupe",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dupe"
+            }
+        },
+        {
+            "name": "edx",
+            "source": {
+                "source": "local",
+                "path": "./plugins/edx"
+            }
+        },
+        {
+            "name": "egnyte",
+            "source": {
+                "source": "local",
+                "path": "./plugins/egnyte"
+            }
+        },
+        {
+            "name": "expedia",
+            "source": {
+                "source": "local",
+                "path": "./plugins/expedia"
+            }
+        },
+        {
+            "name": "fareharbor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/fareharbor"
+            }
+        },
+        {
+            "name": "figma",
+            "source": {
+                "source": "local",
+                "path": "./plugins/figma"
+            }
+        },
+        {
+            "name": "fireflies",
+            "source": {
+                "source": "local",
+                "path": "./plugins/fireflies"
+            }
+        },
+        {
+            "name": "flight-network",
+            "source": {
+                "source": "local",
+                "path": "./plugins/flight-network"
+            }
+        },
+        {
+            "name": "flixor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/flixor"
+            }
+        },
+        {
+            "name": "function-health",
+            "source": {
+                "source": "local",
+                "path": "./plugins/function-health"
+            }
+        },
+        {
+            "name": "fyxer",
+            "source": {
+                "source": "local",
+                "path": "./plugins/fyxer"
+            }
+        },
+        {
+            "name": "gamma",
+            "source": {
+                "source": "local",
+                "path": "./plugins/gamma"
+            }
+        },
+        {
+            "name": "genspark-ai-slides",
+            "source": {
+                "source": "local",
+                "path": "./plugins/genspark-ai-slides"
+            }
+        },
+        {
+            "name": "getyourguide",
+            "source": {
+                "source": "local",
+                "path": "./plugins/getyourguide"
+            }
+        },
+        {
+            "name": "granola",
+            "source": {
+                "source": "local",
+                "path": "./plugins/granola"
+            }
+        },
+        {
+            "name": "hepsiemlak",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hepsiemlak"
+            }
+        },
+        {
+            "name": "hex",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hex"
+            }
+        },
+        {
+            "name": "heygen",
+            "source": {
+                "source": "local",
+                "path": "./plugins/heygen"
+            }
+        },
+        {
+            "name": "highlevel",
+            "source": {
+                "source": "local",
+                "path": "./plugins/highlevel"
+            }
+        },
+        {
+            "name": "hubspot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hubspot"
+            }
+        },
+        {
+            "name": "hugging-face",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hugging-face"
+            }
+        },
+        {
+            "name": "hyatt",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hyatt"
+            }
+        },
+        {
+            "name": "idealista",
+            "source": {
+                "source": "local",
+                "path": "./plugins/idealista"
+            }
+        },
+        {
+            "name": "imovirtual",
+            "source": {
+                "source": "local",
+                "path": "./plugins/imovirtual"
+            }
+        },
+        {
+            "name": "instacart",
+            "source": {
+                "source": "local",
+                "path": "./plugins/instacart"
+            }
+        },
+        {
+            "name": "internshala",
+            "source": {
+                "source": "local",
+                "path": "./plugins/internshala"
+            }
+        },
+        {
+            "name": "intuit-credit-karma",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-credit-karma"
+            }
+        },
+        {
+            "name": "intuit-mailchimp",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-mailchimp"
+            }
+        },
+        {
+            "name": "intuit-quickbooks",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-quickbooks"
+            }
+        },
+        {
+            "name": "intuit-turbotax",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-turbotax"
+            }
+        },
+        {
+            "name": "invideo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/invideo"
+            }
+        },
+        {
+            "name": "is-it-safe-to-travel",
+            "source": {
+                "source": "local",
+                "path": "./plugins/is-it-safe-to-travel"
+            }
+        },
+        {
+            "name": "italki-language-learning",
+            "source": {
+                "source": "local",
+                "path": "./plugins/italki-language-learning"
+            }
+        },
+        {
+            "name": "jam",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jam"
+            }
+        },
+        {
+            "name": "jerry-ai-car-insurance-care",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jerry-ai-car-insurance-care"
+            }
+        },
+        {
+            "name": "jimdo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jimdo"
+            }
+        },
+        {
+            "name": "jotform",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jotform"
+            }
+        },
+        {
+            "name": "keybid-puls",
+            "source": {
+                "source": "local",
+                "path": "./plugins/keybid-puls"
+            }
+        },
+        {
+            "name": "khan-academy",
+            "source": {
+                "source": "local",
+                "path": "./plugins/khan-academy"
+            }
+        },
+        {
+            "name": "kiwi-com",
+            "source": {
+                "source": "local",
+                "path": "./plugins/kiwi-com"
+            }
+        },
+        {
+            "name": "klaviyo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/klaviyo"
+            }
+        },
+        {
+            "name": "kleinanzeigen",
+            "source": {
+                "source": "local",
+                "path": "./plugins/kleinanzeigen"
+            }
+        },
+        {
+            "name": "klook",
+            "source": {
+                "source": "local",
+                "path": "./plugins/klook"
+            }
+        },
+        {
+            "name": "komoot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/komoot"
+            }
+        },
+        {
+            "name": "kraken",
+            "source": {
+                "source": "local",
+                "path": "./plugins/kraken"
+            }
+        },
+        {
+            "name": "legalzoom",
+            "source": {
+                "source": "local",
+                "path": "./plugins/legalzoom"
+            }
+        },
+        {
+            "name": "lona",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lona"
+            }
+        },
+        {
+            "name": "lovable",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lovable"
+            }
+        },
+        {
+            "name": "lseg",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lseg"
+            }
+        },
+        {
+            "name": "lseg-2",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lseg-2"
+            }
+        },
+        {
+            "name": "lugg",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lugg"
+            }
+        },
+        {
+            "name": "makemytrip",
+            "source": {
+                "source": "local",
+                "path": "./plugins/makemytrip"
+            }
+        },
+        {
+            "name": "malwarebytes",
+            "source": {
+                "source": "local",
+                "path": "./plugins/malwarebytes"
+            }
+        },
+        {
+            "name": "mangaboom",
+            "source": {
+                "source": "local",
+                "path": "./plugins/mangaboom"
+            }
+        },
+        {
+            "name": "manus",
+            "source": {
+                "source": "local",
+                "path": "./plugins/manus"
+            }
+        },
+        {
+            "name": "marcopolo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/marcopolo"
+            }
+        },
+        {
+            "name": "meetup",
+            "source": {
+                "source": "local",
+                "path": "./plugins/meetup"
+            }
+        },
+        {
+            "name": "monday-com",
+            "source": {
+                "source": "local",
+                "path": "./plugins/monday-com"
+            }
+        },
+        {
+            "name": "myfitnesspal",
+            "source": {
+                "source": "local",
+                "path": "./plugins/myfitnesspal"
+            }
+        },
+        {
+            "name": "na-drink-finder",
+            "source": {
+                "source": "local",
+                "path": "./plugins/na-drink-finder"
+            }
+        },
+        {
+            "name": "namecheap",
+            "source": {
+                "source": "local",
+                "path": "./plugins/namecheap"
+            }
+        },
+        {
+            "name": "nesha",
+            "source": {
+                "source": "local",
+                "path": "./plugins/nesha"
+            }
+        },
+        {
+            "name": "netlify",
+            "source": {
+                "source": "local",
+                "path": "./plugins/netlify"
+            }
+        },
+        {
+            "name": "network-solutions",
+            "source": {
+                "source": "local",
+                "path": "./plugins/network-solutions"
+            }
+        },
+        {
+            "name": "norton",
+            "source": {
+                "source": "local",
+                "path": "./plugins/norton"
+            }
+        },
+        {
+            "name": "okx",
+            "source": {
+                "source": "local",
+                "path": "./plugins/okx"
+            }
+        },
+        {
+            "name": "omio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/omio"
+            }
+        },
+        {
+            "name": "omni-analytics",
+            "source": {
+                "source": "local",
+                "path": "./plugins/omni-analytics"
+            }
+        },
+        {
+            "name": "openai-certified",
+            "source": {
+                "source": "local",
+                "path": "./plugins/openai-certified"
+            }
+        },
+        {
+            "name": "opentable",
+            "source": {
+                "source": "local",
+                "path": "./plugins/opentable"
+            }
+        },
+        {
+            "name": "otomoto",
+            "source": {
+                "source": "local",
+                "path": "./plugins/otomoto"
+            }
+        },
+        {
+            "name": "otter-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/otter-ai"
+            }
+        },
+        {
+            "name": "outliner",
+            "source": {
+                "source": "local",
+                "path": "./plugins/outliner"
+            }
+        },
+        {
+            "name": "paypal",
+            "source": {
+                "source": "local",
+                "path": "./plugins/paypal"
+            }
+        },
+        {
+            "name": "peloton",
+            "source": {
+                "source": "local",
+                "path": "./plugins/peloton"
+            }
+        },
+        {
+            "name": "pitchbook",
+            "source": {
+                "source": "local",
+                "path": "./plugins/pitchbook"
+            }
+        },
+        {
+            "name": "preply-language-tutor-finder",
+            "source": {
+                "source": "local",
+                "path": "./plugins/preply-language-tutor-finder"
+            }
+        },
+        {
+            "name": "priceline",
+            "source": {
+                "source": "local",
+                "path": "./plugins/priceline"
+            }
+        },
+        {
+            "name": "pylon",
+            "source": {
+                "source": "local",
+                "path": "./plugins/pylon"
+            }
+        },
+        {
+            "name": "quizlet",
+            "source": {
+                "source": "local",
+                "path": "./plugins/quizlet"
+            }
+        },
+        {
+            "name": "ranked-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ranked-ai"
+            }
+        },
+        {
+            "name": "realestate-com-au",
+            "source": {
+                "source": "local",
+                "path": "./plugins/realestate-com-au"
+            }
+        },
+        {
+            "name": "recorrido",
+            "source": {
+                "source": "local",
+                "path": "./plugins/recorrido"
+            }
+        },
+        {
+            "name": "redbus",
+            "source": {
+                "source": "local",
+                "path": "./plugins/redbus"
+            }
+        },
+        {
+            "name": "redfin",
+            "source": {
+                "source": "local",
+                "path": "./plugins/redfin"
+            }
+        },
+        {
+            "name": "replit",
+            "source": {
+                "source": "local",
+                "path": "./plugins/replit"
+            }
+        },
+        {
+            "name": "retell-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/retell-ai"
+            }
+        },
+        {
+            "name": "s-p-global",
+            "source": {
+                "source": "local",
+                "path": "./plugins/s-p-global"
+            }
+        },
+        {
+            "name": "scite",
+            "source": {
+                "source": "local",
+                "path": "./plugins/scite"
+            }
+        },
+        {
+            "name": "semrush",
+            "source": {
+                "source": "local",
+                "path": "./plugins/semrush"
+            }
+        },
+        {
+            "name": "shazam",
+            "source": {
+                "source": "local",
+                "path": "./plugins/shazam"
+            }
+        },
+        {
+            "name": "skyscanner",
+            "source": {
+                "source": "local",
+                "path": "./plugins/skyscanner"
+            }
+        },
+        {
+            "name": "slidesgpt",
+            "source": {
+                "source": "local",
+                "path": "./plugins/slidesgpt"
+            }
+        },
+        {
+            "name": "spaceship",
+            "source": {
+                "source": "local",
+                "path": "./plugins/spaceship"
+            }
+        },
+        {
+            "name": "speechify",
+            "source": {
+                "source": "local",
+                "path": "./plugins/speechify"
+            }
+        },
+        {
+            "name": "statsig",
+            "source": {
+                "source": "local",
+                "path": "./plugins/statsig"
+            }
+        },
+        {
+            "name": "steadily",
+            "source": {
+                "source": "local",
+                "path": "./plugins/steadily"
+            }
+        },
+        {
+            "name": "streak",
+            "source": {
+                "source": "local",
+                "path": "./plugins/streak"
+            }
+        },
+        {
+            "name": "stripe",
+            "source": {
+                "source": "local",
+                "path": "./plugins/stripe"
+            }
+        },
+        {
+            "name": "strive-pdf-generator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/strive-pdf-generator"
+            }
+        },
+        {
+            "name": "stubhub",
+            "source": {
+                "source": "local",
+                "path": "./plugins/stubhub"
+            }
+        },
+        {
+            "name": "talkgen",
+            "source": {
+                "source": "local",
+                "path": "./plugins/talkgen"
+            }
+        },
+        {
+            "name": "target",
+            "source": {
+                "source": "local",
+                "path": "./plugins/target"
+            }
+        },
+        {
+            "name": "tarot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tarot"
+            }
+        },
+        {
+            "name": "the-knot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/the-knot"
+            }
+        },
+        {
+            "name": "thefork",
+            "source": {
+                "source": "local",
+                "path": "./plugins/thefork"
+            }
+        },
+        {
+            "name": "thehotelsnetwork",
+            "source": {
+                "source": "local",
+                "path": "./plugins/thehotelsnetwork"
+            }
+        },
+        {
+            "name": "third-bridge",
+            "source": {
+                "source": "local",
+                "path": "./plugins/third-bridge"
+            }
+        },
+        {
+            "name": "thumbtack",
+            "source": {
+                "source": "local",
+                "path": "./plugins/thumbtack"
+            }
+        },
+        {
+            "name": "tickersage",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tickersage"
+            }
+        },
+        {
+            "name": "tinman-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tinman-ai"
+            }
+        },
+        {
+            "name": "tonita",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tonita"
+            }
+        },
+        {
+            "name": "tourlane",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tourlane"
+            }
+        },
+        {
+            "name": "tourradar",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tourradar"
+            }
+        },
+        {
+            "name": "travelenie",
+            "source": {
+                "source": "local",
+                "path": "./plugins/travelenie"
+            }
+        },
+        {
+            "name": "tripadvisor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tripadvisor"
+            }
+        },
+        {
+            "name": "tuio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tuio"
+            }
+        },
+        {
+            "name": "turo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/turo"
+            }
+        },
+        {
+            "name": "uber",
+            "source": {
+                "source": "local",
+                "path": "./plugins/uber"
+            }
+        },
+        {
+            "name": "uber-eats",
+            "source": {
+                "source": "local",
+                "path": "./plugins/uber-eats"
+            }
+        },
+        {
+            "name": "udemy",
+            "source": {
+                "source": "local",
+                "path": "./plugins/udemy"
+            }
+        },
+        {
+            "name": "unpack",
+            "source": {
+                "source": "local",
+                "path": "./plugins/unpack"
+            }
+        },
+        {
+            "name": "upwork",
+            "source": {
+                "source": "local",
+                "path": "./plugins/upwork"
+            }
+        },
+        {
+            "name": "vercel",
+            "source": {
+                "source": "local",
+                "path": "./plugins/vercel"
+            }
+        },
+        {
+            "name": "viator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/viator"
+            }
+        },
+        {
+            "name": "vio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/vio"
+            }
+        },
+        {
+            "name": "vivid-seats",
+            "source": {
+                "source": "local",
+                "path": "./plugins/vivid-seats"
+            }
+        },
+        {
+            "name": "wayground",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wayground"
+            }
+        },
+        {
+            "name": "wednesday-app",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wednesday-app"
+            }
+        },
+        {
+            "name": "wego",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wego"
+            }
+        },
+        {
+            "name": "weightwatchers",
+            "source": {
+                "source": "local",
+                "path": "./plugins/weightwatchers"
+            }
+        },
+        {
+            "name": "wix",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wix"
+            }
+        },
+        {
+            "name": "zen-shopping",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zen-shopping"
+            }
+        },
+        {
+            "name": "zillow",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zillow"
+            }
+        },
+        {
+            "name": "ziprecruiter",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ziprecruiter"
+            }
+        },
+        {
+            "name": "zola",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zola"
+            }
+        },
+        {
+            "name": "zoom",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zoom"
+            }
+        },
+        {
+            "name": "zoominfo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zoominfo"
+            }
+        },
+        {
+            "name": "zumba",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zumba"
+            }
+        },
+        {
+            "name": "zumper",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zumper"
             }
         }
     ]

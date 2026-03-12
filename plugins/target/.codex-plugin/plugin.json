@@ -1,0 +1,25 @@
+{
+  "name": "target",
+  "version": "1.0.0",
+  "description": "Style, decor, beauty, and more",
+  "author": {
+    "url": "https://www.target.com"
+  },
+  "homepage": "https://www.target.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Target",
+    "shortDescription": "Style, decor, beauty, and more",
+    "longDescription": "Style, decor, beauty, and more",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.target.com",
+    "privacyPolicyURL": "https://www.target.com/c/target-privacy-policy/-/N-4sr7p",
+    "termsOfServiceURL": "https://www.target.com/c/terms-conditions/-/N-4sr7p",
+    "defaultPrompt": "@Target I want to bring holiday cookies to my neighbors. What options do you have?",
+    "screenshots": []
+  }
+}

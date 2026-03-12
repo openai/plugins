@@ -1,0 +1,27 @@
+{
+  "name": "expedia",
+  "version": "2.0.0",
+  "description": "Plan trips, flights and hotels",
+  "author": {
+    "name": "Expedia Group",
+    "url": "https://www.expedia.com"
+  },
+  "homepage": "https://www.expedia.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Expedia",
+    "shortDescription": "Plan trips, flights and hotels",
+    "longDescription": "Discover and search flights and hotels worldwide. Get real-time pricing and availability to plan your perfect trip.",
+    "developerName": "Expedia Group",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.expedia.com",
+    "privacyPolicyURL": "https://www.expedia.com/legal/privacy",
+    "termsOfServiceURL": "https://www.expedia.com/lp/b/terms-of-service",
+    "defaultPrompt": "@Expedia find flights from Seattle to Cancun in February",
+    "screenshots": []
+  }
+}

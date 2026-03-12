@@ -1,0 +1,27 @@
+{
+  "name": "dealpilot",
+  "version": "2.0.0",
+  "description": "Find Verified Coupon Codes",
+  "author": {
+    "name": "LoudCrowd",
+    "url": "https://dealpilot.loudcrowd.com/"
+  },
+  "homepage": "https://dealpilot.loudcrowd.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "DealPilot",
+    "shortDescription": "Find Verified Coupon Codes",
+    "longDescription": "DealPilot is a shopping assistant that gives consumers verified, store provided coupon codes that will provide discounts on their respective eCommerce platforms.  We have assembled this proprietary database of verified coupon codes by working directly with merchants, and in many cases negotiating exclusive deals with merchants to distribute on LLMs.\n\nUsers can search for reliable, verified coupon codes for specific retailers or product categories, and DealPilot will return a list of the best, most relevant coupon codes.\n\nUsers can directly copy coupon codes and link directly to the retail site.",
+    "developerName": "LoudCrowd",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://dealpilot.loudcrowd.com/",
+    "privacyPolicyURL": "https://loudcrowd.com/privacy-policy-dpf/",
+    "termsOfServiceURL": "https://loudcrowd.com/terms/",
+    "defaultPrompt": "What makeup and cosmetic sites are currently running promos?",
+    "screenshots": []
+  }
+}

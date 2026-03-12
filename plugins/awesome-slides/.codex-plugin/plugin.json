@@ -1,0 +1,27 @@
+{
+  "name": "awesome-slides",
+  "version": "1.0.0",
+  "description": "Slides with video & voiceover",
+  "author": {
+    "name": "Sider AI",
+    "url": "https://sider.ai/chatgpt-apps/chatgpt-presentation-maker"
+  },
+  "homepage": "https://sider.ai/chatgpt-apps/chatgpt-presentation-maker",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Awesome Slides",
+    "shortDescription": "Slides with video & voiceover",
+    "longDescription": "One-stop AI slide app: create, edit, and export slides as videos with voice-overs, all in one place.\nQuickly turn any topic, text, PDF, or URL into a professionally designed PowerPoint presentation. With AI-powered content generation, you can edit every detail through conversation and export your work as an editable PPTX or a video with voiceover. \n\nKey Features\n- Multi-source input: Create presentations from a simple topic, pasted text, an uploaded PDF, or a web URL.\n- Automated slide design: The AI builds layouts, selects relevant images, and creates diagrams automatically.\n- Conversational editing: Refine slides using natural commands to change the tone, shorten text, or add new sections.\n- Precision control: Edit any text manually or ask the AI to revise it. Use your own images or generate new AI visuals.\n- Export and share: Download a fully editable .pptx file or export your presentation as a video with embedded narration.\n\nHow to Use\n1. Connect the Awesome Slides app\n2. Type \"@\" and choose the AI Slides app, or type \"AI Slides\", then enter your prompt\n\nExamples:\n- Awesome Slides create a presentation about the history of AI\n- Awesome Slides turn this PDF into a 10-slide deck\n- Awesome Slides help me make a presentation for my Q3 marketing strategy",
+    "developerName": "Sider AI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://sider.ai/chatgpt-apps/chatgpt-presentation-maker",
+    "privacyPolicyURL": "https://sider.ai/policies/privacy",
+    "termsOfServiceURL": "https://sider.ai/policies/terms",
+    "defaultPrompt": "@Awesome Slides Create a 7-day itinerary for Iceland",
+    "screenshots": []
+  }
+}

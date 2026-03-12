@@ -1,0 +1,25 @@
+{
+  "name": "hugging-face",
+  "version": "1.0.0",
+  "description": "Inspect models, datasets, Spaces, and research",
+  "author": {
+    "url": "https://huggingface.co"
+  },
+  "homepage": "https://huggingface.co",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Hugging Face",
+    "shortDescription": "Inspect models, datasets, Spaces, and research",
+    "longDescription": "Connect to the Hugging Face Hub to explore Models and Datasets, access SDK Documentation and more. Manage Machine Learning Jobs and connect to thousands of AI applications via Spaces.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://huggingface.co",
+    "privacyPolicyURL": "https://huggingface.co/privacy",
+    "termsOfServiceURL": "https://huggingface.co/terms-of-service",
+    "defaultPrompt": "@Hugging Face generate a realistic farm using FLUX.1",
+    "screenshots": []
+  }
+}

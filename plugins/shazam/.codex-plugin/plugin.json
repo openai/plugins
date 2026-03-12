@@ -1,0 +1,27 @@
+{
+  "name": "shazam",
+  "version": "1.0.0",
+  "description": "Identify songs instantly",
+  "author": {
+    "name": "Apple Inc.",
+    "url": "https://www.shazam.com"
+  },
+  "homepage": "https://www.shazam.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Shazam",
+    "shortDescription": "Identify songs instantly",
+    "longDescription": "Identify any song playing around you, right within ChatGPT. Use @Shazam in your prompt to discover music with the same powerful recognition technology trusted by hundreds of millions worldwide. Preview songs inline, and save discoveries directly to your Shazam library.",
+    "developerName": "Apple Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.shazam.com",
+    "privacyPolicyURL": "https://www.shazam.com/privacy/summary",
+    "termsOfServiceURL": "https://www.apple.com/legal/internet-services/itunes",
+    "defaultPrompt": "@Shazam what's this song?",
+    "screenshots": []
+  }
+}

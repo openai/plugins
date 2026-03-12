@@ -1,0 +1,27 @@
+{
+  "name": "all-accor",
+  "version": "1.0.0",
+  "description": "Search and book Accor hotels",
+  "author": {
+    "name": "Accor SA",
+    "url": "https://all.accor.com/"
+  },
+  "homepage": "https://all.accor.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "ALL Accor",
+    "shortDescription": "Search and book Accor hotels",
+    "longDescription": "Discover, compare, and book the perfect room for your stay among 5,700+ Accor hotels and residences in 110+ countries from smart economy to exceptional luxury.\n\nWhether you’re looking for a practical city break with ibis or ibis Styles, a comfortable stay with Novotel or Mercure, a lifestyle experience with Mama Shelter, JO&JOE, Tribe or 25hours, or an unforgettable luxury escape with Sofitel, Fairmont, Raffles, Orient Express or Banyan Tree, Accor offers the right brand for every journey and every mood.\n\nSimply describe the experience you’re looking for in the ALL Accor app using ChatGPT.\n\nUse the interactive map to view hotels and easily compare them based on prices, photos, available services, and guest reviews.\n\nAccess member-exclusive rates instead of public ones if you’re already an ALL member or if you’re considering joining (membership is free, by the way, and yes, it’s worth it).\n\nPlan your stay by asking questions such as:\n- Show me romantic hotels in Paris with a spa for our honeymoon\n- Find hotels available tonight within a budget of around €150\n- Are there any nice French restaurants near this hotel?\n\nCompare your options, explore the surroundings of your accommodation, and complete your booking seamlessly on ALL.com  with the confidence of choosing the right brand, at the right level, for the stay you actually want.",
+    "developerName": "Accor SA",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://all.accor.com/",
+    "privacyPolicyURL": "https://all.accor.com/a/en/information/data-protection.html",
+    "termsOfServiceURL": "https://all.accor.com/a/en/information/internet-sales-conditions.html",
+    "defaultPrompt": "Show me available hotels in Paris for tonight",
+    "screenshots": []
+  }
+}

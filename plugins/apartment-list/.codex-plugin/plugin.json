@@ -1,0 +1,27 @@
+{
+  "name": "apartment-list",
+  "version": "2.0.0",
+  "description": "Smarter apartment search",
+  "author": {
+    "name": "Apartment List Inc.",
+    "url": "https://www.apartmentlist.com/"
+  },
+  "homepage": "https://www.apartmentlist.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Apartment List",
+    "shortDescription": "Smarter apartment search",
+    "longDescription": "Apartment List brings real apartments for rent into your ChatGPT conversation.\nDescribe what you’re looking for — budget, commute, pets, amenities, move-in timing — and explore available rentals with up-to-date pricing, availability, and fees.\n\nWhy it’s different:\n\nMatch, Don’t Just Search: Tell us about your life. We translate it into personalized apartment matches.\n\nPowered by Real Rental Data: Get structured, live inventory — not generic AI responses.\n\nThe Anti-Scroll: Compare apartments side by side and ask follow-up questions without leaving chat.\n\nStop searching. Start finding an apartment you’ll love.\n\nTry asking:\n- “Find apartments for rent under $2,300 that allow my 50lb dog.”\n- “Show me current rent and availability for this apt.”\n- “Compare these rentals by price and pet policies.”",
+    "developerName": "Apartment List Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.apartmentlist.com/",
+    "privacyPolicyURL": "https://www.apartmentlist.com/about/privacy",
+    "termsOfServiceURL": "https://www.apartmentlist.com/about/terms",
+    "defaultPrompt": "Find me pet friendly 2 bedroom apartments in Austin under $3,000",
+    "screenshots": []
+  }
+}

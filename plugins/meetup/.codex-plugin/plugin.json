@@ -1,0 +1,27 @@
+{
+  "name": "meetup",
+  "version": "1.0.0",
+  "description": "Find local social events",
+  "author": {
+    "name": "Bending Spoons US Inc.",
+    "url": "https://www.meetup.com/"
+  },
+  "homepage": "https://www.meetup.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Meetup",
+    "shortDescription": "Find local social events",
+    "longDescription": "Discover social events around you that perfectly match your vibe through a focused, personalized view of what’s happening nearby.\n\nWith this ChatGPT app, you can use natural language and rich context to discover Meetup events that align with what you’re actually looking for—helping you find the right people at events you’ll genuinely enjoy.\n\nWhether you’re in the mood for a cozy board game session with fellow introverts or meeting career-oriented young professionals over drinks, the app interprets your preferences and suggests events that fit. You can refine results by interests, location, and dates, and explore each event through the details that matter most—clear descriptions, who’s going, the hosting group, and its rating.c",
+    "developerName": "Bending Spoons US Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.meetup.com/",
+    "privacyPolicyURL": "https://help.meetup.com/hc/en-us/articles/360044422391-Privacy-Policy",
+    "termsOfServiceURL": "https://help.meetup.com/hc/en-us/articles/360027447252-Terms-of-Service",
+    "defaultPrompt": "@Meetup recommend events in San Francisco where I meet people from abroad",
+    "screenshots": []
+  }
+}

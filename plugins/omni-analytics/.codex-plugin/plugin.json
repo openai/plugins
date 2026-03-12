@@ -1,0 +1,27 @@
+{
+  "name": "omni-analytics",
+  "version": "1.0.0",
+  "description": "Trusted answers from your data",
+  "author": {
+    "name": "Omni Analytics",
+    "url": "https://www.omni.co"
+  },
+  "homepage": "https://www.omni.co",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Omni Analytics",
+    "shortDescription": "Trusted answers from your data",
+    "longDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from ChatGPT. Allow internal teams to ask data questions in their AI workflows without logging into Omni directly, while still enforcing row-level security and business definitions.",
+    "developerName": "Omni Analytics",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.omni.co",
+    "privacyPolicyURL": "https://omni.co/privacy",
+    "termsOfServiceURL": "https://omni.co/terms",
+    "defaultPrompt": "@Omni show me last year's orders by status",
+    "screenshots": []
+  }
+}

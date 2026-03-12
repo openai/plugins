@@ -1,0 +1,27 @@
+{
+  "name": "edx",
+  "version": "1.0.0",
+  "description": "Learn new skills online",
+  "author": {
+    "name": "2U, LLC",
+    "url": "https://www.edx.org/"
+  },
+  "homepage": "https://www.edx.org/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "edX",
+    "shortDescription": "Learn new skills online",
+    "longDescription": "edX is the online learning platform that prepares you for every career moment. Join the over 100M people who are part of edX’s online learner network. Founded by Harvard and MIT, edX is leading the way in delivering quality online learning content from universities and institutions you can trust. edX will help you discover high quality learning experiences that fit your personal and professional goals. Learn from top universities and institutions like Harvard, Cambridge, Microsoft, IBM and more. \n\nUse the ChatGPT app to:\nBrowse the Course Catalog\nSearch for Courses by Topic or Skill\nPreview Course Details\nCompare Courses\nGuided Follow-ups\n\nOur courses and programs meet you where you are in your professional trajectory, \n\nYou can:\nStrengthen your résumé. \nDeepen your expertise and showcase your skills with open courses and professional certificate programs.\nLevel up as a leader. \nLearn to lead initiatives and teams with executive education programs.\nEarn a degree. \nUnlock new career opportunities with master’s, doctorate, and undergraduate degree programs.",
+    "developerName": "2U, LLC",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.edx.org/",
+    "privacyPolicyURL": "https://www.edx.org/edx-privacy-policy",
+    "termsOfServiceURL": "https://www.edx.org/edx-terms-service",
+    "defaultPrompt": "I'd like to learn about Artificial Intelligence",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "is-it-safe-to-travel",
+  "version": "1.0.0",
+  "description": "Free real-time travel ratings",
+  "author": {
+    "name": "Layer 3 Labs",
+    "url": "www.layer3labs.io"
+  },
+  "homepage": "www.layer3labs.io",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Is It Safe To Travel?",
+    "shortDescription": "Free real-time travel ratings",
+    "longDescription": "Get instant safety ratings for 200+ countries and major cities worldwide. Combines US State Department advisories, UK Foreign Office warnings, live conflict data (ACLED), and global news monitoring (GDELT) into one comprehensive safety score. Search any destination to see current threat levels, recent incidents, safety trends, and nearby city comparisons. All data updates in real-time from official government sources and verified news feeds—completely free with no limits.",
+    "developerName": "Layer 3 Labs",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "www.layer3labs.io",
+    "privacyPolicyURL": "https://www.layer3labs.io/privacy",
+    "termsOfServiceURL": "https://www.layer3labs.io/terms",
+    "defaultPrompt": "Is it safe to travel to France in 2026?",
+    "screenshots": []
+  }
+}

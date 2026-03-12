@@ -1,0 +1,27 @@
+{
+  "name": "getyourguide",
+  "version": "1.0.0",
+  "description": "Book Tours & Activities",
+  "author": {
+    "name": "GetYourGuide Deutschland GmbH",
+    "url": "https://getyourguide.com/"
+  },
+  "homepage": "https://getyourguide.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "GetYourGuide",
+    "shortDescription": "Book Tours & Activities",
+    "longDescription": "Find, compare, and book sightseeing tours, attractions, excursions, things to do and fun activities from around the world. Save money and book directly from local suppliers.",
+    "developerName": "GetYourGuide Deutschland GmbH",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://getyourguide.com/",
+    "privacyPolicyURL": "https://www.getyourguide.com/c/privacy-policy/",
+    "termsOfServiceURL": "https://www.getyourguide.com/c/general-terms-and-conditions/",
+    "defaultPrompt": "Top activities in Italy",
+    "screenshots": []
+  }
+}

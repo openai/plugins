@@ -1,0 +1,27 @@
+{
+  "name": "wednesday-app",
+  "version": "1.0.0",
+  "description": "Find creators and influencers",
+  "author": {
+    "name": "Upfluence Inc.",
+    "url": "https://wednesday.app/?utm_source=chatgpt_app&utm_campaign=direct&utm_medium=organic"
+  },
+  "homepage": "https://wednesday.app/?utm_source=chatgpt_app&utm_campaign=direct&utm_medium=organic",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Wednesday.app",
+    "shortDescription": "Find creators and influencers",
+    "longDescription": "Find Creators and Influencers with Wednesday.app inside ChatGPT\n\nDiscover the right creators without navigating multiple platforms. Simply describe what you’re looking for in plain language, and ChatGPT will return results powered by Wednesday.app’s search engine.\n\nFor example:\n“Give me english-speaking TikTok creators interested in sustainable fashion with 50K–200K followers.”\n\nBased on your request, you’ll receive a curated list of creator profiles that match your criteria. Review key details, explore their profiles, and check recent posts to evaluate whether they’re a strong fit for your next campaign.\n\nWednesday.app inside ChatGPT makes creator discovery faster, more intuitive, and easier to act on.",
+    "developerName": "Upfluence Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://wednesday.app/?utm_source=chatgpt_app&utm_campaign=direct&utm_medium=organic",
+    "privacyPolicyURL": "https://wednesday.app/privacy-policy/?utm_source=chatgpt_app&utm_campaign=direct&utm_medium=organic",
+    "termsOfServiceURL": "https://wednesday.app/terms-and-conditions/?utm_source=chatgpt_app&utm_campaign=direct&utm_medium=organic",
+    "defaultPrompt": "Find US beauty and lifestyle creators on Instagram using Wednesday.app",
+    "screenshots": []
+  }
+}

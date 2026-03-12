@@ -1,0 +1,27 @@
+{
+  "name": "ranked-ai",
+  "version": "1.0.0",
+  "description": "Manage your SEO & PPC",
+  "author": {
+    "name": "Ranked AI, LLC",
+    "url": "https://www.ranked.ai"
+  },
+  "homepage": "https://www.ranked.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Ranked AI",
+    "shortDescription": "Manage your SEO & PPC",
+    "longDescription": "Ranked AI provides industry leading AI SEO & PPC software, with a fully managed service integrated into it. We combine AI with industry veterans that know how to help you rank your website on traditional & AI search. Manage your traditional & AI search keywords, audits, backlinks, reports and more with our integrated app.",
+    "developerName": "Ranked AI, LLC",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.ranked.ai",
+    "privacyPolicyURL": "https://www.ranked.ai/legal/privacy",
+    "termsOfServiceURL": "//www.ranked.ai/legal/terms",
+    "defaultPrompt": "show me my rankings for my project",
+    "screenshots": []
+  }
+}

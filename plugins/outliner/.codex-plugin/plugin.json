@@ -1,0 +1,27 @@
+{
+  "name": "outliner",
+  "version": "1.0.0",
+  "description": "Create & Edit Outlines",
+  "author": {
+    "name": "Sider AI",
+    "url": "https://sider.ai"
+  },
+  "homepage": "https://sider.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Outliner",
+    "shortDescription": "Create & Edit Outlines",
+    "longDescription": "Turn an idea or an uploaded file into a clean outline right inside ChatGPT.\nAsk Outliner to structure a pitch deck, map a product launch, or shape an essay; it instantly builds a logical hierarchy you can promote, trim, or delete — letting you think while it formats.\n\nHow to Use Outliner in ChatGPT\n\n1. Connect: Connect the Outliner app to ChatGPT.\n2. Trigger: Activate the app using one of these methods:\nType Commands: Simply type “@” then choose the Outliner app, or type “Outliner” (followed by a space) in the chat box.\nAction List: Select it directly from the Action List (Requires the Sider extension).\n3. Create: You are ready to go! Try asking specifically:\n· “Outline my climate-change research paper.”\n· “Break this product concept into a step-by-step workflow.”\n· “Summarize this file, then build a project-plan outline.”\n\nWhen you’re ready, copy the outline and keep refining it with your team.",
+    "developerName": "Sider AI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://sider.ai",
+    "privacyPolicyURL": "https://sider.ai/policies/privacy",
+    "termsOfServiceURL": "https://sider.ai/policies/terms",
+    "defaultPrompt": "@Outliner Deeply refine the outline content",
+    "screenshots": []
+  }
+}

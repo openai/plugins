@@ -1,0 +1,27 @@
+{
+  "name": "alpic",
+  "version": "1.0.0",
+  "description": "Monitor your MCP App & server",
+  "author": {
+    "name": "Alpic",
+    "url": "https://alpic.ai"
+  },
+  "homepage": "https://alpic.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Alpic",
+    "shortDescription": "Monitor your MCP App & server",
+    "longDescription": "Manage your projects, debug deployment, and check analytics for any MCP server you host with Alpic.",
+    "developerName": "Alpic",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://alpic.ai",
+    "privacyPolicyURL": "https://alpic.ai/legal/terms",
+    "termsOfServiceURL": "https://alpic.ai/legal/terms",
+    "defaultPrompt": "Show me my MCP Apps analytics",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ace-quiz-maker",
+  "version": "1.0.0",
+  "description": "Turn PDFs & Notes to Quizzes",
+  "author": {
+    "name": "Sider AI",
+    "url": "sider.ai"
+  },
+  "homepage": "sider.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Ace Quiz Maker",
+    "shortDescription": "Turn PDFs & Notes to Quizzes",
+    "longDescription": "Stop passive reading and start active learning. Turn your PDFs, docs, and notes into interactive practice tests with instant scoring and detailed explanations—helping you master new materials in seconds.\n- Upload & Generate: Simply upload your PDFs, notes, or guides. Quiz Maker analyzes your files to build custom tests instantly.\n- Instant Explanations: Get detailed explanations for every wrong answer immediately to correct misconceptions.\n- Scoring & Report: Track your progress with a final summary showing Score, Accuracy, and Time Spent.\n- Review & Retake: Quizzes are automatically saved, so you can review later or retake them anytime to master the material.\n\nPerfect Scenarios:\n-Exam Prep:Ace exams like Driver's License, SATs, or Certifications. Upload study guides for rigorous practice.\n-Study & Review: Paste notes or upload chapters to verify understanding of new materials in seconds.\n\nHow to Use in ChatGPT\n1. Connect App: Connect Ace Quiz Maker to ChatGPT.\n2. Trigger: Type “@Ace Quiz Maker ”.\nSample prompts:\n- Quiz from File: \"@Ace Quiz Maker Generate a 10-question multiple choice quiz from this uploaded PDF.\"\n- Topic Practice: \"@Ace Quiz Maker Create a practice test about 'Python Programming Basics'.\"",
+    "developerName": "Sider AI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "sider.ai",
+    "privacyPolicyURL": "https://sider.ai/policies/privacy",
+    "termsOfServiceURL": "https://sider.ai/policies/terms",
+    "defaultPrompt": "@Ace Quiz Maker Test me on calculus: derivatives and integrals.",
+    "screenshots": []
+  }
+}

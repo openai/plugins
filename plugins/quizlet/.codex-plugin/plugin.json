@@ -1,0 +1,27 @@
+{
+  "name": "quizlet",
+  "version": "2.0.0",
+  "description": "Study with flashcards",
+  "author": {
+    "name": "Quizlet",
+    "url": "https://quizlet.com"
+  },
+  "homepage": "https://quizlet.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Quizlet",
+    "shortDescription": "Study with flashcards",
+    "longDescription": "Using the Quizlet app in ChatGPT, you can instantly create flashcards from any prompt or file. Just ask for a set on any topic, upload your notes, or describe what you need and we'll handle the formatting and generation for you. No more copying, pasting, or switching tabs. Create, customize, and study all from one place. Whether you're prepping for an exam or building a set between classes, Quizlet in ChatGPT helps you skip the busywork and stay focused on learning.",
+    "developerName": "Quizlet",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://quizlet.com",
+    "privacyPolicyURL": "https://quizlet.com/privacy",
+    "termsOfServiceURL": "https://quizlet.com/tos",
+    "defaultPrompt": "@Quizlet Create flashcards on photosynthesis",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "cottages",
+  "version": "2.0.0",
+  "description": "Discover UK holiday cottages",
+  "author": {
+    "name": "Alpic",
+    "url": "https://www.cottages.com"
+  },
+  "homepage": "https://www.cottages.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Cottages",
+    "shortDescription": "Discover UK holiday cottages",
+    "longDescription": "There's a cottage with your name on it in our ChatGPT app! \n\nTell us what you're looking for in your own words and let us show you what's available from over 18,000 quality-checked cottages across the UK. Need more information or want to check other options? Ask away! With clear pricing, verified reviews, and stress free booking. we'll help find the right cottage for you across coast and countryside, from romantic hideaways to big family stays. Discover real availability, compare favourites, and book with confidence, all in one easy place.",
+    "developerName": "Alpic",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.cottages.com",
+    "privacyPolicyURL": "https://www.cottages.com/legal/privacy-notice",
+    "termsOfServiceURL": "https://www.cottages.com/legal/terms-of-use",
+    "defaultPrompt": "@Cottages Show me great cottages with hot tubs in Devon in August",
+    "screenshots": []
+  }
+}

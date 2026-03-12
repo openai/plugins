@@ -1,0 +1,27 @@
+{
+  "name": "granola",
+  "version": "1.0.0",
+  "description": "Add your meeting context",
+  "author": {
+    "name": "Granola",
+    "url": "www.granola.ai"
+  },
+  "homepage": "www.granola.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Granola",
+    "shortDescription": "Add your meeting context",
+    "longDescription": "Granola MCP connects your meeting history to ChatGPT so your assistant can pull real context from past conversations while you work.\n\nUse MCP when you're already working on something bigger:\n\n-   Writing PRDs or proposals: Pull customer feedback, stakeholder input, and decisions from relevant meetings directly into your draft\n    \n-   Building presentations or reports: Combine insights from multiple conversations with your other research and data\n    \n-   Coding with context: Give your AI the project background, requirements, and technical decisions discussed in planning meetings\n    \n-   Strategic analysis: Merge meeting insights with documents, data, and other sources for comprehensive analysis\n    \nHow it works:\n\nYour AI assistant can search your Granola meetings by topic, person, company, or timeframe - then cite specific conversations in its responses. No more switching tabs to find \"what the customer said\" or \"when we decided that.\"\n\nThe difference:\n\nInstead of copy-pasting meeting notes into prompts, your AI pulls exactly what it needs from your meeting history automatically. You stay focused on the work, not the research or context.",
+    "developerName": "Granola",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "www.granola.ai",
+    "privacyPolicyURL": "https://help.granola.ai/article/privacy-policy",
+    "termsOfServiceURL": "https://help.granola.ai/article/platform-terms-of-service",
+    "defaultPrompt": "summarize what happened during the Hearthbase deal between april and august",
+    "screenshots": []
+  }
+}

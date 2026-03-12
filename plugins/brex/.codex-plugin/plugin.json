@@ -1,0 +1,27 @@
+{
+  "name": "brex",
+  "version": "1.0.0",
+  "description": "Automate expense workflows",
+  "author": {
+    "name": "Brex Inc.",
+    "url": "https://brex.com"
+  },
+  "homepage": "https://brex.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Brex",
+    "shortDescription": "Automate expense workflows",
+    "longDescription": "Connect Brex to ChatGPT and review your company finances through natural conversation — at ChatGPT speed.\n\nFor finance teams: Analyze spend, detect anomalies, and run custom queries and reports instantly to accelerate decisions and do more with less.\n\nFor employees: See how much you can spend, ask policy questions, check reimbursement status, manage travel, and more right in ChatGPT.\n\nAccess is role-aware by default: employees see only what applies to them, while admins retain full visibility and control.",
+    "developerName": "Brex Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://brex.com",
+    "privacyPolicyURL": "https://www.brex.com/legal/privacy",
+    "termsOfServiceURL": "https://www.brex.com/legal/platform-agreement",
+    "defaultPrompt": "How much did I spend on Delta last year?",
+    "screenshots": []
+  }
+}

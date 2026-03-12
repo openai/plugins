@@ -1,0 +1,27 @@
+{
+  "name": "tonita",
+  "version": "1.0.0",
+  "description": "Apparel and accessories search",
+  "author": {
+    "name": "Tonita, Inc.",
+    "url": "https://tonita.co/"
+  },
+  "homepage": "https://tonita.co/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Tonita",
+    "shortDescription": "Apparel and accessories search",
+    "longDescription": "Tonita is a search engine for apparel and accessories, built to work with how you actually think about shopping. It brings together products from hundreds of stores, thousands of brands, and millions of items — all in one place, from clothing and footwear to cosmetics and everyday essentials.\n\nThere isn’t just one way to shop. Sometimes you’re focused on price or practicality; other times it’s about style, fit, materials, or longevity. What matters can shift with the situation — work, travel, special occasions, outdoor use, or everyday wear. Tonita brings these options together, making it easier for you to browse, compare, and make an informed choice.\n\nWithin ChatGPT, Tonita works best as part of a conversation. You can explore broad questions, half-formed ideas, or specific constraints naturally — whether that means thinking through what to buy for a particular occasion, learning about materials or categories, or narrowing in on a specific kind of product. ChatGPT helps shape your thoughts into useful searches, and Tonita surfaces a wide set of relevant results for you to browse, compare, and refine as the picture becomes clearer. (For more advanced tools like virtual try-on, saving favorites, and deeper browsing, Tonita can also be used directly at Tonita.co.)\n\nTonita is built to support the way you actually think about shopping — by priorities, context, and tradeoffs — rather than forcing everything into rigid categories. This includes the ability to search and explore across aspects like:\n\n• Budget and value: From fast fashion and sale finds to higher-end pieces, investment items, and everyday staples.\n• Style and aesthetic: Minimalist, maximalist, classic, streetwear, formal, playful, utilitarian, fashion-forward, or timeless — and combinations of these.\n• Trends and longevity: What’s popular right now, last season’s styles, and pieces meant to stay relevant beyond a trend cycle.\n• Use case and setting: Work, travel, special occasions, outdoor use, events, lounging, or everyday wear.\n• Fit, sizing, and comfort: Different body types and needs, including petite and extended sizing, relaxed or tailored fits, and comfort-first designs.\n• Materials and feel: Natural fibers, synthetics, performance fabrics, lightweight layers, structured pieces, or materials chosen for warmth, breathability, or softness.\n• Durability and care: Easy-care basics, machine-washable items, wrinkle-resistant pieces, or garments meant to be worn, repaired, and kept longer.\n• Sustainability priorities: Interest in materials, production methods, longevity, or brands taking different approaches to environmental impact.\n• Brand familiarity and discovery: Well-known labels alongside emerging brands, niche designers, and alternatives to the usual options.\n• Putting a full look together: Apparel, footwear, accessories, jewelry, and cosmetics, considered side by side rather than in isolation.",
+    "developerName": "Tonita, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://tonita.co/",
+    "privacyPolicyURL": "https://tonita.co/privacy-policy",
+    "termsOfServiceURL": "https://tonita.co/terms-of-service",
+    "defaultPrompt": "@Tonita women's fair isle sweaters under 150",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "angi",
+  "version": "1.0.0",
+  "description": "Find skilled home service pros",
+  "author": {
+    "name": "Angi Inc.",
+    "url": "https://www.angi.com"
+  },
+  "homepage": "https://www.angi.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Angi",
+    "shortDescription": "Find skilled home service pros",
+    "longDescription": "Find a skilled professional for all your home improvement needs with Angi. Angi gives you access to a nationwide network of home service professionals, with 30 years of experience in everything from remodeling and landscaping to cleaning and handyman projects. We have helped more than 150 million people love their homes since 1995.",
+    "developerName": "Angi Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.angi.com",
+    "privacyPolicyURL": "https://legal.angi.com/?#privacy-policy",
+    "termsOfServiceURL": "https://legal.angi.com/?#contract-skmav5s0l",
+    "defaultPrompt": "@Angi find me a plumber",
+    "screenshots": []
+  }
+}

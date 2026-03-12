@@ -1,0 +1,27 @@
+{
+  "name": "zola",
+  "version": "1.0.0",
+  "description": "Find wedding vendors",
+  "author": {
+    "name": "Zola, Inc.",
+    "url": "https://www.zola.com"
+  },
+  "homepage": "https://www.zola.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Zola",
+    "shortDescription": "Find wedding vendors",
+    "longDescription": "Ready to find your dream wedding team? Zola's got you.\n\nFinding the right vendors shouldn't feel like a scavenger hunt. With the Zola app, just describe what you're looking for—\"photographers in Brooklyn,\" \"affordable venues in LA,\" \"florists in Seattle under $5K\"—and browse personalized results in an interactive carousel, complete with photos, pricing, and reviews.\n\nWhether you're just getting started or narrowing down your final picks, Zola connects you to thousands of trusted wedding professionals across the country who fit your style, location, and budget.\n\nWe're Zola, the wedding company that's there for every day along the way.",
+    "developerName": "Zola, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.zola.com",
+    "privacyPolicyURL": "https://www.zola.com/privacy",
+    "termsOfServiceURL": "https://www.zola.com/terms",
+    "defaultPrompt": "@Zola find wedding venues in Brooklyn",
+    "screenshots": []
+  }
+}

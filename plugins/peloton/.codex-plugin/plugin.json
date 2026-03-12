@@ -1,0 +1,25 @@
+{
+  "name": "peloton",
+  "version": "1.0.0",
+  "description": "Discover Peloton workouts",
+  "author": {
+    "url": "https://www.onepeloton.com"
+  },
+  "homepage": "https://www.onepeloton.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Peloton",
+    "shortDescription": "Discover Peloton workouts",
+    "longDescription": "Discover Peloton workouts",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.onepeloton.com",
+    "privacyPolicyURL": "https://www.onepeloton.com/privacy-policy",
+    "termsOfServiceURL": "https://www.onepeloton.com/terms-of-service",
+    "defaultPrompt": "@Peloton show me details for 20 min Hip Hop Run with Matt Wilpers",
+    "screenshots": []
+  }
+}
