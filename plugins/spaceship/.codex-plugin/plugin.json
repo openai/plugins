@@ -1,0 +1,27 @@
+{
+  "name": "spaceship",
+  "version": "2.0.0",
+  "description": "Search domain availability",
+  "author": {
+    "name": "Spaceship, Inc",
+    "url": "https://www.spaceship.com"
+  },
+  "homepage": "https://www.spaceship.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Spaceship",
+    "shortDescription": "Search domain availability",
+    "longDescription": "Spaceship's app enables domain name availability checking and pricing lookup for single or multiple domains. Users can search for specific domains, request alternative suggestions when domains are unavailable, and compare pricing across different TLDs. The server returns real-time availability status and accurate pricing from Spaceship's Product Platform. Best used for domain discovery, bulk domain checks, and helping users find available alternatives.",
+    "developerName": "Spaceship, Inc",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.spaceship.com",
+    "privacyPolicyURL": "https://www.spaceship.com/legal/privacy-policy/",
+    "termsOfServiceURL": "https://www.spaceship.com/legal/universal-terms-of-service-agreement/",
+    "defaultPrompt": "Check next domains: mycompany.com, mysite.io, service.web, sales12345.com",
+    "screenshots": []
+  }
+}

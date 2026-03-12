@@ -1,0 +1,27 @@
+{
+  "name": "nesha",
+  "version": "1.0.0",
+  "description": "Discover B2B partners",
+  "author": {
+    "name": "Nesha, Inc.",
+    "url": "https://nesha.ai"
+  },
+  "homepage": "https://nesha.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Nesha",
+    "shortDescription": "Discover B2B partners",
+    "longDescription": "Nesha helps founders, GTM teams, and corporate development leaders find high-fit strategic partners using its Synergy Engine. Get ranked recommendations for co-sell, channel alliances, technology alliances, go-to-market collaborations, and licensing/white-label/OEM with clear “why this fits” insights and practical ways to collaborate. Click Request Intro to start a warm, double-opt-in introduction.",
+    "developerName": "Nesha, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://nesha.ai",
+    "privacyPolicyURL": "https://nesha.ai/privacy-policy",
+    "termsOfServiceURL": "https://nesha.ai/terms-of-service",
+    "defaultPrompt": "@Nesha find partners that could resell our product as part of their bundles",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "imovirtual",
+  "version": "1.0.0",
+  "description": "Find real estate in Portugal",
+  "author": {
+    "name": "OLX",
+    "url": "https://imovirtual.com"
+  },
+  "homepage": "https://imovirtual.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Imovirtual",
+    "shortDescription": "Find real estate in Portugal",
+    "longDescription": "Find your perfect property in Portugal using everyday language. Skip the complex filters and search forms. With Imovirtual, simply describe what you're looking for - \"3-bedroom house near good schools under €300k\" or \"modern apartment for rent downtown with parking.\"\n\nKey features:\n- Smart search \n- Describe your ideal property in natural language\n- Instant results. Get matched listings for both sales and rentals\n- Interactive refinement . Ask follow-up questions to narrow your search\n- Property insights. Get detailed information about any listing and compare\n\nWhether you're a first-time buyer or seasoned investor, Imovirtual makes property hunting as simple as having a conversation.",
+    "developerName": "OLX",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://imovirtual.com",
+    "privacyPolicyURL": "https://ajuda.imovirtual.com/imovirtualhelp/s/article/novo-poltica-de-privacidade-V20IMO?_gl=1*s6ft4l*_gcl_au*NzQzNDA0NzYuMTc2ODI5ODA4MA..*_ga*MjAwNzMwMTY5MS4xNzY4Mjk4MDgw*_ga_2GM5QEJ1H6*czE3NzAyMDk2NzkkbzIzJGcxJHQxNzcwMjA5OTI1JGozNyRsMCRoMA..",
+    "termsOfServiceURL": "https://ajuda.imovirtual.com/imovirtualhelp/s/article/termos-e-condies-para-clientes-individuais-V32IMO?_gl=1*1q8rb5p*_gcl_au*NzQzNDA0NzYuMTc2ODI5ODA4MA..*_ga*MjAwNzMwMTY5MS4xNzY4Mjk4MDgw*_ga_2GM5QEJ1H6*czE3NzAyMDk2NzkkbzIzJGcxJHQxNzcwMjA5ODM2JGoxNiRsMCRoMA..",
+    "defaultPrompt": "Show me 3 bedroom apartments in Lisbon below 1.500 eur",
+    "screenshots": []
+  }
+}

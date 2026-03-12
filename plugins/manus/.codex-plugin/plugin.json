@@ -1,0 +1,27 @@
+{
+  "name": "manus",
+  "version": "1.0.0",
+  "description": "Create slides, websites, video",
+  "author": {
+    "name": "Butterfly Effect Pte. Ltd.",
+    "url": "https://manus.im"
+  },
+  "homepage": "https://manus.im",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Manus",
+    "shortDescription": "Create slides, websites, video",
+    "longDescription": "Manus is an autonomous AI agent that you can delegate complex tasks to directly within ChatGPT. Instead of just generating content, Manus manages entire projects from a single instruction to a finished product. You can use it to create professional presentations by asking for 'slides' on a specific topic. Tell it to 'build a website' for your project, and it will deliver a functional, live site. Ask it to 'produce a video' for your marketing campaign, and you'll get a polished final cut. Or, have it 'conduct wide research' on any subject to receive a comprehensive report with synthesized findings and sources. Just tell Manus your goal, and it handles the rest.",
+    "developerName": "Butterfly Effect Pte. Ltd.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://manus.im",
+    "privacyPolicyURL": "https://manus.im/privacy",
+    "termsOfServiceURL": "https://manus.im/terms",
+    "defaultPrompt": "@Manus make a 5 pages slides about history of AI",
+    "screenshots": []
+  }
+}

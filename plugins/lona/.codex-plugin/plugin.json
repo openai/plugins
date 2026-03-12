@@ -1,0 +1,27 @@
+{
+  "name": "lona",
+  "version": "1.0.0",
+  "description": "Optimize trading strategies",
+  "author": {
+    "name": "Mindsight Ventures SL",
+    "url": "https://lona.agency/"
+  },
+  "homepage": "https://lona.agency/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Lona",
+    "shortDescription": "Optimize trading strategies",
+    "longDescription": "Lona helps you develop, backtest, and optimize algorithmic trading strategies using AI. Upload market data from exchanges like Binance, write trading strategies, and run comprehensive backtests to see how your strategies would have performed historically. View detailed performance reports with interactive charts showing entry/exit points, returns, and risk metrics.",
+    "developerName": "Mindsight Ventures SL",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://lona.agency/",
+    "privacyPolicyURL": "https://www.lona.agency/en/privacy",
+    "termsOfServiceURL": "https://www.lona.agency/en/terms",
+    "defaultPrompt": "What are my market data symbols?",
+    "screenshots": []
+  }
+}

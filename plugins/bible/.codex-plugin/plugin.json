@@ -1,0 +1,27 @@
+{
+  "name": "bible",
+  "version": "1.0.0",
+  "description": "Find and read Bible verses",
+  "author": {
+    "name": "Life.Church (YouVersion)",
+    "url": "https://youversion.com/"
+  },
+  "homepage": "https://youversion.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Bible",
+    "shortDescription": "Find and read Bible verses",
+    "longDescription": "YouVersion Bible App\nInstant access to Scripture, study tools, and spiritual growth resources, right in your conversation.\nThe YouVersion Bible App brings the world's most popular Bible platform directly into ChatGPT. Whether you're studying a passage, looking for encouragement, or exploring Scripture with friends, you get immediate access to thousands of Bible versions in hundreds of languages.\nWhat you can do:\n\nRead any Bible passage in your preferred translation (KJV, NIV, ESV, and 2,000+ more)\nCompare translations side-by-side to deepen your understanding\nFind reading plans tailored to topics like faith, anxiety, relationships, or spiritual growth\nListen to Scripture with audio Bibles in multiple languages\nSave and organize verses, notes, and prayers as you study\nShare insights with your faith community\n\nWhy people love it:\nNo more switching between apps or tabs to look up a verse. Get Scripture instantly in context—whether you're journaling, discussing theology, seeking comfort, or preparing a lesson. With 1.05 Billion downloads worldwide, YouVersion makes engaging with the Bible simple, accessible, and part of your daily rhythm.\nPerfect for personal devotions, group Bible studies, sermon prep, or anyone curious about exploring Scripture in a conversational way.",
+    "developerName": "Life.Church (YouVersion)",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://youversion.com/",
+    "privacyPolicyURL": "https://www.bible.com/privacy",
+    "termsOfServiceURL": "https://www.bible.com/terms",
+    "defaultPrompt": "Open the Bible to John 1",
+    "screenshots": []
+  }
+}

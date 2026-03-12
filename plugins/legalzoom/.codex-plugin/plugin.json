@@ -1,0 +1,27 @@
+{
+  "name": "legalzoom",
+  "version": "1.0.0",
+  "description": "Get legal info for business",
+  "author": {
+    "name": "LegalZoom.com, Inc.",
+    "url": "https://www.legalzoom.com"
+  },
+  "homepage": "https://www.legalzoom.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "LegalZoom",
+    "shortDescription": "Get legal info for business",
+    "longDescription": "LegalZoom provides reliable legal information to help you start and run your business. Use the app to ask questions, discover relevant LegalZoom resources, and receive guided next steps for common legal tasks.\n\nWhat you can do:\n1. Understand business formation basics (LLC vs. corporation, common filing steps)\n2. Get help navigating contracts (what to include, when to use which agreement)\n3. Learn about compliance and updates (registered agent, annual/biennial requirements, amendments)\n\nImportant: This app provides legal information and educational content—it does not provide legal advice and is not a substitute for a lawyer. If you need advice for your specific situation, consider speaking with an attorney.",
+    "developerName": "LegalZoom.com, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.legalzoom.com",
+    "privacyPolicyURL": "https://www.legalzoom.com/legal/general-terms/privacy-policy",
+    "termsOfServiceURL": "https://www.legalzoom.com/legal/general-terms/terms-of-use",
+    "defaultPrompt": "What is the difference between an LLC and a DBA?",
+    "screenshots": []
+  }
+}

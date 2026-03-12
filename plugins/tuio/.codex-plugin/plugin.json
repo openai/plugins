@@ -1,0 +1,27 @@
+{
+  "name": "tuio",
+  "version": "1.0.0",
+  "description": "Get smart on home insurance",
+  "author": {
+    "name": "Waniwani",
+    "url": "https://tuio.com"
+  },
+  "homepage": "https://tuio.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Tuio",
+    "shortDescription": "Get smart on home insurance",
+    "longDescription": "**Tuio Home Insurance Explorer** provides a transparent way to view and understand Tuio home insurance options directly within ChatGPT. This tool helps you visualize how a policy could be structured for a home, focusing on clarity and customization.\n\nUse this app to design a potential policy configuration and learn about the protection details without any pressure or commitment.\n\n**Key Features:**\n\n- **Coverage Deep Dive:** Receive detailed breakdowns of what is and can be included in a standard Tuio policy for a property type.\n- **Clarified Terms:** Ask for immediate definitions of insurance concepts (e.g., \"aesthetic restoration,\" \"deductibles\") to ensure you fully understand the terminology.\n- **Interactive Customization:** Understand policy parameters - such as liability limits or specific coverage inclusions - to see how they shape the insurance proposal.\n\n**How it works:**\nSimply describe a properties characteristics (e.g., \"A 90m2 apartment in a city center\"). The app will generate a corresponding non-binding policy outline. You can then ask the assistant about coverage, ask to modify details or explain specific clauses to see how the coverage adapts to your needs and what options are available. If you want to go further, the app will prompt you for the necessary details and prvide a price estimate.\n\nFor an official quote or policy issuance, users are directed to Tuio’s official buying channels.\n\n*Note: This tool is for informational and exploration purposes only, providing estimates based on the details shared in the chat. Official policy issuance requires verification through Tuio’s site.*",
+    "developerName": "Waniwani",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://tuio.com",
+    "privacyPolicyURL": "https://tuio.com/politica-de-privacidad",
+    "termsOfServiceURL": "https://tuio.com/terminos-legales",
+    "defaultPrompt": "What's the estimated price for insuring my 75m² rental apartment in Madrid?",
+    "screenshots": []
+  }
+}

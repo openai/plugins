@@ -1,0 +1,27 @@
+{
+  "name": "lseg",
+  "version": "1.0.0",
+  "description": "Data and analytics",
+  "author": {
+    "name": "LSEG Engineering",
+    "url": "https://www.lseg.com"
+  },
+  "homepage": "https://www.lseg.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "LSEG",
+    "shortDescription": "Data and analytics",
+    "longDescription": "The LSEG connector provides real-time access to LSEG's comprehensive financial market data ecosystem, spanning across asset classes and domains. It enables seamless integration of institutional-grade market data, analytics and valuation tools directly into conversational AI workflows, allowing users to access deep market insights, perform complex calculations and analyse financial instruments through natural language interactions.",
+    "developerName": "LSEG Engineering",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.lseg.com",
+    "privacyPolicyURL": "https://www.lseg.com/en/policies/privacy-statement",
+    "termsOfServiceURL": "https://www.lseg.com",
+    "defaultPrompt": "What is the spot price for the top 10 cross currencies traded on forex exch",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "app-6944c5105438",
+  "version": "2.0.0",
+  "description": "배달할 때마다 포인트 적립",
+  "author": {
+    "name": "주식회사 위대한상상",
+    "url": "https://www.wesang.com"
+  },
+  "homepage": "https://www.wesang.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "요기요",
+    "shortDescription": "배달할 때마다 포인트 적립",
+    "longDescription": "Ordering food just got easier with Yogiyo, now integrated with ChatGPT.\nNow, connect with Yogiyo through ChatGPT, allowing you to receive natural food recommendations and easily place orders, just like in a conversation.\nAsk about your mood or what menu best suits your situation, and ChatGPT will recommend dishes that suit your tastes. You can also discover popular local restaurants and a variety of menus right within the conversation.\nWithout complex searches or multiple screens, you can quickly and easily select your desired food and place your Yogiyo delivery order.\nExperience a faster, smarter, and more convenient delivery ordering experience through ChatGPT and Yogiyo.",
+    "developerName": "주식회사 위대한상상",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.wesang.com",
+    "privacyPolicyURL": "https://policy.yogiyo.co.kr/#tab-2",
+    "termsOfServiceURL": "https://policy.yogiyo.co.kr/#tab-1",
+    "defaultPrompt": "강남역 근처 포장 가능한 맛집 지도로 보여줘",
+    "screenshots": []
+  }
+}

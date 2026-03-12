@@ -1,0 +1,27 @@
+{
+  "name": "otter-ai",
+  "version": "1.0.0",
+  "description": "Search meetings from Otter.ai",
+  "author": {
+    "name": "Otter.ai",
+    "url": "https://otter.ai"
+  },
+  "homepage": "https://otter.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Otter.ai",
+    "shortDescription": "Search meetings from Otter.ai",
+    "longDescription": "The Otter.ai MCP server connects ChatGPT to your meeting intelligence, enabling search and retrieval of transcripts, summaries, action items, and meeting metadata directly within your workflow. Search meetings by keyword, date range, attendee, folder, or channel, then fetch full transcripts with speaker attribution. Use it to prepare for meetings by reviewing past discussions, extract decisions from historical conversations, or synthesize insights across your meeting archive. Supports both personal and enterprise Otter.ai workspaces.",
+    "developerName": "Otter.ai",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://otter.ai",
+    "privacyPolicyURL": "https://otter.ai/privacy-policy",
+    "termsOfServiceURL": "https://otter.ai/terms-of-service",
+    "defaultPrompt": "List my recent meetings",
+    "screenshots": []
+  }
+}

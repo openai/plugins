@@ -1,0 +1,18 @@
+{
+  "name": "openai-certified",
+  "version": "1.0.0",
+  "description": "Learn practical AI skills inside ChatGPT and earn OpenAI Certified credentials.",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "OpenAI Certified",
+    "shortDescription": "Learn practical AI skills inside ChatGPT and earn OpenAI Certified credentials.",
+    "longDescription": "Learn practical AI skills inside ChatGPT and earn OpenAI Certified credentials.",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Use OpenAI Certified to help with this task.",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "zumper",
+  "version": "1.0.0",
+  "description": "Find your perfect rental",
+  "author": {
+    "name": "Zumper Inc",
+    "url": "https://www.zumper.com"
+  },
+  "homepage": "https://www.zumper.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Zumper",
+    "shortDescription": "Find your perfect rental",
+    "longDescription": "Discover your ideal rental home across the US and Canada with Zumper. Tell us what matters to you - whether it's in-unit laundry, pet-friendly policies, or parking - and we'll surface places that match your specific needs. Browse apartments, houses, and condos with detailed listings, then compare local rent data to ensure you're getting fair market value. From studio apartments in downtown neighborhoods to family homes in the suburbs, Zumper helps you search smarter and move in with confidence.",
+    "developerName": "Zumper Inc",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.zumper.com",
+    "privacyPolicyURL": "https://www.zumper.com/privacy-policy",
+    "termsOfServiceURL": "https://www.zumper.com/terms-of-use",
+    "defaultPrompt": "We need a 3 bed house in LA. We're bringing a dog and need a garden.",
+    "screenshots": []
+  }
+}

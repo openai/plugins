@@ -1,0 +1,18 @@
+{
+  "name": "function-health",
+  "version": "v1.0.0",
+  "description": "View lab test results, ask health questions, get nutrition plans",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Function Health",
+    "shortDescription": "View lab test results, ask health questions, get nutrition plans",
+    "longDescription": "View lab test results, ask health questions, get nutrition plans",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "@Function how is my overall health?",
+    "screenshots": []
+  }
+}

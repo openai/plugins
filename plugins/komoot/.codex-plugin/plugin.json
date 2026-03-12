@@ -1,0 +1,27 @@
+{
+  "name": "komoot",
+  "version": "1.0.0",
+  "description": "Find outdoor sport routes",
+  "author": {
+    "name": "komoot GmbH",
+    "url": "https://www.komoot.com"
+  },
+  "homepage": "https://www.komoot.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "komoot",
+    "shortDescription": "Find outdoor sport routes",
+    "longDescription": "Komoot is a leading outdoor adventure and route-planning platform built to help people plan and experience activities beyond the everyday route. It supports a wide range of sports—from all types of cycling to jogging, hiking, and more—and offers access to around 7 million routes worldwide. Along these routes, users can discover nearly 5 million highlights: community-curated points of interest that make each adventure more meaningful. Both routes and highlights include images, ratings, and comments shared by a community of 50 million people. With komoot, discovering new places and shaping your own outdoor adventures comes naturally.",
+    "developerName": "komoot GmbH",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.komoot.com",
+    "privacyPolicyURL": "https://www.komoot.com/privacy",
+    "termsOfServiceURL": "https://www.komoot.com/terms-of-service",
+    "defaultPrompt": "@komoot what are the best routes to see the Tre Cime di Lavaredo?",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "alpaca",
+  "version": "1.0.0",
+  "description": "Market data: stocks & crypto",
+  "author": {
+    "url": "https://alpaca.markets/"
+  },
+  "homepage": "https://alpaca.markets/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Alpaca",
+    "shortDescription": "Market data: stocks & crypto",
+    "longDescription": "Market data: stocks & crypto",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://alpaca.markets/",
+    "privacyPolicyURL": "https://s3.amazonaws.com/files.alpaca.markets/disclosures/PrivacyPolicy.pdf",
+    "defaultPrompt": "Use Alpaca to help with this task.",
+    "screenshots": []
+  }
+}
