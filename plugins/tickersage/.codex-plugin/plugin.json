@@ -21,7 +21,7 @@
     "websiteURL": "https://toolpipe.ai/ticker-sage",
     "privacyPolicyURL": "https://toolpipe.ai/privacy-policy",
     "termsOfServiceURL": "https://toolpipe.ai/terms-of-service",
-    "defaultPrompt": "@TickerSage Check BTC's real-time price",
+    "defaultPrompt": "real-time price",
     "screenshots": []
   }
 }

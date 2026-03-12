@@ -21,7 +21,7 @@
     "websiteURL": "https://www.cafe24.com",
     "privacyPolicyURL": "https://www.cafe24.com/agreement/privacy-policy.html",
     "termsOfServiceURL": "https://m-img.cafe24.com/images/terms/app/chatGPT_cafe24.html",
-    "defaultPrompt": "@Cafe24 Find men’s casual leather jackets for fall",
+    "defaultPrompt": "men's casual leather jackets for fall",
     "screenshots": []
   }
 }

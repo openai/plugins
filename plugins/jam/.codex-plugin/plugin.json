@@ -19,7 +19,7 @@
     "websiteURL": "https://jam.dev",
     "privacyPolicyURL": "https://jam.dev/privacy",
     "termsOfServiceURL": "https://jam.dev/terms-of-service",
-    "defaultPrompt": "@Jam what does this bug report show?",
+    "defaultPrompt": "what does this bug report show",
     "screenshots": []
   }
 }

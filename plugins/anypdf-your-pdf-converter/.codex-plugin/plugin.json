@@ -21,7 +21,7 @@
     "websiteURL": "https://appnation.co",
     "privacyPolicyURL": "https://pdfmaker.to/privacy",
     "termsOfServiceURL": "https://www.appnation.co/terms",
-    "defaultPrompt": "@AnyPDF - Your PDF Converter Convert this file to PDF",
+    "defaultPrompt": "- Your PDF Converter Convert this file to PDF",
     "screenshots": []
   }
 }

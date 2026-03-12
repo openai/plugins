@@ -21,7 +21,7 @@
     "websiteURL": "https://www.beautiful.ai",
     "privacyPolicyURL": "https://www.beautiful.ai/privacy-policy",
     "termsOfServiceURL": "https://www.beautiful.ai/terms-of-service",
-    "defaultPrompt": "@Beautiful.ai help me create a go to market strategy presentation.",
+    "defaultPrompt": "ai create go to market strategy presentation",
     "screenshots": []
   }
 }

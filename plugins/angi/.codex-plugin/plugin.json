@@ -21,7 +21,7 @@
     "websiteURL": "https://www.angi.com",
     "privacyPolicyURL": "https://legal.angi.com/?#privacy-policy",
     "termsOfServiceURL": "https://legal.angi.com/?#contract-skmav5s0l",
-    "defaultPrompt": "@Angi find me a plumber",
+    "defaultPrompt": "find me a plumber",
     "screenshots": []
   }
 }

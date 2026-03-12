@@ -21,7 +21,7 @@
     "websiteURL": "https://www.semrush.com/",
     "privacyPolicyURL": "https://www.semrush.com/company/legal/privacy-policy/",
     "termsOfServiceURL": "https://www.semrush.com/company/legal/terms-of-service/",
-    "defaultPrompt": "@Semrush analyze the traffic sources breakdown for nike.com",
+    "defaultPrompt": "analyze traffic sources breakdown for nike.com",
     "screenshots": []
   }
 }

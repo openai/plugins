@@ -28,7 +28,11 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
-    "defaultPrompt": "Starter prompt for trying a plugin",
+    "defaultPrompt": [
+      "Summarize my inbox and draft replies for me.",
+      "Find open bugs and turn them into Linear tickets.",
+      "Review today's meetings and flag scheduling gaps."
+    ],
     "brandColor": "#3B82F6",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/logo.png",
@@ -73,7 +77,10 @@
 - `websiteURL` (`string`): Public website for the plugin.
 - `privacyPolicyURL` (`string`): Privacy policy URL.
 - `termsOfServiceURL` (`string`): Terms of service URL.
-- `defaultPrompt` (`string`): Starter prompt shown in composer/UX context.
+- `defaultPrompt` (`array` of `string`): Starter prompts shown in composer/UX context.
+  - Include at most 3 strings. Entries after the first 3 are ignored and will not be included.
+  - Each string is capped at 128 characters. Longer entries are truncated.
+  - Prefer short starter prompts around 50 characters so they scan well in the UI.
 - `brandColor` (`string`): Theme color for the plugin card.
 - `composerIcon` (`string`): Path to icon asset.
 - `logo` (`string`): Path to logo asset.

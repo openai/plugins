@@ -21,7 +21,7 @@
     "websiteURL": "https://www.scite.ai",
     "privacyPolicyURL": "https://scite.ai/policy",
     "termsOfServiceURL": "https://scite.ai/terms",
-    "defaultPrompt": "What's the latest research on impact  of adolescent screen time?",
+    "defaultPrompt": "What's latest research on impact of adolescent screen time",
     "screenshots": []
   }
 }

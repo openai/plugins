@@ -21,7 +21,7 @@
     "websiteURL": "https://otter.ai",
     "privacyPolicyURL": "https://otter.ai/privacy-policy",
     "termsOfServiceURL": "https://otter.ai/terms-of-service",
-    "defaultPrompt": "List my recent meetings",
+    "defaultPrompt": "List recent meetings",
     "screenshots": []
   }
 }

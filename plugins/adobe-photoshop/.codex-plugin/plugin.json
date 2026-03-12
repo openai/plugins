@@ -19,7 +19,7 @@
     "websiteURL": "https://www.adobe.com/products/photoshop/online.html",
     "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
     "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
-    "defaultPrompt": "@Adobe Photoshop blur the background",
+    "defaultPrompt": "blur the background",
     "screenshots": []
   }
 }

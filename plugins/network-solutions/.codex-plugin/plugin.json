@@ -21,7 +21,7 @@
     "websiteURL": "https://www.networksolutions.com/",
     "privacyPolicyURL": "https://www.newfold.com/privacy-center",
     "termsOfServiceURL": "https://legal.newfold.com/TermsOfUse.pdf",
-    "defaultPrompt": "Searching for a specific domain",
+    "defaultPrompt": "Searching for specific domain",
     "screenshots": []
   }
 }

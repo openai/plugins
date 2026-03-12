@@ -19,7 +19,7 @@
     "websiteURL": "https://music.apple.com/",
     "privacyPolicyURL": "https://www.apple.com/legal/privacy/data/en/apple-music/",
     "termsOfServiceURL": "https://www.apple.com/legal/internet-services/itunes/",
-    "defaultPrompt": "@Apple Music make me a playlist with today's latest hits",
+    "defaultPrompt": "make me a playlist with today's latest hits",
     "screenshots": []
   }
 }

@@ -21,7 +21,7 @@
     "websiteURL": "https://www.namecheap.com",
     "privacyPolicyURL": "https://www.namecheap.com/legal/general/privacy-policy",
     "termsOfServiceURL": "https://www.namecheap.com/legal/universal/universal-tos",
-    "defaultPrompt": "Please check mysite.co, my.io, my.net and product33.io for availability.",
+    "defaultPrompt": "check mysite.co, .io, .net and product33.io",
     "screenshots": []
   }
 }

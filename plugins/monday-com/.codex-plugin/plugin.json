@@ -18,7 +18,7 @@
     "capabilities": [],
     "websiteURL": "https://monday.com",
     "privacyPolicyURL": "https://monday.com/l/privacy/privacy-policy/",
-    "defaultPrompt": "@Monday.com what's the marketing campaign status?",
+    "defaultPrompt": "com what's the marketing campaign status",
     "screenshots": []
   }
 }

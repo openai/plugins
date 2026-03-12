@@ -18,7 +18,7 @@
     "capabilities": [],
     "websiteURL": "https://fireflies.ai",
     "privacyPolicyURL": "https://fireflies.ai/privacy",
-    "defaultPrompt": "@Fireflies what’s our conversation history with Acme so far?",
+    "defaultPrompt": "what's our conversation history with Acme so",
     "screenshots": []
   }
 }

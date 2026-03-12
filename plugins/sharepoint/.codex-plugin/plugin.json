@@ -30,7 +30,7 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": "Use SharePoint context to summarize a site, page, or file, identify the owners and status, or plan the right content update.",
+    "defaultPrompt": "summarize site, page, or file, identify owners and status",
     "brandColor": "#038387",
     "composerIcon": "./assets/sharepoint-small.svg",
     "logo": "./assets/sharepoint.svg",

@@ -19,7 +19,7 @@
     "websiteURL": "https://quickbooks.intuit.com/",
     "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
     "termsOfServiceURL": "https://www.intuit.com/legal/terms/en-us/quickbooks/online/",
-    "defaultPrompt": "@Intuit QuickBooks compare my profit to the profits of top businesses in my area",
+    "defaultPrompt": "compare profit to profits of top",
     "screenshots": []
   }
 }

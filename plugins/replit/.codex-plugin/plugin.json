@@ -19,7 +19,7 @@
     "websiteURL": "https://www.replit.com",
     "privacyPolicyURL": "https://replit.com/privacy-policy",
     "termsOfServiceURL": "https://replit.com/terms-of-service",
-    "defaultPrompt": "@Replit i need a website for my bookstore",
+    "defaultPrompt": "i need a website for my bookstore",
     "screenshots": []
   }
 }

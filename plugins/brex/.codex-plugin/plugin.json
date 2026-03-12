@@ -21,7 +21,7 @@
     "websiteURL": "https://brex.com",
     "privacyPolicyURL": "https://www.brex.com/legal/privacy",
     "termsOfServiceURL": "https://www.brex.com/legal/platform-agreement",
-    "defaultPrompt": "How much did I spend on Delta last year?",
+    "defaultPrompt": "How much did I spend on Delta last year",
     "screenshots": []
   }
 }

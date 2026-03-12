@@ -19,7 +19,7 @@
     "websiteURL": "https://www.tripadvisor.com/",
     "privacyPolicyURL": "https://tripadvisor.mediaroom.com/US-privacy-policy-2019",
     "termsOfServiceURL": "https://tripadvisor.mediaroom.com/us-terms-of-use",
-    "defaultPrompt": "@Tripadvisor find me a hotel near the Empire State Building",
+    "defaultPrompt": "find hotel near Empire State Building",
     "screenshots": []
   }
 }

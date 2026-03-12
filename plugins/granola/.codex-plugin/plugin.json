@@ -21,7 +21,7 @@
     "websiteURL": "www.granola.ai",
     "privacyPolicyURL": "https://help.granola.ai/article/privacy-policy",
     "termsOfServiceURL": "https://help.granola.ai/article/platform-terms-of-service",
-    "defaultPrompt": "summarize what happened during the Hearthbase deal between april and august",
+    "defaultPrompt": "summarize what happened during Hearthbase deal between",
     "screenshots": []
   }
 }

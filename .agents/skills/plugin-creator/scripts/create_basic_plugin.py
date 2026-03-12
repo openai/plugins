@@ -67,7 +67,11 @@ def build_plugin_json(plugin_name: str) -> dict:
             "websiteURL": "[TODO: https://openai.com/]",
             "privacyPolicyURL": "[TODO: https://openai.com/policies/row-privacy-policy/]",
             "termsOfServiceURL": "[TODO: https://openai.com/policies/row-terms-of-use/]",
-            "defaultPrompt": "[TODO: Starter prompt for trying a plugin]",
+            "defaultPrompt": [
+                "[TODO: Summarize my inbox and draft replies for me.]",
+                "[TODO: Find open bugs and turn them into tickets.]",
+                "[TODO: Review today's meetings and flag gaps.]",
+            ],
             "brandColor": "[TODO: #3B82F6]",
             "composerIcon": "[TODO: ./assets/icon.png]",
             "logo": "[TODO: ./assets/logo.png]",

@@ -19,7 +19,7 @@
     "websiteURL": "https://www.zillow.com",
     "privacyPolicyURL": "https://www.zillowgroup.com/zg-privacy-policy/",
     "termsOfServiceURL": "https://www.zillow.com/corp/Terms.htm",
-    "defaultPrompt": "@Zillow show me homes for sale in the Kansas area",
+    "defaultPrompt": "show me homes for sale in the Kansas area",
     "screenshots": []
   }
 }

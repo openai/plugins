@@ -21,7 +21,7 @@
     "websiteURL": "https://www.zumba.com",
     "privacyPolicyURL": "https://www.zumba.com/en-US/support/policy/privacy",
     "termsOfServiceURL": "https://www.zumba.com/en-US/support/terms-of-use",
-    "defaultPrompt": "Are there any Zumba classes in New York tomorrow?",
+    "defaultPrompt": "Are there any Zumba classes in New York tomorrow",
     "screenshots": []
   }
 }

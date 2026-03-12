@@ -21,7 +21,7 @@
     "websiteURL": "https://preply.com/",
     "privacyPolicyURL": "https://termsofuse.preply.com/terms_of_use/en_PrivacyPolicy.pdf",
     "termsOfServiceURL": "https://termsofuse.preply.com/terms_of_use/en_PrivacyPolicy.pdf",
-    "defaultPrompt": "Find me an English tutor below $30, from the United States.",
+    "defaultPrompt": "Find me an English tutor below $30, from the United States",
     "screenshots": []
   }
 }

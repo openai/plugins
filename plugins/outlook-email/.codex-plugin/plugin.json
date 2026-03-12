@@ -30,7 +30,7 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": "Use Outlook Email context to triage my inbox, summarize a thread, or draft the reply or forward I should send next.",
+    "defaultPrompt": "triage inbox, summarize thread, or draft reply or forward",
     "brandColor": "#0078D4",
     "composerIcon": "./assets/outlook-email-small.svg",
     "logo": "./assets/outlook-email.svg",

@@ -21,7 +21,7 @@
     "websiteURL": "https://www.komoot.com",
     "privacyPolicyURL": "https://www.komoot.com/privacy",
     "termsOfServiceURL": "https://www.komoot.com/terms-of-service",
-    "defaultPrompt": "@komoot what are the best routes to see the Tre Cime di Lavaredo?",
+    "defaultPrompt": "top best routes to see Tre Cime di Lavaredo",
     "screenshots": []
   }
 }

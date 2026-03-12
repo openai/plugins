@@ -21,7 +21,7 @@
     "websiteURL": "https://invideo.io",
     "privacyPolicyURL": "https://invideo.io/privacy-policy/",
     "termsOfServiceURL": "https://invideo.io/terms-and-conditions/",
-    "defaultPrompt": "Make a 5 minute video about why we celebrate Christmas.",
+    "defaultPrompt": "Make a 5 minute video about why we celebrate Christmas",
     "screenshots": []
   }
 }

@@ -21,7 +21,7 @@
     "websiteURL": "https://beerfordriving.com/",
     "privacyPolicyURL": "https://friedpicklesllc.com/privacy",
     "termsOfServiceURL": "https://friedpicklesllc.com/terms",
-    "defaultPrompt": "Where can I buy non-alcoholic beer in Manhattan?",
+    "defaultPrompt": "Where can I buy non-alcoholic beer in Manhattan",
     "screenshots": []
   }
 }

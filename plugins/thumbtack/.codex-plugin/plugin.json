@@ -19,7 +19,7 @@
     "websiteURL": "https://www.thumbtack.com/",
     "privacyPolicyURL": "https://www.thumbtack.com/privacy/",
     "termsOfServiceURL": "https://www.thumbtack.com/terms/",
-    "defaultPrompt": "@Thumbtack find me a plumber",
+    "defaultPrompt": "find plumber",
     "screenshots": []
   }
 }
