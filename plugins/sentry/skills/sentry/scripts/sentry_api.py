@@ -112,6 +112,11 @@ def require_org_project(org, project):
         )
 
 
+def require_org(org):
+    if org == DEFAULT_ORG:
+        raise RuntimeError("Missing org. Set SENTRY_ORG or pass --org.")
+
+
 def handle_list_issues(args, token, base_url):
     require_org_project(args.org, args.project)
     limit = min(args.limit, MAX_LIMIT)
@@ -128,16 +133,25 @@ def handle_list_issues(args, token, base_url):
 
 
 def handle_issue_detail(args, token, base_url):
-    path = f"/api/0/issues/{args.issue_id}/"
+    require_org(args.org)
+    path = f"/api/0/organizations/{args.org}/issues/{args.issue_id}/"
     url = build_url(base_url, path)
     data, _ = request_json(url, token)
     return data
 
 
 def handle_issue_events(args, token, base_url):
+    require_org(args.org)
     limit = min(args.limit, MAX_LIMIT)
-    path = f"/api/0/issues/{args.issue_id}/events/"
-    events = paged_get(base_url, path, {}, token, limit)
+    params = {
+        "statsPeriod": args.time_range,
+        "environment": args.environment,
+    }
+    if args.query:
+        params["query"] = args.query
+
+    path = f"/api/0/organizations/{args.org}/issues/{args.issue_id}/events/"
+    events = paged_get(base_url, path, params, token, limit)
     return events
 
 
@@ -190,6 +204,9 @@ def build_parser():
 
     issue_events = subparsers.add_parser("issue-events", help="Issue events")
     issue_events.add_argument("issue_id")
+    issue_events.add_argument("--time-range", default="24h")
+    issue_events.add_argument("--environment", default="prod")
+    issue_events.add_argument("--query", default="")
     issue_events.add_argument("--limit", type=int, default=20)
 
     event_detail = subparsers.add_parser("event-detail", help="Event detail")

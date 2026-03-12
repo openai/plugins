@@ -38,9 +38,9 @@ User-scoped skills install under `$CODEX_HOME/skills` (default: `~/.codex/skills
 
 ```bash
 python3 "$SENTRY_API" \
-  list-issues \
   --org {your-org} \
   --project {your-project} \
+  list-issues \
   --environment prod \
   --time-range 24h \
   --limit 20 \
@@ -51,9 +51,9 @@ python3 "$SENTRY_API" \
 
 ```bash
 python3 "$SENTRY_API" \
-  list-issues \
   --org {your-org} \
   --project {your-project} \
+  list-issues \
   --query "ABC-123" \
   --limit 1
 ```
@@ -64,6 +64,7 @@ Use the returned `id` for issue detail or events.
 
 ```bash
 python3 "$SENTRY_API" \
+  --org {your-org} \
   issue-detail \
   1234567890
 ```
@@ -72,8 +73,11 @@ python3 "$SENTRY_API" \
 
 ```bash
 python3 "$SENTRY_API" \
+  --org {your-org} \
   issue-events \
   1234567890 \
+  --environment prod \
+  --time-range 24h \
   --limit 20
 ```
 
@@ -81,9 +85,9 @@ python3 "$SENTRY_API" \
 
 ```bash
 python3 "$SENTRY_API" \
-  event-detail \
   --org {your-org} \
   --project {your-project} \
+  event-detail \
   abcdef1234567890
 ```
 
@@ -92,15 +96,16 @@ python3 "$SENTRY_API" \
 Always use these endpoints (GET only):
 
 - List issues: `/api/0/projects/{org_slug}/{project_slug}/issues/`
-- Issue detail: `/api/0/issues/{issue_id}/`
-- Events for issue: `/api/0/issues/{issue_id}/events/`
+- Issue detail: `/api/0/organizations/{org_slug}/issues/{issue_id}/`
+- Events for issue: `/api/0/organizations/{org_slug}/issues/{issue_id}/events/`
 - Event detail: `/api/0/projects/{org_slug}/{project_slug}/events/{event_id}/`
 
 ## Inputs and defaults
 
-- `org_slug`, `project_slug`: default to `{your-org}`/`{your-project}` (avoid non-prod orgs).
-- `time_range`: default `24h` (pass as `statsPeriod`).
-- `environment`: default `prod`.
+- `org_slug`: default to `{your-org}` (required for issue detail, issue events, and event detail).
+- `project_slug`: default to `{your-project}` (required for list issues and event detail).
+- `time_range`: default `24h` (pass as `statsPeriod` for list issues and issue events).
+- `environment`: default `prod` (used by list issues and issue events).
 - `limit`: default 20, max 50 (paginate until limit reached).
 - `search_query`: optional `query` parameter.
 - `issue_short_id`: resolve via list-issues query first.
