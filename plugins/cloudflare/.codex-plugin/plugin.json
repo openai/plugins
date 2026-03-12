@@ -1,7 +1,7 @@
 {
   "name": "cloudflare",
   "version": "0.1.0",
-  "description": "Plan Cloudflare platform choices and deployment workflows from Codex.",
+  "description": "Use Cloudflare platform skills for deployment, infrastructure, and analytics workflows.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,13 +13,16 @@
   "keywords": [
     "cloudflare",
     "deployment",
-    "edge"
+    "edge",
+    "analytics",
+    "wrangler",
+    "agents-sdk"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Cloudflare",
-    "shortDescription": "Plan and run Cloudflare deployments",
-    "longDescription": "Use Cloudflare skills to choose the right product, verify setup, and prepare or execute deploy workflows across Workers, Pages, storage, AI, networking, and security services.",
+    "shortDescription": "Use Cloudflare platform skills",
+    "longDescription": "Use Cloudflare skills to choose the right product, verify setup, and work across Workers, Pages, Wrangler, Agents SDK, storage, AI, networking, security, and analytics services.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [
@@ -30,7 +33,7 @@
     "privacyPolicyURL": "https://www.cloudflare.com/privacypolicy/",
     "termsOfServiceURL": "https://www.cloudflare.com/website-terms/",
     "defaultPrompt": [
-      "Use Cloudflare skills to choose the right product and plan a deployment"
+      "Use Cloudflare context to choose the right product, verify setup, or plan the right deployment, data, or analytics workflow without guessing infrastructure."
     ],
     "composerIcon": "./assets/cloudflare-small.svg",
     "logo": "./assets/cloudflare.png",

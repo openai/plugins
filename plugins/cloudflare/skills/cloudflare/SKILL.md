@@ -1,28 +1,32 @@
 ---
-name: cloudflare-deploy
-description: Deploy applications and infrastructure to Cloudflare using Workers, Pages, and related platform services. Use when the user asks to deploy, host, publish, or set up a project on Cloudflare.
+name: cloudflare
+description: Comprehensive Cloudflare platform skill covering Workers, Pages, storage (KV, D1, R2), AI (Workers AI, Vectorize, Agents SDK), networking (Tunnel, Spectrum), security (WAF, DDoS), and infrastructure-as-code (Terraform, Pulumi). Use for any Cloudflare development task. Biases towards retrieval from Cloudflare docs over pre-trained knowledge.
+references:
+  - workers
+  - pages
+  - d1
+  - durable-objects
+  - workers-ai
 ---
 
-# Cloudflare Deploy
+# Cloudflare Platform Skill
 
 Consolidated skill for building on the Cloudflare platform. Use decision trees below to find the right product, then load detailed references.
 
-## Prerequisites
+Your knowledge of Cloudflare APIs, types, limits, and pricing may be outdated. **Prefer retrieval over pre-training** — the references in this skill are starting points, not source of truth.
 
-- When sandboxing blocks the deployment network calls, rerun with `sandbox_permissions=require_escalated`.
-- The deployment might take a few minutes. Use appropriate timeout values.
+## Retrieval Sources
 
-## Authentication (Required Before Deploy)
+Fetch the **latest** information before citing specific numbers, API signatures, or configuration options. Do not rely on baked-in knowledge or these reference files alone.
 
-Verify auth before `wrangler deploy`, `wrangler pages deploy`, or `npm run deploy`:
+| Source | How to retrieve | Use for |
+|--------|----------------|---------|
+| Cloudflare docs | `cloudflare-docs` search tool or `https://developers.cloudflare.com/` | Limits, pricing, API reference, compatibility dates/flags |
+| Workers types | `npm pack @cloudflare/workers-types` or check `node_modules` | Type signatures, binding shapes, handler types |
+| Wrangler config schema | `node_modules/wrangler/config-schema.json` | Config fields, binding shapes, allowed values |
+| Product changelogs | `https://developers.cloudflare.com/changelog/` | Recent changes to limits, features, deprecations |
 
-```bash
-npx wrangler whoami    # Shows account if authenticated
-```
-
-Not authenticated? → `references/wrangler/auth.md`
-- Interactive/local: `wrangler login` (one-time OAuth)
-- CI/CD: Set `CLOUDFLARE_API_TOKEN` env var
+When a reference file and the docs disagree, **trust the docs**. This is especially important for: numeric limits, pricing tiers, type signatures, and configuration options.
 
 ## Quick Decision Trees
 
@@ -101,6 +105,17 @@ Need media?
 ├─ Video streaming/encoding → stream/
 ├─ Browser automation/screenshots → browser-rendering/
 └─ Third-party script management → zaraz/
+```
+
+### "I need analytics/metrics data"
+
+```
+Need analytics?
+├─ Query across all Cloudflare products (HTTP, Workers, DNS, etc.) → graphql-api/
+├─ Custom high-cardinality metrics from Workers → analytics-engine/
+├─ Client-side (RUM) performance data → web-analytics/
+├─ Workers Logs and real-time debugging → observability/
+└─ Raw logs (Logpush to external tools) → Cloudflare docs
 ```
 
 ### "I need infrastructure-as-code"
@@ -189,6 +204,7 @@ Need IaC? → pulumi/ (Pulumi), terraform/ (Terraform), or api/ (REST API)
 | Miniflare | `references/miniflare/` |
 | C3 | `references/c3/` |
 | Observability | `references/observability/` |
+| GraphQL Analytics API | `references/graphql-api/` |
 | Analytics Engine | `references/analytics-engine/` |
 | Web Analytics | `references/web-analytics/` |
 | Sandbox | `references/sandbox/` |
@@ -210,15 +226,3 @@ Need IaC? → pulumi/ (Pulumi), terraform/ (Terraform), or api/ (REST API)
 | Static Assets | `references/static-assets/` |
 | Bindings | `references/bindings/` |
 | Cache Reserve | `references/cache-reserve/` |
-
-## Troubleshooting
-
-### Escalated Network Access
-
-If deployment fails due to network issues (timeouts, DNS errors, connection resets), rerun the deploy with escalated permissions (use `sandbox_permissions=require_escalated`). The deploy requires escalated network access when sandbox networking blocks outbound requests.
-
-Example guidance to the user:
-
-```
-The deploy needs escalated network access to deploy to Cloudflare. I can rerun the command with escalated permissions—want me to proceed?
-```
