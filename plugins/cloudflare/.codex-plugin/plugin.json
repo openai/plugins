@@ -1,0 +1,40 @@
+{
+  "name": "cloudflare",
+  "version": "0.1.0",
+  "description": "Plan Cloudflare platform choices and deployment workflows from Codex.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.cloudflare.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "cloudflare",
+    "deployment",
+    "edge"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Cloudflare",
+    "shortDescription": "Plan and run Cloudflare deployments",
+    "longDescription": "Use Cloudflare skills to choose the right product, verify setup, and prepare or execute deploy workflows across Workers, Pages, storage, AI, networking, and security services.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.cloudflare.com/",
+    "privacyPolicyURL": "https://www.cloudflare.com/privacypolicy/",
+    "termsOfServiceURL": "https://www.cloudflare.com/website-terms/",
+    "defaultPrompt": [
+      "Use Cloudflare skills to choose the right product and plan a deployment"
+    ],
+    "composerIcon": "./assets/cloudflare-small.svg",
+    "logo": "./assets/cloudflare.png",
+    "screenshots": [],
+    "brandColor": "#F48120"
+  }
+}
