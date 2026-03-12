@@ -21,7 +21,9 @@
     "websiteURL": "https://www.realestate.com.au",
     "privacyPolicyURL": "https://www.realestate.com.au/privacy-centre/",
     "termsOfServiceURL": "https://about.realestate.com.au/terms-use/",
-    "defaultPrompt": "com.au show 3 bed houses in Richmond, VIC",
+    "defaultPrompt": [
+      "Com.au show 3 bed houses in Richmond, VIC"
+    ],
     "screenshots": []
   }
 }

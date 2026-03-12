@@ -21,7 +21,9 @@
     "websiteURL": "Turo.com",
     "privacyPolicyURL": "https://turo.com/us/en/policies/privacy",
     "termsOfServiceURL": "https://turo.com/us/en/policies/terms",
-    "defaultPrompt": "find budget-friendly convertible to pick up at LAX",
+    "defaultPrompt": [
+      "Find budget-friendly convertible to pick up at LAX"
+    ],
     "screenshots": []
   }
 }

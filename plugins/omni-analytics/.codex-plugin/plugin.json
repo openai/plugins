@@ -21,7 +21,9 @@
     "websiteURL": "https://www.omni.co",
     "privacyPolicyURL": "https://omni.co/privacy",
     "termsOfServiceURL": "https://omni.co/terms",
-    "defaultPrompt": "show me last year's orders by status",
+    "defaultPrompt": [
+      "Show me last year's orders by status"
+    ],
     "screenshots": []
   }
 }

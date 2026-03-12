@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.atlassian.com",
     "privacyPolicyURL": "https://www.atlassian.com/legal/privacy-policy",
-    "defaultPrompt": "create Jira tasks in project Vita MVP",
+    "defaultPrompt": [
+      "Create Jira tasks in project Vita MVP"
+    ],
     "screenshots": []
   }
 }

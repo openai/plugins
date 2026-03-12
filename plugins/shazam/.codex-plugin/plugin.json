@@ -21,7 +21,9 @@
     "websiteURL": "https://www.shazam.com",
     "privacyPolicyURL": "https://www.shazam.com/privacy/summary",
     "termsOfServiceURL": "https://www.apple.com/legal/internet-services/itunes",
-    "defaultPrompt": "what's this song",
+    "defaultPrompt": [
+      "What's this song"
+    ],
     "screenshots": []
   }
 }

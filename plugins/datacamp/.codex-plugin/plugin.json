@@ -21,7 +21,9 @@
     "websiteURL": "https://datacamp.com",
     "privacyPolicyURL": "https://www.datacamp.com/privacy-policy",
     "termsOfServiceURL": "https://www.datacamp.com/terms-of-use",
-    "defaultPrompt": "Teach me about AI agents",
+    "defaultPrompt": [
+      "Teach me about AI agents"
+    ],
     "screenshots": []
   }
 }

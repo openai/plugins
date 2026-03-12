@@ -19,7 +19,9 @@
     "websiteURL": "https://www.onepeloton.com",
     "privacyPolicyURL": "https://www.onepeloton.com/privacy-policy",
     "termsOfServiceURL": "https://www.onepeloton.com/terms-of-service",
-    "defaultPrompt": "show details for 20 min Hip Hop Run with Matt",
+    "defaultPrompt": [
+      "Show details for 20 min Hip Hop Run with Matt"
+    ],
     "screenshots": []
   }
 }

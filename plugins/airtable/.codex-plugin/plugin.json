@@ -19,7 +19,9 @@
     "websiteURL": "https://airtable.com",
     "privacyPolicyURL": "https://www.airtable.com/company/privacy",
     "termsOfServiceURL": "https://www.airtable.com/company/tos",
-    "defaultPrompt": "show kanban of product roadmap. What's at risk",
+    "defaultPrompt": [
+      "Show kanban of product roadmap. What's at risk"
+    ],
     "screenshots": []
   }
 }

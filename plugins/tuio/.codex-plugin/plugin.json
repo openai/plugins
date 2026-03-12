@@ -21,7 +21,9 @@
     "websiteURL": "https://tuio.com",
     "privacyPolicyURL": "https://tuio.com/politica-de-privacidad",
     "termsOfServiceURL": "https://tuio.com/terminos-legales",
-    "defaultPrompt": "What's estimated price for insuring 75m² rental apartment",
+    "defaultPrompt": [
+      "What's estimated price for insuring 75m² rental apartment"
+    ],
     "screenshots": []
   }
 }

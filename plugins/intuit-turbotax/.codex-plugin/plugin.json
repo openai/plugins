@@ -19,7 +19,9 @@
     "websiteURL": "https://www.intuit.com",
     "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
     "termsOfServiceURL": "https://www.intuit.com/legal/terms/en-us/turbotax/online-license/",
-    "defaultPrompt": "connect me with an expert",
+    "defaultPrompt": [
+      "Connect me with an expert"
+    ],
     "screenshots": []
   }
 }

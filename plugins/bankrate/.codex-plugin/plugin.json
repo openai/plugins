@@ -21,7 +21,9 @@
     "websiteURL": "https://www.bankrate.com",
     "privacyPolicyURL": "https://www.bankrate.com/privacy/",
     "termsOfServiceURL": "https://www.bankrate.com/terms/",
-    "defaultPrompt": "top highest savings account APYs right now",
+    "defaultPrompt": [
+      "Top highest savings account APYs right now"
+    ],
     "screenshots": []
   }
 }

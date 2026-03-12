@@ -19,7 +19,9 @@
     "websiteURL": "https://www.opentable.com",
     "privacyPolicyURL": "https://www.opentable.com/c/legal/privacy-policy",
     "termsOfServiceURL": "https://www.opentable.com/c/legal/terms-and-conditions",
-    "defaultPrompt": "what restaurants near me are available tonight",
+    "defaultPrompt": [
+      "What restaurants near me are available tonight"
+    ],
     "screenshots": []
   }
 }

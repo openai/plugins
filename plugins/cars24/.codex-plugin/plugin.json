@@ -21,7 +21,9 @@
     "websiteURL": "https://www.cars24.com/",
     "privacyPolicyURL": "https://www.cars24.com/privacy-policy/",
     "termsOfServiceURL": "https://www.cars24.com/terms-of-use/",
-    "defaultPrompt": "Can you suggest cars under ₹10 lakh for a family of four",
+    "defaultPrompt": [
+      "Can you suggest cars under ₹10 lakh for a family of four"
+    ],
     "screenshots": []
   }
 }

@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.jotform.com",
     "privacyPolicyURL": "https://www.jotform.com/privacy",
-    "defaultPrompt": "Use Jotform to help with this task",
+    "defaultPrompt": [
+      "Use Jotform to help with this task"
+    ],
     "screenshots": []
   }
 }

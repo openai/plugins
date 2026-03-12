@@ -21,7 +21,9 @@
     "websiteURL": "https://www.steadily.com",
     "privacyPolicyURL": "https://www.steadily.com/privacy-policy",
     "termsOfServiceURL": "https://www.steadily.com/privacy-policy",
-    "defaultPrompt": "How much would landlord insurance cost for 150 N Woodside",
+    "defaultPrompt": [
+      "How much would landlord insurance cost for 150 N Woodside"
+    ],
     "screenshots": []
   }
 }

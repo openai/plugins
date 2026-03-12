@@ -21,7 +21,9 @@
     "websiteURL": "https://sider.ai/chatgpt-apps/chatgpt-presentation-maker",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "a 7-day itinerary for Iceland",
+    "defaultPrompt": [
+      "A 7-day itinerary for Iceland"
+    ],
     "screenshots": []
   }
 }

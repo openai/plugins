@@ -21,7 +21,9 @@
     "websiteURL": "https://www.hyatt.com",
     "privacyPolicyURL": "https://world.hyatt.com/content/gp/en/privacy.html",
     "termsOfServiceURL": "https://www.hyatt.com/help/terms/hyatt",
-    "defaultPrompt": "find hotel this weekend near Millennium Park",
+    "defaultPrompt": [
+      "Find hotel this weekend near Millennium Park"
+    ],
     "screenshots": []
   }
 }

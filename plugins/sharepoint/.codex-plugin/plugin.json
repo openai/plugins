@@ -30,7 +30,9 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": "summarize site, page, or file, identify owners and status",
+    "defaultPrompt": [
+      "Summarize site, page, or file, identify owners and status"
+    ],
     "brandColor": "#038387",
     "composerIcon": "./assets/sharepoint-small.svg",
     "logo": "./assets/sharepoint.svg",

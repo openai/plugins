@@ -21,7 +21,9 @@
     "websiteURL": "https://www.lseg.com",
     "privacyPolicyURL": "https://www.lseg.com/en/policies/privacy-statement",
     "termsOfServiceURL": "https://www.lseg.com",
-    "defaultPrompt": "spot price for top 10 cross currencies traded on forex",
+    "defaultPrompt": [
+      "Spot price for top 10 cross currencies traded on forex"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://www.figma.com",
     "privacyPolicyURL": "https://www.figma.com/legal/privacy/",
     "termsOfServiceURL": "https://www.figma.com/legal/tos/",
-    "defaultPrompt": "read attached PRD and create flowchart of 2FA flow",
+    "defaultPrompt": [
+      "Read attached PRD and create flowchart of 2FA flow"
+    ],
     "screenshots": []
   }
 }

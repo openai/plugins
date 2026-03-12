@@ -21,7 +21,9 @@
     "websiteURL": "https://dealpilot.loudcrowd.com/",
     "privacyPolicyURL": "https://loudcrowd.com/privacy-policy-dpf/",
     "termsOfServiceURL": "https://loudcrowd.com/terms/",
-    "defaultPrompt": "What makeup and cosmetic sites are currently running",
+    "defaultPrompt": [
+      "What makeup and cosmetic sites are currently running"
+    ],
     "screenshots": []
   }
 }

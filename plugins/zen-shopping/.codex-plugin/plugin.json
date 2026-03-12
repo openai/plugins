@@ -21,7 +21,9 @@
     "websiteURL": "https://seekist.ai/#/product/gpt-shopping",
     "privacyPolicyURL": "https://seekist.ai/privacy",
     "termsOfServiceURL": "https://seekist.ai/terms",
-    "defaultPrompt": "wireless office mouse under $50, silent",
+    "defaultPrompt": [
+      "Wireless office mouse under $50, silent"
+    ],
     "screenshots": []
   }
 }

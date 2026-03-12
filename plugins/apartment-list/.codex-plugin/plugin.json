@@ -21,7 +21,9 @@
     "websiteURL": "https://www.apartmentlist.com/",
     "privacyPolicyURL": "https://www.apartmentlist.com/about/privacy",
     "termsOfServiceURL": "https://www.apartmentlist.com/about/terms",
-    "defaultPrompt": "find pet friendly 2 bedroom apartments in Austin under",
+    "defaultPrompt": [
+      "Find pet friendly 2 bedroom apartments in Austin under"
+    ],
     "screenshots": []
   }
 }

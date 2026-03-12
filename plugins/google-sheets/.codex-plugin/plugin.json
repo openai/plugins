@@ -30,7 +30,9 @@
     "websiteURL": "https://workspace.google.com/products/sheets/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
-    "defaultPrompt": "analyze spreadsheet data, suggest formulas, or update",
+    "defaultPrompt": [
+      "Analyze spreadsheet data, suggest formulas, or update"
+    ],
     "brandColor": "#0F9D58",
     "composerIcon": "./assets/google-sheets-small.svg",
     "logo": "./assets/google-sheets.png",

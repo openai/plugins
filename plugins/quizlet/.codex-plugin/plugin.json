@@ -21,7 +21,9 @@
     "websiteURL": "https://quizlet.com",
     "privacyPolicyURL": "https://quizlet.com/privacy",
     "termsOfServiceURL": "https://quizlet.com/tos",
-    "defaultPrompt": "flashcards on photosynthesis",
+    "defaultPrompt": [
+      "Flashcards on photosynthesis"
+    ],
     "screenshots": []
   }
 }

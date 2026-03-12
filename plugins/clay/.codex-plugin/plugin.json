@@ -19,7 +19,9 @@
     "websiteURL": "https://www.clay.com",
     "privacyPolicyURL": "https://privacy.clay.com/policies",
     "termsOfServiceURL": "https://www.clay.com/terms-of-service",
-    "defaultPrompt": "find GTM Leaders at Conclusive AI",
+    "defaultPrompt": [
+      "Find GTM Leaders at Conclusive AI"
+    ],
     "screenshots": []
   }
 }

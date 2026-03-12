@@ -21,7 +21,9 @@
     "websiteURL": "https://better.com",
     "privacyPolicyURL": "https://better.com/about-us/privacy-policy",
     "termsOfServiceURL": "https://better.com/about-us/terms-of-use",
-    "defaultPrompt": "I have borrower at 52% DTI who wants HELOC w/ $450/month",
+    "defaultPrompt": [
+      "I have borrower at 52% DTI who wants HELOC w/ $450/month"
+    ],
     "screenshots": []
   }
 }

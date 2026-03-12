@@ -19,7 +19,9 @@
     "websiteURL": "https://www.adobe.com/acrobat.html",
     "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
     "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
-    "defaultPrompt": "create job application PDF by merging these",
+    "defaultPrompt": [
+      "Create job application PDF by merging these"
+    ],
     "screenshots": []
   }
 }

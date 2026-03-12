@@ -21,7 +21,9 @@
     "websiteURL": "https://upwork.com",
     "privacyPolicyURL": "https://www.upwork.com/legal#privacy",
     "termsOfServiceURL": "https://www.upwork.com/legal#terms",
-    "defaultPrompt": "I'm looking for web developer who is available to work",
+    "defaultPrompt": [
+      "I'm looking for web developer who is available to work"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://www.kleinanzeigen.de/",
     "privacyPolicyURL": "https://themen.kleinanzeigen.de/datenschutzerklaerung/",
     "termsOfServiceURL": "https://themen.kleinanzeigen.de/nutzungsbedingungen/",
-    "defaultPrompt": "Ich bin auf der Suche nach einem gebrauchten Sportwagen",
+    "defaultPrompt": [
+      "Ich bin auf der Suche nach einem gebrauchten Sportwagen"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://youversion.com/",
     "privacyPolicyURL": "https://www.bible.com/privacy",
     "termsOfServiceURL": "https://www.bible.com/terms",
-    "defaultPrompt": "Open Bible to John 1",
+    "defaultPrompt": [
+      "Open Bible to John 1"
+    ],
     "screenshots": []
   }
 }

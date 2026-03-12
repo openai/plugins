@@ -21,7 +21,9 @@
     "websiteURL": "https://lugg.com",
     "privacyPolicyURL": "https://lugg.com/privacy",
     "termsOfServiceURL": "https://lugg.com/terms",
-    "defaultPrompt": "I need quote for moving apartments from Pac Heights",
+    "defaultPrompt": [
+      "I need quote for moving apartments from Pac Heights"
+    ],
     "screenshots": []
   }
 }

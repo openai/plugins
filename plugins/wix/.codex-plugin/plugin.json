@@ -21,7 +21,9 @@
     "websiteURL": "https://www.wix.com",
     "privacyPolicyURL": "https://www.wix.com/about/privacy",
     "termsOfServiceURL": "https://www.wix.com/about/terms-of-use",
-    "defaultPrompt": "create fresh matcha site with online store",
+    "defaultPrompt": [
+      "Create fresh matcha site with online store"
+    ],
     "screenshots": []
   }
 }

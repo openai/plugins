@@ -21,7 +21,9 @@
     "websiteURL": "sider.ai",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "me on calculus: derivatives",
+    "defaultPrompt": [
+      "Me on calculus: derivatives"
+    ],
     "screenshots": []
   }
 }

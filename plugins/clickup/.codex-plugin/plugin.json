@@ -12,7 +12,9 @@
     "longDescription": "Turn ChatGPT into your ClickUp command center. Ask anything, find everything, take action - without breaking your flow.\n• Deep workspace search:  Ask questions naturally, get precise answers from across all your work\n• Action in the same breath: Find, create, update, and manage work in ChatGPT\n• Zero context switching:  Go from question to answer to action without leaving the conversation",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "is Sprint 14 -Simplifying UI looking? Flag",
+    "defaultPrompt": [
+      "Is Sprint 14 -Simplifying UI looking? Flag"
+    ],
     "screenshots": []
   }
 }

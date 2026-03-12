@@ -12,7 +12,9 @@
     "longDescription": "Get accurate, real-time Uber fare estimates between any two locations in the United States. This tool instantly shows you available ride options—such as UberX, UberXL, Comfort, and Black—along with pricing, estimated arrival times, and product details.\n\nWhat You Can Do\n• Check up-to-the-minute fare estimates for on-demand (immediate) trips\n• Compare ride options across Uber products\n• View ETA, pricing ranges, and key product features\n• Jump directly into booking your trip in the Uber app — all ride requests are handed off to the official Uber app to be completed securely\n• Request estimates for specific product types (e.g., “Uber Black from SFO to Union Square”)\n• Ensure accurate pricing by providing a precise pickup and dropoff location\n  • If a location is vague (e.g., “my hotel,” “downtown,” “the airport”), the tool will ask for clarification before showing options or estimates",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "get me a ride to my first meeting",
+    "defaultPrompt": [
+      "Get me a ride to my first meeting"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://www.accuweather.com",
     "privacyPolicyURL": "https://www.accuweather.com/en/privacy",
     "termsOfServiceURL": "https://www.accuweather.com/en/legal",
-    "defaultPrompt": "best day to run this weekend",
+    "defaultPrompt": [
+      "Best day to run this weekend"
+    ],
     "screenshots": []
   }
 }

@@ -19,7 +19,9 @@
     "websiteURL": "https://huggingface.co",
     "privacyPolicyURL": "https://huggingface.co/privacy",
     "termsOfServiceURL": "https://huggingface.co/terms-of-service",
-    "defaultPrompt": "generate a realistic farm using FLUX.1",
+    "defaultPrompt": [
+      "Generate a realistic farm using FLUX.1"
+    ],
     "screenshots": []
   }
 }

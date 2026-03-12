@@ -19,7 +19,9 @@
     "websiteURL": "https://www.egnyte.com",
     "privacyPolicyURL": "https://www.egnyte.com/privacy-policy",
     "termsOfServiceURL": "https://www.egnyte.com/terms-and-conditions/10-2022",
-    "defaultPrompt": "what IT contracts do we have",
+    "defaultPrompt": [
+      "What IT contracts do we have"
+    ],
     "screenshots": []
   }
 }

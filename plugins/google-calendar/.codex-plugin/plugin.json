@@ -33,7 +33,9 @@
     "websiteURL": "https://workspace.google.com/products/calendar/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
-    "defaultPrompt": "summarize day, find availability this week, and schedule",
+    "defaultPrompt": [
+      "Summarize day, find availability this week, and schedule"
+    ],
     "brandColor": "#4285F4",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/logo.png",

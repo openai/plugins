@@ -21,7 +21,9 @@
     "websiteURL": "https://www.meetup.com/",
     "privacyPolicyURL": "https://help.meetup.com/hc/en-us/articles/360044422391-Privacy-Policy",
     "termsOfServiceURL": "https://help.meetup.com/hc/en-us/articles/360027447252-Terms-of-Service",
-    "defaultPrompt": "recommend events in San Francisco where I meet",
+    "defaultPrompt": [
+      "Recommend events in San Francisco where I meet"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "http://www.asana.com",
     "privacyPolicyURL": "https://asana.com/terms/privacy-statement",
     "termsOfServiceURL": "https://asana.com/terms",
-    "defaultPrompt": "Create a project to track creative requests",
+    "defaultPrompt": [
+      "Create a project to track creative requests"
+    ],
     "screenshots": []
   }
 }

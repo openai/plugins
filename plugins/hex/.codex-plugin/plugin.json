@@ -19,7 +19,9 @@
     "websiteURL": "https://hex.tech/",
     "privacyPolicyURL": "https://learn.hex.tech/docs/trust/privacy-policy",
     "termsOfServiceURL": "https://learn.hex.tech/docs/legal/terms-and-conditions",
-    "defaultPrompt": "pull up my board meeting dashboard",
+    "defaultPrompt": [
+      "Pull up my board meeting dashboard"
+    ],
     "screenshots": []
   }
 }
