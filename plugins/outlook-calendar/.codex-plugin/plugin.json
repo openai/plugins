@@ -1,0 +1,39 @@
+{
+  "name": "outlook-calendar",
+  "version": "0.1.0",
+  "description": "Work with Outlook Calendar using the configured Microsoft Outlook app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "outlook-calendar",
+    "calendar",
+    "microsoft"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Outlook Calendar",
+    "shortDescription": "Compare availability and plan event changes",
+    "longDescription": "Use Outlook Calendar to compare availability, propose event diffs, and schedule, reschedule, or cancel events through the connected Microsoft Outlook app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app",
+    "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
+    "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
+    "defaultPrompt": "Use Outlook Calendar context to compare availability, propose the right event update, or help me schedule, reschedule, or cancel a meeting safely.",
+    "brandColor": "#0078D4",
+    "composerIcon": "./assets/outlook-calendar-small.svg",
+    "logo": "./assets/outlook-calendar.svg",
+    "screenshots": []
+  }
+}

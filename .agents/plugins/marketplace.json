@@ -49,6 +49,38 @@
                 "source": "local",
                 "path": "./plugins/slack"
             }
+        },
+        {
+            "name": "teams",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/teams"
+            }
+        },
+        {
+            "name": "sharepoint",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/sharepoint"
+            }
+        },
+        {
+            "name": "outlook-email",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/outlook-email"
+            }
+        },
+        {
+            "name": "outlook-calendar",
+            "source":
+            {
+                "source": "local",
+                "path": "./plugins/outlook-calendar"
+            }
         }
     ]
 }

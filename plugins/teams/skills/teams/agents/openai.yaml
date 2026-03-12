@@ -1,0 +1,7 @@
+interface:
+  display_name: "Teams"
+  short_description: "Summarize chats and draft follow-ups"
+  icon_small: "./assets/teams-small.svg"
+  icon_large: "./assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams to summarize a conversation, pull out action items, or draft the follow-up for the right chat or channel."

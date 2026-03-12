@@ -1,0 +1,39 @@
+{
+  "name": "sharepoint",
+  "version": "0.1.0",
+  "description": "Work with SharePoint using the configured Microsoft SharePoint app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "sharepoint",
+    "documents",
+    "microsoft"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "SharePoint",
+    "shortDescription": "Summarize SharePoint sites and files",
+    "longDescription": "Use SharePoint to summarize sites, pages, and files, extract owners and status, and plan safe content updates through the connected Microsoft SharePoint app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration",
+    "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
+    "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
+    "defaultPrompt": "Use SharePoint context to summarize a site, page, or file, identify the owners and status, or plan the right content update.",
+    "brandColor": "#038387",
+    "composerIcon": "./assets/sharepoint-small.svg",
+    "logo": "./assets/sharepoint.svg",
+    "screenshots": []
+  }
+}
