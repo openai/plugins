@@ -1,7 +1,7 @@
 {
   "name": "slack",
   "version": "0.1.0",
-  "description": "Work with Slack using the configured Slack app connector.",
+  "description": "Work with Slack using the configured Slack integration.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Slack",
     "shortDescription": "Read and manage Slack",
-    "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack app.",
+    "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [
