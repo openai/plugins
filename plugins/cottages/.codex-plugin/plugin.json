@@ -21,7 +21,9 @@
     "websiteURL": "https://www.cottages.com",
     "privacyPolicyURL": "https://www.cottages.com/legal/privacy-notice",
     "termsOfServiceURL": "https://www.cottages.com/legal/terms-of-use",
-    "defaultPrompt": "show great cottages with hot tubs in Devon",
+    "defaultPrompt": [
+      "Show great cottages with hot tubs in Devon"
+    ],
     "screenshots": []
   }
 }

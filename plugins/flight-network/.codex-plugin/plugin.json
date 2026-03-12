@@ -21,7 +21,9 @@
     "websiteURL": "https://www.flightnetwork.com",
     "privacyPolicyURL": "https://www.flightnetwork.com/rf/privacy-policy",
     "termsOfServiceURL": "https://www.flightnetwork.com/rf/travel-conditions",
-    "defaultPrompt": "Find flights from NYC to London on May 17th",
+    "defaultPrompt": [
+      "Find flights from NYC to London on May 17th"
+    ],
     "screenshots": []
   }
 }

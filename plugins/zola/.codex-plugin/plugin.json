@@ -21,7 +21,9 @@
     "websiteURL": "https://www.zola.com",
     "privacyPolicyURL": "https://www.zola.com/privacy",
     "termsOfServiceURL": "https://www.zola.com/terms",
-    "defaultPrompt": "find wedding venues in Brooklyn",
+    "defaultPrompt": [
+      "Find wedding venues in Brooklyn"
+    ],
     "screenshots": []
   }
 }

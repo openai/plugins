@@ -21,7 +21,9 @@
     "websiteURL": "https://www.ranked.ai",
     "privacyPolicyURL": "https://www.ranked.ai/legal/privacy",
     "termsOfServiceURL": "//www.ranked.ai/legal/terms",
-    "defaultPrompt": "show rankings for project",
+    "defaultPrompt": [
+      "Show rankings for project"
+    ],
     "screenshots": []
   }
 }

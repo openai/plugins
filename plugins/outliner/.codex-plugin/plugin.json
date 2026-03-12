@@ -21,7 +21,9 @@
     "websiteURL": "https://sider.ai",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "refine the outline content",
+    "defaultPrompt": [
+      "Refine the outline content"
+    ],
     "screenshots": []
   }
 }

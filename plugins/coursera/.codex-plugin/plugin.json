@@ -19,7 +19,9 @@
     "websiteURL": "https://www.coursera.org",
     "privacyPolicyURL": "https://www.coursera.org/about/privacy",
     "termsOfServiceURL": "https://www.coursera.org/about/terms",
-    "defaultPrompt": "show me a video about machine learning",
+    "defaultPrompt": [
+      "Show me a video about machine learning"
+    ],
     "screenshots": []
   }
 }

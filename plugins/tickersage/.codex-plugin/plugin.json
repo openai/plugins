@@ -21,7 +21,9 @@
     "websiteURL": "https://toolpipe.ai/ticker-sage",
     "privacyPolicyURL": "https://toolpipe.ai/privacy-policy",
     "termsOfServiceURL": "https://toolpipe.ai/terms-of-service",
-    "defaultPrompt": "real-time price",
+    "defaultPrompt": [
+      "Real-time price"
+    ],
     "screenshots": []
   }
 }

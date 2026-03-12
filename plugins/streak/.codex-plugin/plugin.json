@@ -21,7 +21,9 @@
     "websiteURL": "https://www.streak.com",
     "privacyPolicyURL": "https://www.streak.com/privacy",
     "termsOfServiceURL": "https://www.streak.com/terms",
-    "defaultPrompt": "show recent deals in Streak",
+    "defaultPrompt": [
+      "Show recent deals in Streak"
+    ],
     "screenshots": []
   }
 }

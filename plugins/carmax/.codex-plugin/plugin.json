@@ -21,7 +21,9 @@
     "websiteURL": "https://www.carmax.com",
     "privacyPolicyURL": "https://www.carmax.com/privacy-policy",
     "termsOfServiceURL": "https://www.carmax.com/terms",
-    "defaultPrompt": "Find me some SUVs with great gas mileage",
+    "defaultPrompt": [
+      "Find me some SUVs with great gas mileage"
+    ],
     "screenshots": []
   }
 }

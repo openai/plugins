@@ -21,7 +21,9 @@
     "websiteURL": "https://www.autoscout24.com",
     "privacyPolicyURL": "https://www.autoscout24.com/company/privacy/",
     "termsOfServiceURL": "https://www.autoscout24.com/company/agb/",
-    "defaultPrompt": "I'm looking for family car for less than 30k€ near Berlin",
+    "defaultPrompt": [
+      "I'm looking for family car for less than 30k€ near Berlin"
+    ],
     "screenshots": []
   }
 }

@@ -19,7 +19,9 @@
     "websiteURL": "https://quickbooks.intuit.com/",
     "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
     "termsOfServiceURL": "https://www.intuit.com/legal/terms/en-us/quickbooks/online/",
-    "defaultPrompt": "compare profit to profits of top",
+    "defaultPrompt": [
+      "Compare profit to profits of top"
+    ],
     "screenshots": []
   }
 }

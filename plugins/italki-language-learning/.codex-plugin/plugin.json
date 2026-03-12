@@ -21,7 +21,9 @@
     "websiteURL": "https://www.italki.com",
     "privacyPolicyURL": "https://www.italki.com/en/privacy",
     "termsOfServiceURL": "https://www.italki.com/en/tos",
-    "defaultPrompt": "I want to practice English with native speakers",
+    "defaultPrompt": [
+      "I want to practice English with native speakers"
+    ],
     "screenshots": []
   }
 }

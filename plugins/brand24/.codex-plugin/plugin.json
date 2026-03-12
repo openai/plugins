@@ -21,7 +21,9 @@
     "websiteURL": "https://brand24.com",
     "privacyPolicyURL": "https://brand24.com/privacy-policy/",
     "termsOfServiceURL": "https://brand24.com/terms/",
-    "defaultPrompt": "online popularity of biggest sports shoe",
+    "defaultPrompt": [
+      "Online popularity of biggest sports shoe"
+    ],
     "screenshots": []
   }
 }

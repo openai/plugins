@@ -19,7 +19,9 @@
     "websiteURL": "https://lovable.dev/",
     "privacyPolicyURL": "https://lovable.dev/privacy",
     "termsOfServiceURL": "https://lovable.dev/terms",
-    "defaultPrompt": "build me an AI-powered customer support app",
+    "defaultPrompt": [
+      "Build me an AI-powered customer support app"
+    ],
     "screenshots": []
   }
 }

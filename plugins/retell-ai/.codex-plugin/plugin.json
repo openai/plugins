@@ -21,7 +21,9 @@
     "websiteURL": "https://www.retellai.com",
     "privacyPolicyURL": "https://www.retellai.com/legal/privacy-policy",
     "termsOfServiceURL": "https://www.retellai.com/legal/terms-of-service",
-    "defaultPrompt": "Build me an AI receptionist for my dental clinic",
+    "defaultPrompt": [
+      "Build me an AI receptionist for my dental clinic"
+    ],
     "screenshots": []
   }
 }

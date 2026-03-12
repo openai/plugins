@@ -21,7 +21,9 @@
     "websiteURL": "https://www.strivemath.com/pdf",
     "privacyPolicyURL": "https://www.strivemath.com/pdf/privacy-policy",
     "termsOfServiceURL": "https://www.strivemath.com/pdf/terms",
-    "defaultPrompt": "create quadratic equations worksheet with 10",
+    "defaultPrompt": [
+      "Create quadratic equations worksheet with 10"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://www.zoominfo.com/",
     "privacyPolicyURL": "https://www.zoominfo.com/legal/privacy-policy",
     "termsOfServiceURL": "https://www.zoominfo.com/legal/terms-of-use",
-    "defaultPrompt": "Give me the top 10 companies in Boston by annual revenue",
+    "defaultPrompt": [
+      "Give me the top 10 companies in Boston by annual revenue"
+    ],
     "screenshots": []
   }
 }

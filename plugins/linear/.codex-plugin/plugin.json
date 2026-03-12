@@ -32,7 +32,9 @@
     "websiteURL": "https://linear.app/",
     "privacyPolicyURL": "https://linear.app/privacy",
     "termsOfServiceURL": "https://linear.app/terms",
-    "defaultPrompt": "triage or update relevant issues for this task, with clear",
+    "defaultPrompt": [
+      "Triage or update relevant issues for this task, with clear"
+    ],
     "brandColor": "#222326",
     "composerIcon": "./assets/linear-small.svg",
     "logo": "./assets/linear.png",

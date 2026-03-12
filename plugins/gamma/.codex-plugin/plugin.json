@@ -21,7 +21,9 @@
     "websiteURL": "https://gamma.app/about",
     "privacyPolicyURL": "https://gamma.app/privacy",
     "termsOfServiceURL": "https://gamma.app/terms",
-    "defaultPrompt": "Make gamma pitch deck about our new hotels, using Lavender",
+    "defaultPrompt": [
+      "Make gamma pitch deck about our new hotels, using Lavender"
+    ],
     "screenshots": []
   }
 }

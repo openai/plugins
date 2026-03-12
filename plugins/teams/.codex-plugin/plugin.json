@@ -30,7 +30,9 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-teams/group-chat-software",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": "summarize chat, pull out action items, or draft follow-up",
+    "defaultPrompt": [
+      "Summarize chat, pull out action items, or draft follow-up"
+    ],
     "brandColor": "#5B5FC7",
     "composerIcon": "./assets/teams-small.svg",
     "logo": "./assets/teams.svg",

@@ -21,7 +21,9 @@
     "websiteURL": "https://dupe.com",
     "privacyPolicyURL": "https://dupe.com/legal/privacy",
     "termsOfServiceURL": "https://dupe.com/legal/terms",
-    "defaultPrompt": "me cheaper alternatives for this outdoor chair",
+    "defaultPrompt": [
+      "Me cheaper alternatives for this outdoor chair"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://awesomize.ai/apps/manga-boom",
     "privacyPolicyURL": "https://awesomize.ai/privacy",
     "termsOfServiceURL": "https://awesomize.ai/terms",
-    "defaultPrompt": "cat believes it's boss and seriously manages",
+    "defaultPrompt": [
+      "Cat believes it's boss and seriously manages"
+    ],
     "screenshots": []
   }
 }

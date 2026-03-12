@@ -21,7 +21,9 @@
     "websiteURL": "https://awesomize.ai/apps/talk-gen",
     "privacyPolicyURL": "https://awesomize.ai/privacy",
     "termsOfServiceURL": "https://awesomize.ai/terms",
-    "defaultPrompt": "freelance graphic designer and want short",
+    "defaultPrompt": [
+      "Freelance graphic designer and want short"
+    ],
     "screenshots": []
   }
 }

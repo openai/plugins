@@ -21,7 +21,9 @@
     "websiteURL": "https://www.vividseats.com/",
     "privacyPolicyURL": "http://vividseats.com/privacy",
     "termsOfServiceURL": "http://vividseats.com/terms",
-    "defaultPrompt": "help me find tickets to the bulls game",
+    "defaultPrompt": [
+      "Help me find tickets to the bulls game"
+    ],
     "screenshots": []
   }
 }

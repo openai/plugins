@@ -19,7 +19,9 @@
     "websiteURL": "https://www.gohighlevel.com",
     "privacyPolicyURL": "https://www.gohighlevel.com/privacy-policy",
     "termsOfServiceURL": "https://www.gohighlevel.com/terms-of-service",
-    "defaultPrompt": "give me overview of how things have been",
+    "defaultPrompt": [
+      "Give me overview of how things have been"
+    ],
     "screenshots": []
   }
 }

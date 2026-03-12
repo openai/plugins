@@ -21,7 +21,9 @@
     "websiteURL": "https://lona.agency/",
     "privacyPolicyURL": "https://www.lona.agency/en/privacy",
     "termsOfServiceURL": "https://www.lona.agency/en/terms",
-    "defaultPrompt": "What are market data symbols",
+    "defaultPrompt": [
+      "What are market data symbols"
+    ],
     "screenshots": []
   }
 }

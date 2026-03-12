@@ -19,7 +19,9 @@
     "websiteURL": "https://mailchimp.com",
     "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
     "termsOfServiceURL": "https://mailchimp.com/legal/terms/",
-    "defaultPrompt": "am running big promotional sale",
+    "defaultPrompt": [
+      "Am running big promotional sale"
+    ],
     "screenshots": []
   }
 }

@@ -19,7 +19,9 @@
     "websiteURL": "https://vercel.com/",
     "privacyPolicyURL": "https://vercel.com/legal/privacy-policy",
     "termsOfServiceURL": "https://vercel.com/legal/terms",
-    "defaultPrompt": "why is build failing",
+    "defaultPrompt": [
+      "Why is build failing"
+    ],
     "screenshots": []
   }
 }

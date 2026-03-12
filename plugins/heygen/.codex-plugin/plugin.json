@@ -21,7 +21,9 @@
     "websiteURL": "https://www.heygen.com",
     "privacyPolicyURL": "https://www.heygen.com/privacy",
     "termsOfServiceURL": "https://www.heygen.com/terms",
-    "defaultPrompt": "a video explaining the rules of golf",
+    "defaultPrompt": [
+      "A video explaining the rules of golf"
+    ],
     "screenshots": []
   }
 }
