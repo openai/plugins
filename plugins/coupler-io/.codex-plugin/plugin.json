@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.coupler.io/privacy-policy",
     "termsOfServiceURL": "https://www.coupler.io/terms-of-use",
     "defaultPrompt": "@Coupler show me overall spend, impressions, clicks, and CPC by platform",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

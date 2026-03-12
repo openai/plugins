@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.expedia.com/legal/privacy",
     "termsOfServiceURL": "https://www.expedia.com/lp/b/terms-of-service",
     "defaultPrompt": "@Expedia find flights from Seattle to Cancun in February",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

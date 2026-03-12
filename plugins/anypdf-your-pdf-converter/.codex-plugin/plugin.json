@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://pdfmaker.to/privacy",
     "termsOfServiceURL": "https://www.appnation.co/terms",
     "defaultPrompt": "@AnyPDF - Your PDF Converter Convert this file to PDF",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.creditkarma.com/about/privacy",
     "termsOfServiceURL": "https://www.creditkarma.com/about/terms202309",
     "defaultPrompt": "@Intuit Credit Karma how can I improve my credit score?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
     "defaultPrompt": "@Ace Quiz Maker Test me on calculus: derivatives and integrals.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

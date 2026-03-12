@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.omio.com/privacy-policy",
     "termsOfServiceURL": "https://www.omio.com/terms-of-use",
     "defaultPrompt": "I need to go from Paris to London tomorrow, find me train options",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

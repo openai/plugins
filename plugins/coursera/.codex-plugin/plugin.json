@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.coursera.org/about/privacy",
     "termsOfServiceURL": "https://www.coursera.org/about/terms",
     "defaultPrompt": "@Coursera show me a video about machine learning",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

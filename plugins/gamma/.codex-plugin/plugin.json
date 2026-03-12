@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://gamma.app/privacy",
     "termsOfServiceURL": "https://gamma.app/terms",
     "defaultPrompt": "Make a gamma pitch deck about our new hotels, using the Lavender theme!",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

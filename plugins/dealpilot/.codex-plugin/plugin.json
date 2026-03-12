@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://loudcrowd.com/privacy-policy-dpf/",
     "termsOfServiceURL": "https://loudcrowd.com/terms/",
     "defaultPrompt": "What makeup and cosmetic sites are currently running promos?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

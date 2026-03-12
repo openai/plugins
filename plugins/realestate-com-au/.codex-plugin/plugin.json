@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.realestate.com.au/privacy-centre/",
     "termsOfServiceURL": "https://about.realestate.com.au/terms-use/",
     "defaultPrompt": "@realestate.com.au show me 3 bed houses in Richmond, VIC under $2m",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

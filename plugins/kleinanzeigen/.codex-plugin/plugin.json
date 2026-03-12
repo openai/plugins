@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://themen.kleinanzeigen.de/datenschutzerklaerung/",
     "termsOfServiceURL": "https://themen.kleinanzeigen.de/nutzungsbedingungen/",
     "defaultPrompt": "Ich bin auf der Suche nach einem gebrauchten Sportwagen. Er sollte zwischen",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

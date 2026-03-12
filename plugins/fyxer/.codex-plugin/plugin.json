@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://app.fyxer.com/privacy-policy",
     "termsOfServiceURL": "https://app.fyxer.com/terms-of-use",
     "defaultPrompt": "Follow up with Sarah about our meeting last week",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

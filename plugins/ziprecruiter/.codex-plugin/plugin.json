@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.ziprecruiter.global/en/privacy",
     "termsOfServiceURL": "https://www.ziprecruiter.global/en/terms",
     "defaultPrompt": "@ZipRecruiter find warehouse associate jobs in Seattle",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://legal.jimdo.com/hc/en-us/articles/26840490952084-Jimdo-Privacy-Notice-for-Jimdo-com",
     "termsOfServiceURL": "https://legal.jimdo.com/hc/en-us/articles/4414668143508-Jimdo-Terms-Of-Service",
     "defaultPrompt": "@Jimdo Create a website for my photography business",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

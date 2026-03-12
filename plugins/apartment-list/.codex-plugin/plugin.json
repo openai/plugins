@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.apartmentlist.com/about/privacy",
     "termsOfServiceURL": "https://www.apartmentlist.com/about/terms",
     "defaultPrompt": "Find me pet friendly 2 bedroom apartments in Austin under $3,000",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

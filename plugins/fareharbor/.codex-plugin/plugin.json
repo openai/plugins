@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://fareharbor.com/legal/privacy/",
     "termsOfServiceURL": "https://fareharbor.com/legal/tos-customers/",
     "defaultPrompt": "I'm looking for tours in the mountains",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

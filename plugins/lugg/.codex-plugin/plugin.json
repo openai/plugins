@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://lugg.com/privacy",
     "termsOfServiceURL": "https://lugg.com/terms",
     "defaultPrompt": "I need a quote for moving apartments from Pac Heights to the Mission",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

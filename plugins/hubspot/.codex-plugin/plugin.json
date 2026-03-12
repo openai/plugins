@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
     "termsOfServiceURL": "https://legal.hubspot.com/terms-of-service",
     "defaultPrompt": "@HubSpot create a follow-up task to schedule a meeting with Brightlane",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

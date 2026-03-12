@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://alpic.ai/legal/terms",
     "termsOfServiceURL": "https://alpic.ai/legal/terms",
     "defaultPrompt": "Show me my MCP Apps analytics",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

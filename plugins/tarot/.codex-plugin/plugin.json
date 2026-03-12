@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://toolpipe.ai/privacy-policy",
     "termsOfServiceURL": "https://toolpipe.ai/terms-of-service",
     "defaultPrompt": "@Tarot I want clarity on my life now and what’s ahead.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

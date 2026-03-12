@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.viator.com/support/privacyPolicy",
     "termsOfServiceURL": "https://www.viator.com/support/termsAndConditions",
     "defaultPrompt": "What can I do in the Vatican tomorrow?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

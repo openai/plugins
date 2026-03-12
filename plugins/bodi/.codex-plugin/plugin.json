@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.bodi.com/us/en/privacy",
     "termsOfServiceURL": "https://www.bodi.com/us/en/terms-of-use",
     "defaultPrompt": "@BODi I want to build muscle and get stronger",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

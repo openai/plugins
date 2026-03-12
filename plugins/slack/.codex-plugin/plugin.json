@@ -32,8 +32,8 @@
     "termsOfServiceURL": "https://slack.com/terms-of-service/user",
     "defaultPrompt": "Use Slack context to summarize unread activity, draft replies, or help me prepare channel updates.",
     "brandColor": "#611F69",
-    "composerIcon": "./assets/slack-small.svg",
-    "logo": "./assets/slack.png",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }

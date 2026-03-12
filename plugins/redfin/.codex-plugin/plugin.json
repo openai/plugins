@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.redfin.com/about/privacy-policy",
     "termsOfServiceURL": "https://www.redfin.com/about/terms-of-use",
     "defaultPrompt": "Show me 3 bedroom homes in Seattle with a modern kitchen",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

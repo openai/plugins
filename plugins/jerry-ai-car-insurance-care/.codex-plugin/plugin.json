@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://jerry.ai/privacy-policy/",
     "termsOfServiceURL": "https://jerry.ai/terms-of-use/",
     "defaultPrompt": "Jerry, get me estimates for front brake pads on a 2021 Corolla in Palo Alto",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

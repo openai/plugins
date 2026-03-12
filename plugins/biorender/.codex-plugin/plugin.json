@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://biorender.com/privacy",
     "termsOfServiceURL": "https://www.biorender.com/terms-of-service",
     "defaultPrompt": "@BioRender can you find me some GLP-1 diagram templates?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

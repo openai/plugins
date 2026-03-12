@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.apple.com/legal/privacy/data/en/apple-music/",
     "termsOfServiceURL": "https://www.apple.com/legal/internet-services/itunes/",
     "defaultPrompt": "@Apple Music make me a playlist with today's latest hits",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

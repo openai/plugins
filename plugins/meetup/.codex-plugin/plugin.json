@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://help.meetup.com/hc/en-us/articles/360044422391-Privacy-Policy",
     "termsOfServiceURL": "https://help.meetup.com/hc/en-us/articles/360027447252-Terms-of-Service",
     "defaultPrompt": "@Meetup recommend events in San Francisco where I meet people from abroad",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

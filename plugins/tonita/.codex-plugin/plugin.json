@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://tonita.co/privacy-policy",
     "termsOfServiceURL": "https://tonita.co/terms-of-service",
     "defaultPrompt": "@Tonita women's fair isle sweaters under 150",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://replit.com/privacy-policy",
     "termsOfServiceURL": "https://replit.com/terms-of-service",
     "defaultPrompt": "@Replit i need a website for my bookstore",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

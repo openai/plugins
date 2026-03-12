@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.atlys.com/privacy",
     "termsOfServiceURL": "https://www.atlys.com/terms",
     "defaultPrompt": "Hey @Atlys, US trip as an Indian, what do I need?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.klook.com/policy/",
     "termsOfServiceURL": "https://www.klook.com/conditions/",
     "defaultPrompt": "@Klook Recommend Things to do in Tokyo for me",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://learn.hex.tech/docs/trust/privacy-policy",
     "termsOfServiceURL": "https://learn.hex.tech/docs/legal/terms-and-conditions",
     "defaultPrompt": "@Hex pull up my board meeting dashboard",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

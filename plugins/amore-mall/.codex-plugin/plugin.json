@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.beautypoint.co.kr/privacy",
     "termsOfServiceURL": "https://www.beautypoint.co.kr/agreement",
     "defaultPrompt": "30대 여성에게 인기 있는 화장품을 추천해줘",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.layer3labs.io/privacy",
     "termsOfServiceURL": "https://www.layer3labs.io/terms",
     "defaultPrompt": "Is it safe to travel to France in 2026?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }
