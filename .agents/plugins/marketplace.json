@@ -1582,6 +1582,16 @@
             "category": "Lifestyle"
         },
         {
+            "name": "render",
+            "source": {
+                "source": "local",
+                "path": "./plugins/render"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Coding"
+        },
+        {
             "name": "replit",
             "source": {
                 "source": "local",

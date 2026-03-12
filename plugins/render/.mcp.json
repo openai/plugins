@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "render": {
+      "type": "streamable_http",
+      "url": "https://mcp.render.com/mcp",
+      "bearer_token_env_var": "RENDER_API_KEY"
+    }
+  }
+}

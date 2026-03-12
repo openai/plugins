@@ -1,25 +1,39 @@
 {
   "name": "netlify",
-  "version": "1.0.0",
-  "description": "Build and deploy on Netlify",
+  "version": "1.1.0",
+  "description": "Deploy projects and manage preview or production releases on Netlify.",
   "author": {
+    "name": "Netlify",
     "url": "https://www.netlify.com"
   },
   "homepage": "https://www.netlify.com",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "netlify",
+    "deployment",
+    "hosting",
+    "preview",
+    "static-sites"
+  ],
+  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Netlify",
-    "shortDescription": "Build and deploy on Netlify",
-    "longDescription": "The Netlify empowers AI agents to autonomously build, deploy, and manage web projects through directly and through natural language. It seamlessly connects ChatGPT to the Netlify platform, enabling intelligent automation of deployments, access control management, environment variable configuration, form submission handling, etc. Streamline your development workflow by letting AI handle complex deployment tasks, project management, and infrastructure setup—all conversationally.",
-    "category": "Productivity",
-    "capabilities": [],
+    "shortDescription": "Deploy projects and manage releases",
+    "longDescription": "Use Netlify to inspect deployment state, manage sites, and pair the Netlify app with the curated deployment skill for preview and production workflows.",
+    "developerName": "Netlify",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
     "websiteURL": "https://www.netlify.com",
     "privacyPolicyURL": "https://www.netlify.com/privacy/",
     "termsOfServiceURL": "https://www.netlify.com/legal/terms-of-use/",
-    "defaultPrompt": "@Netlify what projects do I have?",
+    "defaultPrompt": "Use Netlify to analyze this repo, choose the right preview or production path, and tell me the exact next deployment step.",
+    "composerIcon": "./assets/netlify-small.svg",
+    "logo": "./assets/netlify.png",
     "screenshots": []
   }
 }
