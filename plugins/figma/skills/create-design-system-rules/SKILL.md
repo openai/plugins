@@ -15,9 +15,7 @@ This skill helps you generate custom design system rules tailored to your projec
 
 | Agent | Rule File |
 |-------|-----------|
-| Claude Code | `CLAUDE.md` |
 | Codex CLI | `AGENTS.md` |
-| Cursor | `.cursor/rules/figma-design-system.mdc` |
 
 ## What Are Design System Rules?
 
@@ -175,9 +173,7 @@ Detect which AI coding agent the user is working with and save the generated rul
 
 | Agent | Rule File | Notes |
 |-------|-----------|-------|
-| Claude Code | `CLAUDE.md` in project root | Markdown format. Can also use `.claude/rules/figma-design-system.md` for modular organization. |
 | Codex CLI | `AGENTS.md` in project root | Markdown format. Append as a new section if file already exists. 32 KiB combined size limit. |
-| Cursor | `.cursor/rules/figma-design-system.mdc` | Markdown with YAML frontmatter (`description`, `globs`, `alwaysApply`). |
 
 If unsure which agent the user is working with, check for existing rule files in the project or ask the user.
 
