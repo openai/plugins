@@ -9,7 +9,7 @@
             },
             "installPolicy": "AVAILABLE",
             "authPolicy": "ON_INSTALL",
-            "category": "Productivity"
+            "category": "Lifestyle"
         },
         {
             "name": "google-calendar",
@@ -2129,7 +2129,17 @@
             },
             "installPolicy": "AVAILABLE",
             "authPolicy": "ON_INSTALL",
-            "category": "Lifestyle"
+            "category": "Productivity"
+        },
+        {
+            "name": "google-slides",
+            "source": {
+                "source": "local",
+                "path": "./plugins/google-slides"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         }
     ]
 }

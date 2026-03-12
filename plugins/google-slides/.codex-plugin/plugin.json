@@ -1,0 +1,41 @@
+{
+  "name": "google-slides",
+  "version": "0.1.0",
+  "description": "Work with Google Slides using the configured Google Slides app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://workspace.google.com/products/slides/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "google-slides",
+    "presentations",
+    "template-migration",
+    "visual-iteration",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Google Slides",
+    "shortDescription": "Edit Google Slides decks",
+    "longDescription": "Use Google Slides to polish slide layouts, repair repeated template issues, and migrate deck content onto a company template through the connected Google Slides app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://workspace.google.com/products/slides/",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "defaultPrompt": "Use Google Slides to inspect a deck, clean up slide layouts, repair template structure, or migrate content onto a branded template.",
+    "brandColor": "#F9AB00",
+    "composerIcon": "./assets/google-slides-small.svg",
+    "logo": "./assets/google-slides.svg",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Slides Visual Iteration"
+  short_description: "Polish Google Slides layouts with thumbnail-based edit loops"
+  default_prompt: "Use $google-slides-visual-iteration to inspect a connected Google Slides deck, fix spacing/alignment/overlap issues with batch updates, re-check the slide thumbnail after each pass, and iterate a few times until the slide or deck looks clean."
