@@ -1,0 +1,27 @@
+{
+  "name": "zumba",
+  "version": "1.0.0",
+  "description": "Find Zumba classes",
+  "author": {
+    "name": "Zumba Fitness, LLC",
+    "url": "https://www.zumba.com"
+  },
+  "homepage": "https://www.zumba.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Zumba",
+    "shortDescription": "Find Zumba classes",
+    "longDescription": "Discover Zumba® classes that fit your schedule, location, and fitness goals. Browse available classes and their details to find options near you. Whether you’re looking for an in-person, high-energy workout, a beginner-friendly livestream session, or a video-on-demand option, Zumba® makes it easy to go from searching to dancing in just a few clicks.",
+    "developerName": "Zumba Fitness, LLC",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.zumba.com",
+    "privacyPolicyURL": "https://www.zumba.com/en-US/support/policy/privacy",
+    "termsOfServiceURL": "https://www.zumba.com/en-US/support/terms-of-use",
+    "defaultPrompt": "Are there any Zumba classes in New York tomorrow?",
+    "screenshots": []
+  }
+}

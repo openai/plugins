@@ -1,0 +1,25 @@
+{
+  "name": "apple-music",
+  "version": "v1.0.0",
+  "description": "Build playlists and find music",
+  "author": {
+    "url": "https://music.apple.com/"
+  },
+  "homepage": "https://music.apple.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Apple Music",
+    "shortDescription": "Build playlists and find music",
+    "longDescription": "With this app, ChatGPT can connect to Apple Music so all users can search the Apple Music catalog for songs, artists, albums, and playlists—no subscription required. All users can discover music, generate playlists, and listen to clips of music directly within ChatGPT with the help of Apple Music. Users with Apple Music subscriptions can add songs, albums, and playlists to their personal Apple Music library.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://music.apple.com/",
+    "privacyPolicyURL": "https://www.apple.com/legal/privacy/data/en/apple-music/",
+    "termsOfServiceURL": "https://www.apple.com/legal/internet-services/itunes/",
+    "defaultPrompt": "@Apple Music make me a playlist with today's latest hits",
+    "screenshots": []
+  }
+}

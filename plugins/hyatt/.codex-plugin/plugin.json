@@ -1,0 +1,27 @@
+{
+  "name": "hyatt",
+  "version": "4.0.0",
+  "description": "Find hotels and resorts",
+  "author": {
+    "name": "Hyatt",
+    "url": "https://www.hyatt.com"
+  },
+  "homepage": "https://www.hyatt.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Hyatt",
+    "shortDescription": "Find hotels and resorts",
+    "longDescription": "Plan your next Hyatt stay directly in ChatGPT. Search Hyatt hotels and resorts around the world and access information available on Hyatt.com—including real-time room availability, detailed room descriptions, and dynamic rate information—through simple, natural conversation. \n \nAsk for what you need in everyday language, browse tailored results with photos and amenities, and click through to Hyatt.com when you're ready to book. Log in or join World of Hyatt during booking to earn points, access exclusive member rates, and enjoy added benefits. \n \nAdd the Hyatt app in ChatGPT and make planning your next trip effortless.",
+    "developerName": "Hyatt",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.hyatt.com",
+    "privacyPolicyURL": "https://world.hyatt.com/content/gp/en/privacy.html",
+    "termsOfServiceURL": "https://www.hyatt.com/help/terms/hyatt",
+    "defaultPrompt": "@Hyatt find me a hotel this weekend near Millennium Park in Chicago",
+    "screenshots": []
+  }
+}

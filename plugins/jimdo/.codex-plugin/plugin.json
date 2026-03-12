@@ -1,0 +1,27 @@
+{
+  "name": "jimdo",
+  "version": "2.0.0",
+  "description": "Create your website",
+  "author": {
+    "name": "Jimdo GmbH",
+    "url": "https://www.jimdo.com?utm_source=chatgpt&utm_medium=app-store"
+  },
+  "homepage": "https://www.jimdo.com?utm_source=chatgpt&utm_medium=app-store",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Jimdo",
+    "shortDescription": "Create your website",
+    "longDescription": "Jimdo builds your professional small business website directly from what you've already discussed with ChatGPT, no templates, no design work, no starting from scratch. Your conversation becomes your content. Get a complete website in minutes, then publish it or take it to Jimdo's AI-powered growth platform including domain registration, booking systems, local search optimization, and strategic guidance to grow your business online.\n\nTry prompts like:\n-  \"Jimdo, create a photography website for my business\"\n-  \"Jimdo, build me a website based on what we discussed\"\n-  \"Jimdo, turn this into a professional site\"\n\nJimdo uses your conversation context to generate relevant content and professional design tailored to your specific business. Trusted by over 32 million websites since 2007.",
+    "developerName": "Jimdo GmbH",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.jimdo.com?utm_source=chatgpt&utm_medium=app-store",
+    "privacyPolicyURL": "https://legal.jimdo.com/hc/en-us/articles/26840490952084-Jimdo-Privacy-Notice-for-Jimdo-com",
+    "termsOfServiceURL": "https://legal.jimdo.com/hc/en-us/articles/4414668143508-Jimdo-Terms-Of-Service",
+    "defaultPrompt": "@Jimdo Create a website for my photography business",
+    "screenshots": []
+  }
+}

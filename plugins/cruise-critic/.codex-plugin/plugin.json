@@ -1,0 +1,27 @@
+{
+  "name": "cruise-critic",
+  "version": "2.0.0",
+  "description": "Find cruise vacations",
+  "author": {
+    "name": "Cruise Critic",
+    "url": "https://www.cruisecritic.com/"
+  },
+  "homepage": "https://www.cruisecritic.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Cruise Critic",
+    "shortDescription": "Find cruise vacations",
+    "longDescription": "Search for cruise vacations filtered by destination, price, dates and preferred cruise line",
+    "developerName": "Cruise Critic",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.cruisecritic.com/",
+    "privacyPolicyURL": "https://www.cruisecritic.com/about-us/privacy-policy",
+    "termsOfServiceURL": "https://www.cruisecritic.com/about-us/terms-of-use",
+    "defaultPrompt": "Find me cruises to the Caribbean from Miami",
+    "screenshots": []
+  }
+}

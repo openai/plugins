@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Calendar Daily Brief"
+  short_description: "Summarize a day into a readable agenda"
+  default_prompt: "Use $google-calendar-daily-brief to summarize my calendar for today with conflicts and free windows."

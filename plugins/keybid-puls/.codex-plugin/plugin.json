@@ -1,0 +1,27 @@
+{
+  "name": "keybid-puls",
+  "version": "1.0.0",
+  "description": "Evaluate Buy for STR Viability",
+  "author": {
+    "name": "KeyBid",
+    "url": "https://keybid.eu"
+  },
+  "homepage": "https://keybid.eu",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "KeyBid Puls",
+    "shortDescription": "Evaluate Buy for STR Viability",
+    "longDescription": "Unlock the profitability of short-term rental investments with our ROI Calculator app, tailored for platforms like Airbnb, Booking.com, and VRBO. Users can paste property URLs from sites such as idealista.com, imobiliare.ro, storia.ro, and spitogatos.gr (with more integrations on the way), or upload screenshots from other real estate platforms. The app analyzes the data to deliver instant revenue projections, detailed reports, and a concise conclusion on whether the property is worth purchasing for short-term rentals. Covering 56 countries and over 191 cities, it supports multiple languages including English, Romanian, Spanish, and Greek for seamless global use. Ideal for property owners and investors seeking data-driven insights to evaluate vacation rental opportunities. Explore more at https://keybid.eu/keybid-puls.",
+    "developerName": "KeyBid",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://keybid.eu",
+    "privacyPolicyURL": "https://keybid.eu/confidentialitate",
+    "termsOfServiceURL": "https://keybid.eu/termeni",
+    "defaultPrompt": "@KeyBid Puls is this apartment worth buying for short-term rental? URL link",
+    "screenshots": []
+  }
+}

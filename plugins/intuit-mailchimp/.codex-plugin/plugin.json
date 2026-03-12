@@ -1,0 +1,25 @@
+{
+  "name": "intuit-mailchimp",
+  "version": "1.0.0",
+  "description": "Create marketing campaigns",
+  "author": {
+    "url": "https://mailchimp.com"
+  },
+  "homepage": "https://mailchimp.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Intuit Mailchimp",
+    "shortDescription": "Create marketing campaigns",
+    "longDescription": "Turn marketing ideas into campaigns. Create a data-backed omnichannel strategy for email, SMS, and social media. We’ll analyze your business inputs to suggest target audiences and campaign types that work. Ready to launch? We automatically draft the campaign for you. Perfect for generating customized content and actionable marketing plans, whether you have an account or are just getting started.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://mailchimp.com",
+    "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
+    "termsOfServiceURL": "https://mailchimp.com/legal/terms/",
+    "defaultPrompt": "@Intuit Mailchimp I am running a big promotional sale for New Years, build me a marketing plan to execute on it",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "fireflies",
+  "version": "1.0.0",
+  "description": "Search meeting transcripts",
+  "author": {
+    "url": "https://fireflies.ai"
+  },
+  "homepage": "https://fireflies.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Fireflies",
+    "shortDescription": "Search meeting transcripts",
+    "longDescription": "Search meeting transcripts",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://fireflies.ai",
+    "privacyPolicyURL": "https://fireflies.ai/privacy",
+    "defaultPrompt": "@Fireflies what’s our conversation history with Acme so far?",
+    "screenshots": []
+  }
+}

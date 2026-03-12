@@ -1,0 +1,25 @@
+{
+  "name": "cloudinary",
+  "version": "1.0.0",
+  "description": "Manage, modify, and host your images & videos",
+  "author": {
+    "url": "https://cloudinary.com/"
+  },
+  "homepage": "https://cloudinary.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Cloudinary",
+    "shortDescription": "Manage, modify, and host your images & videos",
+    "longDescription": "Manage, search, and transform your Cloudinary media library — directly from ChatGPT.\n\nThe Cloudinary app connects your Cloudinary account to ChatGPT, giving you full control over your visual assets through natural language. Upload, organize, tag, transform, and analyze images or videos without leaving the chat. \n\nWhat You Can Do\n- Upload assets from URLs, local files, or base64 data — automatically analyze, tag, or moderate them.\n- Browse and search your entire media library using smart filters or text queries (tags, format, date, size, etc.).\n- Organize your library — create folders, rename files, manage metadata, and clean up obsolete assets.\n- Transform images or videos with Cloudinary’s powerful syntax — resize, crop, watermark, apply filters, or optimize for delivery.\n- Generate archives and backups, or restore previous versions when needed.\n- Analyze assets with AI — detect faces, extract text, get color palettes, and accessibility scores.\n- Monitor usage — track storage, bandwidth, and transformation credits in real time.\n- Visual search — find visually similar images by uploading an example or describing it.\n\nPerfect For\n- Developers who want to experiment with Cloudinary API commands in natural language.\n- Marketers & designers managing campaign visuals and brand assets.\n- Teams automating content workflows with ChatGPT or building multi-agent setups.\n\nTurn ChatGPT into a powerful media management assistant with the Cloudinary app.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://cloudinary.com/",
+    "privacyPolicyURL": "https://cloudinary.com/privacy",
+    "termsOfServiceURL": "https://cloudinary.com/tou",
+    "defaultPrompt": "@Cloudinary upload this image and enable auto-tagging",
+    "screenshots": []
+  }
+}

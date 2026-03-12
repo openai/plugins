@@ -1,0 +1,27 @@
+{
+  "name": "busbud",
+  "version": "2.0.0",
+  "description": "Find bus and train tickets",
+  "author": {
+    "name": "Busbud Inc.",
+    "url": "https://www.busbud.com"
+  },
+  "homepage": "https://www.busbud.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Busbud",
+    "shortDescription": "Find bus and train tickets",
+    "longDescription": "Busbud brings bus and train travel into your ChatGPT conversations.\nWith the Busbud ChatGPT app, you can search bus and train routes, compare options in a single conversation and jump straight to purchasing your ticket on Busbud.\n\nWhat you can do with Busbud on ChatGPT:\nQuery bus and train inventory across thousands of operators worldwide.\nGet up-to-date prices, schedules, and availability.\nView the cheapest and fastest trips.\nSee operator name, price, duration, and departure details.",
+    "developerName": "Busbud Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.busbud.com",
+    "privacyPolicyURL": "https://www.busbud.com/en/privacy-policy/",
+    "termsOfServiceURL": "https://www.busbud.com/en/terms-of-use/",
+    "defaultPrompt": "Show me buses from Philadelphia to New York City",
+    "screenshots": []
+  }
+}

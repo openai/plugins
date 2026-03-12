@@ -1,0 +1,25 @@
+{
+  "name": "jam",
+  "version": "1.0.0",
+  "description": "Screen record with context",
+  "author": {
+    "url": "https://jam.dev"
+  },
+  "homepage": "https://jam.dev",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Jam",
+    "shortDescription": "Screen record with context",
+    "longDescription": "Screen record with context",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://jam.dev",
+    "privacyPolicyURL": "https://jam.dev/privacy",
+    "termsOfServiceURL": "https://jam.dev/terms-of-service",
+    "defaultPrompt": "@Jam what does this bug report show?",
+    "screenshots": []
+  }
+}

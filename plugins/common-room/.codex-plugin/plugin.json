@@ -1,0 +1,27 @@
+{
+  "name": "common-room",
+  "version": "1.0.0",
+  "description": "Find contacts and accounts",
+  "author": {
+    "name": "Common Room",
+    "url": "https://commonroom.io"
+  },
+  "homepage": "https://commonroom.io",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Common Room",
+    "shortDescription": "Find contacts and accounts",
+    "longDescription": "Embed complete buyer intelligence directly within ChatGPT. Research accounts and contacts, surface buying signals, and browse activity history - all through natural language. Build prospect lists of net-new companies by industry, size, tech stack, or location. Filter and sort contacts by segment, role, lead score, or website visits. Every result is grounded in real context, real prioritization, and real revenue opportunity directly from your CRM fields, scores, enrichment, and signals - so you always know what's actually happening in your accounts.\n\nYou can use the Common Room MCP to:\n\n Account Research:\n \"Tell me about Datadog and create a plan on how to approach the account\"\n\n Contact Lookup:\n \"Research jane.doe@company.com using Common Room\"\n\n Prospect:\n \"Find SaaS companies in the US using Snowflake with 200–1000 employees\"\n\n Filter by Segment and Role:\n \"Show me all Economic Buyers in my 'Champions changing jobs' segment\"\n\n Surface High-Intent Contacts:\n \"Find contacts at ICP companies who have visited our pricing page this week\"\n\n Track Website Visitors:\n \"Who visited our pricing page in the last 7 days?\"",
+    "developerName": "Common Room",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://commonroom.io",
+    "privacyPolicyURL": "https://www.commonroom.io/privacy-policy/",
+    "termsOfServiceURL": "https://www.commonroom.io/terms-of-use/",
+    "defaultPrompt": "Help me build a plan to approach the Northstar Metrics account",
+    "screenshots": []
+  }
+}

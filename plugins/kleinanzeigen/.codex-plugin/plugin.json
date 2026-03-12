@@ -1,0 +1,27 @@
+{
+  "name": "kleinanzeigen",
+  "version": "2.0.0",
+  "description": "Kleinanzeigen: Kauf & Verkauf",
+  "author": {
+    "name": "kleinanzeigen.de GmbH",
+    "url": "https://www.kleinanzeigen.de/"
+  },
+  "homepage": "https://www.kleinanzeigen.de/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Kleinanzeigen",
+    "shortDescription": "Kleinanzeigen: Kauf & Verkauf",
+    "longDescription": "Finde, was du liebst – verkaufe, was du nicht mehr brauchst. Kleinanzeigen ist Deutschlands Nr. 1 für Anzeigen. Millionen nutzen es bereits.",
+    "developerName": "kleinanzeigen.de GmbH",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.kleinanzeigen.de/",
+    "privacyPolicyURL": "https://themen.kleinanzeigen.de/datenschutzerklaerung/",
+    "termsOfServiceURL": "https://themen.kleinanzeigen.de/nutzungsbedingungen/",
+    "defaultPrompt": "Ich bin auf der Suche nach einem gebrauchten Sportwagen. Er sollte zwischen",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "adobe-acrobat",
+  "version": "1.0.0",
+  "description": "Edit and organize PDFs easily",
+  "author": {
+    "url": "https://www.adobe.com/acrobat.html"
+  },
+  "homepage": "https://www.adobe.com/acrobat.html",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Adobe Acrobat",
+    "shortDescription": "Edit and organize PDFs easily",
+    "longDescription": "Edit and organize PDFs easily",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.adobe.com/acrobat.html",
+    "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
+    "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
+    "defaultPrompt": "@Adobe Acrobat create a job application PDF by merging these docs",
+    "screenshots": []
+  }
+}

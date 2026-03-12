@@ -1,0 +1,27 @@
+{
+  "name": "retell-ai",
+  "version": "1.0.0",
+  "description": "Build and deploy voice agents",
+  "author": {
+    "name": "Retell AI, Inc",
+    "url": "https://www.retellai.com"
+  },
+  "homepage": "https://www.retellai.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Retell AI",
+    "shortDescription": "Build and deploy voice agents",
+    "longDescription": "Build, deploy, and manage AI voice agents that handle phone calls for your business. Retell powers call center automation for receptionists, sales outreach, collections, customer support, and more. Use ChatGPT to create agent prompts, configure call transfers, edit settings, and deploy to live phone numbers - all conversationally.",
+    "developerName": "Retell AI, Inc",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.retellai.com",
+    "privacyPolicyURL": "https://www.retellai.com/legal/privacy-policy",
+    "termsOfServiceURL": "https://www.retellai.com/legal/terms-of-service",
+    "defaultPrompt": "Build me an AI receptionist for my dental clinic",
+    "screenshots": []
+  }
+}

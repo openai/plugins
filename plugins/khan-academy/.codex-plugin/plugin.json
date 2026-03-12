@@ -1,0 +1,25 @@
+{
+  "name": "khan-academy",
+  "version": "1.0.0",
+  "description": "Create K-12 math exercises",
+  "author": {
+    "url": "https://www.khanacademy.org"
+  },
+  "homepage": "https://www.khanacademy.org",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Khan Academy",
+    "shortDescription": "Create K-12 math exercises",
+    "longDescription": "Create K-12 math exercises",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.khanacademy.org",
+    "privacyPolicyURL": "https://www.khanacademy.org/about/privacy-policy",
+    "termsOfServiceURL": "https://www.khanacademy.org/about/docs/khan-academy-terms-of-service",
+    "defaultPrompt": "@Khan Academy 10 problems on fractions",
+    "screenshots": []
+  }
+}

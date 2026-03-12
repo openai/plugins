@@ -1,0 +1,27 @@
+{
+  "name": "jerry-ai-car-insurance-care",
+  "version": "2.0.0",
+  "description": "Insurance & Repair Estimates",
+  "author": {
+    "name": "Jerry Services, Inc",
+    "url": "jerry.ai"
+  },
+  "homepage": "jerry.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Jerry.ai Car Insurance & Care",
+    "shortDescription": "Insurance & Repair Estimates",
+    "longDescription": "Jerry helps you make confident decisions about car insurance and repairs with personalized data from repair shops and insurance providers.",
+    "developerName": "Jerry Services, Inc",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "jerry.ai",
+    "privacyPolicyURL": "https://jerry.ai/privacy-policy/",
+    "termsOfServiceURL": "https://jerry.ai/terms-of-use/",
+    "defaultPrompt": "Jerry, get me estimates for front brake pads on a 2021 Corolla in Palo Alto",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "genspark-ai-slides",
+  "version": "1.0.0",
+  "description": "professional presentations",
+  "author": {
+    "name": "Mainfunc PTE.LTD",
+    "url": "https://www.genspark.ai"
+  },
+  "homepage": "https://www.genspark.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Genspark AI Slides",
+    "shortDescription": "professional presentations",
+    "longDescription": "Create professional presentations instantly with AI. Generate beautiful slides from any topic or content.",
+    "developerName": "Mainfunc PTE.LTD",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.genspark.ai",
+    "privacyPolicyURL": "https://mainfunc.ai/privacy",
+    "termsOfServiceURL": "https://mainfunc.ai/terms",
+    "defaultPrompt": "Create a slideshow about climate change with 3 slides",
+    "screenshots": []
+  }
+}

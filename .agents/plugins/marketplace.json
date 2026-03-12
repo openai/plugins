@@ -1,86 +1,2135 @@
 {
     "name": "openai-curated",
-    "plugins":
-    [
+    "plugins": [
         {
             "name": "linear",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/linear"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "google-calendar",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/google-calendar"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "gmail",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/gmail"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "google-docs",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/google-docs"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "google-sheets",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/google-sheets"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "slack",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/slack"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "teams",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/teams"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "sharepoint",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/sharepoint"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "outlook-email",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/outlook-email"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         },
         {
             "name": "outlook-calendar",
-            "source":
-            {
+            "source": {
                 "source": "local",
                 "path": "./plugins/outlook-calendar"
-            }
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "accuweather",
+            "source": {
+                "source": "local",
+                "path": "./plugins/accuweather"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "ace-knowledge-graph",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ace-knowledge-graph"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "ace-quiz-maker",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ace-quiz-maker"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "adobe-acrobat",
+            "source": {
+                "source": "local",
+                "path": "./plugins/adobe-acrobat"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "adobe-express",
+            "source": {
+                "source": "local",
+                "path": "./plugins/adobe-express"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "adobe-photoshop",
+            "source": {
+                "source": "local",
+                "path": "./plugins/adobe-photoshop"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "agentforce-sales",
+            "source": {
+                "source": "local",
+                "path": "./plugins/agentforce-sales"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "airtable",
+            "source": {
+                "source": "local",
+                "path": "./plugins/airtable"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "all-accor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/all-accor"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "almanac-by-passby",
+            "source": {
+                "source": "local",
+                "path": "./plugins/almanac-by-passby"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "alpaca",
+            "source": {
+                "source": "local",
+                "path": "./plugins/alpaca"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "alpic",
+            "source": {
+                "source": "local",
+                "path": "./plugins/alpic"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "amore-mall",
+            "source": {
+                "source": "local",
+                "path": "./plugins/amore-mall"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "angi",
+            "source": {
+                "source": "local",
+                "path": "./plugins/angi"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "anypdf-your-pdf-converter",
+            "source": {
+                "source": "local",
+                "path": "./plugins/anypdf-your-pdf-converter"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "apartment-list",
+            "source": {
+                "source": "local",
+                "path": "./plugins/apartment-list"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "app-6944c5105438",
+            "source": {
+                "source": "local",
+                "path": "./plugins/app-6944c5105438"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "apple-music",
+            "source": {
+                "source": "local",
+                "path": "./plugins/apple-music"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "asana",
+            "source": {
+                "source": "local",
+                "path": "./plugins/asana"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "atlassian-rovo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/atlassian-rovo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "atlys",
+            "source": {
+                "source": "local",
+                "path": "./plugins/atlys"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "autoscout24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/autoscout24"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "autotrader",
+            "source": {
+                "source": "local",
+                "path": "./plugins/autotrader"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "autotrader-2",
+            "source": {
+                "source": "local",
+                "path": "./plugins/autotrader-2"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "awesome-slides",
+            "source": {
+                "source": "local",
+                "path": "./plugins/awesome-slides"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "b12-website-generator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/b12-website-generator"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "bankrate",
+            "source": {
+                "source": "local",
+                "path": "./plugins/bankrate"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "beautiful-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/beautiful-ai"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "bible",
+            "source": {
+                "source": "local",
+                "path": "./plugins/bible"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "biorender",
+            "source": {
+                "source": "local",
+                "path": "./plugins/biorender"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "bodi",
+            "source": {
+                "source": "local",
+                "path": "./plugins/bodi"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "booking-com",
+            "source": {
+                "source": "local",
+                "path": "./plugins/booking-com"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "botlab",
+            "source": {
+                "source": "local",
+                "path": "./plugins/botlab"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "botpress",
+            "source": {
+                "source": "local",
+                "path": "./plugins/botpress"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "brand24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/brand24"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "brex",
+            "source": {
+                "source": "local",
+                "path": "./plugins/brex"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "busbud",
+            "source": {
+                "source": "local",
+                "path": "./plugins/busbud"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cafe24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cafe24"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "canva",
+            "source": {
+                "source": "local",
+                "path": "./plugins/canva"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "carfax",
+            "source": {
+                "source": "local",
+                "path": "./plugins/carfax"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cargurus",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cargurus"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "carmax",
+            "source": {
+                "source": "local",
+                "path": "./plugins/carmax"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cars24",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cars24"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "circleback",
+            "source": {
+                "source": "local",
+                "path": "./plugins/circleback"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "clay",
+            "source": {
+                "source": "local",
+                "path": "./plugins/clay"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "clickup",
+            "source": {
+                "source": "local",
+                "path": "./plugins/clickup"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cloudinary",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cloudinary"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "common-room",
+            "source": {
+                "source": "local",
+                "path": "./plugins/common-room"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "conductor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/conductor"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cottages",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cottages"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "coupler-io",
+            "source": {
+                "source": "local",
+                "path": "./plugins/coupler-io"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "coursera",
+            "source": {
+                "source": "local",
+                "path": "./plugins/coursera"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "coveo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/coveo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cruise-critic",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cruise-critic"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "cube",
+            "source": {
+                "source": "local",
+                "path": "./plugins/cube"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "daloopa",
+            "source": {
+                "source": "local",
+                "path": "./plugins/daloopa"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "datacamp",
+            "source": {
+                "source": "local",
+                "path": "./plugins/datacamp"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "dealpilot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dealpilot"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "dewa",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dewa"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "docket",
+            "source": {
+                "source": "local",
+                "path": "./plugins/docket"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "donedeal",
+            "source": {
+                "source": "local",
+                "path": "./plugins/donedeal"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "doordash",
+            "source": {
+                "source": "local",
+                "path": "./plugins/doordash"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "dow-jones-factiva",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dow-jones-factiva"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "dupe",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dupe"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "edx",
+            "source": {
+                "source": "local",
+                "path": "./plugins/edx"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "egnyte",
+            "source": {
+                "source": "local",
+                "path": "./plugins/egnyte"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "expedia",
+            "source": {
+                "source": "local",
+                "path": "./plugins/expedia"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "fareharbor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/fareharbor"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "figma",
+            "source": {
+                "source": "local",
+                "path": "./plugins/figma"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "fireflies",
+            "source": {
+                "source": "local",
+                "path": "./plugins/fireflies"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "flight-network",
+            "source": {
+                "source": "local",
+                "path": "./plugins/flight-network"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "flixor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/flixor"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "function-health",
+            "source": {
+                "source": "local",
+                "path": "./plugins/function-health"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "fyxer",
+            "source": {
+                "source": "local",
+                "path": "./plugins/fyxer"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "gamma",
+            "source": {
+                "source": "local",
+                "path": "./plugins/gamma"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "genspark-ai-slides",
+            "source": {
+                "source": "local",
+                "path": "./plugins/genspark-ai-slides"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "getyourguide",
+            "source": {
+                "source": "local",
+                "path": "./plugins/getyourguide"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "granola",
+            "source": {
+                "source": "local",
+                "path": "./plugins/granola"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "hepsiemlak",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hepsiemlak"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "hex",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hex"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "heygen",
+            "source": {
+                "source": "local",
+                "path": "./plugins/heygen"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "highlevel",
+            "source": {
+                "source": "local",
+                "path": "./plugins/highlevel"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "hubspot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hubspot"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "hugging-face",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hugging-face"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "hyatt",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hyatt"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "idealista",
+            "source": {
+                "source": "local",
+                "path": "./plugins/idealista"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "imovirtual",
+            "source": {
+                "source": "local",
+                "path": "./plugins/imovirtual"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "instacart",
+            "source": {
+                "source": "local",
+                "path": "./plugins/instacart"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "internshala",
+            "source": {
+                "source": "local",
+                "path": "./plugins/internshala"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "intuit-credit-karma",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-credit-karma"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "intuit-mailchimp",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-mailchimp"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "intuit-quickbooks",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-quickbooks"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "intuit-turbotax",
+            "source": {
+                "source": "local",
+                "path": "./plugins/intuit-turbotax"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "invideo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/invideo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "is-it-safe-to-travel",
+            "source": {
+                "source": "local",
+                "path": "./plugins/is-it-safe-to-travel"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "italki-language-learning",
+            "source": {
+                "source": "local",
+                "path": "./plugins/italki-language-learning"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "jam",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jam"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "jerry-ai-car-insurance-care",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jerry-ai-car-insurance-care"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "jimdo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jimdo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "jotform",
+            "source": {
+                "source": "local",
+                "path": "./plugins/jotform"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "keybid-puls",
+            "source": {
+                "source": "local",
+                "path": "./plugins/keybid-puls"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "khan-academy",
+            "source": {
+                "source": "local",
+                "path": "./plugins/khan-academy"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "kiwi-com",
+            "source": {
+                "source": "local",
+                "path": "./plugins/kiwi-com"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "klaviyo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/klaviyo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "kleinanzeigen",
+            "source": {
+                "source": "local",
+                "path": "./plugins/kleinanzeigen"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "klook",
+            "source": {
+                "source": "local",
+                "path": "./plugins/klook"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "komoot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/komoot"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "kraken",
+            "source": {
+                "source": "local",
+                "path": "./plugins/kraken"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "legalzoom",
+            "source": {
+                "source": "local",
+                "path": "./plugins/legalzoom"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "lona",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lona"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "lovable",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lovable"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "lseg",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lseg"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "lseg-2",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lseg-2"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "lugg",
+            "source": {
+                "source": "local",
+                "path": "./plugins/lugg"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "makemytrip",
+            "source": {
+                "source": "local",
+                "path": "./plugins/makemytrip"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "malwarebytes",
+            "source": {
+                "source": "local",
+                "path": "./plugins/malwarebytes"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "mangaboom",
+            "source": {
+                "source": "local",
+                "path": "./plugins/mangaboom"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "manus",
+            "source": {
+                "source": "local",
+                "path": "./plugins/manus"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "marcopolo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/marcopolo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "meetup",
+            "source": {
+                "source": "local",
+                "path": "./plugins/meetup"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "monday-com",
+            "source": {
+                "source": "local",
+                "path": "./plugins/monday-com"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "myfitnesspal",
+            "source": {
+                "source": "local",
+                "path": "./plugins/myfitnesspal"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "na-drink-finder",
+            "source": {
+                "source": "local",
+                "path": "./plugins/na-drink-finder"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "namecheap",
+            "source": {
+                "source": "local",
+                "path": "./plugins/namecheap"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "nesha",
+            "source": {
+                "source": "local",
+                "path": "./plugins/nesha"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "netlify",
+            "source": {
+                "source": "local",
+                "path": "./plugins/netlify"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "network-solutions",
+            "source": {
+                "source": "local",
+                "path": "./plugins/network-solutions"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "norton",
+            "source": {
+                "source": "local",
+                "path": "./plugins/norton"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "okx",
+            "source": {
+                "source": "local",
+                "path": "./plugins/okx"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "omio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/omio"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "omni-analytics",
+            "source": {
+                "source": "local",
+                "path": "./plugins/omni-analytics"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "openai-certified",
+            "source": {
+                "source": "local",
+                "path": "./plugins/openai-certified"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "opentable",
+            "source": {
+                "source": "local",
+                "path": "./plugins/opentable"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "otomoto",
+            "source": {
+                "source": "local",
+                "path": "./plugins/otomoto"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "otter-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/otter-ai"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "outliner",
+            "source": {
+                "source": "local",
+                "path": "./plugins/outliner"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "paypal",
+            "source": {
+                "source": "local",
+                "path": "./plugins/paypal"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "peloton",
+            "source": {
+                "source": "local",
+                "path": "./plugins/peloton"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "pitchbook",
+            "source": {
+                "source": "local",
+                "path": "./plugins/pitchbook"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "preply-language-tutor-finder",
+            "source": {
+                "source": "local",
+                "path": "./plugins/preply-language-tutor-finder"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "priceline",
+            "source": {
+                "source": "local",
+                "path": "./plugins/priceline"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "pylon",
+            "source": {
+                "source": "local",
+                "path": "./plugins/pylon"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "quizlet",
+            "source": {
+                "source": "local",
+                "path": "./plugins/quizlet"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "ranked-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ranked-ai"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "realestate-com-au",
+            "source": {
+                "source": "local",
+                "path": "./plugins/realestate-com-au"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "recorrido",
+            "source": {
+                "source": "local",
+                "path": "./plugins/recorrido"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "redbus",
+            "source": {
+                "source": "local",
+                "path": "./plugins/redbus"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "redfin",
+            "source": {
+                "source": "local",
+                "path": "./plugins/redfin"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "replit",
+            "source": {
+                "source": "local",
+                "path": "./plugins/replit"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "retell-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/retell-ai"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "s-p-global",
+            "source": {
+                "source": "local",
+                "path": "./plugins/s-p-global"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "scite",
+            "source": {
+                "source": "local",
+                "path": "./plugins/scite"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "semrush",
+            "source": {
+                "source": "local",
+                "path": "./plugins/semrush"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "shazam",
+            "source": {
+                "source": "local",
+                "path": "./plugins/shazam"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "skyscanner",
+            "source": {
+                "source": "local",
+                "path": "./plugins/skyscanner"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "slidesgpt",
+            "source": {
+                "source": "local",
+                "path": "./plugins/slidesgpt"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "spaceship",
+            "source": {
+                "source": "local",
+                "path": "./plugins/spaceship"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "speechify",
+            "source": {
+                "source": "local",
+                "path": "./plugins/speechify"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "statsig",
+            "source": {
+                "source": "local",
+                "path": "./plugins/statsig"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "steadily",
+            "source": {
+                "source": "local",
+                "path": "./plugins/steadily"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "streak",
+            "source": {
+                "source": "local",
+                "path": "./plugins/streak"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "stripe",
+            "source": {
+                "source": "local",
+                "path": "./plugins/stripe"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "strive-pdf-generator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/strive-pdf-generator"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "stubhub",
+            "source": {
+                "source": "local",
+                "path": "./plugins/stubhub"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "talkgen",
+            "source": {
+                "source": "local",
+                "path": "./plugins/talkgen"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "target",
+            "source": {
+                "source": "local",
+                "path": "./plugins/target"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tarot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tarot"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "the-knot",
+            "source": {
+                "source": "local",
+                "path": "./plugins/the-knot"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "thefork",
+            "source": {
+                "source": "local",
+                "path": "./plugins/thefork"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "thehotelsnetwork",
+            "source": {
+                "source": "local",
+                "path": "./plugins/thehotelsnetwork"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "third-bridge",
+            "source": {
+                "source": "local",
+                "path": "./plugins/third-bridge"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "thumbtack",
+            "source": {
+                "source": "local",
+                "path": "./plugins/thumbtack"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tickersage",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tickersage"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tinman-ai",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tinman-ai"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tonita",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tonita"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tourlane",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tourlane"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tourradar",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tourradar"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "travelenie",
+            "source": {
+                "source": "local",
+                "path": "./plugins/travelenie"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tripadvisor",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tripadvisor"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "tuio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/tuio"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "turo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/turo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "uber",
+            "source": {
+                "source": "local",
+                "path": "./plugins/uber"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "uber-eats",
+            "source": {
+                "source": "local",
+                "path": "./plugins/uber-eats"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "udemy",
+            "source": {
+                "source": "local",
+                "path": "./plugins/udemy"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "unpack",
+            "source": {
+                "source": "local",
+                "path": "./plugins/unpack"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "upwork",
+            "source": {
+                "source": "local",
+                "path": "./plugins/upwork"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "vercel",
+            "source": {
+                "source": "local",
+                "path": "./plugins/vercel"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "viator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/viator"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "vio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/vio"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "vivid-seats",
+            "source": {
+                "source": "local",
+                "path": "./plugins/vivid-seats"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "wayground",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wayground"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "wednesday-app",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wednesday-app"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "wego",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wego"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "weightwatchers",
+            "source": {
+                "source": "local",
+                "path": "./plugins/weightwatchers"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "wix",
+            "source": {
+                "source": "local",
+                "path": "./plugins/wix"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zen-shopping",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zen-shopping"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zillow",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zillow"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "ziprecruiter",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ziprecruiter"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zola",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zola"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zoom",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zoom"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zoominfo",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zoominfo"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zumba",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zumba"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
+        },
+        {
+            "name": "zumper",
+            "source": {
+                "source": "local",
+                "path": "./plugins/zumper"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Productivity"
         }
     ]
 }

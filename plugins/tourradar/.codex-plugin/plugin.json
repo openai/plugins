@@ -1,0 +1,27 @@
+{
+  "name": "tourradar",
+  "version": "2.0.0",
+  "description": "Find multiday tours & packages",
+  "author": {
+    "name": "TourRadar GmbH",
+    "url": "https://www.tourradar.com"
+  },
+  "homepage": "https://www.tourradar.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "TourRadar",
+    "shortDescription": "Find multiday tours & packages",
+    "longDescription": "TourRadar offers the world’s largest selection of multi-day organized tours, river cruises, safari's and adventures worldwide connecting travelers with over 2,500 multi-day tour operators, offering 50,000+ tours and adventures in 160+ countries. We pride ourselves on a seamless, user-friendly experience.",
+    "developerName": "TourRadar GmbH",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.tourradar.com",
+    "privacyPolicyURL": "https://www.tourradar.com/privacy",
+    "termsOfServiceURL": "https://www.tourradar.com/terms-conditions",
+    "defaultPrompt": "@TourRadar show me a map of the best Europe tours",
+    "screenshots": []
+  }
+}

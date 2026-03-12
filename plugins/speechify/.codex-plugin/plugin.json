@@ -1,0 +1,27 @@
+{
+  "name": "speechify",
+  "version": "1.0.0",
+  "description": "Listen with celebrity voices",
+  "author": {
+    "name": "Speechify, Inc.",
+    "url": "https://speechify.com"
+  },
+  "homepage": "https://speechify.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Speechify",
+    "shortDescription": "Listen with celebrity voices",
+    "longDescription": "Turn any text into natural speech with premium celebrity voices.\n\nUpload PDFs, paste articles, or listen to ChatGPT's responses read aloud with word-by-word highlighting. Choose from 50+ voices including Snoop Dogg, Gwyneth Paltrow, and MrBeast. Adjust speed to match your pace.\n\nIdeal for studying, accessibility, and hands-free learning across web, iOS, and Android.",
+    "developerName": "Speechify, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://speechify.com",
+    "privacyPolicyURL": "https://speechify.com/privacy",
+    "termsOfServiceURL": "https://speechify.com/terms",
+    "defaultPrompt": "summarize chapter 1 of this PDF and read it out to me using Snoop's voice",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "redbus",
+  "version": "1.0.0",
+  "description": "Inter-city Bus Search",
+  "author": {
+    "name": "redBus",
+    "url": "https://www.redbus.in"
+  },
+  "homepage": "https://www.redbus.in",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "redBus",
+    "shortDescription": "Inter-city Bus Search",
+    "longDescription": "Find buses between two cities on redBus and quickly narrow down options with filters for amenities (AC, sleeper, onboard washroom), price, departure time, and bus operator.",
+    "developerName": "redBus",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.redbus.in",
+    "privacyPolicyURL": "https://www.redbus.in/info/privacypolicy",
+    "termsOfServiceURL": "https://www.redbus.in/info/termscondition",
+    "defaultPrompt": "Search AC buses from Bangalore to Hyderabad for tomorrow evening.",
+    "screenshots": []
+  }
+}

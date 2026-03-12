@@ -1,0 +1,27 @@
+{
+  "name": "lugg",
+  "version": "1.0.0",
+  "description": "On-demand movers and trucks",
+  "author": {
+    "name": "Lugg Inc",
+    "url": "https://lugg.com"
+  },
+  "homepage": "https://lugg.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Lugg",
+    "shortDescription": "On-demand movers and trucks",
+    "longDescription": "Instant quotes for on-demand moving and delivery. Tell ChatGPT your pickup and drop-off, compare truck options with real prices, and book vetted professional movers in minutes. Furniture delivery, Marketplace pickups, storage moves, donation drop-offs, junk removal—Lugg handles it all. Same-day or scheduled, with upfront pricing. Over 1 million moves completed.",
+    "developerName": "Lugg Inc",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://lugg.com",
+    "privacyPolicyURL": "https://lugg.com/privacy",
+    "termsOfServiceURL": "https://lugg.com/terms",
+    "defaultPrompt": "I need a quote for moving apartments from Pac Heights to the Mission",
+    "screenshots": []
+  }
+}
