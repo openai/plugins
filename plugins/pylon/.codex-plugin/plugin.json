@@ -21,7 +21,7 @@
     "websiteURL": "https://www.usepylon.com/",
     "privacyPolicyURL": "https://www.usepylon.com/privacy",
     "termsOfServiceURL": "https://www.usepylon.com/terms",
-    "defaultPrompt": "Can you summarize my most recent issues?",
+    "defaultPrompt": "Can you summarize my most recent issues",
     "screenshots": []
   }
 }

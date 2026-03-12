@@ -19,7 +19,7 @@
     "websiteURL": "https://daloopa.com/",
     "privacyPolicyURL": "https://daloopa.com/privacy-policy-2",
     "termsOfServiceURL": "https://daloopa.com/terms-of-use",
-    "defaultPrompt": "@Daloopa can you give an overview for NVDA?",
+    "defaultPrompt": "can you give an overview for NVDA",
     "screenshots": []
   }
 }

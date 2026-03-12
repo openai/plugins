@@ -21,7 +21,7 @@
     "websiteURL": "https://www.klaviyo.com/",
     "privacyPolicyURL": "https://privacy.klaviyo.com/policies/en/",
     "termsOfServiceURL": "https://www.klaviyo.com/legal/terms-of-service",
-    "defaultPrompt": "Analyze my replenishment flow",
+    "defaultPrompt": "Analyze replenishment flow",
     "screenshots": []
   }
 }

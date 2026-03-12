@@ -21,7 +21,7 @@
     "websiteURL": "https://nesha.ai",
     "privacyPolicyURL": "https://nesha.ai/privacy-policy",
     "termsOfServiceURL": "https://nesha.ai/terms-of-service",
-    "defaultPrompt": "@Nesha find partners that could resell our product as part of their bundles",
+    "defaultPrompt": "find partners that could resell our product as part",
     "screenshots": []
   }
 }

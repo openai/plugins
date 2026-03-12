@@ -19,7 +19,7 @@
     "websiteURL": "https://cloudinary.com/",
     "privacyPolicyURL": "https://cloudinary.com/privacy",
     "termsOfServiceURL": "https://cloudinary.com/tou",
-    "defaultPrompt": "@Cloudinary upload this image and enable auto-tagging",
+    "defaultPrompt": "upload this image and enable auto-tagging",
     "screenshots": []
   }
 }

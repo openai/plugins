@@ -21,7 +21,7 @@
     "websiteURL": "https://www.theknot.com",
     "privacyPolicyURL": "https://www.theknotww.com/privacy-policy/",
     "termsOfServiceURL": "https://www.theknotww.com/terms-of-use/",
-    "defaultPrompt": "@The Knot Help me find Wedding florists in Savannah, GA.",
+    "defaultPrompt": "me find Wedding florists in Savannah, GA",
     "screenshots": []
   }
 }

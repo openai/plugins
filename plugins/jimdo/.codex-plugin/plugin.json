@@ -21,7 +21,7 @@
     "websiteURL": "https://www.jimdo.com?utm_source=chatgpt&utm_medium=app-store",
     "privacyPolicyURL": "https://legal.jimdo.com/hc/en-us/articles/26840490952084-Jimdo-Privacy-Notice-for-Jimdo-com",
     "termsOfServiceURL": "https://legal.jimdo.com/hc/en-us/articles/4414668143508-Jimdo-Terms-Of-Service",
-    "defaultPrompt": "@Jimdo Create a website for my photography business",
+    "defaultPrompt": "a website for my photography business",
     "screenshots": []
   }
 }

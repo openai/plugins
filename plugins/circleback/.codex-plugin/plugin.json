@@ -21,7 +21,7 @@
     "websiteURL": "https://circleback.ai",
     "privacyPolicyURL": "https://circleback.ai/privacy",
     "termsOfServiceURL": "https://circleback.ai/terms",
-    "defaultPrompt": "Have I met anyone from Initech?",
+    "defaultPrompt": "Have I met anyone from Initech",
     "screenshots": []
   }
 }

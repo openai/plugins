@@ -19,7 +19,7 @@
     "websiteURL": "https://www.stubhub.com",
     "privacyPolicyURL": "https://www.stubhub.com/legal?section=pp",
     "termsOfServiceURL": "https://www.stubhub.com/legal?section=ua",
-    "defaultPrompt": "@StubHub when are the Backstreet Boys playing in Vegas?",
+    "defaultPrompt": "when are the Backstreet Boys playing in Vegas",
     "screenshots": []
   }
 }

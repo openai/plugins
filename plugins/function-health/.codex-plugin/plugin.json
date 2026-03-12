@@ -12,7 +12,7 @@
     "longDescription": "View lab test results, ask health questions, get nutrition plans",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "@Function how is my overall health?",
+    "defaultPrompt": "how is overall health",
     "screenshots": []
   }
 }

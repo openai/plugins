@@ -19,7 +19,7 @@
     "websiteURL": "https://www.netlify.com",
     "privacyPolicyURL": "https://www.netlify.com/privacy/",
     "termsOfServiceURL": "https://www.netlify.com/legal/terms-of-use/",
-    "defaultPrompt": "@Netlify what projects do I have?",
+    "defaultPrompt": "what projects do I have",
     "screenshots": []
   }
 }

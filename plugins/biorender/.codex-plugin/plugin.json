@@ -19,7 +19,7 @@
     "websiteURL": "https://biorender.com/",
     "privacyPolicyURL": "https://biorender.com/privacy",
     "termsOfServiceURL": "https://www.biorender.com/terms-of-service",
-    "defaultPrompt": "@BioRender can you find me some GLP-1 diagram templates?",
+    "defaultPrompt": "can you find me some GLP-1 diagram templates",
     "screenshots": []
   }
 }

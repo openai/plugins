@@ -18,7 +18,7 @@
     "capabilities": [],
     "websiteURL": "https://alpaca.markets/",
     "privacyPolicyURL": "https://s3.amazonaws.com/files.alpaca.markets/disclosures/PrivacyPolicy.pdf",
-    "defaultPrompt": "Use Alpaca to help with this task.",
+    "defaultPrompt": "Use Alpaca to help with this task",
     "screenshots": []
   }
 }

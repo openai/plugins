@@ -21,7 +21,7 @@
     "websiteURL": "https://www.spglobal.com/",
     "privacyPolicyURL": "https://www.spglobal.com/en/privacy/privacy-policy-english",
     "termsOfServiceURL": "https://kensho.com/terms-of-service",
-    "defaultPrompt": "Meta revenue and net income over the last 4 quarters.",
+    "defaultPrompt": "Meta revenue and net income over the last 4 quarters",
     "screenshots": []
   }
 }

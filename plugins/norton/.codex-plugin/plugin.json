@@ -21,7 +21,7 @@
     "websiteURL": "https://norton.com/",
     "privacyPolicyURL": "https://norton.com/privacy",
     "termsOfServiceURL": "https://norton.com/legal/terms-of-use",
-    "defaultPrompt": "@Norton This free Bitcoin text just came in – scam? https://lihi.cc/s4TTF",
+    "defaultPrompt": "free Bitcoin text just came in – scam",
     "screenshots": []
   }
 }

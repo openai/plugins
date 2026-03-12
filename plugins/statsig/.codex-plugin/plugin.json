@@ -21,7 +21,7 @@
     "websiteURL": "https://statsig.com",
     "privacyPolicyURL": "https://www.statsig.com/privacy",
     "termsOfServiceURL": "https://www.statsig.com/enterprise-terms",
-    "defaultPrompt": "Analyze the results of my Statsig experiment shorter_blog_titles",
+    "defaultPrompt": "Analyze results of Statsig experiment shorter_blog_titles",
     "screenshots": []
   }
 }

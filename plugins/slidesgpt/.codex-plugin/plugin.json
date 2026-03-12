@@ -21,7 +21,7 @@
     "websiteURL": "https://slidesgpt.com",
     "privacyPolicyURL": "https://slidesgpt.com/privacy",
     "termsOfServiceURL": "https://slidesgpt.com/tos",
-    "defaultPrompt": "Create a slide about the benefits of renewable energy.",
+    "defaultPrompt": "Create a slide about the benefits of renewable energy",
     "screenshots": []
   }
 }

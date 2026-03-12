@@ -21,7 +21,7 @@
     "websiteURL": "https://toolpipe.ai/flixor",
     "privacyPolicyURL": "https://toolpipe.ai/privacy-policy",
     "termsOfServiceURL": "https://toolpipe.ai/terms-of-service",
-    "defaultPrompt": "@Flixor Recommend a few good movies",
+    "defaultPrompt": "a few good movies",
     "screenshots": []
   }
 }

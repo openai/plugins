@@ -19,7 +19,7 @@
     "websiteURL": "https://www.thefork.com",
     "privacyPolicyURL": "https://www.thefork.com/legal#PrivacyPolicy",
     "termsOfServiceURL": "https://www.thefork.com/legal#TermsOfUse",
-    "defaultPrompt": "@TheFork top restaurants in Milan",
+    "defaultPrompt": "top restaurants in Milan",
     "screenshots": []
   }
 }

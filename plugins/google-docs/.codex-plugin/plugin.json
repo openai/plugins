@@ -30,7 +30,7 @@
     "websiteURL": "https://workspace.google.com/products/docs/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
-    "defaultPrompt": "Use Google Docs context to summarize a document, draft revisions, or help me organize written content.",
+    "defaultPrompt": "summarize document, draft revisions, or organize written",
     "brandColor": "#1A73E8",
     "composerIcon": "./assets/google-docs-small.svg",
     "logo": "./assets/google-docs.png",

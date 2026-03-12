@@ -19,7 +19,7 @@
     "websiteURL": "https://www.onepeloton.com",
     "privacyPolicyURL": "https://www.onepeloton.com/privacy-policy",
     "termsOfServiceURL": "https://www.onepeloton.com/terms-of-service",
-    "defaultPrompt": "@Peloton show me details for 20 min Hip Hop Run with Matt Wilpers",
+    "defaultPrompt": "show details for 20 min Hip Hop Run with Matt",
     "screenshots": []
   }
 }

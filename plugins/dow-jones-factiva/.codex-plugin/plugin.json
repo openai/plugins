@@ -21,7 +21,7 @@
     "websiteURL": "https://www.dowjones.com/business-intelligence/factiva/",
     "privacyPolicyURL": "https://www.dowjones.com/privacy-notice/",
     "termsOfServiceURL": "https://global.factiva.com/factivalogin/tou/default.aspx?fcpil=en",
-    "defaultPrompt": "What's the latest on Nvidia's earnings and market outlook?",
+    "defaultPrompt": "What's the latest on Nvidia's earnings and market outlook",
     "screenshots": []
   }
 }

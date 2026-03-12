@@ -30,7 +30,7 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": "Use Outlook Calendar context to compare availability, propose the right event update, or help me schedule, reschedule, or cancel a meeting safely.",
+    "defaultPrompt": "compare availability, propose right event update",
     "brandColor": "#0078D4",
     "composerIcon": "./assets/outlook-calendar-small.svg",
     "logo": "./assets/outlook-calendar.svg",
