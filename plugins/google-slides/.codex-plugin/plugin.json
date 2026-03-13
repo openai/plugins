@@ -32,7 +32,9 @@
     "websiteURL": "https://workspace.google.com/products/slides/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
-    "defaultPrompt": "Use Google Slides to inspect a deck, clean up slide layouts, repair template structure, or migrate content onto a branded template.",
+    "defaultPrompt": [
+      "Inspect a deck and clean up slide layouts"
+    ],
     "brandColor": "#F9AB00",
     "composerIcon": "./assets/google-slides-small.svg",
     "logo": "./assets/google-slides.svg",
