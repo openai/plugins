@@ -1,0 +1,7 @@
+interface:
+  display_name: "Canva Translate Design"
+  short_description: "Create translated copies of designs"
+  icon_small: "./assets/canva-small.svg"
+  icon_large: "./assets/canva.svg"
+  brand_color: "#00C4CC"
+  default_prompt: "Use $canva-translate-design to create a translated copy of my Canva design in another language."

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Canva Social Resize"
+  short_description: "Resize one design for social platforms"
+  icon_small: "./assets/canva-small.svg"
+  icon_large: "./assets/canva.svg"
+  brand_color: "#00C4CC"
+  default_prompt: "Use $canva-resize-for-all-social-media to turn one Canva design into Facebook, Instagram, and LinkedIn-ready versions."

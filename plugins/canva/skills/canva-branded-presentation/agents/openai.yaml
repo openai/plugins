@@ -1,0 +1,7 @@
+interface:
+  display_name: "Canva Branded Presentation"
+  short_description: "Create on-brand decks from briefs"
+  icon_small: "./assets/canva-small.svg"
+  icon_large: "./assets/canva.svg"
+  brand_color: "#00C4CC"
+  default_prompt: "Use $canva-branded-presentation to turn my brief or Canva doc into an on-brand presentation."
