@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "stripe": {
+      "type": "streamable_http",
+      "url": "https://mcp.stripe.com"
+    }
+  }
+}

@@ -9,6 +9,8 @@
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Stripe",
