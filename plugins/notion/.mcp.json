@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "notion": {
+      "type": "streamable_http",
+      "url": "https://mcp.notion.com/mcp"
+    }
+  }
+}

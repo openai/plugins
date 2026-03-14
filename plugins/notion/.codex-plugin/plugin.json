@@ -1,0 +1,37 @@
+{
+  "name": "notion",
+  "version": "0.1.0",
+  "description": "Notion skills and the Notion MCP server packaged as a Codex plugin.",
+  "author": {
+    "name": "Notion Labs",
+    "url": "https://www.notion.so"
+  },
+  "homepage": "https://github.com/makenotion/claude-code-notion-plugin",
+  "repository": "https://github.com/makenotion/claude-code-notion-plugin",
+  "license": "MIT",
+  "keywords": [
+    "notion",
+    "knowledge-management",
+    "documentation",
+    "research",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Notion",
+    "shortDescription": "Use Notion skills and MCP in Codex",
+    "longDescription": "Use Notion skills and the hosted Notion MCP server to search, read, create, and update workspace content for knowledge capture, meeting notes, research documentation, and spec-to-implementation workflows.",
+    "developerName": "Notion Labs",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.notion.so",
+    "privacyPolicyURL": "https://www.notion.so/Privacy-Policy-3468d120cf614d4c9014c09f6adc9091",
+    "termsOfServiceURL": "https://www.notion.so/Terms-and-Conditions-1585064e256f4280a85b6e9e66910b58",
+    "defaultPrompt": "Use Notion to find the relevant workspace docs for this task, summarize the current context, and update the right page with the outcome.",
+    "screenshots": []
+  }
+}
