@@ -1,0 +1,37 @@
+{
+  "name": "ramp",
+  "version": "0.1.0",
+  "description": "Ramp skills and MCP server for vendor spend analysis and finance workflows.",
+  "author": {
+    "name": "Ramp",
+    "url": "https://ramp.com"
+  },
+  "homepage": "https://docs.ramp.com/developer-api/v1/ramp-mcp",
+  "repository": "https://github.com/ramp-public/mcp-skills",
+  "license": "MIT",
+  "keywords": [
+    "ramp",
+    "finance",
+    "vendor-analysis",
+    "spend",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Ramp",
+    "shortDescription": "Analyze vendor spend and Ramp finance data",
+    "longDescription": "Use Ramp's MCP-backed skills to analyze vendor spend, enrich vendor ownership data, and answer finance workflow questions directly from Ramp data.",
+    "developerName": "Ramp",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://ramp.com",
+    "privacyPolicyURL": "https://ramp.com/privacy-policy",
+    "termsOfServiceURL": "https://ramp.com/terms-of-service",
+    "defaultPrompt": "Use Ramp to analyze vendor spend, identify top vendors, and summarize ownership and renewal risk.",
+    "screenshots": []
+  }
+}
