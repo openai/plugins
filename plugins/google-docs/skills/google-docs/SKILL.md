@@ -1,51 +1,86 @@
 ---
 name: google-docs
-description: Summarize Google Docs documents, plan structured revisions, and help with edit-in-place writing through connected Google Docs data. Use when the user wants to inspect document structure, outline or summarize content, draft rewrites, convert notes into prose, or apply explicit edits while preserving headings and organization.
+description: Inspect and edit Google Docs documents with index-aware batch updates. Use when the user wants to read document text or structure, find paragraph indexes, rewrite sections in place, edit tables, or apply style-aware document changes with Google Docs tools.
 ---
 
 # Google Docs
 
-## Overview
+Use this guide for precise Google Docs reading, editing, and creation.
 
-Use this skill to turn document content into clear summaries, revision plans, and structured edits. Read the document first, preserve its organization, and distinguish between summarizing, rewriting, and directly editing content.
+## Required Tooling
 
-## Preferred Deliverables
+Confirm these tools are available:
+- `search_documents`
+- `get_document`
+- `get_document_text`
+- `find_text_range`
+- `get_paragraph_range`
+- `get_tables`
+- `batch_update`
 
-- Document briefs that summarize purpose, structure, and missing or weak sections.
-- Revision plans that show which headings or sections will change and why.
-- Rewritten passages that preserve the surrounding structure and audience.
+If write tooling is missing, stop and explain that the document cannot be edited safely.
+
+## Read Path
+
+- If you only know the doc title or title keywords, use `search_documents` first instead of asking for a URL.
+- Prefer `get_document_text` when you need paragraph text and indexes.
+- Use `get_document` when you need the full document structure, styles, or non-text elements.
+- Prefer `find_text_range` over hand-picked indexes when you can anchor on exact text.
+- Use `get_paragraph_range` when you have an index inside a paragraph and need its full boundaries.
+- Use `get_tables` before editing or rebuilding table content.
+- If the doc has tabs, use `get_document` to identify the right tab and carry `tab_id` through follow-up reads.
+- Re-read after substantial edits so later writes use live indexes.
 
 ## Workflow
 
-1. Read the document structure before writing. Capture the title, major headings, important sections, and any existing style or organization that should be preserved.
-2. Decide whether the request is a summary, a targeted edit, or a broader rewrite. If the scope is unclear, summarize the current state before proposing changes.
-3. For larger edits, present a revision plan before applying changes. Make the intended section-level updates easy to review.
-4. Preserve the document's structure while drafting. Keep headings, section order, and existing intent unless the user asks for a reorganization.
-5. If the user asks for a revision but not direct editing, default to a proposed rewrite or section-by-section plan.
-6. Only apply major rewrites or destructive edits when the user has clearly requested them.
+1. Read before writing.
+- Identify the exact section, heading structure, paragraph boundaries, table locations, and current formatting.
+- If the target is ambiguous, summarize the candidate section first and make the scope explicit in the response.
 
-## Write Safety
+2. Find live indexes.
+- Use `find_text_range` when you can anchor on exact text.
+- Use `get_paragraph_range` when you need the full paragraph range around an index.
+- Do not guess offsets after prior writes.
+- After many edits, call `get_document` or `get_document_text` again before the next batch.
 
-- Preserve exact section names, links, dates, and structured content from the source document unless the user asks to change them.
-- Treat long-form rewrites, deletions, and restructuring as explicit actions that should be clearly scoped.
-- If a request could be satisfied with either comments, a revision plan, or direct edits, state which path you are taking.
-- If the document has multiple sections with similar themes, identify the exact target section before editing.
+3. Build a `batch_update`.
+- All document changes go through `batch_update`.
+- IMPORTANT: `batch_update.requests` must be an array of structured request objects, even if the tool signature appears to say string[]. Do not JSON-stringify Docs API requests.
+- `batch_update.write_control` must also be an object, and not a JSON-stringified string.
+- Requests execute in order, so sequence dependent edits deliberately.
+- For concurrency-sensitive writes, prefer `write_control` with the latest `revisionId`. Set either `requiredRevisionId` or `targetRevisionId`, never both.
+- Keep unrelated changes in separate batches when possible.
 
-## Output Conventions
+4. Preserve Docs-native formatting.
+- Use heading levels and paragraph styles to organize the document.
+- Build lists with inserted text plus Docs list or paragraph styling. Do not fake bullets or numbering with literal `-`, `*`, or `1.` characters alone.
+- Do not add blank paragraphs for spacing. Use styles instead.
+- Do not leave the document unformatted unless the user explicitly asks.
 
-- Reference headings or section names when summarizing or planning changes.
-- Use concise revision plans for multi-section edits before presenting rewritten content.
-- When presenting rewrites, label the affected section so the user can compare old and new structure easily.
-- Keep rewritten text aligned with the existing audience and purpose unless the user asks to change tone or format.
-- When summarizing, lead with the main purpose of the document and then list the most important sections or unresolved gaps.
+5. Verify the write.
+- After finishing, call `get_document_text` again.
+- Confirm the text landed in the intended place and indexes still line up before ending.
 
-## Example Requests
+## Allowed `batch_update` Request Types
 
-- "Summarize this project brief and tell me what is still missing before review."
-- "Rewrite the executive summary so it is clearer and more concise."
-- "Turn these bullet notes into polished prose in the existing document style."
-- "Plan the edits needed to make the onboarding doc accurate for the new launch process."
+- Text: `replaceAllText`, `insertText`, `deleteContentRange`, `replaceNamedRangeContent`
+- Text and paragraph formatting: `updateTextStyle`, `updateParagraphStyle`, `createParagraphBullets`, `deleteParagraphBullets`
+- Named ranges: `createNamedRange`, `deleteNamedRange`
+- Images and embedded objects: `insertInlineImage`, `replaceImage`, `deletePositionedObject`
+- Tables: `insertTable`, `insertTableRow`, `insertTableColumn`, `deleteTableRow`, `deleteTableColumn`, `updateTableColumnProperties`, `updateTableCellStyle`, `updateTableRowStyle`, `mergeTableCells`, `unmergeTableCells`, `pinTableHeaderRows`
+- Document layout and structure: `updateDocumentStyle`, `updateSectionStyle`, `insertPageBreak`, `insertSectionBreak`
+- Headers, footers, and notes: `createHeader`, `deleteHeader`, `createFooter`, `deleteFooter`, `createFootnote`
+- Tabs: `addDocumentTab`, `deleteTab`, `updateDocumentTabProperties`
+- People: `insertPerson`
 
-## Light Fallback
+## Write Rules
 
-If document content is missing, say that Google Docs access may be unavailable or pointed at the wrong document and ask the user to reconnect or clarify which document should be used.
+- Preserve existing headings, links, dates, and table structure unless the user asks to change them.
+- Use multiple heading levels to organize a doc unless the user instructs otherwise.
+- Treat large rewrites, deletions, tab changes, layout changes, and table restructuring as explicit actions.
+- When similar headings or repeated text exist, identify the exact target section before editing.
+- Prefer multiple small verified batches over one large speculative batch.
+
+## Fallback
+
+If document content or write tools are unavailable, say that Google Docs access or tooling is missing and ask the user to reconnect or clarify the target document.
