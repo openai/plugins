@@ -34,8 +34,8 @@
     "defaultPrompt": [
       "What projects do I have"
     ],
-    "composerIcon": "./assets/netlify-small.svg",
-    "logo": "./assets/netlify.png",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Analyze results of Statsig experiment shorter_blog_titles"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

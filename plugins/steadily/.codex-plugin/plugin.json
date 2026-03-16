@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "How much would landlord insurance cost for 150 N Woodside"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

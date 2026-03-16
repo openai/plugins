@@ -21,6 +21,8 @@
     "defaultPrompt": [
       "What's our conversation history with Acme so"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

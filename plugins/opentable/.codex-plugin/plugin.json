@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "What restaurants near me are available tonight"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

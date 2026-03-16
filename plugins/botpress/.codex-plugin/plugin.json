@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Make recommendation agent for Jordan shoes with"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

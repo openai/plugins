@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Make me a playlist with today's latest hits"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

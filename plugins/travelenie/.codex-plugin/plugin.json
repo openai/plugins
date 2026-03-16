@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Show me my upcoming trip to Japan and Korea"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "2+1, balkonlu, otoparklı kiralık"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

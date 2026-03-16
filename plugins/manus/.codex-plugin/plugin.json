@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Make a 5 pages slides about history of AI"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

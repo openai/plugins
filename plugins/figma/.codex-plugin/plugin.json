@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Read attached PRD and create flowchart of 2FA flow"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

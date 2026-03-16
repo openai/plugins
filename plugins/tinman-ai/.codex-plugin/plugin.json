@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "I have borrower at 52% DTI who wants HELOC w/ $450/month"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

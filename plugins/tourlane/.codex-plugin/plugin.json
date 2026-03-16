@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "I want to travel to Italy next year 🏛️"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Create fresh matcha site with online store"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Let's make a birthday party invitation"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Show Starbucks foot traffic for January 2026 vs last year"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

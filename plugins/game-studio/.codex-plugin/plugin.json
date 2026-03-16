@@ -1,0 +1,46 @@
+{
+  "name": "game-studio",
+  "version": "0.1.0",
+  "description": "Design, prototype, and ship browser games with guided 2D and 3D workflows, asset pipelines, and playtesting support.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "games",
+    "phaser",
+    "threejs",
+    "react-three-fiber",
+    "gltf",
+    "rapier",
+    "webgl",
+    "sprites",
+    "playtest"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Game Studio",
+    "shortDescription": "Design, prototype, and ship browser games",
+    "longDescription": "Plan, prototype, and build browser games with guided workflows for gameplay systems, UI, asset pipelines, and playtesting across 2D and 3D projects.",
+    "developerName": "OpenAI",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Help me design and prototype a browser game with a strong core loop, clear player verbs, and the right implementation plan."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/game-studio.svg",
+    "logo": "./assets/game-studio.svg",
+    "screenshots": []
+  }
+}

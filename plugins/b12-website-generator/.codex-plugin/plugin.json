@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Create website for marketing agency called Summit Agency"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

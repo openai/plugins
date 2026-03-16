@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Búscame viajes de Santiago a Temuco para mañana"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

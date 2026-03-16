@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Want to build muscle and get stronger"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

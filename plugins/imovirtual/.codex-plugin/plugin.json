@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Show me 3 bedroom apartments in Lisbon below 1.500 eur"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

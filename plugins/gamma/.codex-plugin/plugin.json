@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Make gamma pitch deck about our new hotels, using Lavender"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

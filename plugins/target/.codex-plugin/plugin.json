@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Want to bring holiday cookies to neighbors. What"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

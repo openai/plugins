@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Can you find me some GLP-1 diagram templates"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "What is the difference between an LLC and a DBA"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

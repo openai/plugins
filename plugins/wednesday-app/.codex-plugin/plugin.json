@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find US beauty and lifestyle creators on Instagram using"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

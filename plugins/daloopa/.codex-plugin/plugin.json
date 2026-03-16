@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Can you give an overview for NVDA"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

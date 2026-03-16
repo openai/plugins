@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Competitive analysis based on Third Bridge expert network"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

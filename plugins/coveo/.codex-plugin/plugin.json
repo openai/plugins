@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Use Coveo to help with this task"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

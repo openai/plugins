@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Show hotels in Barcelona, 16-18 November for two"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

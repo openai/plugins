@@ -1,6 +1,6 @@
 ---
 name: google-calendar
-description: Manage Google Calendar scheduling, availability, and event changes through connected Google Calendar data. Use when the user wants to inspect calendars, compare availability, schedule or reschedule events, review conflicts, or prepare clear event-change proposals with timezone-aware details.
+description: Manage scheduling and conflicts in connected Google Calendar. Use when the user asks to inspect calendars, compare availability, review conflicts, or draft exact create, update, reschedule, or cancel changes with timezone-aware ranges and attendees.
 ---
 
 # Google Calendar

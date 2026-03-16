@@ -1,6 +1,6 @@
 ---
 name: sharepoint
-description: Summarize Microsoft SharePoint sites, pages, and files, extract ownership and status, and plan safe content updates through connected SharePoint data. Use when the user wants to understand a site, review document context, identify owners, or prepare a content or information-architecture change before editing.
+description: Inspect Microsoft SharePoint context and prepare safe changes. Use when the user wants site, page, or file review, ownership and status extraction, or change planning before editing content, navigation, or information architecture.
 ---
 
 # SharePoint

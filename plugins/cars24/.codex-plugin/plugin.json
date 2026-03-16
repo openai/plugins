@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Can you suggest cars under ₹10 lakh for a family of four"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

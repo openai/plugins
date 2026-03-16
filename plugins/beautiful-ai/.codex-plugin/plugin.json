@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Ai create go to market strategy presentation"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

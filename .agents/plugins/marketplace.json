@@ -2150,6 +2150,16 @@
             "installPolicy": "AVAILABLE",
             "authPolicy": "ON_INSTALL",
             "category": "Productivity"
+        },
+        {
+            "name": "game-studio",
+            "source": {
+                "source": "local",
+                "path": "./plugins/game-studio"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Coding"
         }
     ]
 }

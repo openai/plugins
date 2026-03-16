@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find me cruises to the Caribbean from Miami"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }
