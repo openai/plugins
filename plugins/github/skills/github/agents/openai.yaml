@@ -1,0 +1,12 @@
+interface:
+  display_name: "GitHub"
+  short_description: "Inspect PRs, issues, CI, and publish flows"
+  icon_small: "./assets/github-small.svg"
+  icon_large: "./assets/github.png"
+  default_prompt: "Use $github to inspect pull requests and issues, orient the repository context, and choose the right GitHub workflow."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "github"
+      description: "GitHub MCP server"

@@ -2160,6 +2160,16 @@
             "installPolicy": "AVAILABLE",
             "authPolicy": "ON_INSTALL",
             "category": "Coding"
+        },
+        {
+            "name": "github",
+            "source": {
+                "source": "local",
+                "path": "./plugins/github"
+            },
+            "installPolicy": "AVAILABLE",
+            "authPolicy": "ON_INSTALL",
+            "category": "Coding"
         }
     ]
 }
