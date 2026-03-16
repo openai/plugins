@@ -24,29 +24,29 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 
 1. Identify the target presentation.
 - If the user names a deck but does not provide a URL, search for it first.
-- If the user provides a local presentation file, import it before trying to edit slides.
+- If the user provides a local presentation file, tell the user you are importing it into native Google Slides first, then use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
 
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
 
 3. Route only when the job is narrower than general Slides work.
+- Stay in this skill for deck summaries, slide-by-slide reviews, new presentation creation, and small content edits.
 - Use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md) when the source is a local presentation file.
-- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for spacing, overlap, alignment, and visual polish.
+- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for spacing, overlap, alignment, cropping, density, or other layout cleanup where the slide image matters.
 - Use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when the repeated layout structure is broken.
 - Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when content should move onto a company or team template deck.
 
 4. Keep writes grounded.
 - Restate the target slide numbers, titles, or object IDs before making changes.
 - Prefer small `batch_update` requests over large speculative batches.
-- Use thumbnails for verification whenever the task is visual, not just textual.
+- If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
 
 ## Write Safety
 
 - Preserve slide order, titles, body text, charts, notes, and supporting evidence unless the user asks for a change.
 - Use live object IDs from the current deck state. Never guess IDs or request shapes.
-- Treat deck-wide rewrites, slide deletions, and broad template changes as explicit actions that should be clearly scoped.
-- If the user asks to edit a `.pptx`, convert it into native Google Slides first instead of promising in-place Office edits.
+- Before deleting slides, rewriting multiple slides, or changing the layout pattern across a section, state exactly which slides will change and what kind of change you are about to make.
 - Do not promise pixel-perfect fidelity when importing Office formats into Google Slides.
 
 ## Output
