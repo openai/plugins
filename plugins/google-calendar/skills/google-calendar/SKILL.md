@@ -20,10 +20,11 @@ Use this skill to turn raw calendar data into clear scheduling decisions. Keep a
 
 1. Read the relevant calendar state first so the request is grounded in actual events, calendars, and time windows.
 2. Normalize relative time language into explicit dates, times, and timezone-aware ranges before reasoning about availability.
-3. For room-finding requests, do not assume there is a reliable global room search. In this V1 flow, mine a reasonable window of past meetings, locations, and resource attendees to build a candidate room list, then compare availability on that concrete set.
-4. When notes, prep context, or missing details matter, inspect the event payload before proposing a change.
-5. Surface conflicts, transparent holds, and missing meeting details before suggesting a write.
-6. When the request is ambiguous, summarize the candidate slots or exact diff before writing anything.
+3. When the user leaves something ambiguous, inspect previous calendar data for a clear precedent before choosing a default. Follow established patterns when they are obvious, such as using the user's usual meeting duration if similar events are consistently 30 minutes.
+4. For room-finding requests, do not assume there is a reliable global room search. In this V1 flow, mine a reasonable window of past meetings, locations, and resource attendees to build a candidate room list, then compare availability on that concrete set.
+5. When notes, prep context, or missing details matter, inspect the event payload before proposing a change.
+6. Surface conflicts, transparent holds, and missing meeting details before suggesting a write.
+7. If the request is still ambiguous after checking for precedent, summarize the candidate slots or exact diff before writing anything.
 
 ## Write Safety
 
