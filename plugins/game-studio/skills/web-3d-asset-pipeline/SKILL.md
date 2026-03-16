@@ -1,6 +1,6 @@
 ---
 name: web-3d-asset-pipeline
-description: Prepare and optimize GLB or glTF assets for browser games. Use when the user needs help with model formats, Blender export, optimization, compression, texture packaging, collision proxies, LOD, or shipping 3D assets cleanly across Three.js, React Three Fiber, Babylon.js, or PlayCanvas.
+description: Prepare and optimize browser-game 3D assets. Use when the user asks for GLB or glTF shipping work, including Blender cleanup and export, collision or LOD setup, compression, texture packaging, and runtime validation.
 ---
 
 # Web 3D Asset Pipeline

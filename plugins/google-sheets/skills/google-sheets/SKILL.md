@@ -1,6 +1,6 @@
 ---
 name: google-sheets
-description: Analyze Google Sheets data, plan range-precise edits, and help with formulas or tabular transformations through connected Google Sheets data. Use when the user wants to inspect tabs or ranges, summarize spreadsheet contents, propose formulas, clean or restructure tables, or update cells with explicit range-level intent.
+description: Analyze and edit connected Google Sheets with range precision. Use when the user asks for tab or range inspection, concise summaries, formula planning, table cleanup, or explicit cell-range updates.
 ---
 
 # Google Sheets

@@ -1,6 +1,6 @@
 ---
 name: three-webgl-game
-description: Build 3D browser games with a concrete vanilla Three.js stack. Use when the user wants plain TypeScript or Vite control over Three.js scenes, loaders, physics, GLB assets, materials, WebGL debugging, and a clean low-chrome 3D scaffold without a React wrapper.
+description: Implement browser-game runtimes with plain Three.js. Use when the user wants imperative scene control in TypeScript or Vite with GLB assets, loaders, physics, and low-level WebGL debugging.
 ---
 
 # Three WebGL Game

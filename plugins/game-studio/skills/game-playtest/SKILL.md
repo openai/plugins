@@ -1,6 +1,6 @@
 ---
 name: game-playtest
-description: Review browser games with a structured playtest and frontend QA workflow. Use when the user wants smoke tests, FE review, screenshot-led QA, Playwright-style browser checks, or issue finding across 2D and 3D browser games, including obstructive HUD or overlay issues.
+description: Run browser-game playtests and frontend QA. Use when the user asks for smoke tests, screenshot-based verification, browser automation, HUD or overlay review, or structured issue-finding in a browser game.
 ---
 
 # Game Playtest

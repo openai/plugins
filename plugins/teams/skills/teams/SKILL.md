@@ -1,6 +1,6 @@
 ---
 name: teams
-description: Summarize Microsoft Teams chats and channels, extract action items, and draft follow-ups through connected Teams data. Use when the user wants to review a chat or channel, distill meeting discussions, identify owners and next steps, or prepare a safe reply or post without sending it by default.
+description: Summarize Microsoft Teams conversations and prepare follow-ups. Use when the user asks for chat, channel, or meeting summaries, owner and action extraction, or conversation-scoped draft replies or posts.
 ---
 
 # Teams

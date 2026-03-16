@@ -1,6 +1,6 @@
 ---
 name: outlook-calendar
-description: Compare Outlook Calendar availability, review event details, and plan safe create, update, reschedule, or cancel actions through connected Outlook calendar data. Use when the user wants to inspect a schedule, compare candidate slots, review conflicts, or prepare an exact event change before applying it.
+description: Handle scheduling flows in Outlook Calendar. Use when the user asks for availability checks, conflict review, or draft create, update, reschedule, or cancel changes with timezone-aware event times and attendee validation.
 ---
 
 # Outlook Calendar

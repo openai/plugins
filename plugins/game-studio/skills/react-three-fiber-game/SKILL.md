@@ -1,6 +1,6 @@
 ---
 name: react-three-fiber-game
-description: Build React-hosted 3D browser games with React Three Fiber and the pmndrs stack. Use when the user wants a 3D scene inside a React app, declarative scene composition, shared app state, or React-native UI coordination around a clean low-chrome 3D experience.
+description: Build React-hosted 3D browser games with React Three Fiber. Use when the user wants pmndrs-based scene composition, shared React state, and 3D HUD integration inside a React app.
 ---
 
 # React Three Fiber Game

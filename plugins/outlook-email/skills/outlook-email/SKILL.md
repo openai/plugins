@@ -1,6 +1,6 @@
 ---
 name: outlook-email
-description: Triage Outlook inboxes, summarize email threads, extract action items, and draft replies or forwards through connected Outlook data. Use when the user wants to inspect a mailbox or thread, understand the latest status, identify what still needs a response, or prepare a safe draft without sending it by default.
+description: Triage Outlook mail and draft responses. Use when the user asks to inspect an Outlook inbox or thread, summarize open actions and deadlines, or draft replies or forwards before send confirmation.
 ---
 
 # Outlook Email

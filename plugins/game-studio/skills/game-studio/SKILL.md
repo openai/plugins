@@ -1,6 +1,6 @@
 ---
 name: game-studio
-description: Plan and route browser-game work with a 2D-first default. Use when the user wants help designing, implementing, asseting, or playtesting a browser game and needs the right stack, workflow, and specialist skill routing.
+description: Route early browser-game work. Use when the user needs stack selection and workflow planning across design, implementation, assets, and playtesting before moving to a specialist skill.
 ---
 
 # Game Studio
