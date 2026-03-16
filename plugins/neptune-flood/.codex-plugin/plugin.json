@@ -1,0 +1,27 @@
+{
+  "name": "neptune-flood",
+  "version": "1.0.0",
+  "description": "Quote Flood Insurance",
+  "author": {
+    "name": "Neptune Flood, Inc.",
+    "url": "neptuneflood.com"
+  },
+  "homepage": "neptuneflood.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Neptune Flood",
+    "shortDescription": "Quote Flood Insurance",
+    "longDescription": "Flooding is one of the most common and costly natural risks in the United States, yet getting a flood insurance quote has often been confusing and time consuming.\n\nThis app connects ChatGPT directly to Neptune Flood’s quoting system, allowing you to quickly retrieve real time flood insurance quote information for a specific property. Receive flood insurance pricing information within the ChatGPT conversation in seconds.\n\nThe goal is simple: make accessing flood insurance quotes faster, clearer, and easier.\nThis app provides quote information only. It does not offer advice, recommend coverage amounts, or make coverage decisions.\n\nImportant Information\n\nChatGPT is not an insurance agent, broker, or representative of Neptune Flood. The information presented is based on the details provided at the time of the quote request. This quote does not constitute a binder of coverage, an offer to insure, or a guarantee of coverage. Coverage is subject to underwriting review, eligibility requirements, policy terms, conditions, exclusions, and applicable state regulations.\n\nIf you have questions about coverage, limits, deductibles, or whether this policy is appropriate for your needs, please consult a Neptune agent or other insurance professional.\n\nQuotes are valid for sixty (60) days from the date generated, unless otherwise indicated. Pricing, eligibility, and terms are subject to change.\n\nNeptune Flood is not responsible for any reliance placed on information interpreted, summarized, or communicated by third party AI systems.",
+    "developerName": "Neptune Flood, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "neptuneflood.com",
+    "privacyPolicyURL": "https://neptuneflood.com/privacy-policy-2026",
+    "termsOfServiceURL": "https://neptuneflood.com/terms-of-service",
+    "defaultPrompt": "How much is flood insurance at 400 6th St S, St Petersburg, FL 33701?",
+    "screenshots": []
+  }
+}

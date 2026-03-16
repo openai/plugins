@@ -2160,6 +2160,139 @@
             "installPolicy": "AVAILABLE",
             "authPolicy": "ON_INSTALL",
             "category": "Coding"
+        },
+        {
+            "name": "ai-wisebase",
+            "source": {
+                "source": "local",
+                "path": "./plugins/ai-wisebase"
+            }
+        },
+        {
+            "name": "assessment-generator",
+            "source": {
+                "source": "local",
+                "path": "./plugins/assessment-generator"
+            }
+        },
+        {
+            "name": "base44",
+            "source": {
+                "source": "local",
+                "path": "./plugins/base44"
+            }
+        },
+        {
+            "name": "box",
+            "source": {
+                "source": "local",
+                "path": "./plugins/box"
+            }
+        },
+        {
+            "name": "datadog",
+            "source": {
+                "source": "local",
+                "path": "./plugins/datadog"
+            }
+        },
+        {
+            "name": "demandbase",
+            "source": {
+                "source": "local",
+                "path": "./plugins/demandbase"
+            }
+        },
+        {
+            "name": "dropbox",
+            "source": {
+                "source": "local",
+                "path": "./plugins/dropbox"
+            }
+        },
+        {
+            "name": "github",
+            "source": {
+                "source": "local",
+                "path": "./plugins/github"
+            }
+        },
+        {
+            "name": "google-drive",
+            "source": {
+                "source": "local",
+                "path": "./plugins/google-drive"
+            }
+        },
+        {
+            "name": "hubspot-legacy",
+            "source": {
+                "source": "local",
+                "path": "./plugins/hubspot-legacy"
+            }
+        },
+        {
+            "name": "linear-2",
+            "source": {
+                "source": "local",
+                "path": "./plugins/linear-2"
+            }
+        },
+        {
+            "name": "miro",
+            "source": {
+                "source": "local",
+                "path": "./plugins/miro"
+            }
+        },
+        {
+            "name": "neptune-flood",
+            "source": {
+                "source": "local",
+                "path": "./plugins/neptune-flood"
+            }
+        },
+        {
+            "name": "notion",
+            "source": {
+                "source": "local",
+                "path": "./plugins/notion"
+            }
+        },
+        {
+            "name": "sendgrid",
+            "source": {
+                "source": "local",
+                "path": "./plugins/sendgrid"
+            }
+        },
+        {
+            "name": "sider-recorder-transcriber",
+            "source": {
+                "source": "local",
+                "path": "./plugins/sider-recorder-transcriber"
+            }
+        },
+        {
+            "name": "sider-scholar",
+            "source": {
+                "source": "local",
+                "path": "./plugins/sider-scholar"
+            }
+        },
+        {
+            "name": "skywatch",
+            "source": {
+                "source": "local",
+                "path": "./plugins/skywatch"
+            }
+        },
+        {
+            "name": "slack-legacy",
+            "source": {
+                "source": "local",
+                "path": "./plugins/slack-legacy"
+            }
         }
     ]
 }

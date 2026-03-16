@@ -1,0 +1,24 @@
+{
+  "name": "github",
+  "description": "Access repositories, issues, and pull requests. Required for some features such as Codex",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://github.com/"
+  },
+  "homepage": "https://github.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "GitHub",
+    "shortDescription": "Access repositories, issues, and pull requests. Required for some features such as Codex",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/",
+    "privacyPolicyURL": "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement",
+    "defaultPrompt": "Use GitHub to help with this task.",
+    "screenshots": []
+  }
+}

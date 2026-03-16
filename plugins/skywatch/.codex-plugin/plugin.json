@@ -1,0 +1,27 @@
+{
+  "name": "skywatch",
+  "version": "1.0.0",
+  "description": "Search satellite imagery data",
+  "author": {
+    "name": "SkyWatch Space Applications Inc.",
+    "url": "https://skywatch.com"
+  },
+  "homepage": "https://skywatch.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "SkyWatch",
+    "shortDescription": "Search satellite imagery data",
+    "longDescription": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in one place. SkyWatch lets you find archive imagery by location, date, resolution, and cloud cover, compare pricing across providers, and browse available satellites and product offerings. Results include direct links to view and order imagery on SkyWatch Explore.",
+    "developerName": "SkyWatch Space Applications Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://skywatch.com",
+    "privacyPolicyURL": "https://skywatch.com/privacy/",
+    "termsOfServiceURL": "https://s3-us-west-2.amazonaws.com/skywatch-legal/SkyWatch+Terms+of+Service.pdf",
+    "defaultPrompt": "Find satellite images of the Golden Gate Bridge from the past 30 days with",
+    "screenshots": []
+  }
+}
