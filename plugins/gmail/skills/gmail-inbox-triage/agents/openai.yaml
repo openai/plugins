@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gmail Inbox Triage"
+  short_description: "Triage an inbox into action buckets"
+  default_prompt: "Use $gmail-inbox-triage to triage my inbox into urgent, needs reply soon, waiting, and FYI."
