@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://scite.ai/policy",
     "termsOfServiceURL": "https://scite.ai/terms",
     "defaultPrompt": "What's the latest research on impact  of adolescent screen time?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

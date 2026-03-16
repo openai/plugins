@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.italki.com/en/privacy",
     "termsOfServiceURL": "https://www.italki.com/en/tos",
     "defaultPrompt": "I want to practice English with native speakers.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

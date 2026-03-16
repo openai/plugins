@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.newfold.com/privacy-center",
     "termsOfServiceURL": "https://legal.newfold.com/TermsOfUse.pdf",
     "defaultPrompt": "Searching for a specific domain",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

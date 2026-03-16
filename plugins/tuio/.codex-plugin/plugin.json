@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://tuio.com/politica-de-privacidad",
     "termsOfServiceURL": "https://tuio.com/terminos-legales",
     "defaultPrompt": "What's the estimated price for insuring my 75m² rental apartment in Madrid?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

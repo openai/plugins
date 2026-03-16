@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.legalzoom.com/legal/general-terms/privacy-policy",
     "termsOfServiceURL": "https://www.legalzoom.com/legal/general-terms/terms-of-use",
     "defaultPrompt": "What is the difference between an LLC and a DBA?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

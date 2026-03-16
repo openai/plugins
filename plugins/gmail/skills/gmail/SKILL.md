@@ -1,6 +1,6 @@
 ---
 name: gmail
-description: Manage Gmail inbox triage, thread summaries, action extraction, and reply drafting through connected Gmail data. Use when the user wants to inspect a mailbox or thread, summarize messages, extract decisions and follow-ups, prepare replies or forwards, or organize messages with explicit confirmation before send, archive, or delete actions.
+description: Summarize threads and draft replies in connected Gmail. Use when the user asks to inspect a Gmail mailbox or thread, extract decisions or follow-ups, triage urgency, or draft context-aware replies or forwards.
 ---
 
 # Gmail

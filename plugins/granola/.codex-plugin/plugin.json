@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://help.granola.ai/article/privacy-policy",
     "termsOfServiceURL": "https://help.granola.ai/article/platform-terms-of-service",
     "defaultPrompt": "summarize what happened during the Hearthbase deal between april and august",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

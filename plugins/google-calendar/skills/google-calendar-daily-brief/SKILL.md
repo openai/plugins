@@ -1,6 +1,6 @@
 ---
 name: google-calendar-daily-brief
-description: Create a polished, human-readable day brief from Google Calendar events. Use when the user asks for a summary of today, tomorrow, a specific day, "my schedule", "my day", an agenda, or a calendar brief and the Google Calendar app/connector from this plugin is available.
+description: Build polished one-day Google Calendar briefs. Use when the user asks for today, tomorrow, or a specific date summary with an agenda, conflict flags, free windows, remaining-meeting readouts, or a calendar brief, and the Google Calendar connector is available.
 ---
 
 # Google Calendar Daily Brief

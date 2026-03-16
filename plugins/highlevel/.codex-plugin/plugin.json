@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.gohighlevel.com/privacy-policy",
     "termsOfServiceURL": "https://www.gohighlevel.com/terms-of-service",
     "defaultPrompt": "@HighLevel give me an overview of how things have been for the last month",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

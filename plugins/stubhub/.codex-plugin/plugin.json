@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.stubhub.com/legal?section=pp",
     "termsOfServiceURL": "https://www.stubhub.com/legal?section=ua",
     "defaultPrompt": "@StubHub when are the Backstreet Boys playing in Vegas?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

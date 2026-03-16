@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.doordash.com/privacy/",
     "termsOfServiceURL": "https://www.doordash.com/terms/",
     "defaultPrompt": "@DoorDash get me ingredients for apple pie",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

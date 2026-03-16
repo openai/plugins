@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://quizlet.com/privacy",
     "termsOfServiceURL": "https://quizlet.com/tos",
     "defaultPrompt": "@Quizlet Create flashcards on photosynthesis",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

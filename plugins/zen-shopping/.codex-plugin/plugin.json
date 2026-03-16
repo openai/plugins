@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://seekist.ai/privacy",
     "termsOfServiceURL": "https://seekist.ai/terms",
     "defaultPrompt": "@Zen Shopping Pick a wireless office mouse under $50, silent model",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

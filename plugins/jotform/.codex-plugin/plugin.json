@@ -19,6 +19,8 @@
     "websiteURL": "https://www.jotform.com",
     "privacyPolicyURL": "https://www.jotform.com/privacy",
     "defaultPrompt": "Use Jotform to help with this task.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

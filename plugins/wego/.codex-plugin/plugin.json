@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://company.wego.com/data-privacy-policy/",
     "termsOfServiceURL": "https://company.wego.com/terms-of-service/",
     "defaultPrompt": "Show me round-trip flights from Dubai to London next weekend",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

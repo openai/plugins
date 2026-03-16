@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.commonroom.io/privacy-policy/",
     "termsOfServiceURL": "https://www.commonroom.io/terms-of-use/",
     "defaultPrompt": "Help me build a plan to approach the Northstar Metrics account",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

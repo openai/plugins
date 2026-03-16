@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.redbus.in/info/privacypolicy",
     "termsOfServiceURL": "https://www.redbus.in/info/termscondition",
     "defaultPrompt": "Search AC buses from Bangalore to Hyderabad for tomorrow evening.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

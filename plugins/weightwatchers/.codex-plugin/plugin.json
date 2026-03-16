@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.weightwatchers.com/us/privacy/policy",
     "termsOfServiceURL": "https://www.weightwatchers.com/us/termsandconditions",
     "defaultPrompt": "I am taking a GLP-1, what should I make for dinner?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

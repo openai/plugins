@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
     "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
     "defaultPrompt": "@Adobe Express let's make a birthday party invitation",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

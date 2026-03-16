@@ -13,6 +13,8 @@
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": "@Uber get me a ride to my first meeting",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -1,6 +1,6 @@
 ---
 name: google-sheets
-description: Analyze and edit connected Google Sheets spreadsheets. Use when the user wants to find a spreadsheet, inspect tabs or ranges, search rows, propose formulas, clean or restructure tables, or make precise spreadsheet edits.
+description: Analyze and edit connected Google Sheets with range precision. Use when the user wants to find a spreadsheet, inspect tabs or ranges, search rows, plan formulas, clean or restructure tables, write concise summaries, or make explicit cell-range updates.
 ---
 
 # Google Sheets

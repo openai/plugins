@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://toolpipe.ai/privacy-policy",
     "termsOfServiceURL": "https://toolpipe.ai/terms-of-service",
     "defaultPrompt": "@Flixor Recommend a few good movies",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.makemytrip.com/legal/in/eng/privacy_policy.html",
     "termsOfServiceURL": "https://www.makemytrip.com/legal/in/eng/user_agreement.html",
     "defaultPrompt": "Show me Hotels for Goa.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

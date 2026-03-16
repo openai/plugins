@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.tourradar.com/privacy",
     "termsOfServiceURL": "https://www.tourradar.com/terms-conditions",
     "defaultPrompt": "@TourRadar show me a map of the best Europe tours",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

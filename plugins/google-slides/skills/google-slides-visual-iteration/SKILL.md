@@ -1,6 +1,6 @@
 ---
 name: google-slides-visual-iteration
-description: Iteratively inspect and polish connected Google Slides presentations in Codex using slide thumbnails plus raw Slides edits. Use when a user asks to fix spacing, alignment, overlap, crowding, hierarchy, or deck-wide visual consistency in Google Slides, especially when the work should follow a thumbnail -> diagnose -> batch_update -> re-thumbnail verification loop.
+description: Iteratively improve connected Google Slides visuals. Use when the user asks for spacing, alignment, overlap, crowding, or consistency fixes through thumbnail diagnosis, batch_update edits, and re-thumbnail verification.
 ---
 
 # Google Slides Visual Iteration

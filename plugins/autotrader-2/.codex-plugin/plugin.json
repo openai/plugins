@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.autotrader.com/legal/privacy-statement",
     "termsOfServiceURL": "https://www.autotrader.com/legal/visitor-agreement",
     "defaultPrompt": "Find me an orange Bronco",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

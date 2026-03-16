@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://passby.com/privacy/",
     "termsOfServiceURL": "https://passby.com/terms-conditions/",
     "defaultPrompt": "Show me Starbucks foot traffic for January 2026 compared to the last year",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

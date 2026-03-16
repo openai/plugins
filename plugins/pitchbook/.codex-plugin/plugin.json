@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.pitchbook.com/privacy-policy",
     "termsOfServiceURL": "https://www.pitchbook.com/terms-of-use",
     "defaultPrompt": "Use PitchBook to help with this task.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

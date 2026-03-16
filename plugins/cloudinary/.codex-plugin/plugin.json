@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://cloudinary.com/privacy",
     "termsOfServiceURL": "https://cloudinary.com/tou",
     "defaultPrompt": "@Cloudinary upload this image and enable auto-tagging",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

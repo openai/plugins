@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.opentable.com/c/legal/privacy-policy",
     "termsOfServiceURL": "https://www.opentable.com/c/legal/terms-and-conditions",
     "defaultPrompt": "@OpenTable what restaurants near me are available tonight?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

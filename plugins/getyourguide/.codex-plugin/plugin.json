@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.getyourguide.com/c/privacy-policy/",
     "termsOfServiceURL": "https://www.getyourguide.com/c/general-terms-and-conditions/",
     "defaultPrompt": "Top activities in Italy",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://privacy.klaviyo.com/policies/en/",
     "termsOfServiceURL": "https://www.klaviyo.com/legal/terms-of-service",
     "defaultPrompt": "Analyze my replenishment flow",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

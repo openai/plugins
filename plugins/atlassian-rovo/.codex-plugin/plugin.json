@@ -19,6 +19,8 @@
     "websiteURL": "https://www.atlassian.com",
     "privacyPolicyURL": "https://www.atlassian.com/legal/privacy-policy",
     "defaultPrompt": "@Atlassian Rovo create Jira tasks in project Vita MVP with the product spec details",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

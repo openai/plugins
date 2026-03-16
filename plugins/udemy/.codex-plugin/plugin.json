@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.udemy.com/terms/privacy/",
     "termsOfServiceURL": "https://www.udemy.com/terms/",
     "defaultPrompt": "I want to learn Python by building real projects.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

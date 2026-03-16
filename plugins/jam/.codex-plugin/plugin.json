@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://jam.dev/privacy",
     "termsOfServiceURL": "https://jam.dev/terms-of-service",
     "defaultPrompt": "@Jam what does this bug report show?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

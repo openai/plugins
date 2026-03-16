@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://mainfunc.ai/privacy",
     "termsOfServiceURL": "https://mainfunc.ai/terms",
     "defaultPrompt": "Create a slideshow about climate change with 3 slides",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

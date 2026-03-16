@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://www.carfax.com/company/privacy-statement",
     "termsOfServiceURL": "https://www.carfax.com/company/terms-of-use",
     "defaultPrompt": "Find me used hybrid cars for sale within 50 miles of Stockton, CA",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

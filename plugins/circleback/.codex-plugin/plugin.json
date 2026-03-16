@@ -22,6 +22,8 @@
     "privacyPolicyURL": "https://circleback.ai/privacy",
     "termsOfServiceURL": "https://circleback.ai/terms",
     "defaultPrompt": "Have I met anyone from Initech?",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

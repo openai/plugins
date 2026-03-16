@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://stripe.com/privacy",
     "termsOfServiceURL": "https://stripe.com/legal/ssa",
     "defaultPrompt": "Use Stripe to help with this task.",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

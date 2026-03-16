@@ -20,6 +20,8 @@
     "privacyPolicyURL": "https://www.canva.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://www.canva.com/policies/terms-of-use/",
     "defaultPrompt": "@Canva create some social media posts based on our October campaign brief",
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }
