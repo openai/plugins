@@ -1,5 +1,8 @@
 {
   "name": "openai-curated",
+  "interface": {
+    "displayName": "ChatGPT Official"
+  },
   "plugins": [
     {
       "name": "linear",

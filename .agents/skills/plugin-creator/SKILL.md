@@ -41,6 +41,7 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Always creates `/<parent-plugin-directory>/<plugin-name>/.codex-plugin/plugin.json`.
 - Fills the manifest with the full schema shape, placeholder values, and the complete `interface` section.
 - Creates or updates `<repo-root>/.agents/plugins/marketplace.json` when `--with-marketplace` is set.
+  - If the marketplace file does not exist yet, seed top-level `name` plus `interface.displayName` placeholders before adding the first plugin entry.
 - `<plugin-name>` is normalized using skill-creator naming rules:
   - `My Plugin` → `my-plugin`
   - `My--Plugin` → `my-plugin`
@@ -57,7 +58,9 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 ## Marketplace workflow
 
 - `marketplace.json` always lives at `<repo-root>/.agents/plugins/marketplace.json`.
+- Marketplace root metadata supports top-level `name` plus optional `interface.displayName`.
 - Treat plugin order in `plugins[]` as render order in Codex. Append new entries unless a user explicitly asks to reorder the list.
+- `displayName` belongs inside the marketplace `interface` object, not individual `plugins[]` entries.
 - Each generated marketplace entry must include all of:
   - `installPolicy`
   - `authPolicy`
@@ -73,7 +76,7 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Allowed `authPolicy` values:
   - `ON_INSTALL`
   - `ON_USE`
-- The generated entry shape is:
+- The generated plugin entry shape is:
 
 ```json
 {
@@ -89,7 +92,30 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 ```
 
 - Use `--force` only when intentionally replacing an existing marketplace entry for the same plugin name.
-- If `<repo-root>/.agents/plugins/marketplace.json` does not exist yet, create it with a top-level `"name"` placeholder and a `plugins` array, then add the new entry.
+- If `<repo-root>/.agents/plugins/marketplace.json` does not exist yet, create it with top-level `"name"`, an `"interface"` object containing `"displayName"`, and a `plugins` array, then add the new entry.
+
+- For a brand-new marketplace file, the root object should look like:
+
+```json
+{
+  "name": "[TODO: marketplace-name]",
+  "interface": {
+    "displayName": "[TODO: Marketplace Display Name]"
+  },
+  "plugins": [
+    {
+      "name": "plugin-name",
+      "source": {
+        "source": "local",
+        "path": "./plugins/plugin-name"
+      },
+      "installPolicy": "AVAILABLE",
+      "authPolicy": "ON_INSTALL",
+      "category": "Productivity"
+    }
+  ]
+}
+```
 
 ## Required behavior
 
@@ -97,6 +123,7 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Do not remove required structure; keep `.codex-plugin/plugin.json` present.
 - Keep manifest values as placeholders until a human or follow-up step explicitly fills them.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
+- Preserve any existing marketplace `interface.displayName`; when updating an older marketplace file, move legacy top-level `display_name` or `displayName` into `interface.displayName`.
 - When generating marketplace entries, always write `installPolicy`, `authPolicy`, and `category` even if their values are defaults.
 - Keep marketplace `source.path` relative to repo root as `./plugins/<plugin-name>`.
 

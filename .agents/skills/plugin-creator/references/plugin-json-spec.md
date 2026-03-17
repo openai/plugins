@@ -95,6 +95,9 @@
 ```json
 {
   "name": "openai-curated",
+  "interface": {
+    "displayName": "ChatGPT Official"
+  },
   "plugins": [
     {
       "name": "linear",
@@ -115,7 +118,12 @@
 ### Top-level fields
 
 - `name` (`string`): Marketplace identifier or catalog name.
+- `interface` (`object`, optional): Marketplace presentation metadata.
 - `plugins` (`array`): Ordered plugin entries. This order determines how Codex renders plugins.
+
+### `interface` fields
+
+- `displayName` (`string`, optional): User-facing marketplace title.
 
 ### Plugin entry fields
 
@@ -133,6 +141,9 @@
 
 ### Marketplace generation rules
 
+- `displayName` belongs under the top-level `interface` object, not individual plugin entries.
+- When creating a new marketplace file from scratch, seed `interface.displayName` alongside top-level `name`.
+- When updating an older marketplace file, migrate legacy top-level `display_name` or `displayName` into `interface.displayName`.
 - Always include `installPolicy`, `authPolicy`, and `category` on every generated or updated plugin entry.
 - Append new entries unless the user explicitly requests reordering.
 - Replace an existing entry for the same plugin only when overwrite is intentional.
