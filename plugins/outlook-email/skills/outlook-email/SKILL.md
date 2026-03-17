@@ -1,19 +1,39 @@
 ---
 name: outlook-email
-description: Triage Outlook mail and draft responses. Use when the user asks to inspect an Outlook inbox or thread, summarize open actions and deadlines, or draft replies or forwards before send confirmation.
+description: Triage Outlook mail, extract tasks, clean up subscriptions, and draft responses. Use when the user asks to inspect an Outlook inbox or thread, summarize open actions and deadlines, clean up newsletters, draft replies or forwards, or organize mailbox follow-up work before any send or cleanup action.
 ---
 
 # Outlook Email
 
 ## Overview
 
-Use this skill to turn Outlook inbox and thread context into clear summaries, action lists, and ready-to-review drafts. Read the thread first, preserve recipients and message intent, and treat sending as a separate explicit step.
+Use this skill to turn Outlook inbox and thread context into clear summaries, action lists, and ready-to-review drafts. Prefer Outlook-native list and search flows to build a shortlist, expand only the messages that matter, and treat mailbox mutations as separate explicit actions.
 
 ## Preferred Deliverables
 
 - Thread briefs that capture the latest status, decisions, deadlines, and next actions.
 - Inbox triage summaries that group messages by urgency, follow-up state, or owner.
 - Draft replies or forwards that are ready to review before sending.
+- Task and commitment summaries that identify owner, due date, blocker, and likely next step.
+- Subscription-cleanup plans that separate unsubscribe, archive, and mailbox-organization actions.
+
+## Workflow Skills
+
+| Workflow | Skill |
+| --- | --- |
+| Inbox triage, urgency ranking, and reply-needed detection | [../outlook-email-inbox-triage/SKILL.md](../outlook-email-inbox-triage/SKILL.md) |
+| Reply drafting, reply-all decisions, and send-vs-draft handling | [../outlook-email-reply-drafting/SKILL.md](../outlook-email-reply-drafting/SKILL.md) |
+| Action-item, deadline, and commitment extraction | [../outlook-email-task-extraction/SKILL.md](../outlook-email-task-extraction/SKILL.md) |
+| Newsletter and subscription cleanup | [../outlook-email-subscription-cleanup/SKILL.md](../outlook-email-subscription-cleanup/SKILL.md) |
+
+## Outlook Reading Pattern
+
+1. Prefer `list_messages` or `search_messages` to build the first-pass shortlist. These calls already return rich enough fields for most inbox navigation and thread-selection tasks.
+2. Use `fetch_message` or `fetch_messages_batch` only when the user explicitly needs fuller body content, longer context, or tighter evidence for task extraction.
+3. Use `list_attachments` and `fetch_attachment` when attachment metadata or file contents change the answer.
+4. Use draft-first actions for write preparation: `create_reply_draft`, `create_forward_draft`, or `draft_email`.
+5. Use mailbox-organization actions only with clear user intent: `mark_email_read_state`, `move_email`, `set_message_categories`, `create_category`, `create_mail_folder`.
+6. For newsletter cleanup, inspect `get_unsubscribe_info` before assuming a safe unsubscribe path. `unsubscribe_via_mailto` only covers `mailto:` targets.
 
 ## Workflow
 
@@ -32,6 +52,17 @@ Use this skill to turn Outlook inbox and thread context into clear summaries, ac
 13. Before forwarding, confirm that the source message match is unique enough for the requested description. If the user refers to "that email" or describes a message indirectly, verify there is exactly one plausible mailbox match or stop and ask.
 14. Before forwarding to a named person, confirm that the recipient identity is unique enough in mailbox context. If multiple plausible addresses exist for that person, stop and ask which one to use.
 15. If the forward target and source message were inferred from search rather than directly specified by message ID or exact address, say what you matched before sending.
+
+## What Stays In The Base Skill
+
+Keep these workflows in the base Outlook Email skill instead of splitting them further for now:
+
+- mailbox search and thread summarization
+- forwarding when it is part of a broader mailbox task
+- attachment extraction that supports triage or task extraction
+- automated follow-up planning after a thread is understood
+- commitment tracking across several related messages
+- handoffs to Outlook Calendar, SharePoint, or other Microsoft surfaces when email turns into scheduling or document work
 
 ## Write Safety
 

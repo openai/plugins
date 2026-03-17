@@ -1,7 +1,7 @@
 interface:
   display_name: "Outlook Email"
-  short_description: "Triage inboxes and draft replies"
+  short_description: "Triage inboxes, extract tasks, and draft replies"
   icon_small: "./assets/outlook-email-small.svg"
   icon_large: "./assets/outlook-email.svg"
   brand_color: "#0078D4"
-  default_prompt: "Use $outlook-email to triage my inbox, summarize a thread, or draft the reply or forward I should send next."
+  default_prompt: "Use $outlook-email to triage my inbox, summarize a thread, extract the tasks I owe, clean up newsletters, or draft the reply or forward I should send next."
