@@ -51,6 +51,8 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Restate the target slide numbers, titles, or object IDs before making changes.
 - Prefer small `batch_update` requests over large speculative batches.
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
+- When supplying `objectId` values in `batch_update`, use valid Google Slides IDs that are 5-50 characters long and start with an alphanumeric character or `_`. Prefer descriptive IDs like `slide02`, `slide02_title`, or `slide02_body`; do not use very short IDs like `s2` or `i0`.
+- If you need to create a slide and edit its placeholders in the same `batch_update`, create the slide with valid placeholder ID mappings first, then reference those placeholder IDs in later requests in the same batch.
 
 ## Write Safety
 
