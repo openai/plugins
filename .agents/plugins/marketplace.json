@@ -2276,6 +2276,20 @@
         "source": "local",
         "path": "./plugins/slack-legacy"
       }
+    },
+    {
+      "name": "motherduck",
+      "source": {
+        "source": "local",
+        "path": "./plugins/motherduck"
+      }
+    },
+    {
+      "name": "quintoandar",
+      "source": {
+        "source": "local",
+        "path": "./plugins/quintoandar"
+      }
     }
   ]
 }

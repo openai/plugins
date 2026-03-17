@@ -1,0 +1,27 @@
+{
+  "name": "quintoandar",
+  "version": "1.0.0",
+  "description": "Find your ideal home",
+  "author": {
+    "name": "GRPQA Ltda.",
+    "url": "https://www.quintoandar.com.br/"
+  },
+  "homepage": "https://www.quintoandar.com.br/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "QuintoAndar",
+    "shortDescription": "Find your ideal home",
+    "longDescription": "Thousands of houses and apartments for rent and sale, and one of them could be yours.\nWith the QuintoAndar ChatGPT app, you have another simple way to find what you are looking for.\nWrite what you need, such as: \"I want to rent a two-bedroom apartment in Pinheiros for up to R$5,000\" and instantly receive a personalized selection of properties. Choose the ones that caught your attention the most and click on \"View property\" to access all the details on the QuintoAndar platform, schedule a visit, and find the place that best suits you.\nAnd if you are an owner, the process is also fast and simple: access the QuintoAndar app to list your property easily and reach thousands of interested people.",
+    "developerName": "GRPQA Ltda.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.quintoandar.com.br/",
+    "privacyPolicyURL": "https://mkt.quintoandar.com.br/aviso-de-privacidade/",
+    "termsOfServiceURL": "https://www.quintoandar.com.br/termos/",
+    "defaultPrompt": "@QuintoAndar apartments for rent with 3 bedrooms in Moema, São Paulo",
+    "screenshots": []
+  }
+}
