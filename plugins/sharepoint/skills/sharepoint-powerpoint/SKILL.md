@@ -20,7 +20,7 @@ Use this skill for `.pptx` work that starts from SharePoint and where visual fid
 ## Core Workflow
 
 1. Confirm whether the request is content-only or style-sensitive.
-2. Use the SharePoint skill to locate the exact deck and fetch the raw `.pptx`.
+2. Use the SharePoint skill to locate the exact deck and fetch the raw `.pptx` with `fetch(download_raw_file=true)`.
 3. Inspect the deck before editing:
    - slide count and order
    - available slide masters and layouts
@@ -39,7 +39,7 @@ Use this skill for `.pptx` work that starts from SharePoint and where visual fid
 6. Perform visual QA:
    - render the edited slide and adjacent slides if a render path exists
    - compare the new slide to its neighbors for background, spacing, hierarchy, and density
-7. Return to SharePoint only for upload after local QA.
+7. Return to SharePoint only for upload with `update_file` after local QA.
 8. If style fidelity cannot be validated, stop and state that clearly.
 
 ## Style Rules
@@ -91,15 +91,8 @@ Stop and report limitations when:
 - no render path exists for visual QA
 - the deck template is constrained and the only remaining option is a generic low-fidelity slide insertion
 
-## Expected Helper Scripts
+## Bundled Assets
 
-This skill should eventually be paired with scripts such as:
+This plugin does not currently bundle PowerPoint helper scripts.
 
-- `inspect_pptx.py`
-- `clone_slide.py`
-- `update_slide_text.py`
-- `extract_slide_style.py`
-- `render_pptx.py`
-- `compare_slides.py`
-
-If these scripts are missing, prefer conservative edits and state the gap.
+If local inspection, cloning, or rendering helpers are unavailable, prefer conservative edits and state the gap explicitly rather than implying a script-backed workflow exists.

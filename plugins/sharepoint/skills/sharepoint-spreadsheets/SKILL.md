@@ -16,14 +16,14 @@ If the formula itself is the task, pair this with [../sharepoint-spreadsheet-for
 1. Search or list folder items to locate the exact workbook.
 2. Prefer the exact `url` returned by `search` or `list_recent_documents` when you later call `fetch`.
 3. Fetch extracted content once to identify relevant sheets and the likely target area.
-4. Fetch the raw `.xlsx`.
+4. Fetch the raw `.xlsx` with `fetch(download_raw_file=true)`.
 5. Inspect workbook structure before editing:
    - sheet names
    - used ranges or dimensions
    - formulas
    - headers
    - the most natural insertion point
-6. Apply the edit with the `spreadsheet` skill or `openpyxl`, preserving workbook structure, formulas, and formatting.
+6. Apply the edit with workbook-aware local tooling such as `openpyxl`, preserving workbook structure, formulas, and formatting.
 7. Verify the exact inserted cells, rows, or section header after save rather than relying on a generic workbook-size change.
 8. Write the revised workbook back with `update_file` using the exact drive-root-relative path from SharePoint metadata.
 9. Confirm the SharePoint update metadata and, when possible, reopen the workbook locally to verify the targeted cells.

@@ -13,10 +13,10 @@ Use this skill for `.docx` edits that start from SharePoint. Treat the file as a
 
 1. Search for the file and confirm the exact target by title, path, and file type.
 2. Fetch extracted text once to confirm it is the right document and to locate the target section.
-3. Fetch the raw `.docx` before editing.
-4. Edit locally with the `doc` skill and `python-docx` so the original Word package remains intact.
+3. Fetch the raw `.docx` with `fetch(download_raw_file=true)` before editing.
+4. Edit locally with `python-docx` or equivalent OOXML-aware local tooling so the original Word package remains intact.
 5. Confirm that the upload path can preserve a normal styled Word package before overwriting the original.
-6. Upload the revised file back to the same SharePoint item.
+6. Write the revised file back with `update_file` using the exact drive-root-relative path from SharePoint metadata.
 7. Re-fetch and verify both:
    - the intended text or section change
    - the expected structure or styling when possible
