@@ -30,14 +30,22 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
 
-3. Route only when the job is narrower than general Slides work.
+3. Apply default creation polish when making a new presentation.
+- Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
+- Make new decks look intentionally designed by default rather than leaving them as raw black text on white slides.
+- Keep the styling lightweight: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
+- When using bullets, put each bullet on its own line. Do not combine multiple bullets into one paragraph or line.
+- Use color to create structure such as title emphasis, section separators, callout boxes, or light background shapes, but do not overdecorate the deck.
+- Preserve user control over substantive design choices. Apply a clean default look, but do not invent a heavy brand system or overly specific theme unless the user asks.
+
+4. Route only when the job is narrower than general Slides work.
 - Stay in this skill for deck summaries, slide-by-slide reviews, new presentation creation, and small content edits.
 - Use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md) when the source is a local presentation file.
 - Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for spacing, overlap, alignment, cropping, density, or other layout cleanup where the slide image matters.
 - Use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when the repeated layout structure is broken.
 - Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when content should move onto a company or team template deck.
 
-4. Keep writes grounded.
+5. Keep writes grounded.
 - Restate the target slide numbers, titles, or object IDs before making changes.
 - Prefer small `batch_update` requests over large speculative batches.
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
@@ -48,6 +56,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Use live object IDs from the current deck state. Never guess IDs or request shapes.
 - Before deleting slides, rewriting multiple slides, or changing the layout pattern across a section, state exactly which slides will change and what kind of change you are about to make.
 - Do not promise pixel-perfect fidelity when importing Office formats into Google Slides.
+- When creating a new deck, default to modest visual polish and readable structure, not a bare text dump.
 
 ## Output
 
