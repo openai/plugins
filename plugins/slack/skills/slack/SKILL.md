@@ -7,22 +7,32 @@ description: Summarize Slack channels and threads, draft post-ready Slack messag
 
 ## Overview
 
-Use this skill to turn channel and thread context into concise, post-ready Slack communication. Read the conversation first, preserve the intended audience and tone, and format drafts with Slack-native mrkdwn instead of generic prose.
+Use this skill to turn channel and thread context into concise, post-ready Slack communication. Read the conversation first, preserve the intended audience and tone, and format messages with Slack-native mrkdwn.
 
-## Preferred Deliverables
+## Related Skills
 
-- Thread briefs that capture status, blockers, decisions, and owners.
-- Channel-ready updates with clean mrkdwn and an explicit ask or next step.
-- Reply drafts that match the tone and urgency of the thread.
+| Workflow | Skill |
+| --- | --- |
+| Message composition, rewrites, drafts, and canvas-writing workflows | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
+| Bounded channel recaps and thematic Slack summaries | [../slack-channel-summarization/SKILL.md](../slack-channel-summarization/SKILL.md) |
+| Daily digests across selected channels or topics | [../slack-daily-digest/SKILL.md](../slack-daily-digest/SKILL.md) |
+| Notification triage and priority ranking across recent Slack activity | [../slack-notification-triage/SKILL.md](../slack-notification-triage/SKILL.md) |
 
-## Workflow
+## Reference Notes
 
-1. Read the channel or thread before drafting. Capture who is involved, the latest status, unresolved questions, owners, and any links or code snippets that should be preserved.
-2. Summarize the thread before writing when the conversation is long or the user asks for a response strategy first.
-3. Draft messages in Slack-native mrkdwn. Use concise blocks, clear lists, clean code fences, and deliberate mentions.
-4. If the user asks for a reply but does not explicitly ask to post, default to a draft.
-5. If the request is ambiguous, present a proposed message and explain who it is aimed at and what it is trying to accomplish.
-6. Only post to a channel or DM when the user has explicitly asked for the message to be sent.
+| Task | Reference |
+| --- | --- |
+| Slack mrkdwn formatting rules and examples | [references/mrkdwn.md](./references/mrkdwn.md) |
+
+## Support Checks
+
+- Confirm the requested action is supported before asking the user for more input. If Slack does not support the action, say so immediately and offer the closest supported path instead of collecting unnecessary details.
+- For broad Slack analysis requests, fail fast if the connector cannot establish the needed coverage or signals reliably. Do not invent channel names, imply the user is in a channel, or present workspace-wide conclusions as authoritative. Ask for a candidate list, a narrower scope, or a question that can be answered from specific channels, threads, profiles, or search results.
+
+## DM Routing
+
+- When the same message is meant for multiple specific people, first look for an existing group DM with the right people and prefer that over duplicate one-to-one DMs.
+- If there is no suitable group DM, do not silently fan out separate DMs. Ask whether the user wants individual DMs instead, or ask them to create the group DM if that is the better path and the connector cannot create it.
 
 ## Write Safety
 
