@@ -21,6 +21,7 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 | --- | --- |
 | Word document edits that must preserve `.docx` structure and styling | [../sharepoint-word-docs/SKILL.md](../sharepoint-word-docs/SKILL.md) |
 | Spreadsheet edits that must preserve workbook structure, formulas, and formatting | [../sharepoint-spreadsheets/SKILL.md](../sharepoint-spreadsheets/SKILL.md) |
+| Formula design, repair, and rollout in a SharePoint-hosted workbook | [../sharepoint-spreadsheet-formula-builder/SKILL.md](../sharepoint-spreadsheet-formula-builder/SKILL.md) |
 | PowerPoint deck edits that must preserve slide style and template fidelity | [../sharepoint-powerpoint/SKILL.md](../sharepoint-powerpoint/SKILL.md) |
 | Cross-document synthesis and maintaining shared strategy or roadmap docs | [../sharepoint-shared-doc-maintenance/SKILL.md](../sharepoint-shared-doc-maintenance/SKILL.md) |
 
@@ -33,6 +34,7 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 5. Route specialized Office workflows to the appropriate SharePoint skill:
    - `.docx` edits -> [../sharepoint-word-docs/SKILL.md](../sharepoint-word-docs/SKILL.md)
    - `.xlsx` edits -> [../sharepoint-spreadsheets/SKILL.md](../sharepoint-spreadsheets/SKILL.md)
+   - formula-heavy `.xlsx` work -> [../sharepoint-spreadsheet-formula-builder/SKILL.md](../sharepoint-spreadsheet-formula-builder/SKILL.md)
    - style-sensitive `.pptx` edits -> [../sharepoint-powerpoint/SKILL.md](../sharepoint-powerpoint/SKILL.md)
    - maintained strategy, roadmap, planning, or status docs -> [../sharepoint-shared-doc-maintenance/SKILL.md](../sharepoint-shared-doc-maintenance/SKILL.md)
 6. When using SharePoint file-update tools, prefer the drive-root-relative file path from the item's metadata rather than guessing a library-prefixed path. A file may appear under `Shared Documents/...` in the web URL while the writable API path is just the filename or another root-relative path.
@@ -47,11 +49,14 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 
 ## Write Safety
 
+- In Codex, treat the Microsoft SharePoint app tools as the primary surface. Do not rely on generic MCP resource listing for SharePoint discovery; the backend wrapper routes through direct connector tools instead.
+- Prefer the exact SharePoint result `url` from `search` or `list_recent_documents` when handing a file into `fetch`; the implementation supports browser/sharing URLs too, but that is fallback resolution logic.
 - Preserve page titles, document names, file locations, ownership details, and linked references unless the user requests a change.
 - Treat page overwrites, navigation changes, library reorganizations, and sharing or permission changes as high-impact actions that require extra clarity.
 - If multiple similarly named sites, pages, or files exist, identify the intended destination before drafting or editing.
 - When a requested change could affect linked content or downstream readers, call that out before proposing the update.
 - For document edits, preserve the file format and existing structure. Do not replace a `.docx` or other Office file with plain text output when the user expects the original document to remain editable.
+- Treat SharePoint `update_file` as a whole-file overwrite, not an in-place Office patch. For rich Office edits, make the change locally to the real package, then replace the file deliberately.
 - If one failed binary overwrite strongly suggests inline base64 transport fragility, do not keep retrying richer Office packages blindly. Reassess the connector path, reduce scope, or stop and explain the limitation.
 
 ## Output Conventions
