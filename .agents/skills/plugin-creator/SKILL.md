@@ -123,7 +123,7 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Do not remove required structure; keep `.codex-plugin/plugin.json` present.
 - Keep manifest values as placeholders until a human or follow-up step explicitly fills them.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
-- Preserve any existing marketplace `interface.displayName`; when updating an older marketplace file, move legacy top-level `display_name` or `displayName` into `interface.displayName`.
+- Preserve any existing marketplace `interface.displayName`.
 - When generating marketplace entries, always write `installPolicy`, `authPolicy`, and `category` even if their values are defaults.
 - Keep marketplace `source.path` relative to repo root as `./plugins/<plugin-name>`.
 

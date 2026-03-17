@@ -143,7 +143,6 @@
 
 - `displayName` belongs under the top-level `interface` object, not individual plugin entries.
 - When creating a new marketplace file from scratch, seed `interface.displayName` alongside top-level `name`.
-- When updating an older marketplace file, migrate legacy top-level `display_name` or `displayName` into `interface.displayName`.
 - Always include `installPolicy`, `authPolicy`, and `category` on every generated or updated plugin entry.
 - Append new entries unless the user explicitly requests reordering.
 - Replace an existing entry for the same plugin only when overwrite is intentional.

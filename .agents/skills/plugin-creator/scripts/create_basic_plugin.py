@@ -114,21 +114,10 @@ def build_default_marketplace() -> dict[str, Any]:
     }
 
 
-def normalize_marketplace_interface(payload: dict[str, Any]) -> None:
+def validate_marketplace_interface(payload: dict[str, Any]) -> None:
     interface = payload.get("interface")
-    if interface is None:
-        interface = {}
-    elif not isinstance(interface, dict):
+    if interface is not None and not isinstance(interface, dict):
         raise ValueError("marketplace.json field 'interface' must be an object.")
-
-    legacy_display_name = payload.pop("display_name", None)
-    legacy_display_name = payload.pop("displayName", legacy_display_name)
-
-    if "displayName" not in interface and isinstance(legacy_display_name, str):
-        interface["displayName"] = legacy_display_name
-
-    if interface:
-        payload["interface"] = interface
 
 
 def update_marketplace_json(
@@ -147,7 +136,7 @@ def update_marketplace_json(
     if not isinstance(payload, dict):
         raise ValueError(f"{marketplace_path} must contain a JSON object.")
 
-    normalize_marketplace_interface(payload)
+    validate_marketplace_interface(payload)
 
     plugins = payload.setdefault("plugins", [])
     if not isinstance(plugins, list):
