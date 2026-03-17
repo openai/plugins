@@ -38,6 +38,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Do not default to a plain white background with only colored title text. Use background color, tinted sections, colored bands, or colored cards so most slides have visible color surfaces, not just colored text.
 - Keep all content inside a safe content frame inset from the slide edges. If you use a full-bleed header band, footer band, or background block, size it exactly to the slide bounds rather than past them.
 - Keep slide titles to one line at most. If a title would wrap, shorten it or split the content across slides instead of using a multi-line title.
+- When content is naturally a list of points, default to bullet points instead of stacked prose lines.
 - When using bullets, put each bullet on its own line. Do not combine multiple bullets into one paragraph or line.
 - If body text, cards, or labels would run wide or tall, shorten them, reduce density, or split the content across slides instead of letting any element exceed the slide frame.
 - Use color to create structure such as title emphasis, section separators, callout boxes, light background shapes, or full-slide background treatment, but do not overdecorate the deck.
