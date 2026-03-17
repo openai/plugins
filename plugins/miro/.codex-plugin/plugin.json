@@ -1,0 +1,29 @@
+{
+  "name": "miro",
+  "version": "1.0.0",
+  "description": "Visualize and structure ideas",
+  "author": {
+    "name": "Miro",
+    "url": "https://miro.com"
+  },
+  "homepage": "https://miro.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Miro",
+    "shortDescription": "Visualize and structure ideas",
+    "longDescription": "Turn your ideas into powerful visuals and kick-off real collaboration with your team, right from the chat. Transform any conversation into a visual diagram, roadmap, user stories, wireframes, timelines and more. Whether you are mapping out systems, prioritizing a backlog, or outlining a delivery plan, use Miro as a space to build on ideas, share context, and speed up delivery with your team. Just describe what you need, and Miro creates a collaborative space your team can build on—free to use, built for how teams actually work.",
+    "developerName": "Miro",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://miro.com",
+    "privacyPolicyURL": "https://miro.com/legal/privacy-policy/",
+    "termsOfServiceURL": "https://miro.com/legal/terms-of-service/",
+    "defaultPrompt": [
+      "@Miro turn this product spec into an architecture diagram."
+    ],
+    "screenshots": []
+  }
+}

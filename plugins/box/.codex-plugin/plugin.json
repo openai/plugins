@@ -1,0 +1,26 @@
+{
+  "name": "box",
+  "description": "Search and reference your documents",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://www.box.com/home"
+  },
+  "homepage": "https://www.box.com/home",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Box",
+    "shortDescription": "Search and reference your documents",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.box.com/home",
+    "privacyPolicyURL": "https://www.box.com/legal/privacypolicy",
+    "defaultPrompt": [
+      "Use Box to help with this task."
+    ],
+    "screenshots": []
+  }
+}

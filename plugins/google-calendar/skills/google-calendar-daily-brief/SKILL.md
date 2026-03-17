@@ -1,20 +1,25 @@
 ---
 name: google-calendar-daily-brief
-description: Build polished one-day Google Calendar briefs. Use when the user asks for today, tomorrow, or a specific date summary with an agenda, conflict flags, free windows, or remaining-meeting readouts, and the Google Calendar connector is available.
+description: Build polished one-day Google Calendar briefs. Use when the user asks for today, tomorrow, or a specific date summary with an agenda, conflict flags, free windows, remaining-meeting readouts, or a calendar brief, and the Google Calendar connector is available.
 ---
 
 # Google Calendar Daily Brief
 
 ## Overview
 
-Use this skill to turn one day of Google Calendar events into a structured daily brief that reads like an executive agenda instead of a raw event dump. Use the Google Calendar app from this plugin for the source data, then use the bundled formatter to keep the output shape stable.
+Use this skill to turn one day of Google Calendar events into a readable daily brief instead of a raw event dump. Use the Google Calendar app from this plugin for the source data, then use the bundled formatter as the default rendering path.
 
 ## Workflow
 
 1. Resolve the date window explicitly in the user's timezone.
 2. Fetch the day's events through the Google Calendar app/connector for the relevant calendar. Default to `calendar_id=primary` unless the user names a different calendar.
 3. Pass the raw JSON response to `scripts/render_day_brief.py`.
-4. Return the rendered Markdown as the answer. Add only a short lead-in or one-line clarification if the user asked for a narrower scope.
+4. Return the rendered Markdown as the answer. Lightly adapt the lead-in or emphasis if the user asked for a narrower scope, a more compact answer, or a specific focus.
+
+## Relevant Actions
+
+- Prefer `search_events` for the one-day event list that feeds the formatter.
+- Use `search_events_all_fields` only if the brief needs richer event metadata than the standard event summary surface returns.
 
 ## Data Source Rules
 
@@ -23,21 +28,17 @@ Use this skill to turn one day of Google Calendar events into a structured daily
 - Prefer the app's event search/list call that accepts `calendar_id`, `time_min`, `time_max`, and `timezone`.
 - Preserve titles exactly as returned by Google Calendar.
 
-## Output Contract
+## Default Shape
 
-Render the brief in this order:
+The formatter's default shape is a good baseline:
 
-1. `**Weekday, Month Day**`
-2. Up to four short summary lines with restrained markers:
-   - `📍` day marker such as office / travel / PTO if an all-day marker exists
-   - `⚠` conflict-zone count
-   - `🍽` lunch-window note
-   - `🟢` best free windows
-3. `**Day Shape**` paragraph
-4. `**Agenda**` Markdown table with columns `Time | Meeting`
-5. `**What Needs Attention**` only when there are conflicts or unusual overlaps
-6. `**Useful Readout**` with 2-4 short bullets
-7. `**Remaining Today**` only when the requested day is today and there are future events left
+- date header
+- short top summary lines
+- `Day Shape`
+- `Agenda`
+- optional `What Needs Attention`
+- `Useful Readout`
+- optional `Remaining Today`
 
 Keep the tone compact and practical. Do not use a fenced code block for the agenda.
 
@@ -62,7 +63,7 @@ Use `--now` when summarizing today so the script can emit `Remaining Today`. Omi
 
 ## Formatting Rules
 
-- Keep markers restrained. Use only the markers in the output contract unless the user explicitly asks for more decoration.
+- Keep markers restrained. Use only the formatter's default markers unless the user explicitly asks for more decoration.
 - Keep the agenda table to two columns only: `Time` and `Meeting`.
 - Use bare compact agenda times like `10:00-10:15` without meridiem in each row.
 - Allow short inline conflict annotations in the meeting column only for the representative event in a conflict cluster.
@@ -72,7 +73,3 @@ Use `--now` when summarizing today so the script can emit `Remaining Today`. Omi
 - Treat all-day transparent markers as context, not meetings.
 - Base free-window and lunch-window calculations on opaque timed events.
 - Preserve event ordering by start time.
-
-## Fallback
-
-If the app is unavailable or returns no events unexpectedly, say that Google Calendar access may be unavailable or pointed at the wrong calendar. If shell execution is unavailable, reproduce the same structure manually and be explicit that the output was manually formatted rather than script-rendered.

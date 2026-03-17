@@ -1,0 +1,29 @@
+{
+  "name": "ai-wisebase",
+  "version": "1.0.0",
+  "description": "Chat with Your Knowledge Base",
+  "author": {
+    "name": "Sider AI",
+    "url": "https://sider.ai/wisebase"
+  },
+  "homepage": "https://sider.ai/wisebase",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "AI Wisebase",
+    "shortDescription": "Chat with Your Knowledge Base",
+    "longDescription": "A Simple Way to Chat with Your Own Information.\n\nAI Wisebase is your personal knowledge base. It allows you to use your saved files and chat history directly within ChatGPT to generate responses grounded in your own data.\n\n1. Organize Your Files and Chats\nSave Chat History: Save important ChatGPT chats as editable documents for future reference.\n\nUpload Files: Add your personal files to your knowledge base to build your private library.\n\nEasy Access: View and access your uploaded files and saved chats in one simple list.\n\n2. Chat with Your Knowledge Base\nGrounded Answers: Ask questions and get responses based on your saved data, complete with references to the source content. This helps ChatGPT write reports or summarize topics that matter to you.\n\n3. Specialized Tools for Learning\nVideo Explanations: Transform concepts into easy-to-follow animations or video summaries.\n\nKnowledge Graphs: Generate interactive knowledge graphs to visualize and explore your saved files and chats.\n\nStudy Aids: Turn your saved chats and files into flashcards or quizzes for review.\n\nDocument Translation: Translate PDF files and view original and translated text side-by-side.\n\nHow to Use:\nConnect: Link AI Wisebase to your ChatGPT account.\n\nAdd Data: Upload your files or save chat history directly.\n\nTrigger: Type @AI Wisebase followed by your request.\n\nSample Prompts:\nSave History: \"@AI Wisebase Save this discussion as a document.\"\n\nKnowledge Base: \"@AI Wisebase Draft a report using my knowledge base.\"\n\nKnowledge Graph: \"@AI Wisebase Generate an interactive knowledge graph for my files.\"\n\nVideo Learning: \"@AI Wisebase Create a video explaining this concept.\"\n\nQuiz/Flashcards: \"@AI Wisebase Create flashcards from my saved chats.\"\n\nTranslate: \"@AI Wisebase Translate this PDF into English.\"",
+    "developerName": "Sider AI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://sider.ai/wisebase",
+    "privacyPolicyURL": "https://sider.ai/policies/privacy",
+    "termsOfServiceURL": "https://sider.ai/policies/terms",
+    "defaultPrompt": [
+      "@AI Wisebase Draft a report on AI Trends using my knowledge base."
+    ],
+    "screenshots": []
+  }
+}
