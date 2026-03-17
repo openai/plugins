@@ -33,9 +33,11 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 
 3. Apply default creation polish when making a new presentation.
 - Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
+- Make the slides feel pretty and visually appealing by default, not merely correct.
 - Make new decks look intentionally designed by default rather than leaving them as raw black text on white slides.
 - Keep the styling lightweight but visibly designed: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
 - Do not default to a plain white background with only colored title text. Use background color, tinted sections, colored bands, or colored cards so most slides have visible color surfaces, not just colored text.
+- Add graphics, icons, diagrams, or simple visual motifs when they help explain the point or make the slide feel designed, but do not add decorative elements that overwhelm the content.
 - Keep all content inside a safe content frame inset from the slide edges. If you use a full-bleed header band, footer band, or background block, size it exactly to the slide bounds rather than past them.
 - Keep slide titles to one line at most. If a title would wrap, shorten it or split the content across slides instead of using a multi-line title.
 - When content is naturally a list of points, default to bullet points instead of stacked prose lines.
