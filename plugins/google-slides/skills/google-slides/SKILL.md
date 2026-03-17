@@ -33,10 +33,11 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 3. Apply default creation polish when making a new presentation.
 - Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
 - Make new decks look intentionally designed by default rather than leaving them as raw black text on white slides.
-- Keep the styling lightweight: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
+- Keep the styling lightweight but visibly designed: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
+- Do not default to a plain white background with only colored title text. Use background color, tinted sections, colored bands, or colored cards so most slides have visible color surfaces, not just colored text.
 - Keep slide titles to one line at most. If a title would wrap, shorten it or split the content across slides instead of using a multi-line title.
 - When using bullets, put each bullet on its own line. Do not combine multiple bullets into one paragraph or line.
-- Use color to create structure such as title emphasis, section separators, callout boxes, or light background shapes, but do not overdecorate the deck.
+- Use color to create structure such as title emphasis, section separators, callout boxes, light background shapes, or full-slide background treatment, but do not overdecorate the deck.
 - Preserve user control over substantive design choices. Apply a clean default look, but do not invent a heavy brand system or overly specific theme unless the user asks.
 
 4. Route only when the job is narrower than general Slides work.
@@ -57,7 +58,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Use live object IDs from the current deck state. Never guess IDs or request shapes.
 - Before deleting slides, rewriting multiple slides, or changing the layout pattern across a section, state exactly which slides will change and what kind of change you are about to make.
 - Do not promise pixel-perfect fidelity when importing Office formats into Google Slides.
-- When creating a new deck, default to modest visual polish and readable structure, not a bare text dump.
+- When creating a new deck, default to readable structure plus visible color treatment, not a bare text dump.
 
 ## Output
 
