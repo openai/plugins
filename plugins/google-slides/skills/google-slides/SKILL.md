@@ -29,14 +29,17 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
+- Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
 
 3. Apply default creation polish when making a new presentation.
 - Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
 - Make new decks look intentionally designed by default rather than leaving them as raw black text on white slides.
 - Keep the styling lightweight but visibly designed: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
 - Do not default to a plain white background with only colored title text. Use background color, tinted sections, colored bands, or colored cards so most slides have visible color surfaces, not just colored text.
+- Keep all content inside a safe content frame inset from the slide edges. If you use a full-bleed header band, footer band, or background block, size it exactly to the slide bounds rather than past them.
 - Keep slide titles to one line at most. If a title would wrap, shorten it or split the content across slides instead of using a multi-line title.
 - When using bullets, put each bullet on its own line. Do not combine multiple bullets into one paragraph or line.
+- If body text, cards, or labels would run wide or tall, shorten them, reduce density, or split the content across slides instead of letting any element exceed the slide frame.
 - Use color to create structure such as title emphasis, section separators, callout boxes, light background shapes, or full-slide background treatment, but do not overdecorate the deck.
 - Preserve user control over substantive design choices. Apply a clean default look, but do not invent a heavy brand system or overly specific theme unless the user asks.
 
@@ -51,6 +54,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Restate the target slide numbers, titles, or object IDs before making changes.
 - Prefer small `batch_update` requests over large speculative batches.
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
+- After creating a new slide or applying layout-heavy changes, immediately verify that no text, shape, image, or color band extends beyond the slide boundary. If the editor would require horizontal or vertical scrolling to see the whole slide, treat that as a failure and fix it before moving on.
 - When supplying `objectId` values in `batch_update`, use valid Google Slides IDs that are 5-50 characters long and start with an alphanumeric character or `_`. Prefer descriptive IDs like `slide02`, `slide02_title`, or `slide02_body`; do not use very short IDs like `s2` or `i0`.
 - If you need to create a slide and edit its placeholders in the same `batch_update`, create the slide with valid placeholder ID mappings first, then reference those placeholder IDs in later requests in the same batch.
 
@@ -61,6 +65,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Before deleting slides, rewriting multiple slides, or changing the layout pattern across a section, state exactly which slides will change and what kind of change you are about to make.
 - Do not promise pixel-perfect fidelity when importing Office formats into Google Slides.
 - When creating a new deck, default to readable structure plus visible color treatment, not a bare text dump.
+- Never leave text boxes, shapes, or header bands hanging outside the slide frame unless they are intentional full-bleed elements sized exactly to the slide edges.
 
 ## Output
 
