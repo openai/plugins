@@ -34,6 +34,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
 - Make new decks look intentionally designed by default rather than leaving them as raw black text on white slides.
 - Keep the styling lightweight: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
+- Keep slide titles to one line at most. If a title would wrap, shorten it or split the content across slides instead of using a multi-line title.
 - When using bullets, put each bullet on its own line. Do not combine multiple bullets into one paragraph or line.
 - Use color to create structure such as title emphasis, section separators, callout boxes, or light background shapes, but do not overdecorate the deck.
 - Preserve user control over substantive design choices. Apply a clean default look, but do not invent a heavy brand system or overly specific theme unless the user asks.
