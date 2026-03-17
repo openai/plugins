@@ -1,0 +1,4 @@
+interface:
+  display_name: "SharePoint PowerPoint"
+  short_description: "Edit SharePoint decks with style preservation"
+  default_prompt: "Use $sharepoint-powerpoint to edit a SharePoint PowerPoint deck while preserving the existing slide style and verifying the result visually when possible."
