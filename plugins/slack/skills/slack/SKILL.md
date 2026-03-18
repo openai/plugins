@@ -13,10 +13,10 @@ Use this skill to turn channel and thread context into concise, post-ready Slack
 
 | Workflow | Skill |
 | --- | --- |
+| Triage for what the user needs to read, reply to, or do next | [../slack-notification-triage/SKILL.md](../slack-notification-triage/SKILL.md) |
 | Message composition, rewrites, drafts, and canvas-writing workflows | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
 | Bounded channel recaps and thematic Slack summaries | [../slack-channel-summarization/SKILL.md](../slack-channel-summarization/SKILL.md) |
 | Daily digests across selected channels or topics | [../slack-daily-digest/SKILL.md](../slack-daily-digest/SKILL.md) |
-| Notification triage and priority ranking across recent Slack activity | [../slack-notification-triage/SKILL.md](../slack-notification-triage/SKILL.md) |
 
 ## Reference Notes
 
