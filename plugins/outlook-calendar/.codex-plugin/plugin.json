@@ -1,7 +1,7 @@
 {
   "name": "outlook-calendar",
   "version": "0.1.0",
-  "description": "Work with Outlook Calendar using the configured Microsoft Outlook app connector.",
+  "description": "Connect Outlook Calendar for scheduling, daily briefs, event prep, and safe meeting changes.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,14 +13,18 @@
   "keywords": [
     "outlook-calendar",
     "calendar",
-    "microsoft"
+    "microsoft",
+    "scheduling",
+    "teams",
+    "daily-brief",
+    "meeting-prep"
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Outlook Calendar",
-    "shortDescription": "Compare availability and plan event changes",
-    "longDescription": "Use Outlook Calendar to compare availability, propose event diffs, and schedule, reschedule, or cancel events through the connected Microsoft Outlook app.",
+    "shortDescription": "Manage Outlook schedules and meeting changes",
+    "longDescription": "Use Outlook Calendar to summarize a day, compare availability, prepare for meetings, explain Outlook status semantics, and schedule, reschedule, or cancel events through the connected Microsoft Outlook app.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [
@@ -30,9 +34,7 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": [
-      "Compare availability, propose right event update"
-    ],
+    "defaultPrompt": "Use Outlook Calendar to summarize my day, compare availability, explain Outlook meeting status, and draft the right event update, including Teams details when needed.",
     "brandColor": "#0078D4",
     "composerIcon": "./assets/outlook-calendar-small.svg",
     "logo": "./assets/outlook-calendar.svg",
