@@ -1,0 +1,53 @@
+{
+  "name": "vercel-plugin",
+  "version": "0.21.0",
+  "description": "Comprehensive Vercel ecosystem plugin with Codex-compatible skills, hooks, and MCP.",
+  "author": {
+    "name": "Vercel Labs",
+    "url": "https://github.com/vercel-labs"
+  },
+  "homepage": "https://vercel.com/",
+  "repository": "https://github.com/vercel/vercel-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "vercel",
+    "nextjs",
+    "ai-sdk",
+    "turborepo",
+    "turbopack",
+    "workflow",
+    "deployment",
+    "edge-functions",
+    "serverless",
+    "ai-gateway",
+    "chat-sdk",
+    "chat-bot",
+    "slack-bot",
+    "discord-bot"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Vercel Plugin",
+    "shortDescription": "Vercel ecosystem guidance for Codex",
+    "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills, project-profiling hooks, and the official Vercel MCP server. This import packages the upstream vercel/vercel-plugin runtime surfaces with the manifest and hook adjustments Codex needs.",
+    "developerName": "Vercel Labs",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://vercel.com/",
+    "privacyPolicyURL": "https://vercel.com/legal/privacy-policy",
+    "termsOfServiceURL": "https://vercel.com/legal/terms",
+    "defaultPrompt": [
+      "Audit this repo for Vercel deployment risks",
+      "Which Vercel tools fit this app best",
+      "Help wire Vercel MCP into this workflow"
+    ],
+    "composerIcon": "./assets/vercel.svg",
+    "logo": "./assets/vercel.svg",
+    "screenshots": []
+  }
+}
