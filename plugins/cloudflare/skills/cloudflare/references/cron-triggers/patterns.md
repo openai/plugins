@@ -173,7 +173,7 @@ describe("Scheduled Handler", () => {
     await worker.scheduled(controller, env, ctx);
     expect(await env.MY_KV.get("last_run")).toBeDefined();
   });
-  
+
   it("calls noRetry on duplicate", async () => {
     const controller = { scheduledTime: 1704067200000, cron: "0 2 * * *", type: "scheduled" as const, noRetry: vi.fn() };
     await env.EXECUTIONS.put("0 2 * * *-1704067200000", "1");

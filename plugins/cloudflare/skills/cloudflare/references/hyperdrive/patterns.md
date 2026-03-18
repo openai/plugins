@@ -70,7 +70,7 @@ const sql = postgres(env.HYPERDRIVE.connectionString, {prepare: true});
 
 // Tenant-scoped queries cached separately
 const docs = await sql`
-  SELECT * FROM documents 
+  SELECT * FROM documents
   WHERE tenant_id = ${tenantId} AND deleted_at IS NULL
   ORDER BY updated_at DESC LIMIT 50
 `;

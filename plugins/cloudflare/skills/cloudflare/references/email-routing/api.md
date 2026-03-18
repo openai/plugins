@@ -20,7 +20,7 @@ interface ForwardableEmailMessage {
   readonly to: string;             // Envelope recipient (e.g., "you@yourdomain.com")
   readonly headers: Headers;       // Web API Headers object
   readonly raw: ReadableStream;    // Raw MIME message stream
-  
+
   setReject(reason: string): void;
   forward(rcptTo: string, headers?: Headers): Promise<void>;
 }
@@ -142,7 +142,7 @@ export default {
       html: "<p>Track your package at: <a href='https://track.example.com/12345'>View tracking</a></p>",
       reply_to: { name: "Support", email: "support@yourdomain.com" }
     });
-    
+
     return new Response("Email sent");
   }
 } satisfies ExportedHandler<Env>;

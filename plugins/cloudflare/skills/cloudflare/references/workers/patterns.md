@@ -179,7 +179,7 @@ import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:work
 
 export class MyWorkflow extends WorkflowEntrypoint {
   async run(event: WorkflowEvent<{ userId: string }>, step: WorkflowStep) {
-    const user = await step.do('fetch-user', async () => 
+    const user = await step.do('fetch-user', async () =>
       fetch(`/api/users/${event.payload.userId}`).then(r => r.json())
     );
     await step.sleep('wait', '1 hour');

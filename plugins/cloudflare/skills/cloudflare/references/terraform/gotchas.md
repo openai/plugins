@@ -20,7 +20,7 @@ resource "cloudflare_workers_script" "api" {
   name = "api-worker"
   content = file("worker.js")
   secret_text_binding { name = "API_KEY"; text = var.api_key }
-  
+
   lifecycle {
     ignore_changes = [secret_text_binding]
   }
@@ -61,8 +61,8 @@ terraform state mv cloudflare_worker_script.api cloudflare_workers_script.api
 
 ### R2 Location Case Sensitivity
 
-**Problem:** Terraform creates R2 bucket but fails on subsequent applies  
-**Cause:** Location must be UPPERCASE  
+**Problem:** Terraform creates R2 bucket but fails on subsequent applies
+**Cause:** Location must be UPPERCASE
 **Solution:** Use `WNAM`, `ENAM`, `WEUR`, `EEUR`, `APAC` (not `wnam`, `enam`, etc.)
 
 ```hcl
@@ -75,14 +75,14 @@ resource "cloudflare_r2_bucket" "assets" {
 
 ### KV Special Characters (< 5.16.0)
 
-**Problem:** Keys with `+`, `#`, `%` cause encoding issues  
-**Cause:** URL encoding bug in provider < 5.16.0  
+**Problem:** Keys with `+`, `#`, `%` cause encoding issues
+**Cause:** URL encoding bug in provider < 5.16.0
 **Solution:** Upgrade to 5.16.0+ or avoid special chars in keys
 
 ### D1 Migrations
 
-**Problem:** Terraform creates database but schema is empty  
-**Cause:** Terraform only creates D1 resource, not schema  
+**Problem:** Terraform creates database but schema is empty
+**Cause:** Terraform only creates D1 resource, not schema
 **Solution:** Run migrations via wrangler after Terraform apply
 
 ```bash
@@ -92,41 +92,41 @@ wrangler d1 migrations apply <db-name>
 
 ### Worker Script Size Limit
 
-**Problem:** Worker deployment fails with "script too large"  
-**Cause:** Worker script + dependencies exceed 10 MB limit  
+**Problem:** Worker deployment fails with "script too large"
+**Cause:** Worker script + dependencies exceed 10 MB limit
 **Solution:** Use code splitting, external dependencies, or minification
 
 ### Pages Project Drift
 
-**Problem:** Pages project shows perpetual diff on `deployment_configs`  
-**Cause:** Cloudflare API adds default values not in Terraform state  
+**Problem:** Pages project shows perpetual diff on `deployment_configs`
+**Cause:** Cloudflare API adds default values not in Terraform state
 **Solution:** Add lifecycle ignore block (see State Drift table above)
 
 ## Common Errors
 
 ### "Error: couldn't find resource"
 
-**Cause:** Resource was deleted outside Terraform  
+**Cause:** Resource was deleted outside Terraform
 **Solution:** Import resource back into state with `terraform import cloudflare_zone.example <zone-id>` or remove from state with `terraform state rm cloudflare_zone.example`
 
 ### "409 Conflict on worker deployment"
 
-**Cause:** Worker being deployed by both Terraform and wrangler simultaneously  
+**Cause:** Worker being deployed by both Terraform and wrangler simultaneously
 **Solution:** Choose one deployment method; if using Terraform, remove wrangler deployments
 
 ### "DNS record already exists"
 
-**Cause:** Existing DNS record not imported into Terraform state  
+**Cause:** Existing DNS record not imported into Terraform state
 **Solution:** Find record ID in Cloudflare dashboard and import with `terraform import cloudflare_dns_record.example <zone-id>/<record-id>`
 
 ### "Invalid provider configuration"
 
-**Cause:** API token missing, invalid, or lacking required permissions  
+**Cause:** API token missing, invalid, or lacking required permissions
 **Solution:** Set `CLOUDFLARE_API_TOKEN` environment variable or check token permissions in dashboard
 
 ### "State locking errors"
 
-**Cause:** Multiple concurrent Terraform runs or stale lock from crashed process  
+**Cause:** Multiple concurrent Terraform runs or stale lock from crashed process
 **Solution:** Remove stale lock with `terraform force-unlock <lock-id>` (use with caution)
 
 ## Limits

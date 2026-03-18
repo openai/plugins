@@ -86,7 +86,7 @@ Deploy and wait 15 minutes for analysis. Check status via API or dashboard metri
 ## Placement Status Values
 
 ```typescript
-type PlacementStatus = 
+type PlacementStatus =
   | undefined  // Not yet analyzed
   | 'SUCCESS'  // Successfully optimized
   | 'INSUFFICIENT_INVOCATIONS'  // Not enough traffic

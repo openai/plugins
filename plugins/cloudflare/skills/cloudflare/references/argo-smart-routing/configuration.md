@@ -160,14 +160,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
-        
+
       - name: Terraform Init
         run: terraform init
         working-directory: ./terraform
-        
+
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: ./terraform

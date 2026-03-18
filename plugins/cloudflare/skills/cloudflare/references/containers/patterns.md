@@ -57,7 +57,7 @@ export default {
       const sessionId = request.headers.get("X-Session-ID") || crypto.randomUUID();
       const container = env.WS_BACKEND.getByName(sessionId);
       await container.startAndWaitForPorts();
-      
+
       // ⚠️ MUST use fetch(), not containerFetch()
       return container.fetch(request);
     }
@@ -155,18 +155,18 @@ import { WorkflowEntrypoint } from "cloudflare:workers";
 export class ProcessingWorkflow extends WorkflowEntrypoint {
   async run(event, step) {
     const container = this.env.PROCESSOR.getByName(event.payload.jobId);
-    
+
     await step.do("start", async () => {
       await container.startAndWaitForPorts();
     });
-    
+
     const result = await step.do("process", async () => {
       return container.fetch("/process", {
         method: "POST",
         body: JSON.stringify(event.payload.data)
       }).then(r => r.json());
     });
-    
+
     return result;
   }
 }
@@ -183,12 +183,12 @@ export default {
       try {
         const container = env.PROCESSOR.getByName(msg.body.jobId);
         await container.startAndWaitForPorts();
-        
+
         const response = await container.fetch("/process", {
           method: "POST",
           body: JSON.stringify(msg.body)
         });
-        
+
         response.ok ? msg.ack() : msg.retry();
       } catch (err) {
         console.error("Queue processing error:", err);

@@ -34,12 +34,12 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const token = window.turnstile.getResponse(widgetId);
   if (!token) return;
-  
+
   const response = await fetch('/submit', {
     method: 'POST',
     body: JSON.stringify({ 'cf-turnstile-response': token })
   });
-  
+
   if (!response.ok) window.turnstile.reset(widgetId);
 });
 </script>
@@ -60,7 +60,7 @@ export default function Form() {
     <form onSubmit={async (e) => {
       e.preventDefault();
       if (!token) return;
-      await fetch('/api/submit', { 
+      await fetch('/api/submit', {
         method: 'POST',
         body: JSON.stringify({ 'cf-turnstile-response': token })
       });
@@ -96,14 +96,14 @@ export default {
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 });
     }
-    
+
     const formData = await request.formData();
     const token = formData.get('cf-turnstile-response');
-    
+
     if (!token) {
       return new Response('Missing token', { status: 400 });
     }
-    
+
     // Validate token
     const ip = request.headers.get('CF-Connecting-IP');
     const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
@@ -115,13 +115,13 @@ export default {
         remoteip: ip
       })
     });
-    
+
     const validation = await result.json();
-    
+
     if (!validation.success) {
       return new Response('CAPTCHA validation failed', { status: 403 });
     }
-    
+
     // Process form...
     return new Response('Success');
   }

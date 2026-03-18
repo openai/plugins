@@ -36,7 +36,7 @@ GET    /accounts/{account_id}/cni/interconnects/{icon}/loa   # Returns PDF
 DELETE /accounts/{account_id}/cni/interconnects/{icon}
 ```
 
-**Create Body:** `account`, `slot_id`, `type`, `facility`, `speed`, `name`, `description`  
+**Create Body:** `account`, `slot_id`, `type`, `facility`, `speed`, `name`, `description`
 **Status Values:** `active` | `healthy` | `unhealthy` | `pending` | `down`
 
 **Response Example:**

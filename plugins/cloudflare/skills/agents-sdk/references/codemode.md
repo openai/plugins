@@ -150,13 +150,13 @@ When user asks "Check the weather in NYC and email me the forecast", codemode ge
 ```javascript
 async function executeTask() {
   const weather = await codemode.getWeather({ location: "NYC" });
-  
+
   await codemode.sendEmail({
     to: "user@example.com",
     subject: "NYC Weather Forecast",
     body: `Current weather: ${weather}`
   });
-  
+
   return { success: true, weather };
 }
 ```
@@ -169,13 +169,13 @@ Code Mode excels at orchestrating multiple MCP servers:
 async function executeTask() {
   // Query file system MCP
   const files = await codemode.listFiles({ path: "/projects" });
-  
+
   // Query database MCP
   const status = await codemode.queryDatabase({
     query: "SELECT * FROM projects WHERE name = ?",
     params: [files[0].name]
   });
-  
+
   // Conditional logic based on results
   if (status.length === 0) {
     await codemode.createTask({
@@ -183,7 +183,7 @@ async function executeTask() {
       priority: "high"
     });
   }
-  
+
   return { files, status };
 }
 ```

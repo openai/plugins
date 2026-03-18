@@ -112,7 +112,7 @@ const ruleset = await client.rulesets.get({
 console.log(ruleset.rules.map(r => ({ id: r.id, description: r.description })));
 
 // Use correct IDs in overrides
-{ action: 'execute', action_parameters: { id: 'efb7b8c949ac4650a09736fc376e9aee', 
+{ action: 'execute', action_parameters: { id: 'efb7b8c949ac4650a09736fc376e9aee',
   overrides: { rules: [{ id: '5de7edfa648c4d6891dc3e7f84534ffa', action: 'log' }] } } }
 ```
 

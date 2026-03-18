@@ -206,7 +206,7 @@ PartitionSpec(PartitionField(source_id=1, field_id=1000, transform=DayTransform(
 
 ```sql
 -- Better: Multiple filters on partition key
-SELECT * FROM logs.requests 
+SELECT * FROM logs.requests
 WHERE timestamp >= '2025-01-15T00:00:00Z' AND status = 404 AND method = 'GET' LIMIT 100;
 ```
 

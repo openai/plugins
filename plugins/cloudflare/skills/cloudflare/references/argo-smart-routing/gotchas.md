@@ -81,7 +81,7 @@ try {
   if (error instanceof RateLimitError) {
     const retryAfter = error.response?.headers.get('retry-after');
     console.log(`Rate limited. Retry after ${retryAfter} seconds`);
-    
+
     // Implement exponential backoff
     await new Promise(resolve => setTimeout(resolve, (retryAfter || 60) * 1000));
     // Retry request

@@ -9,8 +9,8 @@ curl -X POST 'https://rtc.live/v1/apps/${CALLS_APP_ID}/sessions/new' \
 
 ## Core Concepts
 
-**Sessions:** PeerConnection to Cloudflare edge  
-**Tracks:** Media/data channels (audio/video/datachannel)  
+**Sessions:** PeerConnection to Cloudflare edge
+**Tracks:** Media/data channels (audio/video/datachannel)
 **No rooms:** Build presence via track sharing
 
 ## Client Libraries

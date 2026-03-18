@@ -33,9 +33,9 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
       return await this.env.DB.prepare('SELECT * FROM users WHERE id = ?')
         .bind(event.params.userId).first();
     });
-    
+
     await step.sleep('wait 7 days', '7 days');
-    
+
     await step.do('send reminder', async () => {
       await sendEmail(user.email, 'Reminder!');
     });
@@ -54,7 +54,7 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 ## Reading Order
 
-**Getting Started:** configuration.md → api.md → patterns.md  
+**Getting Started:** configuration.md → api.md → patterns.md
 **Troubleshooting:** gotchas.md
 
 ## In This Reference

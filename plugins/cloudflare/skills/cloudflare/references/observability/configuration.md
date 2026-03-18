@@ -15,9 +15,9 @@
 
 ```typescript
 // Good - structured logging
-console.log({ 
-  user_id: 123, 
-  action: "login", 
+console.log({
+  user_id: 123,
+  action: "login",
   status: "success",
   duration_ms: 45
 });
@@ -65,7 +65,7 @@ export default {
       doubles: [1, 245.5], // request_count, response_time_ms
       indexes: ['customer_123'] // for efficient filtering
     });
-    
+
     return new Response('OK');
   }
 }
@@ -90,10 +90,10 @@ service = "my-worker" # Worker to tail
 export default {
   async tail(events: TraceItem[], env: Env, ctx: ExecutionContext) {
     // Filter errors only
-    const errors = events.filter(event => 
+    const errors = events.filter(event =>
       event.outcome === 'exception' || event.outcome === 'exceededCpu'
     );
-    
+
     if (errors.length > 0) {
       // Send to external monitoring
       ctx.waitUntil(

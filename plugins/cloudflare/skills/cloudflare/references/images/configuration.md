@@ -45,10 +45,10 @@ import FormData from 'form-data';
 async function uploadImage(filePath: string) {
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID!;
   const apiToken = process.env.CLOUDFLARE_API_TOKEN!;
-  
+
   const formData = new FormData();
   formData.append('file', fs.createReadStream(filePath));
-  
+
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${accountId}/images/v1`,
     {
@@ -59,7 +59,7 @@ async function uploadImage(filePath: string) {
       body: formData,
     }
   );
-  
+
   const result = await response.json();
   console.log('Uploaded:', result);
 }
@@ -194,7 +194,7 @@ function signUrl(imageId: string, variant: string, expiry: number, key: string):
   const signature = createHmac('sha256', key)
     .update(toSign)
     .digest('hex');
-  
+
   return `https://imagedelivery.net/{hash}${path}?exp=${expiry}&sig=${signature}`;
 }
 

@@ -9,7 +9,7 @@
 const configuration = {
   tieredCache: 'enabled',    // Required for optimal performance
   cacheReserve: 'enabled',   // Works best with Tiered Cache
-  
+
   hierarchy: [
     'Lower-Tier Cache (visitor)',
     'Upper-Tier Cache (origin region)',
@@ -72,18 +72,18 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await fetch(request);
     if (!response.ok) return response;
-    
+
     const headers = new Headers(response.headers);
     headers.set('Cache-Control', 'public, max-age=36000'); // 10hr minimum
     headers.delete('Set-Cookie'); // Blocks caching
-    
+
     // Ensure Content-Length present
     if (!headers.has('Content-Length')) {
       const blob = await response.blob();
       headers.set('Content-Length', blob.size.toString());
       return new Response(blob, { status: response.status, headers });
     }
-    
+
     return new Response(response.body, { status: response.status, headers });
   }
 };
@@ -104,7 +104,7 @@ export default {
     const url = new URL(request.url);
     const isImmutable = /\.[a-f0-9]{8,}\.(js|css|jpg|png|woff2)$/.test(url.pathname);
     const response = await fetch(request);
-    
+
     if (isImmutable) {
       const headers = new Headers(response.headers);
       headers.set('Cache-Control', 'public, max-age=31536000, immutable');
@@ -133,23 +133,23 @@ function estimateMonthlyCost(input: CacheReserveEstimate) {
   const storageCostPerGBMonth = 0.015;
   const classAPerMillion = 4.50; // writes
   const classBPerMillion = 0.36; // reads
-  
+
   // Calculate Cache Reserve costs
   const totalStorageGB = input.avgAssetSizeGB * input.uniqueAssets;
   const storageCost = totalStorageGB * storageCostPerGBMonth;
   const writeCost = (input.monthlyWrites / 1_000_000) * classAPerMillion;
   const readCost = (input.monthlyReads / 1_000_000) * classBPerMillion;
-  
+
   const cacheReserveCost = storageCost + writeCost + readCost;
-  
+
   // Calculate origin egress cost (what you'd pay without Cache Reserve)
   const totalTrafficGB = (input.monthlyReads * input.avgAssetSizeGB);
   const originEgressCost = totalTrafficGB * input.originEgressCostPerGB;
-  
+
   // Savings calculation
   const savings = originEgressCost - cacheReserveCost;
   const savingsPercent = ((savings / originEgressCost) * 100).toFixed(1);
-  
+
   return {
     cacheReserveCost: `$${cacheReserveCost.toFixed(2)}`,
     originEgressCost: `$${originEgressCost.toFixed(2)}`,

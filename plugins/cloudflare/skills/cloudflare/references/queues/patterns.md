@@ -123,14 +123,14 @@ await env.EMAIL_QUEUE.send({ to, template, userId }, { delaySeconds: 3600 });
 ```typescript
 async fetch(request: Request, env: Env): Promise<Response> {
   const event = await request.json();
-  
+
   // Send to multiple queues for parallel processing
   await Promise.all([
     env.ANALYTICS_QUEUE.send(event),
     env.NOTIFICATIONS_QUEUE.send(event),
     env.AUDIT_LOG_QUEUE.send(event)
   ]);
-  
+
   return Response.json({ status: 'processed' });
 }
 ```
@@ -146,7 +146,7 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
       msg.ack();
       continue;
     }
-    
+
     await processMessage(msg.body);
     await env.PROCESSED_KV.put(msg.id, '1', { expirationTtl: 86400 });
     msg.ack();
@@ -159,11 +159,11 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
 ```typescript
 async queue(batch: MessageBatch, env: Env): Promise<void> {
   // Collect all inserts for single D1 batch
-  const statements = batch.messages.map(msg => 
+  const statements = batch.messages.map(msg =>
     env.DB.prepare('INSERT INTO events (id, data, created) VALUES (?, ?, ?)')
       .bind(msg.id, JSON.stringify(msg.body), Date.now())
   );
-  
+
   try {
     await env.DB.batch(statements);
     batch.ackAll();
@@ -201,11 +201,11 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
 async queue(batch: MessageBatch, env: Env): Promise<void> {
   for (const msg of batch.messages) {
     const { userId, action } = msg.body;
-    
+
     // Route to user-specific DO
     const id = env.USER_DO.idFromName(userId);
     const stub = env.USER_DO.get(id);
-    
+
     try {
       await stub.fetch(new Request('https://do/process', {
         method: 'POST',

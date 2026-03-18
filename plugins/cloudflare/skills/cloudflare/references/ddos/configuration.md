@@ -71,7 +71,7 @@ Individual Rule > Category > Global sensitivity/action
 
 ## Adaptive DDoS Profiles
 
-**Availability**: Enterprise, Enterprise Advanced  
+**Availability**: Enterprise, Enterprise Advanced
 **Learning period**: 7 days of traffic history required
 
 | Profile Type | Description | Detects |

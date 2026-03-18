@@ -4,7 +4,7 @@
 
 ### ".get() Throws on Error"
 
-**Cause:** Assuming `.get()` returns null on failure instead of throwing  
+**Cause:** Assuming `.get()` returns null on failure instead of throwing
 **Solution:** Always wrap `.get()` calls in try/catch blocks to handle errors gracefully
 
 ```typescript
@@ -17,27 +17,27 @@ try {
 
 ### "Logging Secret Values"
 
-**Cause:** Accidentally logging secret values in console or error messages  
+**Cause:** Accidentally logging secret values in console or error messages
 **Solution:** Only log metadata (e.g., "Retrieved API_KEY") never the actual secret value
 
 ### "Module-Level Secret Access"
 
-**Cause:** Attempting to access secrets during module initialization before env is available  
+**Cause:** Attempting to access secrets during module initialization before env is available
 **Solution:** Cache secrets in request scope only, not at module level
 
 ### "Secret not found in store"
 
-**Cause:** Secret name doesn't exist, case mismatch, missing workers scope, or incorrect store_id  
+**Cause:** Secret name doesn't exist, case mismatch, missing workers scope, or incorrect store_id
 **Solution:** Verify secret exists with `wrangler secrets-store secret list <store-id> --remote`, check name matches exactly (case-sensitive), ensure secret has `workers` scope, and verify correct store_id
 
 ### "Scope Mismatch"
 
-**Cause:** Secret exists but missing `workers` scope (only has `ai-gateway` scope)  
+**Cause:** Secret exists but missing `workers` scope (only has `ai-gateway` scope)
 **Solution:** Update secret scopes: `wrangler secrets-store secret update <store-id> --name SECRET --scopes workers --remote` or add via Dashboard
 
 ### "JSON Parsing Failure"
 
-**Cause:** Storing invalid JSON in secret, then failing to parse during runtime  
+**Cause:** Storing invalid JSON in secret, then failing to parse during runtime
 **Solution:** Validate JSON before storing:
 
 ```bash
@@ -61,22 +61,22 @@ try {
 
 ### "Cannot access secret in local dev"
 
-**Cause:** Attempting to access production secrets in local development environment  
+**Cause:** Attempting to access production secrets in local development environment
 **Solution:** Create local-only secrets (without `--remote` flag) for development: `wrangler secrets-store secret create <store-id> --name API_KEY --scopes workers`
 
 ### "Property 'get' does not exist"
 
-**Cause:** Missing TypeScript type definition for secret binding  
+**Cause:** Missing TypeScript type definition for secret binding
 **Solution:** Define interface with get method: `interface Env { API_KEY: { get(): Promise<string> }; }`
 
 ### "Binding already exists"
 
-**Cause:** Duplicate binding in dashboard or conflict between wrangler.jsonc and dashboard  
+**Cause:** Duplicate binding in dashboard or conflict between wrangler.jsonc and dashboard
 **Solution:** Remove duplicate from dashboard Settings → Bindings, check for conflicts, or delete old Worker secret with `wrangler secret delete API_KEY`
 
 ### "Account secret quota exceeded"
 
-**Cause:** Account has reached 100 secret limit (beta)  
+**Cause:** Account has reached 100 secret limit (beta)
 **Solution:** Check quota with `wrangler secrets-store quota --remote`, delete unused secrets, consolidate duplicates, or contact Cloudflare for increase
 
 ## Limits

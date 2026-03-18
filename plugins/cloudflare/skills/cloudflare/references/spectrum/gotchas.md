@@ -2,8 +2,8 @@
 
 ### Connection Timeouts
 
-**Problem:** Connections fail or timeout  
-**Cause:** Origin firewall blocking Cloudflare IPs, origin service not running, incorrect DNS  
+**Problem:** Connections fail or timeout
+**Cause:** Origin firewall blocking Cloudflare IPs, origin service not running, incorrect DNS
 **Solution:**
 1. Verify origin firewall allows Cloudflare IP ranges
 2. Check origin service running on correct port
@@ -18,8 +18,8 @@ dig app.example.com
 
 ### Client IP Showing Cloudflare IP
 
-**Problem:** Origin logs show Cloudflare IPs not real client IPs  
-**Cause:** Proxy Protocol not enabled or origin not configured  
+**Problem:** Origin logs show Cloudflare IPs not real client IPs
+**Cause:** Proxy Protocol not enabled or origin not configured
 **Solution:**
 ```typescript
 // Enable in Spectrum app
@@ -35,7 +35,7 @@ const app = await client.spectrum.apps.create({
 
 ### TLS Errors
 
-**Problem:** TLS handshake failures, 525 errors  
+**Problem:** TLS handshake failures, 525 errors
 **Cause:** TLS mode mismatch
 
 | Error | TLS Mode | Problem | Solution |
@@ -51,8 +51,8 @@ openssl s_client -connect app.example.com:443 -showcerts
 
 ### SMTP Reverse DNS
 
-**Problem:** Email servers reject SMTP via Spectrum  
-**Cause:** Spectrum IPs lack PTR (reverse DNS) records  
+**Problem:** Email servers reject SMTP via Spectrum
+**Cause:** Spectrum IPs lack PTR (reverse DNS) records
 **Impact:** Many mail servers require valid rDNS for anti-spam
 
 **Solution:**
@@ -62,7 +62,7 @@ openssl s_client -connect app.example.com:443 -showcerts
 
 ### Proxy Protocol Compatibility
 
-**Problem:** Connection works but app behaves incorrectly  
+**Problem:** Connection works but app behaves incorrectly
 **Cause:** Origin doesn't support Proxy Protocol
 
 **Solution:**
@@ -88,7 +88,7 @@ frontend ft_ssh
 
 ### Analytics Data Retention
 
-**Problem:** Historical data not available  
+**Problem:** Historical data not available
 **Cause:** Retention varies by plan
 
 | Plan | Real-time | Historical |
@@ -101,7 +101,7 @@ frontend ft_ssh
 
 ### Enterprise-Only Features
 
-**Problem:** Feature unavailable/errors  
+**Problem:** Feature unavailable/errors
 **Cause:** Requires Enterprise plan
 
 **Enterprise-only:**
@@ -112,7 +112,7 @@ frontend ft_ssh
 
 ### IPv6 Considerations
 
-**Problem:** IPv6 clients can't connect or origin doesn't support IPv6  
+**Problem:** IPv6 clients can't connect or origin doesn't support IPv6
 **Solution:** Configure `edge_ips.connectivity`
 
 ```typescript

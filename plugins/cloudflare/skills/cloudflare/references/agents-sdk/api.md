@@ -176,9 +176,9 @@ const result = await agent.processTask({ text: "Hello" }); // Call @callable met
 // useAgentChat() - AI chat UI
 import { useAgentChat } from "agents/ai-react";
 const agent = useAgent({ agent: "ChatAgent" });
-const { messages, input, handleInputChange, handleSubmit, isLoading, stop, clearHistory } = 
-  useAgentChat({ 
-    agent, 
+const { messages, input, handleInputChange, handleSubmit, isLoading, stop, clearHistory } =
+  useAgentChat({
+    agent,
     maxSteps: 5,        // Max tool iterations
     resume: true,       // Auto-resume on disconnect
     onToolCall: async (toolCall) => {

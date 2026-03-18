@@ -83,7 +83,7 @@ new Response("Hello", { status: 200 })
 Response.json({ key: "value" }, { status: 200 })
 
 // HTML
-new Response("<h1>Hi</h1>", { 
+new Response("<h1>Hi</h1>", {
   status: 200,
   headers: { "Content-Type": "text/html" }
 })

@@ -7,10 +7,10 @@ export class MyDurableObject extends DurableObject {
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     this.sql = ctx.storage.sql;
-    
+
     // Use SQLite's built-in user_version pragma
     const ver = this.sql.exec("PRAGMA user_version").one()?.user_version || 0;
-    
+
     if (ver === 0) {
       this.sql.exec(`CREATE TABLE users(id INTEGER PRIMARY KEY, name TEXT)`);
       this.sql.exec("PRAGMA user_version = 1");
@@ -125,13 +125,13 @@ export class Workspace extends DurableObject {
     const childId = this.env.DOCUMENT.idFromName(`${this.ctx.id.toString()}:${docId}`);
     const childStub = this.env.DOCUMENT.get(childId);
     await childStub.initialize(name);
-    
+
     // Track child in parent storage
-    this.sql.exec('INSERT INTO documents (id, name, created) VALUES (?, ?, ?)', 
+    this.sql.exec('INSERT INTO documents (id, name, created) VALUES (?, ?, ?)',
       docId, name, Date.now());
     return docId;
   }
-  
+
   async listDocuments(): Promise<string[]> {
     return this.sql.exec('SELECT id FROM documents').toArray().map(r => r.id);
   }
@@ -155,7 +155,7 @@ async updateMetrics(userId: string, actions: Action[]) {
   // All writes coalesce - no await needed
   for (const action of actions) {
     this.ctx.storage.put(`user:${userId}:lastAction`, action.type);
-    this.ctx.storage.put(`user:${userId}:count`, 
+    this.ctx.storage.put(`user:${userId}:count`,
       await this.ctx.storage.get(`user:${userId}:count`) + 1);
   }
   // Output gate ensures all writes confirm before response

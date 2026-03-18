@@ -116,7 +116,7 @@ interface Env { AUTH: Fetcher; API_KEY: string; }
 export const onRequest: PagesFunction<Env> = async (ctx) => {
   // Service binding: forward to another Worker
   return ctx.env.AUTH.fetch(ctx.request);
-  
+
   // Environment variable
   return Response.json({ key: ctx.env.API_KEY });
 };

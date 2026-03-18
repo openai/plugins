@@ -16,10 +16,10 @@ interface Env {
   DB: D1Database;
   MY_SERVICE: Fetcher;
   AI: Ai;
-  
+
   // From vars
   API_URL: string;
-  
+
   // From secrets (set via wrangler secret put)
   API_KEY: string;
 }

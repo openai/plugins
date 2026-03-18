@@ -60,10 +60,10 @@ await env.STREAM.send(events);
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const event = { /* ... */ };
-    
+
     // Don't block response on send
     ctx.waitUntil(env.STREAM.send([event]));
-    
+
     return new Response('OK');
   }
 };
@@ -193,7 +193,7 @@ WHERE event_type IN ('purchase', 'refund')
 export WRANGLER_R2_SQL_AUTH_TOKEN=YOUR_CATALOG_TOKEN
 
 npx wrangler r2 sql query "warehouse_name" "
-SELECT 
+SELECT
   event_type,
   COUNT(*) as event_count,
   SUM(amount) as total_revenue

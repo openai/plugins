@@ -76,7 +76,7 @@ resource "cloudflare_worker_script" "app" {
 
 **CRITICAL**: Wrangler and Terraform must NOT manage same resources.
 
-**Terraform**: Zones, DNS, security rules, Access, load balancers, worker deployments (CI/CD), KV/R2/D1 resource creation  
+**Terraform**: Zones, DNS, security rules, Access, load balancers, worker deployments (CI/CD), KV/R2/D1 resource creation
 **Wrangler**: Local dev (`wrangler dev`), manual deploys, D1 migrations, KV bulk ops, log streaming (`wrangler tail`)
 
 ### CI/CD Pattern

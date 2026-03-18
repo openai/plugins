@@ -173,19 +173,19 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const customerName = env.customer_name;
     const url = new URL(request.url);
-    
+
     // Block domains
     if (["malicious.com"].some(d => url.hostname.includes(d))) {
       return new Response("Blocked", { status: 403 });
     }
-    
+
     // Inject auth
     if (url.hostname === "api.example.com") {
       const headers = new Headers(request.headers);
       headers.set("Authorization", `Bearer ${generateJWT(customerName)}`);
       return fetch(new Request(request, { headers }));
     }
-    
+
     return fetch(request);
   },
 };

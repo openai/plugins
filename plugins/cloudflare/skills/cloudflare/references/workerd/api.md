@@ -67,7 +67,7 @@ async function handleRequest(request) {
 ```javascript
 export class Room {
   constructor(state, env) { this.state = state; this.env = env; }
-  
+
   async fetch(request) {
     const url = new URL(request.url);
     if (url.pathname === "/increment") {

@@ -105,7 +105,7 @@ const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] 
 const matches = await env.VECTORIZE.query(embedding.data[0], { topK: 5 });
 
 // 3. Fetch full documents from R2/D1/KV
-const docs = await Promise.all(matches.matches.map(m => 
+const docs = await Promise.all(matches.matches.map(m =>
   env.R2.get(m.metadata.key).then(obj => obj?.text())
 ));
 

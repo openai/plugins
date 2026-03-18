@@ -133,7 +133,7 @@ or              // Logical OR
   expression: 'http.request.uri.path starts_with "/api"',
   action_parameters: {
     ratelimit: {
-      // Characteristics define uniqueness: 'ip.src', 'cf.colo.id', 
+      // Characteristics define uniqueness: 'ip.src', 'cf.colo.id',
       // 'http.request.headers["key"][0]', 'http.request.cookies["session"][0]'
       characteristics: ['cf.colo.id', 'ip.src'], // Recommended: per-IP per-datacenter
       period: 60,                      // Time window in seconds

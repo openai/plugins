@@ -4,8 +4,8 @@
 
 ### "No bundler/build step" - Pulumi uploads raw code
 
-**Problem:** Worker fails with "Cannot use import statement outside a module"  
-**Cause:** Pulumi doesn't bundle Worker code - uploads exactly what you provide  
+**Problem:** Worker fails with "Cannot use import statement outside a module"
+**Cause:** Pulumi doesn't bundle Worker code - uploads exactly what you provide
 **Solution:** Build Worker BEFORE Pulumi deploy
 
 ```typescript
@@ -27,8 +27,8 @@ const worker = new cloudflare.WorkerScript("worker", {
 
 ### "wrangler.toml not consumed" - Config drift
 
-**Problem:** Local wrangler dev works, Pulumi deploy fails  
-**Cause:** Pulumi ignores wrangler.toml - must duplicate config  
+**Problem:** Local wrangler dev works, Pulumi deploy fails
+**Cause:** Pulumi ignores wrangler.toml - must duplicate config
 **Solution:** Generate wrangler.toml from Pulumi or keep synced manually
 
 ```typescript
@@ -50,8 +50,8 @@ EOF`,
 
 ### "False no-changes detection" - Content SHA unchanged
 
-**Problem:** Worker code updated, Pulumi says "no changes"  
-**Cause:** Content hash identical (whitespace/comment-only change)  
+**Problem:** Worker code updated, Pulumi says "no changes"
+**Cause:** Content hash identical (whitespace/comment-only change)
 **Solution:** Add build timestamp or version to force update
 
 ```typescript
@@ -64,8 +64,8 @@ const worker = new cloudflare.WorkerScript("worker", {
 
 ### "D1 migrations don't run on pulumi up"
 
-**Problem:** Database schema not applied after D1 database created  
-**Cause:** Pulumi creates database but doesn't run migrations  
+**Problem:** Database schema not applied after D1 database created
+**Cause:** Pulumi creates database but doesn't run migrations
 **Solution:** Use Command resource with dependsOn
 
 ```typescript
@@ -84,8 +84,8 @@ const worker = new cloudflare.WorkerScript("worker", {
 
 ### "Missing required property 'accountId'"
 
-**Problem:** `Error: Missing required property 'accountId'`  
-**Cause:** Account ID not provided in resource configuration  
+**Problem:** `Error: Missing required property 'accountId'`
+**Cause:** Account ID not provided in resource configuration
 **Solution:** Add to stack config
 
 ```yaml
@@ -96,8 +96,8 @@ config:
 
 ### "Binding name mismatch"
 
-**Problem:** Worker fails with "env.MY_KV is undefined"  
-**Cause:** Binding name in Pulumi != name in Worker code  
+**Problem:** Worker fails with "env.MY_KV is undefined"
+**Cause:** Binding name in Pulumi != name in Worker code
 **Solution:** Match exactly (case-sensitive)
 
 ```typescript
@@ -110,14 +110,14 @@ export default { async fetch(request, env) { await env.MY_KV.get("key"); }}
 
 ### "API token permissions insufficient"
 
-**Problem:** `Error: authentication error (10000)`  
-**Cause:** Token lacks required permissions  
+**Problem:** `Error: authentication error (10000)`
+**Cause:** Token lacks required permissions
 **Solution:** Grant token permissions: Account.Workers Scripts:Edit, Account.Account Settings:Read
 
 ### "Resource not found after import"
 
-**Problem:** Imported resource shows as changed on next `pulumi up`  
-**Cause:** State mismatch between actual resource and Pulumi config  
+**Problem:** Imported resource shows as changed on next `pulumi up`
+**Cause:** State mismatch between actual resource and Pulumi config
 **Solution:** Check property names/types match exactly
 
 ```bash
@@ -127,8 +127,8 @@ pulumi preview # If shows changes, adjust Pulumi code to match actual resource
 
 ### "v6.x Worker versioning confusion"
 
-**Problem:** Worker deployed but not receiving traffic  
-**Cause:** v6.x requires Worker + WorkerVersion + WorkersDeployment (3 resources)  
+**Problem:** Worker deployed but not receiving traffic
+**Cause:** v6.x requires Worker + WorkerVersion + WorkersDeployment (3 resources)
 **Solution:** Use WorkerScript (auto-versioning) OR full versioning pattern
 
 ```typescript

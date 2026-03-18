@@ -180,7 +180,7 @@ resource "cloudflare_spectrum_application" "game_cluster" {
   }
 
   origin_direct = ["tcp://192.0.2.1"]
-  
+
   origin_port {
     start = 25565
     end   = 25575

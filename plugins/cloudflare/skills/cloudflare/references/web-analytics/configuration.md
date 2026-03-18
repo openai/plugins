@@ -25,7 +25,7 @@ script-src https://static.cloudflareinsights.com https://cloudflareinsights.com;
 Dashboard → Web Analytics → Add site → Enter hostname → Copy snippet
 
 ```html
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' 
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js'
         data-cf-beacon='{"token": "YOUR_TOKEN", "spa": true}'></script>
 ```
 

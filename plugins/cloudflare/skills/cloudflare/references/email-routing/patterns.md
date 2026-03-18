@@ -21,10 +21,10 @@ export default {
   async email(message, env, ctx) {
     // CRITICAL: Consume stream immediately
     const raw = await message.raw.arrayBuffer();
-    
+
     const parser = new PostalMime();
     const email = await parser.parse(raw);
-    
+
     console.log({
       subject: email.subject,
       text: email.text,
@@ -32,7 +32,7 @@ export default {
       from: email.from.address,
       attachments: email.attachments.length
     });
-    
+
     await message.forward("inbox@corp.com");
   }
 } satisfies ExportedHandler;
@@ -57,12 +57,12 @@ interface Env { R2: R2Bucket; }
 export default {
   async email(message, env, ctx) {
     const raw = await message.raw.arrayBuffer();
-    
+
     const key = `${new Date().toISOString()}-${message.from}.eml`;
-    await env.R2.put(key, raw, { 
+    await env.R2.put(key, raw, {
       httpMetadata: { contentType: "message/rfc822" }
     });
-    
+
     await message.forward("inbox@corp.com");
   }
 } satisfies ExportedHandler<Env>;
@@ -80,14 +80,14 @@ export default {
     const raw = await message.raw.arrayBuffer();
     const parser = new PostalMime();
     const email = await parser.parse(raw);
-    
+
     const metadata = {
       from: email.from.address,
       subject: email.subject,
       timestamp: new Date().toISOString(),
       size: raw.byteLength
     };
-    
+
     await env.KV.put(`email:${Date.now()}`, JSON.stringify(metadata));
     await message.forward("inbox@corp.com");
   }
@@ -100,7 +100,7 @@ export default {
 export default {
   async email(message, env, ctx) {
     const subject = message.headers.get("subject")?.toLowerCase() || "";
-    
+
     if (subject.includes("[urgent]")) {
       await message.forward("oncall@corp.com");
     } else if (subject.includes("[billing]")) {
@@ -125,12 +125,12 @@ interface Env {
 export default {
   async email(message, env, ctx) {
     const msgId = message.headers.get("message-id");
-    
+
     if (msgId && await env.REPLIED.get(msgId)) {
       await message.forward("archive@corp.com");
       return;
     }
-    
+
     ctx.waitUntil((async () => {
       await env.EMAIL.send({
         from: "noreply@yourdomain.com",
@@ -140,7 +140,7 @@ export default {
       });
       if (msgId) await env.REPLIED.put(msgId, "1", { expirationTtl: 604800 });
     })());
-    
+
     await message.forward("support@corp.com");
   }
 } satisfies ExportedHandler<Env>;
@@ -157,14 +157,14 @@ export default {
   async email(message, env, ctx) {
     const parser = new PostalMime();
     const email = await parser.parse(await message.raw.arrayBuffer());
-    
+
     for (const att of email.attachments) {
       const key = `${Date.now()}-${att.filename}`;
       await env.ATTACHMENTS.put(key, att.content, {
         httpMetadata: { contentType: att.mimeType }
       });
     }
-    
+
     await message.forward("inbox@corp.com");
   }
 } satisfies ExportedHandler<Env>;
@@ -181,13 +181,13 @@ export default {
   async email(message, env, ctx) {
     const parser = new PostalMime();
     const email = await parser.parse(await message.raw.arrayBuffer());
-    
+
     ctx.waitUntil(
       env.DB.prepare("INSERT INTO log (ts, from_addr, subj) VALUES (?, ?, ?)")
         .bind(new Date().toISOString(), email.from.address, email.subject || "")
         .run()
     );
-    
+
     await message.forward("inbox@corp.com");
   }
 } satisfies ExportedHandler<Env>;
@@ -202,12 +202,12 @@ export default {
   async email(message, env, ctx) {
     const subdomain = message.to.split("@")[1].split(".")[0];
     const config = await env.TENANTS.get(subdomain, "json") as { forward: string } | null;
-    
+
     if (!config) {
       message.setReject("Unknown tenant");
       return;
     }
-    
+
     await message.forward(config.forward);
   }
 } satisfies ExportedHandler<Env>;

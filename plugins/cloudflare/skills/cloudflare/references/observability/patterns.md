@@ -58,11 +58,11 @@ env.ANALYTICS.writeDataPoint({
 ```typescript
 export default {
   async tail(events, env, ctx) {
-    const critical = events.filter(e => 
+    const critical = events.filter(e =>
       e.exceptions.length > 0 || e.event.wallTime > 1000000
     );
     if (critical.length === 0) return;
-    
+
     ctx.waitUntil(
       fetch('https://logging.example.com/ingest', {
         method: 'POST',
@@ -92,7 +92,7 @@ export default {
         { key: 'worker.cpu_time_us', value: { intValue: String(e.event.cpuTime) } }
       ]
     }));
-    
+
     ctx.waitUntil(
       fetch('https://api.honeycomb.io/v1/traces', {
         method: 'POST',

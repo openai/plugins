@@ -46,7 +46,7 @@ Returns when **process starts**, NOT when ports ready. Use for fire-and-forget.
 ```typescript
 await container.startAndWaitForPorts();  // Uses requiredPorts
 await container.startAndWaitForPorts({ ports: [8080, 9090] });
-await container.startAndWaitForPorts({ 
+await container.startAndWaitForPorts({
   ports: [8080],
   startOptions: { envVars: { KEY: "value" } }
 });

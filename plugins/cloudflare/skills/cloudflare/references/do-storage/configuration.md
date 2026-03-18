@@ -35,11 +35,11 @@
 ```typescript
 export class MyDurableObject extends DurableObject {
   sql: SqlStorage;
-  
+
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     this.sql = ctx.storage.sql;
-    
+
     // Initialize schema
     this.sql.exec(`
       CREATE TABLE IF NOT EXISTS users(
@@ -60,11 +60,11 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const id = env.MY_DO.idFromName('singleton');
     const stub = env.MY_DO.get(id);
-    
+
     // Modern RPC: call methods directly (recommended)
     const result = await stub.someMethod();
     return Response.json(result);
-    
+
     // Legacy: forward request (still works)
     // return stub.fetch(request);
   }
@@ -99,10 +99,10 @@ const stub = env.MY_DO.get(id, { locationHint: "enam" });
 ```typescript
 export class Counter extends DurableObject {
   value: number;
-  
+
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
-    
+
     // Block concurrent requests during init
     ctx.blockConcurrencyWhile(async () => {
       this.value = (await ctx.storage.get("value")) || 0;

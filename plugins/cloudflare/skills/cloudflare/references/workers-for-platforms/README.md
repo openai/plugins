@@ -41,7 +41,7 @@ Multi-tenant platform with isolated customer code execution at scale.
 
 **Request Flow:**
 ```
-Request → Dispatch Worker → Determines user Worker → env.DISPATCHER.get("customer") 
+Request → Dispatch Worker → Determines user Worker → env.DISPATCHER.get("customer")
 → User Worker executes (Outbound Worker for external fetch) → Response → Dispatch Worker → Client
 ```
 

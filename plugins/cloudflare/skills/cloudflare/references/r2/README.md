@@ -72,7 +72,7 @@ async queue(batch: MessageBatch, env: Env) {
 
 ## Reading Order
 
-**First-time users:** README → configuration.md → api.md → patterns.md  
+**First-time users:** README → configuration.md → api.md → patterns.md
 **Specific tasks:**
 - Setup: configuration.md
 - Client uploads: patterns.md (presigned URLs)

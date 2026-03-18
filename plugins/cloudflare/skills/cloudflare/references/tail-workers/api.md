@@ -27,9 +27,9 @@ export default {
 interface TraceItem {
   scriptName: string;           // Producer Worker name
   eventTimestamp: number;        // Epoch milliseconds
-  outcome: 'ok' | 'exception' | 'exceededCpu' | 'exceededMemory' 
+  outcome: 'ok' | 'exception' | 'exceededCpu' | 'exceededMemory'
          | 'canceled' | 'scriptNotFound' | 'responseStreamDisconnected' | 'unknown';
-  
+
   event?: {
     request?: {
       url: string;               // Redacted by default
@@ -42,19 +42,19 @@ interface TraceItem {
       status: number;
     };
   };
-  
+
   logs: Array<{
     timestamp: number;           // Epoch milliseconds
     level: 'debug' | 'info' | 'log' | 'warn' | 'error';
     message: unknown[];          // Args passed to console function
   }>;
-  
+
   exceptions: Array<{
     timestamp: number;           // Epoch milliseconds
     name: string;                // Error type (Error, TypeError, etc.)
     message: string;             // Error description
   }>;
-  
+
   diagnosticsChannelEvents: Array<{
     channel: string;
     message: unknown;
@@ -137,7 +137,7 @@ export default {
       url: event.event?.request?.url,
       status: event.event?.response?.status,
     }));
-    
+
     ctx.waitUntil(
       fetch(env.LOG_ENDPOINT, {
         method: "POST",

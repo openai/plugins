@@ -47,7 +47,7 @@ export default {
   async fetch(request) {
     const formData = await request.formData();
     const token = formData.get('cf-turnstile-response');
-    
+
     const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -57,7 +57,7 @@ export default {
         remoteip: request.headers.get('CF-Connecting-IP')
       })
     });
-    
+
     const validation = await result.json();
     if (!validation.success) {
       return new Response('Invalid CAPTCHA', { status: 400 });

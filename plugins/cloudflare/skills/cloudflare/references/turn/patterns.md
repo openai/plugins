@@ -21,7 +21,7 @@ interface RTCIceServer {
 async function getTURNConfig(): Promise<RTCIceServer[]> {
   const response = await fetch('/api/turn-credentials');
   const data = await response.json();
-  
+
   return [
     {
       urls: 'stun:stun.cloudflare.com:3478'
@@ -99,15 +99,15 @@ After network change, TURN server maintenance, or credential expiry:
 pc.addEventListener('iceconnectionstatechange', async () => {
   if (pc.iceConnectionState === 'failed') {
     console.warn('ICE connection failed, restarting...');
-    
+
     // Refresh credentials
     await refreshTURNCredentials(pc);
-    
+
     // Trigger ICE restart
     pc.restartIce();
     const offer = await pc.createOffer({ iceRestart: true });
     await pc.setLocalDescription(offer);
-    
+
     // Send offer to peer via signaling channel...
   }
 });
@@ -121,7 +121,7 @@ class TURNCredentialsManager {
 
   async getCredentials(keyId: string, keySecret: string): Promise<RTCIceServer[]> {
     const now = Date.now();
-    
+
     if (this.creds && this.creds.expiresAt > now) {
       return this.buildIceServers(this.creds);
     }

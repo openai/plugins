@@ -3,7 +3,7 @@
 ### "Logs not appearing"
 
 **Cause:** Observability disabled, Worker not redeployed, no traffic, low sampling rate, or log size exceeds 256 KB
-**Solution:** 
+**Solution:**
 ```bash
 # Verify config
 cat wrangler.jsonc | jq '.observability'
@@ -59,7 +59,7 @@ export default {
     const start = Date.now();
     const response = await processRequest(request);
     const duration = Date.now() - start;
-    
+
     // For detailed performance analysis, use Workers Traces instead
     return response;
   }

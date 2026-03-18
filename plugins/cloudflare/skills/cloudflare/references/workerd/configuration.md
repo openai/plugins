@@ -150,7 +150,7 @@ bindings = [
       apiToken = .envVar("CF_API_TOKEN")
     )
   )),
-  
+
   # Remote R2
   (name = "PROD_R2", r2Bucket = (
     remote = (
@@ -159,7 +159,7 @@ bindings = [
       apiToken = .envVar("CF_API_TOKEN")
     )
   )),
-  
+
   # Remote Durable Object
   (name = "PROD_DO", durableObjectNamespace = (
     remote = (

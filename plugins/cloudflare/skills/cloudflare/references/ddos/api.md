@@ -78,7 +78,7 @@ const l4Ruleset = await client.accounts.rulesets.phases.entrypoint.get("ddos_l4"
 interface DDoSAlertConfig {
   name: string;
   enabled: boolean;
-  alert_type: "http_ddos_attack_alert" | "layer_3_4_ddos_attack_alert" 
+  alert_type: "http_ddos_attack_alert" | "layer_3_4_ddos_attack_alert"
     | "advanced_http_ddos_attack_alert" | "advanced_layer_3_4_ddos_attack_alert";
   filters?: {
     zones?: string[];

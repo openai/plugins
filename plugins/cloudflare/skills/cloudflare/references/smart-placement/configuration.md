@@ -74,7 +74,7 @@
 Smart Placement is fundamentally limited to Workers with default `fetch` handlers. This is a key architectural constraint.
 
 - ✅ **Affects:** `fetch` event handlers ONLY (the default export's fetch method)
-- ❌ **Does NOT affect:** 
+- ❌ **Does NOT affect:**
   - RPC methods (Service Bindings with `WorkerEntrypoint` - see example below)
   - Named entrypoints (exports other than `default`)
   - Workers without `fetch` handlers
@@ -93,7 +93,7 @@ export default {
 
 // ❌ Smart Placement DOES NOT affect these:
 export class MyRPC extends WorkerEntrypoint {
-  async myMethod() { 
+  async myMethod() {
     // This ALWAYS runs at edge, Smart Placement has NO EFFECT
     const data = await this.env.DATABASE.prepare('SELECT * FROM users').all();
     return data;

@@ -134,24 +134,24 @@ Navigate to **Caching > Cache Reserve** to view:
 // Logpush field: CacheReserveUsed (boolean) - filter for Cache Reserve hits
 // Query Cache Reserve hits in analytics
 const logpushQuery = `
-  SELECT 
-    ClientRequestHost, 
-    COUNT(*) as requests, 
+  SELECT
+    ClientRequestHost,
+    COUNT(*) as requests,
     SUM(EdgeResponseBytes) as bytes_served,
     COUNT(CASE WHEN CacheReserveUsed = true THEN 1 END) as cache_reserve_hits,
     COUNT(CASE WHEN CacheReserveUsed = false THEN 1 END) as cache_reserve_misses
-  FROM http_requests 
+  FROM http_requests
   WHERE Timestamp >= NOW() - INTERVAL '24 hours'
-  GROUP BY ClientRequestHost 
+  GROUP BY ClientRequestHost
   ORDER BY requests DESC
 `;
 
 // Filter only Cache Reserve hits
 const crHitsQuery = `
   SELECT ClientRequestHost, COUNT(*) as requests, SUM(EdgeResponseBytes) as bytes
-  FROM http_requests 
+  FROM http_requests
   WHERE CacheReserveUsed = true AND Timestamp >= NOW() - INTERVAL '7 days'
-  GROUP BY ClientRequestHost 
+  GROUP BY ClientRequestHost
   ORDER BY bytes DESC
 `;
 ```

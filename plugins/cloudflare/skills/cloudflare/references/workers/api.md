@@ -106,11 +106,11 @@ export class WebSocketDO {
   async webSocketMessage(ws: WebSocket, message: string) {
     ws.send(`Echo: ${message}`);
   }
-  
+
   async webSocketClose(ws: WebSocket, code: number, reason: string) {
     // Cleanup on close
   }
-  
+
   async webSocketError(ws: WebSocket, error: Error) {
     console.error('WebSocket error:', error);
   }
@@ -126,20 +126,20 @@ Hibernation automatically suspends inactive connections (no CPU cost), wakes on 
 ```typescript
 export class Counter {
   private value = 0;
-  
+
   constructor(private state: DurableObjectState) {
     state.blockConcurrencyWhile(async () => {
       this.value = (await state.storage.get('value')) || 0;
     });
   }
-  
+
   // Export methods directly - called via RPC (type-safe, zero serialization)
   async increment(): Promise<number> {
     this.value++;
     await this.state.storage.put('value', this.value);
     return this.value;
   }
-  
+
   async getValue(): Promise<number> {
     return this.value;
   }

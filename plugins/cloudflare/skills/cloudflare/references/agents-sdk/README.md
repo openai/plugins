@@ -49,7 +49,7 @@ export class MyAgent extends Agent<Env> {
   onStart() {
     this.sql`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`;
   }
-  
+
   async onRequest(request: Request) {
     return Response.json({ state: this.state });
   }

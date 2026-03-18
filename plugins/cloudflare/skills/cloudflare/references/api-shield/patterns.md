@@ -130,8 +130,8 @@ and http.host eq "api.example.com"
 
 ## Architecture Patterns
 
-**Public API:** Discovery + Schema Validation 2.0 + JWT + Rate Limiting + Bot Management  
-**Partner API:** mTLS + Schema Validation + Sequence Mitigation  
+**Public API:** Discovery + Schema Validation 2.0 + JWT + Rate Limiting + Bot Management
+**Partner API:** mTLS + Schema Validation + Sequence Mitigation
 **Internal API:** Discovery + Schema Learning + Auth Posture
 
 ## OWASP API Security Top 10 Mapping (2026)
@@ -151,8 +151,8 @@ and http.host eq "api.example.com"
 
 ## Monitoring
 
-**Security Events:** `Security > Events` → Filter: Action = block, Service = API Shield  
-**Firewall Analytics:** `Analytics > Security` → Filter by `cf.api_gateway.*` fields  
+**Security Events:** `Security > Events` → Filter: Action = block, Service = API Shield
+**Firewall Analytics:** `Analytics > Security` → Filter by `cf.api_gateway.*` fields
 **Logpush fields:** APIGatewayAuthIDPresent, APIGatewayRequestViolatesSchema, APIGatewayFallthroughDetected, JWTValidationResult
 
 ## Availability (2026)

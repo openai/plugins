@@ -17,7 +17,7 @@ try {
   const writer = socket.writable.getWriter();
   await writer.write(new TextEncoder().encode("Hello\n"));
   await writer.close();
-  
+
   const reader = socket.readable.getReader();
   const { value } = await reader.read();
   return new Response(value);
@@ -152,7 +152,7 @@ export default {
 ```typescript
 class SocketPool {
   private pool = new Map<string, Socket[]>();
-  
+
   async acquire(hostname: string, port: number): Promise<Socket> {
     const key = `${hostname}:${port}`;
     const sockets = this.pool.get(key) || [];
@@ -161,7 +161,7 @@ class SocketPool {
     await socket.opened;
     return socket;
   }
-  
+
   release(hostname: string, port: number, socket: Socket): void {
     const key = `${hostname}:${port}`;
     const sockets = this.pool.get(key) || [];

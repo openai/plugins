@@ -102,10 +102,10 @@ console.log({
 
 **Log Levels**: All console methods produce logs; use structured fields for filtering:
 ```typescript
-console.log({ 
-  level: 'error', 
-  message: 'Payment failed', 
-  error_code: 'CARD_DECLINED' 
+console.log({
+  level: 'error',
+  message: 'Payment failed',
+  error_code: 'CARD_DECLINED'
 });
 ```
 
@@ -119,10 +119,10 @@ interface AnalyticsEngineDataset {
 interface AnalyticsEngineDataPoint {
   // Indexed strings (use for filtering/grouping)
   indexes?: string[];
-  
+
   // Non-indexed strings (metadata, IDs, URLs)
   blobs?: string[];
-  
+
   // Numeric values (counts, durations, amounts)
   doubles?: number[];
 }

@@ -15,7 +15,7 @@
 ### "Schema validation blocking valid requests"
 
 **Cause:** Schema too restrictive, missing fields, or incorrect types
-**Solution:** 
+**Solution:**
 1. Check Firewall Events for violation details
 2. Review schema in Settings
 3. Test schema in Swagger Editor
@@ -26,7 +26,7 @@
 ### "JWT validation failing"
 
 **Cause:** JWKS mismatch with IdP, expired token, wrong header/cookie name, or clock skew
-**Solution:** 
+**Solution:**
 1. Verify JWKS matches IdP configuration
 2. Check token `exp` claim is valid
 3. Confirm header/cookie name matches config
@@ -62,7 +62,7 @@
 ### "Sequence detection false positives"
 
 **Cause:** Lookback window issues, non-unique session IDs, or model sensitivity
-**Solution:** 
+**Solution:**
 1. Review lookback settings (10 reqs to managed endpoints, 10min window)
 2. Ensure session ID uniqueness per user (not shared tokens)
 3. Adjust positive/negative model balance

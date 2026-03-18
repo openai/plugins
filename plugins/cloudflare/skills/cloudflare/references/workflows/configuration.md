@@ -55,7 +55,7 @@ const [user, settings] = await Promise.all([
 
 ### Conditional Steps
 ```typescript
-const config = await step.do('fetch config', async () => 
+const config = await step.do('fetch config', async () =>
   this.env.KV.get('flags', { type: 'json' })
 );
 
@@ -70,7 +70,7 @@ if (Date.now() > deadline) { /* BAD */ }
 
 ### Dynamic Steps (Loops)
 ```typescript
-const files = await step.do('list files', async () => 
+const files = await step.do('list files', async () =>
   this.env.BUCKET.list()
 );
 

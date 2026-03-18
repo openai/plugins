@@ -29,7 +29,7 @@ const auth: PagesFunction<Env> = async (context) => {
   if (!authHeader?.startsWith('Bearer ')) {
     return new Response('Unauthorized', { status: 401 });
   }
-  
+
   try {
     const payload = await verifyJWT(authHeader.substring(7), context.env.JWT_SECRET);
     context.data.user = payload;
@@ -96,8 +96,8 @@ const errorHandler: PagesFunction = async (context) => {
     if (context.request.url.includes('/api/')) {
       return Response.json({ error: error.message }, { status: 500 });
     }
-    return new Response(`<h1>Error</h1><p>${error.message}</p>`, { 
-      status: 500, headers: { 'Content-Type': 'text/html' } 
+    return new Response(`<h1>Error</h1><p>${error.message}</p>`, {
+      status: 500, headers: { 'Content-Type': 'text/html' }
     });
   }
 };
@@ -112,7 +112,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, request }) => {
   const cacheKey = `data:${new URL(request.url).pathname}`;
   const cached = await env.KV.get(cacheKey, 'json');
   if (cached) return Response.json(cached, { headers: { 'X-Cache': 'HIT' } });
-  
+
   const data = await env.DB.prepare('SELECT * FROM data').first();
   await env.KV.put(cacheKey, JSON.stringify(data), {expirationTtl: 3600});
   return Response.json(data, {headers: {'X-Cache': 'MISS'}});
@@ -147,7 +147,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
 };
 ```
 
-**Best for**: Read-heavy apps with D1/Durable Objects in specific regions.  
+**Best for**: Read-heavy apps with D1/Durable Objects in specific regions.
 **Not needed**: Apps without data locality constraints or with evenly distributed traffic.
 
 ## Framework Integration
@@ -199,6 +199,6 @@ Dashboard → Settings → Build → Root directory. Set to subproject (e.g., `a
 
 ## Best Practices
 
-**Performance**: Exclude static via `_routes.json`; cache with KV; keep bundle < 1MB  
-**Security**: Use secrets (not vars); validate inputs; rate limit with KV/DO  
+**Performance**: Exclude static via `_routes.json`; cache with KV; keep bundle < 1MB
+**Security**: Use secrets (not vars); validate inputs; rate limit with KV/DO
 **Workflow**: Preview per branch; local dev with `wrangler pages dev`; instant rollbacks in Dashboard

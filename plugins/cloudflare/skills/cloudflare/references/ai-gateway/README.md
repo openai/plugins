@@ -36,8 +36,8 @@ const gateway = createAiGateway({
   gateway: process.env.CF_GATEWAY_ID,
 });
 
-const openai = createOpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY 
+const openai = createOpenAI({
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 // Single model
@@ -90,14 +90,14 @@ export default {
     const response = await env.AI.run(
       '@cf/meta/llama-3-8b-instruct',
       { messages: [{ role: 'user', content: 'Hello!' }] },
-      { 
-        gateway: { 
+      {
+        gateway: {
           id: 'my-gateway',
           metadata: { userId: '123', team: 'engineering' }
-        } 
+        }
       }
     );
-    
+
     return Response.json(response);
   }
 };

@@ -10,7 +10,7 @@ export default {
 };
 ```
 
-**JavaScript:** Same signature without types  
+**JavaScript:** Same signature without types
 **Python:** `class Default(WorkerEntrypoint): async def scheduled(self, controller, env, ctx)`
 
 ## ScheduledController
@@ -79,7 +79,7 @@ export default {
 export default {
   async scheduled(controller, env, ctx) {
     const data = await fetchCriticalData(); // Critical path
-    
+
     // Non-blocking background tasks
     ctx.waitUntil(Promise.all([
       logToAnalytics(data),
@@ -147,7 +147,7 @@ describe("Scheduled Handler", () => {
     await worker.scheduled(controller, env, ctx);
     expect(await env.MY_KV.get("last_run")).toBeDefined();
   });
-  
+
   it("handles multiple crons", async () => {
     const ctx = { waitUntil: () => {}, passThroughOnException: () => {} };
     await worker.scheduled({ scheduledTime: Date.now(), cron: "*/5 * * * *", type: "scheduled", noRetry: () => {} }, env, ctx);
@@ -177,7 +177,7 @@ export default {
         error: error.message,
         stack: error.stack,
       });
-      
+
       // Decide: retry or skip
       if (error.message.includes("rate limit")) {
         controller.noRetry(); // Skip retry for rate limits

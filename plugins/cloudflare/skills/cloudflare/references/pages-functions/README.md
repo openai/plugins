@@ -17,7 +17,7 @@ Serverless functions on Cloudflare Pages using Workers runtime. Full-stack dev w
 ## Decision Tree: Is This Pages Functions?
 
 ```
-Need serverless backend? 
+Need serverless backend?
 ├─ Yes, for a static site → Pages Functions
 ├─ Yes, standalone API → Workers
 └─ Just static hosting → Pages (no functions)

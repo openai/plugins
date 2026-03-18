@@ -14,7 +14,7 @@ app.post('/submit', async (req, res) => {
     method: 'POST',
     body: JSON.stringify({ secret: SECRET, response: token })
   }).then(r => r.json());
-  
+
   if (!validation.success) return res.status(403).json({ error: 'CAPTCHA failed' });
 });
 ```
@@ -63,7 +63,7 @@ window.turnstile.render('#container', {
 function TurnstileWidget({ onToken }) {
   const containerRef = useRef(null);
   const widgetIdRef = useRef(null);
-  
+
   useEffect(() => {
     if (containerRef.current && !widgetIdRef.current) {
       widgetIdRef.current = window.turnstile.render(containerRef.current, {
@@ -78,7 +78,7 @@ function TurnstileWidget({ onToken }) {
       }
     };
   }, []);
-  
+
   return <div ref={containerRef} />;
 }
 ```
@@ -122,8 +122,8 @@ useEffect(() => () => window.turnstile.remove(widgetId), []);
 
 **Solution:** Add CSP directives.
 ```html
-<meta http-equiv="Content-Security-Policy" 
-      content="script-src 'self' https://challenges.cloudflare.com; 
+<meta http-equiv="Content-Security-Policy"
+      content="script-src 'self' https://challenges.cloudflare.com;
                frame-src https://challenges.cloudflare.com;">
 ```
 

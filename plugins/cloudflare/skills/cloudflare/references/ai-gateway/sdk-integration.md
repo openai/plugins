@@ -77,7 +77,7 @@ id = "my-gateway"
 ```
 
 ```typescript
-await env.AI.run('@cf/meta/llama-3-8b-instruct', 
+await env.AI.run('@cf/meta/llama-3-8b-instruct',
   { messages: [...] },
   { gateway: { id: 'my-gateway', metadata: { userId: '123' } } }
 );

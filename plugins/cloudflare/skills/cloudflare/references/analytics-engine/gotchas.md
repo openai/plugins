@@ -74,12 +74,12 @@ Auto-generated at write time. Store original in blob if needed.
 
 ## Best Practices
 
-✅ Pre-aggregate at high volumes  
-✅ Use index for high-cardinality (millions)  
-✅ Always include time filter in queries  
-✅ Design schema before coding  
+✅ Pre-aggregate at high volumes
+✅ Use index for high-cardinality (millions)
+✅ Always include time filter in queries
+✅ Design schema before coding
 
-❌ Don't await writeDataPoint  
-❌ Don't use index for low-cardinality  
-❌ Don't query without time range  
+❌ Don't await writeDataPoint
+❌ Don't use index for low-cardinality
+❌ Don't query without time range
 ❌ Don't assume all writes succeed

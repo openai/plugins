@@ -69,12 +69,12 @@ Deploy: `wrangler deploy --env production`
 { "r2_buckets": [{ "binding": "ASSETS", "bucket_name": "my-assets" }] }
 
 // Durable Objects
-{ "durable_objects": { 
-  "bindings": [{ 
-    "name": "COUNTER", 
+{ "durable_objects": {
+  "bindings": [{
+    "name": "COUNTER",
     "class_name": "Counter",
     "script_name": "my-worker"  // Required for external DOs
-  }] 
+  }]
 } }
 { "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Counter"] }] }
 
@@ -129,7 +129,7 @@ export default {
     // Try serving static asset first
     const asset = await env.ASSETS.fetch(request);
     if (asset.status !== 404) return asset;
-    
+
     // Custom logic for non-assets
     return new Response("API response");
   }

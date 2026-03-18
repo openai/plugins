@@ -2,7 +2,7 @@
 
 ## REST API
 
-**Base:** `https://api.cloudflare.com/client/v4/accounts/{accountId}/browser-rendering`  
+**Base:** `https://api.cloudflare.com/client/v4/accounts/{accountId}/browser-rendering`
 **Auth:** `Authorization: Bearer <token>` (Browser Rendering - Edit permission)
 
 ### Endpoints

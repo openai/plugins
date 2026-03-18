@@ -25,7 +25,7 @@ export default {
       message.setReject('Blocked');
       return;
     }
-    
+
     // Forward to inbox
     await message.forward('inbox@example.com');
   }

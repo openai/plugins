@@ -73,7 +73,7 @@ Check partition spec: `DESCRIBE namespace.table_name`
 ## Common Errors
 
 ### "Column not found"
-**Cause:** Typo, column doesn't exist, or case mismatch  
+**Cause:** Typo, column doesn't exist, or case mismatch
 **Solution:** `DESCRIBE namespace.table_name` to check schema
 
 ### "Type mismatch"
@@ -88,7 +88,7 @@ WHERE timestamp > '2025-01-01T00:00:00Z'
 ```
 
 ### "ORDER BY column not in partition key"
-**Cause:** Ordering by non-partition column  
+**Cause:** Ordering by non-partition column
 **Solution:** Use partition key, aggregation, or remove ORDER BY. Check: `DESCRIBE table`
 
 ### "Token authentication failed"
@@ -130,12 +130,12 @@ Max LIMIT is 10,000. For pagination, use WHERE filters with partition keys.
 SELECT * FROM logs.requests LIMIT 10000;
 
 -- ✅ Fast: Filter on partition key
-SELECT * FROM logs.requests 
+SELECT * FROM logs.requests
 WHERE timestamp >= '2025-01-15T00:00:00Z' AND timestamp < '2025-01-16T00:00:00Z'
 LIMIT 1000;
 
 -- ✅ Faster: Multiple filters
-SELECT * FROM logs.requests 
+SELECT * FROM logs.requests
 WHERE timestamp >= '2025-01-15T00:00:00Z' AND status = 404 AND method = 'GET'
 LIMIT 1000;
 ```
@@ -151,11 +151,11 @@ LIMIT 1000;
 
 ```sql
 -- ❌ Times out: Year-long aggregation
-SELECT status, COUNT(*) FROM logs.requests 
+SELECT status, COUNT(*) FROM logs.requests
 WHERE timestamp >= '2024-01-01T00:00:00Z' GROUP BY status;
 
 -- ✅ Faster: Month-long aggregation
-SELECT status, COUNT(*) FROM logs.requests 
+SELECT status, COUNT(*) FROM logs.requests
 WHERE timestamp >= '2025-01-01T00:00:00Z' AND timestamp < '2025-02-01T00:00:00Z'
 GROUP BY status;
 ```

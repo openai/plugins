@@ -178,12 +178,12 @@ export default {
 export default {
   async fetch(request, env, ctx) {
     const response = new Response("OK");
-    
+
     // Fire-and-forget background work
     ctx.waitUntil(
       env.ANALYTICS.put(request.url, Date.now())
     );
-    
+
     return response;
   }
 };

@@ -13,7 +13,7 @@ interface ForwardableEmailMessage {
   readonly headers: Headers;    // Web-standard Headers object
   readonly raw: ReadableStream; // Raw MIME message (single-use stream)
   readonly rawSize: number;     // Total message size in bytes
-  
+
   setReject(reason: string): void;
   forward(rcptTo: string, headers?: Headers): Promise<void>;
   reply(message: EmailMessage): Promise<void>;
@@ -214,9 +214,9 @@ const raw = msg.asRaw(); // Returns string
 ## TypeScript Types
 
 ```typescript
-import { 
+import {
   ForwardableEmailMessage,
-  EmailMessage 
+  EmailMessage
 } from 'cloudflare:email';
 
 interface Env {

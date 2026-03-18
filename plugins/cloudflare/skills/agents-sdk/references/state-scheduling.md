@@ -9,7 +9,7 @@ State persists to SQLite and broadcasts to connected clients automatically.
 ### Define Typed State
 
 ```typescript
-type State = { 
+type State = {
   count: number;
   items: string[];
 };
@@ -55,7 +55,7 @@ import { useAgent } from "agents/react";
 
 function App() {
   const [state, setLocalState] = useState<State>({ count: 0 });
-  
+
   const agent = useAgent<State>({
     agent: "MyAgent",
     name: "instance-1",

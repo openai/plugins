@@ -76,16 +76,16 @@ import assert from "node:assert";
 
 describe("API", () => {
   let worker;
-  
+
   before(async () => {
-    worker = await startWorker({ 
+    worker = await startWorker({
       config: "wrangler.jsonc",
       remote: "minimal"  // Fast tests with real bindings
     });
   });
-  
+
   after(async () => await worker.dispose());
-  
+
   it("creates user", async () => {
     const response = await worker.fetch("http://example.com/api/users", {
       method: "POST",
@@ -142,7 +142,7 @@ await apiWorker.dispose();
 ### Mock External APIs
 
 ```typescript
-const worker = await startWorker({ 
+const worker = await startWorker({
   config: "wrangler.jsonc",
   outboundService: (req) => {
     const url = new URL(req.url);

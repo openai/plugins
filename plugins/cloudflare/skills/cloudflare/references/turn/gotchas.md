@@ -121,7 +121,7 @@ Implement in all production apps:
 
 ```typescript
 pc.addEventListener('iceconnectionstatechange', async () => {
-  if (pc.iceConnectionState === 'failed' || 
+  if (pc.iceConnectionState === 'failed' ||
       pc.iceConnectionState === 'disconnected') {
     await refreshTURNCredentials(pc);
     pc.restartIce();
@@ -184,7 +184,7 @@ if (ttl > 172800) {
 
 **Cause**: Credentials expired (48hr max)
 
-**Solution**: 
+**Solution**:
 - Set TTL to expected session duration
 - Implement credential refresh with setConfiguration()
 - Use ICE restart if connection fails
@@ -211,7 +211,7 @@ const filtered = urls.filter(url => !url.includes(':53'));
 
 **Cause**: Cloudflare changed IP addresses (14-day notice)
 
-**Solution**: 
+**Solution**:
 - Use DNS hostnames (`turn.cloudflare.com`)
 - Monitor DNS changes with automated alerts
 - Update allowlists within 14 days if using IP allowlisting

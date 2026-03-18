@@ -8,27 +8,27 @@ const memoryCache = new Map<string, { data: any; expires: number }>();
 
 async function getCached(env: Env, key: string): Promise<any> {
   const now = Date.now();
-  
+
   // L1: Memory cache (fastest)
   const cached = memoryCache.get(key);
   if (cached && cached.expires > now) {
     return cached.data;
   }
-  
+
   // L2: KV cache (fast)
   const kvValue = await env.CACHE.get(key, "json");
   if (kvValue) {
     memoryCache.set(key, { data: kvValue, expires: now + 60000 }); // 1min in memory
     return kvValue;
   }
-  
+
   // L3: Origin (slow)
   const origin = await fetch(`https://api.example.com/${key}`).then(r => r.json());
-  
+
   // Backfill caches
   await env.CACHE.put(key, JSON.stringify(origin), { expirationTtl: 300 }); // 5min in KV
   memoryCache.set(key, { data: origin, expires: now + 60000 });
-  
+
   return origin;
 }
 ```
@@ -39,7 +39,7 @@ async function getCached(env: Env, key: string): Promise<any> {
 async function getCachedData(env: Env, key: string, fetcher: () => Promise<any>): Promise<any> {
   const cached = await env.MY_KV.get(key, "json");
   if (cached) return cached;
-  
+
   const data = await fetcher();
   await env.MY_KV.put(key, JSON.stringify(data), { expirationTtl: 300 });
   return data;
@@ -60,13 +60,13 @@ interface Session { userId: string; expiresAt: number; }
 async function createSession(env: Env, userId: string): Promise<string> {
   const sessionId = crypto.randomUUID();
   const expiresAt = Date.now() + (24 * 60 * 60 * 1000);
-  
+
   await env.SESSIONS.put(
     `session:${sessionId}`,
     JSON.stringify({ userId, expiresAt }),
     { expirationTtl: 86400, metadata: { createdAt: Date.now() } }
   );
-  
+
   return sessionId;
 }
 
@@ -140,24 +140,24 @@ interface VersionedData {
 
 async function migrateIfNeeded(env: Env, key: string) {
   const result = await env.DATA.getWithMetadata(key, "json");
-  
+
   if (!result.value) return null;
-  
+
   const currentVersion = result.metadata?.version || 1;
   const targetVersion = 2;
-  
+
   if (currentVersion < targetVersion) {
     // Migrate data format
     const migrated = migrate(result.value, currentVersion, targetVersion);
-    
+
     // Store with new version
     await env.DATA.put(key, JSON.stringify(migrated), {
       metadata: { version: targetVersion, migratedAt: Date.now() }
     });
-    
+
     return migrated;
   }
-  
+
   return result.value;
 }
 

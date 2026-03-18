@@ -38,7 +38,7 @@ export const onRequest: PagesFunction<Env> = async (ctx) => { /* ... */ };
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
-  
+
   "vars": { "API_URL": "https://api.example.com" },
   "kv_namespaces": [{ "binding": "KV", "id": "abc123" }],
   "d1_databases": [{ "binding": "DB", "database_name": "prod-db", "database_id": "xyz789" }],

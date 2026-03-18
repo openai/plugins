@@ -110,9 +110,9 @@ Choose content type based on consumer type and data requirements:
 await env.QUEUE.send({ id: 123, name: 'test' }, { contentType: 'json' });
 
 // V8: Good for Date, Map, Set (push consumers only)
-await env.QUEUE.send({ 
-  created: new Date(), 
-  tags: new Set(['a', 'b']) 
+await env.QUEUE.send({
+  created: new Date(),
+  tags: new Set(['a', 'b'])
 }, { contentType: 'v8' });
 
 // Text: Simple strings

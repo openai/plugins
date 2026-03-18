@@ -9,7 +9,7 @@ npm create cloudflare@latest my-api -- --type=hello-world --lang=ts --deploy
 # Next.js on Pages
 npm create cloudflare@latest my-app -- --type=web-app --framework=next --platform=pages --ts --deploy
 
-# Astro static site  
+# Astro static site
 npm create cloudflare@latest my-blog -- --type=web-app --framework=astro --platform=pages --ts
 ```
 

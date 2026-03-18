@@ -25,7 +25,7 @@
 **Cause:** Using local mode when remote resources needed
 **Solution:** Use `remote` option:
 ```typescript
-const worker = await startWorker({ 
+const worker = await startWorker({
   config: "wrangler.jsonc",
   remote: true  // or "minimal" for faster tests
 });
@@ -76,7 +76,7 @@ For local DOs in same Worker, `script_name` is optional.
 ### "Workers Assets 404 errors"
 
 **Cause:** Asset path mismatch or incorrect `html_handling`
-**Solution:** 
+**Solution:**
 - Check `assets.directory` points to correct build output
 - Set `html_handling: "auto-trailing-slash"` for SPAs
 - Use `not_found_handling: "single-page-application"` to serve index.html for 404s
@@ -175,7 +175,7 @@ wrangler dev --inspector-port 9229  # Enable debugging
 worker.dispose()  // Always cleanup
 
 # If bindings don't work in tests
-const worker = await startWorker({ 
+const worker = await startWorker({
   config: "wrangler.jsonc",
   remote: "minimal"  // Use remote bindings
 });

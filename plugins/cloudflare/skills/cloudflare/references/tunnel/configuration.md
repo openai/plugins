@@ -41,15 +41,15 @@ ingress:
   - hostname: static.example.com
     path: \.(jpg|png|css|js)$
     service: https://localhost:8001
-  
+
   # Wildcard hostname
   - hostname: "*.example.com"
     service: https://localhost:8002
-  
+
   # Path only (all hostnames)
   - path: /api/.*
     service: http://localhost:9000
-  
+
   # Catch-all (required)
   - service: http_status:404
 ```

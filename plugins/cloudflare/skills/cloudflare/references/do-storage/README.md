@@ -20,13 +20,13 @@ DO Storage provides:
 ```typescript
 export class Counter extends DurableObject {
   sql: SqlStorage;
-  
+
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     this.sql = ctx.storage.sql;
     this.sql.exec('CREATE TABLE IF NOT EXISTS data(key TEXT PRIMARY KEY, value INTEGER)');
   }
-  
+
   async increment(): Promise<number> {
     const result = this.sql.exec(
       'INSERT INTO data VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = value + 1 RETURNING value',
@@ -55,9 +55,9 @@ export class Counter extends DurableObject {
 
 ## Reading Order
 
-**New to DO storage:** configuration.md → api.md → patterns.md → gotchas.md  
-**Building features:** patterns.md → api.md → gotchas.md  
-**Debugging issues:** gotchas.md → api.md  
+**New to DO storage:** configuration.md → api.md → patterns.md → gotchas.md
+**Building features:** patterns.md → api.md → gotchas.md
+**Debugging issues:** gotchas.md → api.md
 **Writing tests:** testing.md
 
 ## In This Reference

@@ -59,7 +59,7 @@ export default {
   ): Promise<void> {
     console.log("Cron:", controller.cron);
     console.log("Time:", new Date(controller.scheduledTime));
-    
+
     ctx.waitUntil(asyncTask(env)); // Non-blocking
   },
 };

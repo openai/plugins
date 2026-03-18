@@ -5,7 +5,7 @@
 ## Basic HTML
 
 ```html
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' 
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js'
         data-cf-beacon='{"token": "YOUR_TOKEN", "spa": true}'></script>
 ```
 

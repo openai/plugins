@@ -34,7 +34,7 @@ export class MyAgent extends Agent<Env, State> {
 async onChatMessage() {
   // Get AI-compatible tools from all connected MCP servers
   const mcpTools = this.mcp.getAITools();
-  
+
   const allTools = {
     ...localTools,
     ...mcpTools
@@ -45,7 +45,7 @@ async onChatMessage() {
     messages: await convertToModelMessages(this.messages),
     tools: allTools
   });
-  
+
   return result.toUIMessageStreamResponse();
 }
 ```

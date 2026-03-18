@@ -15,10 +15,10 @@ export default {
     // CRITICAL: Must consume stream before response
     const parser = new PostalMime.default();
     const email = await parser.parse(await message.raw.arrayBuffer());
-    
+
     // Process email
     console.log(`From: ${message.from}, Subject: ${email.subject}`);
-    
+
     // Forward or reject
     await message.forward("verified@destination.com");
   }

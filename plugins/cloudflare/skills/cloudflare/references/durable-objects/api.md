@@ -10,13 +10,13 @@ export class MyDO extends DurableObject<Env> {
     super(ctx, env);
     // Runs on EVERY wake - keep light!
   }
-  
+
   // RPC methods (called directly from worker)
   async myMethod(arg: string): Promise<string> { return arg; }
-  
+
   // fetch handler (legacy/HTTP semantics)
   async fetch(req: Request): Promise<Response> { /* ... */ }
-  
+
   // Lifecycle handlers
   async alarm() { /* alarm fired */ }
   async webSocketMessage(ws: WebSocket, msg: string | ArrayBuffer) { /* ... */ }

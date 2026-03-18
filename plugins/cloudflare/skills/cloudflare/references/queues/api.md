@@ -25,12 +25,12 @@ export default {
   async queue(batch: MessageBatch, env: Env, ctx: ExecutionContext): Promise<void> {
     for (const msg of batch.messages) {
       await processMessage(msg.body);
-      
+
       // Fire-and-forget analytics (doesn't block ack)
       ctx.waitUntil(
         env.ANALYTICS_QUEUE.send({ messageId: msg.id, processedAt: Date.now() })
       );
-      
+
       msg.ack();
     }
   }
@@ -102,7 +102,7 @@ async queue(batch: MessageBatch): Promise<void> {
     msg.ack();        // Message marked for ack
     msg.retry();      // Overrides ack - message will retry
   }
-  
+
   batch.ackAll();     // Only affects messages not explicitly handled above
 }
 ```

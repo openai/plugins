@@ -106,7 +106,7 @@ type UnsupportedCallback = () => void;
 
 ### Request
 
-**Method:** POST  
+**Method:** POST
 **Content-Type:** `application/json` or `application/x-www-form-urlencoded`
 
 ```typescript

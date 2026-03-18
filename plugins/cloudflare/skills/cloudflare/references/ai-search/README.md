@@ -51,7 +51,7 @@ export default {
       query: "How do I configure caching?",
       model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
     });
-    
+
     return Response.json({ answer: answer.response });
   }
 };

@@ -33,7 +33,7 @@
     "privacyPolicyURL": "https://www.cloudflare.com/privacypolicy/",
     "termsOfServiceURL": "https://www.cloudflare.com/website-terms/",
     "defaultPrompt": [
-      "Use Cloudflare context to choose the right product, verify setup, or plan the right deployment, data, or analytics workflow without guessing infrastructure."
+      "Choose the right Cloudflare product and plan the deployment or analytics workflow without guessing."
     ],
     "composerIcon": "./assets/cloudflare-small.svg",
     "logo": "./assets/cloudflare.png",

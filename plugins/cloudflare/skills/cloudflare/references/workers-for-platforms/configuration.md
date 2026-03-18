@@ -72,7 +72,7 @@ const userWorker = env.DISPATCHER.get(
   workerName,
   {},
   {
-    limits: { 
+    limits: {
       cpuMs: 10,        // Max CPU ms
       subRequests: 5    // Max fetch() calls
     }

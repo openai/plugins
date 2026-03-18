@@ -17,8 +17,8 @@
 
 ### TypeScript type errors
 
-**Problem:** `ctx.env.MY_BINDING` shows type error  
-**Cause:** No type definition for `Env`  
+**Problem:** `ctx.env.MY_BINDING` shows type error
+**Cause:** No type definition for `Env`
 **Solution:** Run `npx wrangler types` or manually define:
 ```typescript
 interface Env { MY_BINDING: KVNamespace; }
@@ -27,8 +27,8 @@ export const onRequest: PagesFunction<Env> = async (ctx) => { /* ... */ };
 
 ### Secrets not available in production
 
-**Problem:** `ctx.env.SECRET_KEY` is undefined in production  
-**Cause:** `.dev.vars` is local-only, not deployed  
+**Problem:** `ctx.env.SECRET_KEY` is undefined in production
+**Cause:** `.dev.vars` is local-only, not deployed
 **Solution:** Set production secrets:
 ```bash
 echo "value" | npx wrangler pages secret put SECRET_KEY --project-name=my-app

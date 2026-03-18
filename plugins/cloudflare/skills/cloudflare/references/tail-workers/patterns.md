@@ -30,7 +30,7 @@ export default {
       logs: event.logs,
       exceptions: event.exceptions,
     }));
-    
+
     ctx.waitUntil(
       fetch(env.LOG_ENDPOINT, {
         method: "POST",
@@ -46,12 +46,12 @@ export default {
 ```typescript
 export default {
   async tail(events, env, ctx) {
-    const errors = events.filter(e => 
+    const errors = events.filter(e =>
       e.outcome === 'exception' || e.exceptions.length > 0
     );
-    
+
     if (errors.length === 0) return;
-    
+
     ctx.waitUntil(
       fetch(env.ERROR_ENDPOINT, {
         method: "POST",
@@ -108,14 +108,14 @@ Filter by route, outcome, or other criteria:
 export default {
   async tail(events, env, ctx) {
     // Route filtering
-    const apiEvents = events.filter(e => 
+    const apiEvents = events.filter(e =>
       e.event?.request?.url?.includes('/api/')
     );
-    
+
     // Multi-destination routing
     const errors = events.filter(e => e.outcome === 'exception');
     const success = events.filter(e => e.outcome === 'ok');
-    
+
     const tasks = [];
     if (errors.length > 0) {
       tasks.push(fetch(env.ERROR_ENDPOINT, {
@@ -129,7 +129,7 @@ export default {
         body: JSON.stringify(success),
       }));
     }
-    
+
     ctx.waitUntil(Promise.all(tasks));
   }
 };

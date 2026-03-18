@@ -66,11 +66,11 @@ interface Socket {
   // Streams
   readable: ReadableStream<Uint8Array>;
   writable: WritableStream<Uint8Array>;
-  
+
   // Connection state
   opened: Promise<SocketInfo>;
   closed: Promise<void>;
-  
+
   // Methods
   close(): Promise<void>;
   startTls(): Socket;
@@ -164,14 +164,14 @@ export default {
 
     try {
       await socket.opened;
-      
+
       const writer = socket.writable.getWriter();
       await writer.write(new TextEncoder().encode("Hello, TCP!\n"));
       await writer.close();
 
       const reader = socket.readable.getReader();
       const { value } = await reader.read();
-      
+
       return new Response(value);
     } finally {
       await socket.close();

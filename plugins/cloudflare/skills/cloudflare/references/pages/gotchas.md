@@ -2,56 +2,56 @@
 
 ## Functions Not Running
 
-**Problem**: Function endpoints return 404 or don't execute  
-**Causes**: `_routes.json` excludes path; wrong file extension (`.jsx`/`.tsx`); Functions dir not at output root  
+**Problem**: Function endpoints return 404 or don't execute
+**Causes**: `_routes.json` excludes path; wrong file extension (`.jsx`/`.tsx`); Functions dir not at output root
 **Solution**: Check `_routes.json`, rename to `.ts`/`.js`, verify build output structure
 
 ## 404 on Static Assets
 
-**Problem**: Static files not serving  
-**Causes**: Build output dir misconfigured; Functions catching requests; Advanced mode missing `env.ASSETS.fetch()`  
+**Problem**: Static files not serving
+**Causes**: Build output dir misconfigured; Functions catching requests; Advanced mode missing `env.ASSETS.fetch()`
 **Solution**: Verify output dir, add exclusions to `_routes.json`, call `env.ASSETS.fetch()` in `_worker.js`
 
 ## Bindings Not Working
 
-**Problem**: `env.BINDING` undefined or errors  
-**Causes**: wrangler.jsonc syntax error; wrong binding IDs; missing `.dev.vars`; out-of-sync types  
+**Problem**: `env.BINDING` undefined or errors
+**Causes**: wrangler.jsonc syntax error; wrong binding IDs; missing `.dev.vars`; out-of-sync types
 **Solution**: Validate config, verify IDs, create `.dev.vars`, run `npx wrangler types`
 
 ## Build Failures
 
-**Problem**: Deployment fails during build  
-**Causes**: Wrong build command/output dir; Node version incompatibility; missing env vars; 20min timeout; OOM  
+**Problem**: Deployment fails during build
+**Causes**: Wrong build command/output dir; Node version incompatibility; missing env vars; 20min timeout; OOM
 **Solution**: Check Dashboard → Deployments → Build log; verify settings; add `.nvmrc`; optimize build
 
 ## Middleware Not Running
 
-**Problem**: Middleware doesn't execute  
-**Causes**: Wrong filename (not `_middleware.ts`); missing `onRequest` export; didn't call `next()`  
+**Problem**: Middleware doesn't execute
+**Causes**: Wrong filename (not `_middleware.ts`); missing `onRequest` export; didn't call `next()`
 **Solution**: Rename file with underscore prefix; export handler; call `next()` or return Response
 
 ## Headers/Redirects Not Working
 
-**Problem**: `_headers` or `_redirects` not applying  
-**Causes**: Only work for static assets; Functions override; syntax errors; exceeded limits  
+**Problem**: `_headers` or `_redirects` not applying
+**Causes**: Only work for static assets; Functions override; syntax errors; exceeded limits
 **Solution**: Set headers in Response object for Functions; verify syntax; check limits (100 headers, 2,100 redirects)
 
 ## TypeScript Errors
 
-**Problem**: Type errors in Functions code  
-**Causes**: Types not generated; Env interface doesn't match wrangler.jsonc  
+**Problem**: Type errors in Functions code
+**Causes**: Types not generated; Env interface doesn't match wrangler.jsonc
 **Solution**: Run `npx wrangler types --path='./functions/types.d.ts'`; update Env interface
 
 ## Local Dev Issues
 
-**Problem**: Dev server errors or bindings don't work  
-**Causes**: Port conflict; bindings not passed; local vs HTTPS differences  
+**Problem**: Dev server errors or bindings don't work
+**Causes**: Port conflict; bindings not passed; local vs HTTPS differences
 **Solution**: Use `--port=3000`; pass bindings via CLI or wrangler.jsonc; account for HTTP/HTTPS differences
 
 ## Performance Issues
 
-**Problem**: Slow responses or CPU limit errors  
-**Causes**: Functions invoked for static assets; cold starts; 10ms CPU limit; large bundle  
+**Problem**: Slow responses or CPU limit errors
+**Causes**: Functions invoked for static assets; cold starts; 10ms CPU limit; large bundle
 **Solution**: Exclude static via `_routes.json`; optimize hot paths; keep bundle < 1MB
 
 ## Framework-Specific
@@ -108,76 +108,76 @@ console.log('Params:', params);
 
 ### Increased Cold Start Latency
 
-**Problem**: First requests slower after enabling Smart Placement  
-**Cause**: Initial optimization period while system learns traffic patterns  
+**Problem**: First requests slower after enabling Smart Placement
+**Cause**: Initial optimization period while system learns traffic patterns
 **Solution**: Expected behavior during first 24-48 hours; monitor latency trends over time
 
 ### Inconsistent Response Times
 
-**Problem**: Latency varies significantly across requests during initial deployment  
-**Cause**: Smart Placement testing different execution locations to find optimal placement  
+**Problem**: Latency varies significantly across requests during initial deployment
+**Cause**: Smart Placement testing different execution locations to find optimal placement
 **Solution**: Normal during learning phase; stabilizes after traffic patterns emerge (1-2 days)
 
 ### No Performance Improvement
 
-**Problem**: Smart Placement enabled but no latency reduction observed  
-**Cause**: Traffic evenly distributed globally, or no data locality constraints  
+**Problem**: Smart Placement enabled but no latency reduction observed
+**Cause**: Traffic evenly distributed globally, or no data locality constraints
 **Solution**: Smart Placement most effective with centralized data (D1/DO) or regional traffic; disable if no benefit
 
 ## Remote Bindings Issues
 
 ### Accidentally Modified Production Data
 
-**Problem**: Local dev with `--remote` altered production database/KV  
-**Cause**: Remote bindings connect directly to production resources; writes are real  
-**Solution**: 
+**Problem**: Local dev with `--remote` altered production database/KV
+**Cause**: Remote bindings connect directly to production resources; writes are real
+**Solution**:
 - Use `--remote` only for read-heavy debugging
 - Create separate preview environments for testing
 - Never use `--remote` for write operations during development
 
 ### Remote Binding Auth Errors
 
-**Problem**: `npx wrangler pages dev --remote` fails with "Unauthorized" or auth error  
-**Cause**: Not logged in, session expired, or insufficient account permissions  
-**Solution**: 
+**Problem**: `npx wrangler pages dev --remote` fails with "Unauthorized" or auth error
+**Cause**: Not logged in, session expired, or insufficient account permissions
+**Solution**:
 1. Run `npx wrangler login` to re-authenticate
 2. Verify account has access to project and bindings
 3. Check binding IDs match production configuration
 
 ### Slow Local Dev with Remote Bindings
 
-**Problem**: Local dev server slow when using `--remote`  
-**Cause**: Every request makes network calls to production bindings  
+**Problem**: Local dev server slow when using `--remote`
+**Cause**: Every request makes network calls to production bindings
 **Solution**: Use local bindings for development; reserve `--remote` for final validation
 
 ## Common Errors
 
 ### "Module not found"
-**Cause**: Dependencies not bundled or build output incorrect  
+**Cause**: Dependencies not bundled or build output incorrect
 **Solution**: Check build output directory, ensure dependencies bundled
 
 ### "Binding not found"
-**Cause**: Binding not configured or types out of sync  
+**Cause**: Binding not configured or types out of sync
 **Solution**: Verify wrangler.jsonc, run `npx wrangler types`
 
 ### "Request exceeded CPU limit"
-**Cause**: Code execution too slow or heavy compute  
+**Cause**: Code execution too slow or heavy compute
 **Solution**: Optimize hot paths, upgrade to Workers Paid
 
 ### "Script too large"
-**Cause**: Bundle size exceeds limit  
+**Cause**: Bundle size exceeds limit
 **Solution**: Tree-shake, use dynamic imports, code-split
 
 ### "Too many subrequests"
-**Cause**: Exceeded 50 subrequest limit  
+**Cause**: Exceeded 50 subrequest limit
 **Solution**: Batch or reduce fetch calls
 
 ### "KV key not found"
-**Cause**: Key doesn't exist or wrong namespace  
+**Cause**: Key doesn't exist or wrong namespace
 **Solution**: Check namespace matches environment
 
 ### "D1 error"
-**Cause**: Wrong database_id or missing migrations  
+**Cause**: Wrong database_id or missing migrations
 **Solution**: Verify config, run `wrangler d1 migrations list`
 
 ## Limits Reference (Jan 2026)

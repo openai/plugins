@@ -128,11 +128,11 @@ export default {
       const users = await env.DB_REPLICA.prepare('SELECT * FROM users WHERE active = 1').all();
       return Response.json(users.results);
     }
-    
+
     if (request.method === 'POST') {
       const { name, email } = await request.json();
       const result = await env.DB.prepare('INSERT INTO users (name, email) VALUES (?, ?)').bind(name, email).run();
-      
+
       // Read-after-write: use primary for consistency (replication lag <100ms-2s)
       const user = await env.DB.prepare('SELECT * FROM users WHERE id = ?').bind(result.meta.last_row_id).first();
       return Response.json(user, { status: 201 });
@@ -141,7 +141,7 @@ export default {
 }
 ```
 
-**Use replicas for**: Analytics dashboards, search results, public queries (eventual consistency OK)  
+**Use replicas for**: Analytics dashboards, search results, public queries (eventual consistency OK)
 **Use primary for**: Read-after-write, financial transactions, authentication (consistency required)
 
 ## Sessions API Pattern (Paid Plans)
@@ -168,7 +168,7 @@ async function transformLargeDataset(env: Env) {
     while (true) {
       const rows = await session.prepare('SELECT id, data FROM legacy LIMIT ? OFFSET ?').bind(BATCH_SIZE, offset).all();
       if (rows.results.length === 0) break;
-      const updates = rows.results.map(row => 
+      const updates = rows.results.map(row =>
         session.prepare('UPDATE legacy SET new_data = ? WHERE id = ?').bind(transform(row.data), row.id)
       );
       await session.batch(updates);

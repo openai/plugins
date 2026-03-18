@@ -30,7 +30,7 @@ Enterprise plans get granular 1-99 scores for custom thresholds.
 ```txt
 Dashboard: Security > Bots > Configure
 - Definitely automated: Block/Challenge
-- Likely automated: Challenge/Allow  
+- Likely automated: Challenge/Allow
 - Verified bots: Allow (recommended)
 - Static resource protection: ON (may block mail clients)
 - JavaScript Detections: Optional
@@ -68,7 +68,7 @@ function jsdOnload() {
 <script src="/cdn-cgi/challenge-platform/scripts/jsd/api.js?onload=jsdOnload" async></script>
 ```
 
-**Use API for**: Selective deployment on specific pages  
+**Use API for**: Selective deployment on specific pages
 **Don't combine**: Zone-wide toggle + manual injection
 
 ### WAF Rules for JSD
@@ -100,7 +100,7 @@ Bot scores for repeat visitors consider session history via this cookie.
 
 ## Static Resource Protection
 
-**File Extensions**: ico, jpg, png, jpeg, gif, css, js, tif, tiff, bmp, pict, webp, svg, svgz, class, jar, txt, csv, doc, docx, xls, xlsx, pdf, ps, pls, ppt, pptx, ttf, otf, woff, woff2, eot, eps, ejs, swf, torrent, midi, mid, m3u8, m4a, mp3, ogg, ts  
+**File Extensions**: ico, jpg, png, jpeg, gif, css, js, tif, tiff, bmp, pict, webp, svg, svgz, class, jar, txt, csv, doc, docx, xls, xlsx, pdf, ps, pls, ppt, pptx, ttf, otf, woff, woff2, eot, eps, ejs, swf, torrent, midi, mid, m3u8, m4a, mp3, ogg, ts
 **Plus**: `/.well-known/` path (all files)
 
 ```txt

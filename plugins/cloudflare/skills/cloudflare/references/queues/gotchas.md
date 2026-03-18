@@ -4,8 +4,8 @@
 
 ### 1. "Entire Batch Retried After Single Error"
 
-**Problem:** Throwing uncaught error in queue handler retries the entire batch, not just the failed message  
-**Cause:** Uncaught exceptions propagate to the runtime, triggering batch-level retry  
+**Problem:** Throwing uncaught error in queue handler retries the entire batch, not just the failed message
+**Cause:** Uncaught exceptions propagate to the runtime, triggering batch-level retry
 **Solution:** Always wrap individual message processing in try/catch and call `msg.retry()` explicitly
 
 ```typescript
@@ -32,8 +32,8 @@ async queue(batch: MessageBatch): Promise<void> {
 
 ### 2. "Messages Retry Forever"
 
-**Problem:** Messages not explicitly ack'd or retry'd will auto-retry indefinitely  
-**Cause:** Runtime default behavior retries unhandled messages until `max_retries` reached  
+**Problem:** Messages not explicitly ack'd or retry'd will auto-retry indefinitely
+**Cause:** Runtime default behavior retries unhandled messages until `max_retries` reached
 **Solution:** Always call `msg.ack()` or `msg.retry()` for each message. Never leave messages unhandled.
 
 ```typescript
@@ -65,8 +65,8 @@ async queue(batch: MessageBatch): Promise<void> {
 
 ### "Duplicate Message Processing"
 
-**Problem:** Same message processed multiple times  
-**Cause:** At-least-once delivery guarantee means duplicates are possible during retries  
+**Problem:** Same message processed multiple times
+**Cause:** At-least-once delivery guarantee means duplicates are possible during retries
 **Solution:** Design consumers to be idempotent by tracking processed message IDs in KV with expiration TTL
 
 ```typescript
@@ -77,7 +77,7 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
       msg.ack();
       continue;
     }
-    
+
     await processMessage(msg.body);
     await env.PROCESSED_KV.put(msg.id, '1', { expirationTtl: 86400 });
     msg.ack();
@@ -87,8 +87,8 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
 
 ### "Pull Consumer Can't Decode Messages"
 
-**Problem:** Pull consumer or dashboard shows unreadable message bodies  
-**Cause:** Messages sent with `v8` content type are only decodable by Workers push consumers  
+**Problem:** Pull consumer or dashboard shows unreadable message bodies
+**Cause:** Messages sent with `v8` content type are only decodable by Workers push consumers
 **Solution:** Use `json` content type for pull consumers or dashboard visibility
 
 ```typescript
@@ -101,14 +101,14 @@ await env.MY_QUEUE.send({ date: new Date(), tags: new Set() }, { contentType: 'v
 
 ### "Messages Not Being Delivered"
 
-**Problem:** Messages sent but consumer not processing  
-**Cause:** Queue paused, consumer not configured, or consumer errors  
+**Problem:** Messages sent but consumer not processing
+**Cause:** Queue paused, consumer not configured, or consumer errors
 **Solution:** Check queue status with `wrangler queues list`, verify consumer configured with `wrangler queues consumer add`, and check logs with `wrangler tail`
 
 ### "High Dead Letter Queue Rate"
 
-**Problem:** Many messages ending up in DLQ  
-**Cause:** Consumer repeatedly failing to process messages after max retries  
+**Problem:** Many messages ending up in DLQ
+**Cause:** Consumer repeatedly failing to process messages after max retries
 **Solution:** Review consumer error logs, check external dependency availability, verify message format matches expectations, or increase retry delay
 
 ## Error Classification Patterns
@@ -126,7 +126,7 @@ async queue(batch: MessageBatch, env: Env): Promise<void> {
       if (isRetryable(error)) {
         const delay = Math.min(30 * (2 ** msg.attempts), 43200);
         msg.retry({ delaySeconds: delay });
-      } 
+      }
       // Permanent errors: ack to avoid infinite retries
       else {
         console.error('Permanent error, sending to DLQ:', error);
@@ -144,7 +144,7 @@ function isRetryable(error: unknown): boolean {
   }
   if (error instanceof Error) {
     // Don't retry: validation, auth, not found
-    return !error.message.includes('validation') && 
+    return !error.message.includes('validation') &&
            !error.message.includes('unauthorized') &&
            !error.message.includes('not found');
   }
@@ -154,8 +154,8 @@ function isRetryable(error: unknown): boolean {
 
 ### "CPU Time Exceeded in Consumer"
 
-**Problem:** Consumer fails with CPU time limit exceeded  
-**Cause:** Consumer processing exceeding 30s default CPU time limit  
+**Problem:** Consumer fails with CPU time limit exceeded
+**Cause:** Consumer processing exceeding 30s default CPU time limit
 **Solution:** Increase CPU limit in wrangler.jsonc: `{ "limits": { "cpu_ms": 300000 } }` (5 minutes max)
 
 ## Content Type Decision Guide
@@ -180,9 +180,9 @@ function isRetryable(error: unknown): boolean {
 await env.QUEUE.send({ id: 123, name: 'test' }, { contentType: 'json' });
 
 // Complex JS types (push only): use v8
-await env.QUEUE.send({ 
-  created: new Date(), 
-  tags: new Set(['a', 'b']) 
+await env.QUEUE.send({
+  created: new Date(),
+  tags: new Set(['a', 'b'])
 }, { contentType: 'v8' });
 ```
 

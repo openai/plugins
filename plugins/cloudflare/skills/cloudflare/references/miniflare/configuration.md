@@ -43,7 +43,7 @@ new Miniflare({
   host: "127.0.0.1",
   https: true,             // Self-signed cert
   liveReload: true,        // Auto-reload HTML
-  
+
   cf: true,                // Fetch live Request.cf data (cached)
   // cf: "./cf.json",      // Or load from file
   // cf: { colo: "DFW" },  // Or inline mock
@@ -59,11 +59,11 @@ new Miniflare({
   // KV
   kvNamespaces: ["TEST_NAMESPACE", "CACHE"],
   kvPersist: "./kv-data", // Optional: persist to disk
-  
+
   // R2
   r2Buckets: ["BUCKET", "IMAGES"],
   r2Persist: "./r2-data",
-  
+
   // Durable Objects
   modules: true,
   durableObjects: {
@@ -71,11 +71,11 @@ new Miniflare({
     API_OBJECT: { className: "ApiObject", scriptName: "api-worker" },
   },
   durableObjectsPersist: "./do-data",
-  
+
   // D1
   d1Databases: ["DB"],
   d1Persist: "./d1-data",
-  
+
   // Cache
   cache: true, // Default
   cachePersist: "./cache-data",
@@ -92,7 +92,7 @@ new Miniflare({
     API_URL: "https://api.example.com",
     DEBUG: true,
   },
-  
+
   // Other bindings
   wasmBindings: { ADD_MODULE: "./add.wasm" },
   textBlobBindings: { TEXT: "./data.txt" },
