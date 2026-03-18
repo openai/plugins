@@ -34,11 +34,11 @@ If `import_presentation` is unavailable, stop and say the file cannot be convert
 
 4. Verify enough to hand it off safely.
 - Compare the imported slide count to the source file when that information is available.
-- Use thumbnails for spot checks when layout fidelity matters or the user plans visual cleanup next.
+- Use thumbnails for spot checks when layout fidelity matters or the user plans formatting cleanup next.
 
 5. Hand off to the right next skill.
 - Use [google-slides](../google-slides/SKILL.md) for general summaries or edits.
-- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for post-import layout cleanup.
+- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for post-import slide formatting cleanup.
 - Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when the imported deck should move onto a branded template.
 
 ## Rules
