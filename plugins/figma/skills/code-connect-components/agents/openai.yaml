@@ -1,8 +1,8 @@
 interface:
   display_name: "Code Connect Components"
   short_description: "Map Figma components to code components"
-  icon_small: "./assets/figma-small.svg"
-  icon_large: "./assets/figma.svg"
+  icon_small: "../../../assets/figma-small.svg"
+  icon_large: "../../../assets/figma.svg"
   default_prompt: "Use the Figma MCP server to find Code Connect mappings for a Figma selection and relate them to this codebase."
 
 dependencies:

@@ -1,8 +1,8 @@
 interface:
   display_name: "Create Design System Rules"
   short_description: "Generate project-specific Figma-to-code rules"
-  icon_small: "./assets/figma-small.svg"
-  icon_large: "./assets/figma.svg"
+  icon_small: "../../../assets/figma-small.svg"
+  icon_large: "../../../assets/figma.svg"
   default_prompt: "Use the Figma MCP server to generate design system rules for this codebase based on its existing patterns."
 
 dependencies:
