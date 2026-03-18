@@ -1,6 +1,6 @@
 ---
 name: google-slides-visual-iteration
-description: Iteratively inspect and polish connected Google Slides presentations in Codex using slide thumbnails plus raw Slides edits. Use when a user asks to fix spacing, alignment, overlap, crowding, hierarchy, or deck-wide visual consistency in Google Slides, especially when the work should follow a thumbnail -> diagnose -> batch_update -> re-thumbnail verification loop.
+description: Iteratively inspect and polish connected Google Slides presentations in Codex using slide thumbnails plus raw Slides edits. Use when a user asks to fix per-slide formatting, spacing, alignment, overlap, crowding, hierarchy, or deck-wide visual consistency in Google Slides, especially when the work should follow a thumbnail -> diagnose -> batch_update -> re-thumbnail verification loop.
 ---
 
 # Google Slides Visual Iteration
@@ -8,6 +8,7 @@ description: Iteratively inspect and polish connected Google Slides presentation
 Use this skill for existing or newly imported Google Slides decks when the user wants visual cleanup, not just content edits.
 
 Prefer the connected Google Slides workflow over generic slide-generation skills when the task is about improving a real Slides deck.
+Treat this as the focused formatting workflow: work one slide at a time, and complete the thumbnail -> diagnose -> batch_update -> re-thumbnail loop before moving to the next slide.
 
 ## Required Tooling
 
@@ -25,6 +26,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 
 1. Clarify scope.
 - Determine whether the user wants one slide fixed or the whole presentation.
+- If multiple slides need cleanup, still process formatting slide by slide unless a single repeated structural fix is clearly safer.
 - Preserve content by default. Do not rewrite copy unless the user asks or layout cannot be fixed any other way.
 
 2. Read structure before editing.
@@ -41,6 +43,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Look for overlapping text boxes, shapes, charts, and images.
 - Look for uneven alignment, broken grid structure, inconsistent spacing, off-center titles, awkward margins, and clipped elements.
 - Look for image distortion, poor crops, weak hierarchy, and slides that feel heavier on one side without intent.
+- Look for visual regressions introduced by the previous pass before adding more polish.
 - Prioritize legibility and collisions first, then alignment/spacing, then aesthetic polish.
 
 5. Make small, targeted edits.
@@ -89,16 +92,20 @@ If the user asks to improve the whole presentation:
 1. Read the presentation first and make a slide inventory.
 - Note the title slide, section dividers, dense slides, image-heavy slides, and obvious outliers.
 
-2. Work in passes.
-- Pass 1: fix hard failures across the deck: overlap, clipping, unreadable density, broken crops.
-- Pass 2: normalize spacing, alignment, title placement, and image treatment.
-- Pass 3: improve consistency across related slides so the deck feels intentional rather than individually patched.
+2. Prioritize the slide order.
+- Start with slides that have overlap, clipping, unreadable density, or broken crops.
+- Move to spacing, alignment, title placement, image treatment, and consistency after the hard failures are under control.
 
-3. Keep a global style memory.
+3. Finish each slide before moving on.
+- For each target slide, run the full thumbnail -> diagnose -> batch_update -> re-thumbnail loop.
+- Do 2-4 verified passes on that slide as needed before advancing to the next one.
+- If the same formatting defect keeps recurring because of shared structure, escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of hand-patching every slide forever.
+
+4. Keep a global style memory.
 - Reuse the same margin logic, title placement, image sizing style, and spacing rhythm across similar slides.
 - If one slide establishes a strong layout pattern, align sibling slides to it unless the content demands a different structure.
 
-4. Report what changed.
+5. Report what changed.
 - Summarize which slides were updated, what categories of issues were fixed, and any slides that still need human taste decisions.
 
 ## Editing Guidance For Raw Slides Requests
