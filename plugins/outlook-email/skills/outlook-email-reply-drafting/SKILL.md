@@ -22,13 +22,15 @@ Use this skill when the reply itself is the task. Read enough mailbox context to
 1. Identify the exact source message or thread before drafting.
 2. Read the most recent message first, then enough nearby context to understand participants, status, commitments, and tone.
 3. Decide whether reply-all is necessary based on shared context, not just recipient count.
-4. Draft the reply in the thread's tone unless the user asks for a deliberate change.
-5. If the draft depends on missing facts, produce the best draft you can and list the unresolved details separately.
-6. If the user later approves sending, reuse the thread-grounded draft instead of recreating the reply from scratch.
+4. Fetch the user's profile with `get_profile` before writing any greeting, self-reference, or signature that uses their name. Treat that as the primary source of truth, prefer other first-party profile/contact context only if needed, and ask the user before guessing.
+5. Draft the reply in the thread's tone unless the user asks for a deliberate change.
+6. If the draft depends on missing facts, produce the best draft you can and list the unresolved details separately.
+7. If the user later approves sending, reuse the thread-grounded draft instead of recreating the reply from scratch.
 
 ## Safety
 
 - Preserve dates, commitments, names, links, and quoted facts unless the user asks to change them.
+- Do not infer the user's name from their email address or invent a likely first name. Use `get_profile` first when the reply includes the user's name or signature.
 - Do not invent availability, approvals, ownership, or promises that are not already established in mailbox context.
 - Treat reply-all as a deliberate choice. If the audience is ambiguous, explain the safest default.
 - If the user says "send" but the content still depends on unstated choices, stop and ask the narrowest necessary confirmation question.
@@ -36,5 +38,6 @@ Use this skill when the reply itself is the task. Read enough mailbox context to
 ## Output
 
 - Provide a ready-to-send draft with greeting, body, and closing when appropriate.
+- When the draft includes the user's name or sign-off, use the real name from `get_profile`.
 - If important assumptions remain, list them immediately after the draft.
 - If you are recommending a reply-all decision, say why in one short line.

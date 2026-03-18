@@ -46,6 +46,7 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 ## Write Safety
 
 - Preserve exact recipients, subject lines, quoted facts, dates, and links from the source thread unless the user asks to change them.
+- When drafting or sending a reply, use the user's actual name for greetings, self-reference, and signatures. Prefer the connector's `get_profile` result as the source of truth for the user's name, fall back to other first-party profile/contact context only if `get_profile` is unavailable, and ask the user before guessing.
 - When drafting a reply, call out any assumptions, missing context, or information that still needs confirmation.
 - Treat send, archive, trash, label, and move operations as explicit actions that require clear user intent.
 - If a thread has multiple possible recipients or parallel conversations, identify the intended thread before drafting or acting.
@@ -59,6 +60,7 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 - Avoid absolute claims like "the only urgent email" unless the mailbox scan was comprehensive enough to support that conclusion.
 - When the result comes from a narrowed search or shortlist, report that confidence and mention what was excluded.
 - Draft replies should be concise and ready to paste or send, with greeting, body, and closing when appropriate.
+- When a draft includes the user's name or signature, use the real name from `get_profile` rather than inferring from the email address or making one up.
 - If a reply depends on missing facts, present a short draft plus a list of unresolved details.
 - When multiple emails are involved, reference the sender and timestamp of the message that matters most.
 
