@@ -62,20 +62,21 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Treat plugin order in `plugins[]` as render order in Codex. Append new entries unless a user explicitly asks to reorder the list.
 - `displayName` belongs inside the marketplace `interface` object, not individual `plugins[]` entries.
 - Each generated marketplace entry must include all of:
-  - `installPolicy`
-  - `authPolicy`
+  - `policy.installation`
+  - `policy.authentication`
   - `category`
 - Default new entries to:
-  - `installPolicy: "AVAILABLE"`
-  - `authPolicy: "ON_INSTALL"`
+  - `policy.installation: "AVAILABLE"`
+  - `policy.authentication: "ON_INSTALL"`
 - Override defaults only when the user explicitly specifies another allowed value.
-- Allowed `installPolicy` values:
+- Allowed `policy.installation` values:
   - `NOT_AVAILABLE`
   - `AVAILABLE`
   - `INSTALLED_BY_DEFAULT`
-- Allowed `authPolicy` values:
+- Allowed `policy.authentication` values:
   - `ON_INSTALL`
   - `ON_USE`
+- Treat `policy.products` as an override. Omit it unless the user explicitly requests product gating.
 - The generated plugin entry shape is:
 
 ```json
@@ -85,8 +86,10 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
     "source": "local",
     "path": "./plugins/plugin-name"
   },
-  "installPolicy": "AVAILABLE",
-  "authPolicy": "ON_INSTALL",
+  "policy": {
+    "installation": "AVAILABLE",
+    "authentication": "ON_INSTALL"
+  },
   "category": "Productivity"
 }
 ```
@@ -109,8 +112,10 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
         "source": "local",
         "path": "./plugins/plugin-name"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     }
   ]
@@ -124,7 +129,8 @@ python3 .agents/skills/plugin-creator/scripts/create_basic_plugin.py my-plugin -
 - Keep manifest values as placeholders until a human or follow-up step explicitly fills them.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
 - Preserve any existing marketplace `interface.displayName`.
-- When generating marketplace entries, always write `installPolicy`, `authPolicy`, and `category` even if their values are defaults.
+- When generating marketplace entries, always write `policy.installation`, `policy.authentication`, and `category` even if their values are defaults.
+- Add `policy.products` only when the user explicitly asks for that override.
 - Keep marketplace `source.path` relative to repo root as `./plugins/<plugin-name>`.
 
 ## Reference to exact spec sample

@@ -93,8 +93,10 @@ def build_marketplace_entry(
             "source": "local",
             "path": f"./plugins/{plugin_name}",
         },
-        "installPolicy": install_policy,
-        "authPolicy": auth_policy,
+        "policy": {
+            "installation": install_policy,
+            "authentication": auth_policy,
+        },
         "category": category,
     }
 
@@ -207,13 +209,13 @@ def parse_args() -> argparse.Namespace:
         "--install-policy",
         default=DEFAULT_INSTALL_POLICY,
         choices=sorted(VALID_INSTALL_POLICIES),
-        help="Marketplace installPolicy value",
+        help="Marketplace policy.installation value",
     )
     parser.add_argument(
         "--auth-policy",
         default=DEFAULT_AUTH_POLICY,
         choices=sorted(VALID_AUTH_POLICIES),
-        help="Marketplace authPolicy value",
+        help="Marketplace policy.authentication value",
     )
     parser.add_argument(
         "--category",

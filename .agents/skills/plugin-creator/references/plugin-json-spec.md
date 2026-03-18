@@ -131,18 +131,21 @@
 - `source` (`object`): Plugin source descriptor.
   - `source` (`string`): Use `local` for this repo workflow.
   - `path` (`string`): Relative plugin path, always `./plugins/<plugin-name>`.
-- `installPolicy` (`string`): Availability policy. Always include it.
-  - Allowed values: `NOT_AVAILABLE`, `AVAILABLE`, `INSTALLED_BY_DEFAULT`
-  - Default for new entries: `AVAILABLE`
-- `authPolicy` (`string`): Authentication timing policy. Always include it.
-  - Allowed values: `ON_INSTALL`, `ON_USE`
-  - Default for new entries: `ON_INSTALL`
+- `policy` (`object`): Marketplace policy block. Always include it.
+  - `installation` (`string`): Availability policy.
+    - Allowed values: `NOT_AVAILABLE`, `AVAILABLE`, `INSTALLED_BY_DEFAULT`
+    - Default for new entries: `AVAILABLE`
+  - `authentication` (`string`): Authentication timing policy.
+    - Allowed values: `ON_INSTALL`, `ON_USE`
+    - Default for new entries: `ON_INSTALL`
+  - `products` (`array` of `string`, optional): Product override for this plugin entry. Omit it unless product gating is explicitly requested.
 - `category` (`string`): Display category bucket. Always include it.
 
 ### Marketplace generation rules
 
 - `displayName` belongs under the top-level `interface` object, not individual plugin entries.
 - When creating a new marketplace file from scratch, seed `interface.displayName` alongside top-level `name`.
-- Always include `installPolicy`, `authPolicy`, and `category` on every generated or updated plugin entry.
+- Always include `policy.installation`, `policy.authentication`, and `category` on every generated or updated plugin entry.
+- Treat `policy.products` as an override and omit it unless explicitly requested.
 - Append new entries unless the user explicitly requests reordering.
 - Replace an existing entry for the same plugin only when overwrite is intentional.
