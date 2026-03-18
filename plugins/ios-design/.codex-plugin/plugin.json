@@ -33,9 +33,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": [
-      "Use iOS Design to build or refactor SwiftUI UI, audit performance, adopt Liquid Glass APIs, or debug an iOS app on a simulator."
-    ],
+    "defaultPrompt": "Use iOS Design to build or refactor SwiftUI UI, audit performance, adopt Liquid Glass APIs, or debug an iOS app on a simulator.",
     "brandColor": "#0A84FF",
     "screenshots": []
   }

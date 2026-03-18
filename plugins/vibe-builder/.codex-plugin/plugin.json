@@ -35,9 +35,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": [
-      "Deploy this app, wire payments, and review the schema."
-    ],
+    "defaultPrompt": "Deploy this app, wire payments, and review the schema.",
     "brandColor": "#111111",
     "screenshots": []
   }

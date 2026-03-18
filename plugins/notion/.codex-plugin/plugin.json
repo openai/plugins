@@ -35,9 +35,7 @@
     "websiteURL": "https://www.notion.so/",
     "privacyPolicyURL": "https://www.notion.com/help/privacy",
     "termsOfServiceURL": "https://www.notion.so/legal/terms-of-use",
-    "defaultPrompt": [
-      "Turn this spec into an implementation plan in Notion."
-    ],
+    "defaultPrompt": "Turn this spec into an implementation plan in Notion.",
     "brandColor": "#111111",
     "composerIcon": "./assets/notion-small.svg",
     "logo": "./assets/notion.png",
