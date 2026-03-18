@@ -5,6 +5,17 @@ description: Migrate a Google Slides deck onto a target template. Use when the u
 
 # Google Slides Template Migration
 
+## Critical Rules
+
+- YOU MUST USE CONNECTORS IF THEY ARE AVAILABLE.
+- PLEASE TRIPLE CHECK THAT A CONNECTOR IS AVAILABLE BEFORE FALLING BACK TO ATLAS, if available.
+- MUST use the Google Slides connector for migration work.
+- MUST NOT migrate by manually rebuilding or emulating the deck in Atlas, if available, when the Slides connector exists.
+- If the connector path truly cannot perform the required migration step, STOP and report that plainly. Do not finish the migration in Atlas.
+- A failed migration batch is not permission to abandon the connector path.
+
+Use the Google Slides connector for all source/template lookup, slide duplication, reads, thumbnails, and writes. This is mandatory. Do not use Atlas, if available, for migration work when the connector supports it.
+
 Use this skill when the user has:
 - a source deck whose content should be kept
 - a target template deck whose visual system should be adopted
@@ -23,12 +34,15 @@ Confirm the runtime exposes:
 - `batch_update`
 
 If the user is starting from a local `.pptx`, also confirm `import_presentation`.
+If required connector actions are missing, say so explicitly before considering any fallback path.
+Verify with a minimal representative connector action before concluding that a required action is missing. Do not hallucinate connector failure because one request shape was wrong.
 
 ## Core Workflow
 
 1. Identify the two decks.
 - Source deck: the content to preserve.
 - Template deck: the company deck or branded presentation whose layout language should be reused.
+- Use connector search and connector reads to resolve both decks before touching either one.
 
 2. Read both decks before editing.
 - Build a slide inventory for the source deck.
@@ -43,6 +57,7 @@ If the user is starting from a local `.pptx`, also confirm `import_presentation`
 4. Duplicate from the template, not from the source.
 - Prefer duplicating the closest matching template slide and then adapting it.
 - Do not try to “convert” the old slide in place when a clean template pattern already exists.
+- Treat the template as a source for reusable slides through the connector workflow, not as something to manually emulate in Atlas, if available.
 
 5. Port content into the duplicated template slide.
 - Replace title and body text.
@@ -58,11 +73,14 @@ If the user is starting from a local `.pptx`, also confirm `import_presentation`
 
 ## Migration Rules
 
+- Connector-first is mandatory. Do not use Atlas, if available, to migrate slides that the connector can read, duplicate, and edit.
+- A failed batch shape or bad object reference is not evidence that the connector lacks migration support.
 - The template is the source of truth for layout, margins, hierarchy, and decorative style.
 - The source deck is the source of truth for content.
 - Preserve content by default; do not silently drop claims, bullets, data, or charts just to make the slide fit.
 - When a source slide is denser than the template pattern allows, split the content across multiple template-based slides.
 - Keep the migration deterministic. One source slide should map to one explicit template archetype or a deliberate split.
+- If the required migration capability truly is unavailable, stop and say so plainly instead of finishing the migration in Atlas. That workaround is not acceptable.
 
 ## Preferred Strategy
 

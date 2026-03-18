@@ -5,9 +5,19 @@ description: Iteratively improve connected Google Slides visuals. Use when the u
 
 # Google Slides Visual Iteration
 
+## Critical Rules
+
+- YOU MUST USE CONNECTORS IF THEY ARE AVAILABLE.
+- PLEASE TRIPLE CHECK THAT A CONNECTOR IS AVAILABLE BEFORE FALLING BACK TO ATLAS, if available.
+- MUST use the Google Slides connector for visual diagnosis, thumbnails, and edits.
+- MUST NOT switch to Atlas, if available, for normal slide cleanup, visual verification, or iterative editing when the Slides connector exists.
+- If the connector path truly cannot perform the required edit or verification step, STOP and report that plainly. Do not continue the slide edits in Atlas.
+- A bad payload, stale state, or wrong object target is not permission to abandon the connector path.
+
 Use this skill for existing or newly imported Google Slides decks when the user wants visual cleanup, not just content edits.
 
 Prefer the connected Google Slides workflow over generic slide-generation skills when the task is about improving a real Slides deck.
+Use the Google Slides connector for all slide reads, thumbnails, and edits. This is mandatory. Do not use Atlas, if available, for normal visual-iteration work when the connector supports the task.
 
 ## Required Tooling
 
@@ -20,6 +30,8 @@ Confirm the runtime exposes the Google Slides actions you need before editing:
 If the user wants to bring in a local `.pptx`, also confirm `import_presentation`.
 
 If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, emulate the loop with `get_slide_thumbnail` plus direct Google Slides edits.
+If a needed connector capability is missing, say so explicitly instead of silently switching to Atlas, if available.
+Verify with a minimal representative connector call before concluding that the capability is missing. Do not hallucinate connector failure because one payload or target was wrong.
 
 ## Default Approach
 
@@ -30,6 +42,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 2. Read structure before editing.
 - Use `get_presentation` or `get_presentation_text` to identify slide order, titles, and object IDs.
 - Use `get_slide` on the target slide before the first write so you have the current element structure and IDs.
+- Keep the iteration grounded in connector reads, not Atlas inspection.
 
 3. Start with a thumbnail.
 - Call `get_slide_thumbnail` first.
@@ -111,9 +124,12 @@ The Slides connector exposes raw `batch_update` requests. That means:
 
 ## Failure Policy
 
+- Connector-first is mandatory. Do not leave the connector path for normal visual diagnosis, editing, or verification work.
+- A failed payload, stale state, or wrong object target is not evidence that the connector lacks the capability.
 - If the thumbnail action is unavailable, say that visual verification is blocked and fall back to structural cleanup only if the user still wants that.
 - If the runtime lacks the Slides edit action, stop and say the deck can be diagnosed but not corrected from Codex.
 - If repeated passes do not improve the slide, stop and explain what remains subjective or structurally constrained.
+- Do not "save the run" by moving the slide edits into Atlas. That is a launch-blocking failure, not an acceptable workaround.
 
 ## Example Prompts
 

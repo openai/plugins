@@ -5,6 +5,17 @@ description: Perform structural rework in connected Google Slides decks. Use whe
 
 # Google Slides Template Surgery
 
+## Critical Rules
+
+- YOU MUST USE CONNECTORS IF THEY ARE AVAILABLE.
+- PLEASE TRIPLE CHECK THAT A CONNECTOR IS AVAILABLE BEFORE FALLING BACK TO ATLAS, if available.
+- MUST use the Google Slides connector for template-surgery work.
+- MUST NOT switch to Atlas, if available, for structural edits when the Slides connector exists.
+- If the connector path truly cannot perform the needed structural edit, STOP and report that plainly. Do not finish the job in Atlas.
+- A malformed batch or wrong object ID is not permission to abandon the connector path.
+
+Use the Google Slides connector for all reads, thumbnails, and structural edits. This is mandatory. Do not use Atlas, if available, for normal template-surgery work when the connector supports the operation.
+
 Use this skill for structural Google Slides cleanup. This is the escalation path after normal visual iteration fails to converge.
 
 Start with local slide fixes first. Escalate to template surgery only when one of these is true:
@@ -24,6 +35,7 @@ Confirm the runtime exposes:
 - `batch_update`
 
 If any of those are missing, stop and explain that the deck cannot be safely restructured from Codex.
+Do not replace missing connector structure-editing support with ad hoc Atlas, if available, manipulation. Do not "save the run" by switching to Atlas.
 
 ## Workflow
 
@@ -31,6 +43,7 @@ If any of those are missing, stop and explain that the deck cannot be safely res
 - Inventory slide types, repeated layouts, title patterns, image-heavy slides, and broken outliers.
 - Fetch the target slide structure with `get_slide` before writing.
 - Use live object IDs only. Never guess them.
+- Keep the whole workflow grounded in connector state rather than Atlas state.
 
 2. Decide whether to patch or rebuild.
 - Patch in place when the slide has the right elements but the geometry is bad.
@@ -52,11 +65,14 @@ If any of those are missing, stop and explain that the deck cannot be safely res
 
 ## Structural Rules
 
+- Connector-first is mandatory. Do not leave the connector path for normal template-surgery work.
+- Do not treat one malformed structural batch as proof that the connector cannot perform template surgery.
 - Prefer duplicating a clean slide pattern over endlessly mutating a broken one.
 - Prefer deleting or replacing redundant elements over stacking new ones on top of old ones.
 - Preserve user content by default. Structural cleanup is not permission to rewrite the narrative.
 - Keep batches reversible. If the slide gets worse after a pass, correct the structure before adding more edits.
 - If repeated edits are failing, stop and explain what constraint is blocking clean automation.
+- If the needed structural edit truly cannot be done through the connector, stop and say so plainly instead of finishing the job in Atlas.
 
 ## Common Surgery Cases
 

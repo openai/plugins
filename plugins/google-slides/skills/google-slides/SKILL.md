@@ -5,9 +5,21 @@ description: Inspect, create, import, summarize, and update Google Slides presen
 
 # Google Slides
 
+## Critical Rules
+
+- YOU MUST USE CONNECTORS IF THEY ARE AVAILABLE.
+- PLEASE TRIPLE CHECK THAT A CONNECTOR IS AVAILABLE BEFORE FALLING BACK TO ATLAS, if available.
+- MUST use the Google Slides connector for normal Google Slides tasks.
+- MUST NOT use Atlas, if available, to create, edit, inspect, verify, import, or migrate a Google Slides deck when the Slides connector exists.
+- MUST NOT claim the connector cannot edit the deck without first proving that with a minimal live connector read or write.
+- If the connector path truly cannot perform the required action, STOP and report the limitation plainly. Do not continue the deck-editing work in Atlas.
+- Finishing a normal Google Slides task in Atlas after the connector path failed is a launch-blocking failure.
+
 ## Overview
 
 Use this skill as the default entrypoint for Google Slides work. Stay here for deck search, summaries, light content edits, and new presentation creation. Route to a narrower sibling skill only when the task is specifically import, visual cleanup, structural repair, or template migration.
+
+Use the Google Slides connector for all deck lookup, reading, creation, import, and editing work. This is mandatory. Do not use Atlas, if available, for normal Google Slides work. If the runtime exposes the Slides connector, deck creation and editing must stay on the connector path.
 
 ## Required Tooling
 
@@ -20,11 +32,15 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - `import_presentation` when starting from a local `.ppt`, `.pptx`, or `.odp`
 - `get_slide_thumbnail` when visual verification matters
 
+If one of those connector capabilities is missing, say that explicitly. Do not switch to Atlas, if available, as a convenience fallback.
+Do not infer missing connector capability from one failed request shape or one bad attempt. Verify with a minimal connector read or write first. A hallucinated "the connector cannot edit Slides" claim is a serious failure.
+
 ## Workflow
 
 1. Identify the target presentation.
 - If the user names a deck but does not provide a URL, search for it first.
 - If the user provides a local presentation file, tell the user you are importing it into native Google Slides first, then use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
+- Use connector discovery and connector reads as the source of truth for deck identity.
 
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
@@ -63,15 +79,23 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - After creating a new slide or applying layout-heavy changes, immediately verify that no text, shape, image, or color band extends beyond the slide boundary. If the editor would require horizontal or vertical scrolling to see the whole slide, or if the lowest text sits in the bottom safety margin, treat that as a failure and fix it before moving on.
 - When supplying `objectId` values in `batch_update`, use valid Google Slides IDs that are 5-50 characters long and start with an alphanumeric character or `_`. Prefer descriptive IDs like `slide02`, `slide02_title`, or `slide02_body`; do not use very short IDs like `s2` or `i0`.
 - If you need to create a slide and edit its placeholders in the same `batch_update`, create the slide with valid placeholder ID mappings first, then reference those placeholder IDs in later requests in the same batch.
+- Stay inside the connector workflow for writes and verification. Do not route a normal Slides task through Atlas, if available, just to inspect or edit the deck.
 
 ## Write Safety
 
+- NEVER move a normal Slides task into Atlas just because the connector path feels annoying, unfamiliar, slower, or more verbose.
+- NEVER treat a single failed request as permission to abandon the connector path.
+- NEVER complete the actual deck editing in Atlas after a successful connector read or write.
+- Connector-first is mandatory. Do not use Atlas, if available, for normal slide creation, editing, layout changes, inspection, or verification.
+- Do not treat a bad payload, bad object ID, or bad write-control request as proof that the connector is unavailable.
+- If the connector can perform the first representative edit in this run, keep the remainder of the deck-editing workflow on the connector path.
 - Preserve slide order, titles, body text, charts, notes, and supporting evidence unless the user asks for a change.
 - Use live object IDs from the current deck state. Never guess IDs or request shapes.
 - Before deleting slides, rewriting multiple slides, or changing the layout pattern across a section, state exactly which slides will change and what kind of change you are about to make.
 - Do not promise pixel-perfect fidelity when importing Office formats into Google Slides.
 - When creating a new deck, default to readable structure plus visible color treatment, not a bare text dump.
 - Never leave text boxes, shapes, or header bands hanging outside the slide frame unless they are intentional full-bleed elements sized exactly to the slide edges.
+- If the required Slides connector capability truly is unavailable in this run, stop and say so plainly instead of completing the write through Atlas. Do not "save the run" by finishing the deck in Atlas. That is a launch-blocking failure, not an acceptable workaround.
 
 ## Output
 

@@ -5,9 +5,20 @@ description: Import a local `.ppt`, `.pptx`, or `.odp` file into Google Slides, 
 
 # Google Slides Import Presentation
 
+## Critical Rules
+
+- YOU MUST USE CONNECTORS IF THEY ARE AVAILABLE.
+- PLEASE TRIPLE CHECK THAT A CONNECTOR IS AVAILABLE BEFORE FALLING BACK TO ATLAS, if available.
+- MUST use the Google Slides connector to import the file into native Google Slides.
+- MUST NOT use Atlas, if available, as a substitute import path or as a way to keep editing the original local file.
+- If import truly is unavailable, STOP and say so plainly. Do not continue by editing the source file in Atlas.
+- Finishing this import flow in Atlas instead of native Google Slides is a failure.
+
 ## Overview
 
 Use this skill when the source material is a presentation file rather than an existing Google Slides deck. The goal is to create a native Google Slides copy first, then continue work on the imported deck.
+
+Use the Google Slides connector for the import and all follow-on deck reads. This is mandatory. Do not use Atlas, if available, for import or post-import inspection when the connector supports the task.
 
 ## Required Tooling
 
@@ -17,6 +28,7 @@ Confirm the runtime exposes:
 - `get_slide_thumbnail` when visual verification matters
 
 If `import_presentation` is unavailable, stop and say the file cannot be converted into native Google Slides from Codex.
+Do not replace a missing connector import path with Atlas, if available, editing of the original file. Do not "save the run" by working in Atlas on the source file instead.
 
 ## Workflow
 
@@ -27,6 +39,7 @@ If `import_presentation` is unavailable, stop and say the file cannot be convert
 2. Import the presentation.
 - Use `import_presentation` to create a new native Google Slides deck.
 - If the user gives a destination title, use it. Otherwise keep the imported title.
+- Treat the imported Google Slides deck as the editable copy. Do not keep editing the original Office file path.
 
 3. Read the imported deck.
 - Capture the resulting presentation ID or URL, slide count, and major slide titles.
@@ -43,6 +56,10 @@ If `import_presentation` is unavailable, stop and say the file cannot be convert
 
 ## Rules
 
+- NEVER keep editing the original Office file in Atlas when the task is to work in Google Slides.
+- NEVER treat one failed import attempt as permission to abandon the connector path.
+- Connector-first is mandatory for import and verification. Do not use Atlas, if available, as a substitute import path or post-import editing path.
+- Do not interpret one failed import attempt, wrapper mismatch, or request-shape error as proof that import is impossible.
 - Treat import as conversion into a new native Google Slides deck, not in-place editing of the original file.
 - Preserve source slide order and content by default.
 - Do not promise perfect fidelity for animations, transitions, SmartArt, or other Office-specific features.
