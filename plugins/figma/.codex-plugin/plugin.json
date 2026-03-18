@@ -36,7 +36,7 @@
     "privacyPolicyURL": "https://www.figma.com/legal/privacy/",
     "termsOfServiceURL": "https://www.figma.com/legal/tos/",
     "defaultPrompt": [
-      "Use Figma to inspect a design, implement it in code, connect design components to code with Code Connect, or generate project-specific design system rules."
+      "Inspect a Figma design and implement it in code."
     ],
     "brandColor": "#0D99FF",
     "composerIcon": "./assets/figma-small.svg",

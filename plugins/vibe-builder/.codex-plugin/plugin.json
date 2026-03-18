@@ -36,7 +36,7 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Use Vibe Builder to deploy with Vercel, build UI with shadcn, design Stripe integrations, and apply Supabase/Postgres best practices while shipping a product."
+      "Deploy this app, wire payments, and review the schema."
     ],
     "brandColor": "#111111",
     "screenshots": []
