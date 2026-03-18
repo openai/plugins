@@ -1,0 +1,14 @@
+interface:
+  display_name: "Notion"
+  short_description: "Use Notion MCP for planning, documentation, meetings, and knowledge capture"
+  icon_small: "./assets/notion-small.svg"
+  icon_large: "./assets/notion.png"
+  default_prompt: "Use Notion MCP to search workspace content, create or update pages, and turn specs, notes, and meeting context into structured outputs."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "notion"
+      description: "Notion MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.notion.com/mcp"

@@ -1,0 +1,53 @@
+{
+  "lockVersion": 1,
+  "pluginId": "com.openai.figma",
+  "pluginVersion": "0.1.0",
+  "generatedBy": "codex plugin pack (draft)",
+  "generatedAt": "2026-02-24T17:00:00Z",
+  "skills": [
+    {
+      "id": "figma-core",
+      "vendoredPath": "skills/figma",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/figma",
+        "ref": "<pin-commit-or-tag>"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    },
+    {
+      "id": "figma-implement-design",
+      "vendoredPath": "skills/figma-implement-design",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/figma-implement-design",
+        "ref": "<pin-commit-or-tag>"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    },
+    {
+      "id": "figma-create-design-system-rules",
+      "vendoredPath": "skills/figma-create-design-system-rules",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/figma-create-design-system-rules",
+        "ref": "<pin-commit-or-tag>"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    },
+    {
+      "id": "figma-code-connect-components",
+      "vendoredPath": "skills/figma-code-connect-components",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/figma-code-connect-components",
+        "ref": "<pin-commit-or-tag>"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    }
+  ]
+}

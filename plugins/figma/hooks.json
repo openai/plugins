@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/post_write_figma_parity_check.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
