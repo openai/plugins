@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.hubspot.com/ai-tools/openai-connector",
     "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
-    "defaultPrompt": "@HubSpot find where prospects drop off most frequently in my marketing funnel",
+    "defaultPrompt": [
+      "Find the biggest drop-off in my marketing funnel"
+    ],
     "screenshots": []
   }
 }

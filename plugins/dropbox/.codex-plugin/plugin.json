@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.dropbox.com/",
     "privacyPolicyURL": "https://www.dropbox.com/privacy",
-    "defaultPrompt": "Use Dropbox to help with this task.",
+    "defaultPrompt": [
+      "Find a Dropbox file and summarize the key points"
+    ],
     "screenshots": []
   }
 }

@@ -35,7 +35,9 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Help me design and prototype a browser game, starting with the core loop, player verbs, visual direction, and the right implementation plan.",
+    "defaultPrompt": [
+      "Design a browser game and plan the core loop"
+    ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/game-studio.svg",
     "logo": "./assets/game-studio.svg",

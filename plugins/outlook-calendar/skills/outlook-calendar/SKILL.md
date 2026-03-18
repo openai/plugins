@@ -1,6 +1,6 @@
 ---
 name: outlook-calendar
-description: Handle scheduling flows in Outlook Calendar. Use when the user asks for availability checks, conflict review, or draft create, update, reschedule, or cancel changes with timezone-aware event times and attendee validation.
+description: Handle Outlook Calendar workflows. Use when the user asks for schedule understanding, availability checks, meeting scheduling, intelligent rescheduling, meeting prep, reminder updates, RSVP responses, recurring maintenance, travel coordination, deadline planning, or safe create, update, reschedule, or cancel changes with timezone-aware event times and attendee validation.
 ---
 
 # Outlook Calendar
@@ -9,6 +9,16 @@ description: Handle scheduling flows in Outlook Calendar. Use when the user asks
 
 Use this skill to turn Outlook Calendar data into clear scheduling decisions and safe event updates. Favor exact dates, times, attendees, and timezone-aware details over vague time language.
 
+Use this base skill when the request spans multiple Outlook calendar workflows or when no more focused Outlook calendar skill is a better fit.
+
+## Specialized Skills
+
+- For one-day schedule understanding and agenda readouts, prefer [outlook-calendar-daily-brief](../outlook-calendar-daily-brief/SKILL.md).
+- For creating a meaningful focus block through intelligent moves, prefer [outlook-calendar-free-up-time](../outlook-calendar-free-up-time/SKILL.md).
+- For ranking the best group meeting options, prefer [outlook-calendar-group-scheduler](../outlook-calendar-group-scheduler/SKILL.md).
+- For meeting prep briefs grounded in the event and nearby Microsoft context, prefer [outlook-calendar-meeting-prep](../outlook-calendar-meeting-prep/SKILL.md).
+- Keep reminder planning, RSVP replies, recurring-series maintenance, travel-aware scheduling, and deadline planning in this base Outlook skill.
+
 ## Preferred Deliverables
 
 - Availability summaries with exact candidate slots, timezone, and relevant conflicts.
@@ -16,6 +26,7 @@ Use this skill to turn Outlook Calendar data into clear scheduling decisions and
 - Reschedule proposals that show the current event, one to three exact replacement slots, and whether attendee availability was verified or remains unverified.
 - Final event details that are ready to create, reschedule, or cancel after confirmation.
 - Meeting-note drafts that are phrased as shared, meeting-ready agenda or prep bullets rather than assistant-facing analysis.
+- Reminder or deadline plans that make clear whether the outcome is an Outlook event reminder, a calendar hold, an invite response, or a separate automation.
 
 ## Workflow
 
@@ -74,6 +85,7 @@ Use this skill to turn Outlook Calendar data into clear scheduling decisions and
 - When proposing a new or updated event, format the response as title, attendees, start, end, timezone, location or meeting link, and purpose.
 - Keep option lists short and explain the tradeoff for each candidate slot.
 - When reporting conflicts, name the overlapping events and how much time is affected.
+- When a workflow turns into a reminder, RSVP, recurring-series, or travel-buffer task, say explicitly which Outlook action or follow-up path is being used rather than presenting it as a generic edit.
 - For invite-note drafts, prefer a compact structure such as `Agenda`, `Open items`, `Decisions needed`, or `Next steps`.
 - Meeting-note text should be concrete and low-drama. Avoid headings like `Prep summary` unless the user asked for that exact label.
 - If the note is synthesized from multiple artifacts, collapse the synthesis into meeting-ready bullets rather than exposing the retrieval path or evidentiary narrative.
@@ -92,6 +104,9 @@ Use this skill to turn Outlook Calendar data into clear scheduling decisions and
 - "Move the project review to next week and keep the same attendees and Teams link."
 - "Summarize my calendar for tomorrow and flag anything that overlaps."
 - "Draft the exact event details for a 30 minute sync with the vendor at 2 PM Pacific on Friday."
+- "Help me decide whether to accept this invite, decline it, or propose a better time."
+- "Clean up this recurring staff meeting without breaking the whole series."
+- "Add the right reminder coverage for my review next week and the deadline after it."
 
 ## Light Fallback
 

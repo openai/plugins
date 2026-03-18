@@ -21,7 +21,9 @@
     "websiteURL": "https://www.wix.com",
     "privacyPolicyURL": "https://www.wix.com/about/privacy",
     "termsOfServiceURL": "https://www.wix.com/about/terms-of-use",
-    "defaultPrompt": "@Wix create a fresh matcha site with an online store and booking tools.",
+    "defaultPrompt": [
+      "Create fresh matcha site with online store"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

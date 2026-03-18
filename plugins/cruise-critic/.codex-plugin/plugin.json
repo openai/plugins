@@ -21,7 +21,9 @@
     "websiteURL": "https://www.cruisecritic.com/",
     "privacyPolicyURL": "https://www.cruisecritic.com/about-us/privacy-policy",
     "termsOfServiceURL": "https://www.cruisecritic.com/about-us/terms-of-use",
-    "defaultPrompt": "Find me cruises to the Caribbean from Miami",
+    "defaultPrompt": [
+      "Find me cruises to the Caribbean from Miami"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

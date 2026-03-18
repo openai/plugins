@@ -21,7 +21,9 @@
     "websiteURL": "https://motherduck.com/",
     "privacyPolicyURL": "https://motherduck.com/privacy-policy/",
     "termsOfServiceURL": "https://motherduck.com/terms-of-service/",
-    "defaultPrompt": "Show me the top 30 customers by revenue last quarter",
+    "defaultPrompt": [
+      "Show the top 30 customers by revenue last quarter"
+    ],
     "screenshots": []
   }
 }

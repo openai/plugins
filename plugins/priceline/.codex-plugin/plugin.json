@@ -21,7 +21,9 @@
     "websiteURL": "https://www.priceline.com/",
     "privacyPolicyURL": "https://www.priceline.com/static-pages/privacy-policy.html",
     "termsOfServiceURL": "https://www.priceline.com/static-pages/terms_en.html",
-    "defaultPrompt": "Pet friendly hotels in Chicago",
+    "defaultPrompt": [
+      "Pet friendly hotels in Chicago"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

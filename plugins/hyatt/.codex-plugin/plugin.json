@@ -21,7 +21,9 @@
     "websiteURL": "https://www.hyatt.com",
     "privacyPolicyURL": "https://world.hyatt.com/content/gp/en/privacy.html",
     "termsOfServiceURL": "https://www.hyatt.com/help/terms/hyatt",
-    "defaultPrompt": "@Hyatt find me a hotel this weekend near Millennium Park in Chicago",
+    "defaultPrompt": [
+      "Find hotel this weekend near Millennium Park"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

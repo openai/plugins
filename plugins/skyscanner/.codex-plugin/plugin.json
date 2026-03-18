@@ -21,7 +21,9 @@
     "websiteURL": "https://skyscanner.net/g/referrals/v1/flights/home?mediaPartnerId=2850210&utm_term=skyscanner_chatgpt_app_meta",
     "privacyPolicyURL": "https://www.skyscanner.net/media/privacy-policy",
     "termsOfServiceURL": "https://www.skyscanner.net/terms-of-service",
-    "defaultPrompt": "flights from San Francisco to Seattle next weekend returning on Tuesday",
+    "defaultPrompt": [
+      "Flights from San Francisco to Seattle next weekend"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

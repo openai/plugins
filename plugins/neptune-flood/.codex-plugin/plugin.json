@@ -21,7 +21,9 @@
     "websiteURL": "neptuneflood.com",
     "privacyPolicyURL": "https://neptuneflood.com/privacy-policy-2026",
     "termsOfServiceURL": "https://neptuneflood.com/terms-of-service",
-    "defaultPrompt": "How much is flood insurance at 400 6th St S, St Petersburg, FL 33701?",
+    "defaultPrompt": [
+      "Estimate flood insurance for this property address"
+    ],
     "screenshots": []
   }
 }

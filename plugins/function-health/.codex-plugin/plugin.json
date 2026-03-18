@@ -12,7 +12,9 @@
     "longDescription": "View lab test results, ask health questions, get nutrition plans",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "@Function how is my overall health?",
+    "defaultPrompt": [
+      "How is overall health"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -21,7 +21,9 @@
     "websiteURL": "https://www.kraken.com",
     "privacyPolicyURL": "https://www.kraken.com/legal/privacy",
     "termsOfServiceURL": "https://www.kraken.com/legal",
-    "defaultPrompt": "kraken list top assets",
+    "defaultPrompt": [
+      "Kraken list top assets"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

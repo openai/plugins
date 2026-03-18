@@ -21,7 +21,9 @@
     "websiteURL": "https://better.com",
     "privacyPolicyURL": "https://better.com/about-us/privacy-policy",
     "termsOfServiceURL": "https://better.com/about-us/terms-of-use",
-    "defaultPrompt": "I have a borrower at 52% DTI who wants a HELOC w/ a $450/month car payment.",
+    "defaultPrompt": [
+      "I have borrower at 52% DTI who wants HELOC w/ $450/month"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

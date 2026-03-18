@@ -21,7 +21,9 @@
     "websiteURL": "https://sider.ai/wisebase/scholar-research",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "@Sider Scholar Search for recent papers on LLM alignment.",
+    "defaultPrompt": [
+      "Find recent papers on LLM alignment"
+    ],
     "screenshots": []
   }
 }

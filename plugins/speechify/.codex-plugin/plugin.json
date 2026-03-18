@@ -21,7 +21,9 @@
     "websiteURL": "https://speechify.com",
     "privacyPolicyURL": "https://speechify.com/privacy",
     "termsOfServiceURL": "https://speechify.com/terms",
-    "defaultPrompt": "summarize chapter 1 of this PDF and read it out to me using Snoop's voice",
+    "defaultPrompt": [
+      "Summarize chapter 1 of this PDF and read it out to me"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

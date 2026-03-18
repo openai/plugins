@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://sendgrid.com/",
     "privacyPolicyURL": "https://www.twilio.com/legal/privacy",
-    "defaultPrompt": "Use SendGrid to help with this task.",
+    "defaultPrompt": [
+      "Review email metrics and summarize deliverability"
+    ],
     "screenshots": []
   }
 }

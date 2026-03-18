@@ -68,7 +68,11 @@ def build_plugin_json(plugin_name: str) -> dict:
             "websiteURL": "[TODO: https://openai.com/]",
             "privacyPolicyURL": "[TODO: https://openai.com/policies/row-privacy-policy/]",
             "termsOfServiceURL": "[TODO: https://openai.com/policies/row-terms-of-use/]",
-            "defaultPrompt": "[TODO: Starter prompt for trying a plugin]",
+            "defaultPrompt": [
+                "[TODO: Summarize my inbox and draft replies for me.]",
+                "[TODO: Find open bugs and turn them into tickets.]",
+                "[TODO: Review today's meetings and flag gaps.]",
+            ],
             "brandColor": "[TODO: #3B82F6]",
             "composerIcon": "[TODO: ./assets/icon.png]",
             "logo": "[TODO: ./assets/logo.png]",
@@ -93,8 +97,10 @@ def build_marketplace_entry(
             "source": "local",
             "path": f"./plugins/{plugin_name}",
         },
-        "installPolicy": install_policy,
-        "authPolicy": auth_policy,
+        "policy": {
+            "installation": install_policy,
+            "authentication": auth_policy,
+        },
         "category": category,
     }
 
@@ -207,13 +213,13 @@ def parse_args() -> argparse.Namespace:
         "--install-policy",
         default=DEFAULT_INSTALL_POLICY,
         choices=sorted(VALID_INSTALL_POLICIES),
-        help="Marketplace installPolicy value",
+        help="Marketplace policy.installation value",
     )
     parser.add_argument(
         "--auth-policy",
         default=DEFAULT_AUTH_POLICY,
         choices=sorted(VALID_AUTH_POLICIES),
-        help="Marketplace authPolicy value",
+        help="Marketplace policy.authentication value",
     )
     parser.add_argument(
         "--category",

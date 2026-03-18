@@ -1,0 +1,53 @@
+{
+  "lockVersion": 1,
+  "pluginId": "com.openai.notion",
+  "pluginVersion": "0.1.0",
+  "generatedBy": "codex plugin pack (draft)",
+  "generatedAt": "2026-03-09T14:08:16Z",
+  "skills": [
+    {
+      "id": "notion-knowledge-capture",
+      "vendoredPath": "skills/notion-knowledge-capture",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/.curated/notion-knowledge-capture",
+        "ref": "c207989386b30063bcecaf6b1977d761b244732e"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    },
+    {
+      "id": "notion-meeting-intelligence",
+      "vendoredPath": "skills/notion-meeting-intelligence",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/.curated/notion-meeting-intelligence",
+        "ref": "c207989386b30063bcecaf6b1977d761b244732e"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    },
+    {
+      "id": "notion-research-documentation",
+      "vendoredPath": "skills/notion-research-documentation",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/.curated/notion-research-documentation",
+        "ref": "c207989386b30063bcecaf6b1977d761b244732e"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    },
+    {
+      "id": "notion-spec-to-implementation",
+      "vendoredPath": "skills/notion-spec-to-implementation",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills",
+        "path": "skills/.curated/notion-spec-to-implementation",
+        "ref": "c207989386b30063bcecaf6b1977d761b244732e"
+      },
+      "integrity": "sha256-<fill-during-pack>"
+    }
+  ]
+}

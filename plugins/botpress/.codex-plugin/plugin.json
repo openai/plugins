@@ -21,7 +21,9 @@
     "websiteURL": "https://www.botpress.com",
     "privacyPolicyURL": "https://botpress.com/legal/privacy-statement",
     "termsOfServiceURL": "https://botpress.com/legal/terms-of-service",
-    "defaultPrompt": "Make a recommendation agent for Jordan shoes with @Botpress!",
+    "defaultPrompt": [
+      "Make recommendation agent for Jordan shoes with"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

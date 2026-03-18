@@ -21,7 +21,9 @@
     "websiteURL": "https://www.colossyan.com/",
     "privacyPolicyURL": "https://www.colossyan.com/privacy",
     "termsOfServiceURL": "https://www.colossyan.com/terms",
-    "defaultPrompt": "@Assessment Generator App create a quiz about workplace harassment",
+    "defaultPrompt": [
+      "Create a workplace harassment quiz"
+    ],
     "screenshots": []
   }
 }

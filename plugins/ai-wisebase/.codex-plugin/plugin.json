@@ -21,7 +21,9 @@
     "websiteURL": "https://sider.ai/wisebase",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "@AI Wisebase Draft a report on AI Trends using my knowledge base.",
+    "defaultPrompt": [
+      "Draft an AI trends report from my knowledge base"
+    ],
     "screenshots": []
   }
 }

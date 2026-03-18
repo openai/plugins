@@ -21,7 +21,9 @@
     "websiteURL": "https://skywatch.com",
     "privacyPolicyURL": "https://skywatch.com/privacy/",
     "termsOfServiceURL": "https://s3-us-west-2.amazonaws.com/skywatch-legal/SkyWatch+Terms+of+Service.pdf",
-    "defaultPrompt": "Find satellite images of the Golden Gate Bridge from the past 30 days with",
+    "defaultPrompt": [
+      "Find recent satellite images of the Golden Gate Bridge"
+    ],
     "screenshots": []
   }
 }

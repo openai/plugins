@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://linear.app/",
     "privacyPolicyURL": "https://linear.app/privacy",
-    "defaultPrompt": "Use Linear to help with this task.",
+    "defaultPrompt": [
+      "Triage or update relevant issues for this task, with clear"
+    ],
     "screenshots": []
   }
 }

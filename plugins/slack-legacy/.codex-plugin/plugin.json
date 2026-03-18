@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://slack.com/",
     "privacyPolicyURL": "https://slack.com/privacy-policy",
-    "defaultPrompt": "Use Slack (Legacy) to help with this task.",
+    "defaultPrompt": [
+      "Review a Slack thread and summarize the discussion"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://www.cottages.com",
     "privacyPolicyURL": "https://www.cottages.com/legal/privacy-notice",
     "termsOfServiceURL": "https://www.cottages.com/legal/terms-of-use",
-    "defaultPrompt": "@Cottages Show me great cottages with hot tubs in Devon in August",
+    "defaultPrompt": [
+      "Show great cottages with hot tubs in Devon"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

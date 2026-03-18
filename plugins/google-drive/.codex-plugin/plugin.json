@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.google.com/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
-    "defaultPrompt": "Use Google Drive to help with this task.",
+    "defaultPrompt": [
+      "Find a Drive doc and summarize the key points"
+    ],
     "screenshots": []
   }
 }

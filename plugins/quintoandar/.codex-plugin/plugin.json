@@ -21,7 +21,9 @@
     "websiteURL": "https://www.quintoandar.com.br/",
     "privacyPolicyURL": "https://mkt.quintoandar.com.br/aviso-de-privacidade/",
     "termsOfServiceURL": "https://www.quintoandar.com.br/termos/",
-    "defaultPrompt": "@QuintoAndar apartments for rent with 3 bedrooms in Moema, São Paulo",
+    "defaultPrompt": [
+      "Find 3-bedroom rentals in Moema, Sao Paulo"
+    ],
     "screenshots": []
   }
 }

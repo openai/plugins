@@ -21,7 +21,9 @@
     "websiteURL": "https://toolpipe.ai/flixor",
     "privacyPolicyURL": "https://toolpipe.ai/privacy-policy",
     "termsOfServiceURL": "https://toolpipe.ai/terms-of-service",
-    "defaultPrompt": "@Flixor Recommend a few good movies",
+    "defaultPrompt": [
+      "A few good movies"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

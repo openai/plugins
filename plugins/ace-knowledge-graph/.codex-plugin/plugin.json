@@ -21,7 +21,9 @@
     "websiteURL": "sider.ai",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "@Ace Knowledge Graph Help me understand React ecosystem.",
+    "defaultPrompt": [
+      "Understand React ecosystem"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

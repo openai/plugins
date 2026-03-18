@@ -1,0 +1,43 @@
+{
+  "name": "cloudflare",
+  "version": "0.1.0",
+  "description": "Use Cloudflare platform skills for deployment, infrastructure, and analytics workflows.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.cloudflare.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "cloudflare",
+    "deployment",
+    "edge",
+    "analytics",
+    "wrangler",
+    "agents-sdk"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Cloudflare",
+    "shortDescription": "Use Cloudflare platform skills",
+    "longDescription": "Use Cloudflare skills to choose the right product, verify setup, and work across Workers, Pages, Wrangler, Agents SDK, storage, AI, networking, security, and analytics services.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.cloudflare.com/",
+    "privacyPolicyURL": "https://www.cloudflare.com/privacypolicy/",
+    "termsOfServiceURL": "https://www.cloudflare.com/website-terms/",
+    "defaultPrompt": [
+      "Choose the right Cloudflare product and plan the deployment or analytics workflow without guessing."
+    ],
+    "composerIcon": "./assets/cloudflare-small.svg",
+    "logo": "./assets/cloudflare.png",
+    "screenshots": [],
+    "brandColor": "#F48120"
+  }
+}

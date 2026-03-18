@@ -1,0 +1,22 @@
+interface:
+  display_name: "Vibe Builder"
+  short_description: "Use Stripe, Vercel, and Supabase MCPs to build and ship products"
+  default_prompt: "Use Vibe Builder to build and ship a product using Vercel for deployment, Supabase for backend and data, and Stripe for payments."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "stripe"
+      description: "Stripe MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.stripe.com"
+    - type: "mcp"
+      value: "vercel"
+      description: "Vercel MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.vercel.com"
+    - type: "mcp"
+      value: "supabase"
+      description: "Supabase MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.supabase.com/mcp"

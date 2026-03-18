@@ -12,7 +12,9 @@
     "longDescription": "Generate meal plans, recipes, and personalized nutrition guidance",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "How many calories should I eat to hit my weight goal?",
+    "defaultPrompt": [
+      "How many calories should I eat to hit my weight goal"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

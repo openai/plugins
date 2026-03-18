@@ -19,7 +19,9 @@
     "websiteURL": "https://www.thumbtack.com/",
     "privacyPolicyURL": "https://www.thumbtack.com/privacy/",
     "termsOfServiceURL": "https://www.thumbtack.com/terms/",
-    "defaultPrompt": "@Thumbtack find me a plumber",
+    "defaultPrompt": [
+      "Find plumber"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

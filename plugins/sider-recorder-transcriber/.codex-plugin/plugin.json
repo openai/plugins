@@ -21,7 +21,9 @@
     "websiteURL": "https://sider.ai/rec-note",
     "privacyPolicyURL": "https://sider.ai/policies/privacy",
     "termsOfServiceURL": "https://sider.ai/policies/terms",
-    "defaultPrompt": "@Sider Recorder & Transcriber Open recorder",
+    "defaultPrompt": [
+      "Open the recorder and start a new capture"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://travelenie.com/",
     "privacyPolicyURL": "https://travelenie.com/privacy",
     "termsOfServiceURL": "https://travelenie.com/terms",
-    "defaultPrompt": "Show me my upcoming trip to Japan and Korea",
+    "defaultPrompt": [
+      "Show me my upcoming trip to Japan and Korea"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

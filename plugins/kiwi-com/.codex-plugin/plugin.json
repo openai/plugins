@@ -21,7 +21,9 @@
     "websiteURL": "https://kiwi.com",
     "privacyPolicyURL": "https://kiwi.com/privacy",
     "termsOfServiceURL": "https://www.kiwi.com/pages/content/terms",
-    "defaultPrompt": "Flights from SF to some scuba-friendly destination south of Europe",
+    "defaultPrompt": [
+      "Flights from SF to some scuba-friendly destination south"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

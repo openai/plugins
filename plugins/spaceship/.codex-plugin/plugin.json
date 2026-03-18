@@ -21,7 +21,9 @@
     "websiteURL": "https://www.spaceship.com",
     "privacyPolicyURL": "https://www.spaceship.com/legal/privacy-policy/",
     "termsOfServiceURL": "https://www.spaceship.com/legal/universal-terms-of-service-agreement/",
-    "defaultPrompt": "Check next domains: mycompany.com, mysite.io, service.web, sales12345.com",
+    "defaultPrompt": [
+      "Check next domains: mycompany.com, mysite.io, service.web"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.box.com/home",
     "privacyPolicyURL": "https://www.box.com/legal/privacypolicy",
-    "defaultPrompt": "Use Box to help with this task.",
+    "defaultPrompt": [
+      "Find a Box file and summarize the key points"
+    ],
     "screenshots": []
   }
 }

@@ -21,7 +21,9 @@
     "websiteURL": "https://base44.com/",
     "privacyPolicyURL": "https://base44.com/privacy-policy",
     "termsOfServiceURL": "https://base44.com/terms-of-service",
-    "defaultPrompt": "@base44 build a personal finance dashboard with income tracking & projecti",
+    "defaultPrompt": [
+      "Build a finance dashboard with income tracking"
+    ],
     "screenshots": []
   }
 }

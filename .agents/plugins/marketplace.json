@@ -10,8 +10,10 @@
         "source": "local",
         "path": "./plugins/linear"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -20,8 +22,10 @@
         "source": "local",
         "path": "./plugins/google-calendar"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -30,8 +34,10 @@
         "source": "local",
         "path": "./plugins/gmail"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -40,8 +46,10 @@
         "source": "local",
         "path": "./plugins/google-docs"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -50,8 +58,10 @@
         "source": "local",
         "path": "./plugins/google-sheets"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -60,8 +70,10 @@
         "source": "local",
         "path": "./plugins/slack"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -70,8 +82,10 @@
         "source": "local",
         "path": "./plugins/teams"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -80,8 +94,10 @@
         "source": "local",
         "path": "./plugins/sharepoint"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -90,8 +106,10 @@
         "source": "local",
         "path": "./plugins/outlook-email"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -100,8 +118,10 @@
         "source": "local",
         "path": "./plugins/outlook-calendar"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -110,8 +130,10 @@
         "source": "local",
         "path": "./plugins/accuweather"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -120,8 +142,10 @@
         "source": "local",
         "path": "./plugins/ace-knowledge-graph"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -130,8 +154,10 @@
         "source": "local",
         "path": "./plugins/ace-quiz-maker"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -140,8 +166,10 @@
         "source": "local",
         "path": "./plugins/adobe-acrobat"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -150,8 +178,10 @@
         "source": "local",
         "path": "./plugins/adobe-express"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -160,8 +190,10 @@
         "source": "local",
         "path": "./plugins/adobe-photoshop"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -170,8 +202,10 @@
         "source": "local",
         "path": "./plugins/agentforce-sales"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -180,8 +214,10 @@
         "source": "local",
         "path": "./plugins/airtable"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -190,8 +226,10 @@
         "source": "local",
         "path": "./plugins/all-accor"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -200,8 +238,10 @@
         "source": "local",
         "path": "./plugins/almanac-by-passby"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -210,8 +250,10 @@
         "source": "local",
         "path": "./plugins/alpaca"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -220,8 +262,10 @@
         "source": "local",
         "path": "./plugins/alpic"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -230,8 +274,10 @@
         "source": "local",
         "path": "./plugins/amore-mall"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -240,8 +286,10 @@
         "source": "local",
         "path": "./plugins/angi"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -250,8 +298,10 @@
         "source": "local",
         "path": "./plugins/anypdf-your-pdf-converter"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -260,8 +310,10 @@
         "source": "local",
         "path": "./plugins/apartment-list"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -270,8 +322,10 @@
         "source": "local",
         "path": "./plugins/app-6944c5105438"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -280,8 +334,10 @@
         "source": "local",
         "path": "./plugins/apple-music"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -290,8 +346,10 @@
         "source": "local",
         "path": "./plugins/asana"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -300,8 +358,10 @@
         "source": "local",
         "path": "./plugins/atlassian-rovo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -310,8 +370,10 @@
         "source": "local",
         "path": "./plugins/atlys"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -320,8 +382,10 @@
         "source": "local",
         "path": "./plugins/autoscout24"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -330,8 +394,10 @@
         "source": "local",
         "path": "./plugins/autotrader"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -340,8 +406,10 @@
         "source": "local",
         "path": "./plugins/autotrader-2"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -350,8 +418,10 @@
         "source": "local",
         "path": "./plugins/awesome-slides"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -360,8 +430,10 @@
         "source": "local",
         "path": "./plugins/b12-website-generator"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -370,8 +442,10 @@
         "source": "local",
         "path": "./plugins/bankrate"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -380,8 +454,10 @@
         "source": "local",
         "path": "./plugins/beautiful-ai"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -390,8 +466,10 @@
         "source": "local",
         "path": "./plugins/bible"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -400,8 +478,10 @@
         "source": "local",
         "path": "./plugins/biorender"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -410,8 +490,10 @@
         "source": "local",
         "path": "./plugins/bodi"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -420,8 +502,10 @@
         "source": "local",
         "path": "./plugins/booking-com"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -430,8 +514,10 @@
         "source": "local",
         "path": "./plugins/botlab"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -440,8 +526,10 @@
         "source": "local",
         "path": "./plugins/botpress"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -450,8 +538,10 @@
         "source": "local",
         "path": "./plugins/brand24"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -460,8 +550,10 @@
         "source": "local",
         "path": "./plugins/brex"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -470,8 +562,10 @@
         "source": "local",
         "path": "./plugins/busbud"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -480,8 +574,10 @@
         "source": "local",
         "path": "./plugins/cafe24"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -490,8 +586,10 @@
         "source": "local",
         "path": "./plugins/canva"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -500,8 +598,10 @@
         "source": "local",
         "path": "./plugins/carfax"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -510,8 +610,10 @@
         "source": "local",
         "path": "./plugins/cargurus"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -520,8 +622,10 @@
         "source": "local",
         "path": "./plugins/carmax"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -530,8 +634,10 @@
         "source": "local",
         "path": "./plugins/cars24"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -540,8 +646,10 @@
         "source": "local",
         "path": "./plugins/circleback"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -550,8 +658,10 @@
         "source": "local",
         "path": "./plugins/clay"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -560,8 +670,10 @@
         "source": "local",
         "path": "./plugins/clickup"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -570,8 +682,10 @@
         "source": "local",
         "path": "./plugins/cloudinary"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -580,8 +694,10 @@
         "source": "local",
         "path": "./plugins/common-room"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -590,8 +706,10 @@
         "source": "local",
         "path": "./plugins/conductor"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -600,8 +718,10 @@
         "source": "local",
         "path": "./plugins/cottages"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -610,8 +730,10 @@
         "source": "local",
         "path": "./plugins/coupler-io"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -620,8 +742,10 @@
         "source": "local",
         "path": "./plugins/coursera"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -630,8 +754,10 @@
         "source": "local",
         "path": "./plugins/coveo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -640,8 +766,10 @@
         "source": "local",
         "path": "./plugins/cruise-critic"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -650,8 +778,10 @@
         "source": "local",
         "path": "./plugins/cube"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -660,8 +790,10 @@
         "source": "local",
         "path": "./plugins/daloopa"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -670,8 +802,10 @@
         "source": "local",
         "path": "./plugins/datacamp"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -680,8 +814,10 @@
         "source": "local",
         "path": "./plugins/dealpilot"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -690,8 +826,10 @@
         "source": "local",
         "path": "./plugins/dewa"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -700,8 +838,10 @@
         "source": "local",
         "path": "./plugins/docket"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -710,8 +850,10 @@
         "source": "local",
         "path": "./plugins/donedeal"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -720,8 +862,10 @@
         "source": "local",
         "path": "./plugins/doordash"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -730,8 +874,10 @@
         "source": "local",
         "path": "./plugins/dow-jones-factiva"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -740,8 +886,10 @@
         "source": "local",
         "path": "./plugins/dupe"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -750,8 +898,10 @@
         "source": "local",
         "path": "./plugins/edx"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -760,8 +910,10 @@
         "source": "local",
         "path": "./plugins/egnyte"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -770,8 +922,10 @@
         "source": "local",
         "path": "./plugins/expedia"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -780,8 +934,10 @@
         "source": "local",
         "path": "./plugins/fareharbor"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -790,8 +946,10 @@
         "source": "local",
         "path": "./plugins/figma"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -800,8 +958,10 @@
         "source": "local",
         "path": "./plugins/fireflies"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -810,8 +970,10 @@
         "source": "local",
         "path": "./plugins/flight-network"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -820,8 +982,10 @@
         "source": "local",
         "path": "./plugins/flixor"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -830,8 +994,10 @@
         "source": "local",
         "path": "./plugins/function-health"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -840,8 +1006,10 @@
         "source": "local",
         "path": "./plugins/fyxer"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -850,8 +1018,10 @@
         "source": "local",
         "path": "./plugins/gamma"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -860,8 +1030,10 @@
         "source": "local",
         "path": "./plugins/genspark-ai-slides"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -870,8 +1042,10 @@
         "source": "local",
         "path": "./plugins/getyourguide"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -880,8 +1054,10 @@
         "source": "local",
         "path": "./plugins/granola"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -890,8 +1066,10 @@
         "source": "local",
         "path": "./plugins/hepsiemlak"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -900,8 +1078,10 @@
         "source": "local",
         "path": "./plugins/hex"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -910,8 +1090,10 @@
         "source": "local",
         "path": "./plugins/heygen"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -920,8 +1102,10 @@
         "source": "local",
         "path": "./plugins/highlevel"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -930,8 +1114,10 @@
         "source": "local",
         "path": "./plugins/hubspot"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -940,8 +1126,10 @@
         "source": "local",
         "path": "./plugins/hugging-face"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -950,8 +1138,10 @@
         "source": "local",
         "path": "./plugins/hyatt"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -960,8 +1150,10 @@
         "source": "local",
         "path": "./plugins/idealista"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -970,8 +1162,10 @@
         "source": "local",
         "path": "./plugins/imovirtual"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -980,8 +1174,10 @@
         "source": "local",
         "path": "./plugins/instacart"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -990,8 +1186,10 @@
         "source": "local",
         "path": "./plugins/internshala"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1000,8 +1198,10 @@
         "source": "local",
         "path": "./plugins/intuit-credit-karma"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1010,8 +1210,10 @@
         "source": "local",
         "path": "./plugins/intuit-mailchimp"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1020,8 +1222,10 @@
         "source": "local",
         "path": "./plugins/intuit-quickbooks"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1030,8 +1234,10 @@
         "source": "local",
         "path": "./plugins/intuit-turbotax"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1040,8 +1246,10 @@
         "source": "local",
         "path": "./plugins/invideo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1050,8 +1258,10 @@
         "source": "local",
         "path": "./plugins/is-it-safe-to-travel"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1060,8 +1270,10 @@
         "source": "local",
         "path": "./plugins/italki-language-learning"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1070,8 +1282,10 @@
         "source": "local",
         "path": "./plugins/jam"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1080,8 +1294,10 @@
         "source": "local",
         "path": "./plugins/jerry-ai-car-insurance-care"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1090,8 +1306,10 @@
         "source": "local",
         "path": "./plugins/jimdo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1100,8 +1318,10 @@
         "source": "local",
         "path": "./plugins/jotform"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1110,8 +1330,10 @@
         "source": "local",
         "path": "./plugins/keybid-puls"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1120,8 +1342,10 @@
         "source": "local",
         "path": "./plugins/khan-academy"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1130,8 +1354,10 @@
         "source": "local",
         "path": "./plugins/kiwi-com"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1140,8 +1366,10 @@
         "source": "local",
         "path": "./plugins/klaviyo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1150,8 +1378,10 @@
         "source": "local",
         "path": "./plugins/kleinanzeigen"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1160,8 +1390,10 @@
         "source": "local",
         "path": "./plugins/klook"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1170,8 +1402,10 @@
         "source": "local",
         "path": "./plugins/komoot"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1180,8 +1414,10 @@
         "source": "local",
         "path": "./plugins/kraken"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1190,8 +1426,10 @@
         "source": "local",
         "path": "./plugins/legalzoom"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1200,8 +1438,10 @@
         "source": "local",
         "path": "./plugins/lona"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1210,8 +1450,10 @@
         "source": "local",
         "path": "./plugins/lovable"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1220,8 +1462,10 @@
         "source": "local",
         "path": "./plugins/lseg"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1230,8 +1474,10 @@
         "source": "local",
         "path": "./plugins/lugg"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1240,8 +1486,10 @@
         "source": "local",
         "path": "./plugins/makemytrip"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1250,8 +1498,10 @@
         "source": "local",
         "path": "./plugins/malwarebytes"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1260,8 +1510,10 @@
         "source": "local",
         "path": "./plugins/mangaboom"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1270,8 +1522,10 @@
         "source": "local",
         "path": "./plugins/manus"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1280,8 +1534,10 @@
         "source": "local",
         "path": "./plugins/marcopolo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1290,8 +1546,10 @@
         "source": "local",
         "path": "./plugins/meetup"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1300,8 +1558,10 @@
         "source": "local",
         "path": "./plugins/monday-com"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1310,8 +1570,10 @@
         "source": "local",
         "path": "./plugins/myfitnesspal"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1320,8 +1582,10 @@
         "source": "local",
         "path": "./plugins/na-drink-finder"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1330,8 +1594,10 @@
         "source": "local",
         "path": "./plugins/namecheap"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1340,8 +1606,10 @@
         "source": "local",
         "path": "./plugins/nesha"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1350,8 +1618,10 @@
         "source": "local",
         "path": "./plugins/netlify"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1360,8 +1630,10 @@
         "source": "local",
         "path": "./plugins/network-solutions"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1370,8 +1642,10 @@
         "source": "local",
         "path": "./plugins/norton"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1380,8 +1654,10 @@
         "source": "local",
         "path": "./plugins/okx"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1390,8 +1666,10 @@
         "source": "local",
         "path": "./plugins/omio"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1400,8 +1678,10 @@
         "source": "local",
         "path": "./plugins/omni-analytics"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1410,8 +1690,10 @@
         "source": "local",
         "path": "./plugins/openai-certified"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1420,8 +1702,10 @@
         "source": "local",
         "path": "./plugins/opentable"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1430,8 +1714,10 @@
         "source": "local",
         "path": "./plugins/otomoto"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1440,8 +1726,10 @@
         "source": "local",
         "path": "./plugins/otter-ai"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1450,8 +1738,10 @@
         "source": "local",
         "path": "./plugins/outliner"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1460,8 +1750,10 @@
         "source": "local",
         "path": "./plugins/paypal"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1470,8 +1762,10 @@
         "source": "local",
         "path": "./plugins/peloton"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1480,8 +1774,10 @@
         "source": "local",
         "path": "./plugins/pitchbook"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1490,8 +1786,10 @@
         "source": "local",
         "path": "./plugins/preply-language-tutor-finder"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1500,8 +1798,10 @@
         "source": "local",
         "path": "./plugins/priceline"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1510,8 +1810,10 @@
         "source": "local",
         "path": "./plugins/pylon"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1520,8 +1822,10 @@
         "source": "local",
         "path": "./plugins/quizlet"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1530,8 +1834,10 @@
         "source": "local",
         "path": "./plugins/ranked-ai"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1540,8 +1846,10 @@
         "source": "local",
         "path": "./plugins/realestate-com-au"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1550,8 +1858,10 @@
         "source": "local",
         "path": "./plugins/recorrido"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1560,8 +1870,10 @@
         "source": "local",
         "path": "./plugins/redbus"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1570,8 +1882,10 @@
         "source": "local",
         "path": "./plugins/redfin"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1580,8 +1894,10 @@
         "source": "local",
         "path": "./plugins/render"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1590,8 +1906,10 @@
         "source": "local",
         "path": "./plugins/replit"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1600,8 +1918,10 @@
         "source": "local",
         "path": "./plugins/retell-ai"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1610,8 +1930,10 @@
         "source": "local",
         "path": "./plugins/s-p-global"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1620,8 +1942,10 @@
         "source": "local",
         "path": "./plugins/scite"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1630,8 +1954,10 @@
         "source": "local",
         "path": "./plugins/semrush"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1640,8 +1966,10 @@
         "source": "local",
         "path": "./plugins/shazam"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1650,8 +1978,10 @@
         "source": "local",
         "path": "./plugins/skyscanner"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1660,8 +1990,10 @@
         "source": "local",
         "path": "./plugins/slidesgpt"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1670,8 +2002,10 @@
         "source": "local",
         "path": "./plugins/spaceship"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1680,8 +2014,10 @@
         "source": "local",
         "path": "./plugins/speechify"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1690,8 +2026,10 @@
         "source": "local",
         "path": "./plugins/statsig"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1700,8 +2038,10 @@
         "source": "local",
         "path": "./plugins/steadily"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1710,8 +2050,10 @@
         "source": "local",
         "path": "./plugins/streak"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1720,8 +2062,10 @@
         "source": "local",
         "path": "./plugins/stripe"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1730,8 +2074,10 @@
         "source": "local",
         "path": "./plugins/strive-pdf-generator"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1740,8 +2086,10 @@
         "source": "local",
         "path": "./plugins/stubhub"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1750,8 +2098,10 @@
         "source": "local",
         "path": "./plugins/talkgen"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -1760,8 +2110,10 @@
         "source": "local",
         "path": "./plugins/target"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1770,8 +2122,10 @@
         "source": "local",
         "path": "./plugins/tarot"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1780,8 +2134,10 @@
         "source": "local",
         "path": "./plugins/the-knot"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1790,8 +2146,10 @@
         "source": "local",
         "path": "./plugins/thefork"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1800,8 +2158,10 @@
         "source": "local",
         "path": "./plugins/thehotelsnetwork"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1810,8 +2170,10 @@
         "source": "local",
         "path": "./plugins/third-bridge"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1820,8 +2182,10 @@
         "source": "local",
         "path": "./plugins/thumbtack"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1830,8 +2194,10 @@
         "source": "local",
         "path": "./plugins/tickersage"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1840,8 +2206,10 @@
         "source": "local",
         "path": "./plugins/tinman-ai"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1850,8 +2218,10 @@
         "source": "local",
         "path": "./plugins/tonita"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1860,8 +2230,10 @@
         "source": "local",
         "path": "./plugins/tourlane"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1870,8 +2242,10 @@
         "source": "local",
         "path": "./plugins/tourradar"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1880,8 +2254,10 @@
         "source": "local",
         "path": "./plugins/travelenie"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1890,8 +2266,10 @@
         "source": "local",
         "path": "./plugins/tripadvisor"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1900,8 +2278,10 @@
         "source": "local",
         "path": "./plugins/tuio"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1910,8 +2290,10 @@
         "source": "local",
         "path": "./plugins/turo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1920,8 +2302,10 @@
         "source": "local",
         "path": "./plugins/uber"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1930,8 +2314,10 @@
         "source": "local",
         "path": "./plugins/uber-eats"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1940,8 +2326,10 @@
         "source": "local",
         "path": "./plugins/udemy"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -1950,8 +2338,10 @@
         "source": "local",
         "path": "./plugins/unpack"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1960,8 +2350,10 @@
         "source": "local",
         "path": "./plugins/upwork"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -1970,8 +2362,22 @@
         "source": "local",
         "path": "./plugins/vercel"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "vercel-plugin",
+      "source": {
+        "source": "local",
+        "path": "./plugins/vercel-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -1980,8 +2386,10 @@
         "source": "local",
         "path": "./plugins/viator"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -1990,8 +2398,10 @@
         "source": "local",
         "path": "./plugins/vio"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2000,8 +2410,10 @@
         "source": "local",
         "path": "./plugins/vivid-seats"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2010,8 +2422,10 @@
         "source": "local",
         "path": "./plugins/wayground"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -2020,8 +2434,10 @@
         "source": "local",
         "path": "./plugins/wednesday-app"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -2030,8 +2446,10 @@
         "source": "local",
         "path": "./plugins/wego"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2040,8 +2458,10 @@
         "source": "local",
         "path": "./plugins/weightwatchers"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2050,8 +2470,10 @@
         "source": "local",
         "path": "./plugins/wix"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Design"
     },
     {
@@ -2060,8 +2482,10 @@
         "source": "local",
         "path": "./plugins/zen-shopping"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2070,8 +2494,10 @@
         "source": "local",
         "path": "./plugins/zillow"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2080,8 +2506,10 @@
         "source": "local",
         "path": "./plugins/ziprecruiter"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2090,8 +2518,10 @@
         "source": "local",
         "path": "./plugins/zola"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2100,8 +2530,10 @@
         "source": "local",
         "path": "./plugins/zoom"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -2110,8 +2542,10 @@
         "source": "local",
         "path": "./plugins/zoominfo"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Research"
     },
     {
@@ -2120,8 +2554,10 @@
         "source": "local",
         "path": "./plugins/zumba"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2130,8 +2566,10 @@
         "source": "local",
         "path": "./plugins/zumper"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Lifestyle"
     },
     {
@@ -2140,8 +2578,10 @@
         "source": "local",
         "path": "./plugins/google-slides"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     },
     {
@@ -2150,8 +2590,10 @@
         "source": "local",
         "path": "./plugins/game-studio"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Coding"
     },
     {
@@ -2159,6 +2601,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/ai-wisebase"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2166,6 +2612,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/assessment-generator"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2173,6 +2623,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/base44"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2180,6 +2634,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/box"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2187,6 +2645,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/datadog"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2194,6 +2656,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/demandbase"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2201,6 +2667,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/dropbox"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2208,13 +2678,22 @@
       "source": {
         "source": "local",
         "path": "./plugins/github"
-      }
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
     },
     {
       "name": "google-drive",
       "source": {
         "source": "local",
         "path": "./plugins/google-drive"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2222,6 +2701,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/hubspot-legacy"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2229,6 +2712,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/miro"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2236,6 +2723,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/neptune-flood"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2243,13 +2734,22 @@
       "source": {
         "source": "local",
         "path": "./plugins/notion"
-      }
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     },
     {
       "name": "sendgrid",
       "source": {
         "source": "local",
         "path": "./plugins/sendgrid"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2257,6 +2757,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/sider-recorder-transcriber"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2264,6 +2768,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/sider-scholar"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2271,6 +2779,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/skywatch"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2278,6 +2790,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/slack-legacy"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2285,6 +2801,10 @@
       "source": {
         "source": "local",
         "path": "./plugins/motherduck"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
     },
     {
@@ -2292,7 +2812,59 @@
       "source": {
         "source": "local",
         "path": "./plugins/quintoandar"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
       }
+    },
+    {
+      "name": "cloudflare",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cloudflare"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "sentry",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sentry"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "ios-design",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ios-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "vibe-builder",
+      "source": {
+        "source": "local",
+        "path": "./plugins/vibe-builder"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
     }
   ]
 }

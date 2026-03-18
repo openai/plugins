@@ -21,7 +21,9 @@
     "websiteURL": "https://keybid.eu",
     "privacyPolicyURL": "https://keybid.eu/confidentialitate",
     "termsOfServiceURL": "https://keybid.eu/termeni",
-    "defaultPrompt": "@KeyBid Puls is this apartment worth buying for short-term rental? URL link",
+    "defaultPrompt": [
+      "Is this apartment worth buying for short-term"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

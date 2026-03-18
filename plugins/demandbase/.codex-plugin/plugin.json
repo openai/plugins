@@ -21,7 +21,9 @@
     "websiteURL": "www.demandbase.com",
     "privacyPolicyURL": "http://demandbase.com/privacy/",
     "termsOfServiceURL": "https://www.demandbase.com/terms-of-use/",
-    "defaultPrompt": "@Demandbase Give me a list of top 10 VP contacts at Demandbase",
+    "defaultPrompt": [
+      "List the top 10 VP contacts at Demandbase"
+    ],
     "screenshots": []
   }
 }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Implement Design"
+  short_description: "Turn Figma designs into production-ready code"
+  default_prompt: "Implement this Figma frame/component with high visual fidelity and project conventions."

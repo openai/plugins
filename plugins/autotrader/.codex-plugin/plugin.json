@@ -21,7 +21,9 @@
     "websiteURL": "https://www.autotrader.ca",
     "privacyPolicyURL": "https://www.autotrader.ca/privacy-statement/",
     "termsOfServiceURL": "https://www.autotrader.ca/privacy-statement/?#terms",
-    "defaultPrompt": "Find reliable family cars around Toronto",
+    "defaultPrompt": [
+      "Find reliable family cars around Toronto"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

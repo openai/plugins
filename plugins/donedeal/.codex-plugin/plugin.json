@@ -21,7 +21,9 @@
     "websiteURL": "www.donedeal.ie",
     "privacyPolicyURL": "https://hello.donedeal.ie/hc/en-us/articles/201251721-Privacy-Cookie-Policies",
     "termsOfServiceURL": "https://hello.donedeal.ie/hc/en-us/articles/201251761-Terms-Conditions-of-Use-of-DoneDeal",
-    "defaultPrompt": "@DoneDeal Show me SUV's from Dealerships",
+    "defaultPrompt": [
+      "Find SUVs from dealerships"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

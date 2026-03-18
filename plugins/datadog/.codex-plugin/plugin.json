@@ -18,7 +18,9 @@
     "capabilities": [],
     "websiteURL": "https://www.datadoghq.com/",
     "privacyPolicyURL": "https://www.datadoghq.com/legal/privacy/",
-    "defaultPrompt": "Use Datadog to help with this task.",
+    "defaultPrompt": [
+      "Investigate an incident and summarize the signals"
+    ],
     "screenshots": []
   }
 }

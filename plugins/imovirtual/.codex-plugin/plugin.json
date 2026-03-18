@@ -21,7 +21,9 @@
     "websiteURL": "https://imovirtual.com",
     "privacyPolicyURL": "https://ajuda.imovirtual.com/imovirtualhelp/s/article/novo-poltica-de-privacidade-V20IMO?_gl=1*s6ft4l*_gcl_au*NzQzNDA0NzYuMTc2ODI5ODA4MA..*_ga*MjAwNzMwMTY5MS4xNzY4Mjk4MDgw*_ga_2GM5QEJ1H6*czE3NzAyMDk2NzkkbzIzJGcxJHQxNzcwMjA5OTI1JGozNyRsMCRoMA..",
     "termsOfServiceURL": "https://ajuda.imovirtual.com/imovirtualhelp/s/article/termos-e-condies-para-clientes-individuais-V32IMO?_gl=1*1q8rb5p*_gcl_au*NzQzNDA0NzYuMTc2ODI5ODA4MA..*_ga*MjAwNzMwMTY5MS4xNzY4Mjk4MDgw*_ga_2GM5QEJ1H6*czE3NzAyMDk2NzkkbzIzJGcxJHQxNzcwMjA5ODM2JGoxNiRsMCRoMA..",
-    "defaultPrompt": "Show me 3 bedroom apartments in Lisbon below 1.500 eur",
+    "defaultPrompt": [
+      "Show me 3 bedroom apartments in Lisbon below 1.500 eur"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -1,3 +1,16 @@
 # Plugins
 
-This repository contains a curated collection of plugins.
+This repository contains a curated collection of Codex plugin examples.
+
+Each plugin lives under `plugins/<name>/` with a required
+`.codex-plugin/plugin.json` manifest and optional companion surfaces such as
+`skills/`, `.app.json`, `.mcp.json`, plugin-level `agents/`, `commands/`,
+`hooks.json`, `assets/`, and other supporting files.
+
+Highlighted richer examples in this repo include:
+
+- `plugins/figma` for design-to-code, Code Connect, and design system rules
+- `plugins/notion` for planning, research, meetings, and knowledge capture
+- `plugins/ios-design` for SwiftUI implementation, refactors, performance, and debugging
+- `plugins/vibe-builder` for deployment, UI, payments, and database workflows
+- `plugins/netlify`, `plugins/render`, and `plugins/google-slides` for additional public skill- and MCP-backed plugin bundles

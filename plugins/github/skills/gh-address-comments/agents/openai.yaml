@@ -1,0 +1,12 @@
+interface:
+  display_name: "GitHub Review Follow-up"
+  short_description: "Address actionable PR feedback"
+  icon_small: "./assets/github-small.svg"
+  icon_large: "./assets/github.png"
+  default_prompt: "Use $gh-address-comments to review unresolved pull request feedback, implement the selected fixes, and summarize what changed."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "github"
+      description: "GitHub MCP server"

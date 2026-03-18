@@ -21,7 +21,9 @@
     "websiteURL": "https://manus.im",
     "privacyPolicyURL": "https://manus.im/privacy",
     "termsOfServiceURL": "https://manus.im/terms",
-    "defaultPrompt": "@Manus make a 5 pages slides about history of AI",
+    "defaultPrompt": [
+      "Make a 5 pages slides about history of AI"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

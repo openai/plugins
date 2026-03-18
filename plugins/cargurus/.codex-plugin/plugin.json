@@ -21,7 +21,9 @@
     "websiteURL": "www.cargurus.com",
     "privacyPolicyURL": "https://www.cargurus.com/about/privacy-policy",
     "termsOfServiceURL": "https://www.cargurus.com/about/terms-of-use",
-    "defaultPrompt": "Most reliable cars built to last over 200K miles",
+    "defaultPrompt": [
+      "Most reliable cars built to last over 200K miles"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

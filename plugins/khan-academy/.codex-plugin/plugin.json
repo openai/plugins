@@ -19,7 +19,9 @@
     "websiteURL": "https://www.khanacademy.org",
     "privacyPolicyURL": "https://www.khanacademy.org/about/privacy-policy",
     "termsOfServiceURL": "https://www.khanacademy.org/about/docs/khan-academy-terms-of-service",
-    "defaultPrompt": "@Khan Academy 10 problems on fractions",
+    "defaultPrompt": [
+      "10 problems on fractions"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

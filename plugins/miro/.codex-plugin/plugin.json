@@ -21,7 +21,9 @@
     "websiteURL": "https://miro.com",
     "privacyPolicyURL": "https://miro.com/legal/privacy-policy/",
     "termsOfServiceURL": "https://miro.com/legal/terms-of-service/",
-    "defaultPrompt": "@Miro turn this product spec into an architecture diagram.",
+    "defaultPrompt": [
+      "Turn this product spec into an architecture diagram"
+    ],
     "screenshots": []
   }
 }

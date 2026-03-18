@@ -21,7 +21,9 @@
     "websiteURL": "https://www.busbud.com",
     "privacyPolicyURL": "https://www.busbud.com/en/privacy-policy/",
     "termsOfServiceURL": "https://www.busbud.com/en/terms-of-use/",
-    "defaultPrompt": "Show me buses from Philadelphia to New York City",
+    "defaultPrompt": [
+      "Show me buses from Philadelphia to New York City"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

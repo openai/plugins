@@ -19,7 +19,9 @@
     "websiteURL": "https://www.adobe.com/products/photoshop/online.html",
     "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
     "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
-    "defaultPrompt": "@Adobe Photoshop blur the background",
+    "defaultPrompt": [
+      "Blur the background"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

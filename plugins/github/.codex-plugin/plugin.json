@@ -1,24 +1,44 @@
 {
   "name": "github",
-  "description": "Access repositories, issues, and pull requests. Required for some features such as Codex",
+  "version": "0.1.0",
+  "description": "Inspect repositories, triage pull requests and issues, debug CI, and publish changes through a hybrid GitHub connector and CLI workflow.",
   "author": {
     "name": "OpenAI",
-    "url": "https://github.com/"
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
   },
   "homepage": "https://github.com/",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "github",
+    "pull-request",
+    "code-review",
+    "issues",
+    "ci",
+    "actions"
+  ],
+  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "GitHub",
-    "shortDescription": "Access repositories, issues, and pull requests. Required for some features such as Codex",
+    "shortDescription": "Triage PRs, issues, CI, and publish flows",
+    "longDescription": "Use GitHub to inspect repositories, review pull requests, address feedback, debug failing Actions checks, and prepare code changes for review through a connector-first workflow with targeted CLI fallbacks.",
     "developerName": "OpenAI",
-    "category": "Productivity",
-    "capabilities": [],
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
     "websiteURL": "https://github.com/",
     "privacyPolicyURL": "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement",
-    "defaultPrompt": "Use GitHub to help with this task.",
-    "screenshots": []
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "defaultPrompt": [
+      "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review."
+    ],
+    "composerIcon": "./assets/github-small.svg",
+    "logo": "./assets/github.png",
+    "screenshots": [],
+    "brandColor": "#24292F"
   }
 }
