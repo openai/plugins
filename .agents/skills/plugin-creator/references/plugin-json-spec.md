@@ -28,7 +28,11 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
-    "defaultPrompt": "Starter prompt for trying a plugin",
+    "defaultPrompt": [
+      "Summarize my inbox and draft replies for me.",
+      "Find open bugs and turn them into Linear tickets.",
+      "Review today's meetings and flag scheduling gaps."
+    ],
     "brandColor": "#3B82F6",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/logo.png",
@@ -73,7 +77,10 @@
 - `websiteURL` (`string`): Public website for the plugin.
 - `privacyPolicyURL` (`string`): Privacy policy URL.
 - `termsOfServiceURL` (`string`): Terms of service URL.
-- `defaultPrompt` (`string`): Starter prompt shown in composer/UX context.
+- `defaultPrompt` (`array` of `string`): Starter prompts shown in composer/UX context.
+  - Include at most 3 strings. Entries after the first 3 are ignored and will not be included.
+  - Each string is capped at 128 characters. Longer entries are truncated.
+  - Prefer short starter prompts around 50 characters so they scan well in the UI.
 - `brandColor` (`string`): Theme color for the plugin card.
 - `composerIcon` (`string`): Path to icon asset.
 - `logo` (`string`): Path to logo asset.
@@ -95,6 +102,9 @@
 ```json
 {
   "name": "openai-curated",
+  "interface": {
+    "displayName": "ChatGPT Official"
+  },
   "plugins": [
     {
       "name": "linear",
@@ -115,7 +125,12 @@
 ### Top-level fields
 
 - `name` (`string`): Marketplace identifier or catalog name.
+- `interface` (`object`, optional): Marketplace presentation metadata.
 - `plugins` (`array`): Ordered plugin entries. This order determines how Codex renders plugins.
+
+### `interface` fields
+
+- `displayName` (`string`, optional): User-facing marketplace title.
 
 ### Plugin entry fields
 
@@ -123,16 +138,21 @@
 - `source` (`object`): Plugin source descriptor.
   - `source` (`string`): Use `local` for this repo workflow.
   - `path` (`string`): Relative plugin path, always `./plugins/<plugin-name>`.
-- `installPolicy` (`string`): Availability policy. Always include it.
-  - Allowed values: `NOT_AVAILABLE`, `AVAILABLE`, `INSTALLED_BY_DEFAULT`
-  - Default for new entries: `AVAILABLE`
-- `authPolicy` (`string`): Authentication timing policy. Always include it.
-  - Allowed values: `ON_INSTALL`, `ON_USE`
-  - Default for new entries: `ON_INSTALL`
+- `policy` (`object`): Marketplace policy block. Always include it.
+  - `installation` (`string`): Availability policy.
+    - Allowed values: `NOT_AVAILABLE`, `AVAILABLE`, `INSTALLED_BY_DEFAULT`
+    - Default for new entries: `AVAILABLE`
+  - `authentication` (`string`): Authentication timing policy.
+    - Allowed values: `ON_INSTALL`, `ON_USE`
+    - Default for new entries: `ON_INSTALL`
+  - `products` (`array` of `string`, optional): Product override for this plugin entry. Omit it unless product gating is explicitly requested.
 - `category` (`string`): Display category bucket. Always include it.
 
 ### Marketplace generation rules
 
-- Always include `installPolicy`, `authPolicy`, and `category` on every generated or updated plugin entry.
+- `displayName` belongs under the top-level `interface` object, not individual plugin entries.
+- When creating a new marketplace file from scratch, seed `interface.displayName` alongside top-level `name`.
+- Always include `policy.installation`, `policy.authentication`, and `category` on every generated or updated plugin entry.
+- Treat `policy.products` as an override and omit it unless explicitly requested.
 - Append new entries unless the user explicitly requests reordering.
 - Replace an existing entry for the same plugin only when overwrite is intentional.

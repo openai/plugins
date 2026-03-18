@@ -21,7 +21,9 @@
     "websiteURL": "https://www.ranked.ai",
     "privacyPolicyURL": "https://www.ranked.ai/legal/privacy",
     "termsOfServiceURL": "//www.ranked.ai/legal/terms",
-    "defaultPrompt": "show me my rankings for my project",
+    "defaultPrompt": [
+      "Show rankings for project"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -21,7 +21,9 @@
     "websiteURL": "https://recorrido.com",
     "privacyPolicyURL": "https://www.recorrido.cl/es/politica-de-privacidad",
     "termsOfServiceURL": "https://www.recorrido.cl/es/terminos-y-condiciones",
-    "defaultPrompt": "Búscame viajes de Santiago a Temuco para mañana",
+    "defaultPrompt": [
+      "Búscame viajes de Santiago a Temuco para mañana"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

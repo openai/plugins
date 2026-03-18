@@ -21,7 +21,9 @@
     "websiteURL": "https://www.hepsiemlak.com/",
     "privacyPolicyURL": "https://www.hepsiemlak.com/aydinlatma-metni",
     "termsOfServiceURL": "https://www.hepsiemlak.com/kullanim-kosullari",
-    "defaultPrompt": "@hepsiemlak Kadıköy’de 2+1, balkonlu, otoparklı kiralık daireleri bul",
+    "defaultPrompt": [
+      "2+1, balkonlu, otoparklı kiralık"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

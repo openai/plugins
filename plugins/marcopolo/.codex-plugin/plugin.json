@@ -21,7 +21,9 @@
     "websiteURL": "https://marcopolo.dev",
     "privacyPolicyURL": "https://marcopolo.dev/privacy-policy",
     "termsOfServiceURL": "https://marcopolo.dev/terms-and-conditions",
-    "defaultPrompt": "available data sources to query or update",
+    "defaultPrompt": [
+      "Available data sources to query or update"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

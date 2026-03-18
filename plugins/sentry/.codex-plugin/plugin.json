@@ -1,0 +1,40 @@
+{
+  "name": "sentry",
+  "version": "0.1.0",
+  "description": "Inspect recent issues and events in Sentry from Codex.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://sentry.io/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "sentry",
+    "observability",
+    "triage"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Sentry",
+    "shortDescription": "Inspect recent Sentry issues and events",
+    "longDescription": "Use Sentry skills to inspect recent issues, review events, and summarize production errors with a read-only workflow.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://sentry.io/",
+    "privacyPolicyURL": "https://sentry.io/privacy/",
+    "termsOfServiceURL": "https://sentry.io/terms/",
+    "defaultPrompt": [
+      "Inspect recent Sentry issues and summarize the top production errors"
+    ],
+    "composerIcon": "./assets/sentry-small.svg",
+    "logo": "./assets/sentry.png",
+    "screenshots": [],
+    "brandColor": "#362D59"
+  }
+}

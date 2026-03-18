@@ -21,7 +21,9 @@
     "websiteURL": "https://tourlane.com",
     "privacyPolicyURL": "https://www.tourlane.com/privacy-policy/",
     "termsOfServiceURL": "https://www.tourlane.com/terms-and-conditions/",
-    "defaultPrompt": "I want to travel to Italy next year 🏛️",
+    "defaultPrompt": [
+      "I want to travel to Italy next year 🏛️"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

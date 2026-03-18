@@ -21,7 +21,9 @@
     "websiteURL": "https://www.wayground.com",
     "privacyPolicyURL": "https://wayground.com/privacy",
     "termsOfServiceURL": "https://wayground.com/tos",
-    "defaultPrompt": "Create quiz on subtraction of integers",
+    "defaultPrompt": [
+      "Create quiz on subtraction of integers"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

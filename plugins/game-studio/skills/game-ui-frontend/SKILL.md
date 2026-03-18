@@ -1,6 +1,6 @@
 ---
 name: game-ui-frontend
-description: Design game HUDs, menus, and browser-facing frontend surfaces with intentional visual direction and protected playfield space. Use when the user needs polished game UI, low-chrome 3D overlays, menu systems, HUD hierarchy, responsive behavior, or prompt guidance that avoids generic app-like frontend output.
+description: Design UI surfaces for browser games. Use when the user asks for HUDs, menus, overlays, responsive layouts, or visual direction that must protect the playfield.
 ---
 
 # Game UI Frontend

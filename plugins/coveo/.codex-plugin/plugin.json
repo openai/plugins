@@ -19,7 +19,9 @@
     "websiteURL": "https://www.coveo.com",
     "privacyPolicyURL": "https://www.coveo.com/en/company/legal/privacy-and-security/privacy-notice",
     "termsOfServiceURL": "https://www.coveo.com/en/company/legal/terms-and-agreements/customer-agreement",
-    "defaultPrompt": "Use Coveo to help with this task.",
+    "defaultPrompt": [
+      "Use Coveo to help with this task"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

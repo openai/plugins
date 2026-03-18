@@ -21,7 +21,9 @@
     "websiteURL": "https://www.docket.io/",
     "privacyPolicyURL": "https://www.docket.io/privacy-policy",
     "termsOfServiceURL": "https://www.docket.io/terms-and-conditions",
-    "defaultPrompt": "check docket how our partnership with commonwealth bank of Australia went",
+    "defaultPrompt": [
+      "Check docket how our partnership with commonwealth bank"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

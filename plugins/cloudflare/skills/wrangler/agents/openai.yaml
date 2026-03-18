@@ -1,0 +1,6 @@
+interface:
+  display_name: "Wrangler"
+  short_description: "Use the Cloudflare Workers CLI safely"
+  icon_small: "./assets/cloudflare-small.svg"
+  icon_large: "./assets/cloudflare.png"
+  default_prompt: "Use Wrangler to set up, review, or fix this Cloudflare Worker config and deployment flow without guessing CLI flags."

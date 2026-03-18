@@ -1,0 +1,5 @@
+interface:
+  display_name: "Google Slides"
+  short_description: "Inspect decks and plan Slides edits"
+  brand_color: "#F9AB00"
+  default_prompt: "Use $google-slides to inspect a deck, import a PPTX, or plan an exact Google Slides edit."

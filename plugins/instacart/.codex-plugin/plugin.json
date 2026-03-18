@@ -19,7 +19,9 @@
     "websiteURL": "https://www.instacart.com",
     "privacyPolicyURL": "https://www.instacart.com/privacy",
     "termsOfServiceURL": "https://www.instacart.com/terms",
-    "defaultPrompt": "@Instacart show stores near me",
+    "defaultPrompt": [
+      "Show stores nearby"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

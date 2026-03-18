@@ -1,6 +1,6 @@
 ---
 name: google-slides-template-migration
-description: Migrate an existing connected Google Slides deck onto a company or team template in Codex. Use when a user wants to restyle a deck to match a template, port content from a source presentation into a branded template deck, or rebuild slides by duplicating template patterns rather than patching the old layout in place.
+description: Migrate a Google Slides deck onto a target template. Use when the user wants to preserve source content while rebuilding slides from a branded template structure instead of making incremental in-place edits.
 ---
 
 # Google Slides Template Migration

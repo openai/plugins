@@ -21,7 +21,9 @@
     "websiteURL": "https://www.edx.org/",
     "privacyPolicyURL": "https://www.edx.org/edx-privacy-policy",
     "termsOfServiceURL": "https://www.edx.org/edx-terms-service",
-    "defaultPrompt": "I'd like to learn about Artificial Intelligence",
+    "defaultPrompt": [
+      "I'd like to learn about Artificial Intelligence"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -1,6 +1,6 @@
 ---
 name: google-docs
-description: Summarize Google Docs documents, plan structured revisions, and help with edit-in-place writing through connected Google Docs data. Use when the user wants to inspect document structure, outline or summarize content, draft rewrites, convert notes into prose, or apply explicit edits while preserving headings and organization.
+description: Summarize and revise connected Google Docs. Use when the user asks to inspect a doc, review structure, convert notes into prose, plan section-level revisions, or apply edits while preserving heading hierarchy.
 ---
 
 # Google Docs

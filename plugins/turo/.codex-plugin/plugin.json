@@ -21,7 +21,9 @@
     "websiteURL": "Turo.com",
     "privacyPolicyURL": "https://turo.com/us/en/policies/privacy",
     "termsOfServiceURL": "https://turo.com/us/en/policies/terms",
-    "defaultPrompt": "@Turo find me a budget-friendly convertible to pick up at LAX next weekend",
+    "defaultPrompt": [
+      "Find budget-friendly convertible to pick up at LAX"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

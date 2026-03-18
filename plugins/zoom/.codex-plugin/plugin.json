@@ -19,7 +19,9 @@
     "websiteURL": "https://zoom.us",
     "privacyPolicyURL": "https://zoom.us/privacy",
     "termsOfServiceURL": "https://www.zoom.com/en/trust/terms/",
-    "defaultPrompt": "@Zoom recap my last meeting",
+    "defaultPrompt": [
+      "Recap last meeting"
+    ],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",
     "screenshots": []

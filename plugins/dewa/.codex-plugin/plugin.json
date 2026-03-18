@@ -21,7 +21,9 @@
     "websiteURL": "https://www.dewa.gov.ae",
     "privacyPolicyURL": "https://www.dewa.gov.ae/en/security-and-policy",
     "termsOfServiceURL": "https://www.dewa.gov.ae/en/terms-and-conditions",
-    "defaultPrompt": "What is my outstanding balance?",
+    "defaultPrompt": [
+      "What is outstanding balance"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -30,7 +30,9 @@
     "websiteURL": "https://slack.com/",
     "privacyPolicyURL": "https://slack.com/privacy-policy",
     "termsOfServiceURL": "https://slack.com/terms-of-service/user",
-    "defaultPrompt": "Use Slack context to summarize unread activity, draft replies, or help me prepare channel updates.",
+    "defaultPrompt": [
+      "Summarize unread activity, draft replies, or prepare"
+    ],
     "brandColor": "#611F69",
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",

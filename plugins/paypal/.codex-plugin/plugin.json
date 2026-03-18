@@ -21,7 +21,9 @@
     "websiteURL": "https://www.paypal.com",
     "privacyPolicyURL": "https://www.paypal.com/us/legalhub/paypal/privacy-full",
     "termsOfServiceURL": "https://www.paypal.com/us/legalhub",
-    "defaultPrompt": "Create a $1500 PayPal invoice for Acme Corp for web development services.",
+    "defaultPrompt": [
+      "Create $1500 PayPal invoice for Acme Corp for web"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

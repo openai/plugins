@@ -21,7 +21,9 @@
     "websiteURL": "https://internshala.com/",
     "privacyPolicyURL": "https://internshala.com/privacy/",
     "termsOfServiceURL": "https://internshala.com/terms/",
-    "defaultPrompt": "Find me paid marketing internships in Mumbai with a PPO.",
+    "defaultPrompt": [
+      "Find me paid marketing internships in Mumbai with a PPO"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

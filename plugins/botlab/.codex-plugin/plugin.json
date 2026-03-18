@@ -21,7 +21,9 @@
     "websiteURL": "https://airudder.com/",
     "privacyPolicyURL": "https://airudder.com/privacy-policy/",
     "termsOfServiceURL": "https://airudder.com/terms-of-service/",
-    "defaultPrompt": "Call +65 31****73 ask how to open a new savings account and what documents",
+    "defaultPrompt": [
+      "Call +65 31****73 ask how to open new savings account"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

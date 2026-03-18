@@ -19,7 +19,9 @@
     "websiteURL": "https://www.conductor.com",
     "privacyPolicyURL": "https://www.conductor.com/legal/privacy-policy/",
     "termsOfServiceURL": "https://www.conductor.com/legal/terms-of-use/",
-    "defaultPrompt": "@Conductor who are my top competitors for “wireless earbuds”?",
+    "defaultPrompt": [
+      "Who are top competitors for “wireless earbuds”"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

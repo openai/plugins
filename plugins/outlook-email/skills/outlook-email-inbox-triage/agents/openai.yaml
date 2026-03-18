@@ -1,0 +1,4 @@
+interface:
+  display_name: "Outlook Email Inbox Triage"
+  short_description: "Triage an Outlook inbox into action buckets"
+  default_prompt: "Use $outlook-email-inbox-triage to triage my Outlook inbox into urgent, needs reply soon, waiting, and FYI."

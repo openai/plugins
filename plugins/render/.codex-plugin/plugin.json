@@ -32,7 +32,9 @@
     "websiteURL": "https://render.com/",
     "privacyPolicyURL": "https://render.com/privacy",
     "termsOfServiceURL": "https://render.com/terms",
-    "defaultPrompt": "Use Render to inspect this repo, decide whether I need a Blueprint or direct creation, and prepare the right deployment setup.",
+    "defaultPrompt": [
+      "Inspect this repo and prepare a Render deploy"
+    ],
     "composerIcon": "./assets/render-small.svg",
     "logo": "./assets/render.png",
     "screenshots": []

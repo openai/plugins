@@ -1,0 +1,26 @@
+{
+  "name": "hubspot-legacy",
+  "description": "Analyze CRM data and surface insights",
+  "author": {
+    "name": "HubSpot",
+    "url": "https://www.hubspot.com/ai-tools/openai-connector"
+  },
+  "homepage": "https://www.hubspot.com/ai-tools/openai-connector",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "HubSpot (Legacy)",
+    "shortDescription": "Analyze CRM data and surface insights",
+    "developerName": "HubSpot",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.hubspot.com/ai-tools/openai-connector",
+    "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
+    "defaultPrompt": [
+      "Find the biggest drop-off in my marketing funnel"
+    ],
+    "screenshots": []
+  }
+}

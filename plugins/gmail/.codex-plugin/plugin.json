@@ -30,7 +30,9 @@
     "websiteURL": "https://workspace.google.com/products/gmail/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
-    "defaultPrompt": "Use Gmail context to summarize my inbox, draft replies, or help me process email threads.",
+    "defaultPrompt": [
+      "Summarize inbox, draft replies, or process email threads"
+    ],
     "brandColor": "#EA4335",
     "composerIcon": "./assets/gmail-small.svg",
     "logo": "./assets/gmail.png",

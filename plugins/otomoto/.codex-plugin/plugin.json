@@ -21,7 +21,9 @@
     "websiteURL": "www.otomoto.com",
     "privacyPolicyURL": "https://pomoc.otomoto.pl/otomotohelpcenter/s/article/polityka-prywatnosci?_gl=1*u2nje4*_gcl_au*MTc1MTI4ODE1NC4xNzcwODAxMTEz*_ga*Mzg3OTgwNTY3LjE3NzA4MDExMTI.*_ga_1MNBX75RRH*czE3NzA4MDExMTIkbzEkZzEkdDE3NzA4MDQ3MjgkajQzJGwwJGgw",
     "termsOfServiceURL": "https://pomoc.otomoto.pl/otomotohelpcenter/s/article/regulamin-dla-klientow-indywidualnych?_gl=1*w0wli8*_gcl_au*MTc1MTI4ODE1NC4xNzcwODAxMTEz*_ga*Mzg3OTgwNTY3LjE3NzA4MDExMTI.*_ga_1MNBX75RRH*czE3NzA4MDExMTIkbzEkZzEkdDE3NzA4MDQ3NjUkajYkbDAkaDA.",
-    "defaultPrompt": "Show me an automatic car below 150K PLN",
+    "defaultPrompt": [
+      "Show me an automatic car below 150K PLN"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

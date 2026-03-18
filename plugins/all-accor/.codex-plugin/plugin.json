@@ -21,7 +21,9 @@
     "websiteURL": "https://all.accor.com/",
     "privacyPolicyURL": "https://all.accor.com/a/en/information/data-protection.html",
     "termsOfServiceURL": "https://all.accor.com/a/en/information/internet-sales-conditions.html",
-    "defaultPrompt": "Show me available hotels in Paris for tonight",
+    "defaultPrompt": [
+      "Show me available hotels in Paris for tonight"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

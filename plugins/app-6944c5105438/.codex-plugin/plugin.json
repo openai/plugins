@@ -21,7 +21,9 @@
     "websiteURL": "https://www.wesang.com",
     "privacyPolicyURL": "https://policy.yogiyo.co.kr/#tab-2",
     "termsOfServiceURL": "https://policy.yogiyo.co.kr/#tab-1",
-    "defaultPrompt": "강남역 근처 포장 가능한 맛집 지도로 보여줘",
+    "defaultPrompt": [
+      "강남역 근처 포장 가능한 맛집 지도로 보여줘"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

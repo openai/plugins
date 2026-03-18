@@ -21,7 +21,9 @@
     "websiteURL": "https://unpack.fulfilling-productivity.com/",
     "privacyPolicyURL": "https://unpack.fulfilling-productivity.com/privacy-policy",
     "termsOfServiceURL": "https://unpack.fulfilling-productivity.com/terms",
-    "defaultPrompt": "Help me brainstorm this: I'm a freelance UX designer and I'm not sure if..",
+    "defaultPrompt": [
+      "Brainstorm this: I'm freelance UX designer and I'm not"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

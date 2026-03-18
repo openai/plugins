@@ -1,0 +1,4 @@
+interface:
+  display_name: "Outlook Calendar Group Scheduler"
+  short_description: "Rank the best meeting times for several people"
+  default_prompt: "Use $outlook-calendar-group-scheduler to find and rank the best Outlook meeting times, with clear tradeoffs instead of an exhaustive list."

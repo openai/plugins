@@ -21,7 +21,9 @@
     "websiteURL": "https://www.okx.com",
     "privacyPolicyURL": "https://www.okx.com/help/privacy-policy-statement",
     "termsOfServiceURL": "https://www.okx.com/help/terms-of-service",
-    "defaultPrompt": "Show me BTC price",
+    "defaultPrompt": [
+      "Show me BTC price"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

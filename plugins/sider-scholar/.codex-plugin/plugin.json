@@ -1,0 +1,29 @@
+{
+  "name": "sider-scholar",
+  "version": "1.0.0",
+  "description": "Search 350M+ Paper. Save. Chat",
+  "author": {
+    "name": "Sider AI",
+    "url": "https://sider.ai/wisebase/scholar-research"
+  },
+  "homepage": "https://sider.ai/wisebase/scholar-research",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Sider Scholar",
+    "shortDescription": "Search 350M+ Paper. Save. Chat",
+    "longDescription": "Your AI Research Assistant lets you search 350M+ research papers, chat with large volumes of research PDFs, and save findings to your Wisebase (knowledge base).\n\n1. Global Academic Search (Search & Read)\n- Major Sources: Search 350M+ papers from Google Scholar, PubMed, arXiv, and more.\n- Read Instantly: Access full papers instantly to verify findings.\n\n2. Build Your Knowledge Base (Save & Collect)\n- Save for Continuous Research: Save searched papers to Wisebase for continuous questioning and deep analysis of your findings.\n- Save Chat History: Save key research discussions as editable documents to capture and refine insights.\n\n3. Unified Knowledge Analysis (Agentic RAG)\n- Chat with Your Collection: Analyze your entire collection simultaneously.\n- Traceable Sources: Get grounded answers with precise Reference Indices to verify every claim.\n\n4. Visual Knowledge Organization (Visualize & Explore)\n- Knowledge Graphing: Instantly generate interactive graphs from any paper to explore definitions, cause-and-effect links, and concept hierarchies.\n\nIdeal Use Cases: For researchers, PhD students, and academics who need to access massive academic sources and synthesize grounded arguments with precise citations.\n\nHow to Use in ChatGPT\n1. Connect App: Connect Sider Scholar to ChatGPT.\n2. Trigger: Type “@Sider Scholar\".\n\nSample Prompts\n- Search Paper: “@Sider Scholar Search recent papers on 'LLM alignment' published in the last two years.”\n- Chat with Knowledge Base: “@Sider Scholar Answer questions about 'CRISPR gene editing' using my Knowledge Base.”\n- Visual Research: “@Sider Scholar Build a Knowledge Graph explaining key concepts in 'Reinforcement Learning'.”",
+    "developerName": "Sider AI",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://sider.ai/wisebase/scholar-research",
+    "privacyPolicyURL": "https://sider.ai/policies/privacy",
+    "termsOfServiceURL": "https://sider.ai/policies/terms",
+    "defaultPrompt": [
+      "Find recent papers on LLM alignment"
+    ],
+    "screenshots": []
+  }
+}

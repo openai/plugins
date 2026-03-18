@@ -1,0 +1,4 @@
+interface:
+  display_name: "Outlook Calendar Free Up Time"
+  short_description: "Create a meaningful block of free time"
+  default_prompt: "Use $outlook-calendar-free-up-time to find the smallest set of Outlook calendar changes that would open up a meaningful block of time."

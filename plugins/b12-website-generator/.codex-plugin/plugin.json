@@ -21,7 +21,9 @@
     "websiteURL": "https://www.b12.io",
     "privacyPolicyURL": "https://cdn.b12.io/client_media/dmdju/2a2cd5ca-4fd4-11e8-b1b5-0242ac110002-Privacy_Policy.pdf",
     "termsOfServiceURL": "https://www.b12.io/static-assets/docs/terms-of-service-03-01-2021.pdf",
-    "defaultPrompt": "Create a website for a marketing agency called Summit Agency",
+    "defaultPrompt": [
+      "Create website for marketing agency called Summit Agency"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

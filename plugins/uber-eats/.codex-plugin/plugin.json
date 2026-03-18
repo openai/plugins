@@ -19,7 +19,9 @@
     "websiteURL": "http://ubereats.com/",
     "privacyPolicyURL": "https://www.uber.com/global/en/privacy-notice-riders-order-recipients",
     "termsOfServiceURL": "https://www.uber.com/legal/en/",
-    "defaultPrompt": "@Uber Eats what healthy lunch options can I get delivered?",
+    "defaultPrompt": [
+      "What healthy lunch options can I get delivered"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

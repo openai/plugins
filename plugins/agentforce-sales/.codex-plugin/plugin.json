@@ -21,7 +21,9 @@
     "websiteURL": "https://www.salesforce.com",
     "privacyPolicyURL": "https://www.salesforce.com/company/legal/privacy/",
     "termsOfServiceURL": "https://www.salesforce.com/company/legal/sfdc-website-terms-of-service/",
-    "defaultPrompt": "@Agentforce Sales show me my top 10 leads",
+    "defaultPrompt": [
+      "Show me my top 10 leads"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

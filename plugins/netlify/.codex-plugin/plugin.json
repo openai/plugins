@@ -31,7 +31,9 @@
     "websiteURL": "https://www.netlify.com",
     "privacyPolicyURL": "https://www.netlify.com/privacy/",
     "termsOfServiceURL": "https://www.netlify.com/legal/terms-of-use/",
-    "defaultPrompt": "Use Netlify to analyze this repo, choose the right preview or production path, and tell me the exact next deployment step.",
+    "defaultPrompt": [
+      "What projects do I have"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

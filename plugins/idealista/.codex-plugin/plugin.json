@@ -21,7 +21,9 @@
     "websiteURL": "https://www.idealista.com/",
     "privacyPolicyURL": "https://www.idealista.com/ayuda/articulos/politica-de-privacidad/",
     "termsOfServiceURL": "https://www.idealista.com/ayuda/articulos/terminos-y-condiciones-generales-de-idealista/",
-    "defaultPrompt": "@idealista muéstrame pisos con ascensor en Malasaña por menos de 1300 €/mes",
+    "defaultPrompt": [
+      "Muéstrame pisos con ascensor en Malasaña por"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SharePoint Shared Doc Maintenance"
+  short_description: "Maintain shared docs from source-of-truth changes"
+  default_prompt: "Use $sharepoint-shared-doc-maintenance to update this shared SharePoint document based on changes in the underlying source documents."

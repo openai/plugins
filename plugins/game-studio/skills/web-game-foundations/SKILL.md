@@ -1,6 +1,6 @@
 ---
 name: web-game-foundations
-description: Define the shared architecture for browser games across 2D and 3D. Use when the user needs engine choice, system boundaries, input strategy, asset organization, save/debug/performance structure, or shared browser-game architecture.
+description: Set browser-game architecture before implementation. Use when the user needs engine choice, simulation and render boundaries, input model, asset organization, or save/debug/performance strategy.
 ---
 
 # Web Game Foundations

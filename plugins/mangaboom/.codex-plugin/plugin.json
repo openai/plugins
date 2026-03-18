@@ -21,7 +21,9 @@
     "websiteURL": "https://awesomize.ai/apps/manga-boom",
     "privacyPolicyURL": "https://awesomize.ai/privacy",
     "termsOfServiceURL": "https://awesomize.ai/terms",
-    "defaultPrompt": "@MangaBoom A cat believes it’s the boss and seriously manages the human.",
+    "defaultPrompt": [
+      "Cat believes it's boss and seriously manages"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

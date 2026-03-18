@@ -21,7 +21,9 @@
     "websiteURL": "https://www.cubesoftware.com/",
     "privacyPolicyURL": "https://www.cubesoftware.com/privacy-policy",
     "termsOfServiceURL": "https://www.cubesoftware.com/terms-of-service",
-    "defaultPrompt": "Compare Actuals vs. Forecast for Revenue by entity for the last 12 months",
+    "defaultPrompt": [
+      "Compare Actuals vs. Forecast for Revenue by entity"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

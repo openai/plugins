@@ -19,7 +19,9 @@
     "websiteURL": "https://airtable.com",
     "privacyPolicyURL": "https://www.airtable.com/company/privacy",
     "termsOfServiceURL": "https://www.airtable.com/company/tos",
-    "defaultPrompt": "@Airtable show me a kanban of the product roadmap. What’s at risk? What’s up next?",
+    "defaultPrompt": [
+      "Show kanban of product roadmap. What's at risk"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

@@ -31,12 +31,14 @@
       "Write"
     ],
     "websiteURL": "https://github.com/",
-    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "privacyPolicyURL": "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement",
     "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
-    "defaultPrompt": "Use GitHub to inspect PRs, triage issues, debug failing checks, and prepare code changes for review.",
-    "brandColor": "#24292F",
+    "defaultPrompt": [
+      "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review."
+    ],
     "composerIcon": "./assets/github-small.svg",
     "logo": "./assets/github.png",
-    "screenshots": []
+    "screenshots": [],
+    "brandColor": "#24292F"
   }
 }

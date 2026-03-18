@@ -12,7 +12,9 @@
     "longDescription": "Learn practical AI skills inside ChatGPT and earn OpenAI Certified credentials.",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "Use OpenAI Certified to help with this task.",
+    "defaultPrompt": [
+      "Use OpenAI Certified to help with this task"
+    ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"

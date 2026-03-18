@@ -33,7 +33,9 @@
     "websiteURL": "https://workspace.google.com/products/calendar/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
-    "defaultPrompt": "Use Google Calendar to summarize my day, find availability this week, and schedule, update, or cancel the right event.",
+    "defaultPrompt": [
+      "Summarize day, find availability this week, and schedule"
+    ],
     "brandColor": "#4285F4",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/logo.png",
