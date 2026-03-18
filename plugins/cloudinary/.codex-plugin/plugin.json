@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Upload this image and enable auto-tagging"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

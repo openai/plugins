@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find 3-star hotels in Barcelona to go with partner this"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find pet friendly 2 bedroom apartments in Austin under"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

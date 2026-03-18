@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "- Your PDF Converter Convert this file to PDF"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

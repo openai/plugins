@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Give me the top 10 companies in Boston by annual revenue"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

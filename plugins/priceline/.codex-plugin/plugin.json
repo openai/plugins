@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Pet friendly hotels in Chicago"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

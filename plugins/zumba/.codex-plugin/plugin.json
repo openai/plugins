@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Are there any Zumba classes in New York tomorrow"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

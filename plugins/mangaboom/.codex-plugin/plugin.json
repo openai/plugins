@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Cat believes it's boss and seriously manages"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

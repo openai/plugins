@@ -1,0 +1,26 @@
+{
+  "name": "notion",
+  "description": "Search and reference your Notion pages",
+  "author": {
+    "name": "Notion",
+    "url": "https://www.notion.so/"
+  },
+  "homepage": "https://www.notion.so/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Notion",
+    "shortDescription": "Search and reference your Notion pages",
+    "developerName": "Notion",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.notion.so/",
+    "privacyPolicyURL": "https://www.notion.com/help/privacy",
+    "defaultPrompt": [
+      "Find a Notion page and summarize the key points"
+    ],
+    "screenshots": []
+  }
+}

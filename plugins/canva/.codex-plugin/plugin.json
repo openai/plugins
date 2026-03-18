@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Create some social media posts based on our October"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

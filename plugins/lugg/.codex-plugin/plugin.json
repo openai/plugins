@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "I need quote for moving apartments from Pac Heights"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

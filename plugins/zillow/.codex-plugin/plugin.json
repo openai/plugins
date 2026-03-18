@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Show me homes for sale in the Kansas area"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

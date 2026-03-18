@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Show me buses from Philadelphia to New York City"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

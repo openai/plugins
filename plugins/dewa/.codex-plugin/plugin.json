@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "What is outstanding balance"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Want clarity on my life now and what's ahead"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

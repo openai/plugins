@@ -1,0 +1,29 @@
+{
+  "name": "motherduck",
+  "version": "1.0.0",
+  "description": "Get answers from your data",
+  "author": {
+    "name": "MotherDuck Corporation",
+    "url": "https://motherduck.com/"
+  },
+  "homepage": "https://motherduck.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "MotherDuck",
+    "shortDescription": "Get answers from your data",
+    "longDescription": "Connect AI assistants to your MotherDuck data warehouse. Explore, visualize, and manage data using natural language–no SQL skills required. Create Dives: interactive visualizations that let you save and share answers with your team, staying up-to-date with your latest data. Works with real-world data without requiring semantic models or pre-configuration. Your AI assistant acts like a data analyst, exploring, validating, analyzing, and visualizing data iteratively to answer your questions.",
+    "developerName": "MotherDuck Corporation",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://motherduck.com/",
+    "privacyPolicyURL": "https://motherduck.com/privacy-policy/",
+    "termsOfServiceURL": "https://motherduck.com/terms-of-service/",
+    "defaultPrompt": [
+      "Show the top 30 customers by revenue last quarter"
+    ],
+    "screenshots": []
+  }
+}

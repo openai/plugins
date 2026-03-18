@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Blur the background"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

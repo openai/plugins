@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Brainstorm this: I'm freelance UX designer and I'm not"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

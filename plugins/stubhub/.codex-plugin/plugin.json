@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "When are the Backstreet Boys playing in Vegas"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

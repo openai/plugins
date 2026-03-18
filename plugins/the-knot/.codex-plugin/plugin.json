@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find wedding florists in Savannah, GA"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

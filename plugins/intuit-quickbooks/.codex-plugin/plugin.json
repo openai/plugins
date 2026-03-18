@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Compare profit to profits of top"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

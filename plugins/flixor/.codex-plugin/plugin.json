@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "A few good movies"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

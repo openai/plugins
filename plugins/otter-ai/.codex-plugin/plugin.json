@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "List recent meetings"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Online popularity of biggest sports shoe"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Is this apartment worth buying for short-term"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

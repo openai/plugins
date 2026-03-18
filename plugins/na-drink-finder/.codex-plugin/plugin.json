@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Where can I buy non-alcoholic beer in Manhattan"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

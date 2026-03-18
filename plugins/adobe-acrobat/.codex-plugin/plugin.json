@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Create job application PDF by merging these"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

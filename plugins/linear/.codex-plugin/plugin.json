@@ -1,43 +1,26 @@
 {
   "name": "linear",
-  "version": "1.2.0",
-  "description": "Manage issues, projects, and team workflows in Linear from Codex.",
+  "description": "Find and reference issues and projects.",
   "author": {
     "name": "OpenAI",
-    "email": "support@openai.com",
-    "url": "https://openai.com/"
+    "url": "https://linear.app/"
   },
-  "homepage": "https://linear.app/integrations/codex-mcp",
+  "homepage": "https://linear.app/",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
-  "keywords": [
-    "linear",
-    "issues",
-    "productivity"
-  ],
-  "skills": "./skills/",
-  "hooks": "./hooks.json",
-  "mcpServers": "./.mcp.json",
-  "apps": "./app.json",
+  "keywords": [],
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Linear",
-    "shortDescription": "Manage Linear issues in Codex",
-    "longDescription": "Use Codex with Linear to triage, create, and update issues, projects, and team workflows directly from task prompts.",
+    "shortDescription": "Find and reference issues and projects.",
     "developerName": "OpenAI",
     "category": "Productivity",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
+    "capabilities": [],
     "websiteURL": "https://linear.app/",
     "privacyPolicyURL": "https://linear.app/privacy",
-    "termsOfServiceURL": "https://linear.app/terms",
     "defaultPrompt": [
       "Triage or update relevant issues for this task, with clear"
     ],
-    "brandColor": "#222326",
-    "composerIcon": "./assets/linear-small.svg",
-    "logo": "./assets/linear.png",
     "screenshots": []
   }
 }

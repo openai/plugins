@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "What's estimated price for insuring 75m² rental apartment"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

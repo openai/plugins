@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Follow up with Sarah about our meeting last week"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

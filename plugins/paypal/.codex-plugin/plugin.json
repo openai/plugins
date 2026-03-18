@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Create $1500 PayPal invoice for Acme Corp for web"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

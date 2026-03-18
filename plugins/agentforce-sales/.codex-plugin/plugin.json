@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Show me my top 10 leads"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

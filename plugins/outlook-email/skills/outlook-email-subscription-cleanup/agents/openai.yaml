@@ -1,0 +1,4 @@
+interface:
+  display_name: "Outlook Email Subscription Cleanup"
+  short_description: "Unsubscribe from and organize newsletter traffic"
+  default_prompt: "Use $outlook-email-subscription-cleanup to identify Outlook newsletters I can unsubscribe from and organize the rest safely."

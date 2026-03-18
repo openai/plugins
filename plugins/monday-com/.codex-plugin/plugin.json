@@ -21,6 +21,8 @@
     "defaultPrompt": [
       "Com what's the marketing campaign status"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

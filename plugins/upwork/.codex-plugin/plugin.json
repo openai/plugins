@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "I'm looking for web developer who is available to work"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

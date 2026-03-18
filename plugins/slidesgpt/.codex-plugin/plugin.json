@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Create a slide about the benefits of renewable energy"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

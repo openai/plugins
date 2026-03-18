@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find me paid marketing internships in Mumbai with a PPO"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

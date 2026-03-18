@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "How can I improve my credit score"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

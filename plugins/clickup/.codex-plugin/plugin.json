@@ -15,6 +15,8 @@
     "defaultPrompt": [
       "Is Sprint 14 -Simplifying UI looking? Flag"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

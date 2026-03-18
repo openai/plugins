@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Com.au show 3 bed houses in Richmond, VIC"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

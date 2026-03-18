@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Men's casual leather jackets for fall"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find budget-friendly convertible to pick up at LAX"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

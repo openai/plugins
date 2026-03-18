@@ -1,6 +1,6 @@
 ---
 name: google-slides-template-surgery
-description: Restructure connected Google Slides decks in Codex when local slide cleanup is not enough. Use when repeated alignment or overlap issues come from the slide structure itself, when the same fix must be applied across many slides, or when raw Slides batch_update requests need stricter recipes and verification to avoid hallucinated params or broken layouts.
+description: Perform structural rework in connected Google Slides decks. Use when local visual cleanup is not enough and repeated layout defects require batch_update structure edits plus strict verification.
 ---
 
 # Google Slides Template Surgery

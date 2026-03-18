@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Game Studio</title>
+  <desc id="desc">A stylized browser game plugin icon with a viewport frame, a d-pad, and layered tiles.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#134E4A"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CCFBF1"/>
+      <stop offset="100%" stop-color="#5EEAD4"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="52" fill="url(#bg)"/>
+  <rect x="40" y="46" width="176" height="124" rx="20" fill="#062F2D" stroke="#7DD3C7" stroke-width="8"/>
+  <rect x="58" y="62" width="140" height="92" rx="12" fill="url(#screen)"/>
+  <path d="M76 132h28l14-18 18 20 24-30 18 18v18H76z" fill="#0F766E" opacity="0.9"/>
+  <rect x="62" y="178" width="50" height="50" rx="18" fill="#0B2F2D" stroke="#7DD3C7" stroke-width="6"/>
+  <rect x="144" y="178" width="50" height="50" rx="18" fill="#0B2F2D" stroke="#7DD3C7" stroke-width="6"/>
+  <rect x="81" y="189" width="12" height="28" rx="4" fill="#CCFBF1"/>
+  <rect x="73" y="197" width="28" height="12" rx="4" fill="#CCFBF1"/>
+  <circle cx="160" cy="203" r="8" fill="#FDE68A"/>
+  <circle cx="178" cy="203" r="8" fill="#FCA5A5"/>
+  <circle cx="169" cy="192" r="8" fill="#BFDBFE"/>
+</svg>

@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Show details for 20 min Hip Hop Run with Matt"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

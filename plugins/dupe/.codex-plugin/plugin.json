@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find cheaper alternatives for this outdoor chair"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

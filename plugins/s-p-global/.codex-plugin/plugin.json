@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Meta revenue and net income over the last 4 quarters"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

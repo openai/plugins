@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Show overall spend, impressions, clicks, and CPC"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

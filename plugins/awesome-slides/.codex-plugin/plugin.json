@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "A 7-day itinerary for Iceland"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

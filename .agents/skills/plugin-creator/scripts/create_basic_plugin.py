@@ -16,6 +16,7 @@ DEFAULT_MARKETPLACE_PATH = Path(__file__).resolve().parents[2] / "plugins" / "ma
 DEFAULT_INSTALL_POLICY = "AVAILABLE"
 DEFAULT_AUTH_POLICY = "ON_INSTALL"
 DEFAULT_CATEGORY = "Productivity"
+DEFAULT_MARKETPLACE_DISPLAY_NAME = "[TODO: Marketplace Display Name]"
 VALID_INSTALL_POLICIES = {"NOT_AVAILABLE", "AVAILABLE", "INSTALLED_BY_DEFAULT"}
 VALID_AUTH_POLICIES = {"ON_INSTALL", "ON_USE"}
 
@@ -96,8 +97,10 @@ def build_marketplace_entry(
             "source": "local",
             "path": f"./plugins/{plugin_name}",
         },
-        "installPolicy": install_policy,
-        "authPolicy": auth_policy,
+        "policy": {
+            "installation": install_policy,
+            "authentication": auth_policy,
+        },
         "category": category,
     }
 
@@ -110,8 +113,17 @@ def load_json(path: Path) -> dict[str, Any]:
 def build_default_marketplace() -> dict[str, Any]:
     return {
         "name": "[TODO: marketplace-name]",
+        "interface": {
+            "displayName": DEFAULT_MARKETPLACE_DISPLAY_NAME,
+        },
         "plugins": [],
     }
+
+
+def validate_marketplace_interface(payload: dict[str, Any]) -> None:
+    interface = payload.get("interface")
+    if interface is not None and not isinstance(interface, dict):
+        raise ValueError("marketplace.json field 'interface' must be an object.")
 
 
 def update_marketplace_json(
@@ -129,6 +141,8 @@ def update_marketplace_json(
 
     if not isinstance(payload, dict):
         raise ValueError(f"{marketplace_path} must contain a JSON object.")
+
+    validate_marketplace_interface(payload)
 
     plugins = payload.setdefault("plugins", [])
     if not isinstance(plugins, list):
@@ -199,13 +213,13 @@ def parse_args() -> argparse.Namespace:
         "--install-policy",
         default=DEFAULT_INSTALL_POLICY,
         choices=sorted(VALID_INSTALL_POLICIES),
-        help="Marketplace installPolicy value",
+        help="Marketplace policy.installation value",
     )
     parser.add_argument(
         "--auth-policy",
         default=DEFAULT_AUTH_POLICY,
         choices=sorted(VALID_AUTH_POLICIES),
-        help="Marketplace authPolicy value",
+        help="Marketplace policy.authentication value",
     )
     parser.add_argument(
         "--category",

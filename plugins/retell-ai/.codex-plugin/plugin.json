@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Build me an AI receptionist for my dental clinic"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "We need 3 bed house in LA. We're bringing dog and need"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

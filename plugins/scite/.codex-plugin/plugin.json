@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "What's latest research on impact of adolescent screen time"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "I'm looking for tours in the mountains"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

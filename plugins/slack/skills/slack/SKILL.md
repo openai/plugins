@@ -1,6 +1,6 @@
 ---
 name: slack
-description: Summarize Slack channels and threads, draft post-ready Slack messages, and format content in Slack markdwn through connected Slack data. Use when the user wants to review unread activity, distill long threads, prepare status updates, reply in the right tone, or translate notes into Slack-ready message formatting.
+description: Summarize Slack conversations and draft channel-ready posts. Use when the user asks for channel or thread summaries, unread-activity review, tone-aware replies, status updates, or Slack-native formatting.
 ---
 
 # Slack

@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Analyze traffic sources breakdown for nike.com"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

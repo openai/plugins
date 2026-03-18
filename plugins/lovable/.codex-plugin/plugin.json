@@ -22,6 +22,8 @@
     "defaultPrompt": [
       "Build me an AI-powered customer support app"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

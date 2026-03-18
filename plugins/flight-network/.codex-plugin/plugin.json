@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find flights from NYC to London on May 17th"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

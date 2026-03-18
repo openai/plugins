@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find partners that could resell our product as part"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }

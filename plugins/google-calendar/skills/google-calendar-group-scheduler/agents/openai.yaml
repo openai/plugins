@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Calendar Group Scheduler"
+  short_description: "Rank the best meeting times for several people"
+  default_prompt: "Use $google-calendar-group-scheduler to find and rank the best group meeting times, with clear tradeoffs instead of an exhaustive list."

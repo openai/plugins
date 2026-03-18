@@ -24,6 +24,8 @@
     "defaultPrompt": [
       "Find me an orange Bronco"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }
