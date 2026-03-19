@@ -57,6 +57,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Look for text overflow, clipping, or density that makes the slide feel compressed.
 - Look for overlapping text boxes, shapes, charts, and images.
 - Look for misaligned images, cards, icons, and text blocks.
+- Look for grouped boxes, cards, or sections whose header text, body starts, icons, or internal padding do not sit on the same visual plane.
 - Look for inconsistent emphasis such as one label or bullet line being bolded differently from its siblings without intent.
 - Look for uneven alignment, broken grid structure, inconsistent spacing, off-center titles, awkward margins, and clipped elements.
 - Look for image distortion, poor crops, weak hierarchy, and slides that feel heavier on one side without intent.
@@ -68,6 +69,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Be aggressive enough to materially improve the slide in each pass. Do not make timid edits that technically move elements but leave the slide still looking broken.
 - Batch related fixes together when they affect the same slide structure, such as overflow plus alignment plus inconsistent spacing in one column or card set.
 - Prefer moving, resizing, reflowing, redistributing, or re-aligning existing elements over rewriting the slide.
+- If multiple boxes or sections are part of a visible group, align their headers, icons, top text baselines, and body starting positions unless the stagger is clearly intentional.
 - Do not default to shrinking font size, tightening line spacing, or squishing elements closer together just to make the slide fit.
 - If content still does not fit cleanly after a reasonable structural pass, split the content across slides or escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of repeatedly compressing the layout.
 - Keep each pass narrow enough that the effect is understandable, but strong enough to visibly improve the slide.
@@ -100,6 +102,7 @@ Apply these in order:
 - Normalize spacing between repeated items.
 - Remove accidental overlaps before style refinements.
 - When a container or shape is too small for its text, prefer resizing the container or redistributing the layout over tolerating cramped text padding.
+- When multiple cards or panels are presented as siblings, keep their header text, icon blocks, and first body lines aligned on consistent horizontal and vertical planes.
 
 3. Balance
 - Avoid slides that are top-heavy or left-heavy unless it is a deliberate composition.
@@ -108,6 +111,7 @@ Apply these in order:
 4. Consistency
 - Keep repeated bullets, labels, captions, and card headings consistent in weight, alignment, and spacing unless the difference is intentional.
 - If a row or family of elements should look parallel, treat one-off bolding, indentation, or sizing differences as defects to fix.
+- If three or more boxes read as a set, treat mismatched header heights, top padding, or body-start positions as alignment defects even when the text itself is different lengths.
 
 5. Restraint
 - Do not churn the whole slide if one local fix is enough.
