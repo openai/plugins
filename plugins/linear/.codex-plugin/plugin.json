@@ -21,6 +21,8 @@
     "defaultPrompt": [
       "Triage or update relevant issues for this task, with clear"
     ],
+    "composerIcon": "./assets/linear-icon.svg",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
