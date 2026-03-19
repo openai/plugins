@@ -28,6 +28,7 @@ Confirm the runtime exposes the Google Slides actions you need before editing:
 If the user wants to bring in a local `.pptx`, also confirm `import_presentation`.
 
 If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, emulate the loop with `get_slide_thumbnail` plus direct Google Slides edits.
+Use the connector actions directly in the conversation workflow. Do not open a shell, `js_repl`, or local script just to inspect connector output shapes for this skill.
 
 ## Default Approach
 
@@ -48,6 +49,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Treat the thumbnail as the source of truth for visual quality. Raw JSON alone is not enough.
 - When the tool returns a thumbnail artifact, image content, or image-bearing URL/data wrapper, treat that as analyzable visual input for this workflow and inspect it directly.
 - If `get_slide_thumbnail` succeeds, treat that as the visual verification path for this workflow even if the transcript view looks metadata-shaped. Do not abandon the thumbnail loop just because the runtime shows a thumbnail artifact, URL, or metadata wrapper instead of inline pixels in the message body.
+- Do not run shell commands, `js_repl`, or ad hoc parsing code to "decode" the thumbnail response for this skill. Use the connector result directly.
 - Do not switch to deck export, PDF rendering, or other fallback rendering paths when the thumbnail tool already succeeded. Only use a fallback path if the thumbnail action itself failed or is unavailable.
 
 4. Diagnose concrete visual problems.
@@ -169,6 +171,7 @@ Core rule:
 - Keep the issue list concrete and visual, for example `text overflow in right card`, `image misaligned with left column`, or `middle bullet line is bolded inconsistently`.
 - Do not open with a broad deck-wide cluster like `slides 3, 4, 7, 8, and 10 all have...` unless the user asked for an audit instead of an iteration workflow.
 - Do not narrate a future-slide plan like `I am fetching the rest of the deck now` before finishing the current slide.
+- Do not narrate internal runtime debugging like `I am probing the connector output shape` or `I am writing the export locally to inspect it` during this workflow.
 
 ## Editing Guidance For Raw Slides Requests
 
@@ -184,6 +187,7 @@ The Slides connector exposes raw `batch_update` requests. That means:
 
 - If the thumbnail action is unavailable, say that visual verification is blocked and fall back to structural cleanup only if the user still wants that.
 - If the thumbnail action succeeded, do not claim that visual verification is blocked just because the response was wrapped as metadata or a separate artifact in the runtime transcript.
+- If the thumbnail action succeeded, do not switch into shell/REPL inspection, local export inspection, or connector-shape debugging. Stay in the slide-local thumbnail loop.
 - If the runtime lacks the Slides edit action, stop and say the deck can be diagnosed but not corrected from Codex.
 - If repeated passes do not improve the slide, stop and explain what remains subjective or structurally constrained.
 
