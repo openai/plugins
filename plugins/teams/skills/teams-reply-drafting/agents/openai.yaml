@@ -1,0 +1,7 @@
+interface:
+  display_name: "Teams Reply Drafting"
+  short_description: "Draft Teams replies from context"
+  icon_small: "../teams/assets/teams-small.svg"
+  icon_large: "../teams/assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams-reply-drafting to identify Teams messages that likely need a response and draft reply text grounded in the conversation context."

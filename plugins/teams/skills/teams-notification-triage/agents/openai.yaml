@@ -1,0 +1,7 @@
+interface:
+  display_name: "Teams Notification Triage"
+  short_description: "Triage Teams attention signals"
+  icon_small: "../teams/assets/teams-small.svg"
+  icon_large: "../teams/assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams-notification-triage to triage recent Teams activity into what likely needs my attention, separating unread chats from recent channel or mention-driven follow-ups."

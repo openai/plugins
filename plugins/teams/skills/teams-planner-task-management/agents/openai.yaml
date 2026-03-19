@@ -1,0 +1,7 @@
+interface:
+  display_name: "Teams Planner Task Management"
+  short_description: "Manage Teams Planner tasks"
+  icon_small: "../teams/assets/teams-small.svg"
+  icon_large: "../teams/assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams-planner-task-management to review Planner tasks in Teams, create tasks from follow-ups, or update or delete an existing Planner task safely."

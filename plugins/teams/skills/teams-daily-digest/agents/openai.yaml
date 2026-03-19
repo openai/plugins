@@ -1,0 +1,7 @@
+interface:
+  display_name: "Teams Daily Digest"
+  short_description: "Summarize today's Teams activity"
+  icon_small: "../teams/assets/teams-small.svg"
+  icon_large: "../teams/assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams-daily-digest to summarize today's important Teams activity from selected chats, channels, or teams."

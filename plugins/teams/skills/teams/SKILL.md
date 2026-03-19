@@ -1,51 +1,74 @@
 ---
 name: teams
-description: Summarize Microsoft Teams conversations and prepare follow-ups. Use when the user asks for chat, channel, or meeting summaries, owner and action extraction, or conversation-scoped draft replies or posts.
+description: Summarize Microsoft Teams conversations, triage unread or recent activity, draft follow-ups, and manage Planner tasks through connected Teams data. Use when the user wants to review chats or channels, identify owners and next steps, prepare a safe reply or post, or turn follow-ups into Teams-native tasks.
 ---
 
 # Teams
 
 ## Overview
 
-Use this skill to turn Teams chats, channels, and meeting discussions into concise summaries and safe follow-ups. Read the full conversation context first, keep participant and thread intent intact, and separate drafting from posting.
+Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, or manage Planner follow-ups. Keep answers grounded in exact Teams context, preserve thread intent, and separate drafting from posting unless the user explicitly wants a send.
 
-## Preferred Deliverables
+## Related Skills
 
-- Thread briefs that capture the latest status, decisions, owners, and next actions.
-- Channel-ready or meeting-ready drafts that are concise and easy to post after review.
-- Follow-up summaries that translate meeting discussion into clear owners, due dates, and open questions.
+| Workflow | Skill |
+| --- | --- |
+| Compose, route, draft, or send Teams messages | [../teams-messages/SKILL.md](../teams-messages/SKILL.md) |
+| Summarize one Teams channel or scoped conversation | [../teams-channel-summarization/SKILL.md](../teams-channel-summarization/SKILL.md) |
+| Build a daily digest across selected chats or channels | [../teams-daily-digest/SKILL.md](../teams-daily-digest/SKILL.md) |
+| Find messages that likely need a response and draft replies | [../teams-reply-drafting/SKILL.md](../teams-reply-drafting/SKILL.md) |
+| Triage what likely needs the user's attention | [../teams-notification-triage/SKILL.md](../teams-notification-triage/SKILL.md) |
+| Review, create, update, and delete Teams Planner tasks | [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md) |
 
-## Workflow
+## Support Checks
 
-1. Read the chat, channel, or meeting thread before drafting. Capture the participants, latest replies, linked files, unresolved questions, and any explicit asks.
-2. Summarize before writing when the conversation is long or the user has not yet decided what response they want.
-3. Keep the draft grounded in Teams context. Preserve the intended audience, thread continuity, and any important mentions or file references.
-4. If the user asks for a reply or follow-up but does not explicitly ask to send or post it, default to a draft.
-5. Call out if the requested action belongs in a private chat, a channel reply, or a meeting follow-up so the destination stays clear.
-6. Only post, send, or otherwise change Teams state when the user has explicitly asked for that action.
+- Confirm the requested Teams action is supported before collecting extra details. If the connector cannot do it, say so immediately and offer the closest supported path.
+- Verify write capability before concluding a Teams action is unsupported. Distinguish between:
+  - the needed tool not being surfaced in-session
+  - the connector truly lacking the capability
+  - the destination or Teams product rules blocking the action
+- For any write request involving DMs, group chats, channels, or replies, resolve the exact destination first.
+
+## Core Truths
+
+- Unread state exists for chats only. The connector does not expose unread markers for specific channel messages.
+- Mention metadata is reliable on chat and channel message-history reads. Do not rely on Teams search hits to detect mentions.
+- Teams does not expose native persisted drafts here. "Draft" means return draft text unless the user explicitly asks to send or post.
+- There is no Slack-canvas analogue in this Teams connector. If the user wants something posted in Teams, return or send message text rather than inventing a document workflow.
+- Real outbound Teams mentions require structured mention inputs with exact Entra user IDs. Do not rely on plain `@name` text.
+- For unbounded channel summaries, start with `list_channel_messages(top=50)`. Do not probe larger values by default because the underlying endpoint rejects oversized reads.
+
+## DM Routing
+
+- When the user refers to an existing DM or group chat, prefer resolving that chat instead of creating a new one.
+- For a new direct chat, resolve the target user first and use `create_chat(chat_type='oneOnOne')` with exactly one recipient user ID.
+- If one-on-one chat creation fails with a caller-membership or contract mismatch, use the known-good fallback path: create a two-person `group` chat containing the caller and the intended recipient, then send the message there.
+- For note-to-self requests, prefer an obvious existing self-chat target if one is available. Otherwise use the supported one-member `group` chat fallback.
 
 ## Write Safety
 
-- Preserve participant names, meeting details, linked files, dates, and action items from the source thread unless the user asks to change them.
-- Treat channel-wide announcements, broad mentions, and edits to a shared meeting thread as high-impact actions that deserve an extra confirmation step.
-- If multiple chats, channels, or similarly named meetings are in scope, identify the intended conversation before drafting.
-- If a draft depends on missing facts, provide the draft plus a short list of the unresolved details.
+- Preserve participant names, dates, links, files, decisions, and action items from the source conversation unless the user asks to change them.
+- Treat channel-wide announcements, broad mentions, and shared-thread edits as high-impact. Call them out before posting.
+- If multiple chats, channels, or similarly named meetings are in scope, identify the intended destination before drafting or posting.
+- For answer-in-thread requests, draft first unless the user explicitly says to post, send, or reply now.
+- Use canonical message paths for replies whenever possible. Do not treat free-form quoted text as a stable reply target.
+- If outside context is needed to answer well, use the narrowest extra Teams context that materially changes the answer.
+- If a write request fails after capability verification, say whether the blocker is connector availability, target resolution, or a Teams product rule such as chat membership requirements.
 
 ## Output Conventions
 
+- Distinguish clearly between a private summary for the user and a message intended for Teams.
 - Lead summaries with the latest status, then list decisions, owners, blockers, and next steps.
 - Keep post-ready drafts concise, with one clear objective and a concrete ask when needed.
-- When summarizing meetings, group outcomes by decision, owner, and follow-up rather than replaying the conversation verbatim.
-- Distinguish clearly between a private summary for the user and a message intended for Teams.
-- When helpful, format follow-ups as a short list of action items with owners and due dates.
+- When some channel activity is unreadable or artifact-only, say so explicitly instead of presenting it as confirmed human conversation.
 
 ## Example Requests
 
 - "Summarize the latest Teams thread with design and tell me what follow-ups came out of it."
-- "Draft a short channel reply that confirms the rollout plan and asks for final QA sign-off."
-- "Turn this meeting chat into action items with owners and dates."
-- "Review the release thread in Teams and draft the follow-up I should send to the project channel."
+- "Check what likely needs my attention in Teams and separate unread chats from recent channel activity."
+- "Draft a short Teams reply that confirms the rollout plan and asks for final QA sign-off."
+- "Turn this Teams meeting follow-up list into Planner tasks."
 
 ## Light Fallback
 
-If Teams data is missing or incomplete, say that Microsoft Teams access may be unavailable or pointed at the wrong chat or channel, then ask the user to reconnect or clarify the intended conversation.
+If Teams data is missing or incomplete, say that Teams access may be unavailable, pointed at the wrong destination, or too broad to answer reliably, then ask the user to reconnect or narrow the scope.
