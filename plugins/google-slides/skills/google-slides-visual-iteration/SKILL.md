@@ -48,6 +48,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 4. Diagnose concrete visual problems.
 - Before editing a slide, list the specific visible issues back to the user for that slide.
 - Do not keep the diagnosis implicit. The user should be able to see what you think is wrong before the first `batch_update` pass.
+- Limit the issue list to the 2-4 most important issues on that slide for the current pass.
 - Look for text too close to edges or neighboring elements.
 - Look for text overflow, clipping, or density that makes the slide feel compressed.
 - Look for overlapping text boxes, shapes, charts, and images.
@@ -116,6 +117,7 @@ If the user asks to improve the whole presentation:
 
 1. Read the presentation first and make a slide inventory.
 - Note the title slide, section dividers, dense slides, image-heavy slides, and obvious outliers.
+- Do not present one giant deck-wide issue dump before editing. The working unit is still one slide at a time.
 
 2. Prioritize the slide order.
 - Start with slides that have overlap, clipping, unreadable density, or broken crops.
@@ -123,7 +125,9 @@ If the user asks to improve the whole presentation:
 
 3. Finish each slide before moving on.
 - For each target slide, run the full thumbnail -> diagnose -> batch_update -> re-thumbnail loop.
-- Start each slide with an explicit issue list and end each pass with a fixed-vs-remaining issue summary.
+- Start each slide with an explicit list of the 2-4 key issues on that slide only.
+- Fix that slide before moving to the next one. Do not diagnose the whole rest of the deck in detail while the current slide is still unresolved.
+- End each pass with a fixed-vs-remaining issue summary for that slide only.
 - Do 2-4 verified passes on that slide as needed before advancing to the next one.
 - If the same formatting defect keeps recurring because of shared structure, escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of hand-patching every slide forever.
 
@@ -137,8 +141,10 @@ If the user asks to improve the whole presentation:
 ## Output Conventions
 
 - Before the first edit pass on a slide, show a short issue list for that slide so the user can see what will be fixed.
+- Keep deck-wide work slide-scoped in the narration: talk about the current slide's issues, fixes, and remaining defects before moving on to another slide.
 - After each pass, separate `fixed`, `remaining`, and `new regressions` clearly instead of giving a vague progress note.
 - Keep the issue list concrete and visual, for example `text overflow in right card`, `image misaligned with left column`, or `middle bullet line is bolded inconsistently`.
+- Do not open with a broad deck-wide cluster like `slides 3, 4, 7, 8, and 10 all have...` unless the user asked for an audit instead of an iteration workflow.
 
 ## Editing Guidance For Raw Slides Requests
 
