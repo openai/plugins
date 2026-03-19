@@ -1,13 +1,21 @@
 ---
 name: google-slides
-description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, update slide text, formatting, or layout, or route a Slides task to a more specific workflow.
+description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
 ---
 
 # Google Slides
 
 ## Overview
 
-Use this skill as the default entrypoint for Google Slides work. Stay here for deck search, summaries, light content edits, isolated slide formatting fixes, and new presentation creation. Route to a narrower sibling skill only when the task is specifically import, repeated visual cleanup, structural repair, or template migration.
+Use this skill as the default entrypoint for Google Slides work. Stay here for deck search, summaries, general content edits, imports, and new presentation creation. If the user primarily wants to make an existing deck look better by fixing formatting, overflow, spacing, alignment, or visual polish, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
+Use this base skill when the request spans multiple Google Slides workflows or when no more focused Google Slides skill is a better fit.
+
+## Specialized Skills
+
+- For importing a local presentation file into native Google Slides first, prefer [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
+- For visual cleanup of an existing deck, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
+- For repairing broken repeated layout structure inside a deck, prefer [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md).
+- For moving content onto a company or team template deck, prefer [google-slides-template-migration](../google-slides-template-migration/SKILL.md).
 
 ## Required Tooling
 
@@ -51,7 +59,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 4. Route only when the job is narrower than general Slides work.
 - Stay in this skill for deck summaries, slide-by-slide reviews, new presentation creation, small content edits, and isolated formatting fixes on specific slides.
 - Use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md) when the source is a local presentation file.
-- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) when formatting cleanup becomes a dedicated slide-by-slide workflow, or when spacing, overlap, alignment, cropping, density, or other layout cleanup needs repeated thumbnail-based passes.
+- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) when the user asks to fix a slide visually, clean up formatting, make a deck look better, or correct spacing, overlap, alignment, cropping, density, overflow, or other layout cleanup where the slide image matters.
 - Use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when the repeated layout structure is broken.
 - Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when content should move onto a company or team template deck.
 

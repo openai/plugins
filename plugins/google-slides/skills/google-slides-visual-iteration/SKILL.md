@@ -1,6 +1,6 @@
 ---
 name: google-slides-visual-iteration
-description: Iteratively inspect and polish connected Google Slides presentations in Codex using slide thumbnails plus raw Slides edits. Use when a user asks to fix per-slide formatting, spacing, alignment, overlap, crowding, hierarchy, or deck-wide visual consistency in Google Slides, especially when the work should follow a thumbnail -> diagnose -> batch_update -> re-thumbnail verification loop.
+description: Iteratively inspect and polish existing connected Google Slides presentations in Codex using slide thumbnails plus raw Slides edits. Use when a user asks to fix a slide visually, clean up formatting, improve slide quality, make a deck look better, fix alignment, spacing, overlap, overflow, crowding, awkward whitespace, or deck-wide visual consistency in an existing Google Slides deck or shared Slides link, especially when the work should follow a thumbnail -> diagnose -> batch_update -> re-thumbnail verification loop.
 ---
 
 # Google Slides Visual Iteration
@@ -9,6 +9,13 @@ Use this skill for existing or newly imported Google Slides decks when the user 
 
 Prefer the connected Google Slides workflow over generic slide-generation skills when the task is about improving a real Slides deck.
 Treat this as the focused formatting workflow: work one slide at a time, and complete the thumbnail -> diagnose -> batch_update -> re-thumbnail loop before moving to the next slide.
+Prefer this skill over [google-slides](../google-slides/SKILL.md) when the request is primarily about visual polish on an existing deck rather than content generation or general deck inspection.
+
+## Use When
+
+- The user wants to improve how an existing Google Slides deck looks, not just change its copy.
+- The request includes phrases like "fix this slide," "make this deck look better," "clean up formatting," "fix overflow," "fix spacing," "fix alignment," or "visual iteration."
+- The user shares a connected Google Slides deck or link and wants edits applied directly to that deck.
 
 ## Required Tooling
 
@@ -127,3 +134,5 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - `Use $google-slides-visual-iteration to fix the alignment and overlap issues on slide 4 of this Google Slides deck.`
 - `Use $google-slides-visual-iteration to clean up this entire deck and make the slide layouts feel consistent.`
 - `Import this PPTX into Google Slides, then use $google-slides-visual-iteration to polish each slide with thumbnail-based verification.`
+- `Use $google-slides-visual-iteration to make this existing Google Slides deck look better and fix the formatting issues.`
+- `Use $google-slides-visual-iteration to clean up spacing, overflow, and alignment in this shared Google Slides link.`
