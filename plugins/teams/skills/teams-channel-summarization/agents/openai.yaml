@@ -1,0 +1,7 @@
+interface:
+  display_name: "Teams Channel Summarization"
+  short_description: "Summarize one Teams channel"
+  icon_small: "../teams/assets/teams-small.svg"
+  icon_large: "../teams/assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams-channel-summarization to review one Teams channel, use the requested window when provided and otherwise a safe recent read, then produce a concise summary or follow-up draft."
