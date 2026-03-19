@@ -39,6 +39,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 2. Read structure before editing.
 - Use `get_presentation` or `get_presentation_text` to identify slide order, titles, and object IDs.
 - Use `get_slide` on the target slide before the first write so you have the current element structure and IDs.
+- Before each additional write pass on that same slide, call `get_slide` again so the next `batch_update` uses fresh geometry and current element state rather than stale structure from the prior pass.
 
 3. Start with a thumbnail.
 - Call `get_slide_thumbnail` first.
@@ -80,10 +81,14 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - State which issues are now fixed, which issues remain, and whether the pass introduced any new regressions.
 - Confirm the targeted issue cluster is actually fixed before moving on.
 - If a fix introduced a new collision, imbalance, or cramped layout, correct that next instead of blindly continuing.
+- After each verification thumbnail, do a fresh read of the current slide before the next write pass if more edits are needed.
 
 7. Iterate a few times, then stop.
-- Run 2-4 visual passes per slide by default.
-- Stop earlier if the slide is clearly clean.
+- Run at least 2 full visual loops per slide in this skill.
+- Do not stop after a single pass just because the first verification looks acceptable.
+- The second loop must start with a fresh thumbnail review and refreshed slide structure so you can catch residual spacing, alignment, padding, and balance issues that were easy to miss in the first pass.
+- After the second verified loop, continue to a third or fourth loop only if the slide still has meaningful issues.
+- Only stop after the second loop if that fresh review finds nothing materially worth changing.
 - Stop when further edits are becoming subjective or are not improving the slide.
 - Escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when a slide still has structural layout problems after 2-4 verified passes, or when the same issue repeats across multiple slides.
 
@@ -142,7 +147,9 @@ Core rule:
 - Start each slide with an explicit list of the 2-4 key issues on that slide only.
 - Fix that slide before moving to the next one. Do not diagnose the whole rest of the deck in detail while the current slide is still unresolved.
 - End each pass with a fixed-vs-remaining issue summary for that slide only.
-- Do 2-4 verified passes on that slide as needed before advancing to the next one.
+- Do at least 2 verified loops on that slide before advancing to the next one.
+- Do not say a slide needs no second pass until you have actually completed the second fresh review loop on that slide.
+- Between loops, re-read the current slide structure so follow-up writes use fresh state rather than stale element geometry.
 - If the same formatting defect keeps recurring because of shared structure, escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of hand-patching every slide forever.
 
 4. Keep a global style memory.
@@ -158,6 +165,7 @@ Core rule:
 - In deck-wide mode, narrate progress in strict slide order, for example `slide 1`, then `slide 2`, then `slide 3`, until the last slide in scope.
 - Keep deck-wide work slide-scoped in the narration: talk about the current slide's issues, fixes, and remaining defects before moving on to another slide.
 - After each pass, separate `fixed`, `remaining`, and `new regressions` clearly instead of giving a vague progress note.
+- Do not announce `none that require a second pass` after pass 1. Complete the second slide-local loop first, then decide whether the slide is done.
 - Keep the issue list concrete and visual, for example `text overflow in right card`, `image misaligned with left column`, or `middle bullet line is bolded inconsistently`.
 - Do not open with a broad deck-wide cluster like `slides 3, 4, 7, 8, and 10 all have...` unless the user asked for an audit instead of an iteration workflow.
 - Do not narrate a future-slide plan like `I am fetching the rest of the deck now` before finishing the current slide.
