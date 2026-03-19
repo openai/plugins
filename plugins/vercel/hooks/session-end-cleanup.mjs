@@ -43,7 +43,7 @@ function parseSessionIdFromStdin() {
 }
 function main() {
   try {
-    const prefPath = join(homedir(), ".claude", "vercel-plugin-telemetry-preference");
+    const prefPath = join(homedir(), ".claude", "vercel-telemetry-preference");
     const pref = readFileSync(prefPath, "utf-8").trim();
     if (pref === "asked") {
       writeFileSync(prefPath, "disabled");
@@ -55,7 +55,7 @@ function main() {
     process.exit(0);
   }
   const tempRoot = tmpdir();
-  const prefix = `vercel-plugin-${tempSessionIdSegment(sessionId)}-`;
+  const prefix = `vercel-${tempSessionIdSegment(sessionId)}-`;
   let entries = [];
   try {
     entries = readdirSync(tempRoot).filter((name) => name.startsWith(prefix));

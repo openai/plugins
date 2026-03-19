@@ -698,7 +698,7 @@ function formatPlatformOutput(platform, additionalContext, env) {
   return Object.keys(output).length > 0 ? JSON.stringify(output) : "{}";
 }
 function buildBanner(injectedSkills, toolName, toolTarget, matchReasons) {
-  const lines = ["[vercel-plugin] Best practices auto-suggested based on detected patterns:"];
+  const lines = ["[vercel] Best practices auto-suggested based on detected patterns:"];
   for (const skill of injectedSkills) {
     const reason = matchReasons?.[skill];
     if (reason) {

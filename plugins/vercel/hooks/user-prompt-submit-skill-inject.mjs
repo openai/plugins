@@ -510,7 +510,7 @@ function formatOutput(parts, matchedSkills, injectedSkills, summaryOnly, dropped
     droppedByBudget
   };
   const metaComment = `<!-- skillInjection: ${JSON.stringify(skillInjection)} -->`;
-  const bannerLines = ["[vercel-plugin] Best practices auto-suggested based on prompt analysis:"];
+  const bannerLines = ["[vercel] Best practices auto-suggested based on prompt analysis:"];
   for (const skill of injectedSkills) {
     const reason = promptMatchReasons?.[skill];
     if (reason) {

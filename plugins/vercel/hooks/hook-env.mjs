@@ -30,7 +30,7 @@ function resolveAuditLogPath(hookInputCwd) {
     return resolve(projectRoot, configuredPath);
   }
   const projectSlug = projectRoot.replaceAll("/", "-");
-  return join(homedir(), ".claude", "projects", projectSlug, "vercel-plugin", "skill-injections.jsonl");
+  return join(homedir(), ".claude", "projects", projectSlug, "vercel", "skill-injections.jsonl");
 }
 function appendAuditLog(record, hookInputCwd) {
   const auditLogPath = resolveAuditLogPath(hookInputCwd);
@@ -66,7 +66,7 @@ function dedupScopeIdSegment(scopeId) {
 function resolveDedupTempPath(sessionId, basename, scopeId) {
   const tempRoot = resolve(tmpdir());
   const scopeSegment = scopeId ? `-${dedupScopeIdSegment(scopeId)}` : "";
-  const candidate = resolve(join(tempRoot, `vercel-plugin-${dedupSessionIdSegment(sessionId)}${scopeSegment}-${basename}`));
+  const candidate = resolve(join(tempRoot, `vercel-${dedupSessionIdSegment(sessionId)}${scopeSegment}-${basename}`));
   const tempPrefix = tempRoot.endsWith(sep) ? tempRoot : `${tempRoot}${sep}`;
   if (!candidate.startsWith(tempPrefix)) {
     throw new Error(`dedup temp path escaped tmpdir: tempRoot=${tempRoot} candidate=${candidate}`);
@@ -132,7 +132,7 @@ function removeSessionClaimDir(sessionId, kind, scopeId) {
 function removeAllSessionDedupArtifacts(sessionId) {
   const result = { removedFiles: 0, removedDirs: 0 };
   const tempRoot = resolve(tmpdir());
-  const prefix = `vercel-plugin-${dedupSessionIdSegment(sessionId)}-`;
+  const prefix = `vercel-${dedupSessionIdSegment(sessionId)}-`;
   let entries;
   try {
     entries = readdirSync(tempRoot).filter(

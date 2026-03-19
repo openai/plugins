@@ -472,7 +472,7 @@ async function main() {
       envVarCount: Object.keys(envVars).length
     });
   }
-  const telemetryPrefPath = join(homedir(), ".claude", "vercel-plugin-telemetry-preference");
+  const telemetryPrefPath = join(homedir(), ".claude", "vercel-telemetry-preference");
   let telemetryPref = null;
   try {
     telemetryPref = readFileSync(telemetryPrefPath, "utf-8").trim();

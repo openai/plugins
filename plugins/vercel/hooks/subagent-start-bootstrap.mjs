@@ -130,14 +130,14 @@ function profileLine(agentType, likelySkills) {
 }
 function buildMinimalContext(agentType, likelySkills) {
   const parts = [];
-  parts.push(`<!-- vercel-plugin:subagent-bootstrap agent_type="${agentType}" budget="minimal" -->`);
+  parts.push(`<!-- vercel:subagent-bootstrap agent_type="${agentType}" budget="minimal" -->`);
   parts.push(profileLine(agentType, likelySkills));
-  parts.push("<!-- /vercel-plugin:subagent-bootstrap -->");
+  parts.push("<!-- /vercel:subagent-bootstrap -->");
   return parts.join("\n");
 }
 function buildLightContext(agentType, likelySkills, budgetBytes) {
   const parts = [];
-  parts.push(`<!-- vercel-plugin:subagent-bootstrap agent_type="${agentType}" budget="light" -->`);
+  parts.push(`<!-- vercel:subagent-bootstrap agent_type="${agentType}" budget="light" -->`);
   parts.push(profileLine(agentType, likelySkills));
   let usedBytes = Buffer.byteLength(parts.join("\n"), "utf8");
   const loaded = loadSkills(PLUGIN_ROOT, log);
@@ -164,12 +164,12 @@ function buildLightContext(agentType, likelySkills, budgetBytes) {
     parts.push(constraint);
     usedBytes += lineBytes + 1;
   }
-  parts.push("<!-- /vercel-plugin:subagent-bootstrap -->");
+  parts.push("<!-- /vercel:subagent-bootstrap -->");
   return parts.join("\n");
 }
 function buildStandardContext(agentType, likelySkills, budgetBytes) {
   const parts = [];
-  parts.push(`<!-- vercel-plugin:subagent-bootstrap agent_type="${agentType}" budget="standard" -->`);
+  parts.push(`<!-- vercel:subagent-bootstrap agent_type="${agentType}" budget="standard" -->`);
   parts.push(profileLine(agentType, likelySkills));
   let usedBytes = Buffer.byteLength(parts.join("\n"), "utf8");
   const loaded = loadSkills(PLUGIN_ROOT, log);
@@ -201,7 +201,7 @@ ${summary}
       }
     }
   }
-  parts.push("<!-- /vercel-plugin:subagent-bootstrap -->");
+  parts.push("<!-- /vercel:subagent-bootstrap -->");
   return parts.join("\n");
 }
 function main() {

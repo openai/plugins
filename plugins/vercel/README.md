@@ -1,6 +1,6 @@
-# vercel-plugin
+# vercel
 
-This directory packages the upstream [vercel/vercel-plugin](https://github.com/vercel/vercel-plugin) runtime content for the `openai/plugins` marketplace, with the Codex-specific manifest and hook changes needed for local loading.
+This directory packages the upstream [vercel/vercel-plugin](https://github.com/vercel/vercel-plugin) runtime content as the local `vercel` plugin for the `openai/plugins` marketplace, with the Codex-specific manifest and hook changes needed for local loading.
 
 ## What is included
 
@@ -21,7 +21,7 @@ This directory packages the upstream [vercel/vercel-plugin](https://github.com/v
 
 - Repo: [vercel/vercel-plugin](https://github.com/vercel/vercel-plugin)
 - Imported version: `0.21.0`
-- Local plugin id: `vercel-plugin`
+- Local plugin id: `vercel`
 
 ## Components
 
@@ -84,11 +84,11 @@ A text-form relational graph covering:
 
 | Command | Purpose |
 |---------|---------|
-| `/vercel-plugin:bootstrap` | Bootstrap project — linking, env provisioning, db setup |
-| `/vercel-plugin:deploy` | Deploy to Vercel (preview or production) |
-| `/vercel-plugin:env` | Manage environment variables |
-| `/vercel-plugin:status` | Project status overview |
-| `/vercel-plugin:marketplace` | Discover and install marketplace integrations |
+| `/vercel:bootstrap` | Bootstrap project — linking, env provisioning, db setup |
+| `/vercel:deploy` | Deploy to Vercel (preview or production) |
+| `/vercel:env` | Manage environment variables |
+| `/vercel:status` | Project status overview |
+| `/vercel:marketplace` | Discover and install marketplace integrations |
 
 ### Hooks
 
@@ -104,16 +104,16 @@ Lifecycle hooks that run automatically during your session:
 After installing, skills and context are injected automatically. You can also invoke skills directly via slash commands:
 
 ```
-/vercel-plugin:nextjs
-/vercel-plugin:ai-sdk
-/vercel-plugin:deploy prod
+/vercel:nextjs
+/vercel:ai-sdk
+/vercel:deploy prod
 ```
 
 ## Architecture
 
 ```
-vercel-plugin/
-├── .plugin/plugin.json              # Plugin manifest
+vercel/
+├── .codex-plugin/plugin.json        # Plugin manifest
 ├── vercel.md                        # Ecosystem graph + conventions (injected via SessionStart hook)
 ├── skills/                          # 34 deep-dive skills
 │   ├── agent-browser/

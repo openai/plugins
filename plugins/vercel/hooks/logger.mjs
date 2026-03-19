@@ -43,7 +43,7 @@ function resolveLogLevel() {
   }
   if (explicit) {
     console.error(
-      `[vercel-plugin] Unknown VERCEL_PLUGIN_LOG_LEVEL="${explicit}". Valid levels: ${LEVELS.join(", ")}. Falling back to "off".`
+      `[vercel] Unknown VERCEL_PLUGIN_LOG_LEVEL="${explicit}". Valid levels: ${LEVELS.join(", ")}. Falling back to "off".`
     );
   }
   if (process.env.VERCEL_PLUGIN_DEBUG === "1" || process.env.VERCEL_PLUGIN_HOOK_DEBUG === "1") {

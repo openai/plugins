@@ -37,7 +37,7 @@ async function send(sessionId, events) {
 function isTelemetryEnabled() {
   if (process.env.VERCEL_PLUGIN_TELEMETRY === "on") return true;
   try {
-    const prefPath = join(homedir(), ".claude", "vercel-plugin-telemetry-preference");
+    const prefPath = join(homedir(), ".claude", "vercel-telemetry-preference");
     const pref = readFileSync(prefPath, "utf-8").trim();
     return pref === "enabled";
   } catch {

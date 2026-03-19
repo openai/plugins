@@ -41,14 +41,14 @@ function resolveTmpRoot() {
   return resolve(tmpdir());
 }
 function pendingLaunchPath(sessionId) {
-  return join(resolveTmpRoot(), `vercel-plugin-${sessionId}-pending-launches.jsonl`);
+  return join(resolveTmpRoot(), `vercel-${sessionId}-pending-launches.jsonl`);
 }
 function pendingLaunchLockPath(sessionId) {
   return `${pendingLaunchPath(sessionId)}.lock`;
 }
 function agentStatePath(sessionId, agentId) {
   const agentHash = createHash("sha256").update(agentId).digest("hex");
-  return join(resolveTmpRoot(), `vercel-plugin-${sessionId}-agent-${agentHash}.json`);
+  return join(resolveTmpRoot(), `vercel-${sessionId}-agent-${agentHash}.json`);
 }
 function maybeClearStaleLock(lockPath, context) {
   try {

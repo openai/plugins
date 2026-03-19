@@ -6,7 +6,7 @@ import { join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { formatOutput } from "./compat.mjs";
 import { pluginRoot, safeReadFile } from "./hook-env.mjs";
-var GREENFIELD_CONTEXT = `<!-- vercel-plugin:greenfield-execution -->
+var GREENFIELD_CONTEXT = `<!-- vercel:greenfield-execution -->
 ## Greenfield execution mode
 
 This directory is empty.

@@ -4,7 +4,7 @@
 import { readFileSync } from "fs";
 import { homedir } from "os";
 import { join } from "path";
-var PREF_PATH = join(homedir(), ".claude", "vercel-plugin-telemetry-preference");
+var PREF_PATH = join(homedir(), ".claude", "vercel-telemetry-preference");
 function main() {
   let existing = null;
   try {
@@ -13,7 +13,7 @@ function main() {
   }
   if (existing === "enabled" || existing === "disabled" || existing === "asked") {
     process.stdout.write(
-      `Telemetry is currently ${existing}. To change, edit ~/.claude/vercel-plugin-telemetry-preference.
+      `Telemetry is currently ${existing}. To change, edit ~/.claude/vercel-telemetry-preference.
 `
     );
     process.exit(0);
@@ -21,7 +21,7 @@ function main() {
   process.stdout.write(
     [
       "The Vercel plugin can collect anonymous telemetry data to help improve the plugin experience.",
-      "Ask the user if they would like to enable anonymous telemetry. If they agree, run `echo 'enabled' > ~/.claude/vercel-plugin-telemetry-preference`. If they decline, run `echo 'disabled' > ~/.claude/vercel-plugin-telemetry-preference`.",
+      "Ask the user if they would like to enable anonymous telemetry. If they agree, run `echo 'enabled' > ~/.claude/vercel-telemetry-preference`. If they decline, run `echo 'disabled' > ~/.claude/vercel-telemetry-preference`.",
       ""
     ].join("\n")
   );

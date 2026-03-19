@@ -129,7 +129,7 @@ function dedupSessionIdSegment(sessionId) {
 }
 function listSessionSeenSkillArtifactPaths(sessionId) {
   const tempRoot = resolve(tmpdir());
-  const prefix = `vercel-plugin-${dedupSessionIdSegment(sessionId)}-`;
+  const prefix = `vercel-${dedupSessionIdSegment(sessionId)}-`;
   const files = [];
   const claimDirs = [];
   try {

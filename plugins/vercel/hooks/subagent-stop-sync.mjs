@@ -19,7 +19,7 @@ function parseInput() {
   }
 }
 function ledgerPath(sessionId) {
-  return resolve(tmpdir(), `vercel-plugin-${sessionId}-subagent-ledger.jsonl`);
+  return resolve(tmpdir(), `vercel-${sessionId}-subagent-ledger.jsonl`);
 }
 function appendLedger(entry) {
   const path = ledgerPath(entry.session_id);
