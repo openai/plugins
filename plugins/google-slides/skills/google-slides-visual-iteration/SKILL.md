@@ -46,8 +46,10 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Fetch the thumbnail for the current slide only. Do not prefetch thumbnails for the rest of the deck before starting the current slide's edit loop.
 - Use `LARGE` when spacing, overlap, cropping, or dense layouts are the concern.
 - Treat the thumbnail as the source of truth for visual quality. Raw JSON alone is not enough.
-- When the tool returns a thumbnail artifact, image content, or image-bearing URL/data wrapper, treat that as analyzable visual input for this workflow and inspect it directly.
+- When the tool returns a thumbnail artifact, image content, base64 image data, or an image-bearing URL/data wrapper, treat that as analyzable visual input for this workflow and inspect it directly.
+- If the thumbnail payload includes image bytes, a data URL, or base64 image content, ingest it directly as if the user had uploaded a screenshot of the slide.
 - If `get_slide_thumbnail` succeeds, treat that as the visual verification path for this workflow even if the transcript view looks metadata-shaped. Do not abandon the thumbnail loop just because the runtime shows a thumbnail artifact, URL, or metadata wrapper instead of inline pixels in the message body.
+- Do not route thumbnail inspection through Atlas or another separate visual-analysis path when the connector already returned analyzable image content for the current slide.
 - Do not switch to deck export, PDF rendering, or other fallback rendering paths when the thumbnail tool already succeeded. Only use a fallback path if the thumbnail action itself failed or is unavailable.
 
 4. Diagnose concrete visual problems.

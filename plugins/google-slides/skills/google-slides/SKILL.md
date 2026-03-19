@@ -1,6 +1,6 @@
 ---
 name: google-slides
-description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
+description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
 ---
 
 # Google Slides
@@ -9,6 +9,7 @@ description: Inspect, create, import, summarize, and update Google Slides presen
 
 Use this skill as the default entrypoint for Google Slides work. Stay here for deck search, summaries, general content edits, imports, and new presentation creation. If the user primarily wants to make an existing deck look better by fixing formatting, overflow, spacing, alignment, or visual polish, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
 Use this base skill when the request spans multiple Google Slides workflows or when no more focused Google Slides skill is a better fit.
+For slide-reading and summary tasks, combine structural deck reads with slide thumbnails when the slide contains charts, graphs, diagrams, screenshots, or other content that cannot be understood from text alone.
 
 ## Specialized Skills
 
@@ -37,6 +38,9 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
+- For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
+- Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
+- If the thumbnail response includes image content, base64 image data, or an image-bearing URL/data wrapper, ingest that directly as slide image input rather than routing through Atlas or another separate visual-analysis path.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
 
 3. Apply default creation polish when making a new presentation.
@@ -68,6 +72,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Prefer small `batch_update` requests over large speculative batches.
 - Send `batch_update` requests as structured request objects in the expected tool shape, not as JSON strings or stringified arrays.
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
+- If the task is to summarize, interpret, or sanity-check a visual slide, fetch a thumbnail and use it as evidence for charts, graphs, screenshots, diagrams, and other non-textual content rather than summarizing only the extracted text.
 - When fixing slide formatting, use a tight loop: take a thumbnail, identify visible spacing/alignment/cropping/regression issues, send a focused `batch_update`, then take another thumbnail to verify the result.
 - Run 2-4 verified formatting passes when needed. Stop earlier once the slide is clearly clean, and switch to [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) if the job turns into slide-by-slide formatting across a larger set of slides.
 - After creating a new slide or applying layout-heavy changes, immediately verify that no text, shape, image, or color band extends beyond the slide boundary. If the editor would require horizontal or vertical scrolling to see the whole slide, or if the lowest text sits in the bottom safety margin, treat that as a failure and fix it before moving on.
@@ -86,6 +91,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 ## Output
 
 - Reference slide numbers and titles when summarizing or planning edits.
+- For slide summaries that involve charts, graphs, or other visuals, distinguish clearly between what comes from extracted text and what comes from thumbnail-based visual understanding.
 - Distinguish clearly between a proposed plan and changes that were actually applied.
 - Say which presentation and slides were read or changed.
 - Call out any remaining issues that need a narrower workflow or human design judgment.
@@ -93,6 +99,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 ## Example Requests
 
 - "Find the Q2 board deck and summarize the storyline slide by slide."
+- "Read slide 8 and summarize both the chart and the surrounding text."
 - "Create a new Google Slides presentation from this outline."
 - "Import this PPTX into Google Slides and then clean up the layout."
 - "Update slide 6 so the title and chart description match the latest numbers."
