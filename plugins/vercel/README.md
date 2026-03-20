@@ -1,11 +1,10 @@
 # vercel
 
-This directory packages the upstream [vercel/vercel-plugin](https://github.com/vercel/vercel-plugin) runtime content as the local `vercel` plugin for the `openai/plugins` marketplace, with the Codex-specific manifest and hook changes needed for local loading.
+This directory packages the upstream [vercel/vercel-plugin](https://github.com/vercel/vercel-plugin) runtime content as the local `vercel` plugin for the `openai/plugins` marketplace, with the Codex-specific manifest and asset adjustments needed for local loading.
 
 ## What is included
 
 - `skills/` from the upstream plugin
-- Codex-compatible `hooks/hooks.json` plus the upstream runtime `.mjs` hook files
 - `.mcp.json` for the official Vercel MCP server
 - `vercel.md` and plugin assets
 - Upstream `agents/` and `commands/` markdown for source parity
@@ -13,9 +12,8 @@ This directory packages the upstream [vercel/vercel-plugin](https://github.com/v
 ## Codex compatibility notes
 
 - The upstream repo ships `.plugin/plugin.json`; this import uses `.codex-plugin/plugin.json`.
-- Hook commands are rewritten to local `./hooks/...` paths so Codex can execute them correctly.
-- Empty `UserPromptSubmit.matcher` values are normalized to `.*`, which Codex accepts.
-- The bundled `agents/` and `commands/` content is included from upstream, but the smoke test for this repo focuses on plugin loading, skill discovery, hooks, and MCP registration.
+- Hooks are intentionally omitted until Codex supports this bundle surface.
+- The bundled `agents/` and `commands/` content is included from upstream, but the smoke test for this repo focuses on plugin loading, skill discovery, and MCP registration.
 
 ## Upstream source
 
@@ -90,18 +88,9 @@ A text-form relational graph covering:
 | `/vercel:status` | Project status overview |
 | `/vercel:marketplace` | Discover and install marketplace integrations |
 
-### Hooks
-
-Lifecycle hooks that run automatically during your session:
-
-- **Session start context injection** — Injects `vercel.md` (ecosystem graph + conventions) into every session
-- **Session start repo profiler** — Scans config files and dependencies to pre-prime skill matching for faster first tool call
-- **Pre-tool-use skill injection** — Matches tool calls to skills and injects relevant guidance with dedup
-- **Pre-write/edit validation** — Catches deprecated patterns before they're written (sunset packages, old API names, renamed files)
-
 ## Usage
 
-After installing, skills and context are injected automatically. You can also invoke skills directly via slash commands:
+After installing, the plugin exposes Vercel skills and the Vercel MCP server. You can also invoke skills directly via slash commands:
 
 ```
 /vercel:nextjs
@@ -114,7 +103,7 @@ After installing, skills and context are injected automatically. You can also in
 ```
 vercel/
 ├── .codex-plugin/plugin.json        # Plugin manifest
-├── vercel.md                        # Ecosystem graph + conventions (injected via SessionStart hook)
+├── vercel.md                        # Ecosystem graph + conventions
 ├── skills/                          # 34 deep-dive skills
 │   ├── agent-browser/
 │   ├── ai-elements/
@@ -151,9 +140,7 @@ vercel/
 │   ├── vercel-storage/
 │   └── workflow/
 ├── agents/                          # 3 specialist agents
-├── commands/                        # 5 slash commands
-└── hooks/                           # SessionStart injection, repo profiler, skill injection, deprecation guard
-    └── src/                         # TypeScript source (compiled to .mjs via tsup)
+└── commands/                        # 5 slash commands
 ```
 
 ## Ecosystem Coverage (March 2026)
