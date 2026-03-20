@@ -41,11 +41,11 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - For topic asks such as "find the slide that explains churn," do not rely on exact keyword hits alone. Use deck structure, section headers, overview slides, and nearby slide numbers to identify the full relevant section.
 - When a topic appears as a contiguous section, inspect that full section or a tight local window around the section entry before answering. Do not stop after the first matching slide.
 - Keep topic-retrieval bounded. After you inspect the most relevant local section, usually about 3-7 slides, stop gathering more slides unless the evidence is still conflicting and synthesize the answer from that section.
-- Use `get_presentation_text` to find candidate slides, then inspect the relevant slides with `get_slide` and `get_slide_thumbnail` when visual evidence matters.
+- Use `get_presentation_text` to find candidate slides, then inspect the relevant slides with `get_slide`. If a relevant slide is chart-led, image-led, or has sparse text, you must inspect it with `get_slide_thumbnail` before answering.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
 - For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
-- Treat low-text slides inside a relevant section as potentially chart-led or image-led evidence, not irrelevant slides. If a candidate slide or its neighbors have sparse extracted text, fetch a thumbnail before excluding them.
-- For chart-led or mixed text-plus-visual sections, fetch at least one thumbnail for the best anchor slide and any low-text supporting slide before finalizing the answer.
+- Treat low-text slides inside a relevant section as potentially chart-led or image-led evidence, not irrelevant slides. If a candidate slide or its neighbors have sparse extracted text, you must fetch a thumbnail before excluding them.
+- For chart-led or mixed text-plus-visual sections, you must fetch a thumbnail for the best anchor slide and for each low-text supporting slide before finalizing the answer.
 - Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
 - If the thumbnail response includes inline image content, base64 image data, or an image-bearing data wrapper, ingest that directly as slide image input. The response may also include `contentUrl` metadata, but if inline image data is present, inspect that directly instead of downloading the URL or relying only on metadata.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
