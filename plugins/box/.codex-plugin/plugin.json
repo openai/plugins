@@ -9,6 +9,7 @@
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [],
+  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Box",
@@ -21,6 +22,8 @@
     "defaultPrompt": [
       "Find a Box file and summarize the key points"
     ],
+    "composerIcon": "./assets/box-small.svg",
+    "logo": "./assets/box.svg",
     "screenshots": []
   }
 }

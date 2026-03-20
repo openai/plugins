@@ -1,0 +1,6 @@
+interface:
+  display_name: "Box Content API"
+  short_description: "Implement Box content flows safely"
+  icon_small: "../../../assets/box-small.svg"
+  icon_large: "../../../assets/box.svg"
+  default_prompt: "Use $box-content-api to identify the acting Box auth context, prefer Box CLI for local verification when available, implement the smallest Box flow needed, and return Box IDs plus a verification command."
