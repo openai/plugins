@@ -1,6 +1,6 @@
 ---
 name: google-slides
-description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For deck reading and summarization, stay on the Google Slides read-tool path rather than detouring into generic code execution or export fallbacks. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
+description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, retrieve the full slide section for a conceptual topic rather than stopping at the first keyword match, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For deck reading and summarization, stay on the Google Slides read-tool path rather than detouring into generic code execution or export fallbacks. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
 ---
 
 # Google Slides
@@ -38,9 +38,14 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
 - For deck reading, slide finding, and summarization, use Google Slides read tools directly rather than generic code execution such as `js_repl`.
+- For topic asks such as "find the slide that explains churn," do not rely on exact keyword hits alone. Use deck structure, section headers, overview slides, and nearby slide numbers to identify the full relevant section.
+- When a topic appears as a contiguous section, inspect that full section or a tight local window around the section entry before answering. Do not stop after the first matching slide.
+- Keep topic-retrieval bounded. After you inspect the most relevant local section, usually about 3-7 slides, stop gathering more slides unless the evidence is still conflicting and synthesize the answer from that section.
 - Use `get_presentation_text` to find candidate slides, then inspect the relevant slides with `get_slide` and `get_slide_thumbnail` when visual evidence matters.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
 - For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
+- Treat low-text slides inside a relevant section as potentially chart-led or image-led evidence, not irrelevant slides. If a candidate slide or its neighbors have sparse extracted text, fetch a thumbnail before excluding them.
+- For chart-led or mixed text-plus-visual sections, fetch at least one thumbnail for the best anchor slide and any low-text supporting slide before finalizing the answer.
 - Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
 - If the thumbnail response includes inline image content, base64 image data, or an image-bearing data wrapper, ingest that directly as slide image input. The response may also include `contentUrl` metadata, but if inline image data is present, inspect that directly instead of downloading the URL or relying only on metadata.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
@@ -94,6 +99,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 ## Output
 
 - Reference slide numbers and titles when summarizing or planning edits.
+- When a conceptual topic is explained across multiple slides, identify the best anchor slide and include the supporting slides that complete the explanation instead of implying the topic lives on only one slide.
 - For slide summaries that involve charts, graphs, or other visuals, distinguish clearly between what comes from extracted text and what comes from thumbnail-based visual understanding.
 - Distinguish clearly between a proposed plan and changes that were actually applied.
 - Say which presentation and slides were read or changed.
