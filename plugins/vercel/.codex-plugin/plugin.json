@@ -41,7 +41,11 @@
     "websiteURL": "https://vercel.com/",
     "privacyPolicyURL": "https://vercel.com/legal/privacy-policy",
     "termsOfServiceURL": "https://vercel.com/legal/terms",
-    "defaultPrompt": "Audit this repo for Vercel deployment risks",
+    "defaultPrompt": [
+      "Audit this repo for Vercel deployment risks",
+      "Which Vercel tools fit this app best",
+      "Help wire Vercel MCP into this workflow"
+    ],
     "composerIcon": "./assets/vercel.svg",
     "logo": "./assets/vercel.svg",
     "screenshots": []
