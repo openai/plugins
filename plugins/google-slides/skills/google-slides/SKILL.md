@@ -1,6 +1,6 @@
 ---
 name: google-slides
-description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
+description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For deck reading and summarization, stay on the Google Slides read-tool path rather than detouring into generic code execution or export fallbacks. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
 ---
 
 # Google Slides
@@ -37,6 +37,8 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
+- For deck reading, slide finding, and summarization, use Google Slides read tools directly rather than generic code execution such as `js_repl`.
+- Use `get_presentation_text` to find candidate slides, then inspect the relevant slides with `get_slide` and `get_slide_thumbnail` when visual evidence matters.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
 - For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
 - Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
@@ -71,6 +73,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Restate the target slide numbers, titles, or object IDs before making changes.
 - Prefer small `batch_update` requests over large speculative batches.
 - Send `batch_update` requests as structured request objects in the expected tool shape, not as JSON strings or stringified arrays.
+- Do not use `export` as the default path for finding content, summarizing slides, or understanding visuals. Use it only when the user explicitly asks for an exported file or a downstream step truly requires exported bytes.
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
 - If the task is to summarize, interpret, or sanity-check a visual slide, fetch a thumbnail and use it as evidence for charts, graphs, screenshots, diagrams, and other non-textual content rather than summarizing only the extracted text.
 - When fixing slide formatting, use a tight loop: take a thumbnail, identify visible spacing/alignment/cropping/regression issues, send a focused `batch_update`, then take another thumbnail to verify the result.
