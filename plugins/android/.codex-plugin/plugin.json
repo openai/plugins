@@ -1,0 +1,39 @@
+{
+  "name": "android",
+  "version": "0.1.0",
+  "description": "Android emulator QA workflows for adb-driven launch, input, UI-tree inspection, screenshots, and logcat capture.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "android",
+    "adb",
+    "emulator",
+    "qa",
+    "logcat",
+    "uiautomator"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Android",
+    "shortDescription": "Drive Android emulator QA workflows with adb",
+    "longDescription": "Use Android Emulator QA to build and install app variants, drive a booted Android emulator with adb input events, inspect UI trees, capture screenshots, and collect logcat output while reproducing issues.",
+    "developerName": "OpenAI",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": "Use Android to build an app, launch it on a booted emulator, reproduce the issue with adb-driven UI steps, and capture screenshots plus logs.",
+    "brandColor": "#3DDC84",
+    "screenshots": []
+  }
+}
