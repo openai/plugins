@@ -1,0 +1,20 @@
+{
+  "lockVersion": 1,
+  "pluginId": "com.openai.android",
+  "pluginVersion": "0.1.0",
+  "generatedBy": "codex plugin pack (draft)",
+  "generatedAt": "2026-03-21T16:20:57Z",
+  "skills": [
+    {
+      "id": "android-emulator-qa",
+      "vendoredPath": "skills/android-emulator-qa",
+      "source": {
+        "type": "github",
+        "repo": "openai/skills-internal",
+        "path": ".codex/skills/android-emulator-qa",
+        "ref": "5a9bf9e14d3e8bdd93f046c01437a2e2f4369b86"
+      },
+      "integrity": "sha256-de517708b4f488f820c5cc088bc6feb875b02e06597ce09372332cbdcdfcc47d"
+    }
+  ]
+}

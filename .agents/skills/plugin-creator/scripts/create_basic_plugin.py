@@ -12,7 +12,9 @@ from typing import Any
 
 MAX_PLUGIN_NAME_LENGTH = 64
 DEFAULT_PLUGIN_PARENT = Path(__file__).resolve().parents[4] / "plugins"
-DEFAULT_MARKETPLACE_PATH = Path(__file__).resolve().parents[2] / "plugins" / "marketplace.json"
+DEFAULT_MARKETPLACE_PATH = (
+    Path(__file__).resolve().parents[3] / "plugins" / "marketplace.json"
+)
 DEFAULT_INSTALL_POLICY = "AVAILABLE"
 DEFAULT_AUTH_POLICY = "ON_INSTALL"
 DEFAULT_CATEGORY = "Productivity"
@@ -68,11 +70,7 @@ def build_plugin_json(plugin_name: str) -> dict:
             "websiteURL": "[TODO: https://openai.com/]",
             "privacyPolicyURL": "[TODO: https://openai.com/policies/row-privacy-policy/]",
             "termsOfServiceURL": "[TODO: https://openai.com/policies/row-terms-of-use/]",
-            "defaultPrompt": [
-                "[TODO: Summarize my inbox and draft replies for me.]",
-                "[TODO: Find open bugs and turn them into tickets.]",
-                "[TODO: Review today's meetings and flag gaps.]",
-            ],
+            "defaultPrompt": "[TODO: Summarize my inbox and draft replies for me.]",
             "brandColor": "[TODO: #3B82F6]",
             "composerIcon": "[TODO: ./assets/icon.png]",
             "logo": "[TODO: ./assets/logo.png]",
