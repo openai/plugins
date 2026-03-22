@@ -18,7 +18,6 @@
     "design-system"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
   "hooks": "./hooks.json",
   "mcpServers": "./.mcp.json",
   "interface": {
