@@ -1,5 +1,7 @@
 interface:
   display_name: "Google Drive"
   short_description: "One entrypoint for Drive, Docs, Sheets, and Slides"
+  icon_small: "./assets/google-drive-small.svg"
+  icon_large: "./assets/google-drive.png"
   brand_color: "#0F9D58"
   default_prompt: "Use $google-drive to find the right Drive file, then summarize a Doc, update a Sheet, or edit a Slides deck through the unified Google Drive workflow, including refreshing linked charts or replacing static chart content from an existing connected source such as Google Sheets."
