@@ -32,8 +32,8 @@
     "privacyPolicyURL": "https://ramp.com/privacy-policy",
     "termsOfServiceURL": "https://ramp.com/terms-of-service",
     "defaultPrompt": "Use Ramp to analyze vendor spend, identify top vendors, and summarize ownership and renewal risk.",
-    "composerIcon": "./assets/ramp.svg",
-    "logo": "./assets/ramp.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
