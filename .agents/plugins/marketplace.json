@@ -41,30 +41,6 @@
       "category": "Productivity"
     },
     {
-      "name": "google-docs",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-docs"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "google-sheets",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-sheets"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "slack",
       "source": {
         "source": "local",
@@ -2572,18 +2548,6 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Lifestyle"
-    },
-    {
-      "name": "google-slides",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-slides"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
     },
     {
       "name": "game-studio",

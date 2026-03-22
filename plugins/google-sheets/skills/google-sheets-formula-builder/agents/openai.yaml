@@ -1,4 +1,0 @@
-interface:
-  display_name: "Google Sheets Formula Builder"
-  short_description: "Design and validate formulas before rolling them out"
-  default_prompt: "Use $google-sheets-formula-builder to design or repair a Google Sheets formula, validate it on a few representative rows, and then roll it out cleanly."
