@@ -175,7 +175,7 @@ SFTConfig(max_seq_length=512)
 **Solutions:**
 1. **Verify authentication:**
    ```python
-   mcp__huggingface__hf_whoami()  # Check who's authenticated
+   hf_whoami()  # Check who's authenticated
    ```
 
 2. **Check token permissions:**

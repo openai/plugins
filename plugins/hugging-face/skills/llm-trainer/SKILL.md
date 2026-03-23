@@ -645,7 +645,7 @@ See `references/training_patterns.md` for detailed examples including:
 **Fix:**
 1. Add to job: `secrets={"HF_TOKEN": "$HF_TOKEN"}`
 2. Add to config: `push_to_hub=True`, `hub_model_id="username/model-name"`
-3. Verify auth: `mcp__huggingface__hf_whoami()`
+3. Verify auth: `hf_whoami()`
 4. Check token has write permissions and repo exists (or set `hub_private_repo=True`)
 
 ### Missing Dependencies
@@ -666,7 +666,7 @@ Add to PEP 723 header:
 - Out of Memory (OOM) → Reduce batch size, increase gradient accumulation, enable LoRA, use larger GPU
 - Dataset format error → Validate with dataset inspector (see Dataset Validation section)
 - Import/module errors → Add PEP 723 header with dependencies, verify format
-- Authentication errors → Check `mcp__huggingface__hf_whoami()`, token permissions, secrets parameter
+- Authentication errors → Check `hf_whoami()`, token permissions, secrets parameter
 
 **See:** `references/troubleshooting.md` for complete troubleshooting guide
 
