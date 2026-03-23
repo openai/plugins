@@ -23,6 +23,11 @@ Read this reference **before finalizing any outgoing Slack text**:
 2. Determine whether the user wants a **draft**, a **send-ready message**, or content for a **Slack canvas**. **Default to a draft** unless the user has approved the wording or explicitly asked to send.
 3. Read `../slack/references/mrkdwn.md` and use that syntax directly instead of generic Markdown.
 
+## Tool Parameter Hygiene
+
+- For `slack_send_message`, `slack_send_message_draft`, and `slack_schedule_message`, include `thread_ts` only when replying inside an existing thread and you have the parent message timestamp.
+- For top-level channel messages, DMs, and group DMs, omit `thread_ts` entirely. Do not pass an empty string, whitespace, `null`, or a placeholder value.
+
 ## Destination Safety
 
 - If the user wants to **cc, mention, or tag** someone, first check whether that person is already in the destination channel or group DM. If they are not, **warn the user** instead of implying the mention will notify them or that they will see the message.
