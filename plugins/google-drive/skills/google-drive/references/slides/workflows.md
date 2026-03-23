@@ -38,10 +38,13 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
 - When the request rewrites, translates, or updates multiple slides, follow [deck-scope-verification](./deck-scope-verification.md) before the first write so the full in-scope slide list is explicit.
 - Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
+- For Q&A, evidence-finding, or "where in the deck is X?" requests, build an explicit candidate slide list first. Do not stop at the first keyword hit if the topic could appear across a section, in appendix evidence, or in both summary and detail slides.
+- When answering a topic question such as churn, pipeline, or ARR, inspect every plausible slide in the relevant section before concluding that the answer lives on only one slide.
 - For chart refresh or chart replacement work, follow [chart-refresh-workflows](./chart-refresh-workflows.md). Do not rely on `get_presentation_text` alone for chart workflows because chart-only slide elements may be omitted from text-only reads.
 - If the task is to swap screenshot placeholders or other static chart content for charts from an existing connected source, keep the source artifacts grounded before the first write. If the source is Google Sheets, also read [sheets-chart-replacement](./sheets-chart-replacement.md) so chart IDs, placeholder geometry, and write scope stay grounded.
 - For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
 - Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
+- If a candidate slide has little useful extracted text but may still contain relevant evidence in a chart, screenshot, or diagram, inspect its thumbnail before ruling it out.
 - If the thumbnail response includes inline image content, base64 image data, or an image-bearing data wrapper, ingest that directly as slide image input. The response may also include `contentUrl` metadata, but if inline image data is present, inspect that directly instead of downloading the URL or relying only on metadata.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
 
@@ -108,6 +111,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 
 - Reference slide numbers and titles when summarizing or planning edits.
 - For slide summaries that involve charts, graphs, or other visuals, distinguish clearly between what comes from extracted text and what comes from thumbnail-based visual understanding.
+- For Q&A or evidence-location requests, say which slide range or candidate slides were inspected before giving the answer. Do not imply exhaustive coverage if you only checked one likely slide.
 - For chart update requests, say explicitly whether the chart itself was refreshed, whether a placeholder or static chart content block was replaced from an existing source chart such as a Google Sheets chart, whether a new source chart had to be created first, or whether only surrounding text changed.
 - Say whether any placeholder or instructional chart text remained after the update.
 - Distinguish clearly between a proposed plan and changes that were actually applied.
@@ -118,6 +122,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 
 - "Find the Q2 board deck and summarize the storyline slide by slide."
 - "Read slide 8 and summarize both the chart and the surrounding text."
+- "Which slides in this deck discuss churn, and what does each one say?"
 - "Refresh the linked chart on slide 6 from its source workbook and verify the updated visual."
 - "Replace the ARR, churn, and pipeline static chart content with charts from the metrics spreadsheet without leaving placeholder text behind."
 - "Open this Google Sheet and Google Slides deck, make a few targeted chart-data edits, and replace the chart placeholder screenshots with the existing Sheets charts."
