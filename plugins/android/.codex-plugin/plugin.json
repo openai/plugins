@@ -32,7 +32,9 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Use Android to build an app, launch it on a booted emulator, reproduce the issue with adb-driven UI steps, and capture screenshots plus logs.",
+    "defaultPrompt": [
+      "Use Android to reproduce an emulator issue with adb, then capture screenshots and logcat."
+    ],
     "brandColor": "#3DDC84",
     "screenshots": []
   }
