@@ -4,7 +4,7 @@
   "description": "Comprehensive Vercel ecosystem plugin with Codex-compatible skills and MCP.",
   "author": {
     "name": "Vercel Labs",
-    "url": "https://github.com/vercel-labs"
+    "url": "https://github.com/vercel"
   },
   "homepage": "https://vercel.com/",
   "repository": "https://github.com/vercel/vercel-plugin",
