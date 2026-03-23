@@ -15,7 +15,6 @@ Editor config files:
 
 | Editor | Config file |
 |--------|------------|
-| Claude Code | `.mcp.json` |
 | Cursor | `.cursor/mcp.json` |
 | VS Code | `.vscode/mcp.json` |
 | OpenCode | `opencode.json` |
