@@ -1,28 +1,43 @@
 {
   "name": "google-drive",
-  "description": "Search and reference files from your Drive.",
+  "version": "0.1.0",
+  "description": "Use Google Drive as the single entrypoint for Drive, Docs, Sheets, and Slides work.",
   "author": {
     "name": "OpenAI",
-    "url": "https://www.google.com/"
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
   },
-  "homepage": "https://www.google.com/",
+  "homepage": "https://workspace.google.com/products/drive/",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "google-drive",
+    "google-docs",
+    "google-sheets",
+    "google-slides",
+    "productivity"
+  ],
+  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Google Drive",
-    "shortDescription": "Search and reference files from your Drive.",
+    "shortDescription": "Work across Drive, Docs, Sheets, and Slides",
+    "longDescription": "Use Google Drive as one unified Google file plugin for search, file organization, sharing, and Google Docs, Google Sheets, and Google Slides workflows.",
     "developerName": "OpenAI",
     "category": "Productivity",
-    "capabilities": [],
-    "websiteURL": "https://www.google.com/",
-    "privacyPolicyURL": "https://policies.google.com/privacy",
-    "defaultPrompt": [
-      "Find a Drive doc and summarize the key points"
+    "capabilities": [
+      "Interactive",
+      "Write"
     ],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",
+    "websiteURL": "https://workspace.google.com/products/drive/",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "defaultPrompt": [
+      "Find a Drive file, then summarize or edit the right Google document"
+    ],
+    "brandColor": "#0F9D58",
     "screenshots": []
   }
 }
