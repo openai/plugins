@@ -27,6 +27,13 @@
       "Interactive",
       "Write"
     ],
+    "translations": {
+      "fr_fr": {
+        "displayName": "Le Google Sheets",
+        "shortDescription": "Google Sheets",
+        "longDescription": "Fais plein de choses avec Google Sheets",
+      }
+    }
     "websiteURL": "https://workspace.google.com/products/sheets/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
