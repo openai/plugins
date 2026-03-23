@@ -11,6 +11,7 @@ Prefer this reference over [google-slides](./workflows.md) when the request is p
 - The user wants to improve how an existing Google Slides deck looks, not just change its copy.
 - The request includes phrases like "fix this slide," "make this deck look better," "clean up formatting," "fix overflow," "fix spacing," "fix alignment," or "visual iteration."
 - The user shares a connected Google Slides deck or link and wants edits applied directly to that deck.
+- The user wants to replace static chart screenshots or placeholder images with charts from a connected source, such as Google Sheets, while preserving the current slide footprint.
 
 ## Required Tooling
 
@@ -35,6 +36,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Use `get_presentation` or `get_presentation_text` to identify slide order, titles, and object IDs.
 - Use `get_slide` on the target slide before the first write so you have the current element structure and IDs.
 - Before each additional write pass on that same slide, call `get_slide` again so the next `batch_update` uses fresh geometry and current element state rather than stale structure from the prior pass.
+- For screenshot-to-chart swaps sourced from Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md) before the first write so the replace flow stays grounded in live chart IDs and placeholder geometry.
 
 3. Start with a thumbnail.
 - Call `get_slide_thumbnail` first.
@@ -67,6 +69,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Be aggressive enough to materially improve the slide in each pass. Do not make timid edits that technically move elements but leave the slide still looking broken.
 - Batch related fixes together when they affect the same slide structure, such as overflow plus alignment plus inconsistent spacing in one column or card set.
 - Prefer moving, resizing, reflowing, redistributing, or re-aligning existing elements over rewriting the slide.
+- When the target element is a screenshot placeholder for a chart, treat delete-and-replace as the default move: preserve the existing footprint, insert the source chart, and remove obsolete chart-area text when it is clearly placeholder copy.
 - If multiple boxes or sections are part of a visible group, align their headers, icons, top text baselines, and body starting positions unless the stagger is clearly intentional.
 - Do not default to shrinking font size, tightening line spacing, or squishing elements closer together just to make the slide fit.
 - If content still does not fit cleanly after a reasonable structural pass, split the content across slides or escalate to [google-slides-template-surgery](./template-surgery.md) instead of repeatedly compressing the layout.
@@ -131,6 +134,7 @@ Core rule:
 1. Read the presentation first and make a slide inventory.
 - Note the title slide, section dividers, dense slides, image-heavy slides, and obvious outliers.
 - Keep that inventory lightweight. Do not present one giant deck-wide issue dump before editing.
+- Keep an explicit ordered slide checklist for the requested scope, and do not infer coverage from object ID numbering or from which slides happened to stand out in the first scan.
 
 2. Prioritize the slide order.
 - If the user asked for the whole deck, start with slide 1 in the requested scope, finish slide 1, then move to slide 2, then slide 3, and continue in order until the last slide in scope.
@@ -147,6 +151,7 @@ Core rule:
 - Do at least 2 verified loops on that slide before advancing to the next one.
 - Do not say a slide needs no second pass until you have actually completed the second fresh review loop on that slide.
 - Between loops, re-read the current slide structure so follow-up writes use fresh state rather than stale element geometry.
+- Mark the current slide done only after the final verification loop confirms it is the next expected slide in the checklist. If deck-wide work ever loses track of coverage, stop and reconcile against the checklist before continuing.
 - If the same formatting defect keeps recurring because of shared structure, escalate to [google-slides-template-surgery](./template-surgery.md) instead of hand-patching every slide forever.
 
 4. Keep a global style memory.
@@ -173,6 +178,7 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - Always inspect the current slide before editing.
 - Keep the tool loop local to the current slide: one slide thumbnail in, one slide edit pass, one verification thumbnail out.
 - Use object IDs from the live slide state, not guessed IDs.
+- When replacing a screenshot placeholder with a source chart, reuse the current image geometry as the starting insertion footprint instead of inventing a new layout.
 - Prefer reversible, geometric edits first: transform, size, alignment, deletion only when clearly safe.
 - If a text box is too dense, try resizing, redistributing, or reflowing the slide before shortening the text.
 - If the only apparent fix is to compress all the content tighter, stop and reconsider the layout pattern instead of blindly applying that edit.
@@ -184,6 +190,11 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - If the runtime lacks the Slides edit action, stop and say the deck can be diagnosed but not corrected from Codex.
 - If repeated passes do not improve the slide, stop and explain what remains subjective or structurally constrained.
 
+## References
+
+- [deck-scope-verification](./deck-scope-verification.md)
+- [sheets-chart-replacement](./sheets-chart-replacement.md)
+
 ## Example Prompts
 
 - `Fix the alignment and overlap issues on slide 4 of this Google Slides deck through Google Drive.`
@@ -191,3 +202,4 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - `Import this PPTX into Google Slides, then polish each slide with thumbnail-based verification through Google Drive.`
 - `Make this existing Google Slides deck look better and fix the formatting issues through Google Drive.`
 - `Clean up spacing, overflow, and alignment in this shared Google Slides link through Google Drive.`
+- `Replace the chart screenshots on slides 3-5 with the existing Google Sheets charts and keep the same approximate layout through Google Drive.`
