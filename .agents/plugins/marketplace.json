@@ -1,7 +1,7 @@
 {
   "name": "openai-curated",
   "interface": {
-    "displayName": "ChatGPT Official"
+    "displayName": "Codex official"
   },
   "plugins": [
     {
