@@ -9,6 +9,8 @@ description: Triage Outlook mail, extract tasks, clean up subscriptions, and dra
 
 Use this skill to turn Outlook inbox and thread context into clear summaries, action lists, and ready-to-review drafts. Prefer Outlook-native list and search flows to build a shortlist, expand only the messages that matter, and treat mailbox mutations as separate explicit actions.
 
+Outbound Outlook email writes are plain-text only. When drafting, replying, scheduling, or sending, do not plan around HTML bodies, rich formatting, tracking pixels, or formatting-dependent layouts. If the user asks for richer formatting, translate it into the clearest plain-text equivalent.
+
 ## Preferred Deliverables
 
 - Thread briefs that capture the latest status, decisions, deadlines, and next actions.
@@ -74,13 +76,14 @@ Keep these workflows in the base Outlook Email skill instead of splitting them f
 - When a user says "send a reply," that authorizes the act of sending but not unstated content choices. Confirm assumptions that materially change the meaning of the reply.
 - Treat the existence of a saved draft as part of mailbox state. Do not silently leave behind duplicate or superseded drafts when the user believes you sent the prepared reply.
 - Treat connector schema requirements as part of write safety. For forwards, prefer the documented recipient object shape up front instead of relying on a failing trial call.
+- Treat plain-text-only email bodies as part of connector safety. Do not promise HTML formatting, hidden tracking content, or markup-dependent rendering for Outlook email write actions.
 - Treat source-message selection and recipient identity as write-safety checks for forwards. Do not forward based on a fuzzy match when multiple plausible threads or recipients remain in scope.
 
 ## Output Conventions
 
 - Lead summaries with the latest status, then list decisions, open questions, and action items.
 - Keep triage buckets explicit, such as urgent, waiting, needs reply, and FYI, when that helps the user scan faster.
-- Draft replies should be concise, ready to paste or send, and clearly separated from private notes.
+- Draft replies should be concise, plain text, ready to paste or send, and clearly separated from private notes.
 - When multiple messages matter, reference the sender and timestamp of the message that drives the next action.
 - If a draft requires follow-up details, list them immediately after the draft.
 - Before sending, explicitly note any assumptions you checked and any missing facts you asked the user to confirm.
