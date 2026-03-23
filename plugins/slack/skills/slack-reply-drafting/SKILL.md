@@ -11,7 +11,7 @@ Use this skill to identify messages that likely need a reply and produce Slack-r
 
 | Workflow | Skill |
 | --- | --- |
-| Refine, draft, or send the final Slack text | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
+| Refine, draft, or send the final Slack text | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
 
 ## Start Here
 
@@ -48,7 +48,7 @@ Use this skill to identify messages that likely need a reply and produce Slack-r
 
 ## Drafting Rules
 
-- Use the [../slack-messages/SKILL.md](../slack-messages/SKILL.md) skill to draft outgoing Slack text.
+- Use the [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) skill to draft outgoing Slack text.
 
 ## Formatting
 

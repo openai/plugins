@@ -13,7 +13,7 @@ Use this skill to turn channel and thread context into concise, post-ready Slack
 
 | Workflow | Skill |
 | --- | --- |
-| Message composition, rewrites, drafts, and canvas-writing workflows | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
+| Compose final outbound Slack text, drafts, sends, and canvases | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
 | Bounded channel recaps and thematic Slack summaries | [../slack-channel-summarization/SKILL.md](../slack-channel-summarization/SKILL.md) |
 | Daily digests across selected channels or topics | [../slack-daily-digest/SKILL.md](../slack-daily-digest/SKILL.md) |
 | Find messages that likely need a response and prepare reply drafts | [../slack-reply-drafting/SKILL.md](../slack-reply-drafting/SKILL.md) |

@@ -11,7 +11,7 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 
 | Workflow | Skill |
 | --- | --- |
-| Draft, send, or rewrite the final Slack update | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
+| Draft, send, or rewrite the final outbound Slack update | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
 
 ## Start Here
 
