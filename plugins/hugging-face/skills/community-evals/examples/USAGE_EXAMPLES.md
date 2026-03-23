@@ -22,7 +22,7 @@ If you want to run these same scripts remotely, use the `hugging-face-jobs` skil
 ## Setup
 
 ```bash
-cd skills/hugging-face-evaluation
+cd skills/community-evals
 export HF_TOKEN=hf_xxx
 uv --version
 ```
