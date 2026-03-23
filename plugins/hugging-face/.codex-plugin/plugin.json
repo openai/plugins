@@ -21,9 +21,7 @@
     "websiteURL": "https://huggingface.co",
     "privacyPolicyURL": "https://huggingface.co/privacy",
     "termsOfServiceURL": "https://huggingface.co/terms-of-service",
-    "defaultPrompt": [
-      "Generate a realistic farm using FLUX.1"
-    ],
+    "defaultPrompt": "Generate a realistic farm using FLUX.1",
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"
