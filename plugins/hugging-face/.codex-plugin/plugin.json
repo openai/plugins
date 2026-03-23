@@ -33,7 +33,9 @@
     "websiteURL": "https://huggingface.co",
     "privacyPolicyURL": "https://huggingface.co/privacy",
     "termsOfServiceURL": "https://huggingface.co/terms-of-service",
-    "defaultPrompt": "Generate a realistic farm using FLUX.1",
+    "defaultPrompt": [
+      "Generate a realistic farm using FLUX.1"
+    ],
     "brandColor": "#FFD21E",
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
