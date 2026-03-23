@@ -9,7 +9,7 @@ description: Draft Outlook email replies safely from connected mailbox context. 
 
 Use this skill when the reply itself is the task. Read enough mailbox context to understand the latest ask, then default to a draft unless the user clearly asked you to send.
 
-Outlook reply writes are plain-text only. If the user asks for HTML formatting, styled sections, or layout-specific markup, convert that into a clean plain-text reply instead of planning an HTML body.
+Outlook reply writes are plain-text only. If the user asks for HTML formatting, styled sections, or layout-specific markup, say briefly that Outlook reply actions here only support plain text, then convert the request into a clean plain-text reply instead of planning an HTML body.
 
 ## Relevant Actions
 
@@ -34,7 +34,7 @@ Outlook reply writes are plain-text only. If the user asks for HTML formatting, 
 - Do not invent availability, approvals, ownership, or promises that are not already established in mailbox context.
 - Treat reply-all as a deliberate choice. If the audience is ambiguous, explain the safest default.
 - If the user says "send" but the content still depends on unstated choices, stop and ask the narrowest necessary confirmation question.
-- Do not promise HTML email formatting or markup-specific rendering. Express structure with plain-text paragraphs, lists, and raw links.
+- Do not promise HTML email formatting or markup-specific rendering. Express structure with plain-text paragraphs, lists, and raw links, and tell the user when that means a requested formatting detail cannot be preserved exactly.
 
 ## Output
 
