@@ -36,8 +36,8 @@
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
     "defaultPrompt": "Use Outlook Calendar to summarize my day, compare availability, explain Outlook meeting status, and draft the right event update, including Teams details when needed.",
     "brandColor": "#0078D4",
-    "composerIcon": "./assets/outlook-calendar-small.svg",
-    "logo": "./assets/outlook-calendar.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }

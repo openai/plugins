@@ -1,0 +1,5 @@
+interface:
+  display_name: "Google Drive"
+  short_description: "One entrypoint for Drive, Docs, Sheets, and Slides"
+  brand_color: "#0F9D58"
+  default_prompt: "Use $google-drive to find the right Drive file, then summarize a Doc, update a Sheet, or edit a Slides deck through the unified Google Drive workflow."

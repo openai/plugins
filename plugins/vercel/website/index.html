@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northline Studio</title>
+    <meta
+      name="description"
+      content="Northline Studio builds fast, conversion-focused websites for startups and product teams."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-noise" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="container nav">
+        <a href="#" class="brand">Northline</a>
+        <nav>
+          <a href="#work">Work</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <p class="kicker">Design + Engineering Studio</p>
+        <h1>
+          Websites that look sharp,
+          <span>load instantly, and convert.</span>
+        </h1>
+        <p class="lede">
+          We turn rough ideas into memorable web experiences with clear
+          messaging, high-performance frontend architecture, and launch-ready
+          deployment pipelines.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Start a project</a>
+          <a href="#work" class="btn btn-ghost">See latest builds</a>
+        </div>
+      </section>
+
+      <section id="work" class="container work">
+        <article class="card reveal">
+          <p class="tag">B2B SaaS</p>
+          <h3>Pulseboard</h3>
+          <p>Lifted trial conversion 31% with a product-led homepage revamp.</p>
+        </article>
+        <article class="card reveal">
+          <p class="tag">Creator Tools</p>
+          <h3>Lumen Studio</h3>
+          <p>
+            Rebuilt marketing pages on modern SSR stack, cutting TTFB in half.
+          </p>
+        </article>
+        <article class="card reveal">
+          <p class="tag">Fintech</p>
+          <h3>Helio Pay</h3>
+          <p>Shipped launch site and docs hub in 10 days, ready for scale.</p>
+        </article>
+      </section>
+
+      <section id="services" class="container services">
+        <h2>What we ship</h2>
+        <div class="service-grid">
+          <div class="service reveal">
+            <h3>Strategy + Messaging</h3>
+            <p>Offer clarity, brand voice, and a structure built to convert.</p>
+          </div>
+          <div class="service reveal">
+            <h3>UI Systems</h3>
+            <p>Reusable, accessible components that keep velocity high.</p>
+          </div>
+          <div class="service reveal">
+            <h3>Frontend Engineering</h3>
+            <p>Fast Core Web Vitals, resilient routing, and clean handoff.</p>
+          </div>
+          <div class="service reveal">
+            <h3>Launch + Optimization</h3>
+            <p>Analytics wiring, SEO baseline, and ongoing iteration support.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="container contact reveal">
+        <h2>Ready to launch?</h2>
+        <p>
+          Send a short brief and we’ll reply with a scope, timeline, and build
+          plan.
+        </p>
+        <a class="btn btn-primary" href="mailto:hello@northline.studio"
+          >hello@northline.studio</a
+        >
+      </section>
+    </main>
+
+    <footer class="container site-footer">
+      <p>© <span id="year"></span> Northline Studio</p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -34,8 +34,8 @@
       "Summarize chat, pull out action items, or draft follow-up"
     ],
     "brandColor": "#5B5FC7",
-    "composerIcon": "./assets/teams-small.svg",
-    "logo": "./assets/teams.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
