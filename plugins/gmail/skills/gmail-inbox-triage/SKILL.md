@@ -31,3 +31,4 @@ Use this skill for direct inbox-triage requests. Build on the core Gmail skill a
 - State timeframe, search scope, and confidence.
 - Treat reply-needed as an inference, not a guaranteed state.
 - Avoid claiming the inbox is fully triaged if you only checked a narrow slice.
+- Do not surface repetitive connector or retrieval-debug notes in the triage output unless they materially affect the classification. Prefer a brief confidence caveat over raw tool diagnostics.
