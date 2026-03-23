@@ -2856,10 +2856,10 @@
       "category": "Coding"
     },
     {
-      "name": "vibe-builder",
+      "name": "web-design",
       "source": {
         "source": "local",
-        "path": "./plugins/vibe-builder"
+        "path": "./plugins/web-design"
       },
       "policy": {
         "installation": "AVAILABLE",

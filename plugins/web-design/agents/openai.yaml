@@ -1,7 +1,7 @@
 interface:
-  display_name: "Vibe Builder"
-  short_description: "Use Stripe, Vercel, and Supabase MCPs to build and ship products"
-  default_prompt: "Use Vibe Builder to build and ship a product using Vercel for deployment, Supabase for backend and data, and Stripe for payments."
+  display_name: "Web Design"
+  short_description: "Use Web Design to review UI, improve React apps, and ship products"
+  default_prompt: "Use Web Design to review a web app's UI, improve the React implementation, and help ship it with Vercel, Supabase, and Stripe when needed."
 
 dependencies:
   tools:

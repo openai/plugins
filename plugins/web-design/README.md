@@ -1,13 +1,15 @@
-# Vibe Builder Plugin
+# Web Design Plugin
 
-This plugin packages builder-oriented workflows in `plugins/vibe-builder`.
+This plugin packages builder-oriented workflows in `plugins/web-design`.
 
 It currently includes these skills:
 
 - `deploy-to-vercel`
+- `react-best-practices`
 - `shadcn-best-practices`
 - `stripe-best-practices`
 - `supabase-best-practices`
+- `web-design-guidelines`
 
 It is scaffolded to use these plugin-local MCP servers:
 
@@ -18,9 +20,11 @@ It is scaffolded to use these plugin-local MCP servers:
 ## What It Covers
 
 - deployment and hosting operations through Vercel MCP
+- React and Next.js performance guidance sourced from Vercel best practices
 - shadcn/ui composition, styling, and component usage guidance
 - Stripe integration design across payments, subscriptions, Connect, and Treasury
 - Supabase/Postgres schema, performance, and RLS best practices
+- UI review guidance against web interface design guidelines
 - end-to-end product building workflows that span frontend, backend, payments,
   and deployment
 
@@ -28,7 +32,7 @@ It is scaffolded to use these plugin-local MCP servers:
 
 The plugin now lives at:
 
-- `plugins/vibe-builder/`
+- `plugins/web-design/`
 
 with this shape:
 
@@ -54,6 +58,8 @@ with this shape:
 This plugin is MCP-backed through `.mcp.json` and currently combines:
 
 - Vercel deployment workflows
+- React and Next.js optimization guidance
 - shadcn/ui frontend implementation guidance
 - Stripe integration guidance
 - Supabase/Postgres optimization guidance
+- web design and UI review guidance
