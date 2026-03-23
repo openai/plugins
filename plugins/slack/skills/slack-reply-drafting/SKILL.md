@@ -11,7 +11,7 @@ Use this skill to identify messages that likely need a reply and produce Slack-r
 
 | Workflow | Skill |
 | --- | --- |
-| Refine, draft, or send the final Slack text | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
+| Refine, draft, or send the final Slack text | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
 
 ## Start Here
 
@@ -45,10 +45,11 @@ Use this skill to identify messages that likely need a reply and produce Slack-r
 5. Keep only candidates where the latest relevant message is from someone else, or where newer replies appeared after the user's last reply or mention.
 6. Expand only the threads or surrounding messages needed to answer accurately. Answer the question first, then add clarification or next steps when the context supports it.
 7. If the context is incomplete, write the smallest useful clarifying reply instead of pretending the answer is known.
+8. Create the draft with `slack_send_message_draft`, and *only* nclude `thread_ts` for real thread replies.
 
 ## Drafting Rules
 
-- Use the [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) skill to draft outgoing Slack text.
+- Use the [../slack-messages/SKILL.md](../slack-messages/SKILL.md) skill to draft outgoing Slack text.
 
 ## Formatting
 
