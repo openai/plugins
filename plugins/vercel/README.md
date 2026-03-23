@@ -5,7 +5,9 @@ This directory packages the upstream [vercel/vercel-plugin](https://github.com/v
 ## What is included
 
 - `skills/` from the upstream plugin (47 skills with retrieval metadata for Codex discovery)
+- `hooks.json` no-op placeholder to match the pinned plugin-creator manifest shape
 - `.mcp.json` for the official Vercel MCP server
+- `.app.json` for the existing Vercel connector wiring
 - `vercel.md` ecosystem reference graph
 - `agents/` specialist agent definitions
 - `commands/` slash command definitions
@@ -15,6 +17,7 @@ This directory packages the upstream [vercel/vercel-plugin](https://github.com/v
 
 - The upstream repo ships `.plugin/plugin.json`; this import uses `.codex-plugin/plugin.json`.
 - Skills use frontmatter metadata (`retrieval.aliases`, `intents`, `entities`, `pathPatterns`, `bashPatterns`) for Codex-native discovery — no hooks required.
+- `hooks.json` is intentionally empty; it is present only to keep the manifest aligned with the pinned `plugin-creator` sample.
 - The bundled `agents/` and `commands/` content is included from upstream for source parity.
 
 ## Upstream source

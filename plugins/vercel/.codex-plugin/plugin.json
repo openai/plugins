@@ -4,6 +4,7 @@
   "description": "Comprehensive Vercel ecosystem plugin with Codex-compatible skills and MCP.",
   "author": {
     "name": "Vercel Labs",
+    "email": "integrations@vercel.com",
     "url": "https://github.com/vercel-labs"
   },
   "homepage": "https://vercel.com/",
@@ -26,7 +27,9 @@
     "discord-bot"
   ],
   "skills": "./skills/",
+  "hooks": "./hooks.json",
   "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Vercel",
     "shortDescription": "Vercel ecosystem guidance for Codex",
@@ -40,7 +43,12 @@
     "websiteURL": "https://vercel.com/",
     "privacyPolicyURL": "https://vercel.com/legal/privacy-policy",
     "termsOfServiceURL": "https://vercel.com/legal/terms",
-    "defaultPrompt": "Audit this repo for Vercel deployment risks",
+    "defaultPrompt": [
+      "Audit this repo for Vercel deployment risks",
+      "Which Vercel tools fit this app best",
+      "Help wire Vercel MCP into this workflow"
+    ],
+    "brandColor": "#000000",
     "composerIcon": "./assets/vercel.svg",
     "logo": "./assets/vercel.svg",
     "screenshots": []
