@@ -38,8 +38,8 @@
       "Inspect a deck and clean up slide layouts"
     ],
     "brandColor": "#F9AB00",
-    "composerIcon": "./assets/google-slides-small.svg",
-    "logo": "./assets/google-slides.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }

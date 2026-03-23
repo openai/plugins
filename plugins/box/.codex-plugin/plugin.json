@@ -21,6 +21,8 @@
     "defaultPrompt": [
       "Find a Box file and summarize the key points"
     ],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }

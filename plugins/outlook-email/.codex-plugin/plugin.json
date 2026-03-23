@@ -34,8 +34,8 @@
       "Triage inbox, summarize thread, or draft reply or forward"
     ],
     "brandColor": "#0078D4",
-    "composerIcon": "./assets/outlook-email-small.svg",
-    "logo": "./assets/outlook-email.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
