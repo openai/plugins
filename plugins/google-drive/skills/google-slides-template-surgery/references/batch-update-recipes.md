@@ -644,6 +644,7 @@ Use this for a small benchmark, caption, or one-line helper label.
 - The `translateX` and `translateY` values above are top-left coordinates, not the label's center point.
 - If the desired visual center is `C`, compute the top-left as `C - (width / 2, height / 2)` before sending the request.
 - If the next thumbnail shows the text sitting visibly low or off-center, tighten the text-box height or nudge the top-left in a second pass. Treat that as a geometry miss, not a reason to stop.
+- If this label lives next to another text box, verify both boxes together after the write. Do not treat a local text update as successful if the new label now crowds or overlaps its neighbor.
 
 ## Common Failure Modes
 
@@ -654,6 +655,7 @@ Use this for a small benchmark, caption, or one-line helper label.
 - Using `updateShapeProperties` on a connector or `updateLineProperties` on a filled shape
 - Assuming `translateX` and `translateY` target the element center instead of the upper-left corner
 - Creating a large or tall text box for a tiny one-line label, then leaving the label visually low inside the box
+- Fixing one text box while leaving its adjacent text box colliding, overlapping, or starved for padding
 - Updating one repeated card or primitive in isolation and leaving sibling cards with mismatched bar heights, arrow scales, or text baselines
 - Letting same-state colors drift so one "green" bar, arrow, or delta label does not match the others
 - Stringified JSON instead of structured objects

@@ -14,6 +14,7 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Read the current slide structure with live object IDs.
 - Identify the full local edit cluster, not just the most obvious text box.
 - For metric cards or scorecards, treat the main value, target value, delta text, arrow, accent bar, and nearby border or connector as one cluster.
+- If two adjacent text boxes are colliding, wrapping into each other, or visually fighting for the same lane, treat them as one cluster and fix their geometry together.
 
 2. Start with a thumbnail.
 - Fetch a `LARGE` thumbnail when spacing, clipping, or shape alignment matters.
@@ -32,17 +33,20 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Batch the related fixes for that local issue cluster together.
 - Include `write_control` when a fresh revision token is available.
 - Prefer geometry and styling fixes that materially improve the slide over tiny nudges that leave obvious problems behind.
+- When two neighboring text boxes collide, prefer resizing, repositioning, or redistributing both boxes before shrinking the text. Do not "fix" one box while leaving the adjacent one still cramped.
 - Do not stop at "technically updated." The target is a slide that looks intentionally arranged and presentation-ready, not merely one with fewer defects than before.
 
 5. Verify immediately.
 - Fetch another thumbnail right after the write.
 - Confirm both text and non-text visual targets actually changed.
 - If the write fixed the main text but left stale bars, arrows, borders, wrapping, or collisions, the slide is not done.
+- If text from one box still overlaps, crowds, or visually crashes into text from an adjacent box, the slide is not done.
 - If a new small label looks one line low, visually offset, or miscentered relative to its neighbors, the slide is not done. Re-read the slide and tighten the text box geometry before moving on.
 
 6. Run a second and third fresh review loop.
 - Start each additional loop from a fresh thumbnail review, not from memory.
 - Re-read the live slide structure before any additional pass.
+- Run at least 3 full write-and-verify loops whenever this recipe is triggered, even if pass 1 or pass 2 already looks acceptable.
 - Do not call the slide done after pass 2, even if it looks close.
 - Treat pass 2 as an alignment-and-spacing pass, not a victory lap.
 - Treat pass 3 as a polish pass: look for anything that still feels slightly off, uneven, cramped, weakly grouped, or visually unbalanced, even if the slide is already functional.

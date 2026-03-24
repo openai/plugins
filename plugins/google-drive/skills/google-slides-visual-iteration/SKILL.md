@@ -68,6 +68,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Look for text too close to edges or neighboring elements.
 - Look for text overflow, clipping, or density that makes the slide feel compressed.
 - Look for overlapping text boxes, shapes, charts, and images.
+- Look for adjacent text boxes whose copy is colliding, wrapping into the neighboring lane, or reading like one crowded block instead of two separate elements.
 - Look for misaligned images, cards, icons, and text blocks.
 - Look for grouped boxes, cards, or sections whose header text, body starts, icons, or internal padding do not sit on the same visual plane.
 - Look for stale accent-bar colors, arrow directions, border strokes, connector lines, or small benchmark text that lag behind the main headline text.
@@ -82,6 +83,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Be aggressive enough to materially improve the slide in each pass. Do not make timid edits that technically move elements but leave the slide still looking broken.
 - Batch related fixes together when they affect the same slide structure, such as overflow plus alignment plus inconsistent spacing in one column or card set.
 - Prefer moving, resizing, reflowing, redistributing, or re-aligning existing elements over rewriting the slide.
+- When adjacent text boxes collide, treat them as one geometry problem. Resize, reposition, or redistribute both boxes together before shrinking text or editing only one of them.
 - For small labels, benchmark values, or captions, prefer reusing an existing text box when possible. If you must create a new one, keep its footprint tight to the intended line of text rather than dropping the text into a large placeholder box.
 - When the target element is a screenshot placeholder for a chart, treat delete-and-replace as the default move: preserve the existing footprint, insert the source chart, and remove obsolete chart-area text when it is clearly placeholder copy.
 - For metric cards, summary strips, or scorecard rows, treat the main value, target value, delta text, arrow, and accent bar as one local edit cluster. Do not stop after changing only the visible headline text if nearby target text or non-text styling is now stale.
@@ -103,10 +105,12 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Verify that accent bars, arrow shapes, borders, and connector strokes changed visually, not just the text around them.
 - Verify that newly placed text labels sit optically centered in their intended lane or container. If the text looks one line low or offset relative to nearby elements, treat that as unfinished geometry.
 - If a fix introduced a new collision, imbalance, or cramped layout, correct that next instead of blindly continuing.
+- If adjacent text boxes still crowd or overlap after a pass, keep working the slide until both boxes have clean separation and readable padding.
 - After each verification thumbnail, do a fresh read of the current slide before the next write pass if more edits are needed.
 
 7. Iterate a few times, then stop.
 - Run at least 3 full visual loops per slide in this reference workflow.
+- Treat those 3 loops as a minimum, not a cap. Do not stop after 1 or 2 passes just because the slide is merely readable again.
 - Do not stop after a single pass just because the first verification looks acceptable.
 - The second loop must start with a fresh thumbnail review and refreshed slide structure so you can catch residual spacing, alignment, padding, and balance issues that were easy to miss in the first pass.
 - The third loop must also start from a fresh thumbnail review and refreshed slide structure. Treat it as a required polish-and-regression pass, not an optional extra.
@@ -200,6 +204,7 @@ Core rule:
 
 3. Finish each slide before moving on.
 - For each target slide, run the full thumbnail -> diagnose -> batch_update -> re-thumbnail loop.
+- For each target slide, run that loop at least 3 times before marking the slide complete.
 - Work strictly sequentially: finish the current slide before starting issue diagnosis for the next slide.
 - Do not fetch thumbnails for later slides while the current slide is still in progress unless the user explicitly asked for a separate audit.
 - Start each slide with an explicit list of the 2-4 key issues on that slide only.
