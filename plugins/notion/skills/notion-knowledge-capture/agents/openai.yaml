@@ -4,3 +4,11 @@ interface:
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"
   default_prompt: "Capture this conversation into structured Notion pages with decisions, action items, and owners when known."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "notion"
+      description: "Notion MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.notion.com/mcp"

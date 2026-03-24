@@ -4,3 +4,11 @@ interface:
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"
   default_prompt: "Research this topic in Notion and produce a sourced brief with clear recommendations."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "notion"
+      description: "Notion MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.notion.com/mcp"

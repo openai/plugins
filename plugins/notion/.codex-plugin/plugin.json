@@ -19,7 +19,7 @@
     "planning"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Notion",
     "shortDescription": "Notion workflows for specs, research, meetings, and knowledge capture",
