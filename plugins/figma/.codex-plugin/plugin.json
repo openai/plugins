@@ -19,10 +19,10 @@
   ],
   "skills": "./skills/",
   "hooks": "./hooks.json",
-  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Figma",
-    "shortDescription": "Design-to-code workflows powered by the Figma MCP server",
+    "shortDescription": "Design-to-code workflows powered by the Figma integration",
     "longDescription": "Figma workflows for implementing designs in code, creating Code Connect mappings between published Figma components and source files, and generating project-specific design system rules for repeatable Figma-to-code work.",
     "developerName": "OpenAI",
     "category": "Design",

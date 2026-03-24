@@ -12,7 +12,7 @@ It currently includes these skills:
 ## What It Covers
 
 - translating Figma frames and components into production-ready UI code
-- inspecting design context and screenshots through the Figma MCP server
+- inspecting design context and screenshots through the connected Figma tools
 - connecting published Figma components to matching code components with Code Connect
 - generating project-specific design system rules for Figma-to-code workflows
 
@@ -28,14 +28,9 @@ with this shape:
   - required plugin manifest
   - defines plugin metadata and points Codex at the plugin contents
 
-- `.mcp.json`
-  - plugin-local MCP dependency manifest
-  - bundles the Figma MCP endpoint used by the bundled skills
-
 - `.app.json`
   - plugin-local app dependency manifest
-  - keeps the public Figma connector wiring explicit alongside the bundled
-    MCP-backed workflows
+  - points Codex at the connected Figma integration used by the bundled skills
 
 - `agents/`
   - plugin-level agent metadata
@@ -54,10 +49,10 @@ with this shape:
 
 ## Notes
 
-This plugin is MCP-backed through `.mcp.json` and currently depends on the
-Figma MCP server at `https://mcp.figma.com/mcp`. The bundled skills assume that
-the Figma MCP tools are available and that the user can supply Figma URLs with
-node IDs when needed.
+This plugin is app-backed through `.app.json` and uses the connected Figma
+integration for the bundled skills. The workflows assume that the Figma tools
+are available and that the user can supply Figma URLs with node IDs when
+needed.
 
 The current skill set is focused on three workflows:
 
@@ -65,6 +60,5 @@ The current skill set is focused on three workflows:
 - creating Code Connect mappings between published Figma components and code
 - generating durable project rules for future Figma-to-code work
 
-This public repo keeps the older connector wiring in `.app.json` while adding
-the MCP config, bundled skills, and example command or hook scaffolding that
-ship with the richer workflow bundle.
+This public repo keeps the bundled skills plus the example command, hook, and
+UI scaffolding alongside the app-backed plugin wiring.
