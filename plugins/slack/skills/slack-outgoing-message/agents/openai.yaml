@@ -1,7 +1,7 @@
 interface:
   display_name: "Slack Outgoing Message"
   short_description: "Compose final outbound Slack text"
-  icon_small: "../slack/assets/slack-small.svg"
-  icon_large: "../slack/assets/slack.svg"
+  icon_small: "./assets/slack-small.svg"
+  icon_large: "./assets/slack.png"
   brand_color: "#611F69"
   default_prompt: "Use $slack-outgoing-message to turn source context into final Slack-ready text for a draft, send, or canvas with correct mrkdwn and explicit Slack mentions."

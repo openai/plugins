@@ -1,7 +1,7 @@
 interface:
   display_name: "Slack Notification Triage"
   short_description: "Triage Slack attention signals"
-  icon_small: "../slack/assets/slack-small.svg"
-  icon_large: "../slack/assets/slack.svg"
+  icon_small: "./assets/slack-small.svg"
+  icon_large: "./assets/slack.png"
   brand_color: "#611F69"
   default_prompt: "Use $slack-notification-triage to triage recent Slack activity into what likely needs my attention, separating items that need a reply from things worth skimming."
