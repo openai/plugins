@@ -35,6 +35,8 @@
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": "Use Build iOS Apps to build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an iOS app on a simulator.",
     "brandColor": "#0A84FF",
+    "composerIcon": "./assets/build-ios-apps-small.svg",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
