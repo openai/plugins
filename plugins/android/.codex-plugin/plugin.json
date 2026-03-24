@@ -32,9 +32,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": [
-      "Use Android to reproduce an emulator issue with adb, then capture screenshots and logcat."
-    ],
+    "defaultPrompt": "Reproduce an emulator issue; capture logs.",
     "brandColor": "#3DDC84",
     "screenshots": []
   }
