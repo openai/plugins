@@ -1,7 +1,7 @@
 {
-  "name": "ios-design",
+  "name": "build-ios-apps",
   "version": "0.1.0",
-  "description": "iOS and Swift workflows for SwiftUI implementation, refactoring, performance audits, Liquid Glass adoption, and simulator debugging.",
+  "description": "Build iOS apps with workflows for SwiftUI UI work, refactors, performance audits, and simulator debugging.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -20,9 +20,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "iOS Design",
-    "shortDescription": "SwiftUI and iOS workflows for UI work, refactors, performance, and debugging",
-    "longDescription": "iOS and Swift workflows for building or refactoring SwiftUI UI, adopting Liquid Glass patterns, auditing runtime performance, and debugging apps on simulators with XcodeBuildMCP-backed workflows.",
+    "displayName": "Build iOS Apps",
+    "shortDescription": "Build, refine, and debug iOS apps with SwiftUI and Xcode workflows",
+    "longDescription": "Use Build iOS Apps to build or refactor SwiftUI UI, adopt modern iOS patterns such as Liquid Glass, audit runtime performance, and debug apps on simulators with XcodeBuildMCP-backed workflows.",
     "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [
@@ -33,7 +33,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Use iOS Design to build or refactor SwiftUI UI, audit performance, adopt Liquid Glass APIs, or debug an iOS app on a simulator.",
+    "defaultPrompt": "Use Build iOS Apps to build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an iOS app on a simulator.",
     "brandColor": "#0A84FF",
     "screenshots": []
   }

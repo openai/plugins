@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build iOS Apps"
+  short_description: "Build, refine, and debug iOS apps with SwiftUI and Xcode workflows"
+  default_prompt: "Use Build iOS Apps to build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an iOS app on a simulator."

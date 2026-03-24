@@ -3009,10 +3009,10 @@
       "category": "Coding"
     },
     {
-      "name": "ios-design",
+      "name": "build-ios-apps",
       "source": {
         "source": "local",
-        "path": "./plugins/ios-design"
+        "path": "./plugins/build-ios-apps"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -3021,10 +3021,10 @@
       "category": "Coding"
     },
     {
-      "name": "web-design",
+      "name": "build-web-apps",
       "source": {
         "source": "local",
-        "path": "./plugins/web-design"
+        "path": "./plugins/build-web-apps"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -3034,10 +3034,10 @@
       "category": "Coding"
     },
     {
-      "name": "android",
+      "name": "test-android-apps",
       "source": {
         "source": "local",
-        "path": "./plugins/android"
+        "path": "./plugins/test-android-apps"
       },
       "policy": {
         "installation": "AVAILABLE",

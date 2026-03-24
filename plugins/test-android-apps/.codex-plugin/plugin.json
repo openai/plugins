@@ -1,7 +1,7 @@
 {
-  "name": "android",
+  "name": "test-android-apps",
   "version": "0.1.0",
-  "description": "Android emulator QA workflows for adb-driven launch, input, UI-tree inspection, screenshots, and logcat capture.",
+  "description": "Test Android apps with emulator workflows for reproduction, screenshots, UI inspection, and log capture.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -20,9 +20,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Android",
-    "shortDescription": "Drive Android emulator QA workflows with adb",
-    "longDescription": "Use Android Emulator QA to build and install app variants, drive a booted Android emulator with adb input events, inspect UI trees, capture screenshots, and collect logcat output while reproducing issues.",
+    "displayName": "Test Android Apps",
+    "shortDescription": "Reproduce issues, inspect UI, and capture evidence from Android emulators",
+    "longDescription": "Use Test Android Apps to build and install app variants, drive a booted Android emulator with adb input events, inspect UI trees, capture screenshots, and collect logcat output while reproducing issues.",
     "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [
@@ -33,7 +33,7 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Use Android to reproduce an emulator issue with adb, then capture screenshots and logcat."
+      "Use Test Android Apps to reproduce an emulator issue with adb, then capture screenshots, UI state, and logcat."
     ],
     "brandColor": "#3DDC84",
     "screenshots": []

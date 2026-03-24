@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Android Apps"
+  short_description: "Reproduce issues, inspect UI, and capture evidence from Android emulators"
+  default_prompt: "Use Test Android Apps to build an app, launch it on a booted emulator, reproduce the issue with adb-driven UI steps, and capture screenshots plus logs."

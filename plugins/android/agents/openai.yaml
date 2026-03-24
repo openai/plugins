@@ -1,4 +1,0 @@
-interface:
-  display_name: "Android"
-  short_description: "Drive Android emulator QA workflows with adb"
-  default_prompt: "Use Android to build an app, launch it on a booted emulator, reproduce the issue with adb-driven UI steps, and capture screenshots plus logs."

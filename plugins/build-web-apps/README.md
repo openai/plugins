@@ -1,6 +1,6 @@
-# Web Design Plugin
+# Build Web Apps Plugin
 
-This plugin packages builder-oriented workflows in `plugins/web-design`.
+This plugin packages builder-oriented workflows in `plugins/build-web-apps`.
 
 It currently includes these skills:
 
@@ -32,7 +32,7 @@ It is scaffolded to use these plugin-local MCP servers:
 
 The plugin now lives at:
 
-- `plugins/web-design/`
+- `plugins/build-web-apps/`
 
 with this shape:
 

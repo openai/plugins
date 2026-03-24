@@ -1,6 +1,6 @@
-# iOS Design Plugin
+# Build iOS Apps Plugin
 
-This plugin packages iOS and Swift workflows in `plugins/ios-design`.
+This plugin packages iOS and Swift workflows in `plugins/build-ios-apps`.
 
 It currently includes these skills:
 
@@ -22,7 +22,7 @@ It currently includes these skills:
 
 The plugin now lives at:
 
-- `plugins/ios-design/`
+- `plugins/build-ios-apps/`
 
 with this shape:
 

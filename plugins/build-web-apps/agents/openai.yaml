@@ -1,7 +1,7 @@
 interface:
-  display_name: "Web Design"
-  short_description: "Use Web Design to review UI, improve React apps, and ship products"
-  default_prompt: "Use Web Design to review a web app's UI, improve the React implementation, and help ship it with Vercel, Supabase, and Stripe when needed."
+  display_name: "Build Web Apps"
+  short_description: "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases"
+  default_prompt: "Use Build Web Apps to review a web app's UI, improve the React implementation, wire up payments or database changes, and help deploy it."
 
 dependencies:
   tools:

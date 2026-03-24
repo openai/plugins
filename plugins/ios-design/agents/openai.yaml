@@ -1,4 +1,0 @@
-interface:
-  display_name: "iOS Design"
-  short_description: "Use iOS and Swift skills for SwiftUI implementation, refactors, performance work, and debugging"
-  default_prompt: "Use iOS Design to build or refactor SwiftUI UI, audit performance, adopt Liquid Glass APIs, or debug an iOS app on a simulator."
