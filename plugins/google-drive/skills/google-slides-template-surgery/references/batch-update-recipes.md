@@ -108,7 +108,7 @@ Use this when a specific text box should be preserved structurally but its conte
 
 Use this for geometry adjustments when the object already exists and only its position or scale is wrong.
 
-## Few-shot: normalize a repeated metric card against a polished target
+## Few-shot: normalize a repeated card family against a polished target
 
 Use this pattern when you have:
 - a stale slide that is structurally close but visually loose, and
@@ -117,6 +117,13 @@ Use this pattern when you have:
 Representative stale-to-polished delta from a dashboard card:
 - stale card: label, value, target, arrow, delta, and accent bar exist, but their baselines drift and same-state primitives are not normalized
 - polished card: label is smaller than the value, target is lighter and smaller than the value, delta color matches the arrow and accent bar, and the bar and arrow use the same size treatment as sibling cards
+
+Common middle state after pass 1:
+- the stale slide is better because colors and core objects are now present, but the repeated family still looks rough
+- same-role primitives are present but not normalized, such as uneven bar heights, drifting arrow scales, or delta rows that sit on slightly different baselines
+- hierarchy is improved, but the slide still needs a second pass to align sibling cards into one system rather than a set of individually readable fixes
+
+Treat that middle state as contrast, not as a recipe to copy. Use it to decide what pass 2 must clean up before the slide is presentation-ready.
 
 ```json
 [

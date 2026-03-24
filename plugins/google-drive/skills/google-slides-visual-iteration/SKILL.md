@@ -127,18 +127,27 @@ Use this as the default shape of a strong slide-local cleanup:
 - Pass 3, polish:
   improve hierarchy, whitespace, and visual balance so the slide feels finished rather than merely repaired.
 
+Common middle state after pass 1:
+- colors, arrows, bars, or key graphics are now present, but sibling primitives still look uneven
+- text hierarchy is better, but labels, targets, or delta rows still sit on different baselines
+- the slide is clearly improved over the stale version, but it still looks like a draft repair rather than a finished composition
+
+Do not stop in that middle state. Treat it as the normal trigger for pass 2.
+
 If pass 3 still finds an area that looks slightly off, awkwardly spaced, or visually lopsided, run another pass. Do not stop just because the content is now readable.
 
 ## Few-Shot Alignment Example
 
 - Stale metric dashboard:
   the slide has the right objects, but repeated cards still feel uneven because bar heights drift, target labels are too heavy, delta rows sit on different baselines, and same-state colors are inconsistent.
+- Better but not done:
+  the slide now has the right colors and rough structure, but sibling primitives still do not line up cleanly enough to read as one system.
 - Stronger hand-polished target:
   the slide uses one shared hierarchy across cards, consistent primitive sizes, and one state palette per meaning. The cards read as a system instead of eight independent edits.
 - What to copy from the stronger target:
   use the target slide's bar width and height treatment, arrow scale, label/value/target/delta text hierarchy, and row spacing as the geometry truth for the stale slide.
 - What not to do:
-  do not update one card at a time by eye and stop once each card is individually readable. The goal is family-level consistency.
+  do not update one card at a time by eye and stop once each card is individually readable. The goal is family-level consistency, not just a slide that is less broken than before.
 
 ## Slide-Level Heuristics
 
