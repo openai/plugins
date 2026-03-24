@@ -1,6 +1,8 @@
 interface:
   display_name: "Build Web Apps"
   short_description: "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases"
+  icon_small: "./assets/build-web-apps-small.svg"
+  icon_large: "./assets/app-icon.png"
   default_prompt: "Use Build Web Apps to review a web app's UI, improve the React implementation, wire up payments or database changes, and help deploy it."
 
 dependencies:
