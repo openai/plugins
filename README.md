@@ -9,7 +9,7 @@ Each plugin lives under `plugins/<name>/` with a required
 
 Highlighted richer examples in this repo include:
 
-- `plugins/figma` for design-to-code, Code Connect, and design system rules
+- `plugins/figma` for `use_figma`, Code to Canvas, Code Connect, and design system rules
 - `plugins/notion` for planning, research, meetings, and knowledge capture
 - `plugins/ios-design` for SwiftUI implementation, refactors, performance, and debugging
 - `plugins/web-design` for deployment, UI, payments, and database workflows
