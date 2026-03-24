@@ -4,11 +4,3 @@ interface:
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"
   default_prompt: "Turn this Notion spec into an implementation plan with milestones, tasks, and dependencies."
-
-dependencies:
-  tools:
-    - type: "mcp"
-      value: "notion"
-      description: "Notion MCP server"
-      transport: "streamable_http"
-      url: "https://mcp.notion.com/mcp"

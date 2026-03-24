@@ -17,15 +17,12 @@ Pull relevant Notion pages, synthesize findings, and publish clear briefs or rep
 5) Link sources and add a references/citations section; update as new info arrives with `Notion:notion-update-page`.
 
 ## Workflow
-### 0) If any MCP call fails because Notion MCP is not connected, pause and set it up:
-1. Add the Notion MCP:
-   - `codex mcp add notion --url https://mcp.notion.com/mcp`
-2. Enable remote MCP client:
-   - Set `[features].rmcp_client = true` in `config.toml` **or** run `codex --enable rmcp_client`
-3. Log in with OAuth:
-   - `codex mcp login notion`
+### 0) If Notion tools are unavailable, pause and ask the user to connect the Notion app:
+1. Enable the bundled Notion app for this plugin or session.
+2. Complete the Notion auth flow if Codex prompts for it.
+3. Restart Codex or the current session if the tools still do not appear.
 
-After successful login, the user will have to restart codex. You should finish your answer and tell them so when they try again they can continue with Step 1.
+After the app is connected, finish your answer and tell the user to retry so they can continue with Step 1.
 
 ### 1) Gather sources
 - Search first (`Notion:notion-search`); refine queries, and ask the user to confirm if multiple results appear.

@@ -4,11 +4,3 @@ interface:
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"
   default_prompt: "Prepare this meeting from Notion context with a brief, agenda, decisions needed, and open questions."
-
-dependencies:
-  tools:
-    - type: "mcp"
-      value: "notion"
-      description: "Notion MCP server"
-      transport: "streamable_http"
-      url: "https://mcp.notion.com/mcp"
