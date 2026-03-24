@@ -8,12 +8,13 @@ description: Summarize Slack conversations and draft channel-ready posts. Use wh
 ## Overview
 
 Use this skill to turn channel and thread context into concise, post-ready Slack communication. Read the conversation first, preserve the intended audience and tone, and format messages with Slack-native mrkdwn.
+If the task will produce outgoing Slack text, switch to [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) before finalizing and reread that file's `## Formatting Rules` section immediately before any draft or send.
 
 ## Related Skills
 
 | Workflow | Skill |
 | --- | --- |
-| Compose final outbound Slack text, drafts, sends, and canvases | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
+| Message composition, rewrites, drafts, and canvas-writing workflows | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
 | Bounded channel recaps and thematic Slack summaries | [../slack-channel-summarization/SKILL.md](../slack-channel-summarization/SKILL.md) |
 | Daily digests across selected channels or topics | [../slack-daily-digest/SKILL.md](../slack-daily-digest/SKILL.md) |
 | Find messages that likely need a response and prepare reply drafts | [../slack-reply-drafting/SKILL.md](../slack-reply-drafting/SKILL.md) |
@@ -46,6 +47,7 @@ Use this skill to turn channel and thread context into concise, post-ready Slack
 
 - Prefer a short opener, a few tight bullets, and a clear ask or next step.
 - Use mrkdwn formatting rules from `references/mrkdwn.md` for emphasis, lists, links, quotes, mentions, and code.
+- For any outgoing Slack text, use the `slack-outgoing-message` skill.
 - Distinguish clearly between a private summary for the user and a post-ready message for Slack.
 - When summarizing a thread, lead with the latest status and then list blockers, decisions, and owners.
 - When drafting a reply, match the tone of the channel and avoid over-formatting.

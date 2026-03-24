@@ -11,7 +11,7 @@ Use this skill to identify messages that likely need a reply and produce Slack-r
 
 | Workflow | Skill |
 | --- | --- |
-| Refine, draft, or send the final Slack text | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
+| Refine, draft, or send the final Slack text | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
 
 ## Start Here
 
@@ -38,30 +38,33 @@ Use this skill to identify messages that likely need a reply and produce Slack-r
    - named person or DM: `slack_search_users`, then `slack_search_public_and_private`
    - bounded keyword search: `slack_search_public_and_private`
 4. If no scope was provided, search these default categories:
-   - unanswered direct conversations: `slack_search_public_and_private` across `im,mpim`, then `slack_read_channel` to keep conversations where the latest relevant message is from someone else
+   - unanswered direct conversations: `slack_search_public_and_private` across `im,mpim` to generate candidate conversations, then `slack_read_channel` for each plausible candidate before deciding whether it needs a reply; do not decide from the search snippet alone
    - direct mentions: `slack_search_public_and_private` with `query` set to `<@USER_ID>`
    - threads with prior user participation: `slack_search_public_and_private` with `query` set to `from:<@USER_ID> is:thread`, then `slack_read_thread` for newer replies
    - threads with prior user mention: `slack_search_public_and_private` with `query` set to `<@USER_ID> is:thread`, then `slack_read_thread` for newer replies after the mention
-5. Keep only candidates where the latest relevant message is from someone else, or where newer replies appeared after the user's last reply or mention.
+5. Keep only candidates where the latest unresolved ask is from someone else, or where newer replies appeared after the user's last substantive reply or mention. Do not count emoji-only, acknowledgement-only, or other non-answer chatter from the user as a reply.
 6. Expand only the threads or surrounding messages needed to answer accurately. Answer the question first, then add clarification or next steps when the context supports it.
 7. If the context is incomplete, write the smallest useful clarifying reply instead of pretending the answer is known.
-8. Create the draft with `slack_send_message_draft`, and *only* nclude `thread_ts` for real thread replies.
+8. Create the draft with `slack_send_message_draft` in the source channel or DM. Include `thread_ts` only for thread replies; otherwise omit the parameter entirely. If Slack returns `draft_already_exists`, stop and tell the user you cannot overwrite the existing attached draft via API.
 
 ## Drafting Rules
 
-- Use the [../slack-messages/SKILL.md](../slack-messages/SKILL.md) skill to draft outgoing Slack text.
+- Use the [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) skill to draft outgoing Slack text.
 
 ## Formatting
+
+- For a concise Slack or chat summary, you MUST use exactly this structure unless the user explicitly requests a different format.
+- If you use `../slack-outgoing-message/SKILL.md` to draft or send the final message, this output contract remains binding. The downstream skill does not relax or rename these sections.
 
 Format multiple drafts as:
 
 ```md
-*Reply Drafts — <scope>*
+**Reply Drafts — <scope>**
 
-*<channel / DM / thread info>*
+**<channel / DM / thread info>**
 Draft: <link to draft>
 
-*<channel / DM / thread info>*
+**<channel / DM / thread info>**
 Draft: <link to draft>
 ```
 

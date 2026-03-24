@@ -19,33 +19,55 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 3. Named channels: Resolve IDs through `slack_search_channels`, then call `slack_read_channel` for today's window with `limit` at `50` per channel.
 4. Named topics: Use `slack_search_public_and_private` for each topic phrase. If channels were also provided, run one search per topic and channel with `query` set to `<topic phrase> in:<#CHANNEL_ID>` so the search stays inside the selected channels. If no channels were provided, set `query` to the topic phrase. Then read the returned channels with `slack_read_channel` or parent threads with `slack_read_thread` when a result looks important.
 5. Prioritize decisions, blockers, incidents, asks, ownership changes, deadline changes, and status changes.
+6. Read the full `## Formatting Rules` section below.
 
-## Formatting
+## Formatting Rules
 
-Format the digest as:
+- For a concise Slack or chat summary, you MUST use exactly this structure unless the user explicitly requests a different format.
+- If you use `../slack-messages/SKILL.md` to draft or send the final message, this output contract remains binding. The downstream skill does not relax or rename these sections.
 
 ```md
-*Daily Slack Digest — YYYY-MM-DD*
+*Daily Slack Digest - YYYY-MM-DD*
+[ZWSP line]
+*Scope*
+[ZWSP line]
+- <channels + topics + time window>
+- <coverage note or omitted-channel caveat, if any>
 
-*Scope:* <channels + topics + time window + coverage note>
-*Summary:* <1–2 line overview of volume + key signals>
+[blank line]
+[ZWSP line]
+*Summary*
+[ZWSP line]
+<1-2 sentence summary of volume + key signals>
 
-*Details (by <channel|topic>)*
-*<Group 1>*
+[blank line]
+[ZWSP line]
+*Topic: <group 1>*
+[ZWSP line]
 - ...
 - ...
 
-*<Group 2>*
+[blank line]
+[ZWSP line]
+*Topic: <group 2>*
+[ZWSP line]
 - ...
 - ...
 
+[blank line]
+[ZWSP line]
 *Needs attention*
+[ZWSP line]
 - ...
 
+[blank line]
+[ZWSP line]
 *Notes*
+[ZWSP line]
 - <gaps, absences, or caveats>
 ```
 
+- Group the digest by topic or channel, whichever better matches the request.
 - Use short group headers and keep each group to 1–3 bullets.
 - Keep the digest compact; aim for 4–10 bullets total across all sections.
 - Start each bullet with the key update, then add implication, owner, blocker, or action if relevant.
@@ -53,4 +75,4 @@ Format the digest as:
 - If grouping by channel, include the topic when helpful.
 - Preserve exact channel names.
 - Include *Needs attention* only for items requiring user action, decisions, or input.
-- Include *Notes* for gaps, absences, sparse results, or caveats.
+- Include *Notes* for gaps, absences, sparse results, or caveats.the exact safe transition required by `../slack-messages/SKILL.md`: prior content line, true blank line, `U+200B` line, next `*Section*` label, `U+200B` line, section content.
