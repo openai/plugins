@@ -108,6 +108,245 @@ Use this when a specific text box should be preserved structurally but its conte
 
 Use this for geometry adjustments when the object already exists and only its position or scale is wrong.
 
+## Few-shot: normalize a repeated metric card against a polished target
+
+Use this pattern when you have:
+- a stale slide that is structurally close but visually loose, and
+- a stronger manually polished target slide that shows the intended row spacing, text hierarchy, and primitive sizes.
+
+Representative stale-to-polished delta from a dashboard card:
+- stale card: label, value, target, arrow, delta, and accent bar exist, but their baselines drift and same-state primitives are not normalized
+- polished card: label is smaller than the value, target is lighter and smaller than the value, delta color matches the arrow and accent bar, and the bar and arrow use the same size treatment as sibling cards
+
+```json
+[
+  {
+    "updatePageElementTransform": {
+      "objectId": "card-1-bar",
+      "applyMode": "ABSOLUTE",
+      "transform": {
+        "scaleX": 0.0467,
+        "scaleY": 0.537,
+        "translateX": 300000,
+        "translateY": 951500,
+        "unit": "EMU",
+        "shearX": 0,
+        "shearY": 0
+      }
+    }
+  },
+  {
+    "updateShapeProperties": {
+      "objectId": "card-1-bar",
+      "shapeProperties": {
+        "shapeBackgroundFill": {
+          "solidFill": {
+            "color": {
+              "rgbColor": {
+                "red": 0.20392157,
+                "green": 0.65882355,
+                "blue": 0.3254902
+              }
+            }
+          }
+        },
+        "outline": {
+          "propertyState": "NOT_RENDERED"
+        }
+      },
+      "fields": "shapeBackgroundFill.solidFill.color,outline.propertyState"
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "card-1-label",
+      "textRange": {
+        "type": "ALL"
+      },
+      "style": {
+        "fontSize": {
+          "magnitude": 16,
+          "unit": "PT"
+        }
+      },
+      "fields": "fontSize"
+    }
+  },
+  {
+    "updatePageElementTransform": {
+      "objectId": "card-1-label",
+      "applyMode": "ABSOLUTE",
+      "transform": {
+        "scaleX": 0.5333,
+        "scaleY": 0.1117,
+        "translateX": 470050,
+        "translateY": 943350,
+        "unit": "EMU",
+        "shearX": 0,
+        "shearY": 0
+      }
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "card-1-value",
+      "textRange": {
+        "type": "ALL"
+      },
+      "style": {
+        "fontSize": {
+          "magnitude": 24,
+          "unit": "PT"
+        },
+        "bold": true
+      },
+      "fields": "fontSize,bold"
+    }
+  },
+  {
+    "updatePageElementTransform": {
+      "objectId": "card-1-value",
+      "applyMode": "ABSOLUTE",
+      "transform": {
+        "scaleX": 0.5,
+        "scaleY": 0.1333,
+        "translateX": 520000,
+        "translateY": 1200100,
+        "unit": "EMU",
+        "shearX": 0,
+        "shearY": 0
+      }
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "card-1-target",
+      "textRange": {
+        "type": "ALL"
+      },
+      "style": {
+        "fontSize": {
+          "magnitude": 12,
+          "unit": "PT"
+        },
+        "foregroundColor": {
+          "opaqueColor": {
+            "rgbColor": {
+              "red": 0.47058824,
+              "green": 0.5019608,
+              "blue": 0.54901963
+            }
+          }
+        }
+      },
+      "fields": "fontSize,foregroundColor"
+    }
+  },
+  {
+    "updatePageElementTransform": {
+      "objectId": "card-1-target",
+      "applyMode": "ABSOLUTE",
+      "transform": {
+        "scaleX": 0.5,
+        "scaleY": 0.06,
+        "translateX": 520000,
+        "translateY": 1629950,
+        "unit": "EMU",
+        "shearX": 0,
+        "shearY": 0
+      }
+    }
+  },
+  {
+    "updatePageElementTransform": {
+      "objectId": "card-1-arrow",
+      "applyMode": "ABSOLUTE",
+      "transform": {
+        "scaleX": 0.0867,
+        "scaleY": 0.0867,
+        "translateX": 520000,
+        "translateY": 2199950,
+        "unit": "EMU",
+        "shearX": 0,
+        "shearY": 0
+      }
+    }
+  },
+  {
+    "updateShapeProperties": {
+      "objectId": "card-1-arrow",
+      "shapeProperties": {
+        "shapeBackgroundFill": {
+          "solidFill": {
+            "color": {
+              "rgbColor": {
+                "red": 0.20392157,
+                "green": 0.65882355,
+                "blue": 0.3254902
+              }
+            }
+          }
+        },
+        "outline": {
+          "propertyState": "NOT_RENDERED"
+        }
+      },
+      "fields": "shapeBackgroundFill.solidFill.color,outline.propertyState"
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "card-1-delta",
+      "textRange": {
+        "type": "ALL"
+      },
+      "style": {
+        "fontSize": {
+          "magnitude": 14,
+          "unit": "PT"
+        },
+        "bold": true,
+        "foregroundColor": {
+          "opaqueColor": {
+            "rgbColor": {
+              "red": 0.20392157,
+              "green": 0.65882355,
+              "blue": 0.3254902
+            }
+          }
+        }
+      },
+      "fields": "fontSize,bold,foregroundColor"
+    }
+  },
+  {
+    "updatePageElementTransform": {
+      "objectId": "card-1-delta",
+      "applyMode": "ABSOLUTE",
+      "transform": {
+        "scaleX": 0.3667,
+        "scaleY": 0.1117,
+        "translateX": 780100,
+        "translateY": 2161450,
+        "unit": "EMU",
+        "shearX": 0,
+        "shearY": 0
+      }
+    }
+  }
+]
+```
+
+Use this as a geometry-and-style template, not as a one-card-only fix.
+
+- Apply the same primitive sizes across sibling cards in the same family:
+  - accent bars should share one width treatment
+  - arrows should share one scale treatment
+  - labels, primary values, targets, and deltas should share a consistent type hierarchy
+- Apply one state palette across the whole row or deck slice. If the source says `GREEN`, do not let some same-state bars, arrows, or delta labels drift to slightly different greens.
+- Normalize both geometry and style. A card is still stale if the numbers updated but the bar height, arrow scale, or label baseline differs from its siblings.
+- If a polished target slide exists, use its transforms as the alignment source of truth instead of eyeballing each card independently.
+
 ## Update a shape fill and border
 
 ```json
@@ -408,6 +647,8 @@ Use this for a small benchmark, caption, or one-line helper label.
 - Using `updateShapeProperties` on a connector or `updateLineProperties` on a filled shape
 - Assuming `translateX` and `translateY` target the element center instead of the upper-left corner
 - Creating a large or tall text box for a tiny one-line label, then leaving the label visually low inside the box
+- Updating one repeated card or primitive in isolation and leaving sibling cards with mismatched bar heights, arrow scales, or text baselines
+- Letting same-state colors drift so one "green" bar, arrow, or delta label does not match the others
 - Stringified JSON instead of structured objects
 - Giant batches mixing duplication, deletion, movement, and copy changes all at once
 - Calling a visual edit complete because the text changed while the non-text styling stayed stale

@@ -47,6 +47,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - For dashboards, scorecards, or metric grids, map the small benchmark or target text boxes separately from the main headline values. Do not assume the smaller target text is part of the same text object as the large value.
 - Before declaring a visual element blocked, classify it as a shape, a line or connector, or an image. Then choose the matching raw request family from [batch-update-recipes](./batch-update-recipes.md).
 - When positioning a new text box relative to another object, remember that Slides transforms use the text box's upper-left corner, not its center. Compute the target top-left from the desired visual center and the new text box footprint before writing.
+- If the user provides or implies a stronger manually polished target slide, treat that target as an explicit alignment and styling reference rather than trying to invent the layout card by card.
 - If the current write changes visible text flow, geometry, or styling, follow [visual-change-loop](./visual-change-loop.md) and treat this reference as the slide-local expanded version of that recipe.
 
 3. Start with a thumbnail.
@@ -88,6 +89,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - If an arrow direction is wrong because the existing element is the wrong shape type, or if a shape is too broken to patch safely, delete and recreate it in the same footprint rather than leaving stale visual state behind.
 - Do not call a shape-style miss a hard API limitation until you have attempted the matching non-text request family or confirmed that the object is actually an image.
 - If multiple boxes or sections are part of a visible group, align their headers, icons, top text baselines, and body starting positions unless the stagger is clearly intentional.
+- For repeated card families, normalize the primitives across siblings: matching accent-bar widths, matching arrow scales, matching muted target text treatment, and matching state colors for bars, arrows, and delta labels.
 - Do not default to shrinking font size, tightening line spacing, or squishing elements closer together just to make the slide fit.
 - If content still does not fit cleanly after a reasonable structural pass, split the content across slides or escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of repeatedly compressing the layout.
 - Keep each pass narrow enough that the effect is understandable, but strong enough to visibly improve the slide.
@@ -126,6 +128,17 @@ Use this as the default shape of a strong slide-local cleanup:
   improve hierarchy, whitespace, and visual balance so the slide feels finished rather than merely repaired.
 
 If pass 3 still finds an area that looks slightly off, awkwardly spaced, or visually lopsided, run another pass. Do not stop just because the content is now readable.
+
+## Few-Shot Alignment Example
+
+- Stale metric dashboard:
+  the slide has the right objects, but repeated cards still feel uneven because bar heights drift, target labels are too heavy, delta rows sit on different baselines, and same-state colors are inconsistent.
+- Stronger hand-polished target:
+  the slide uses one shared hierarchy across cards, consistent primitive sizes, and one state palette per meaning. The cards read as a system instead of eight independent edits.
+- What to copy from the stronger target:
+  use the target slide's bar width and height treatment, arrow scale, label/value/target/delta text hierarchy, and row spacing as the geometry truth for the stale slide.
+- What not to do:
+  do not update one card at a time by eye and stop once each card is individually readable. The goal is family-level consistency.
 
 ## Slide-Level Heuristics
 
