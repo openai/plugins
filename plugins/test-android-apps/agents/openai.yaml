@@ -1,4 +1,6 @@
 interface:
   display_name: "Test Android Apps"
   short_description: "Reproduce issues, inspect UI, and capture evidence from Android emulators"
+  icon_small: "./assets/test-android-apps-small.svg"
+  icon_large: "./assets/app-icon.png"
   default_prompt: "Use Test Android Apps to build an app, launch it on a booted emulator, reproduce the issue with adb-driven UI steps, and capture screenshots plus logs."

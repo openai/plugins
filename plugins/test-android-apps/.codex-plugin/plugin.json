@@ -36,6 +36,8 @@
       "Use Test Android Apps to reproduce an emulator issue with adb, then capture screenshots, UI state, and logcat."
     ],
     "brandColor": "#3DDC84",
+    "composerIcon": "./assets/test-android-apps-small.svg",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
