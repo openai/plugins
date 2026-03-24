@@ -7,25 +7,12 @@ description: Inspect and edit Google Docs documents with index-aware batch updat
 
 Use this guide for precise Google Docs reading, editing, and creation.
 
-## Required Tooling
-
-Confirm these tools are available:
-- `search_documents`
-- `get_document`
-- `get_document_text`
-- `find_text_range`
-- `get_paragraph_range`
-- `get_tables`
-- `batch_update`
-
-If write tooling is missing, stop and explain that the document cannot be edited safely.
-
 ## Read Path
 
-- If you only know the doc title or title keywords, use `search_documents` first instead of asking for a URL.
+- If you only know the doc title or title keywords, use `search` first instead of asking for a URL.
 - Prefer `get_document_text` when you need paragraph text and indexes.
 - Use `get_document` when you need the full document structure, styles, or non-text elements.
-- Prefer `find_text_range` over hand-picked indexes when you can anchor on exact text.
+- Prefer `find_document_text_range` over hand-picked indexes when you can anchor on exact text.
 - Use `get_paragraph_range` when you have an index inside a paragraph and need its full boundaries.
 - Use `get_tables` before editing or rebuilding table content.
 - If the doc has tabs, use `get_document` to identify the right tab and carry `tab_id` through follow-up reads.
@@ -39,8 +26,8 @@ If write tooling is missing, stop and explain that the document cannot be edited
 
 2. Find live indexes.
 - Use `get_document_text` to get all paragraphs along with their indices.
-- Use `find_text_range` when you can anchor on exact text.
-- Use `get_paragraph_range` when you need the full paragraph range around an index.
+- Use `find_document_text_range` when you can anchor on exact text.
+- Use `get_document_paragraph_range` when you need a single paragraph's range around an index.
 - Do not guess offsets after prior writes.
 - After many edits, call `get_document` or `get_document_text` again before the next batch.
 
