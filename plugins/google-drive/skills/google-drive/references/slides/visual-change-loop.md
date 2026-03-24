@@ -26,6 +26,7 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Use `updateLineProperties` for connector or line strokes.
 - If the element is the wrong shape type, or too broken to patch safely, delete and recreate it in the same footprint.
 - Do not call an element blocked until you have classified it as a shape, line or connector, or image.
+- When moving or creating a text box, remember Slides transforms are upper-left-based. Do not aim a new text box at another object's center without converting that desired center into the new box's top-left corner.
 
 4. Make one coherent write pass.
 - Batch the related fixes for that local issue cluster together.
@@ -37,6 +38,7 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Fetch another thumbnail right after the write.
 - Confirm both text and non-text visual targets actually changed.
 - If the write fixed the main text but left stale bars, arrows, borders, wrapping, or collisions, the slide is not done.
+- If a new small label looks one line low, visually offset, or miscentered relative to its neighbors, the slide is not done. Re-read the slide and tighten the text box geometry before moving on.
 
 6. Run a second and third fresh review loop.
 - Start each additional loop from a fresh thumbnail review, not from memory.

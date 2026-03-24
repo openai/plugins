@@ -7,6 +7,8 @@ Use these patterns as copy-and-fill templates. Do not invent raw `batch_update` 
 - Each request object must set exactly one request type key.
 - Use live `objectId` values from `get_slide`.
 - Classify the target as a text box, shape, line or connector, or image before choosing a request family.
+- Remember that Slides `translateX` and `translateY` place the element's upper-left corner, not its center.
+- When centering a new element relative to another object, compute the target top-left from the desired visual center and the new element's rendered width and height.
 - Keep batches small.
 - Re-fetch a thumbnail after every batch.
 - If the batch changed visible layout or styling, continue through [visual-change-loop](./visual-change-loop.md) and do not stop before the third fresh review.
@@ -333,6 +335,70 @@ Use this when rebuilding a content zone is simpler than repairing a broken eleme
 
 Use this immediately after `createShape` for text boxes.
 
+## Create a tight single-line label
+
+```json
+[
+  {
+    "createShape": {
+      "objectId": "shape-small-label-1",
+      "shapeType": "TEXT_BOX",
+      "elementProperties": {
+        "pageObjectId": "slide-1",
+        "size": {
+          "width": {
+            "magnitude": 1400000,
+            "unit": "EMU"
+          },
+          "height": {
+            "magnitude": 320000,
+            "unit": "EMU"
+          }
+        },
+        "transform": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "translateX": 1320000,
+          "translateY": 2260000,
+          "unit": "EMU",
+          "shearX": 0,
+          "shearY": 0
+        }
+      }
+    }
+  },
+  {
+    "insertText": {
+      "objectId": "shape-small-label-1",
+      "insertionIndex": 0,
+      "text": "110%"
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "shape-small-label-1",
+      "textRange": {
+        "type": "ALL"
+      },
+      "style": {
+        "fontSize": {
+          "magnitude": 12,
+          "unit": "PT"
+        }
+      },
+      "fields": "fontSize"
+    }
+  }
+]
+```
+
+Use this for a small benchmark, caption, or one-line helper label.
+
+- Keep the text box footprint tight to the intended label. Do not reuse a tall placeholder box for a short single-line value.
+- The `translateX` and `translateY` values above are top-left coordinates, not the label's center point.
+- If the desired visual center is `C`, compute the top-left as `C - (width / 2, height / 2)` before sending the request.
+- If the next thumbnail shows the text sitting visibly low or off-center, tighten the text-box height or nudge the top-left in a second pass. Treat that as a geometry miss, not a reason to stop.
+
 ## Common Failure Modes
 
 - Wrong request key count: one object containing both `insertText` and `deleteObject`
@@ -340,6 +406,8 @@ Use this immediately after `createShape` for text boxes.
 - Updating the main headline value text and forgetting the smaller target or benchmark text box nearby
 - Treating an arrow or accent bar as “uneditable” without first checking whether it is a shape or a line
 - Using `updateShapeProperties` on a connector or `updateLineProperties` on a filled shape
+- Assuming `translateX` and `translateY` target the element center instead of the upper-left corner
+- Creating a large or tall text box for a tiny one-line label, then leaving the label visually low inside the box
 - Stringified JSON instead of structured objects
 - Giant batches mixing duplication, deletion, movement, and copy changes all at once
 - Calling a visual edit complete because the text changed while the non-text styling stayed stale

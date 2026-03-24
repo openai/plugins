@@ -46,6 +46,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - For screenshot-to-chart swaps sourced from Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md) before the first write so the replace flow stays grounded in live chart IDs and placeholder geometry.
 - For dashboards, scorecards, or metric grids, map the small benchmark or target text boxes separately from the main headline values. Do not assume the smaller target text is part of the same text object as the large value.
 - Before declaring a visual element blocked, classify it as a shape, a line or connector, or an image. Then choose the matching raw request family from [batch-update-recipes](./batch-update-recipes.md).
+- When positioning a new text box relative to another object, remember that Slides transforms use the text box's upper-left corner, not its center. Compute the target top-left from the desired visual center and the new text box footprint before writing.
 - If the current write changes visible text flow, geometry, or styling, follow [visual-change-loop](./visual-change-loop.md) and treat this reference as the slide-local expanded version of that recipe.
 
 3. Start with a thumbnail.
@@ -80,6 +81,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Be aggressive enough to materially improve the slide in each pass. Do not make timid edits that technically move elements but leave the slide still looking broken.
 - Batch related fixes together when they affect the same slide structure, such as overflow plus alignment plus inconsistent spacing in one column or card set.
 - Prefer moving, resizing, reflowing, redistributing, or re-aligning existing elements over rewriting the slide.
+- For small labels, benchmark values, or captions, prefer reusing an existing text box when possible. If you must create a new one, keep its footprint tight to the intended line of text rather than dropping the text into a large placeholder box.
 - When the target element is a screenshot placeholder for a chart, treat delete-and-replace as the default move: preserve the existing footprint, insert the source chart, and remove obsolete chart-area text when it is clearly placeholder copy.
 - For metric cards, summary strips, or scorecard rows, treat the main value, target value, delta text, arrow, and accent bar as one local edit cluster. Do not stop after changing only the visible headline text if nearby target text or non-text styling is now stale.
 - Prefer `updateShapeProperties` for fills and borders on existing shapes, and `updateLineProperties` for connectors or line-based arrows that already exist.
@@ -97,6 +99,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Confirm the targeted issue cluster is actually fixed before moving on.
 - Verify that small target or benchmark text changed along with the main headline value when both were in scope.
 - Verify that accent bars, arrow shapes, borders, and connector strokes changed visually, not just the text around them.
+- Verify that newly placed text labels sit optically centered in their intended lane or container. If the text looks one line low or offset relative to nearby elements, treat that as unfinished geometry.
 - If a fix introduced a new collision, imbalance, or cramped layout, correct that next instead of blindly continuing.
 - After each verification thumbnail, do a fresh read of the current slide before the next write pass if more edits are needed.
 
