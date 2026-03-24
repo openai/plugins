@@ -24,7 +24,7 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 ## Formatting Rules
 
 - For a concise Slack or chat summary, you MUST use exactly this structure unless the user explicitly requests a different format.
-- If you use `../slack-messages/SKILL.md` to draft or send the final message, this output contract remains binding. The downstream skill does not relax or rename these sections.
+- If you use `../slack-outgoing-message/SKILL.md` to draft or send the final message, this output contract remains binding. The downstream skill does not relax or rename these sections.
 
 ```md
 *Daily Slack Digest - YYYY-MM-DD*
@@ -75,4 +75,5 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 - If grouping by channel, include the topic when helpful.
 - Preserve exact channel names.
 - Include *Needs attention* only for items requiring user action, decisions, or input.
-- Include *Notes* for gaps, absences, sparse results, or caveats.the exact safe transition required by `../slack-messages/SKILL.md`: prior content line, true blank line, `U+200B` line, next `*Section*` label, `U+200B` line, section content.
+- Include *Notes* for gaps, absences, sparse results, or caveats.
+- Between sections, use the exact safe transition required by `../slack-outgoing-message/SKILL.md`: prior content line, true blank line, `U+200B` line, next `*Section*` label, `U+200B` line, section content.
