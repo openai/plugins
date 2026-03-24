@@ -279,6 +279,7 @@ Use `setDataValidation` for restricted inputs, including status dropdowns.
 - Using A1 notation where the request expects `GridRange` or `DimensionRange`
 - Forgetting that indexes are zero-based and end-exclusive
 - Omitting `fields` on update-style requests
+- Filling validated cells from plain range reads and missing the dropdown's actual allowed values
 - Mixing too many unrelated operations into one batch
 
 ## Official References

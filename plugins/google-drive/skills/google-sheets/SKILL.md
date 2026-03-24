@@ -12,9 +12,14 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 1. If the spreadsheet or tab is not already grounded, identify it first and read metadata before deeper reads or writes.
 2. Prefer narrow reads and row search over dumping large tabs into context.
 3. Ground the task in exact sheet, range, header, and formula context before proposing changes.
-4. Before the first write-heavy `batch_update`, read `./references/batch-update-recipes.md` for request-shape recall.
-5. Cluster logically related edits into one `batch_update` so the batch is coherent and atomic. Avoid both mega-batches and one-request micro-batches.
-6. If the user asks to clean, normalize, or restructure data, summarize the intended table shape before writing.
+4. When a read could influence a write, default to `get_cells`. Treat `get_range` as the exception and use it only when plain displayed values are truly sufficient.
+5. If the task involves filling in, editing, or normalizing existing cells, do not rely on `get_range` alone. Inspect the target cells with `get_cells` first so value choices come from the live cell metadata.
+6. When validation-backed cells may matter, prefer a `get_cells` read that includes the live constraint data you need, for example `dataValidation,formattedValue,effectiveValue,userEnteredValue`.
+7. When preparing to write into existing cells, check whether the target range is constrained by dropdowns or other data validation before choosing values. Do not infer allowed values from plain neighboring text alone when validation may exist.
+8. If validation is present, restate the allowed values or rule before drafting or applying the write.
+9. Before the first write-heavy `batch_update`, read `./references/batch-update-recipes.md` for request-shape recall.
+10. Cluster logically related edits into one `batch_update` so the batch is coherent and atomic. Avoid both mega-batches and one-request micro-batches.
+11. If the user asks to clean, normalize, or restructure data, summarize the intended table shape before writing.
 
 ## Output Conventions
 
