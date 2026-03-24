@@ -28,42 +28,25 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 
 ```md
 **Daily Slack Digest - YYYY-MM-DD**
-[\u200B line]
 **Scope**
-[\u200B line]
 - <channels + topics + time window>
 - <coverage note or omitted-channel caveat, if any>
 
-[blank line]
-[\u200B line]
 **Summary**
-[\u200B line]
 <1-2 sentence summary of volume + key signals>
 
-[blank line]
-[\u200B line]
 **Topic: <group 1>**
-[\u200B line]
 - ...
 - ...
 
-[blank line]
-[\u200B line]
 **Topic: <group 2>**
-[\u200B line]
 - ...
 - ...
 
-[blank line]
-[\u200B line]
 **Needs attention**
-[\u200B line]
 - ...
 
-[blank line]
-[\u200B line]
 **Notes**
-[\u200B line]
 - <gaps, absences, or caveats>
 ```
 
@@ -76,4 +59,3 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 - Preserve exact channel names.
 - Include **Needs attention** only for items requiring user action, decisions, or input.
 - Include **Notes** for gaps, absences, sparse results, or caveats.
-- Between sections, use the exact safe transition required by `../slack-outgoing-message/SKILL.md`: prior content line, true blank line, `\u200B` line, next `**Section**` label, `\u200B` line, section content.

@@ -39,29 +39,18 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 
 ```md
 **Channel Summary - <channel>**
-[\u200B line]
 **Overview**
-[\u200B line]
 <1-2 sentence summary>
 
-[blank line]
-[\u200B line]
 **Topic: <topic 1>**
-[\u200B line]
 - ...
 - ...
 
-[blank line]
-[\u200B line]
 **Topic: <topic 2>**
-[\u200B line]
 - ...
 - ...
 
-[blank line]
-[\u200B line]
 **Notes**
-[\u200B line]
 - <gaps, caveats, or sparse activity>
 ```
 

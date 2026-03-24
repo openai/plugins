@@ -9,7 +9,6 @@ description: Primary skill for composing, drafting, or refining any outbound Sla
 
 Use this skill whenever the task involves producing final Slack text for a draft, send, or canvas.
 If another Slack skill is used to read or summarize source context, switch to this skill before finalizing outgoing text.
-This skill is not complete until you reread the full `## Formatting Rules` section immediately before any outgoing Slack tool call and verify the final text follows every rule.
 
 ## Reference Notes
 
@@ -19,23 +18,11 @@ Read this reference **before finalizing any outgoing Slack text**:
 | --- | --- |
 | Exact Slack Markdown syntax for emphasis, lists, links, code, and mentions | [../slack/references/markdown.md](../slack/references/markdown.md) |
 
-## Formatting Rules
-
-- Distinguish parser breaks from visible spacing:
-  - Use a true blank line (`\n\n`) after quotes and also whenever a `**Section**` label follows a numbered list, bulleted list, paragraph, or code block.
-  - Use a line containing only `\u200B` when you need a visible blank line separator, since Slack collapses truly empty lines.
-  - Do not use vertical tabs (`U+000B`)
-- After any section label, insert a line containing only `\u200B` before the next bullet, numbered item, or paragraph.
-- If a quote should end before the next section, add a true blank line after the quoted line. If you also want visible spacing before the next section label, follow that with a line containing only `\u200B`.
-- Whenever a new `**Section**` label follows a list item, paragraph, or code block, use this safe transition pattern exactly: prior content line, true blank line, `\u200B` line, `**Section**` label, `\u200B` line, section content.
-- Prefer labels like `**Section: Foo**` or `**Foo**` instead of numbered sections.
-
 ## Workflow
 
 1. Identify the **intended destination** before drafting: channel, thread, DM, or group DM.
 2. Determine whether the user wants a **draft**, a **send-ready message**, or content for a **Slack canvas**. **Default to a draft** unless the user has approved the wording or explicitly asked to send.
-3. Read `../slack/references/markdown.md` and use that syntax directly.
-4. Read the full `## Formatting Rules` section above.
+3. Read `../slack/references/markdown.md` and use that syntax.
 
 ## Tool Guardrails
 

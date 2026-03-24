@@ -38,33 +38,19 @@ Use this skill to produce a priority queue or task list for the user from recent
 
 ```md
 **Slack Notification Triage - YYYY-MM-DD**
-[\u200B line]
 **Overview**
-[\u200B line]
 <1-2 sentence summary of what the user most likely needs to read, reply to, or do next>
 
-[blank line]
-[\u200B line]
 **Tasks for you**
-[\u200B line]
 - ...
 
-[blank line]
-[\u200B line]
 **Worth skimming**
-[\u200B line]
 - ...
 
-[blank line]
-[\u200B line]
 **Can ignore for now**
-[\u200B line]
 - ...
 
-[blank line]
-[\u200B line]
 **Notes**
-[\u200B line]
 - <gaps, caveats, or partial coverage>
 ```
 
