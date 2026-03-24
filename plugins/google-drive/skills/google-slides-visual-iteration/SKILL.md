@@ -105,10 +105,24 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Do not stop after a single pass just because the first verification looks acceptable.
 - The second loop must start with a fresh thumbnail review and refreshed slide structure so you can catch residual spacing, alignment, padding, and balance issues that were easy to miss in the first pass.
 - The third loop must also start from a fresh thumbnail review and refreshed slide structure. Treat it as a required polish-and-regression pass, not an optional extra.
+- The bar for stopping is not "mostly fixed." The bar is that the slide now looks intentional, balanced, and presentation-ready for the current scope.
 - After the third verified loop, continue to a fourth loop only if the slide still has meaningful issues.
 - Only stop after the third loop if that fresh review finds nothing materially worth changing.
 - Stop when further edits are becoming subjective or are not improving the slide.
 - Escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when a slide still has structural layout problems after 3-4 verified passes, or when the same issue repeats across multiple slides.
+
+## Few-Shot Pattern
+
+Use this as the default shape of a strong slide-local cleanup:
+
+- Pass 1, functional cleanup:
+  fix the obvious breakage first, such as overflow, stale styling, collisions, or clearly wrong geometry.
+- Pass 2, structural cleanup:
+  align repeated elements onto a cleaner grid, normalize spacing, and separate groups that still feel crowded or uneven after pass 1.
+- Pass 3, polish:
+  improve hierarchy, whitespace, and visual balance so the slide feels finished rather than merely repaired.
+
+If pass 3 still finds an area that looks slightly off, awkwardly spaced, or visually lopsided, run another pass. Do not stop just because the content is now readable.
 
 ## Slide-Level Heuristics
 

@@ -31,6 +31,7 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Batch the related fixes for that local issue cluster together.
 - Include `write_control` when a fresh revision token is available.
 - Prefer geometry and styling fixes that materially improve the slide over tiny nudges that leave obvious problems behind.
+- Do not stop at "technically updated." The target is a slide that looks intentionally arranged and presentation-ready, not merely one with fewer defects than before.
 
 5. Verify immediately.
 - Fetch another thumbnail right after the write.
@@ -41,7 +42,15 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Start each additional loop from a fresh thumbnail review, not from memory.
 - Re-read the live slide structure before any additional pass.
 - Do not call the slide done after pass 2, even if it looks close.
+- Treat pass 2 as an alignment-and-spacing pass, not a victory lap.
+- Treat pass 3 as a polish pass: look for anything that still feels slightly off, uneven, cramped, weakly grouped, or visually unbalanced, even if the slide is already functional.
 - Only stop after the third fresh review finds nothing materially worth changing.
+
+## Mini Example
+
+- Pass 1: fix the obvious issue cluster, such as clipped text, stale styling, or objects that collide.
+- Pass 2: normalize the structure, such as aligning sibling cards, equalizing spacing, or separating rows that still crowd each other.
+- Pass 3: polish the slide so it feels deliberate, such as strengthening hierarchy, softening secondary text, or balancing whitespace after the functional fixes are already done.
 
 ## Stop Or Escalate
 
