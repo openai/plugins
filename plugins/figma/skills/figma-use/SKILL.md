@@ -1,8 +1,7 @@
 ---
 name: figma-use
 description: "**MANDATORY prerequisite** — you MUST invoke this skill BEFORE every `use_figma` tool call. NEVER call `use_figma` directly without loading this skill first. Skipping it causes common, hard-to-debug failures. Trigger whenever the user wants to perform a write action or a unique read action that requires JavaScript execution in the Figma file context — e.g. create/edit/delete nodes, set up variables or tokens, build components and variants, modify auto-layout or fills, bind variables to properties, or inspect file structure programmatically."
-metadata:
-  mcp-server: figma, figma-staging
+disable-model-invocation: false
 ---
 
 # use_figma — Figma Plugin API Skill
@@ -19,10 +18,11 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 
 ## 1. Critical Rules
 
-1.  **MUST** call `figma.closePlugin()` on success and `figma.closePluginWithFailure(e.toString())` on error — NEVER use `figma.closePlugin()` in a catch block
-2.  **MUST** wrap in `(async () => { try { ... } catch(e) { figma.closePluginWithFailure(e.toString()) } })()`
+1.  **Use `return` to send data back.** The return value is JSON-serialized automatically (objects, arrays, strings, numbers). Do NOT call `figma.closePlugin()` or wrap code in an async IIFE — this is handled for you.
+2.  **Write plain JavaScript with top-level `await` and `return`.** Code is automatically wrapped in an async context. Do NOT wrap in `(async () => { ... })()`.
 3.  `figma.notify()` **throws "not implemented"** — never use it
-4.  `console.log()` is NOT returned — use `closePlugin()` for success output and `closePluginWithFailure()` for errors
+3a. `getPluginData()` / `setPluginData()` are **not supported** in `use_figma` — do not use them. Use `getSharedPluginData()` / `setSharedPluginData()` instead (these ARE supported), or track node IDs by returning them and passing them to subsequent calls.
+4.  `console.log()` is NOT returned — use `return` for output
 5.  **Work incrementally in small steps.** Break large operations into multiple `use_figma` calls. Validate after each step. This is the single most important practice for avoiding bugs.
 6.  Colors are **0–1 range** (not 0–255): `{r: 1, g: 0, b: 0}` = red
 7.  Fills/strokes are **read-only arrays** — clone, modify, reassign
@@ -32,8 +32,10 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 11. `createVariable` accepts collection **object or ID string** (object preferred)
 12. **`layoutSizingHorizontal/Vertical = 'FILL'` MUST be set AFTER `parent.appendChild(child)`** — setting before append throws. Same applies to `'HUG'` on non-auto-layout nodes.
 13. **Position new top-level nodes away from (0,0).** Nodes appended directly to the page default to (0,0). Scan `figma.currentPage.children` to find a clear position (e.g., to the right of the rightmost node). This only applies to page-level nodes — nodes nested inside other frames or auto-layout containers are positioned by their parent. See [Gotchas](references/gotchas.md).
-14. **On `use_figma` error, STOP. Do NOT immediately retry.** Call `get_metadata` to inspect partial state and clean up orphaned nodes BEFORE retrying — failed scripts do NOT roll back; nodes created before the error line persist and will cause duplicates on retry. See [Error Recovery](#6-error-recovery--self-correction).
-15. **MUST return ALL created/mutated node IDs** in the `figma.closePlugin()` response. Whenever a script creates new nodes or mutates existing ones on the canvas, collect every affected node ID and return them in a structured JSON object (e.g. `{ createdNodeIds: [...], mutatedNodeIds: [...] }`). This is essential for subsequent calls to reference, validate, or clean up those nodes.
+14. **On `use_figma` error, STOP. Do NOT immediately retry.** Failed scripts are **atomic** — if a script errors, it is not executed at all and no changes are made to the file. Read the error message carefully, fix the script, then retry. See [Error Recovery](#6-error-recovery--self-correction).
+15. **MUST `return` ALL created/mutated node IDs.** Whenever a script creates new nodes or mutates existing ones on the canvas, collect every affected node ID and return them in a structured object (e.g. `return { createdNodeIds: [...], mutatedNodeIds: [...] }`). This is essential for subsequent calls to reference, validate, or clean up those nodes.
+16. **Always set `variable.scopes` explicitly when creating variables.** The default `ALL_SCOPES` pollutes every property picker — almost never what you want. Use specific scopes like `["FRAME_FILL", "SHAPE_FILL"]` for backgrounds, `["TEXT_FILL"]` for text colors, `["GAP"]` for spacing, etc. See [variable-patterns.md](references/variable-patterns.md) for the full list.
+17. **`await` every Promise.** Never leave a Promise unawaited — unawaited async calls (e.g. `figma.loadFontAsync(...)` without `await`, or `figma.setCurrentPageAsync(page)` without `await`) will fire-and-forget, causing silent failures or race conditions. The script may return before the async operation completes, leading to missing data or half-applied changes.
 
 > For detailed WRONG/CORRECT examples of each rule, see [Gotchas & Common Mistakes](references/gotchas.md).
 
@@ -62,15 +64,15 @@ for (const page of figma.root.children) {
 
 `figma.currentPage` resets to the **first page** at the start of each `use_figma` call. If your workflow spans multiple calls and targets a non-default page, call `await figma.setCurrentPageAsync(page)` at the start of each invocation.
 
-You can call `use_figma` multiple times to incrementally build on the file state, or to retrieve information before writing another script. For example, write a script to get metadata about existing nodes, return that data via `figma.closePlugin()`, then use it in a subsequent script to modify those nodes.
+You can call `use_figma` multiple times to incrementally build on the file state, or to retrieve information before writing another script. For example, write a script to get metadata about existing nodes, `return` that data, then use it in a subsequent script to modify those nodes.
 
-## 3. `figma.closePlugin()` Is Your Only Output Channel
+## 3. `return` Is Your Output Channel
 
-The agent sees **ONLY** the string passed to `figma.closePlugin('msg')`. Everything else is invisible.
+The agent sees **ONLY** the value you `return`. Everything else is invisible.
 
-- **Returning IDs (CRITICAL)**: Every script that creates or mutates canvas nodes **MUST** return all affected node IDs — e.g. `{ createdNodeIds: [...], mutatedNodeIds: [...] }`. This is a hard requirement, not optional.
-- **Progress reporting**: `figma.closePlugin(JSON.stringify({ createdNodeIds: [...], count: 5, errors: [] }))`
-- **Error info**: On failure, pass structured error data
+- **Returning IDs (CRITICAL)**: Every script that creates or mutates canvas nodes **MUST** return all affected node IDs — e.g. `return { createdNodeIds: [...], mutatedNodeIds: [...] }`. This is a hard requirement, not optional.
+- **Progress reporting**: `return { createdNodeIds: [...], count: 5, errors: [] }`
+- **Error info**: Thrown errors are automatically captured and returned — just let them propagate or `throw` explicitly.
 - `console.log()` output is **never** returned to the agent
 - Always return actionable data (IDs, counts, status) so subsequent calls can reference created objects
 
@@ -90,7 +92,7 @@ The most common cause of bugs is trying to do too much in a single `use_figma` c
 
 1. **Inspect first.** Before creating anything, run a read-only `use_figma` to discover what already exists in the file — pages, components, variables, naming conventions. Match what's there.
 2. **Do one thing per call.** Create variables in one call, create components in the next, compose layouts in another. Don't try to build an entire screen in one script.
-3. **Return IDs from every call.** Always return created node IDs, variable IDs, collection IDs via `figma.closePlugin(JSON.stringify({...}))`. You'll need these as inputs to subsequent calls.
+3. **Return IDs from every call.** Always `return` created node IDs, variable IDs, collection IDs as objects (e.g. `return { createdNodeIds: [...] }`). You'll need these as inputs to subsequent calls.
 4. **Validate after each step.** Use `get_metadata` to verify structure (counts, names, hierarchy, positions). Use `get_screenshot` after major milestones to catch visual issues.
 5. **Fix before moving on.** If validation reveals a problem, fix it before proceeding to the next step. Don't build on a broken foundation.
 
@@ -118,42 +120,26 @@ Step 5: Final verification
 
 ## 6. Error Recovery & Self-Correction
 
-**`use_figma` does NOT roll back on failure.** If a script fails on line 50, everything executed on lines 1–49 persists. This means partial nodes, half-created components, and orphaned elements remain in the file.
+**`use_figma` is atomic — failed scripts do not execute.** If a script errors, no changes are made to the file. The file remains in the same state as before the call. This means there are no partial nodes, no orphaned elements from the failed script, and retrying after a fix is safe.
 
 ### When `use_figma` returns an error
 
 1. **STOP.** Do not immediately fix the code and retry.
-2. **Inspect partial state.** Call `get_metadata` on the parent node (page, section, or component set) to see what was partially created.
-3. **If damage is unclear**, call `get_screenshot` to see the visual state.
-4. **Clean up orphaned nodes** before retrying:
-
-```js
-(async () => {
-  try {
-    const page = figma.currentPage;
-    const orphans = page.findChildren(n =>
-      n.type === 'COMPONENT' && n.name.includes('variant=')
-    );
-    for (const orphan of orphans) orphan.remove();
-    figma.closePlugin('Cleaned up ' + orphans.length + ' orphaned nodes');
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
-```
-
-5. **Fix the script** based on what you learned from inspection.
-6. **Retry** only after cleanup is confirmed.
+2. **Read the error message carefully.** Understand exactly what went wrong — wrong API usage, missing font, invalid property value, etc.
+3. **If the error is unclear**, call `get_metadata` or `get_screenshot` to understand the current file state.
+4. **Fix the script** based on the error message.
+5. **Retry** the corrected script.
 
 ### Common self-correction patterns
 
 | Error message | Likely cause | How to fix |
 |---|---|---|
-| `"not implemented"` | Used `figma.notify()` | Replace with `figma.closePlugin()` |
+| `"not implemented"` | Used `figma.notify()` | Remove it — use `return` for output |
 | `"node must be an auto-layout frame..."` | Set `FILL`/`HUG` before appending to auto-layout parent | Move `appendChild` before `layoutSizingX = 'FILL'` |
 | `"Setting figma.currentPage is not supported"` | Used sync page setter | Use `await figma.setCurrentPageAsync(page)` |
 | Property value out of range | Color channel > 1 (used 0–255 instead of 0–1) | Divide by 255 |
 | `"Cannot read properties of null"` | Node doesn't exist (wrong ID, wrong page) | Check page context, verify ID |
-| Script hangs / no response | Missing `figma.closePlugin()` / `figma.closePluginWithFailure()` on some code path | Add closePlugin/closePluginWithFailure to all paths |
-| Duplicate nodes after retry | Retried without cleaning up partial state | Inspect with `get_metadata`, clean up first |
+| Script hangs / no response | Infinite loop or unresolved promise | Check for `while(true)` or missing `await`; ensure code terminates |
 | `"The node with id X does not exist"` | Parent instance was implicitly detached by a child `detachInstance()`, changing IDs | Re-discover nodes by traversal from a stable (non-instance) parent frame |
 
 ### When the script succeeds but the result looks wrong
@@ -169,11 +155,11 @@ Step 5: Final verification
 
 Before submitting ANY `use_figma` call, verify:
 
-- [ ] Script is wrapped in `(async () => { try/catch })()` pattern
-- [ ] `figma.closePlugin()` called on success path, `figma.closePluginWithFailure(e.toString())` in catch block
-- [ ] `figma.closePlugin()` returns structured JSON with actionable data (IDs, counts)
+- [ ] Code uses `return` to send data back (NOT `figma.closePlugin()`)
+- [ ] Code is NOT wrapped in an async IIFE (auto-wrapped for you)
+- [ ] `return` value includes structured data with actionable info (IDs, counts)
 - [ ] NO usage of `figma.notify()` anywhere
-- [ ] NO usage of `console.log()` as output (only closePlugin / closePluginWithFailure)
+- [ ] NO usage of `console.log()` as output (use `return` instead)
 - [ ] All colors use 0–1 range (not 0–255)
 - [ ] Fills/strokes are reassigned as new arrays (not mutated in place)
 - [ ] Page switches use `await figma.setCurrentPageAsync(page)` (sync setter throws)
@@ -183,7 +169,8 @@ Before submitting ANY `use_figma` call, verify:
 - [ ] `resize()` is called BEFORE setting sizing modes (resize resets them to FIXED)
 - [ ] For multi-step workflows: IDs from previous calls are passed as string literals (not variables)
 - [ ] New top-level nodes are positioned away from (0,0) to avoid overlapping existing content
-- [ ] ALL created/mutated node IDs are collected and returned in `figma.closePlugin()` response
+- [ ] ALL created/mutated node IDs are collected and included in the `return` value
+- [ ] Every async call (`loadFontAsync`, `setCurrentPageAsync`, `importComponentByKeyAsync`, etc.) is `await`ed — no fire-and-forget Promises
 
 ## 8. Discover Conventions Before Creating
 
@@ -196,7 +183,7 @@ When in doubt about any convention (naming, scoping, structure), check the Figma
 **List all pages and top-level nodes:**
 ```js
 const pages = figma.root.children.map(p => `${p.name} id=${p.id} children=${p.children.length}`);
-figma.closePlugin(pages.join('\n'));
+return pages.join('\n');
 ```
 
 **List existing components across all pages:**
@@ -210,18 +197,18 @@ for (const page of figma.root.children) {
     return false;
   });
 }
-figma.closePlugin(results.join('\n'));
+return results.join('\n');
 ```
 
 **List existing variable collections and their conventions:**
 ```js
-const collections = figma.variables.getLocalVariableCollections();
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
 const results = collections.map(c => ({
   name: c.name, id: c.id,
   varCount: c.variableIds.length,
   modes: c.modes.map(m => m.name)
 }));
-figma.closePlugin(JSON.stringify(results));
+return results;
 ```
 
 ## 9. Reference Docs
