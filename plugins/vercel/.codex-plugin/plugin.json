@@ -33,10 +33,7 @@
     "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills and the official Vercel MCP server. Packages the upstream vercel/vercel-plugin skills, agents, and commands under the local `vercel` plugin identity for the Codex plugin marketplace.",
     "developerName": "Vercel Labs",
     "category": "Coding",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
+    "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://vercel.com/",
     "privacyPolicyURL": "https://vercel.com/legal/privacy-policy",
     "termsOfServiceURL": "https://vercel.com/legal/terms",
@@ -45,8 +42,8 @@
       "Which Vercel tools fit this app best",
       "Help wire Vercel MCP into this workflow"
     ],
-    "composerIcon": "./assets/vercel.svg",
-    "logo": "./assets/vercel.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
