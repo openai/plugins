@@ -19,7 +19,6 @@
     "planning"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Notion",

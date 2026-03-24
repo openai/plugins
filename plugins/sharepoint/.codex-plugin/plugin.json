@@ -34,8 +34,8 @@
       "Summarize site, page, or file, identify owners and status"
     ],
     "brandColor": "#038387",
-    "composerIcon": "./assets/sharepoint-small.svg",
-    "logo": "./assets/sharepoint.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }

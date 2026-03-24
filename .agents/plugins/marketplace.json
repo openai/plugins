@@ -1,7 +1,7 @@
 {
   "name": "openai-curated",
   "interface": {
-    "displayName": "ChatGPT Official"
+    "displayName": "Codex official"
   },
   "plugins": [
     {
@@ -33,30 +33,6 @@
       "source": {
         "source": "local",
         "path": "./plugins/gmail"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "google-docs",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-docs"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "google-sheets",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-sheets"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -336,7 +312,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -925,7 +902,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2370,18 +2348,6 @@
       "category": "Coding"
     },
     {
-      "name": "vercel-plugin",
-      "source": {
-        "source": "local",
-        "path": "./plugins/vercel-plugin"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    },
-    {
       "name": "viator",
       "source": {
         "source": "local",
@@ -2572,18 +2538,6 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Lifestyle"
-    },
-    {
-      "name": "google-slides",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-slides"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
     },
     {
       "name": "game-studio",
@@ -2860,6 +2814,30 @@
       "source": {
         "source": "local",
         "path": "./plugins/web-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "android",
+      "source": {
+        "source": "local",
+        "path": "./plugins/android"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "neon-postgres",
+      "source": {
+        "source": "local",
+        "path": "./plugins/neon-postgres"
       },
       "policy": {
         "installation": "AVAILABLE",

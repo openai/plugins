@@ -1,7 +1,0 @@
-interface:
-  display_name: "Google Docs"
-  short_description: "Summarize docs and plan revisions"
-  icon_small: "./assets/google-docs-small.svg"
-  icon_large: "./assets/google-docs.png"
-  brand_color: "#1A73E8"
-  default_prompt: "Use $google-docs to summarize a document, outline revisions, or rewrite a section."
