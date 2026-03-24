@@ -33,11 +33,6 @@ with this shape:
   - plugin-local MCP dependency manifest
   - bundles the Notion MCP endpoint used by the bundled skills
 
-- `.app.json`
-  - plugin-local app dependency manifest
-  - preserves the existing public Notion connector wiring alongside the bundled
-    MCP-backed workflows
-
 - `agents/`
   - plugin-level agent metadata
   - currently includes `agents/openai.yaml` for the OpenAI surface

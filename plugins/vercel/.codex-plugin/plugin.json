@@ -1,29 +1,49 @@
 {
   "name": "vercel",
-  "version": "1.0.0",
-  "description": "Search docs and deploy apps",
+  "version": "0.21.0",
+  "description": "Comprehensive Vercel ecosystem plugin with Codex-compatible skills and MCP.",
   "author": {
-    "url": "https://vercel.com/"
+    "name": "Vercel Labs",
+    "url": "https://github.com/vercel"
   },
   "homepage": "https://vercel.com/",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
+  "repository": "https://github.com/vercel/vercel-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "vercel",
+    "nextjs",
+    "ai-sdk",
+    "turborepo",
+    "turbopack",
+    "workflow",
+    "deployment",
+    "edge-functions",
+    "serverless",
+    "ai-gateway",
+    "chat-sdk",
+    "chat-bot",
+    "slack-bot",
+    "discord-bot"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Vercel",
-    "shortDescription": "Search docs and deploy apps",
-    "longDescription": "Search docs and deploy apps",
-    "category": "Productivity",
-    "capabilities": [],
+    "shortDescription": "Vercel ecosystem guidance for Codex",
+    "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills and the official Vercel MCP server. Packages the upstream vercel/vercel-plugin skills, agents, and commands under the local `vercel` plugin identity for the Codex plugin marketplace.",
+    "developerName": "Vercel Labs",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://vercel.com/",
     "privacyPolicyURL": "https://vercel.com/legal/privacy-policy",
     "termsOfServiceURL": "https://vercel.com/legal/terms",
     "defaultPrompt": [
-      "Why is build failing"
+      "Audit this repo for Vercel deployment risks",
+      "Which Vercel tools fit this app best",
+      "Help wire Vercel MCP into this workflow"
     ],
-    "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
   }
 }

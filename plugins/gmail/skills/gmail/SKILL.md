@@ -49,6 +49,7 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 - When drafting a reply, call out any assumptions, missing context, or information that still needs confirmation.
 - Treat send, archive, trash, label, and move operations as explicit actions that require clear user intent.
 - If a thread has multiple possible recipients or parallel conversations, identify the intended thread before drafting or acting.
+- When supporting context such as policy docs, CRM notes, or Slack history is unavailable, do not foreground that limitation unless it materially changes the recommendation. Prefer a draft grounded in the email thread itself, and mention missing internal context only as a brief confidence note when necessary.
 
 ## Output Conventions
 
@@ -61,6 +62,7 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 - Draft replies should be concise and ready to paste or send, with greeting, body, and closing when appropriate.
 - If a reply depends on missing facts, present a short draft plus a list of unresolved details.
 - When multiple emails are involved, reference the sender and timestamp of the message that matters most.
+- Avoid repetitive meta-explanations about inaccessible internal sources in normal deliverables. If the user wants provenance, summarize the evidence used; otherwise keep the output focused on the draft, summary, or next action.
 
 ## Example Requests
 

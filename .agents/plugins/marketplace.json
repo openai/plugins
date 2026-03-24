@@ -1,7 +1,7 @@
 {
   "name": "openai-curated",
   "interface": {
-    "displayName": "ChatGPT Official"
+    "displayName": "Codex official"
   },
   "plugins": [
     {
@@ -41,30 +41,6 @@
       "category": "Productivity"
     },
     {
-      "name": "google-docs",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-docs"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "google-sheets",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-sheets"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "slack",
       "source": {
         "source": "local",
@@ -84,7 +60,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -96,7 +73,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -108,7 +86,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -120,7 +99,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -132,7 +112,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -144,7 +125,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -156,7 +138,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -168,7 +151,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -180,7 +164,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -192,7 +177,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -204,7 +190,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -216,7 +203,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -228,7 +216,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -240,7 +229,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -252,7 +242,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -264,7 +255,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -276,7 +268,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -288,7 +281,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -300,7 +294,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -312,7 +307,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -324,7 +320,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -336,7 +333,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -348,7 +346,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -360,7 +359,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -372,7 +372,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -384,7 +385,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -396,7 +398,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -408,7 +411,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -420,7 +424,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -432,7 +437,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -444,7 +450,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -456,7 +463,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -468,7 +476,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -480,7 +489,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -492,7 +502,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -517,7 +528,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -529,7 +541,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -541,7 +554,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -553,7 +567,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -565,7 +580,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -577,7 +593,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -601,7 +618,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -613,7 +631,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -625,7 +644,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -637,7 +657,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -649,7 +670,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -661,7 +683,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -673,7 +696,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -685,7 +709,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -697,7 +722,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -709,7 +735,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -721,7 +748,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -733,7 +761,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -745,7 +774,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -757,7 +787,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -769,7 +800,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -781,7 +813,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -793,7 +826,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -805,7 +839,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -817,7 +852,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -829,7 +865,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -841,7 +878,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -853,7 +891,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -865,7 +904,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -877,7 +917,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -889,7 +930,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -901,7 +943,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -913,7 +956,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -925,7 +969,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -937,7 +982,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -961,7 +1007,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -973,7 +1020,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -985,7 +1033,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -997,7 +1046,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1009,7 +1059,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1021,7 +1072,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1033,7 +1085,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1045,7 +1098,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1057,7 +1111,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1069,7 +1124,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1081,7 +1137,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1093,7 +1150,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1105,7 +1163,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1117,7 +1176,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1141,7 +1201,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1153,7 +1214,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1165,7 +1227,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1177,7 +1240,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1189,7 +1253,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1201,7 +1266,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1213,7 +1279,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1225,7 +1292,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1237,7 +1305,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1249,7 +1318,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1261,7 +1331,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1273,7 +1344,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1297,7 +1369,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1309,7 +1382,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1321,7 +1395,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1333,7 +1408,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1345,7 +1421,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1357,7 +1434,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1369,7 +1447,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1381,7 +1460,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1393,7 +1473,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1405,7 +1486,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1417,7 +1499,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1429,7 +1512,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1441,7 +1525,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1453,7 +1538,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -1465,7 +1551,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1477,7 +1564,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1489,7 +1577,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1501,7 +1590,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1513,7 +1603,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1525,7 +1616,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1537,7 +1629,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1549,7 +1642,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1561,7 +1655,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1573,7 +1668,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1585,7 +1681,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1597,7 +1694,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -1609,7 +1707,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1633,7 +1732,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -1645,7 +1745,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1657,7 +1758,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1669,7 +1771,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1681,7 +1784,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1693,7 +1797,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1705,7 +1810,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1717,7 +1823,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1729,7 +1836,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1741,7 +1849,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -1753,7 +1862,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1765,7 +1875,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1777,7 +1888,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1789,7 +1901,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1801,7 +1914,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1813,7 +1927,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -1825,7 +1940,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1837,7 +1953,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1849,7 +1966,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1861,7 +1979,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1873,7 +1992,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1885,21 +2005,10 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
-    },
-    {
-      "name": "render",
-      "source": {
-        "source": "local",
-        "path": "./plugins/render"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
     },
     {
       "name": "replit",
@@ -1909,7 +2018,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -1921,7 +2031,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -1933,7 +2044,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1945,7 +2057,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1957,7 +2070,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -1969,7 +2083,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1981,7 +2096,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -1993,7 +2109,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -2005,7 +2122,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     },
@@ -2017,21 +2135,10 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
-    },
-    {
-      "name": "statsig",
-      "source": {
-        "source": "local",
-        "path": "./plugins/statsig"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
     },
     {
       "name": "steadily",
@@ -2041,7 +2148,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2053,7 +2161,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -2077,7 +2186,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -2089,7 +2199,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2101,7 +2212,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -2113,7 +2225,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2125,7 +2238,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2137,7 +2251,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2149,7 +2264,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2161,7 +2277,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2173,7 +2290,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -2185,7 +2303,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2197,7 +2316,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -2209,7 +2329,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -2221,7 +2342,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2233,7 +2355,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2245,7 +2368,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2257,7 +2381,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2269,7 +2394,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2281,7 +2407,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2293,7 +2420,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2305,7 +2433,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2317,7 +2446,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2329,7 +2459,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -2341,7 +2472,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -2353,7 +2485,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -2370,18 +2503,6 @@
       "category": "Coding"
     },
     {
-      "name": "vercel-plugin",
-      "source": {
-        "source": "local",
-        "path": "./plugins/vercel-plugin"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    },
-    {
       "name": "viator",
       "source": {
         "source": "local",
@@ -2389,7 +2510,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2401,7 +2523,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2413,7 +2536,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2425,7 +2549,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -2437,7 +2562,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -2449,7 +2575,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2461,7 +2588,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2473,7 +2601,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Design"
     },
@@ -2485,7 +2614,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2497,7 +2627,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2509,7 +2640,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2521,7 +2653,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2533,7 +2666,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Productivity"
     },
@@ -2545,7 +2679,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Research"
     },
@@ -2557,7 +2692,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
     },
@@ -2569,21 +2705,10 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Lifestyle"
-    },
-    {
-      "name": "google-slides",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-slides"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
     },
     {
       "name": "game-studio",
@@ -2605,7 +2730,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2616,7 +2742,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2627,7 +2754,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2649,7 +2777,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2660,7 +2789,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2671,7 +2801,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2705,7 +2836,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2716,7 +2848,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2727,7 +2860,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2750,7 +2884,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2761,7 +2896,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2772,7 +2908,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2783,7 +2920,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2794,7 +2932,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2805,7 +2944,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2816,7 +2956,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": []
       }
     },
     {
@@ -2856,14 +2997,40 @@
       "category": "Coding"
     },
     {
-      "name": "vibe-builder",
+      "name": "web-design",
       "source": {
         "source": "local",
-        "path": "./plugins/vibe-builder"
+        "path": "./plugins/web-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "android",
+      "source": {
+        "source": "local",
+        "path": "./plugins/android"
       },
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "neon-postgres",
+      "source": {
+        "source": "local",
+        "path": "./plugins/neon-postgres"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
       },
       "category": "Coding"
     }

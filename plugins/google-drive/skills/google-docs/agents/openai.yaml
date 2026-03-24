@@ -1,0 +1,7 @@
+interface:
+  display_name: "Google Docs"
+  short_description: "Read, edit, and create Google Docs files."
+  icon_small: "./assets/google-docs-small.svg"
+  icon_large: "./assets/google-docs.png"
+  brand_color: "#1A73E8"
+  default_prompt: "Use $google-doc to read a Google Doc, find the right indexes, and apply precise batch updates with proper formatting."

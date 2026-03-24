@@ -1,0 +1,22 @@
+interface:
+  display_name: "Web Design"
+  short_description: "Use Web Design to review UI, improve React apps, and ship products"
+  default_prompt: "Use Web Design to review a web app's UI, improve the React implementation, and help ship it with Vercel, Supabase, and Stripe when needed."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "stripe"
+      description: "Stripe MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.stripe.com"
+    - type: "mcp"
+      value: "vercel"
+      description: "Vercel MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.vercel.com"
+    - type: "mcp"
+      value: "supabase"
+      description: "Supabase MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.supabase.com/mcp"

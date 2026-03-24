@@ -1,8 +1,8 @@
 interface:
   display_name: "Ramp Vendor Analysis"
   short_description: "Analyze vendor spend and ownership data"
-  icon_small: "../../../assets/ramp-small.svg"
-  icon_large: "../../../assets/ramp.svg"
+  icon_small: "../../../assets/app-icon.png"
+  icon_large: "../../../assets/app-icon.png"
   default_prompt: "Use Ramp to analyze vendor spend, identify top vendors, and summarize ownership and renewal risk."
 
 dependencies:
