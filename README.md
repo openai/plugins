@@ -13,4 +13,4 @@ Highlighted richer examples in this repo include:
 - `plugins/notion` for planning, research, meetings, and knowledge capture
 - `plugins/ios-design` for SwiftUI implementation, refactors, performance, and debugging
 - `plugins/web-design` for deployment, UI, payments, and database workflows
-- `plugins/netlify`, `plugins/render`, and `plugins/google-slides` for additional public skill- and MCP-backed plugin bundles
+- `plugins/netlify` and `plugins/google-slides` for additional public skill- and MCP-backed plugin bundles
