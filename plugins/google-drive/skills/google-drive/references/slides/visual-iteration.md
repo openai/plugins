@@ -12,6 +12,7 @@ Prefer this reference over [google-slides](./workflows.md) when the request is p
 - The request includes phrases like "fix this slide," "make this deck look better," "clean up formatting," "fix overflow," "fix spacing," "fix alignment," or "visual iteration."
 - The user shares a connected Google Slides deck or link and wants edits applied directly to that deck.
 - The user wants to replace static chart screenshots or placeholder images with charts from a connected source, such as Google Sheets, while preserving the current slide footprint.
+- The user wants to update non-text visual elements such as accent bars, arrow shapes, connector strokes, fills, or borders while keeping the slide layout intact.
 
 ## Required Tooling
 
@@ -37,6 +38,8 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Use `get_slide` on the target slide before the first write so you have the current element structure and IDs.
 - Before each additional write pass on that same slide, call `get_slide` again so the next `batch_update` uses fresh geometry and current element state rather than stale structure from the prior pass.
 - For screenshot-to-chart swaps sourced from Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md) before the first write so the replace flow stays grounded in live chart IDs and placeholder geometry.
+- For dashboards, scorecards, or metric grids, map the small benchmark or target text boxes separately from the main headline values. Do not assume the smaller target text is part of the same text object as the large value.
+- Before declaring a visual element blocked, classify it as a shape, a line or connector, or an image. Then choose the matching raw request family from [batch-update-recipes](./batch-update-recipes.md).
 
 3. Start with a thumbnail.
 - Call `get_slide_thumbnail` first.
@@ -58,6 +61,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Look for overlapping text boxes, shapes, charts, and images.
 - Look for misaligned images, cards, icons, and text blocks.
 - Look for grouped boxes, cards, or sections whose header text, body starts, icons, or internal padding do not sit on the same visual plane.
+- Look for stale accent-bar colors, arrow directions, border strokes, connector lines, or small benchmark text that lag behind the main headline text.
 - Look for inconsistent emphasis such as one label or bullet line being bolded differently from its siblings without intent.
 - Look for uneven alignment, broken grid structure, inconsistent spacing, off-center titles, awkward margins, and clipped elements.
 - Look for image distortion, poor crops, weak hierarchy, and slides that feel heavier on one side without intent.
@@ -70,6 +74,10 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Batch related fixes together when they affect the same slide structure, such as overflow plus alignment plus inconsistent spacing in one column or card set.
 - Prefer moving, resizing, reflowing, redistributing, or re-aligning existing elements over rewriting the slide.
 - When the target element is a screenshot placeholder for a chart, treat delete-and-replace as the default move: preserve the existing footprint, insert the source chart, and remove obsolete chart-area text when it is clearly placeholder copy.
+- For metric cards, summary strips, or scorecard rows, treat the main value, target value, delta text, arrow, and accent bar as one local edit cluster. Do not stop after changing only the visible headline text if nearby target text or non-text styling is now stale.
+- Prefer `updateShapeProperties` for fills and borders on existing shapes, and `updateLineProperties` for connectors or line-based arrows that already exist.
+- If an arrow direction is wrong because the existing element is the wrong shape type, or if a shape is too broken to patch safely, delete and recreate it in the same footprint rather than leaving stale visual state behind.
+- Do not call a shape-style miss a hard API limitation until you have attempted the matching non-text request family or confirmed that the object is actually an image.
 - If multiple boxes or sections are part of a visible group, align their headers, icons, top text baselines, and body starting positions unless the stagger is clearly intentional.
 - Do not default to shrinking font size, tightening line spacing, or squishing elements closer together just to make the slide fit.
 - If content still does not fit cleanly after a reasonable structural pass, split the content across slides or escalate to [google-slides-template-surgery](./template-surgery.md) instead of repeatedly compressing the layout.
@@ -80,6 +88,8 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Call `get_slide_thumbnail` again after every batch update.
 - State which issues are now fixed, which issues remain, and whether the pass introduced any new regressions.
 - Confirm the targeted issue cluster is actually fixed before moving on.
+- Verify that small target or benchmark text changed along with the main headline value when both were in scope.
+- Verify that accent bars, arrow shapes, borders, and connector strokes changed visually, not just the text around them.
 - If a fix introduced a new collision, imbalance, or cramped layout, correct that next instead of blindly continuing.
 - After each verification thumbnail, do a fresh read of the current slide before the next write pass if more edits are needed.
 
@@ -178,7 +188,10 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - Always inspect the current slide before editing.
 - Keep the tool loop local to the current slide: one slide thumbnail in, one slide edit pass, one verification thumbnail out.
 - Use object IDs from the live slide state, not guessed IDs.
+- Distinguish shape styling from line styling before writing. A colored arrow may be a filled shape, a line with arrowheads, or an image; the request family must match the element type.
+- For fills and borders, start with `updateShapeProperties`. For connector or line strokes, start with `updateLineProperties`.
 - When replacing a screenshot placeholder with a source chart, reuse the current image geometry as the starting insertion footprint instead of inventing a new layout.
+- If nearby text updated but the accent bar, arrow, or border stayed stale, treat the slide as incomplete rather than “mostly done.”
 - Prefer reversible, geometric edits first: transform, size, alignment, deletion only when clearly safe.
 - If a text box is too dense, try resizing, redistributing, or reflowing the slide before shortening the text.
 - If the only apparent fix is to compress all the content tighter, stop and reconsider the layout pattern instead of blindly applying that edit.
@@ -193,6 +206,7 @@ The Slides connector exposes raw `batch_update` requests. That means:
 ## References
 
 - [deck-scope-verification](./deck-scope-verification.md)
+- [batch-update-recipes](./batch-update-recipes.md)
 - [sheets-chart-replacement](./sheets-chart-replacement.md)
 
 ## Example Prompts
@@ -203,3 +217,4 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - `Make this existing Google Slides deck look better and fix the formatting issues through Google Drive.`
 - `Clean up spacing, overflow, and alignment in this shared Google Slides link through Google Drive.`
 - `Replace the chart screenshots on slides 3-5 with the existing Google Sheets charts and keep the same approximate layout through Google Drive.`
+- `Update the KPI dashboard so the small target values, arrow colors, and accent bars match the source sheet without changing the layout.`
