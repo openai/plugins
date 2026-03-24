@@ -1,5 +1,5 @@
 interface:
-  display_name: "Slack Channel Summarization"
+  display_name: "Channel Summarization"
   short_description: "Summarize one Slack channel"
   icon_small: "./assets/slack-small.svg"
   icon_large: "./assets/slack.png"

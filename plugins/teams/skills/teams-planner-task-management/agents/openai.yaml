@@ -1,5 +1,5 @@
 interface:
-  display_name: "Teams Planner Task Management"
+  display_name: "Planner Task Management"
   short_description: "Manage Teams Planner tasks"
   icon_small: "../teams/assets/teams-small.svg"
   icon_large: "../teams/assets/teams.svg"

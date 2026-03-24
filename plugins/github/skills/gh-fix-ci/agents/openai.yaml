@@ -1,5 +1,5 @@
 interface:
-  display_name: "GitHub CI Debug"
+  display_name: "CI Debug"
   short_description: "Debug failing GitHub Actions checks"
   icon_small: "./assets/github-small.svg"
   icon_large: "./assets/github.png"

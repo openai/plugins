@@ -1,5 +1,5 @@
 interface:
-  display_name: "Teams Messages"
+  display_name: "Messages"
   short_description: "Write Teams messages and drafts"
   icon_small: "../teams/assets/teams-small.svg"
   icon_large: "../teams/assets/teams.svg"

@@ -1,5 +1,5 @@
 interface:
-  display_name: "Teams Channel Summarization"
+  display_name: "Channel Summarization"
   short_description: "Summarize one Teams channel"
   icon_small: "../teams/assets/teams-small.svg"
   icon_large: "../teams/assets/teams.svg"

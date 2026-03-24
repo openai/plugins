@@ -1,5 +1,5 @@
 interface:
-  display_name: "Google Calendar Free Up Time"
+  display_name: "Free Up Time"
   short_description: "Create a meaningful block of free time"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/logo.png"

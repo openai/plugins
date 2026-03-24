@@ -1,5 +1,5 @@
 interface:
-  display_name: "Canva Social Resize"
+  display_name: "Social Resize"
   short_description: "Resize one design for social platforms"
   icon_small: "./assets/canva-small.svg"
   icon_large: "./assets/canva.svg"

@@ -1,5 +1,5 @@
 interface:
-  display_name: "GitHub Review Follow-up"
+  display_name: "Review Follow-up"
   short_description: "Address actionable PR feedback"
   icon_small: "./assets/github-small.svg"
   icon_large: "./assets/github.png"

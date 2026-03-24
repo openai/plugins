@@ -1,5 +1,5 @@
 interface:
-  display_name: "Teams Daily Digest"
+  display_name: "Daily Digest"
   short_description: "Summarize today's Teams activity"
   icon_small: "../teams/assets/teams-small.svg"
   icon_large: "../teams/assets/teams.svg"

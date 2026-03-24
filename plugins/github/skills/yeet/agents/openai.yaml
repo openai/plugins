@@ -1,5 +1,5 @@
 interface:
-  display_name: "GitHub Publish Changes"
+  display_name: "Publish Changes"
   short_description: "Commit, push, and open a PR"
   icon_small: "./assets/yeet-small.svg"
   icon_large: "./assets/yeet.png"

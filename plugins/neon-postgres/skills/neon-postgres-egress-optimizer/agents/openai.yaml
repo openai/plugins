@@ -1,5 +1,5 @@
 interface:
-  display_name: "Neon Postgres Egress Optimizer"
+  display_name: "Egress Optimizer"
   short_description: "Diagnose and fix excessive Postgres data transfer costs"
   icon_small: "./assets/neon-small.svg"
   icon_large: "./assets/neon.jpg"

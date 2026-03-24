@@ -1,5 +1,5 @@
 interface:
-  display_name: "Canva Branded Presentation"
+  display_name: "Branded Presentation"
   short_description: "Create on-brand decks from briefs"
   icon_small: "./assets/canva-small.svg"
   icon_large: "./assets/canva.svg"

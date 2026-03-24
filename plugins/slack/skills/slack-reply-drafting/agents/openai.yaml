@@ -1,5 +1,5 @@
 interface:
-  display_name: "Slack Reply Drafting"
+  display_name: "Reply Drafting"
   short_description: "Draft Slack replies from context"
   icon_small: "./assets/slack-small.svg"
   icon_large: "./assets/slack.png"

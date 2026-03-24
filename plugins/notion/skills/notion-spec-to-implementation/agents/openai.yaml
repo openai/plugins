@@ -1,5 +1,5 @@
 interface:
-  display_name: "Notion Spec to Implementation"
+  display_name: "Spec to Implementation"
   short_description: "Turn Notion specs into implementation plans, tasks, and progress tracking"
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"

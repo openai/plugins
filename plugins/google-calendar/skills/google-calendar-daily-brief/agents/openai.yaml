@@ -1,5 +1,5 @@
 interface:
-  display_name: "Google Calendar Daily Brief"
+  display_name: "Daily Brief"
   short_description: "Summarize a day into a readable agenda"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/logo.png"

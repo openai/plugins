@@ -1,5 +1,5 @@
 interface:
-  display_name: "Teams Notification Triage"
+  display_name: "Notification Triage"
   short_description: "Triage Teams attention signals"
   icon_small: "../teams/assets/teams-small.svg"
   icon_large: "../teams/assets/teams.svg"

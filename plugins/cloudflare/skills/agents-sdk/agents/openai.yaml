@@ -1,5 +1,5 @@
 interface:
-  display_name: "Cloudflare Agents SDK"
+  display_name: "Agents SDK"
   short_description: "Build stateful agents on Cloudflare Workers"
   icon_small: "./assets/cloudflare-small.svg"
   icon_large: "./assets/cloudflare.png"

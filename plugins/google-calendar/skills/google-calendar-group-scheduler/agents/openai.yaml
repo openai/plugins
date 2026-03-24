@@ -1,5 +1,5 @@
 interface:
-  display_name: "Google Calendar Group Scheduler"
+  display_name: "Group Scheduler"
   short_description: "Rank the best meeting times for several people"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/logo.png"

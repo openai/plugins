@@ -1,5 +1,5 @@
 interface:
-  display_name: "Ramp Vendor Analysis"
+  display_name: "Vendor Analysis"
   short_description: "Analyze vendor spend and ownership data"
   icon_small: "../../../assets/app-icon.png"
   icon_large: "../../../assets/app-icon.png"

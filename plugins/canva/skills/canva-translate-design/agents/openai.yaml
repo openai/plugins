@@ -1,5 +1,5 @@
 interface:
-  display_name: "Canva Translate Design"
+  display_name: "Translate Design"
   short_description: "Create translated copies of designs"
   icon_small: "./assets/canva-small.svg"
   icon_large: "./assets/canva.svg"

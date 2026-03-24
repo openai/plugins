@@ -1,5 +1,5 @@
 interface:
-  display_name: "Google Calendar Meeting Prep"
+  display_name: "Meeting Prep"
   short_description: "Turn an event and its linked context into a prep brief"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/logo.png"

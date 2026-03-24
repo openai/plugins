@@ -1,5 +1,5 @@
 interface:
-  display_name: "Slack Daily Digest"
+  display_name: "Daily Digest"
   short_description: "Summarize today's Slack activity"
   icon_small: "./assets/slack-small.svg"
   icon_large: "./assets/slack.png"

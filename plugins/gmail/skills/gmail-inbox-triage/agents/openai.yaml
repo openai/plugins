@@ -1,5 +1,5 @@
 interface:
-  display_name: "Gmail Inbox Triage"
+  display_name: "Inbox Triage"
   short_description: "Triage an inbox into action buckets"
   icon_small: "./assets/gmail-small.svg"
   icon_large: "./assets/gmail.png"

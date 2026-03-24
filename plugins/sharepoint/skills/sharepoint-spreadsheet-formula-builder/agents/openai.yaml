@@ -1,4 +1,4 @@
 interface:
-  display_name: "SharePoint Spreadsheet Formula Builder"
+  display_name: "Spreadsheet Formula Builder"
   short_description: "Design and roll out workbook formulas safely"
   default_prompt: "Use $sharepoint-spreadsheet-formula-builder to design or repair a formula in a SharePoint-hosted workbook, validate it on representative rows, and roll it out without disturbing workbook structure."

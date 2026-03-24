@@ -1,5 +1,5 @@
 interface:
-  display_name: "Notion Knowledge Capture"
+  display_name: "Knowledge Capture"
   short_description: "Capture conversations into structured Notion pages"
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"

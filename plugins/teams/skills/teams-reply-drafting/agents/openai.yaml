@@ -1,5 +1,5 @@
 interface:
-  display_name: "Teams Reply Drafting"
+  display_name: "Reply Drafting"
   short_description: "Draft Teams replies from context"
   icon_small: "../teams/assets/teams-small.svg"
   icon_large: "../teams/assets/teams.svg"

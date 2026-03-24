@@ -1,5 +1,5 @@
 interface:
-  display_name: "Notion Research & Documentation"
+  display_name: "Research & Documentation"
   short_description: "Research Notion content and produce briefs/reports"
   icon_small: "./assets/notion-small.svg"
   icon_large: "./assets/notion.png"

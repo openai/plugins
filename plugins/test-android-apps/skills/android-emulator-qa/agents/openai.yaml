@@ -1,5 +1,5 @@
 interface:
-  display_name: "Android Emulator QA"
+  display_name: "Emulator QA"
   short_description: "Drive Android emulator QA with adb"
 
 dependencies:
