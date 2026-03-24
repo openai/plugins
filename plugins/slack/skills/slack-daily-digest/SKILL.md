@@ -27,43 +27,43 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 - If you use `../slack-outgoing-message/SKILL.md` to draft or send the final message, this output contract remains binding. The downstream skill does not relax or rename these sections.
 
 ```md
-*Daily Slack Digest - YYYY-MM-DD*
-[ZWSP line]
-*Scope*
-[ZWSP line]
+**Daily Slack Digest - YYYY-MM-DD**
+[\u200B line]
+**Scope**
+[\u200B line]
 - <channels + topics + time window>
 - <coverage note or omitted-channel caveat, if any>
 
 [blank line]
-[ZWSP line]
-*Summary*
-[ZWSP line]
+[\u200B line]
+**Summary**
+[\u200B line]
 <1-2 sentence summary of volume + key signals>
 
 [blank line]
-[ZWSP line]
-*Topic: <group 1>*
-[ZWSP line]
+[\u200B line]
+**Topic: <group 1>**
+[\u200B line]
 - ...
 - ...
 
 [blank line]
-[ZWSP line]
-*Topic: <group 2>*
-[ZWSP line]
+[\u200B line]
+**Topic: <group 2>**
+[\u200B line]
 - ...
 - ...
 
 [blank line]
-[ZWSP line]
-*Needs attention*
-[ZWSP line]
+[\u200B line]
+**Needs attention**
+[\u200B line]
 - ...
 
 [blank line]
-[ZWSP line]
-*Notes*
-[ZWSP line]
+[\u200B line]
+**Notes**
+[\u200B line]
 - <gaps, absences, or caveats>
 ```
 
@@ -74,6 +74,6 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 - If grouping by topic, include the channel when helpful.
 - If grouping by channel, include the topic when helpful.
 - Preserve exact channel names.
-- Include *Needs attention* only for items requiring user action, decisions, or input.
-- Include *Notes* for gaps, absences, sparse results, or caveats.
-- Between sections, use the exact safe transition required by `../slack-outgoing-message/SKILL.md`: prior content line, true blank line, `U+200B` line, next `*Section*` label, `U+200B` line, section content.
+- Include **Needs attention** only for items requiring user action, decisions, or input.
+- Include **Notes** for gaps, absences, sparse results, or caveats.
+- Between sections, use the exact safe transition required by `../slack-outgoing-message/SKILL.md`: prior content line, true blank line, `\u200B` line, next `**Section**` label, `\u200B` line, section content.

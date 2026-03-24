@@ -38,30 +38,30 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 
 
 ```md
-*Channel Summary - <channel>*
-[ZWSP line]
-*Overview*
-[ZWSP line]
+**Channel Summary - <channel>**
+[\u200B line]
+**Overview**
+[\u200B line]
 <1-2 sentence summary>
 
 [blank line]
-[ZWSP line]
-*Topic: <topic 1>*
-[ZWSP line]
+[\u200B line]
+**Topic: <topic 1>**
+[\u200B line]
 - ...
 - ...
 
 [blank line]
-[ZWSP line]
-*Topic: <topic 2>*
-[ZWSP line]
+[\u200B line]
+**Topic: <topic 2>**
+[\u200B line]
 - ...
 - ...
 
 [blank line]
-[ZWSP line]
-*Notes*
-[ZWSP line]
+[\u200B line]
+**Notes**
+[\u200B line]
 - <gaps, caveats, or sparse activity>
 ```
 
@@ -71,5 +71,5 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 - Start each bullet with the main update. Add an owner or next step only when it is clear from the channel.
 - Within each topic, capture decisions, action items, notable updates, and thread outcomes.
 - Note if a thread is still open or unresolved instead of implying it concluded.
-- Omit *Notes* when there are no caveats, gaps, or sparse-activity disclaimers to add.
+- Omit **Notes** when there are no caveats, gaps, or sparse-activity disclaimers to add.
 - For a canvas, expand each topic into a short section and use `slack_create_canvas`.

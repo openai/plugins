@@ -17,24 +17,24 @@ Read this reference **before finalizing any outgoing Slack text**:
 
 | Task | Reference |
 | --- | --- |
-| Exact Slack mrkdwn syntax for emphasis, lists, links, code, and mentions | [../slack/references/mrkdwn.md](../slack/references/mrkdwn.md) |
+| Exact Slack Markdown syntax for emphasis, lists, links, code, and mentions | [../slack/references/markdown.md](../slack/references/markdown.md) |
 
 ## Formatting Rules
 
 - Distinguish parser breaks from visible spacing:
-  - Use a true blank line (`\n\n`) after quotes and also whenever a `*Section*` label follows a numbered list, bulleted list, paragraph, or code block.
-  - Use a line containing only a zero-width space (`U+200B`) when you need a visible blank line separator, since Slack collapses truly empty lines.
+  - Use a true blank line (`\n\n`) after quotes and also whenever a `**Section**` label follows a numbered list, bulleted list, paragraph, or code block.
+  - Use a line containing only `\u200B` when you need a visible blank line separator, since Slack collapses truly empty lines.
   - Do not use vertical tabs (`U+000B`)
-- After any section label, insert a line containing only a zero-width space (`U+200B`) before the next bullet, numbered item, or paragraph.
-- If a quote should end before the next section, add a true blank line after the quoted line. If you also want visible spacing before the next section label, follow that with a line containing only `\u200B` (`U+200B`).
-- Whenever a new `*Section*` label follows a list item, paragraph, or code block, use this safe transition pattern exactly: prior content line, true blank line, `U+200B` line, `*Section*` label, `U+200B` line, section content.
-- Prefer labels like `*Section: Foo*` or `*Foo*` instead of numbered sections.
+- After any section label, insert a line containing only `\u200B` before the next bullet, numbered item, or paragraph.
+- If a quote should end before the next section, add a true blank line after the quoted line. If you also want visible spacing before the next section label, follow that with a line containing only `\u200B`.
+- Whenever a new `**Section**` label follows a list item, paragraph, or code block, use this safe transition pattern exactly: prior content line, true blank line, `\u200B` line, `**Section**` label, `\u200B` line, section content.
+- Prefer labels like `**Section: Foo**` or `**Foo**` instead of numbered sections.
 
 ## Workflow
 
 1. Identify the **intended destination** before drafting: channel, thread, DM, or group DM.
 2. Determine whether the user wants a **draft**, a **send-ready message**, or content for a **Slack canvas**. **Default to a draft** unless the user has approved the wording or explicitly asked to send.
-3. Read `../slack/references/mrkdwn.md` and use that syntax directly instead of generic Markdown.
+3. Read `../slack/references/markdown.md` and use that syntax directly.
 4. Read the full `## Formatting Rules` section above.
 
 ## Tool Guardrails
@@ -43,6 +43,8 @@ Read this reference **before finalizing any outgoing Slack text**:
 - `thread_ts` is valid only for replies in an existing thread. For normal channel posts, DMs, and new group DMs, omit the `thread_ts` key entirely.
 - `slack_send_message_draft` cannot overwrite an existing attached draft, and do not claim that you verified the destination is draft-free before calling the tool.
 - If `slack_send_message_draft` returns `draft_already_exists`, stop immediately. Tell the user there is already an attached draft in that destination and that Slack cannot overwrite it.
+- If `_slack_send_message` succeeds, treat the message as immutable unless the active tool list includes an explicit edit or update tool. Do not send a corrective retry or duplicate follow-up automatically.
+- If a sent message appears malformed, tell the user that the current tool surface cannot edit sent Slack messages in place. Show the corrected payload if helpful, and ask whether they want a follow-up message instead.
 
 ## Destination Safety
 
@@ -51,7 +53,7 @@ Read this reference **before finalizing any outgoing Slack text**:
 
 ## Mention Rules
 
-- Resolve **user mentions** before writing when the message should tag a person, and use canonical Slack mrkdwn syntax: `<@U123456>`.
-- Resolve **Slack user groups** before writing when the message should tag a group, and use canonical Slack mrkdwn syntax: `<!subteam^S123456>`.
+- Resolve **user mentions** before writing when the message should tag a person, and use Slack mention syntax: `<@U123456>`.
+- Resolve **Slack user groups** before writing when the message should tag a group, and use Slack mention syntax: `<!subteam^S123456>`.
 - Do not rely on bare `@name` text in outgoing Slack messages.
 - If you cannot resolve the correct user or group, **tell the user** and compose the draft or message without implying the mention will work.
