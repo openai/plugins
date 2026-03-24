@@ -1,7 +1,0 @@
-interface:
-  display_name: "Slack Messages"
-  short_description: "Write Slack messages and drafts"
-  icon_small: "../slack/assets/slack-small.svg"
-  icon_large: "../slack/assets/slack.svg"
-  brand_color: "#611F69"
-  default_prompt: "Use $slack-messages to write, draft, or rewrite Slack message content for sending, saving as a draft, or creating a canvas with correct mrkdwn and explicit Slack mentions."

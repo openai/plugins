@@ -1,0 +1,6 @@
+interface:
+  display_name: "Google Slides Template Surgery"
+  short_description: "Restructure repeated slide layouts with safer batch-update patterns"
+  icon_small: "./assets/google-slides-small.svg"
+  icon_large: "./assets/google-slides.png"
+  default_prompt: "Use $google-slides-template-surgery to repair the template structure of this connected Google Slides deck. Start with one representative slide, use the skill's batch_update recipes instead of inventing raw request shapes, verify with thumbnails, then roll the pattern out to sibling slides if it works."

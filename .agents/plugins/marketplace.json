@@ -2011,18 +2011,6 @@
       "category": "Lifestyle"
     },
     {
-      "name": "render",
-      "source": {
-        "source": "local",
-        "path": "./plugins/render"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    },
-    {
       "name": "replit",
       "source": {
         "source": "local",
@@ -2151,18 +2139,6 @@
         "products": []
       },
       "category": "Design"
-    },
-    {
-      "name": "statsig",
-      "source": {
-        "source": "local",
-        "path": "./plugins/statsig"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
     },
     {
       "name": "steadily",

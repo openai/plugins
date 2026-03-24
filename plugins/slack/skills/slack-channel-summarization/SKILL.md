@@ -11,7 +11,7 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 
 | Workflow | Skill |
 | --- | --- |
-| Draft, send, or rewrite the final Slack update | [../slack-messages/SKILL.md](../slack-messages/SKILL.md) |
+| Draft, send, or rewrite the final Slack update | [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) |
 
 ## Start Here
 
@@ -24,29 +24,44 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 1. Resolve the named channel with `slack_search_channels`.
 2. Collect the initial pass with `slack_read_channel` and `limit: 100`. If the user gave a window, set `oldest` and `latest`. If not, read the latest messages.
 3. Read a thread using `slack_read_thread` when the parent message looks important to the summary, for example a decision, blocker, launch, incident, or open question. Default to the last `50` replies unless the request requires more.
-4. Consolidate the channel activity into a short summary grouped by topic. The summary should include recurring conversations, key decisions or follow-ups, notable updates, and important threads.
-5. Match the delivery format to the request:
+4. Read the full `## Formatting Rules` section below.
+5. Consolidate the channel activity into a short summary grouped by topic. The summary should include recurring conversations, key decisions or follow-ups, notable updates, and important threads.
+6. Match the delivery format to the request:
    - short recap or brief: reply in chat or draft/send a compact Slack message
    - summary doc: use `slack_create_canvas`
-6. If the user wants the result delivered in Slack, draft by default unless they explicitly asked to send.
+7. If the user wants the result delivered in Slack, draft by default unless they explicitly asked to send.
 
-## Formatting
+## Formatting Rules
 
-For a concise Slack or chat summary, format as:
+- For a concise Slack or chat summary, you MUST use exactly this structure unless the user explicitly requests a different format.
+- If you use `../slack-outgoing-message/SKILL.md` to draft or send the final message, this output contract remains binding. The downstream skill does not relax or rename these sections.
+
 
 ```md
-*Channel Summary — <channel>*
-*Overview:* <1–2 sentence summary of the main themes and biggest updates>
+*Channel Summary - <channel>*
+[ZWSP line]
+*Overview*
+[ZWSP line]
+<1-2 sentence summary>
 
+[blank line]
+[ZWSP line]
 *Topic: <topic 1>*
+[ZWSP line]
 - ...
 - ...
 
+[blank line]
+[ZWSP line]
 *Topic: <topic 2>*
+[ZWSP line]
 - ...
 - ...
 
+[blank line]
+[ZWSP line]
 *Notes*
+[ZWSP line]
 - <gaps, caveats, or sparse activity>
 ```
 
