@@ -29,9 +29,9 @@ with this shape:
   - required plugin manifest
   - defines plugin metadata and points Codex at the plugin contents
 
-- `.mcp.json`
-  - plugin-local MCP dependency manifest
-  - bundles the Notion MCP endpoint used by the bundled skills
+- `.app.json`
+  - plugin-local app manifest
+  - points Codex at the connected Notion app used by the bundled skills
 
 - `agents/`
   - plugin-level agent metadata
@@ -44,8 +44,8 @@ with this shape:
 
 ## Notes
 
-This plugin is MCP-backed through `.mcp.json` and currently depends on the
-Notion MCP server at `https://mcp.notion.com/mcp`.
+This plugin is app-backed through `.app.json` and uses the connected Notion
+integration for the bundled skills.
 
 Plugin-level assets and `agents/openai.yaml` are wired into the manifest and
 the bundled skill surface.
