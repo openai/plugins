@@ -31,7 +31,7 @@
     "privacyPolicyURL": "https://slack.com/privacy-policy",
     "termsOfServiceURL": "https://slack.com/terms-of-service/user",
     "defaultPrompt": [
-      "Summarize unread activity, draft replies, or prepare"
+      "Summarize unread activity, draft replies, or prepare updates"
     ],
     "brandColor": "#611F69",
     "composerIcon": "./assets/app-icon.png",

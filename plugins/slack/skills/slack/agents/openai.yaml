@@ -2,6 +2,6 @@ interface:
   display_name: "Slack"
   short_description: "Summarize threads and draft posts"
   icon_small: "./assets/slack-small.svg"
-  icon_large: "./assets/slack.png"
+  icon_large: "./assets/slack.svg"
   brand_color: "#611F69"
   default_prompt: "Use $slack to summarize a thread and draft a Slack-ready reply or update."
