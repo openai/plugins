@@ -42,6 +42,7 @@ Use this reference when a Google Slides workflow needs to replace a screenshot, 
 - After each replacement, fetch a fresh thumbnail and refreshed slide structure.
 - Expect Google Slides to normalize inserted chart size or aspect slightly; judge success by approximate footprint and visual cleanliness, not exact raw transform equality.
 - Confirm the new chart object exists and the old placeholder image is gone before moving on.
+- If the replacement changed visible chart-area layout, cleanup, or styling, continue with [visual-change-loop](./visual-change-loop.md) and do not stop before the third fresh visual review of that slide.
 
 7. Report exact outcomes.
 - Exact spreadsheet ranges changed.
@@ -53,4 +54,4 @@ Use this reference when a Google Slides workflow needs to replace a screenshot, 
 ## Failure Policy
 
 - If the named chart is missing, then and only then consider creating a replacement chart.
-- If the replacement introduces a layout problem, switch to the visual-iteration loop and adjust only the affected slide.
+- If the replacement introduces a layout problem, switch to [visual-change-loop](./visual-change-loop.md) or [visual-iteration](./visual-iteration.md) and adjust only the affected slide.

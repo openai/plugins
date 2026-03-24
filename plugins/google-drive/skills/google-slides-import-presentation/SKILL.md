@@ -40,6 +40,12 @@ If `import_presentation` is unavailable, stop and say the file cannot be convert
 - Use [google-slides](../google-slides/SKILL.md) for general summaries or edits.
 - Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for post-import slide formatting cleanup.
 - Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when the imported deck should move onto a branded template.
+- If import drift requires visible layout cleanup on a slide, follow [visual-change-loop](./visual-change-loop.md) through the third fresh review instead of stopping after one cosmetic pass.
+5. Hand off to the right next skill.
+- Use [google-slides](../google-slides/SKILL.md) for general summaries or edits.
+- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for post-import slide formatting cleanup.
+- Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when the imported deck should move onto a branded template.
+- If import drift requires visible layout cleanup on a slide, follow [visual-change-loop](../google-drive/references/slides/visual-change-loop.md) through the third fresh review instead of stopping after one cosmetic pass.
 
 ## Rules
 

@@ -59,6 +59,7 @@ If the user is starting from a local `.pptx`, also confirm `import_presentation`
 
 7. Verify every migrated slide with thumbnails.
 - Re-check the migrated slide after each content port.
+- If porting the content required visible local cleanup, run [visual-change-loop](./visual-change-loop.md) on that slide before moving on.
 - If content does not fit the template cleanly, split it into multiple slides instead of overcrowding the layout.
 
 8. Finish with a deck-wide consistency pass.
@@ -113,6 +114,7 @@ A migration pass is only done when:
 - no clipping, overlap, or awkward density was introduced
 - the main content areas feel intentionally filled rather than sparse by accident
 - sibling slides of the same type look like they belong in the same deck
+- any slide that needed visible local cleanup was carried through [visual-change-loop](./visual-change-loop.md) until the third fresh review
 
 ## References
 

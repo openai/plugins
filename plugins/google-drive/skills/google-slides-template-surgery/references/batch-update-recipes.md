@@ -9,6 +9,7 @@ Use these patterns as copy-and-fill templates. Do not invent raw `batch_update` 
 - Classify the target as a text box, shape, line or connector, or image before choosing a request family.
 - Keep batches small.
 - Re-fetch a thumbnail after every batch.
+- If the batch changed visible layout or styling, continue through [visual-change-loop](./visual-change-loop.md) and do not stop before the third fresh review.
 - Prefer exact field masks. Do not use guessed field names.
 
 ## Duplicate a strong slide

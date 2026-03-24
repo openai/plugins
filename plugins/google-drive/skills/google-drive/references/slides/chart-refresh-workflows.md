@@ -26,6 +26,7 @@ Use this guidance when the user asks to refresh, update, replace, or repair a ch
 - When the slide already contains a linked chart, use raw `batch_update` with the chart refresh request on the live chart object ID.
 - Refresh the chart object first, then make any nearby title or annotation edits as separate text changes if needed.
 - After the write, verify that the chart-bearing slide changed, not just the text around it.
+- If the refresh also changes surrounding visible layout or styling, follow [visual-change-loop](./visual-change-loop.md) instead of stopping at a single verification.
 
 ## 5. For shape placeholders, replace the placeholder with a chart graphic
 
@@ -39,6 +40,7 @@ Use this guidance when the user asks to refresh, update, replace, or repair a ch
 - If the chart area is static chart content, preserve the approximate position and size of the existing image.
 - Replace the old chart image rather than stacking a second chart on top of it.
 - If the image is clearly stale or explicitly marked as replaceable static content, do not report success until the old graphic is gone and the new one occupies the intended area.
+- If the replacement leaves visible residue, spacing drift, or chart-area cleanup work, switch to [visual-change-loop](./visual-change-loop.md) and do not stop before the third verified review.
 
 ## 7. If no source chart exists, be explicit about the extra step
 
@@ -50,6 +52,7 @@ Use this guidance when the user asks to refresh, update, replace, or repair a ch
 - A chart refresh or replacement is only complete when the chart slide was re-read after the write and the visual result was checked with a thumbnail when the image itself matters.
 - Do not claim success just because the write call succeeded or because adjacent chart labels changed.
 - When thumbnail responses already include inline image content, inspect that directly instead of downloading the `contentUrl` just to look at the same slide.
+- When the refresh or replacement changed visible layout, placeholder cleanup, or nearby styling, follow [visual-change-loop](./visual-change-loop.md) and keep the review loop going through the third fresh visual pass.
 - Verify both of these things before declaring success:
   - the chart graphic itself now matches the intended source chart
   - obsolete placeholder or instructional text is no longer visible unless the user asked to keep it

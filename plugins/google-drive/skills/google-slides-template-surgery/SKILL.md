@@ -45,6 +45,7 @@ If any of those are missing, stop and explain that the deck cannot be safely res
 4. Verify on representative slides.
 - After each structural batch, re-fetch thumbnails for the edited slide and 1-2 sibling slides that use the same pattern.
 - Do not assume a successful write means the layout is improved.
+- Finish the representative edited slide with [visual-change-loop](./visual-change-loop.md) before rolling the pattern out broadly.
 
 5. Roll forward carefully.
 - Once a structural pattern works, apply it to the next matching slides.

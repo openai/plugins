@@ -12,6 +12,7 @@ Use this base skill when the request spans multiple Google Slides workflows or w
 Keep chart refresh and chart replacement workflows here when the job is to update a chart area from a connected source, such as Google Sheets, without broader deck redesign.
 For slide-reading and summary tasks, combine structural deck reads with slide thumbnails when the slide contains charts, graphs, diagrams, screenshots, or other content that cannot be understood from text alone.
 When the request is to replace screenshot placeholders or other static chart content with charts from an existing connected source, such as Google Sheets, stay in this reference unless the job is mainly visual cleanup. If the source is Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md).
+When a write can change rendered text flow, geometry, colors, shapes, lines, connectors, charts, arrows, or accent bars on a live slide, read [visual-change-loop](./visual-change-loop.md) before the first write even if the request is not primarily visual cleanup.
 
 ## Specialized Skills
 
@@ -52,6 +53,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - If a candidate slide has little useful extracted text but may still contain relevant evidence in a chart, screenshot, or diagram, inspect its thumbnail before ruling it out.
 - If the thumbnail response includes inline image content, base64 image data, or an image-bearing data wrapper, ingest that directly as slide image input. The response may also include `contentUrl` metadata, but if inline image data is present, inspect that directly instead of downloading the URL or relying only on metadata.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
+- If the write can change anything visible on the slide, such as text wrapping, shape styling, arrow direction, accent bars, chart placement, or connector styling, follow [visual-change-loop](./visual-change-loop.md) before the first `batch_update`.
 
 3. Apply default creation polish when making a new presentation.
 - Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
@@ -98,10 +100,11 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
 - If the task is to summarize, interpret, or sanity-check a visual slide, fetch a thumbnail and use it as evidence for charts, graphs, screenshots, diagrams, and other non-textual content rather than summarizing only the extracted text.
 - When fixing slide formatting, use a tight loop: take a thumbnail, identify visible spacing/alignment/cropping/regression issues, send a focused `batch_update`, then take another thumbnail to verify the result.
-- Run 2-4 verified formatting passes when needed. Stop earlier once the slide is clearly clean, and switch to [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) if the job turns into slide-by-slide formatting across a larger set of slides.
+- Run at least 3 verified formatting passes when layout or styling changed, and continue to a fourth only if the slide still has meaningful issues. Switch to [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) if the job turns into slide-by-slide formatting across a larger set of slides.
 - After creating a new slide or applying layout-heavy changes, immediately verify that no text, shape, image, or color band extends beyond the slide boundary. If the editor would require horizontal or vertical scrolling to see the whole slide, or if the lowest text sits in the bottom safety margin, treat that as a failure and fix it before moving on.
 - When supplying `objectId` values in `batch_update`, use valid Google Slides IDs that are 5-50 characters long and start with an alphanumeric character or `_`. Prefer descriptive IDs like `slide02`, `slide02_title`, or `slide02_body`; do not use very short IDs like `s2` or `i0`.
 - If you need to create a slide and edit its placeholders in the same `batch_update`, create the slide with valid placeholder ID mappings first, then reference those placeholder IDs in later requests in the same batch.
+- Any write that can change visible layout or styling must follow [visual-change-loop](./visual-change-loop.md). Do not stop at a successful API response without thumbnail verification.
 
 ## Write Safety
 
@@ -145,3 +148,4 @@ If the presentation is missing or the Google Slides connector does not return de
 - [deck-scope-verification](./deck-scope-verification.md)
 - [chart-refresh-workflows](./chart-refresh-workflows.md)
 - [sheets-chart-replacement](./sheets-chart-replacement.md)
+- [visual-change-loop](./visual-change-loop.md)
