@@ -1,10 +1,15 @@
+---
+name: google-slides-visual-iteration
+description: Iteratively inspect and polish existing connected Google Slides presentations in Codex using slide thumbnails plus raw Slides edits. Use when a user asks to fix a slide visually, clean up formatting, improve slide quality, make a deck look better, fix alignment, spacing, overlap, overflow, crowding, awkward whitespace, or deck-wide visual consistency in an existing Google Slides deck or shared Slides link, especially when the work should follow a thumbnail -> diagnose -> batch_update -> re-thumbnail verification loop.
+---
+
 # Google Slides Visual Iteration
 
-Use this reference for existing or newly imported Google Slides decks when the user wants visual cleanup, not just content edits.
+Use this skill for existing or newly imported Google Slides decks when the user wants visual cleanup, not just content edits.
 
 Prefer the connected Google Slides workflow over generic slide-generation skills when the task is about improving a real Slides deck.
 Treat this as the focused formatting workflow: work one slide at a time, and complete the thumbnail -> diagnose -> batch_update -> re-thumbnail loop before moving to the next slide.
-Prefer this reference over [google-slides](./workflows.md) when the request is primarily about visual polish on an existing deck rather than content generation or general deck inspection.
+Prefer this skill over [google-slides](../google-slides/SKILL.md) when the request is primarily about visual polish on an existing deck rather than content generation or general deck inspection.
 
 ## Use When
 
@@ -80,7 +85,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Do not call a shape-style miss a hard API limitation until you have attempted the matching non-text request family or confirmed that the object is actually an image.
 - If multiple boxes or sections are part of a visible group, align their headers, icons, top text baselines, and body starting positions unless the stagger is clearly intentional.
 - Do not default to shrinking font size, tightening line spacing, or squishing elements closer together just to make the slide fit.
-- If content still does not fit cleanly after a reasonable structural pass, split the content across slides or escalate to [google-slides-template-surgery](./template-surgery.md) instead of repeatedly compressing the layout.
+- If content still does not fit cleanly after a reasonable structural pass, split the content across slides or escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of repeatedly compressing the layout.
 - Keep each pass narrow enough that the effect is understandable, but strong enough to visibly improve the slide.
 - When a fresh revision token is available from the runtime, include `write_control`; otherwise omit it and keep batches small.
 
@@ -94,13 +99,13 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - After each verification thumbnail, do a fresh read of the current slide before the next write pass if more edits are needed.
 
 7. Iterate a few times, then stop.
-- Run at least 2 full visual loops per slide in this reference workflow.
+- Run at least 2 full visual loops per slide in this skill workflow.
 - Do not stop after a single pass just because the first verification looks acceptable.
 - The second loop must start with a fresh thumbnail review and refreshed slide structure so you can catch residual spacing, alignment, padding, and balance issues that were easy to miss in the first pass.
 - After the second verified loop, continue to a third or fourth loop only if the slide still has meaningful issues.
 - Only stop after the second loop if that fresh review finds nothing materially worth changing.
 - Stop when further edits are becoming subjective or are not improving the slide.
-- Escalate to [google-slides-template-surgery](./template-surgery.md) when a slide still has structural layout problems after 2-4 verified passes, or when the same issue repeats across multiple slides.
+- Escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when a slide still has structural layout problems after 2-4 verified passes, or when the same issue repeats across multiple slides.
 
 ## Slide-Level Heuristics
 
@@ -162,7 +167,7 @@ Core rule:
 - Do not say a slide needs no second pass until you have actually completed the second fresh review loop on that slide.
 - Between loops, re-read the current slide structure so follow-up writes use fresh state rather than stale element geometry.
 - Mark the current slide done only after the final verification loop confirms it is the next expected slide in the checklist. If deck-wide work ever loses track of coverage, stop and reconcile against the checklist before continuing.
-- If the same formatting defect keeps recurring because of shared structure, escalate to [google-slides-template-surgery](./template-surgery.md) instead of hand-patching every slide forever.
+- If the same formatting defect keeps recurring because of shared structure, escalate to [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) instead of hand-patching every slide forever.
 
 4. Keep a global style memory.
 - Reuse the same margin logic, title placement, image sizing style, and spacing rhythm across similar slides.

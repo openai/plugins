@@ -1,0 +1,7 @@
+interface:
+  display_name: "Google Slides Import"
+  short_description: "Convert PPTX or ODP into Google Slides"
+  icon_small: "./assets/google-slides-small.svg"
+  icon_large: "./assets/google-slides.png"
+  brand_color: "#F9AB00"
+  default_prompt: "Use $google-slides-import-presentation to import a local PPTX into native Google Slides and verify the resulting deck."

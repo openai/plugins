@@ -1,19 +1,24 @@
+---
+name: google-slides
+description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
+---
+
 # Google Slides
 
 ## Overview
 
-Use this reference as the default entrypoint for Google Slides work. Stay here for deck search, summaries, general content edits, imports, native deck copies, and new presentation creation. If the user primarily wants to make an existing deck look better by fixing formatting, overflow, spacing, alignment, or visual polish, prefer [google-slides-visual-iteration](./visual-iteration.md).
-Use this base reference when the request spans multiple Google Slides workflows or when no more focused Slides reference is a better fit.
+Use this skill as the default entrypoint for Google Slides work. Stay here for deck search, summaries, general content edits, imports, native deck copies, and new presentation creation. If the user primarily wants to make an existing deck look better by fixing formatting, overflow, spacing, alignment, or visual polish, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
+Use this base skill when the request spans multiple Google Slides workflows or when no more focused Slides skill is a better fit.
 Keep chart refresh and chart replacement workflows here when the job is to update a chart area from a connected source, such as Google Sheets, without broader deck redesign.
 For slide-reading and summary tasks, combine structural deck reads with slide thumbnails when the slide contains charts, graphs, diagrams, screenshots, or other content that cannot be understood from text alone.
 When the request is to replace screenshot placeholders or other static chart content with charts from an existing connected source, such as Google Sheets, stay in this reference unless the job is mainly visual cleanup. If the source is Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md).
 
 ## Specialized Skills
 
-- For importing a local presentation file into native Google Slides first, prefer [google-slides-import-presentation](./import-presentation.md).
-- For visual cleanup of an existing deck, prefer [google-slides-visual-iteration](./visual-iteration.md).
-- For repairing broken repeated layout structure inside a deck, prefer [google-slides-template-surgery](./template-surgery.md).
-- For moving content onto a company or team template deck, prefer [google-slides-template-migration](./template-migration.md).
+- For importing a local presentation file into native Google Slides first, prefer [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
+- For visual cleanup of an existing deck, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
+- For repairing broken repeated layout structure inside a deck, prefer [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md).
+- For moving content onto a company or team template deck, prefer [google-slides-template-migration](../google-slides-template-migration/SKILL.md).
 
 ## Required Tooling
 
@@ -32,7 +37,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 1. Identify the target presentation.
 - If the user names a deck but does not provide a URL, search for it first.
 - If the user wants a new deck that preserves the structure or layout of an existing Google Slides deck, create the working copy with `create_from_template` before editing so the output stays native to Google Slides.
-- If the user provides a local presentation file, tell the user you are importing it into native Google Slides first, then use [google-slides-import-presentation](./import-presentation.md).
+- If the user provides a local presentation file, tell the user you are importing it into native Google Slides first, then use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
 
 2. Read before writing.
 - Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
@@ -66,12 +71,12 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Preserve user control over substantive design choices. Apply a clean default look, but do not invent a heavy brand system or overly specific theme unless the user asks.
 
 4. Route only when the job is narrower than general Slides work.
-- Stay in this reference for deck summaries, slide-by-slide reviews, new presentation creation, chart refresh or chart replacement from a connected chart source such as Google Sheets, small content edits, and isolated formatting fixes on specific slides.
-- Use [google-slides-import-presentation](./import-presentation.md) when the source is a local presentation file.
-- Use [google-slides-visual-iteration](./visual-iteration.md) when the user asks to fix a slide visually, clean up formatting, make a deck look better, or correct spacing, overlap, alignment, cropping, density, overflow, or other layout cleanup where the slide image matters.
-- Stay in this reference when the request spans narrow source-data edits, such as Google Sheets edits, plus chart replacement in Slides, and route to visual iteration only when post-replacement layout cleanup is the primary job.
-- Use [google-slides-template-surgery](./template-surgery.md) when the repeated layout structure is broken.
-- Use [google-slides-template-migration](./template-migration.md) when content should move onto a company or team template deck.
+- Stay in this skill for deck summaries, slide-by-slide reviews, new presentation creation, chart refresh or chart replacement from a connected chart source such as Google Sheets, small content edits, and isolated formatting fixes on specific slides.
+- Use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md) when the source is a local presentation file.
+- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) when the user asks to fix a slide visually, clean up formatting, make a deck look better, or correct spacing, overlap, alignment, cropping, density, overflow, or other layout cleanup where the slide image matters.
+- Stay in this skill when the request spans narrow source-data edits, such as Google Sheets edits, plus chart replacement in Slides, and route to visual iteration only when post-replacement layout cleanup is the primary job.
+- Use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when the repeated layout structure is broken.
+- Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when content should move onto a company or team template deck.
 
 5. Keep writes grounded.
 - Restate the target slide numbers, titles, or object IDs before making changes.
@@ -93,7 +98,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
 - If the task is to summarize, interpret, or sanity-check a visual slide, fetch a thumbnail and use it as evidence for charts, graphs, screenshots, diagrams, and other non-textual content rather than summarizing only the extracted text.
 - When fixing slide formatting, use a tight loop: take a thumbnail, identify visible spacing/alignment/cropping/regression issues, send a focused `batch_update`, then take another thumbnail to verify the result.
-- Run 2-4 verified formatting passes when needed. Stop earlier once the slide is clearly clean, and switch to [google-slides-visual-iteration](./visual-iteration.md) if the job turns into slide-by-slide formatting across a larger set of slides.
+- Run 2-4 verified formatting passes when needed. Stop earlier once the slide is clearly clean, and switch to [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) if the job turns into slide-by-slide formatting across a larger set of slides.
 - After creating a new slide or applying layout-heavy changes, immediately verify that no text, shape, image, or color band extends beyond the slide boundary. If the editor would require horizontal or vertical scrolling to see the whole slide, or if the lowest text sits in the bottom safety margin, treat that as a failure and fix it before moving on.
 - When supplying `objectId` values in `batch_update`, use valid Google Slides IDs that are 5-50 characters long and start with an alphanumeric character or `_`. Prefer descriptive IDs like `slide02`, `slide02_title`, or `slide02_body`; do not use very short IDs like `s2` or `i0`.
 - If you need to create a slide and edit its placeholders in the same `batch_update`, create the slide with valid placeholder ID mappings first, then reference those placeholder IDs in later requests in the same batch.

@@ -1,6 +1,11 @@
+---
+name: google-slides-template-surgery
+description: Perform structural rework in connected Google Slides decks. Use when local visual cleanup is not enough and repeated layout defects require batch_update structure edits plus strict verification.
+---
+
 # Google Slides Template Surgery
 
-Use this reference for structural Google Slides cleanup. This is the escalation path after normal visual iteration fails to converge.
+Use this skill for structural Google Slides cleanup. This is the escalation path after normal visual iteration fails to converge.
 
 Start with local slide fixes first. Escalate to template surgery only when one of these is true:
 - the same spacing or overlap problem repeats across multiple slides
@@ -8,7 +13,7 @@ Start with local slide fixes first. Escalate to template surgery only when one o
 - the user explicitly asks to rework the template, placeholders, or repeated layout pattern
 - the deck needs a consistent structural reset, not just cosmetic polish
 
-For simple cleanup, prefer [google-slides-visual-iteration](./visual-iteration.md).
+For simple cleanup, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
 
 ## Required Tooling
 
@@ -55,14 +60,14 @@ If any of those are missing, stop and explain that the deck cannot be safely res
 
 ## Common Surgery Cases
 
-Use this reference for:
+Use this skill for:
 - rebuilding crowded title/content slides with a cleaner text-and-image split
 - replacing a bad placeholder stack with a simpler repeated pattern
 - deleting duplicate or stale decorative shapes that keep causing overlap
 - normalizing title position, body width, and image frame placement across a section
 - duplicating a strong “golden” slide structure and adapting it for sibling slides
 
-Do not use this reference for:
+Do not use this skill for:
 - one-off typo fixes
 - simple repositioning on a single slide
 - content generation from scratch

@@ -1,4 +1,6 @@
 interface:
   display_name: "Google Calendar Meeting Prep"
   short_description: "Turn an event and its linked context into a prep brief"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/logo.png"
   default_prompt: "Use $google-calendar-meeting-prep to build a concise prep brief from this calendar event, its notes, attachments, and obvious linked docs."

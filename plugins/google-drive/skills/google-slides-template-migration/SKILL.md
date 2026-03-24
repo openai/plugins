@@ -1,13 +1,18 @@
+---
+name: google-slides-template-migration
+description: Migrate a Google Slides deck onto a target template. Use when the user wants to preserve source content while rebuilding slides from a branded template structure instead of making incremental in-place edits.
+---
+
 # Google Slides Template Migration
 
-Use this reference when the user has:
+Use this skill when the user has:
 - a source deck whose content should be kept
 - a target template deck whose visual system should be adopted
 
 This is not the same as cleanup or template surgery.
-- For local polish, prefer [google-slides-visual-iteration](./visual-iteration.md).
-- For fixing a broken repeated pattern inside one deck, prefer [google-slides-template-surgery](./template-surgery.md).
-- Use this reference when the right answer is to rebuild slides from the template, not keep nudging the old layout.
+- For local polish, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
+- For fixing a broken repeated pattern inside one deck, prefer [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md).
+- Use this skill when the right answer is to rebuild slides from the template, not keep nudging the old layout.
 - When the content comes from notes, a changelog, or another generated source, outline what each slide should say before choosing a template slide.
 
 ## Required Tooling

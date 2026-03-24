@@ -1,8 +1,13 @@
+---
+name: google-sheets-chart-builder
+description: Design, create, and revise Google Sheets charts with better chart-spec recall and editing discipline. Use when the user wants to add a chart to a sheet, choose the right chart type for existing data, repair a broken chart, update a chart's data series, or reposition or resize a chart after creating it.
+---
+
 # Google Sheets Chart Builder
 
-Use this reference when the chart itself is the task.
+Use this skill when the chart itself is the task.
 
-Read `./chart-recipes.md` before the first chart write. The point is to refresh chart request shapes and a few non-obvious API constraints before building or editing.
+Read `./references/chart-recipes.md` before the first chart write. The point is to refresh chart request shapes and a few non-obvious API constraints before building or editing.
 
 ## Workflow
 
@@ -20,4 +25,4 @@ Read `./chart-recipes.md` before the first chart write. The point is to refresh 
 
 ## References
 
-- For chart-type heuristics, request-shape reminders, and official Google Sheets docs links, read `./chart-recipes.md`.
+- For chart-type heuristics, request-shape reminders, and official Google Sheets docs links, read `./references/chart-recipes.md`.

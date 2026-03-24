@@ -1,8 +1,13 @@
+---
+name: google-sheets-formula-builder
+description: Design, repair, and roll out Google Sheets formulas with better syntax recall and validation discipline. Use when the user wants to add a formula column, fix a broken formula, choose between a row formula and a spill formula, build a lookup or filter formula, or turn repeated logic into a reusable named function.
+---
+
 # Google Sheets Formula Builder
 
-Use this reference when the formula itself is the task.
+Use this skill when the formula itself is the task.
 
-Read `./formula-patterns.md` before drafting the first formula. The point is not to relearn Sheets from scratch. It is to refresh exact syntax and a few high-value function constraints before writing.
+Read `./references/formula-patterns.md` before drafting the first formula. The point is not to relearn Sheets from scratch. It is to refresh exact syntax and a few high-value function constraints before writing.
 
 ## Workflow
 
@@ -25,4 +30,4 @@ Read `./formula-patterns.md` before drafting the first formula. The point is not
 
 ## References
 
-- For syntax reminders, formula-shape heuristics, and official Google Sheets docs links, read `./formula-patterns.md`.
+- For syntax reminders, formula-shape heuristics, and official Google Sheets docs links, read `./references/formula-patterns.md`.

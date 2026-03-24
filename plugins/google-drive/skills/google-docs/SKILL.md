@@ -1,8 +1,13 @@
+---
+name: google-docs
+description: Summarize and revise connected Google Docs. Use when the user asks to inspect a doc, review structure, convert notes into prose, plan section-level revisions, or apply edits while preserving heading hierarchy.
+---
+
 # Google Docs
 
 ## Overview
 
-Use this reference to turn document content into clear summaries, revision plans, and structured edits. Read the document first, preserve its organization, and distinguish between summarizing, rewriting, and directly editing content.
+Use this skill to turn document content into clear summaries, revision plans, and structured edits. Read the document first, preserve its organization, and distinguish between summarizing, rewriting, and directly editing content.
 
 ## Preferred Deliverables
 

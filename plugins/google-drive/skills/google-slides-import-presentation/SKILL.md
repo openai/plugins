@@ -1,8 +1,13 @@
+---
+name: google-slides-import-presentation
+description: Import a local `.ppt`, `.pptx`, or `.odp` file into Google Slides, verify the resulting native deck, and hand it off to the right follow-on workflow. Use when the user wants to convert a presentation file into a native Google Slides deck before follow-on work.
+---
+
 # Google Slides Import Presentation
 
 ## Overview
 
-Use this reference when the source material is a presentation file rather than an existing Google Slides deck. The goal is to create a native Google Slides copy first, then continue work on the imported deck.
+Use this skill when the source material is a presentation file rather than an existing Google Slides deck. The goal is to create a native Google Slides copy first, then continue work on the imported deck.
 
 ## Required Tooling
 
@@ -31,10 +36,10 @@ If `import_presentation` is unavailable, stop and say the file cannot be convert
 - Compare the imported slide count to the source file when that information is available.
 - Use thumbnails for spot checks when layout fidelity matters or the user plans formatting cleanup next.
 
-5. Hand off to the right next reference.
-- Use [google-slides](./workflows.md) for general summaries or edits.
-- Use [google-slides-visual-iteration](./visual-iteration.md) for post-import slide formatting cleanup.
-- Use [google-slides-template-migration](./template-migration.md) when the imported deck should move onto a branded template.
+5. Hand off to the right next skill.
+- Use [google-slides](../google-slides/SKILL.md) for general summaries or edits.
+- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) for post-import slide formatting cleanup.
+- Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when the imported deck should move onto a branded template.
 
 ## Rules
 
