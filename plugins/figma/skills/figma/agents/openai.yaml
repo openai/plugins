@@ -1,4 +1,0 @@
-interface:
-  display_name: "Figma"
-  short_description: "Read Figma files via the Figma MCP"
-  default_prompt: "Use the Figma MCP workflow for this Figma URL and fetch design context plus screenshot first."
