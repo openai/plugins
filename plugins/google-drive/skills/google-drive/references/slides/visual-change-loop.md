@@ -15,10 +15,11 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 - Identify the full local edit cluster, not just the most obvious text box.
 - For metric cards or scorecards, treat the main value, target value, delta text, arrow, accent bar, and nearby border or connector as one cluster.
 - If two adjacent text boxes are colliding, wrapping into each other, or visually fighting for the same lane, treat them as one cluster and fix their geometry together.
+- For overflow or collision-sensitive work, use both signals from the start: the slide thumbnail for rendered appearance and the live slide structure for text-box geometry and neighboring object placement.
 
 2. Start with a thumbnail.
 - Fetch a `LARGE` thumbnail when spacing, clipping, or shape alignment matters.
-- Use that thumbnail as the source of truth for visual quality.
+- Use that thumbnail as the primary visual signal, but not as the only signal for overflow or collision checks.
 - Write down the 2-4 concrete visible issues you are fixing in the next pass.
 
 3. Choose the correct raw edit family.
@@ -39,9 +40,11 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 5. Verify immediately.
 - Fetch another thumbnail right after the write.
 - Confirm both text and non-text visual targets actually changed.
+- Re-read the live slide structure after the write when text boxes, wrapping, or neighboring layout relationships were in scope.
 - If the write fixed the main text but left stale bars, arrows, borders, wrapping, or collisions, the slide is not done.
 - If text from one box still overlaps, crowds, or visually crashes into text from an adjacent box, the slide is not done.
 - If a new small label looks one line low, visually offset, or miscentered relative to its neighbors, the slide is not done. Re-read the slide and tighten the text box geometry before moving on.
+- If the thumbnail looks cleaner but the refreshed slide structure still suggests narrow, colliding, or suspiciously adjacent text boxes, err on the side of caution and keep working the slide.
 
 6. Run a second and third fresh review loop.
 - Start each additional loop from a fresh thumbnail review, not from memory.

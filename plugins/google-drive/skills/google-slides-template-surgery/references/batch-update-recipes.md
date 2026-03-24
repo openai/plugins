@@ -645,6 +645,7 @@ Use this for a small benchmark, caption, or one-line helper label.
 - If the desired visual center is `C`, compute the top-left as `C - (width / 2, height / 2)` before sending the request.
 - If the next thumbnail shows the text sitting visibly low or off-center, tighten the text-box height or nudge the top-left in a second pass. Treat that as a geometry miss, not a reason to stop.
 - If this label lives next to another text box, verify both boxes together after the write. Do not treat a local text update as successful if the new label now crowds or overlaps its neighbor.
+- Use both checks after the write: inspect the thumbnail for rendered collisions and re-read the slide structure for text-box geometry. If those signals disagree, err on the side of caution and keep treating the label placement as unfinished.
 
 ## Common Failure Modes
 
@@ -656,6 +657,7 @@ Use this for a small benchmark, caption, or one-line helper label.
 - Assuming `translateX` and `translateY` target the element center instead of the upper-left corner
 - Creating a large or tall text box for a tiny one-line label, then leaving the label visually low inside the box
 - Fixing one text box while leaving its adjacent text box colliding, overlapping, or starved for padding
+- Trusting the thumbnail alone when refreshed slide geometry still suggests risky overflow or neighboring text-box collisions
 - Updating one repeated card or primitive in isolation and leaving sibling cards with mismatched bar heights, arrow scales, or text baselines
 - Letting same-state colors drift so one "green" bar, arrow, or delta label does not match the others
 - Stringified JSON instead of structured objects

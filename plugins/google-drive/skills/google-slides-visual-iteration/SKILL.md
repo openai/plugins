@@ -43,6 +43,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Use `get_presentation` or `get_presentation_text` to identify slide order, titles, and object IDs.
 - Use `get_slide` on the target slide before the first write so you have the current element structure and IDs.
 - Before each additional write pass on that same slide, call `get_slide` again so the next `batch_update` uses fresh geometry and current element state rather than stale structure from the prior pass.
+- For overflow, wrapping, or neighboring text-box collision work, plan and verify from both sources: the thumbnail for rendered appearance and `get_slide` for live text-box geometry and adjacent object placement.
 - For screenshot-to-chart swaps sourced from Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md) before the first write so the replace flow stays grounded in live chart IDs and placeholder geometry.
 - For dashboards, scorecards, or metric grids, map the small benchmark or target text boxes separately from the main headline values. Do not assume the smaller target text is part of the same text object as the large value.
 - Before declaring a visual element blocked, classify it as a shape, a line or connector, or an image. Then choose the matching raw request family from [batch-update-recipes](./batch-update-recipes.md).
@@ -54,7 +55,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Call `get_slide_thumbnail` first.
 - Fetch the thumbnail for the current slide only. Do not prefetch thumbnails for the rest of the deck before starting the current slide's edit loop.
 - Use `LARGE` when spacing, overlap, cropping, or dense layouts are the concern.
-- Treat the thumbnail as the source of truth for visual quality. Raw JSON alone is not enough.
+- Treat the thumbnail as the primary visual signal for quality. Raw JSON alone is not enough, but the thumbnail alone is also not enough for collision-sensitive text layout work.
 - When the tool returns inline image content in `content`, including image bytes, base64 image data, or an image-bearing data wrapper, treat that as analyzable visual input for this workflow and inspect it directly.
 - If the thumbnail payload includes image bytes, a data URL, or base64 image content, ingest it directly as if the user had uploaded a screenshot of the slide.
 - If `get_slide_thumbnail` succeeds, treat that as the visual verification path for this workflow even if the transcript view looks metadata-shaped. Do not abandon the thumbnail loop just because the runtime shows a thumbnail artifact, URL, or metadata wrapper instead of inline pixels in the message body.
@@ -104,6 +105,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Verify that small target or benchmark text changed along with the main headline value when both were in scope.
 - Verify that accent bars, arrow shapes, borders, and connector strokes changed visually, not just the text around them.
 - Verify that newly placed text labels sit optically centered in their intended lane or container. If the text looks one line low or offset relative to nearby elements, treat that as unfinished geometry.
+- Re-read the slide structure after passes that touched text boxes, wrapping, or neighboring text lanes. If the thumbnail and refreshed geometry disagree about whether two boxes are still risky, err on the side of caution and keep editing.
 - If a fix introduced a new collision, imbalance, or cramped layout, correct that next instead of blindly continuing.
 - If adjacent text boxes still crowd or overlap after a pass, keep working the slide until both boxes have clean separation and readable padding.
 - After each verification thumbnail, do a fresh read of the current slide before the next write pass if more edits are needed.
