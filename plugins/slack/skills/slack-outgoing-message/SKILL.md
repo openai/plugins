@@ -30,8 +30,6 @@ Read this reference **before finalizing any outgoing Slack text**:
 - `thread_ts` is valid only for replies in an existing thread. For normal channel posts, DMs, and new group DMs, omit the `thread_ts` key entirely.
 - `slack_send_message_draft` cannot overwrite an existing attached draft, and do not claim that you verified the destination is draft-free before calling the tool.
 - If `slack_send_message_draft` returns `draft_already_exists`, stop immediately. Tell the user there is already an attached draft in that destination and that Slack cannot overwrite it.
-- If `_slack_send_message` succeeds, treat the message as immutable unless the active tool list includes an explicit edit or update tool. Do not send a corrective retry or duplicate follow-up automatically.
-- If a sent message appears malformed, tell the user that the current tool surface cannot edit sent Slack messages in place. Show the corrected payload if helpful, and ask whether they want a follow-up message instead.
 
 ## Destination Safety
 
