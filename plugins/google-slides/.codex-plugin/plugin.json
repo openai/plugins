@@ -1,0 +1,45 @@
+{
+  "name": "google-slides",
+  "version": "0.1.0",
+  "description": "Work with Google Slides decks and import presentation files using the configured Google Slides app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://workspace.google.com/products/slides/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "google-slides",
+    "pptx",
+    "presentation-import",
+    "presentations",
+    "template-migration",
+    "visual-iteration",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Google Slides",
+    "shortDescription": "Inspect and edit Google Slides decks",
+    "longDescription": "Use Google Slides to import presentation files, inspect deck structure, polish slide layouts, repair repeated template issues, and migrate deck content onto a company template through the connected Google Slides app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://workspace.google.com/products/slides/",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "defaultPrompt": [
+      "Inspect a deck and clean up slide layouts"
+    ],
+    "brandColor": "#F9AB00",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}
