@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://help.granola.ai/article/privacy-policy",
     "termsOfServiceURL": "https://help.granola.ai/article/platform-terms-of-service",
     "defaultPrompt": [
-      "Summarize what happened during Hearthbase deal between"
+      "Summarize what happened in the Hearthbase deal so far"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

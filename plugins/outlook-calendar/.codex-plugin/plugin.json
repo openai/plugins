@@ -34,7 +34,7 @@
     "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app",
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
-    "defaultPrompt": "Summarize my day, compare availability, explain Outlook status, and draft the right event update.",
+    "defaultPrompt": "Summarize my day, compare availability, explain Outlook status, and draft the right event update",
     "brandColor": "#0078D4",
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",

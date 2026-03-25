@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://www.zumper.com/privacy-policy",
     "termsOfServiceURL": "https://www.zumper.com/terms-of-use",
     "defaultPrompt": [
-      "We need 3 bed house in LA. We're bringing dog and need"
+      "Find a 3-bed house in LA that allows dogs"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

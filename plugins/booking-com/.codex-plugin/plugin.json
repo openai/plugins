@@ -20,7 +20,7 @@
     "privacyPolicyURL": "https://www.booking.com/content/privacy.html",
     "termsOfServiceURL": "https://www.booking.com/content/terms.en-gb.html",
     "defaultPrompt": [
-      "Com top hotels in Miami Beach"
+      "Find top hotels in Miami Beach on Booking.com"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

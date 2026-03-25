@@ -19,7 +19,7 @@
     "websiteURL": "https://monday.com",
     "privacyPolicyURL": "https://monday.com/l/privacy/privacy-policy/",
     "defaultPrompt": [
-      "Com what's the marketing campaign status"
+      "Check the marketing campaign status in monday.com"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

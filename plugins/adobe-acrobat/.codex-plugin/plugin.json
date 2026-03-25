@@ -20,7 +20,7 @@
     "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
     "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
     "defaultPrompt": [
-      "Create job application PDF by merging these"
+      "Create a job application PDF by merging these files"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

@@ -20,7 +20,7 @@
     "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
     "termsOfServiceURL": "https://mailchimp.com/legal/terms/",
     "defaultPrompt": [
-      "Am running big promotional sale"
+      "Create a promotional campaign for a big sale"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

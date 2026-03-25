@@ -34,7 +34,7 @@
     "privacyPolicyURL": "https://neon.com/privacy-policy",
     "termsOfServiceURL": "https://neon.com/terms-of-service",
     "defaultPrompt": [
-      "Use Neon to create a new Serverless Postgres database for my project and help me connect to it."
+      "Create or manage a Neon Postgres database, run SQL queries, or manage branches"
     ],
     "brandColor": "#37C38F",
     "composerIcon": "./assets/neon-small.svg",

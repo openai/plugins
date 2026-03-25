@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://www.apartmentlist.com/about/privacy",
     "termsOfServiceURL": "https://www.apartmentlist.com/about/terms",
     "defaultPrompt": [
-      "Find pet friendly 2 bedroom apartments in Austin under"
+      "Find pet-friendly 2-bedroom apartments in Austin under a target budget"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

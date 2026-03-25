@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://nesha.ai/privacy-policy",
     "termsOfServiceURL": "https://nesha.ai/terms-of-service",
     "defaultPrompt": [
-      "Find partners that could resell our product as part"
+      "Find partners that could resell our product as part of their offering"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

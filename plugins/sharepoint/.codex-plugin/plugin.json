@@ -31,7 +31,7 @@
     "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
     "defaultPrompt": [
-      "Summarize site, page, or file, identify owners and status"
+      "Summarize a SharePoint site or file, identify owners and status, or plan a safe update across documents, spreadsheets, or decks"
     ],
     "brandColor": "#038387",
     "composerIcon": "./assets/app-icon.png",

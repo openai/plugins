@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://www.omio.com/privacy-policy",
     "termsOfServiceURL": "https://www.omio.com/terms-of-use",
     "defaultPrompt": [
-      "I need to go from Paris to London tomorrow, find train"
+      "Find the best train options from Paris to London for tomorrow"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

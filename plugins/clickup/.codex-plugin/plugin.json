@@ -13,7 +13,7 @@
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
-      "Is Sprint 14 -Simplifying UI looking? Flag"
+      "Flag whether Sprint 14: Simplifying UI is at risk"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

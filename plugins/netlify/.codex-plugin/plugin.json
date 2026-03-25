@@ -32,7 +32,7 @@
     "privacyPolicyURL": "https://www.netlify.com/privacy/",
     "termsOfServiceURL": "https://www.netlify.com/legal/terms-of-use/",
     "defaultPrompt": [
-      "What projects do I have"
+      "Deploy this project to Netlify and return the preview URL plus any required fixes"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

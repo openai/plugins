@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://www.beautiful.ai/privacy-policy",
     "termsOfServiceURL": "https://www.beautiful.ai/terms-of-service",
     "defaultPrompt": [
-      "Ai create go to market strategy presentation"
+      "Create a go-to-market strategy presentation"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

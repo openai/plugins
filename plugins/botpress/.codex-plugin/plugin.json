@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://botpress.com/legal/privacy-statement",
     "termsOfServiceURL": "https://botpress.com/legal/terms-of-service",
     "defaultPrompt": [
-      "Make recommendation agent for Jordan shoes with"
+      "Make a recommendation agent for Jordan shoes with a guided buying flow"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

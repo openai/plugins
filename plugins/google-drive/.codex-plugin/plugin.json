@@ -35,7 +35,7 @@
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
     "defaultPrompt": [
-      "Find a Drive file, then summarize or edit the right Google document"
+      "Find the right Drive file, then summarize a Doc, update a Sheet, or edit a Slides deck"
     ],
     "brandColor": "#0F9D58",
     "screenshots": []

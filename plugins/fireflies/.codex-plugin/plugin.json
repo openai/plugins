@@ -19,7 +19,7 @@
     "websiteURL": "https://fireflies.ai",
     "privacyPolicyURL": "https://fireflies.ai/privacy",
     "defaultPrompt": [
-      "What's our conversation history with Acme so"
+      "Summarize our conversation history with Acme so far"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

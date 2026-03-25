@@ -34,7 +34,7 @@
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
     "defaultPrompt": [
-      "Summarize day, find availability this week, and schedule"
+      "Summarize my calendar, compare availability, prep meetings, or draft event details"
     ],
     "brandColor": "#4285F4",
     "composerIcon": "./assets/icon.png",

@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://info.thehotelsnetwork.com/hubfs/THN/Connect%20AI%20app%20launch/Privacy%20Policy%20Connect%20AI%20(ENG).pdf",
     "termsOfServiceURL": "https://www.mylighthouse.com/terms-and-conditions",
     "defaultPrompt": [
-      "Find 3-star hotels in Barcelona to go with partner this"
+      "Find 3-star hotels in Barcelona for a trip with my partner"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

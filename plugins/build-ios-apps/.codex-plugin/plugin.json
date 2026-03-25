@@ -33,7 +33,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an app on a simulator.",
+    "defaultPrompt": "Build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an app on a simulator",
     "brandColor": "#0A84FF",
     "composerIcon": "./assets/build-ios-apps-small.svg",
     "logo": "./assets/app-icon.png",

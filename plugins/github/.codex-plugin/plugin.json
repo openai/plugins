@@ -34,7 +34,7 @@
     "privacyPolicyURL": "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement",
     "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
     "defaultPrompt": [
-      "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review."
+      "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review"
     ],
     "composerIcon": "./assets/github-small.svg",
     "logo": "./assets/github.png",

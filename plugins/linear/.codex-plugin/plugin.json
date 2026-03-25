@@ -20,7 +20,7 @@
     "websiteURL": "https://linear.app/",
     "privacyPolicyURL": "https://linear.app/privacy",
     "defaultPrompt": [
-      "Triage or update relevant issues for this task, with clear"
+      "Triage or update relevant issues for this task with clear next actions"
     ],
     "composerIcon": "./assets/linear-icon.svg",
     "logo": "./assets/app-icon.png",

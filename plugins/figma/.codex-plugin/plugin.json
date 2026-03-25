@@ -34,7 +34,7 @@
     "websiteURL": "https://www.figma.com",
     "privacyPolicyURL": "https://www.figma.com/legal/privacy/",
     "termsOfServiceURL": "https://www.figma.com/legal/tos/",
-    "defaultPrompt": "Inspect a Figma design and implement it in code.",
+    "defaultPrompt": "Inspect a Figma design and implement it in code",
     "brandColor": "#0D99FF",
     "composerIcon": "./assets/figma-small.svg",
     "logo": "./assets/figma.png",

@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://pdfmaker.to/privacy",
     "termsOfServiceURL": "https://www.appnation.co/terms",
     "defaultPrompt": [
-      "- Your PDF Converter Convert this file to PDF"
+      "Convert this file to PDF"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

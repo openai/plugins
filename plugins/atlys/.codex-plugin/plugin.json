@@ -22,7 +22,7 @@
     "privacyPolicyURL": "https://www.atlys.com/privacy",
     "termsOfServiceURL": "https://www.atlys.com/terms",
     "defaultPrompt": [
-      "Hey , US trip as an Indian, what do I need"
+      "Check what visa or travel requirements an Indian citizen needs for a US trip"
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",

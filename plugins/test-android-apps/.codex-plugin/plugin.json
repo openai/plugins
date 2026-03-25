@@ -33,7 +33,7 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Use Test Android Apps to reproduce an emulator issue with adb, then capture screenshots, UI state, and logcat."
+      "Use Test Android Apps to reproduce an emulator issue with adb, then capture screenshots, UI state, and logcat"
     ],
     "brandColor": "#3DDC84",
     "composerIcon": "./assets/test-android-apps-small.svg",
