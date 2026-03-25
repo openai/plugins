@@ -40,7 +40,7 @@
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/game-studio.svg",
-    "logo": "./assets/game-studio.svg",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
