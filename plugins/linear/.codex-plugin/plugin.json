@@ -10,7 +10,7 @@
   "license": "MIT",
   "keywords": [],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Linear",
     "shortDescription": "Find and reference issues and projects.",

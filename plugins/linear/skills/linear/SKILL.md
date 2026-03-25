@@ -9,42 +9,34 @@ metadata:
 
 ## Overview
 
-This skill provides a structured workflow for managing issues, projects & team workflows in Linear. It ensures consistent integration with the Linear MCP server, which offers natural-language project management for issues, projects, documentation, and team collaboration.
+This skill provides a structured workflow for managing issues, projects & team workflows in Linear. It assumes the bundled Linear app is connected so the Linear tools are available for issues, projects, documentation, and team collaboration.
 
 ## Prerequisites
-- Linear MCP server must be connected and accessible via OAuth
+- Linear tools must be connected and accessible via OAuth
 - Confirm access to the relevant Linear workspace, teams, and projects
 
 ## Required Workflow
 
 **Follow these steps in order. Do not skip steps.**
 
-### Step 0: Set up Linear MCP (if not already configured)
+### Step 0: Connect the Linear app (if not already configured)
 
-If any MCP call fails because Linear MCP is not connected, pause and set it up:
+If Linear tools are unavailable, pause and ask the user to connect the Linear app:
 
-1. Add the Linear MCP:
-   - `codex mcp add linear --url https://mcp.linear.app/mcp`
-2. Enable remote MCP client:
-   - Set `[features] rmcp_client = true` in `config.toml` **or** run `codex --enable rmcp_client`
-3. Log in with OAuth:
-   - `codex mcp login linear`
+1. Enable the bundled Linear app for this plugin or session.
+2. Complete the Linear auth flow if Codex prompts for it.
+3. Restart Codex or the current session if the tools still do not appear.
 
-After successful login, the user will have to restart codex. You should finish your answer and tell them so when they try again they can continue with Step 1.
-
-**Windows/WSL note:** If you see connection errors on Windows, try configuring the Linear MCP to run via WSL:
-```json
-{"mcpServers": {"linear": {"command": "wsl", "args": ["npx", "-y", "mcp-remote", "https://mcp.linear.app/sse", "--transport", "sse-only"]}}}
-```
+After the app is connected, finish your answer and tell the user to retry so they can continue with Step 1.
 
 ### Step 1
 Clarify the user's goal and scope (e.g., issue triage, sprint planning, documentation audit, workload balance). Confirm team/project, priority, labels, cycle, and due dates as needed.
 
 ### Step 2
-Select the appropriate workflow (see Practical Workflows below) and identify the Linear MCP tools you will need. Confirm required identifiers (issue ID, project ID, team key) before calling tools.
+Select the appropriate workflow (see Practical Workflows below) and identify the Linear tools you will need. Confirm required identifiers (issue ID, project ID, team key) before calling tools.
 
 ### Step 3
-Execute Linear MCP tool calls in logical batches:
+Execute Linear tool calls in logical batches:
 - Read first (list/get/search) to build context.
 - Create or update next (issues, projects, labels, comments) with all required fields.
 - For bulk operations, explain the grouping logic before applying changes.
