@@ -37,7 +37,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Use Build Web Apps to review this app's UI, improve the React implementation, wire up payments or database changes, and help deploy it.",
+    "defaultPrompt": "Review this app's UI, improve the React implementation, wire up payments or database changes, and help deploy it.",
     "brandColor": "#111111",
     "composerIcon": "./assets/build-web-apps-small.svg",
     "logo": "./assets/app-icon.png",
