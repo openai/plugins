@@ -12,7 +12,7 @@ Use this skill to compose, rewrite, route, or send Teams messages. Apply it when
 ## Workflow
 
 1. Identify the intended destination first: existing chat, new DM, new group chat, channel post, or thread reply.
-2. Determine whether the user wants a draft or an actual send. Default to draft text unless the user explicitly asks to send or post.
+2. Determine from the request whether the user wants draft text or an actual send, and use the matching path.
 3. Resolve exact IDs before writing:
    - teams or channels: `resolve_team`, `resolve_channel`
    - existing chats: `resolve_chat`

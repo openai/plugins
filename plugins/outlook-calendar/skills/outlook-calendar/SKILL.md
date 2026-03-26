@@ -39,7 +39,7 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - Shared-calendar summaries that explain when Outlook is showing free/busy only versus full event detail.
 - Meeting-status explanations that decode Outlook concepts such as `Busy`, `Tentative`, `Free`, `Out of Office`, and `Working Elsewhere`.
 - Meeting-readiness summaries that incorporate attendee response state, organizer intent, and whether a Teams link, room, or work-location detail already exists.
-- Final event details that are ready to create, reschedule, or cancel after confirmation.
+- Final event details that are ready to create, reschedule, or cancel directly when the request is clear.
 - Meeting-note drafts that are phrased as shared, meeting-ready agenda or prep bullets rather than assistant-facing analysis.
 - Reminder or deadline plans that make clear whether the outcome is an Outlook event reminder, a calendar hold, an invite response, or a separate automation.
 
@@ -67,9 +67,9 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 14. For reschedules where the user did not specify the destination time, propose one to three exact replacement slots and get confirmation on the chosen slot before moving the event.
 15. Check attendee availability before rescheduling when the connector can do so. If recipient availability cannot be verified, say that explicitly and treat any move as best-effort rather than silently assuming the slot works.
 16. When notes, Teams links, rooms, or missing details matter, inspect the event payload before proposing a change and say when the source data appears partial.
-17. For meeting-prep or invite-note requests, collect the relevant source material first, then decide whether the write is short and grounded enough to apply directly or should be shown for confirmation first.
+17. For meeting-prep or invite-note requests, collect the relevant source material first, then apply a short, grounded write directly unless the request is still ambiguous or under-specified.
 18. Before any create or reschedule write, restate the final interpreted weekday, date, local clock time, and timezone for the event. If the task spans multiple cities or time zones, restate each relevant timestamp separately.
-19. Only create, update, move, or cancel events when the user has clearly asked for that action or confirmed the exact details.
+19. Only create, update, move, or cancel events when the user has clearly asked for that action.
 
 ## Read Path
 
@@ -100,7 +100,7 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - Keep Outlook event descriptions brief by default. Unless the user explicitly asks for a detailed write-up, limit description updates to at most one or two short blocks or paragraphs of operationally useful content.
 - When creating invite content from scratch, prefer plain text for short linear notes and use HTML only when the content needs real structure such as bullets, links, or clearly separated sections.
 - Do not write attendee-facing invite notes that include assistant provenance or meta commentary.
-- When source material is incomplete or unverified, omit the uncertain item, label it as a question for the meeting, or present a draft for confirmation.
+- When source material is incomplete or unverified, omit the uncertain item, label it as a question for the meeting, or present a draft only when unresolved details still block a safe write.
 - Treat deletes and broad availability changes as high-impact actions. Restate the affected event or calendar before applying them.
 - If multiple calendars or similarly named events are in play, identify the intended one explicitly before editing.
 - For cross-timezone requests such as travel, flights, or events tied to a different city, interpret each stated local time in the timezone of the city where that timestamp occurs before converting it into the Outlook event payload.

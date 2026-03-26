@@ -19,7 +19,7 @@ Use this skill for `.pptx` work that starts from SharePoint and where visual fid
 
 ## Core Workflow
 
-1. Confirm whether the request is content-only or style-sensitive.
+1. Determine whether the request is content-only or style-sensitive.
 2. Use the SharePoint skill to locate the exact deck and fetch the raw `.pptx` with `fetch(download_raw_file=true)`.
 3. Inspect the deck before editing:
    - slide count and order

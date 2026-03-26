@@ -17,7 +17,7 @@ Use this skill to identify Teams messages that likely need a reply and produce d
 
 - If the user provided channels, threads, chats, people, or a time window, use that scope instead of the default fallback.
 - If no source scope was provided, treat this as best-effort reply drafting from available Teams signals rather than an exact "messages needing reply" detector.
-- Draft by default. Do not send unless the user explicitly asked to post or reply now.
+- Use draft replies when the user asked for drafting or review, and send when the requested action is to post or reply now.
 
 ## Workflow
 

@@ -28,7 +28,7 @@ Use this skill to summarize one Teams channel, using a requested time window whe
    - use `list_channel_messages(... include_replies=True)` for a small bounded pass when thread outcomes matter
    - use `fetch` for exact wording or a specific message the user points to
 5. Consolidate the activity into a concise summary grouped by topic, decision, blocker, or workstream.
-6. If the user wants the result delivered in Teams, return a post-ready channel summary by default and send only if they explicitly ask to post it.
+6. If the user wants the result delivered in Teams, return a post-ready channel summary and post it when delivery into Teams is the requested action.
 
 ## Formatting
 

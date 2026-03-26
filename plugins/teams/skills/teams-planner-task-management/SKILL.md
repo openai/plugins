@@ -25,7 +25,7 @@ Use this skill to manage Planner tasks that live inside Teams. It is the Teams-n
 2. For follow-up extraction from Teams meetings or chats, summarize the action items first, then turn each confirmed follow-up into a Planner task.
 3. When creating tasks, keep titles short and action-oriented. Add assignees, due dates, start dates, priority, or completion percentage only when the user provided or clearly implied them.
 4. When updating tasks, fetch the current task first if you need to restate the current state before changing it.
-5. Require explicit confirmation before deleting any Planner task.
+5. Delete a Planner task when the user clearly asked for that action and the target task is resolved.
 
 ## Safety
 
@@ -36,12 +36,12 @@ Use this skill to manage Planner tasks that live inside Teams. It is the Teams-n
 ## Output Conventions
 
 - For task reviews, group tasks by plan, bucket, priority, or completion state, whichever makes the answer easiest to scan.
-- For task creation proposals, show the task title, assignee, due date, and target bucket before creating anything if the user has not explicitly asked to create them yet.
-- For destructive requests, restate the target task before asking for confirmation.
+- For task creation proposals, show the task title, assignee, due date, and target bucket before creating anything when the user asked for proposals rather than direct creation.
+- For destructive requests, restate the target task before deleting it.
 
 ## Example Requests
 
 - "Show me my Planner tasks in Teams."
 - "Turn these meeting follow-ups into Planner tasks in the launch board."
 - "Move this Planner task to the blocked bucket and push the due date to Friday."
-- "Delete this Planner task after I confirm it is the right one."
+- "Delete this Planner task."

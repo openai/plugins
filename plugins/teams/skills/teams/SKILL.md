@@ -7,7 +7,7 @@ description: Summarize Microsoft Teams conversations, triage unread or recent ac
 
 ## Overview
 
-Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, or manage Planner follow-ups. Keep answers grounded in exact Teams context, preserve thread intent, and separate drafting from posting unless the user explicitly wants a send.
+Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, or manage Planner follow-ups. Keep answers grounded in exact Teams context, preserve thread intent, and use the write path that matches the user's requested action.
 
 ## Related Skills
 
@@ -33,7 +33,7 @@ Use this skill to route Microsoft Teams work into the right workflow: summarize 
 
 - Unread state exists for chats only. The connector does not expose unread markers for specific channel messages.
 - Mention metadata is reliable on chat and channel message-history reads. Do not rely on Teams search hits to detect mentions.
-- Teams does not expose native persisted drafts here. "Draft" means return draft text unless the user explicitly asks to send or post.
+- Teams does not expose native persisted drafts here. "Draft" means return draft text when the requested action is drafting rather than posting.
 - There is no Slack-canvas analogue in this Teams connector. If the user wants something posted in Teams, return or send message text rather than inventing a document workflow.
 - Real outbound Teams mentions require structured mention inputs with exact Entra user IDs. Do not rely on plain `@name` text.
 - For unbounded channel summaries, start with `list_channel_messages(top=50)`. Do not probe larger values by default because the underlying endpoint rejects oversized reads.
@@ -50,7 +50,7 @@ Use this skill to route Microsoft Teams work into the right workflow: summarize 
 - Preserve participant names, dates, links, files, decisions, and action items from the source conversation unless the user asks to change them.
 - Treat channel-wide announcements, broad mentions, and shared-thread edits as high-impact. Call them out before posting.
 - If multiple chats, channels, or similarly named meetings are in scope, identify the intended destination before drafting or posting.
-- For answer-in-thread requests, draft first unless the user explicitly says to post, send, or reply now.
+- For answer-in-thread requests, post, send, or reply when the user has clearly asked for that action.
 - Use canonical message paths for replies whenever possible. Do not treat free-form quoted text as a stable reply target.
 - If outside context is needed to answer well, use the narrowest extra Teams context that materially changes the answer.
 - If a write request fails after capability verification, say whether the blocker is connector availability, target resolution, or a Teams product rule such as chat membership requirements.

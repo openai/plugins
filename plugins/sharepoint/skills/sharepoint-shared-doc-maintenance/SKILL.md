@@ -34,7 +34,7 @@ Use this skill when the job is not just editing one document, but keeping a main
 - Treat maintenance as a distinct workflow, not as generic document summarization.
 - For roadmap and milestone maintenance, prefer concrete propagation over broad re-summarization.
 - Use modification timestamps as a triage tool, not as proof of substantive change.
-- For multi-document synthesis requests, verify the source set before writing. If the user asks for a consolidated strategy or a summary of all related materials, enumerate the source documents explicitly and confirm that likely variants were not skipped.
+- For multi-document synthesis requests, verify the source set before writing. If the user asks for a consolidated strategy or a summary of all related materials, enumerate the source documents explicitly and verify that likely variants were not skipped.
 - Even if you expect only one source to have changed, enumerate the source set so you do not miss a second updated input.
 
 ## Verification

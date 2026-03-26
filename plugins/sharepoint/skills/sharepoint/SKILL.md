@@ -30,7 +30,7 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 1. Read the relevant site, page, file, or library before proposing changes. Capture the current title, location, owners, linked documents, and the content that matters.
 2. When the user is exploring, summarize the current information architecture or document state before suggesting edits.
 3. Ground every recommendation in the exact SharePoint destination, such as the site name, page name, library, or file path.
-4. If the request targets an Office document, first confirm whether the user wants content analysis only or an actual file edit.
+4. If the request targets an Office document, determine whether the task is content analysis only or an actual file edit before choosing the workflow.
 5. Route specialized Office workflows to the appropriate SharePoint skill:
    - `.docx` edits -> [../sharepoint-word-docs/SKILL.md](../sharepoint-word-docs/SKILL.md)
    - `.xlsx` edits -> [../sharepoint-spreadsheets/SKILL.md](../sharepoint-spreadsheets/SKILL.md)
@@ -45,7 +45,7 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 9. If connector limitations prevent fidelity verification or safe style-preserving upload, say so explicitly before calling the edit complete.
 10. If the request is write-oriented, present the intended content change or structure change before applying broad edits.
 11. Call out content dependencies such as linked files, navigation references, approvals, or owners when they affect the update.
-12. Only change content, structure, metadata, or sharing state when the user has explicitly asked for that action.
+12. Only change content, structure, metadata, or sharing state when the user has clearly asked for that action.
 
 ## Write Safety
 
