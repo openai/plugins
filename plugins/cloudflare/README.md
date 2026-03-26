@@ -63,16 +63,13 @@ Skills are contextual and auto-loaded based on your conversation. When a request
 | building-mcp-server-on-cloudflare | Building remote MCP servers with tools, OAuth, and deployment |
 | building-ai-agent-on-cloudflare | Building AI agents with state, WebSockets, and tool integration |
 
-## MCP Servers
+## MCP Server
 
-This plugin includes [Cloudflare's remote MCP servers](https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/) for enhanced functionality:
+This plugin includes the [Cloudflare API MCP server](https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/) for enhanced functionality:
 
 | Server | Purpose |
 |--------|---------|
-| cloudflare-docs | Up-to-date Cloudflare documentation and reference |
-| cloudflare-bindings | Build Workers applications with storage, AI, and compute primitives |
-| cloudflare-builds | Manage and get insights into Workers builds |
-| cloudflare-observability | Debug and analyze application logs and analytics |
+| cloudflare-api | Token-efficient access to the Cloudflare API via `search()` and `execute()` |
 
 ## Resources
 

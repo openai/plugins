@@ -16,10 +16,10 @@ The user invoked this command with: $ARGUMENTS
 
 When this command is invoked:
 
-1. Read the skill file at `building-mcp-server-on-cloudflare/SKILL.md` for core guidance
-2. Reference `building-mcp-server-on-cloudflare/references/examples.md` for official templates
-3. Use `building-mcp-server-on-cloudflare/references/oauth-setup.md` for security and OAuth
-4. Consult `building-mcp-server-on-cloudflare/references/troubleshooting.md` for common issues
+1. Read the skill file at `skills/building-mcp-server-on-cloudflare/SKILL.md` for core guidance
+2. Reference `skills/building-mcp-server-on-cloudflare/references/examples.md` for official templates
+3. Use `skills/building-mcp-server-on-cloudflare/references/oauth-setup.md` for security and OAuth
+4. Consult `skills/building-mcp-server-on-cloudflare/references/troubleshooting.md` for common issues
 
 ## Capabilities
 
@@ -32,7 +32,7 @@ When this command is invoked:
 ## Example Usage
 
 ```
-/build-mcp a GitHub integration server
-/build-mcp database query tool with OAuth
-/build-mcp file management MCP server
+/cloudflare:build-mcp a GitHub integration server
+/cloudflare:build-mcp database query tool with OAuth
+/cloudflare:build-mcp file management MCP server
 ```

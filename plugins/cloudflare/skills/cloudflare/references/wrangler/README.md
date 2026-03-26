@@ -103,7 +103,7 @@ wrangler tail --status error      # Filter by status
 
 ## In This Reference
 
-- [auth.md](./auth.md) - Authentication setup (`wrangler login`, API tokens)
+- Authentication setup (`wrangler login`, API tokens) is covered in [configuration.md](./configuration.md) and [gotchas.md](./gotchas.md)
 - [configuration.md](./configuration.md) - wrangler.jsonc setup, environments, bindings
 - [api.md](./api.md) - Programmatic API (`startWorker`, `getPlatformProxy`, events)
 - [patterns.md](./patterns.md) - Common workflows and development patterns

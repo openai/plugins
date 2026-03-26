@@ -6,7 +6,7 @@
     "name": "Cloudflare",
     "url": "https://workers.cloudflare.com/"
   },
-  "homepage": "https://www.cloudflare.com/",
+  "homepage": "https://workers.cloudflare.com/",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [
@@ -28,7 +28,7 @@
     "shortDescription": "Cloudflare platform guidance with official MCP",
     "longDescription": "Bring Cloudflare platform guidance into Codex with curated skills for the broader platform, Wrangler CLI, and the Agents SDK, plus the official Cloudflare API MCP server for authenticated access to live account data and workflows across Workers, Pages, storage, AI, networking, security, and analytics services.",
     "developerName": "Cloudflare",
-    "category": "Productivity",
+    "category": "Coding",
     "capabilities": [
       "Interactive",
       "Write"

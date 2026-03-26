@@ -16,11 +16,11 @@ The user invoked this command with: $ARGUMENTS
 
 When this command is invoked:
 
-1. Read the skill file at `building-ai-agent-on-cloudflare/SKILL.md` for core guidance
-2. Reference `building-ai-agent-on-cloudflare/references/examples.md` for templates
-3. Use `building-ai-agent-on-cloudflare/references/agent-patterns.md` for tool calling and patterns
-4. Use `building-ai-agent-on-cloudflare/references/state-patterns.md` for state management
-5. Consult `building-ai-agent-on-cloudflare/references/troubleshooting.md` for common issues
+1. Read the skill file at `skills/building-ai-agent-on-cloudflare/SKILL.md` for core guidance
+2. Reference `skills/building-ai-agent-on-cloudflare/references/examples.md` for templates
+3. Use `skills/building-ai-agent-on-cloudflare/references/agent-patterns.md` for tool calling and patterns
+4. Use `skills/building-ai-agent-on-cloudflare/references/state-patterns.md` for state management
+5. Consult `skills/building-ai-agent-on-cloudflare/references/troubleshooting.md` for common issues
 
 ## Capabilities
 
@@ -34,7 +34,7 @@ When this command is invoked:
 ## Example Usage
 
 ```
-/build-agent a customer support chatbot
-/build-agent real-time coding assistant with WebSocket
-/build-agent multi-agent workflow orchestrator
+/cloudflare:build-agent a customer support chatbot
+/cloudflare:build-agent real-time coding assistant with WebSocket
+/cloudflare:build-agent multi-agent workflow orchestrator
 ```
