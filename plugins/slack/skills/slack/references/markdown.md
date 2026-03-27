@@ -1,16 +1,19 @@
-# Slack Markdown Quick Reference
+# Slack Authoring Reference
 
-Use this reference when a Slack draft needs exact Markdown syntax plus Slack-specific mention syntax.
+Use this reference when writing Slack-ready text for these skills.
 
-## Slack Formatting (Markdown)
+## Authoring Contract
 
-These local Slack skills assume standard Markdown for text formatting and links.
-Keep Slack-specific mention syntax for users, channels, and user groups.
+- Write clean Markdown-style text plus explicit Slack mention syntax.
+- The active Slack runtime may convert Markdown into Slack mrkdwn or blocks before sending. Follow the live tool contract if it is more specific than this file.
+- Keep Slack-specific mention syntax for users and channels. Use user-group mention syntax only when the runtime can actually resolve the group.
 
-| Format | Syntax |
+## Common Syntax
+
+| Intent | Preferred authoring |
 | --- | --- |
-| Bold | `**text**` |
-| Italic | `*text*` |
+| Strong emphasis | `**text**` in Markdown-converting paths, or the live tool's required bold syntax |
+| Emphasis | `*text*` or the live tool's required italic syntax |
 | Strikethrough | `~~text~~` |
 | Inline code | `` `code` `` |
 | Code block | `` ```text``` `` |
@@ -24,6 +27,7 @@ Keep Slack-specific mention syntax for users, channels, and user groups.
 
 ## Usage Notes
 
-- Use `**bold**` for heading-like standalone lines such as `**Next steps**`.
-- Prefer `-` bullets for short updates and `1.` lists only when order matters.
-- Avoid `@here` and `@channel` unless the user explicitly wants a broad mention.
+- Prefer short paragraphs and `-` bullets for Slack posts.
+- Use heading-like standalone lines sparingly. Keep them short.
+- Do not rely on bare `@name` text for mentions.
+- Avoid `@here`, `@channel`, and similar broad notifications unless the user explicitly asked for them.

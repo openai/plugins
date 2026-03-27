@@ -27,9 +27,13 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 4. Read the full `## Formatting Rules` section below.
 5. Consolidate the channel activity into a short summary grouped by topic. The summary should include recurring conversations, key decisions or follow-ups, notable updates, and important threads.
 6. Match the delivery format to the request:
-   - short recap or brief: reply in chat or draft/send a compact Slack message
-   - summary doc: use `slack_create_canvas`
-7. If the user wants the result delivered in Slack, draft by default unless they explicitly asked to send.
+   - short recap or brief: reply in chat or use `../slack-outgoing-message/SKILL.md` for a Slack message
+   - summary doc or canvas: use `slack_create_canvas`
+7. Delivery intent rules:
+   - if the user explicitly asked to post or send the summary in Slack, write it directly
+   - if the user explicitly asked for a draft or review-first flow, create a draft
+   - if the user asked for a canvas or summary doc in Slack, treat that as an immediate write, not a draft
+   - if the user did not ask for Slack delivery, return the summary in chat
 
 ## Formatting Rules
 
@@ -61,4 +65,4 @@ Use this skill to summarize activity from one Slack channel, using a requested t
 - Within each topic, capture decisions, action items, notable updates, and thread outcomes.
 - Note if a thread is still open or unresolved instead of implying it concluded.
 - Omit **Notes** when there are no caveats, gaps, or sparse-activity disclaimers to add.
-- For a canvas, expand each topic into a short section and use `slack_create_canvas`.
+- For a canvas, expand each topic into a short section and use `slack_create_canvas`. Do this only when the user explicitly asked for a canvas, doc, or Slack-hosted summary.

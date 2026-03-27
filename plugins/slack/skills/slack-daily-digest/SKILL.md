@@ -21,6 +21,10 @@ Use this skill to produce a daily digest of today's important Slack activity fro
 5. Prioritize decisions, blockers, incidents, asks, ownership changes, deadline changes, and status changes.
 6. When a named channel was resolved to a channel ID, render that channel in the final digest as a Slack channel mention like `<#CHANNEL_ID>` instead of plain `#channel-name`, especially in **Scope**.
 7. Read the full `## Formatting Rules` section below.
+8. If the user asked to post or send the digest in Slack, use `../slack-outgoing-message/SKILL.md` and follow the user's explicit intent:
+   - explicit send/post/share: write directly
+   - explicit draft/review-first: create a draft
+   - no Slack delivery request: return the digest in chat
 
 ## Formatting Rules
 

@@ -1,14 +1,14 @@
 ---
 name: slack
-description: Summarize Slack conversations and draft channel-ready posts. Use when the user asks for channel or thread summaries, unread-activity review, tone-aware replies, status updates, or Slack-native formatting.
+description: Read Slack context, route to the right Slack workflow, and prepare or perform Slack writes that match the user's intent.
 ---
 
 # Slack
 
 ## Overview
 
-Use this skill to turn channel and thread context into concise, post-ready Slack communication. Read the conversation first, preserve the intended audience and tone, and format messages with Slack-ready Markdown.
-If the task will produce outgoing Slack text, switch to [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) before finalizing and reread that file's `## Formatting Rules` section immediately before any draft or send.
+Use this skill as the router for Slack work. Read the relevant Slack context first, then hand off to the most specific Slack workflow.
+If the task will produce outgoing Slack text or perform a Slack write, switch to [../slack-outgoing-message/SKILL.md](../slack-outgoing-message/SKILL.md) before finalizing and reread that file's `## Formatting Rules` section immediately before any send, draft, schedule, or canvas creation.
 
 ## Related Skills
 
@@ -30,6 +30,14 @@ If the task will produce outgoing Slack text, switch to [../slack-outgoing-messa
 
 - Confirm the requested action is supported before asking the user for more input. If Slack does not support the action, say so immediately and offer the closest supported path instead of collecting unnecessary details.
 - For broad Slack analysis requests, fail fast if the connector cannot establish the needed coverage or signals reliably. Do not invent channel names, imply the user is in a channel, or present workspace-wide conclusions as authoritative. Ask for a candidate list, a narrower scope, or a question that can be answered from specific channels, threads, profiles, or search results.
+- The current Slack app surface here supports reading/searching channels, users, threads, and canvases plus writing messages, drafts, scheduled messages, and canvases. Do not claim support for creating channels, editing messages, deleting messages, or other unsupported Slack admin actions.
+
+## Intent Routing
+
+- If the user explicitly asks to send, post, reply, share, or create something in Slack, follow that write intent directly. Do not downgrade the request into a draft unless the user asked for a draft or review-first flow.
+- If the user explicitly asks for a draft, rewrite, or review-first workflow, use a draft.
+- If the user asks for Slack analysis only, return the result in chat unless they also asked for Slack delivery.
+- If the user asks for an unsupported Slack write action, say so and offer the closest supported path instead of forcing a draft.
 
 ## DM Routing
 
