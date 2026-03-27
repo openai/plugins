@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Slides Template Migration"
+  short_description: "Port a deck onto a company template with slide-type mapping"
+  default_prompt: "Use $google-slides-template-migration to migrate this source Google Slides deck onto the company template deck. Read both decks, map each source slide to a template archetype, duplicate from the template, port the content over, verify with thumbnails, and split slides when the source content is too dense for the template."

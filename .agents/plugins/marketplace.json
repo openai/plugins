@@ -41,6 +41,30 @@
       "category": "Productivity"
     },
     {
+      "name": "google-docs",
+      "source": {
+        "source": "local",
+        "path": "./plugins/google-docs"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "google-sheets",
+      "source": {
+        "source": "local",
+        "path": "./plugins/google-sheets"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "slack",
       "source": {
         "source": "local",
@@ -2827,6 +2851,30 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       }
+    },
+    {
+      "name": "google-slides",
+      "source": {
+        "source": "local",
+        "path": "./plugins/google-slides"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "google-drive-old",
+      "source": {
+        "source": "local",
+        "path": "./plugins/google-drive-old"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     },
     {
       "name": "hubspot-legacy",
