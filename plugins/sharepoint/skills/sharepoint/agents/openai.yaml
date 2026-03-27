@@ -1,7 +1,0 @@
-interface:
-  display_name: "SharePoint"
-  short_description: "Summarize sites and plan safe site or file updates"
-  icon_small: "./assets/sharepoint-small.svg"
-  icon_large: "./assets/sharepoint.svg"
-  brand_color: "#038387"
-  default_prompt: "Use $sharepoint to summarize a site or file, identify the owners and status, or plan a safe update across pages, documents, spreadsheets, or decks."

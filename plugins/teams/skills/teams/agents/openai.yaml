@@ -1,7 +1,0 @@
-interface:
-  display_name: "Teams"
-  short_description: "Route Teams workflows and tasks"
-  icon_small: "./assets/teams-small.svg"
-  icon_large: "./assets/teams.svg"
-  brand_color: "#5B5FC7"
-  default_prompt: "Use $teams to route a Teams workflow, such as summarizing activity, triaging what needs attention, drafting the right follow-up, or managing Planner tasks."

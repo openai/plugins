@@ -1,31 +1,0 @@
-{
-  "name": "flight-network",
-  "version": "1.0.0",
-  "description": "Search and book flights",
-  "author": {
-    "name": "Etraveli Group",
-    "url": "https://www.flightnetwork.com"
-  },
-  "homepage": "https://www.flightnetwork.com",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
-  "interface": {
-    "displayName": "Flight Network",
-    "shortDescription": "Search and book flights",
-    "longDescription": "Use Flight Network ChatGPT app to find and compare real-time flight options directly in your chat. \n\nSimply type @Flight Network followed by your request, or ask for flight recommendations during any travel planning conversation. Example: “Find flights from NYC to London in two weeks” \n\nReal-Time Data: Access live pricing and availability from hundreds of airlines instantly.  Conversational Search: No complex filters. Just tell Flight Network ChatGPT app where you want to go and when. Seamless Transition: Once you find the right flight, click \"Book on Flight Network\" You will be deep-linked directly to our secure booking page to enter passenger details and complete your reservation.",
-    "developerName": "Etraveli Group",
-    "category": "Productivity",
-    "capabilities": [],
-    "websiteURL": "https://www.flightnetwork.com",
-    "privacyPolicyURL": "https://www.flightnetwork.com/rf/privacy-policy",
-    "termsOfServiceURL": "https://www.flightnetwork.com/rf/travel-conditions",
-    "defaultPrompt": [
-      "Find flights from NYC to London on May 17th"
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
-  }
-}

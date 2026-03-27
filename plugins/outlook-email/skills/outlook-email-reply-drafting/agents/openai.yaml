@@ -1,4 +1,0 @@
-interface:
-  display_name: "Reply Drafting"
-  short_description: "Draft grounded Outlook replies from thread context"
-  default_prompt: "Use $outlook-email-reply-drafting to turn this Outlook thread into a safe draft reply, including the right reply-all choice."
