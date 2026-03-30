@@ -1,7 +1,8 @@
 {
   "apps": {
     "jam": {
-      "id": "connector_6923e677f37c8191845e4e0b658dd718"
+      "id": "connector_6923e677f37c8191845e4e0b658dd718",
+      "canonical": true
     }
   }
 }
