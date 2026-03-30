@@ -1,0 +1,4 @@
+interface:
+  display_name: "Word Docs"
+  short_description: "Edit SharePoint Word files without flattening them"
+  default_prompt: "Use $sharepoint-word-docs to update this SharePoint Word document while preserving the existing document structure and styling."

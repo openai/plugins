@@ -53,6 +53,58 @@
       "category": "Productivity"
     },
     {
+      "name": "teams",
+      "source": {
+        "source": "local",
+        "path": "./plugins/teams"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "sharepoint",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sharepoint"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "outlook-email",
+      "source": {
+        "source": "local",
+        "path": "./plugins/outlook-email"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "outlook-calendar",
+      "source": {
+        "source": "local",
+        "path": "./plugins/outlook-calendar"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "canva",
       "source": {
         "source": "local",

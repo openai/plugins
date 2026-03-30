@@ -1,0 +1,7 @@
+interface:
+  display_name: "Messages"
+  short_description: "Write Teams messages and drafts"
+  icon_small: "../teams/assets/teams-small.svg"
+  icon_large: "../teams/assets/teams.svg"
+  brand_color: "#5B5FC7"
+  default_prompt: "Use $teams-messages to write, draft, or send a Teams chat or channel message with correct routing and structured user mentions."
