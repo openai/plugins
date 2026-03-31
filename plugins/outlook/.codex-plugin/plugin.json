@@ -1,0 +1,43 @@
+{
+  "name": "outlook",
+  "version": "0.1.0",
+  "description": "Work with the unified Microsoft Outlook connector for mail, calendar, and contacts.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "outlook",
+    "email",
+    "calendar",
+    "contacts",
+    "microsoft"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Outlook",
+    "shortDescription": "Route unified Outlook workflows",
+    "longDescription": "Use the unified Outlook connector for mail, calendar, and contacts workflows that span inbox, scheduling, and recipient context through one Microsoft Outlook app connection.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook",
+    "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
+    "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
+    "defaultPrompt": [
+      "Route a unified Outlook workflow across mail, calendar, and contacts"
+    ],
+    "brandColor": "#0078D4",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}

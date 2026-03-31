@@ -1,0 +1,4 @@
+interface:
+  display_name: "Communications"
+  short_description: "Choose Outlook or Teams for the follow-up"
+  default_prompt: "Use $m365-enterprise-communications to decide whether a follow-up belongs in Outlook or Teams and draft the right message."

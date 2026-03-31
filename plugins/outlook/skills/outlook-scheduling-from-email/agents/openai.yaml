@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scheduling From Email"
+  short_description: "Turn email threads into scheduling decisions"
+  default_prompt: "Use $outlook-scheduling-from-email to extract times from an Outlook thread, compare them against calendar availability, and prepare the right reply or event."

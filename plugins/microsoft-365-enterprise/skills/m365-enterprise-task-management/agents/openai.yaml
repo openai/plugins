@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Management"
+  short_description: "Manage shared Microsoft Planner tasks"
+  default_prompt: "Use $m365-enterprise-task-management to review, create, update, or safely delete Microsoft Planner tasks."

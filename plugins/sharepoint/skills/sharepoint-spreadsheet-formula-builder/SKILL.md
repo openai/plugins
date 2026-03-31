@@ -7,7 +7,7 @@ description: Design, repair, and roll out formulas in SharePoint-hosted workbook
 
 Use this skill when the formula itself is the task and the workbook lives in SharePoint.
 
-This workflow depends on the Microsoft SharePoint connector for file discovery and binary transfer, not formula-aware editing. The relevant connector actions on the exposed Codex surface are `get_site`, `search`, `list_recent_documents`, `list_folder_items`, `fetch`, `update_file`, and `upload_file`.
+This workflow depends on the Microsoft SharePoint connector for file discovery and binary transfer, not formula-aware editing. The relevant connector actions on the exposed Codex surface are `get_site`, `list_site_drives`, `search`, `list_folder_items`, `fetch`, `update_file`, and `upload_file`.
 
 In Codex, use those direct Microsoft SharePoint app tools rather than generic MCP resource-listing flows. The backend wrapper routes connector actions through tool calls, not through user-facing SharePoint resource enumeration.
 
@@ -18,10 +18,11 @@ Read `./references/formula-patterns.md` before drafting the first formula. The p
 1. Ground the formula in the live workbook first: exact SharePoint file, sheet, target cell or output column, input columns, and a few representative rows.
 2. Use the SharePoint connector flow to locate the exact workbook:
    - `get_site` when you need to confirm the canonical site before path-based operations
-   - `search` when you have keywords
-   - `list_recent_documents` when the user means a recently accessed file or you have no search keywords
-   - `list_folder_items` when the folder is already known
-   - prefer the exact Graph-style `url` returned by `search` or `list_recent_documents` as the input to `fetch`
+   - `list_site_drives` when the site is known but the right library is not
+   - `search(query="...")` when you have keywords
+   - `search(query=None, hostname=..., site_path=..., folder_path=...)` to browse a known site or folder
+   - `list_folder_items` when the exact folder path is already known
+   - prefer the exact Graph-style `url` returned by keyword search or browse results as the input to `fetch`
    - `fetch` once for extracted content to identify sheets and likely target ranges
    - `fetch(download_raw_file=true)` for the actual `.xlsx` bytes before editing formulas
 3. Choose the formula shape deliberately:
@@ -45,8 +46,9 @@ Read `./references/formula-patterns.md` before drafting the first formula. The p
 
 - Do not treat a SharePoint workbook like a live Google Sheet. Formula design happens against a downloaded `.xlsx`, then goes back through the SharePoint file-update path.
 - The connector does not expose cell-level formula editing, workbook recalculation controls, or formula-engine introspection. Do not imply that SharePoint tooling itself validated Excel semantics beyond successful file round-trip.
-- The implementation prefers exact Graph item URLs returned by `search` and `list_recent_documents`. Browser or sharing URLs are supported by `fetch`, but they are fallback inputs rather than the preferred primary path.
-- `search` only returns text-friendly document types and enforces the connector's file-size gate. If `search` is blank, the implementation falls back to recent documents instead of running an unrestricted keyword search.
+- The implementation prefers exact Graph item URLs returned by keyword search or browse results. Browser or sharing URLs are supported by `fetch`, but they are fallback inputs rather than the preferred primary path.
+- Use explicit browse mode for site discovery. Do not treat user-recency as a substitute for site or library discovery.
+- `search` only returns text-friendly document types and enforces the connector's file-size gate. If keyword search is not the right tool, switch to site-scoped browse mode instead of using a vague fallback.
 - If local tooling does not recalculate formulas exactly, verify both the formula text and the dependency ranges, then say clearly that final computed values depend on Excel or SharePoint recalculation after upload.
 - Treat modern Excel functions such as `XLOOKUP`, `FILTER`, `LET`, and `LAMBDA` as workbook-compatibility choices, not connector features. Use them when the target workbook is expected to open in Microsoft 365-era Excel or Excel for the web, and call out compatibility risk otherwise.
 - When compatibility is unclear, prefer conservative formulas such as `IF`, `IFERROR`, `SUMIFS`, `COUNTIFS`, `INDEX/MATCH`, and exact-match `VLOOKUP(FALSE)` over newer dynamic-array constructs.

@@ -13,8 +13,12 @@ If the formula itself is the task, pair this with [../sharepoint-spreadsheet-for
 
 ## Core Workflow
 
-1. Search or list folder items to locate the exact workbook.
-2. Prefer the exact `url` returned by `search` or `list_recent_documents` when you later call `fetch`.
+1. Use the site-scoped SharePoint discovery path to locate the exact workbook:
+   - `get_site(...)` when the user already knows the site
+   - `list_site_drives(...)` when the site is known but the library is not
+   - `search(query=None, hostname=..., site_path=..., folder_path=...)` to browse a known site or folder
+   - `search(query="...")` when the user actually has keywords
+2. Prefer the exact `url` returned by keyword search or browse results when you later call `fetch`.
 3. Fetch extracted content once to identify relevant sheets and the likely target area.
 4. Fetch the raw `.xlsx` with `fetch(download_raw_file=true)`.
 5. Inspect workbook structure before editing:
@@ -36,6 +40,7 @@ Use the direct Microsoft SharePoint app tools for this flow. Do not rely on gene
 - Preserve formulas, charts, sheet structure, and formatting unless the user explicitly asked to change them.
 - Treat connector writes as full workbook replacement. `update_file` does not patch individual cells or formulas inside the existing workbook on the server.
 - `fetch` enforces the connector's supported-file and max-size constraints. If raw workbook retrieval fails at the connector layer, stop and report the limitation instead of pretending the workbook was safely inspected.
+- Do not teach or rely on user-recency as the primary browse path. Resolve the right site, library, and folder first when the workbook location is still ambiguous.
 - If the workbook contains formulas, charts, or formatting-sensitive layouts, treat operations that can shift references or overwrite styled ranges as high risk and inspect carefully before saving.
 - For structured additions such as Q&A sections, notes blocks, or assumption tables, prefer inserting them into the most natural non-formula sheet instead of the main projection grid unless the user explicitly asked otherwise.
 

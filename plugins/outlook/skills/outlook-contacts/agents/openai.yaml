@@ -1,0 +1,4 @@
+interface:
+  display_name: "Contacts"
+  short_description: "Find and organize Outlook contacts"
+  default_prompt: "Use $outlook-contacts to look up, clean up, or organize Outlook contacts and contact folders."

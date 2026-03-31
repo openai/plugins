@@ -1,0 +1,4 @@
+interface:
+  display_name: "Meeting Follow-Up"
+  short_description: "Connect event context with related email"
+  default_prompt: "Use $outlook-meeting-followup to compare an Outlook event with related email and draft the right follow-up."

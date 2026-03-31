@@ -14,15 +14,7 @@ If a request depends on flights, commute blocks, airport timing, or in-person tr
 If a request depends on prep alerts, meeting reminder timing, or deciding which meetings deserve reminders, consult `resources/reminder-planning.md` before proposing a change.
 If a request depends on proposing candidate times, checking when the user is free, or placing a temporary hold, consult `resources/availability-response.md` before proposing a change.
 
-## Specialized Skills
-
-- For one-day schedule understanding and agenda readouts, prefer [outlook-calendar-daily-brief](../outlook-calendar-daily-brief/SKILL.md).
-- For creating a meaningful focus block through intelligent moves, prefer [outlook-calendar-free-up-time](../outlook-calendar-free-up-time/SKILL.md).
-- For ranking the best group meeting options, prefer [outlook-calendar-group-scheduler](../outlook-calendar-group-scheduler/SKILL.md).
-- For meeting prep briefs grounded in the event and nearby Microsoft context, prefer [outlook-calendar-meeting-prep](../outlook-calendar-meeting-prep/SKILL.md).
-- Keep reminder planning, RSVP replies, recurring-series maintenance, travel-aware scheduling, and deadline planning in this base Outlook skill.
-
-Use this base skill when the request spans multiple Outlook calendar workflows or when no more focused Outlook calendar skill is a better fit.
+Keep this plugin focused on specialist calendar work. If the task needs combined mail + calendar reasoning or Outlook contacts, hand off to the unified Outlook skill at [../../../outlook/skills/outlook/SKILL.md](../../../outlook/skills/outlook/SKILL.md).
 
 ## Specialized Skills
 
@@ -31,6 +23,8 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - For ranking the best group meeting options, prefer [outlook-calendar-group-scheduler](../outlook-calendar-group-scheduler/SKILL.md).
 - For meeting prep briefs grounded in the event and nearby Microsoft context, prefer [outlook-calendar-meeting-prep](../outlook-calendar-meeting-prep/SKILL.md).
 - Keep reminder planning, RSVP replies, recurring-series maintenance, travel-aware scheduling, and deadline planning in this base Outlook skill.
+
+Use this base skill when the request spans multiple Outlook Calendar workflows or when no more focused calendar skill is a better fit.
 
 ## Preferred Deliverables
 
@@ -81,8 +75,8 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - Use `fetch_event` after discovery when one concrete event needs deeper inspection before editing.
 - If multiple information surfaces are available for meeting prep, prefer this retrieval order unless the user names a specific source: current event body, prior related event bodies, Outlook Email, SharePoint or OneDrive docs, then lower-signal notes sources.
 - For document retrieval across Microsoft surfaces, use the actual connector or tool surfaces directly:
-  - Outlook mail context: use the Outlook Email app tools.
-  - SharePoint or OneDrive docs: use the Microsoft SharePoint app tools such as `search`, `list_recent_documents`, and `fetch`.
+  - Outlook mail context: use the Outlook Email app tools, or use the unified Outlook plugin when the task genuinely spans mail + calendar.
+  - SharePoint or OneDrive docs: use the Microsoft SharePoint app tools such as `get_site`, `list_site_drives`, `search(query="...")`, `search(query=None, hostname=..., site_path=..., folder_path=...)`, and `fetch`.
   - Do not use generic MCP resource discovery such as `list_mcp_resources` to discover SharePoint content for this workflow.
 
 ## Outlook-Specific Checks
