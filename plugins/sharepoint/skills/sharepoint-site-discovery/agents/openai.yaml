@@ -1,0 +1,4 @@
+interface:
+  display_name: "Site Discovery"
+  short_description: "Resolve the right SharePoint site and library"
+  default_prompt: "Use $sharepoint-site-discovery to find the right SharePoint site, library, or folder before fetching or editing a file."

@@ -1,11 +1,11 @@
 ---
 name: teams-planner-task-management
-description: Review and manage Microsoft Teams Planner tasks. Use when the user wants to inspect plans or buckets, create tasks from follow-ups, update task fields, or safely delete a Planner task.
+description: Review and manage Microsoft Planner tasks from Teams workflows. Use when the user wants to inspect plans or buckets, create tasks from follow-ups, update task fields, or safely delete a Planner task.
 ---
 
 # Teams Planner Task Management
 
-Use this skill to manage Planner tasks that live inside Teams. It is the Teams-native workflow for turning chat or meeting follow-ups into trackable tasks.
+Use this skill to manage Microsoft Planner tasks surfaced through the Teams connector. It is the Teams-focused workflow for turning chat or meeting follow-ups into trackable tasks without claiming that Planner is Teams-exclusive.
 
 ## Start Here
 
@@ -32,6 +32,7 @@ Use this skill to manage Planner tasks that live inside Teams. It is the Teams-n
 - Do not delete a task on implied intent.
 - If a task, plan, or bucket is ambiguous, resolve the exact target before updating or deleting it.
 - If follow-ups from a Teams summary are incomplete, return the proposed task list first instead of creating partial tasks silently.
+- Keep the framing Teams-specific: use this skill when the tasks come from Teams work, even though the underlying Planner surface is shared across Microsoft workflows.
 
 ## Output Conventions
 
@@ -41,7 +42,7 @@ Use this skill to manage Planner tasks that live inside Teams. It is the Teams-n
 
 ## Example Requests
 
-- "Show me my Planner tasks in Teams."
+- "Show me the Planner tasks tied to the work I'm tracking from Teams."
 - "Turn these meeting follow-ups into Planner tasks in the launch board."
 - "Move this Planner task to the blocked bucket and push the due date to Friday."
 - "Delete this Planner task."

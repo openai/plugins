@@ -1,6 +1,6 @@
 ---
 name: sharepoint
-description: Inspect Microsoft SharePoint context and prepare safe changes. Use when the user wants site, page, or file review, ownership and status extraction, or change planning before editing content, navigation, or information architecture.
+description: Inspect Microsoft SharePoint context, discover the right site or library, and prepare safe changes. Use when the user wants site, page, or file review, ownership and status extraction, or change planning before editing content, navigation, or information architecture.
 ---
 
 # SharePoint
@@ -19,6 +19,7 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 
 | Workflow | Skill |
 | --- | --- |
+| Resolve the right site, library, or folder before file work | [../sharepoint-site-discovery/SKILL.md](../sharepoint-site-discovery/SKILL.md) |
 | Word document edits that must preserve `.docx` structure and styling | [../sharepoint-word-docs/SKILL.md](../sharepoint-word-docs/SKILL.md) |
 | Spreadsheet edits that must preserve workbook structure, formulas, and formatting | [../sharepoint-spreadsheets/SKILL.md](../sharepoint-spreadsheets/SKILL.md) |
 | Formula design, repair, and rollout in a SharePoint-hosted workbook | [../sharepoint-spreadsheet-formula-builder/SKILL.md](../sharepoint-spreadsheet-formula-builder/SKILL.md) |
@@ -30,27 +31,34 @@ Use this skill to turn SharePoint sites, pages, files, and document-library cont
 1. Read the relevant site, page, file, or library before proposing changes. Capture the current title, location, owners, linked documents, and the content that matters.
 2. When the user is exploring, summarize the current information architecture or document state before suggesting edits.
 3. Ground every recommendation in the exact SharePoint destination, such as the site name, page name, library, or file path.
-4. If the request targets an Office document, determine whether the task is content analysis only or an actual file edit before choosing the workflow.
-5. Route specialized Office workflows to the appropriate SharePoint skill:
+4. When the exact site, drive, or folder is not already known, use the truthful discovery path:
+   - `get_site(...)` to validate the site
+   - `list_site_drives(...)` to discover libraries on that site
+   - `search(query=None, hostname=..., site_path=..., folder_path=...)` to browse a known site or folder
+   - `search(query="...")` only when the user actually wants keyword search
+5. If the request is primarily about locating the right site, library, or folder before file work, route to [../sharepoint-site-discovery/SKILL.md](../sharepoint-site-discovery/SKILL.md).
+6. If the request targets an Office document, determine whether the task is content analysis only or an actual file edit before choosing the workflow.
+7. Route specialized Office workflows to the appropriate SharePoint skill:
    - `.docx` edits -> [../sharepoint-word-docs/SKILL.md](../sharepoint-word-docs/SKILL.md)
    - `.xlsx` edits -> [../sharepoint-spreadsheets/SKILL.md](../sharepoint-spreadsheets/SKILL.md)
    - formula-heavy `.xlsx` work -> [../sharepoint-spreadsheet-formula-builder/SKILL.md](../sharepoint-spreadsheet-formula-builder/SKILL.md)
    - style-sensitive `.pptx` edits -> [../sharepoint-powerpoint/SKILL.md](../sharepoint-powerpoint/SKILL.md)
    - maintained strategy, roadmap, planning, or status docs -> [../sharepoint-shared-doc-maintenance/SKILL.md](../sharepoint-shared-doc-maintenance/SKILL.md)
-6. When using SharePoint file-update tools, prefer the drive-root-relative file path from the item's metadata rather than guessing a library-prefixed path. A file may appear under `Shared Documents/...` in the web URL while the writable API path is just the filename or another root-relative path.
-7. After any write, re-fetch the file from SharePoint and verify the specific intended change in the returned content or metadata rather than assuming the upload succeeded.
-8. Treat verification as two separate checks whenever fidelity matters:
+8. When using SharePoint file-update tools, prefer the drive-root-relative file path from the item's metadata rather than guessing a library-prefixed path. A file may appear under `Shared Documents/...` in the web URL while the writable API path is just the filename or another root-relative path.
+9. After any write, re-fetch the file from SharePoint and verify the specific intended change in the returned content or metadata rather than assuming the upload succeeded.
+10. Treat verification as two separate checks whenever fidelity matters:
    - Content verification: the intended sections, text, cells, or slides are present.
    - Fidelity verification: headings, spacing, theme, layout, formatting, and template conventions still match the source file's visual language.
-9. If connector limitations prevent fidelity verification or safe style-preserving upload, say so explicitly before calling the edit complete.
-10. If the request is write-oriented, present the intended content change or structure change before applying broad edits.
-11. Call out content dependencies such as linked files, navigation references, approvals, or owners when they affect the update.
-12. Only change content, structure, metadata, or sharing state when the user has clearly asked for that action.
+11. If connector limitations prevent fidelity verification or safe style-preserving upload, say so explicitly before calling the edit complete.
+12. If the request is write-oriented, present the intended content change or structure change before applying broad edits.
+13. Call out content dependencies such as linked files, navigation references, approvals, or owners when they affect the update.
+14. Only change content, structure, metadata, or sharing state when the user has clearly asked for that action.
 
 ## Write Safety
 
 - In Codex, treat the Microsoft SharePoint app tools as the primary surface. Do not rely on generic MCP resource listing for SharePoint discovery; the backend wrapper routes through direct connector tools instead.
-- Prefer the exact SharePoint result `url` from `search` or `list_recent_documents` when handing a file into `fetch`; the implementation supports browser/sharing URLs too, but that is fallback resolution logic.
+- Prefer the exact SharePoint result `url` from keyword search or browse results when handing a file into `fetch`; the implementation supports browser or sharing URLs too, but those are fallback inputs rather than the primary discovery path.
+- Do not treat user-recency as site discovery. For site browsing, use `get_site(...)`, `list_site_drives(...)`, and explicit browse mode on `search(query=None, ...)`.
 - Preserve page titles, document names, file locations, ownership details, and linked references unless the user requests a change.
 - Treat page overwrites, navigation changes, library reorganizations, and sharing or permission changes as high-impact actions that require extra clarity.
 - If multiple similarly named sites, pages, or files exist, identify the intended destination before drafting or editing.

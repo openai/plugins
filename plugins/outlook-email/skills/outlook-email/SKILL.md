@@ -1,13 +1,13 @@
 ---
 name: outlook-email
-description: Triage Outlook mail, extract tasks, clean up subscriptions, and draft responses. Use when the user asks to inspect an Outlook inbox or thread, summarize open actions and deadlines, clean up newsletters, draft replies or forwards, or organize mailbox follow-up work before any send or cleanup action.
+description: Triage Outlook mail, extract tasks, clean up subscriptions, draft responses, and route shared mailbox work. Use when the user asks to inspect an Outlook inbox or thread, summarize open actions and deadlines, clean up newsletters, draft replies or forwards, organize mailbox follow-up work, or act on a delegated/shared Outlook mailbox.
 ---
 
 # Outlook Email
 
 ## Overview
 
-Use this skill to turn Outlook inbox and thread context into clear summaries, action lists, and ready-to-review drafts. Prefer Outlook-native list and search flows to build a shortlist, expand only the messages that matter, and treat mailbox mutations as separate explicit actions.
+Use this skill to turn Outlook Email inbox and thread context into clear summaries, action lists, and ready-to-review drafts. Prefer Outlook-native list and search flows to build a shortlist, expand only the messages that matter, and treat mailbox mutations as separate explicit actions.
 
 Outbound Outlook email writes are plain-text only. When drafting, replying, scheduling, or sending, do not plan around HTML bodies, rich formatting, tracking pixels, or formatting-dependent layouts. If the user asks for richer formatting, say briefly that Outlook email write actions here only support plain text, then translate the request into the clearest plain-text equivalent.
 
@@ -27,6 +27,7 @@ Outbound Outlook email writes are plain-text only. When drafting, replying, sche
 | Reply drafting, reply-all decisions, and send-vs-draft handling | [../outlook-email-reply-drafting/SKILL.md](../outlook-email-reply-drafting/SKILL.md) |
 | Action-item, deadline, and commitment extraction | [../outlook-email-task-extraction/SKILL.md](../outlook-email-task-extraction/SKILL.md) |
 | Newsletter and subscription cleanup | [../outlook-email-subscription-cleanup/SKILL.md](../outlook-email-subscription-cleanup/SKILL.md) |
+| Delegated or shared mailbox reads, sends, read-state changes, and moves | [../outlook-email-shared-mailboxes/SKILL.md](../outlook-email-shared-mailboxes/SKILL.md) |
 
 ## Outlook Reading Pattern
 
@@ -36,6 +37,7 @@ Outbound Outlook email writes are plain-text only. When drafting, replying, sche
 4. Use draft-first actions for write preparation: `create_reply_draft`, `create_forward_draft`, or `draft_email`.
 5. Use mailbox-organization actions only with clear user intent: `mark_email_read_state`, `move_email`, `set_message_categories`, `create_category`, `create_mail_folder`.
 6. For newsletter cleanup, inspect `get_unsubscribe_info` before assuming a safe unsubscribe path. `unsubscribe_via_mailto` only covers `mailto:` targets.
+7. For delegated or shared mailbox work, route to [../outlook-email-shared-mailboxes/SKILL.md](../outlook-email-shared-mailboxes/SKILL.md). Do not use signed-in-user actions such as `list_messages`, `fetch_message`, `send_email`, `mark_email_read_state`, or `move_email` for another mailbox.
 
 ## Workflow
 
@@ -98,6 +100,7 @@ Keep these workflows in the base Outlook Email skill instead of splitting them f
 - "Prepare a short forward that gives leadership the current status from this email thread."
 - "Before you send anything, tell me what assumptions need my confirmation."
 - "I drafted that earlier; now send the draft I approved."
+- "Show me unread mail in the support shared mailbox and draft the safest next response."
 
 ## Light Fallback
 

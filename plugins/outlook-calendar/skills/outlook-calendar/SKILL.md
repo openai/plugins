@@ -1,6 +1,6 @@
 ---
 name: outlook-calendar
-description: Handle Outlook Calendar workflows. Use when the user asks for schedule understanding, availability checks, meeting scheduling, intelligent rescheduling, meeting prep, reminder updates, RSVP responses, recurring maintenance, travel coordination, deadline planning, or safe create, update, reschedule, or cancel changes with timezone-aware event times and attendee validation.
+description: Handle Outlook Calendar workflows, including delegated/shared calendar writes. Use when the user asks for schedule understanding, availability checks, meeting scheduling, intelligent rescheduling, meeting prep, reminder updates, RSVP responses, recurring maintenance, travel coordination, deadline planning, or safe create, update, reschedule, respond, attach, delete, or cancel changes with timezone-aware event times and attendee validation.
 ---
 
 # Outlook Calendar
@@ -20,17 +20,10 @@ If a request depends on proposing candidate times, checking when the user is fre
 - For creating a meaningful focus block through intelligent moves, prefer [outlook-calendar-free-up-time](../outlook-calendar-free-up-time/SKILL.md).
 - For ranking the best group meeting options, prefer [outlook-calendar-group-scheduler](../outlook-calendar-group-scheduler/SKILL.md).
 - For meeting prep briefs grounded in the event and nearby Microsoft context, prefer [outlook-calendar-meeting-prep](../outlook-calendar-meeting-prep/SKILL.md).
+- For creating, updating, responding to, deleting, canceling, or attaching files on delegated or shared calendars, prefer [outlook-calendar-shared-calendars](../outlook-calendar-shared-calendars/SKILL.md).
 - Keep reminder planning, RSVP replies, recurring-series maintenance, travel-aware scheduling, and deadline planning in this base Outlook skill.
 
-Use this base skill when the request spans multiple Outlook calendar workflows or when no more focused Outlook calendar skill is a better fit.
-
-## Specialized Skills
-
-- For one-day schedule understanding and agenda readouts, prefer [outlook-calendar-daily-brief](../outlook-calendar-daily-brief/SKILL.md).
-- For creating a meaningful focus block through intelligent moves, prefer [outlook-calendar-free-up-time](../outlook-calendar-free-up-time/SKILL.md).
-- For ranking the best group meeting options, prefer [outlook-calendar-group-scheduler](../outlook-calendar-group-scheduler/SKILL.md).
-- For meeting prep briefs grounded in the event and nearby Microsoft context, prefer [outlook-calendar-meeting-prep](../outlook-calendar-meeting-prep/SKILL.md).
-- Keep reminder planning, RSVP replies, recurring-series maintenance, travel-aware scheduling, and deadline planning in this base Outlook skill.
+Use this base skill when the request spans multiple Outlook Calendar workflows or when no more focused calendar skill is a better fit.
 
 ## Preferred Deliverables
 
@@ -70,6 +63,7 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 17. For meeting-prep or invite-note requests, collect the relevant source material first, then apply a short, grounded write directly unless the request is still ambiguous or under-specified.
 18. Before any create or reschedule write, restate the final interpreted weekday, date, local clock time, and timezone for the event. If the task spans multiple cities or time zones, restate each relevant timestamp separately.
 19. Only create, update, move, or cancel events when the user has clearly asked for that action.
+20. For delegated or shared calendar writes, route to [../outlook-calendar-shared-calendars/SKILL.md](../outlook-calendar-shared-calendars/SKILL.md). Do not use signed-in-user write actions as a substitute for the explicit shared-calendar action names.
 
 ## Read Path
 
@@ -82,7 +76,7 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - If multiple information surfaces are available for meeting prep, prefer this retrieval order unless the user names a specific source: current event body, prior related event bodies, Outlook Email, SharePoint or OneDrive docs, then lower-signal notes sources.
 - For document retrieval across Microsoft surfaces, use the actual connector or tool surfaces directly:
   - Outlook mail context: use the Outlook Email app tools.
-  - SharePoint or OneDrive docs: use the Microsoft SharePoint app tools such as `search`, `list_recent_documents`, and `fetch`.
+  - SharePoint or OneDrive docs: use the Microsoft SharePoint app tools such as `get_site`, `list_site_drives`, `search(query="...")`, `search(query=None, hostname=..., site_path=..., folder_path=...)`, and `fetch`.
   - Do not use generic MCP resource discovery such as `list_mcp_resources` to discover SharePoint content for this workflow.
 
 ## Outlook-Specific Checks
@@ -90,6 +84,7 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - Distinguish true busy time from softer constraints such as `Tentative`, `Free`, `Out of Office`, or `Working Elsewhere`.
 - If the source data includes attendee response state, organizer role, Teams details, room booking, or work-location context, preserve those details unless the user asked to change them.
 - Shared calendars may expose only free/busy signals rather than full event details. Say that directly instead of implying the view is complete.
+- Shared or delegated calendar writes use explicit shared action names. Reading and availability can be partial; writing requires a concrete shared `calendar_id`.
 - If a slot is free only because another item is marked `Free` or `Working Elsewhere`, describe that nuance.
 - If a meeting is online, preserve the existing Teams or online-meeting setup unless the user asks to change it.
 
@@ -144,6 +139,7 @@ Use this base skill when the request spans multiple Outlook calendar workflows o
 - "Help me decide whether to accept this invite, decline it, or propose a better time."
 - "Clean up this recurring staff meeting without breaking the whole series."
 - "Add the right reminder coverage for my review next week and the deadline after it."
+- "Create this event on the team shared calendar instead of my personal calendar."
 
 ## Light Fallback
 
