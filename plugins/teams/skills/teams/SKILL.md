@@ -1,13 +1,13 @@
 ---
 name: teams
-description: Summarize Microsoft Teams conversations, triage unread or recent activity, draft follow-ups, and manage Planner tasks through connected Teams data. Use when the user wants to review chats or channels, identify owners and next steps, prepare a safe reply or post, or turn follow-ups into Teams-native tasks.
+description: Summarize Microsoft Teams conversations, triage unread or recent activity, draft follow-ups, and manage Planner tasks through connected Teams data. Use when the user wants to review chats or channels, identify owners and next steps, prepare a safe reply or post, or turn Teams follow-ups into Microsoft Planner tasks.
 ---
 
 # Teams
 
 ## Overview
 
-Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, or manage Planner follow-ups. Keep answers grounded in exact Teams context, preserve thread intent, and use the write path that matches the user's requested action.
+Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, or manage Planner follow-ups from Teams context. Keep answers grounded in exact Teams context, preserve thread intent, and use the write path that matches the user's requested action.
 
 ## Related Skills
 
@@ -18,7 +18,7 @@ Use this skill to route Microsoft Teams work into the right workflow: summarize 
 | Build a daily digest across selected chats or channels | [../teams-daily-digest/SKILL.md](../teams-daily-digest/SKILL.md) |
 | Find messages that likely need a response and draft replies | [../teams-reply-drafting/SKILL.md](../teams-reply-drafting/SKILL.md) |
 | Triage what likely needs the user's attention | [../teams-notification-triage/SKILL.md](../teams-notification-triage/SKILL.md) |
-| Review, create, update, and delete Teams Planner tasks | [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md) |
+| Review, create, update, and delete Microsoft Planner tasks from Teams follow-ups | [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md) |
 
 ## Support Checks
 
@@ -36,6 +36,7 @@ Use this skill to route Microsoft Teams work into the right workflow: summarize 
 - Teams does not expose native persisted drafts here. "Draft" means return draft text when the requested action is drafting rather than posting.
 - There is no Slack-canvas analogue in this Teams connector. If the user wants something posted in Teams, return or send message text rather than inventing a document workflow.
 - Real outbound Teams mentions require structured mention inputs with exact Entra user IDs. Do not rely on plain `@name` text.
+- Planner in this plugin is the Microsoft Planner task surface reached from Teams workflows. Treat it as shared Microsoft task infrastructure, while keeping this plugin focused on Teams-originated follow-ups.
 - For unbounded channel summaries, start with `list_channel_messages(top=50)`. Do not probe larger values by default because the underlying endpoint rejects oversized reads.
 
 ## DM Routing

@@ -105,6 +105,32 @@
       "category": "Productivity"
     },
     {
+      "name": "outlook",
+      "source": {
+        "source": "local",
+        "path": "./plugins/outlook"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "microsoft-365-enterprise",
+      "source": {
+        "source": "local",
+        "path": "./plugins/microsoft-365-enterprise"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": []
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "canva",
       "source": {
         "source": "local",

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Outlook"
+  short_description: "Route mail, calendar, and contacts workflows"
+  icon_small: "./assets/outlook-small.svg"
+  icon_large: "./assets/outlook.svg"
+  brand_color: "#0078D4"
+  default_prompt: "Use $outlook to route a unified Outlook workflow that spans email, calendar, and contacts."

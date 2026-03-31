@@ -1,0 +1,4 @@
+interface:
+  display_name: "Daily Brief"
+  short_description: "Summarize what changed across Microsoft 365"
+  default_prompt: "Use $m365-enterprise-daily-brief to build a scoped brief across Outlook, Teams, SharePoint, and Planner."

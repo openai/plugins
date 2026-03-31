@@ -11,6 +11,8 @@ Use this skill to turn Outlook inbox and thread context into clear summaries, ac
 
 Outbound Outlook email writes are plain-text only. When drafting, replying, scheduling, or sending, do not plan around HTML bodies, rich formatting, tracking pixels, or formatting-dependent layouts. If the user asks for richer formatting, say briefly that Outlook email write actions here only support plain text, then translate the request into the clearest plain-text equivalent.
 
+Keep this plugin focused on deep mailbox work. If the task needs combined mail + calendar reasoning or Outlook contacts, hand off to the unified Outlook skill at [../../../outlook/skills/outlook/SKILL.md](../../../outlook/skills/outlook/SKILL.md) instead of stretching Outlook Email beyond mailbox scope.
+
 ## Preferred Deliverables
 
 - Thread briefs that capture the latest status, decisions, deadlines, and next actions.
@@ -27,6 +29,12 @@ Outbound Outlook email writes are plain-text only. When drafting, replying, sche
 | Reply drafting, reply-all decisions, and send-vs-draft handling | [../outlook-email-reply-drafting/SKILL.md](../outlook-email-reply-drafting/SKILL.md) |
 | Action-item, deadline, and commitment extraction | [../outlook-email-task-extraction/SKILL.md](../outlook-email-task-extraction/SKILL.md) |
 | Newsletter and subscription cleanup | [../outlook-email-subscription-cleanup/SKILL.md](../outlook-email-subscription-cleanup/SKILL.md) |
+
+## Handoffs
+
+- For mail + calendar workflows, contact lookup, or recipient cleanup that needs the unified Outlook connector, use [../../../outlook/skills/outlook/SKILL.md](../../../outlook/skills/outlook/SKILL.md).
+- Keep this plugin as the specialist path for mailbox triage, thread summarization, drafting, forwarding, and mailbox organization.
+- Do not claim contact creation or contact-folder management in this plugin.
 
 ## Outlook Reading Pattern
 

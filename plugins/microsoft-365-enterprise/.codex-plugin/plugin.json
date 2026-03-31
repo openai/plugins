@@ -1,0 +1,44 @@
+{
+  "name": "microsoft-365-enterprise",
+  "version": "0.1.0",
+  "description": "Work across Outlook, Teams, SharePoint, and Planner through the Microsoft 365 Enterprise connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.microsoft.com/en-us/microsoft-365/business",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "microsoft-365-enterprise",
+    "microsoft",
+    "outlook",
+    "teams",
+    "sharepoint",
+    "planner"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Microsoft 365 Enterprise",
+    "shortDescription": "Route cross-surface Microsoft workflows",
+    "longDescription": "Use Microsoft 365 Enterprise to route workflows across Outlook, Teams, SharePoint, and Planner through one Microsoft tenant connection.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/business",
+    "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
+    "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
+    "defaultPrompt": [
+      "Route a Microsoft 365 workflow across Outlook, Teams, SharePoint, and Planner"
+    ],
+    "brandColor": "#0078D4",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}

@@ -4,7 +4,7 @@ Use this file as an Excel syntax refresher for SharePoint-hosted workbooks, not 
 
 These are Excel formula patterns, not SharePoint connector capabilities. The connector can fetch and overwrite workbook files, but formula support depends on the Excel environment that opens the workbook afterward.
 
-Operationally, the SharePoint implementation prefers exact Graph item URLs from `search` or `list_recent_documents` for later `fetch` calls, and then uses root-relative paths or exact targets for writes.
+Operationally, the SharePoint implementation prefers exact Graph item URLs from keyword search or explicit browse results for later `fetch` calls, and then uses root-relative paths or exact targets for writes. Use `get_site(...)`, `list_site_drives(...)`, and `search(query=None, ...)` for truthful site-scoped discovery instead of relying on user-recency.
 
 ## Formula Shape Heuristics
 

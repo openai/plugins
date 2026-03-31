@@ -1,0 +1,7 @@
+interface:
+  display_name: "Microsoft 365 Enterprise"
+  short_description: "Route Outlook, Teams, SharePoint, and Planner workflows"
+  icon_small: "./assets/microsoft-365-enterprise-small.svg"
+  icon_large: "./assets/microsoft-365-enterprise.svg"
+  brand_color: "#0078D4"
+  default_prompt: "Use $microsoft-365-enterprise to route a workflow across Outlook, Teams, SharePoint, and Microsoft Planner."

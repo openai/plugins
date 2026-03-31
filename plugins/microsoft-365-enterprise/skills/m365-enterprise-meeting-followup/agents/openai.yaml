@@ -1,0 +1,4 @@
+interface:
+  display_name: "Meeting Follow-Up"
+  short_description: "Synthesize one workstream across Microsoft surfaces"
+  default_prompt: "Use $m365-enterprise-meeting-followup to connect an Outlook meeting, related email, Teams context, SharePoint docs, and Planner follow-ups."
