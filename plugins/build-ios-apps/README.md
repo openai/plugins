@@ -30,6 +30,10 @@ with this shape:
   - required plugin manifest
   - defines plugin metadata and points Codex at the plugin contents
 
+- `.mcp.json`
+  - plugin-local MCP config
+  - wires in XcodeBuildMCP for simulator build/run/debug workflows
+
 - `agents/`
   - plugin-level agent metadata
   - currently includes `agents/openai.yaml` for the OpenAI surface
@@ -38,11 +42,3 @@ with this shape:
   - the actual skill payload
   - each skill keeps the normal skill structure (`SKILL.md`, optional
     `agents/`, `references/`, `assets/`, `scripts/`)
-
-## Notes
-
-This plugin is currently skills-only at the plugin level. It does not ship a
-plugin-local `.mcp.json`.
-
-Some bundled skills rely on external MCP/tooling surfaces at runtime, notably
-XcodeBuildMCP for simulator build/run/debug workflows in `ios-debugger-agent`.
