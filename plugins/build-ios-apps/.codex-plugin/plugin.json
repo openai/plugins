@@ -19,6 +19,7 @@
     "debugging"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Build iOS Apps",
     "shortDescription": "Build, refine, and debug iOS apps with SwiftUI and Xcode workflows",
