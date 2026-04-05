@@ -5,6 +5,7 @@ This plugin packages iOS and Swift workflows in `plugins/build-ios-apps`.
 It currently includes these skills:
 
 - `ios-debugger-agent`
+- `ios-app-intents`
 - `swiftui-liquid-glass`
 - `swiftui-performance-audit`
 - `swiftui-ui-patterns`
@@ -12,6 +13,7 @@ It currently includes these skills:
 
 ## What It Covers
 
+- designing App Intents, app entities, and App Shortcuts for system surfaces
 - building and refactoring SwiftUI UI using current platform patterns
 - reviewing or adopting iOS 26+ Liquid Glass APIs
 - auditing SwiftUI performance and guiding profiling workflows
