@@ -11,6 +11,8 @@ Expose the smallest useful action and entity surface to the system. Start with t
 Read these references as needed:
 
 - `references/first-pass-checklist.md` for choosing the first intent and entity surface
+- `references/example-patterns.md` for concrete example shapes to copy and adapt
+- `references/code-templates.md` for generalized App Intents code templates
 - `references/system-surfaces.md` for how to think about Shortcuts, Siri, Spotlight, widgets, and other system entry points
 
 ## Core workflow
@@ -29,11 +31,13 @@ Read these references as needed:
 - Use non-opening intents for actions that can complete directly from the system surface.
 - Use `openAppWhenRun` or open-style intents when the user should land in a specific in-app workflow.
 - When the app must react inside the main scene, add one clear runtime handoff path instead of scattering ad hoc routing logic.
+- If the action can work in both modes, consider shipping both an inline version and an open-app version rather than forcing one compromise.
 
 ### 4) Make the actions discoverable
 - Add `AppShortcutsProvider` entries for the first set of high-value intents.
 - Choose titles, phrases, and symbols that make sense in Shortcuts, Siri, and Spotlight.
 - Keep shortcut phrases direct and task-oriented.
+- Reuse the same action model for widgets and controls when a widget configuration or intent-driven control already needs the same parameters.
 
 ### 5) Validate the runtime handoff
 - Build the app and confirm the intents target compiles cleanly.
@@ -45,6 +49,7 @@ Read these references as needed:
 - Prefer a dedicated intents target or module for the system-facing layer.
 - Keep intent types thin; business logic should stay in app services or domain models.
 - Keep app entities small and display-friendly.
+- Use `AppEnum` for fixed app choices such as tabs, modes, or visibility levels before reaching for a full entity type.
 - Prefer one predictable app-intent routing surface in the main app scene or root router.
 - Treat App Intents as system integration infrastructure, not only as a Shortcuts feature.
 
@@ -63,3 +68,9 @@ Read these references as needed:
   - `https://developer.apple.com/documentation/appintents/creating-your-first-app-intent`
   - `https://developer.apple.com/documentation/appintents/adopting-app-intents-to-support-system-experiences`
 - A good first pass often includes one open-app intent, one action intent, one or two entity types, and a small `AppShortcutsProvider`.
+- Good example families to cover are:
+  - open a destination or editor in the app
+  - perform a lightweight action inline without opening the app
+  - choose from a fixed enum such as a tab or mode
+  - resolve one or more entities through `EntityQuery`
+  - power widget configuration or controls from the same entity surface
