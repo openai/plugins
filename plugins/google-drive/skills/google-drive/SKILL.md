@@ -19,6 +19,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - Use the base workflow for search, fetch, recent files, folders, sharing, copying, deleting, exporting, and other file-lifecycle work that is not primarily about editing Docs, Sheets, or Slides content.
 
 3. Route to the narrowest sibling skill that matches the file type and job.
+- Drive, Docs, Sheets, or Slides comment creation, comment replies, comment resolution, or review-by-comments: use [google-drive-comments](../google-drive-comments/SKILL.md).
 - Google Docs content summary, revision planning, prose rewriting, or section edits: use [google-docs](../google-docs/SKILL.md).
 - Google Sheets range inspection, table cleanup, data restructuring, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
 - Google Sheets formula design or repair: use [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md).
@@ -46,6 +47,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 
 ## Related Skills
 
+- Comments: [google-drive-comments](../google-drive-comments/SKILL.md)
 - Docs: [google-docs](../google-docs/SKILL.md)
 - Sheets: [google-sheets](../google-sheets/SKILL.md)
 - Sheets formulas: [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md)
