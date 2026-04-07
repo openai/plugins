@@ -1,0 +1,4 @@
+interface:
+  display_name: "Liquid Glass"
+  short_description: "Adopt modern macOS SwiftUI design and Liquid Glass"
+  default_prompt: "Use $liquid-glass to modernize this macOS SwiftUI UI, remove custom chrome that fights system glass, and adopt Liquid Glass in app structure, toolbars, search, controls, and custom surfaces."

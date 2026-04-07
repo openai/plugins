@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build / Run / Debug"
+  short_description: "Build and debug macOS apps with shell-first workflows"
+  default_prompt: "Use $build-run-debug to discover the local project, build it for macOS, launch the app or executable, and summarize the real blocker when something fails."

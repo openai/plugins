@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Triage"
+  short_description: "Run and explain macOS test failures with focused reruns"
+  default_prompt: "Use $test-triage to run the smallest meaningful macOS test scope first, classify failures correctly, and summarize the next best rerun or fix."

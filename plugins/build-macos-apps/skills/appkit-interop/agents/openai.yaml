@@ -1,0 +1,4 @@
+interface:
+  display_name: "AppKit Interop"
+  short_description: "Bridge SwiftUI into AppKit for native macOS behavior"
+  default_prompt: "Use $appkit-interop to choose the smallest AppKit bridge, keep SwiftUI as the source of truth, and implement macOS-specific behavior that SwiftUI does not model cleanly."
