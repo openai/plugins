@@ -47,7 +47,7 @@ async function rehydrateState(runId) {
   }
 
   // Inventory variable collections (variables don't support pluginData — use name-based lookup)
-  const collections = figma.variables.getLocalVariableCollections()
+  const collections = await figma.variables.getLocalVariableCollectionsAsync()
   for (const coll of collections) {
     variableCollections.push({
       id: coll.id,
@@ -58,7 +58,7 @@ async function rehydrateState(runId) {
   }
 
   // Inventory variables (name + collection for idempotency key)
-  const allVars = figma.variables.getLocalVariables()
+  const allVars = await figma.variables.getLocalVariablesAsync()
   for (const v of allVars) {
     variables.push({
       id: v.id,

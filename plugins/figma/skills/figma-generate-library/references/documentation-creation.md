@@ -2,7 +2,7 @@
 
 # Documentation Creation Reference
 
-This reference covers Phase 2 of the design system build: the cover page, foundations documentation page (color swatches, type specimens, spacing bars, shadow cards, radius demo), page layout dimensions, and inline component documentation. Every code block is complete `use_figma`-ready JavaScript (helper-function form — no IIFE wrapper, no `closePlugin` — meant to be embedded in a larger script).
+This reference covers Phase 2 of the design system build: the cover page, foundations documentation page (color swatches, type specimens, spacing bars, shadow cards, radius demo), page layout dimensions, and inline component documentation. Every code block is complete `use_figma`-ready JavaScript (helper-function form — meant to be embedded in a larger script that uses `return` to send results back).
 
 ---
 

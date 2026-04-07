@@ -16,7 +16,7 @@
 | `mode`                          | `'default' \| 'textreview' \| 'inspect' \| 'codegen' \| 'linkpreview' \| 'auth'` |
 | `fileKey`                       | `string \| undefined`                                                            |
 | `root`                          | `DocumentNode`                                                                   |
-| `currentPage`                   | `PageNode` — assign via `setCurrentPageAsync`                                    |
+| `currentPage`                   | `PageNode` — **read-only**; sync setter `figma.currentPage = page` does NOT work and throws; use `await figma.setCurrentPageAsync(page)` instead |
 | `currentUser`                   | `User \| null`                                                                   |
 | `mixed`                         | `unique symbol` — sentinel for mixed values in selection                         |
 | `skipInvisibleInstanceChildren` | `boolean`                                                                        |
@@ -25,7 +25,7 @@
 
 | Method                      | Returns                                                 |
 | --------------------------- | ------------------------------------------------------- |
-| `setCurrentPageAsync(page)` | `Promise<void>` — **MUST use this**; sync setter throws |
+| `setCurrentPageAsync(page)` | `Promise<void>` — **MUST use this**; sync setter `figma.currentPage = page` does NOT work |
 | `getNodeByIdAsync(id)`      | `Promise<BaseNode \| null>`                             |
 | `getNodeById(id)`           | `BaseNode \| null`                                      |
 | `getStyleByIdAsync(id)`     | `Promise<BaseStyle \| null>`                            |
@@ -82,8 +82,8 @@
 
 | Method                                  | Notes                                                        |
 | --------------------------------------- | ------------------------------------------------------------ |
-| `closePlugin(message?)`                 | **MUST call on success paths**                               |
-| `closePluginWithFailure(message?)`      | **MUST call in catch blocks — never use closePlugin for errors** |
+| `closePlugin(message?)`                 | Auto-called; use `return` instead to pass results back       |
+| `closePluginWithFailure(message?)`      | Auto-called on errors; do not call manually                  |
 | `commitUndo()`                          | Snapshot to undo history                                     |
 | `triggerUndo()`                         | Revert to last snapshot                                      |
 | `saveVersionHistoryAsync(title, desc?)` | `Promise<VersionHistoryResult>`                              |
@@ -114,14 +114,10 @@
 ## VariablesAPI — figma.variables (L2016)
 
 ```
-getVariableById(id)                      Variable | null
-getVariableByIdAsync(id)                 Promise<Variable | null>
-getVariableCollectionById(id)            VariableCollection | null
-getVariableCollectionByIdAsync(id)       Promise<VariableCollection | null>
-getLocalVariables(type?)                 Variable[]           ← sync works; filter by VariableResolvedDataType
-getLocalVariablesAsync(type?)            Promise<Variable[]>
-getLocalVariableCollections()            VariableCollection[] ← sync works
-getLocalVariableCollectionsAsync()       Promise<VariableCollection[]> ← may not be available; use sync
+getVariableByIdAsync(id)                 Promise<Variable | null>    ← preferred; sync deprecated
+getVariableCollectionByIdAsync(id)       Promise<VariableCollection | null>    ← preferred; sync deprecated
+getLocalVariablesAsync(type?)            Promise<Variable[]>         ← preferred; filter by VariableResolvedDataType; sync deprecated
+getLocalVariableCollectionsAsync()       Promise<VariableCollection[]>    ← preferred; sync deprecated
 createVariable(name, collection, type)   Variable
 createVariableCollection(name)           VariableCollection
 createVariableAlias(variable)            VariableAlias
@@ -207,7 +203,7 @@ type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
 | `PublishableMixin`           | L7875 | `description`, `key`, `getPublishStatusAsync()`                                                 |
 | `VariantMixin`               | L8182 | `variantProperties`                                                                             |
 | `ComponentPropertiesMixin`   | L8229 | `componentProperties`, `addComponentProperty()`                                                 |
-| `PluginDataMixin`            | L5443 | `getPluginData()`, `setPluginData()`, `getSharedPluginData()`                                   |
+| `PluginDataMixin`            | L5443 | `getSharedPluginData()`, `setSharedPluginData()` supported; `getPluginData()`, `setPluginData()` **NOT supported** |
 | `FramePrototypingMixin`      | L7651 | `overflowDirection`, `numberOfFixedChildren`                                                    |
 | `BaseFrameMixin`             | L7939 | ChildrenMixin + LayoutMixin + AutoLayoutMixin + GeometryMixin + …                               |
 | `DefaultFrameMixin`          | L7997 | BaseFrameMixin + FramePrototypingMixin + ReactionMixin                                          |

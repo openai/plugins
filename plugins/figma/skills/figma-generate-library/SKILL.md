@@ -81,7 +81,7 @@ Phase 4: INTEGRATION + QA (final pass)
 - Page context resets each call — always `await figma.setCurrentPageAsync(page)` at start
 - `figma.notify()` throws — never use it
 - Colors are 0–1 range, not 0–255
-- Font MUST be loaded before any text write: `await figma.loadFontAsync({family, style})`
+- Font MUST be loaded before any text write: `await figma.loadFontAsync({family, style})`. Use `await figma.listAvailableFontsAsync()` to discover available fonts and verify exact style strings — if a load fails, query available fonts to find the correct name or a fallback.
 
 **Design system rules**:
 1. **Variables BEFORE components** — components bind to variables. No token = no component.

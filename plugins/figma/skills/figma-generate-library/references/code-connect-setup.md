@@ -159,11 +159,11 @@ variable.setVariableCodeSyntax('iOS', 'Color.bgPrimary');
 
 ```javascript
 // In use_figma — set WEB code syntax on all variables in a collection
-const collections = figma.variables.getLocalVariableCollections();
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
 for (const coll of collections) {
   if (coll.name !== 'Color') continue;
   for (const varId of coll.variableIds) {
-    const v = figma.variables.getVariableById(varId);
+    const v = await figma.variables.getVariableByIdAsync(varId);
     if (!v) continue;
     // Derive: "color/bg/primary" → "var(--color-bg-primary)"
     const cssName = 'var(--' + v.name.toLowerCase().replace(/\//g, '-').replace(/\s+/g, '-') + ')';

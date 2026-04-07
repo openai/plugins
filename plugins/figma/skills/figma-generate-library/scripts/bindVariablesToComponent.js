@@ -22,10 +22,10 @@
  * }} bindings
  *   Each key is a visual property name; each value is a Figma Variable ID
  *   (e.g. "VariableID:123:456"). Omit a key to skip binding that property.
- * @returns {{ mutatedNodeIds: string[] }}
+ * @returns {Promise<{ mutatedNodeIds: string[] }>}
  *   List of node IDs that were mutated (for audit/validation purposes).
  */
-function bindVariablesToComponent(component, bindings) {
+async function bindVariablesToComponent(component, bindings) {
   const mutatedNodeIds = []
 
   if (!component) {
@@ -34,7 +34,7 @@ function bindVariablesToComponent(component, bindings) {
 
   // --- Fills ---
   if (bindings.fills) {
-    const fillVar = figma.variables.getVariableById(bindings.fills)
+    const fillVar = await figma.variables.getVariableByIdAsync(bindings.fills)
     if (fillVar) {
       const existingFills = component.fills
       if (Array.isArray(existingFills) && existingFills.length > 0) {
@@ -60,7 +60,7 @@ function bindVariablesToComponent(component, bindings) {
 
   // --- Strokes ---
   if (bindings.strokes) {
-    const strokeVar = figma.variables.getVariableById(bindings.strokes)
+    const strokeVar = await figma.variables.getVariableByIdAsync(bindings.strokes)
     if (strokeVar) {
       const existingStrokes = component.strokes
       if (Array.isArray(existingStrokes) && existingStrokes.length > 0) {
@@ -96,7 +96,7 @@ function bindVariablesToComponent(component, bindings) {
 
   for (const [bindingKey, figmaProp] of floatBindings) {
     if (bindings[bindingKey]) {
-      const variable = figma.variables.getVariableById(bindings[bindingKey])
+      const variable = await figma.variables.getVariableByIdAsync(bindings[bindingKey])
       if (variable) {
         component.setBoundVariable(figmaProp, variable)
         if (!mutatedNodeIds.includes(component.id)) {

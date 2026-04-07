@@ -8,6 +8,7 @@
 
 - Listing Effect Styles
 - Creating a Drop Shadow Style
+- Importing Library Effect Styles
 - Applying Effect Styles to Nodes
 
 ## Listing Effect Styles
@@ -32,12 +33,8 @@ async function listEffectStyles() {
 Full runnable script:
 
 ```javascript
-(async () => {
-  try {
-    const results = await listEffectStyles();
-    figma.closePlugin(JSON.stringify(results));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+const results = await listEffectStyles();
+return results;
 ```
 
 ## Creating a Drop Shadow Style
@@ -74,19 +71,28 @@ function createDropShadowStyle(name, color, offset, radius, spread) {
 Full runnable script:
 
 ```javascript
-(async () => {
-  try {
-    const style = createDropShadowStyle(
-      "Elevation/200",
-      { r: 0, g: 0, b: 0, a: 0.15 },
-      { x: 0, y: 4 },
-      12,
-      0
-    );
-    figma.closePlugin(JSON.stringify({ id: style.id, name: style.name }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+const style = createDropShadowStyle(
+  "Elevation/200",
+  { r: 0, g: 0, b: 0, a: 0.15 },
+  { x: 0, y: 4 },
+  12,
+  0
+);
+return { id: style.id, name: style.name };
 ```
+
+## Importing Library Effect Styles
+
+For effect styles from **team libraries**, use `importStyleByKeyAsync`:
+
+```javascript
+// Import a library effect style by key
+const shadowStyle = await figma.importStyleByKeyAsync("EFFECT_STYLE_KEY");
+// Apply to a node
+node.effectStyleId = shadowStyle.id;
+```
+
+`search_design_system` with `includeStyles: true` returns style keys you can import this way. Prefer importing library styles over creating new ones.
 
 ## Applying Effect Styles to Nodes
 
@@ -114,10 +120,6 @@ function applyEffectStyleToMatchingNodes(styleId, nodeNamePattern) {
 Full runnable script:
 
 ```javascript
-(async () => {
-  try {
-    const applied = applyEffectStyleToMatchingNodes('STYLE_ID', 'Card');
-    figma.closePlugin(JSON.stringify({ applied }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+const applied = applyEffectStyleToMatchingNodes('STYLE_ID', 'Card');
+return { applied };
 ```

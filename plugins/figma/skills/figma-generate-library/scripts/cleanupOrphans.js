@@ -75,7 +75,7 @@ async function cleanupOrphans(runId) {
   }
 
   // --- Remove tagged variables ---
-  const allVariables = figma.variables.getLocalVariables()
+  const allVariables = await figma.variables.getLocalVariablesAsync()
   for (const variable of allVariables) {
     if (variable.getPluginData('dsb_run_id') === runId) {
       removedIds.push(variable.id)
@@ -85,7 +85,7 @@ async function cleanupOrphans(runId) {
 
   // --- Remove tagged variable collections ---
   // Must be done after variables are removed
-  const allCollections = figma.variables.getLocalVariableCollections()
+  const allCollections = await figma.variables.getLocalVariableCollectionsAsync()
   for (const collection of allCollections) {
     if (collection.getPluginData('dsb_run_id') === runId) {
       removedIds.push(collection.id)

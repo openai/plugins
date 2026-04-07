@@ -31,7 +31,7 @@ figma.createVector()
 figma.createPolygon()
 figma.createBooleanOperation()
 figma.createSlice()
-figma.createPage()              // Page node can be created, but child persistence is limited in headless mode
+figma.createPage()              // Page node can be created, but child persistence is limited in use_figma
 figma.createSection()
 figma.createTextPath()
 ```
@@ -83,7 +83,7 @@ await node.setGridStyleIdAsync(style.id)    // for GridStyle
 
 ## Library Variable Import (Team Libraries)
 
-This imports variables from **team libraries** (not the same file). For variables in the current file, use `figma.variables.getLocalVariables()` or `figma.variables.getVariableById()`.
+This imports variables from **team libraries** (not the same file). For variables in the current file, use `figma.variables.getLocalVariablesAsync()` or `figma.variables.getVariableByIdAsync()`.
 
 ```js
 // Import a published variable from a team library by key
@@ -109,7 +109,7 @@ collection.renameMode(modeId, "Light")
 
 // Variables
 const variable = figma.variables.createVariable("name", collection, "COLOR")
-//                                                       ^ object or ID string
+//                                                       ^ must be a collection object (passing an ID string is deprecated)
 // resolvedType: "COLOR" | "FLOAT" | "STRING" | "BOOLEAN"
 variable.setValueForMode(modeId, value)
 
@@ -125,11 +125,11 @@ variable.scopes = []                               // hidden from all pickers (u
 //   OPACITY, FONT_FAMILY, FONT_STYLE, FONT_WEIGHT, FONT_SIZE,
 //   LINE_HEIGHT, LETTER_SPACING, PARAGRAPH_SPACING, PARAGRAPH_INDENT
 
-// Querying
-figma.variables.getVariableById(id)
-figma.variables.getLocalVariables(resolvedType?)
-figma.variables.getVariableCollectionById(id)
-figma.variables.getLocalVariableCollections()
+// Querying (always use the Async variants — sync versions are deprecated)
+await figma.variables.getVariableByIdAsync(id)
+await figma.variables.getLocalVariablesAsync(resolvedType?)
+await figma.variables.getVariableCollectionByIdAsync(id)
+await figma.variables.getLocalVariableCollectionsAsync()
 
 // Binding variables to paints (COLOR variables)
 const newPaint = figma.variables.setBoundVariableForPaint(paintCopy, "color", variable)
@@ -178,7 +178,7 @@ node.setBoundVariable("strokeWeight", variable)
 figma.variables.createVariableAlias(variable)
 
 // Explicit modes — CRITICAL for variant components
-node.setExplicitVariableModeForCollection(collectionId, modeId)
+node.setExplicitVariableModeForCollection(collection, modeId)  // pass collection object, NOT an ID string
 // Without this, all nodes use the default (first) mode of the collection
 ```
 
@@ -186,8 +186,8 @@ node.setExplicitVariableModeForCollection(collectionId, modeId)
 
 ```js
 figma.root                      // DocumentNode
-figma.currentPage               // Current page (read-only in use_figma; sync setter throws)
-figma.setCurrentPageAsync(page) // Switch page and load its content (MUST await)
+figma.currentPage               // Current page — READ ONLY; the sync setter (figma.currentPage = page) does NOT work and throws
+figma.setCurrentPageAsync(page) // Switch page and load its content (MUST await) — this is the ONLY way to change pages
 figma.fileKey                   // File key string
 figma.mixed                     // Mixed sentinel value
 ```
@@ -260,6 +260,20 @@ const image = figma.createImage(uint8Array)
 node.fills = [{ type: 'IMAGE', scaleMode: 'FILL', imageHash: image.hash }]
 ```
 
+## Fonts
+
+```js
+// Discover all available fonts and their exact style strings
+const allFonts = await figma.listAvailableFontsAsync()  // Font[] — each has { fontName: { family, style } }
+const interStyles = allFonts.filter(f => f.fontName.family === "Inter")
+
+// MUST load a font before any text property edit
+await figma.loadFontAsync({ family: "Inter", style: "Regular" })
+
+// Check if the file has missing fonts
+figma.hasMissingFont  // boolean
+```
+
 ## Utilities
 
 ```js
@@ -270,9 +284,12 @@ figma.createComponentFromNode(node) // Convert existing node to component (Desig
 
 ## Plugin Lifecycle
 
+Scripts are automatically wrapped in an async IIFE with error handling. Use `return` to send data back:
+
 ```js
-figma.closePlugin("message")                // Close and return a message to the agent (success)
-figma.closePluginWithFailure("error msg")   // Close with error — ALWAYS use in catch blocks
+return { nodeId: frame.id }     // Return object — auto-serialized to JSON
+return "success message"        // Return string
+// Errors are auto-captured — no try/catch or closePlugin needed
 ```
 
 ## Node Traversal
@@ -295,7 +312,6 @@ node.parent                    // Parent node
 | `figma.notify()` | **Throws "not implemented"** — most common mistake |
 | `figma.showUI()` | No-op (silently ignored) |
 | `figma.openExternal()` | No-op (silently ignored) |
-| `figma.listAvailableFontsAsync()` | Not implemented |
 | `figma.loadAllPagesAsync()` | Not implemented |
 | `figma.variables.extendLibraryCollectionByKeyAsync()` | Not implemented |
 | `figma.teamLibrary.*` | Not implemented (requires LiveGraph) |

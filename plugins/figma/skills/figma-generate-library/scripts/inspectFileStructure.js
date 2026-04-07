@@ -43,12 +43,12 @@ async function inspectFileStructure() {
   }
 
   // --- Variable collections ---
-  const collections = figma.variables.getLocalVariableCollections()
+  const collections = await figma.variables.getLocalVariableCollectionsAsync()
   for (const coll of collections) {
-    const variableNames = coll.variableIds
-      .map((id) => figma.variables.getVariableById(id))
-      .filter(Boolean)
-      .map((v) => v.name)
+    const variables = await Promise.all(
+      coll.variableIds.map((id) => figma.variables.getVariableByIdAsync(id)),
+    )
+    const variableNames = variables.filter(Boolean).map((v) => v.name)
 
     result.variableCollections.push({
       id: coll.id,
