@@ -1,0 +1,76 @@
+NCBI BLAST Common URL API (REST) notes
+Source docs: https://ncbi.github.io/blast-cloud/dev/api.html
+Primary endpoint: https://blast.ncbi.nlm.nih.gov/Blast.cgi
+
+Overview:
+- BLAST searches are submitted with CMD=Put.
+- Status checks and result retrieval use CMD=Get.
+- Service is shared/public; avoid high-frequency polling and identify requests with tool/email.
+
+Usage guidelines:
+- Do not contact server more often than once every 10 seconds.
+- Do not poll a single RID more often than once a minute.
+- Include URL parameters email and tool.
+- If submitting >50 searches, run on weekends or 9 pm to 5 am US Eastern on weekdays.
+- If submitting >100 searches in 24h, jobs may be moved to slower queue or blocked.
+- For short queries, batch multiple sequences in one submission when feasible.
+
+Required submit parameters (CMD=Put):
+- CMD=Put
+- QUERY=<accession|GI|FASTA text>
+- DATABASE=<db name e.g. core_nt, swissprot>
+- PROGRAM=<blastn|blastp|blastx|tblastn|tblastx>
+  - megablast enabled via PROGRAM=blastn and MEGABLAST=on
+
+Common optional submit parameters:
+- FILTER (F/T/L/mL)
+- EXPECT (e-value)
+- WORD_SIZE
+- GAPCOSTS
+- MATRIX
+- COMPOSITION_BASED_STATISTICS
+- HITLIST_SIZE
+- SHORT_QUERY_ADJUST
+- FORMAT_TYPE (HTML, Text, XML2, JSON2, JSON2_S, SAM, etc.)
+- DESCRIPTIONS
+- ALIGNMENTS
+- NCBI_GI
+- NO_DATABASE_OVERRIDE (experimental)
+- tool
+- email
+
+Required retrieve/check parameters (CMD=Get):
+- CMD=Get
+- RID=<request id from Put response>
+
+Common optional retrieve parameters:
+- FORMAT_OBJECT=SearchInfo (for status)
+- FORMAT_TYPE (HTML, Text, XML2, JSON2, JSON2_S, SAM, CSV with tabular view)
+- DESCRIPTIONS
+- ALIGNMENTS
+- NCBI_GI
+
+Typical flow:
+1) Submit search with CMD=Put and parse RID + RTOE from response.
+2) Wait at least max(RTOE, 10s) before first status check.
+3) Poll status with CMD=Get&FORMAT_OBJECT=SearchInfo&RID=<RID>, no more than once/min per RID.
+4) If READY and ThereAreHits=yes, retrieve results via CMD=Get&RID=<RID>&FORMAT_TYPE=Text (or JSON2/XML2).
+5) Handle FAILED, UNKNOWN, and no-hit states explicitly.
+
+Example status values in SearchInfo:
+- Status=WAITING
+- Status=READY + ThereAreHits=yes/no
+- Status=FAILED
+- Status=UNKNOWN (expired)
+
+Example submit request shape:
+POST https://blast.ncbi.nlm.nih.gov/Blast.cgi
+Content-Type: application/x-www-form-urlencoded
+CMD=Put&PROGRAM=blastn&DATABASE=core_nt&QUERY=>q1%0AACGT...
+
+Example status request shape:
+GET https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&FORMAT_OBJECT=SearchInfo&RID=<RID>
+
+Example result request shape:
+GET https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Get&FORMAT_TYPE=Text&RID=<RID>
+

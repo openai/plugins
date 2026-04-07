@@ -1,0 +1,3 @@
+interface:
+  display_name: "FinnGen PheWAS"
+  short_description: "Fetch FinnGen PheWAS associations"

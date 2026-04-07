@@ -1,0 +1,49 @@
+{
+  "name": "life-science-research",
+  "version": "0.1.0",
+  "description": "General life-sciences research workflows with query routing, evidence synthesis, and optional parallel subagent analysis across genetics, omics, biology, chemistry, structure, clinical evidence, and public dataset discovery.",
+  "author": {
+    "name": "OpenAI"
+  },
+  "homepage": "https://github.com/openai/openai/tree/master/plugins/life-science-research",
+  "repository": "https://github.com/openai/openai/tree/master/plugins/life-science-research",
+  "license": "Proprietary",
+  "keywords": [
+    "life-science",
+    "research",
+    "bioinformatics",
+    "human-genetics",
+    "functional-genomics",
+    "transcriptomics",
+    "proteomics",
+    "metabolomics",
+    "clinical-research",
+    "drug-discovery",
+    "skill-routing",
+    "evidence-synthesis",
+    "parallel-analysis",
+    "gwas",
+    "variant-interpretation",
+    "pathway-biology",
+    "protein-structure"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Life Science: Research",
+    "shortDescription": "General life-sciences research with routing, evidence synthesis, and optional parallel subagent analysis",
+    "longDescription": "Internal life-science research workflows that help Codex interpret a user's research question, normalize the relevant entities, choose the right skills, and synthesize evidence-backed answers across public resources. The plugin spans human genetics, functional genomics, expression, pathways, protein structure, chemistry, pharmacology, literature, clinical evidence, and public study discovery, with a research-router entrypoint for broad tasks and optional subagent-assisted parallel work when evidence lanes are independent.",
+    "developerName": "OpenAI",
+    "category": "Research",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": "Use Life Science: Research as a general life-sciences research copilot. Start with the research-router-skill for broad or ambiguous requests: determine the user's research task, normalize the core entities, and select the smallest relevant set of skills across genetics, omics, biology, chemistry, structure, literature, and clinical evidence. If the work cleanly decomposes into independent evidence lanes and Codex subagents are available, use bounded parallel subagent analysis for retrieval and intermediate summaries, but keep scoping, conflict resolution, and final synthesis with the coordinating agent. Return a concise evidence-backed answer with key findings, caveats, and next steps instead of dumping raw source output unless the user asks for it.",
+    "brandColor": "#166534",
+    "screenshots": []
+  }
+}

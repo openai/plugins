@@ -1,0 +1,7 @@
+User intent for BLAST skill generation:
+- Build a dedicated NCBI BLAST API skill from Common URL API docs and sample Perl workflow.
+- Keep examples runnable and practical for submission, polling, and result retrieval.
+- Include rate-limit guardrails and good API citizenship expectations.
+- Emphasize required parameters for CMD=Put and CMD=Get.
+- Cover common program/database choices and response status handling.
+- Make the skill concise and directly usable for sequence search tasks.
