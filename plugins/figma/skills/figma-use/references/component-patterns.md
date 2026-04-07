@@ -158,53 +158,41 @@ This works for icons, avatars, badges, or any swappable nested element.
 ### List all existing components across all pages
 
 ```javascript
-(async () => {
-  try {
-    const results = [];
-    for (const page of figma.root.children) {
-      await figma.setCurrentPageAsync(page);
-      page.findAll(n => {
-        if (n.type === 'COMPONENT') results.push(`[${page.name}] ${n.name} (COMPONENT) id=${n.id}`);
-        if (n.type === 'COMPONENT_SET') results.push(`[${page.name}] ${n.name} (COMPONENT_SET) id=${n.id}`);
-        return false;
-      });
-    }
-    figma.closePlugin(results.join('\n'));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+const results = [];
+for (const page of figma.root.children) {
+  await figma.setCurrentPageAsync(page);
+  page.findAll(n => {
+    if (n.type === 'COMPONENT') results.push(`[${page.name}] ${n.name} (COMPONENT) id=${n.id}`);
+    if (n.type === 'COMPONENT_SET') results.push(`[${page.name}] ${n.name} (COMPONENT_SET) id=${n.id}`);
+    return false;
+  });
+}
+return results.join('\n');
 ```
 
 ### Inspect an existing component set's variant naming pattern
 
 ```javascript
-(async () => {
-  try {
-    const cs = await figma.getNodeByIdAsync('COMPONENT_SET_ID');
-    const variantNames = cs.children.map(c => c.name);
-    const propDefs = cs.componentPropertyDefinitions;
-    figma.closePlugin(JSON.stringify({ variantNames, propDefs }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+const cs = await figma.getNodeByIdAsync('COMPONENT_SET_ID');
+const variantNames = cs.children.map(c => c.name);
+const propDefs = cs.componentPropertyDefinitions;
+return { variantNames, propDefs };
 ```
 
 ### Find existing components in the file
 
 ```javascript
-(async () => {
-  try {
-    const components = [];
-    for (const page of figma.root.children) {
-      await figma.setCurrentPageAsync(page);
-      page.findAll(n => {
-        if (n.type === 'COMPONENT') {
-          components.push({ name: n.name, id: n.id, page: page.name, w: n.width, h: n.height });
-        }
-        return false;
-      });
+const components = [];
+for (const page of figma.root.children) {
+  await figma.setCurrentPageAsync(page);
+  page.findAll(n => {
+    if (n.type === 'COMPONENT') {
+      components.push({ name: n.name, id: n.id, page: page.name, w: n.width, h: n.height });
     }
-    figma.closePlugin(JSON.stringify(components));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+    return false;
+  });
+}
+return components;
 ```
 
 ## Importing Components by Key (Team Libraries)
@@ -265,7 +253,7 @@ instance.setProperties({
 const instance = comp.createInstance();
 const propDefs = instance.componentProperties;
 // Returns e.g.: { "Label#2:0": { type: "TEXT", value: "Button" }, "Has Icon#4:64": { type: "BOOLEAN", value: true } }
-figma.closePlugin(JSON.stringify(propDefs));
+return propDefs;
 ```
 
 Also check nested instances — a parent component may not expose text properties directly, but its nested child instances might:
@@ -474,15 +462,11 @@ async function getPublishedComponentMetadata(componentKey) {
 ### Full metadata extraction script
 
 ```javascript
-(async () => {
-  try {
-    // For local components, use getLocalComponentMetadata:
-    const result = await getLocalComponentMetadata('COMPONENT_OR_SET_ID');
-    figma.closePlugin(JSON.stringify(result));
+// For local components, use getLocalComponentMetadata:
+const result = await getLocalComponentMetadata('COMPONENT_OR_SET_ID');
+return result;
 
-    // For published components, use getPublishedComponentMetadata:
-    // const result = await getPublishedComponentMetadata('COMPONENT_KEY');
-    // figma.closePlugin(JSON.stringify(result));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
+// For published components, use getPublishedComponentMetadata:
+// const result = await getPublishedComponentMetadata('COMPONENT_KEY');
+// return result;
 ```

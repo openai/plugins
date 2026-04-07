@@ -6,7 +6,6 @@
 
 - `get_metadata` vs `get_screenshot`
 - Error Recovery After Failed `use_figma`
-- Cleanup Pattern
 - Recommended Workflow
 
 
@@ -54,42 +53,16 @@ ComponentSet node to verify all 120 children exist with correct names, sizes, an
 - **Overlapping content** — elements stacking on top of each other due to incorrect sizing or missing auto-layout
 - **Placeholder text** still showing ("Title", "Heading", "Button") instead of actual content
 
-## CRITICAL: Error Recovery After Failed `use_figma`
+## Error Recovery After Failed `use_figma`
 
-> **THIS IS NOT OPTIONAL.** Every `use_figma` error MUST trigger the recovery steps below. Skipping these steps leaves orphaned nodes in the file that will cause duplicates and inconsistencies on retry.
+**`use_figma` is atomic — failed scripts do not execute.** If a script errors, no changes are made to the file. The file remains in exactly the same state as before the call. There are no partial nodes, no orphaned elements, and retrying after a fix is safe.
 
-**Scripts can partially execute before hitting an error.** A failed `use_figma` does NOT roll back — nodes created before the error line persist in the file. This leaves the file in an **inconsistent, partially-modified state**.
-
-**Mandatory recovery steps when `use_figma` returns an error (DO NOT SKIP):**
-1. **STOP — do NOT immediately fix the code and retry.** The file has partial state that must be inspected first.
-2. **Immediately call `get_metadata`** on the parent node (section, page, or ComponentSet) to see what was partially created.
-3. **If `get_metadata` doesn't make the damage clear** (e.g. positions look fine but visual state is uncertain), call `get_screenshot` to assess visual damage.
-4. **Write a cleanup script** to remove orphaned/incomplete nodes before retrying. Use `page.findChildren()` to locate stray nodes.
-5. **Only after cleanup is confirmed**, fix the original script and retry.
-6. **Never retry the failed script blindly** — the partial state means a retry will create duplicates or hit new errors.
-
-```
-Example: A script creating 8 components fails on component #5.
-Components 1-4 exist on the page. A naive retry creates components 1-8 again,
-leaving 12 components total (4 orphaned duplicates). Always clean up first.
-```
-
-### Cleanup Pattern
-
-```js
-// Cleanup pattern: find and remove orphaned nodes from a failed run
-(async () => {
-  try {
-    const page = figma.currentPage;
-    // Find orphaned components that weren't combined into a ComponentSet
-    const orphans = page.findChildren(n =>
-      n.type === 'COMPONENT' && n.name.includes('variant=')
-    );
-    for (const orphan of orphans) orphan.remove();
-    figma.closePlugin('Cleaned up ' + orphans.length + ' orphaned nodes');
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})()
-```
+**Recovery steps when `use_figma` returns an error:**
+1. **STOP — do NOT immediately fix the code and retry.** Read the error message carefully first.
+2. **Understand the error.** Most errors are caused by wrong API usage, missing font loads, invalid property values, or referencing nodes that don't exist.
+3. **If the error is unclear**, call `get_metadata` or `get_screenshot` to understand the current file state and confirm nothing has changed.
+4. **Fix the script** based on the error message.
+5. **Retry** the corrected script.
 
 ## Recommended Workflow
 
@@ -102,8 +75,8 @@ leaving 12 components total (4 orphaned duplicates). Always clean up first.
 6. get_screenshot   →  Visual check after each major milestone
 
 ⚠️ ON ERROR at any step:
-   a. get_metadata    →  Inspect partial state (always do this first)
-   b. get_screenshot  →  Only if metadata doesn't make the damage clear
-   c. use_figma →  Clean up orphaned/incomplete nodes
-   d. THEN retry the failed operation
+   a. Read the error message carefully
+   b. get_metadata / get_screenshot  →  If the error is unclear, inspect file state
+   c. Fix the script based on the error
+   d. Retry the corrected script (safe — failed scripts don't modify the file)
 ```

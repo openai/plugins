@@ -6,7 +6,7 @@ disable-model-invocation: false
 
 # use_figma — Figma Plugin API Skill
 
-Use `use_figma` MCP to execute JavaScript in Figma files via the Plugin API. All detailed reference docs live in `references/`.
+Use the `use_figma` tool to execute JavaScript in Figma files via the Plugin API. All detailed reference docs live in `references/`.
 
 **Always pass `skillNames: "figma-use"` when calling `use_figma`.** This is a logging parameter used to track skill usage — it does not affect execution.
 
@@ -26,8 +26,8 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 5.  **Work incrementally in small steps.** Break large operations into multiple `use_figma` calls. Validate after each step. This is the single most important practice for avoiding bugs.
 6.  Colors are **0–1 range** (not 0–255): `{r: 1, g: 0, b: 0}` = red
 7.  Fills/strokes are **read-only arrays** — clone, modify, reassign
-8.  Font **MUST** be loaded before any text operation: `await figma.loadFontAsync({family, style})`
-9.  **Pages load incrementally** — use `await figma.setCurrentPageAsync(page)` to switch pages and load their content (see Page Rules below)
+8.  Font **MUST** be loaded before any text operation: `await figma.loadFontAsync({family, style})`. Use `await figma.listAvailableFontsAsync()` to discover all available fonts and their exact style strings — if a `loadFontAsync` call fails, call `listAvailableFontsAsync()` to find the correct style name or pick a fallback.
+9.  **Pages load incrementally** — use `await figma.setCurrentPageAsync(page)` to switch pages and load their content. The sync setter `figma.currentPage = page` does **NOT** work and will throw (see Page Rules below)
 10. `setBoundVariableForPaint` returns a **NEW** paint — must capture and reassign
 11. `createVariable` accepts collection **object or ID string** (object preferred)
 12. **`layoutSizingHorizontal/Vertical = 'FILL'` MUST be set AFTER `parent.appendChild(child)`** — setting before append throws. Same applies to `'HUG'` on non-auto-layout nodes.
@@ -45,7 +45,7 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 
 ### Switching pages
 
-Use `await figma.setCurrentPageAsync(page)` to switch pages and load their content. The sync setter `figma.currentPage = page` **throws an error** in `use_figma` runtimes.
+Use `await figma.setCurrentPageAsync(page)` to switch pages and load their content. The sync setter `figma.currentPage = page` does **NOT work** — it throws `"Setting figma.currentPage is not supported"` in `use_figma`. Always use the async method.
 
 ```js
 // Switch to a specific page (loads its content)
@@ -136,7 +136,7 @@ Step 5: Final verification
 |---|---|---|
 | `"not implemented"` | Used `figma.notify()` | Remove it — use `return` for output |
 | `"node must be an auto-layout frame..."` | Set `FILL`/`HUG` before appending to auto-layout parent | Move `appendChild` before `layoutSizingX = 'FILL'` |
-| `"Setting figma.currentPage is not supported"` | Used sync page setter | Use `await figma.setCurrentPageAsync(page)` |
+| `"Setting figma.currentPage is not supported"` | Used sync page setter (`figma.currentPage = page`) which does NOT work | Use `await figma.setCurrentPageAsync(page)` — the only way to switch pages |
 | Property value out of range | Color channel > 1 (used 0–255 instead of 0–1) | Divide by 255 |
 | `"Cannot read properties of null"` | Node doesn't exist (wrong ID, wrong page) | Check page context, verify ID |
 | Script hangs / no response | Infinite loop or unresolved promise | Check for `while(true)` or missing `await`; ensure code terminates |
@@ -162,9 +162,9 @@ Before submitting ANY `use_figma` call, verify:
 - [ ] NO usage of `console.log()` as output (use `return` instead)
 - [ ] All colors use 0–1 range (not 0–255)
 - [ ] Fills/strokes are reassigned as new arrays (not mutated in place)
-- [ ] Page switches use `await figma.setCurrentPageAsync(page)` (sync setter throws)
+- [ ] Page switches use `await figma.setCurrentPageAsync(page)` (sync setter `figma.currentPage = page` does NOT work)
 - [ ] `layoutSizingVertical/Horizontal = 'FILL'` is set AFTER `parent.appendChild(child)`
-- [ ] `loadFontAsync()` called BEFORE any text property changes
+- [ ] `loadFontAsync()` called BEFORE any text property changes (use `listAvailableFontsAsync()` to verify font availability if unsure)
 - [ ] `lineHeight`/`letterSpacing` use `{unit, value}` format (not bare numbers)
 - [ ] `resize()` is called BEFORE setting sizing modes (resize resets them to FIXED)
 - [ ] For multi-step workflows: IDs from previous calls are passed as string literals (not variables)
@@ -224,7 +224,7 @@ Load these as needed based on what your task involves:
 | [validation-and-recovery.md](references/validation-and-recovery.md) | Multi-step writes or error recovery | `get_metadata` vs `get_screenshot` workflow, mandatory error recovery steps |
 | [component-patterns.md](references/component-patterns.md) | Creating components/variants | combineAsVariants, component properties, INSTANCE_SWAP, variant layout, discovering existing components, metadata traversal |
 | [variable-patterns.md](references/variable-patterns.md) | Creating/binding variables | Collections, modes, scopes, aliasing, binding patterns, discovering existing variables |
-| [text-style-patterns.md](references/text-style-patterns.md) | Creating/applying text styles | Type ramps, font probing, listing styles, applying styles to nodes |
+| [text-style-patterns.md](references/text-style-patterns.md) | Creating/applying text styles | Type ramps, font discovery via `listAvailableFontsAsync`, listing styles, applying styles to nodes |
 | [effect-style-patterns.md](references/effect-style-patterns.md) | Creating/applying effect styles | Drop shadows, listing styles, applying styles to nodes |
 | [plugin-api-standalone.index.md](references/plugin-api-standalone.index.md) | Need to understand the full API surface | Index of all types, methods, and properties in the Plugin API |
 | [plugin-api-standalone.d.ts](references/plugin-api-standalone.d.ts) | Need exact type signatures | Full typings file — grep for specific symbols, don't load all at once |

@@ -28,16 +28,16 @@ Aliasing in Figma variables is simply when you point a variable to another varia
 
 ### Code Syntax
 
-Code syntax is a surface area in Figma for codebase translation context. You can set WEB, iOS, and ANDROID code syntax on any variable, and when that variable is referenced in other places (visually in Figma's dev mode, as design context via MCP), this codebase form will appear. These are best thought of as "instance" documentation, eg. `var(--the-thing)` instead of `--the-thing` in the case of CSS.
+Code syntax is a surface area in Figma for codebase translation context. You can set WEB, iOS, and ANDROID code syntax on any variable, and when that variable is referenced in other places (visually in Figma's dev mode, or as design context when reading component metadata), this codebase form will appear. These are best thought of as "instance" documentation, eg. `var(--the-thing)` instead of `--the-thing` in the case of CSS.
 
 ### Scope
 
-`variable.scopes: VariableScope[]` specifies which properties in Figma the variable can be used for. This is important when you create and when you use variables. It is always better to use scopes than not or to set it to be `ALL_SCOPES`. The more specific the better, but not all variable collections are complex enough to account for precision here.
+`variable.scopes: VariableScope[]` specifies which properties in Figma the variable can be used for. This is important when you create and when you use variables. **Always set specific scopes rather than leaving the default `ALL_SCOPES`** — it pollutes every property picker with irrelevant tokens. The more specific the better. For the canonical scope-to-use-case mapping, see [token-creation.md § Variable Scopes — Complete Reference Table](../../figma-generate-library/references/token-creation.md).
 
 Common scope values:
 
-- `ALL_SCOPES` — unrestricted; use when precision isn't required
-- `FILL_COLOR`, `STROKE_COLOR` — color bindings
+- `ALL_SCOPES` — unrestricted; **avoid this** — it is the default but almost never the right choice. Only acceptable for very simple files with a handful of variables where the overhead of precise scoping isn't justified
+- `FRAME_FILL`, `SHAPE_FILL`, `TEXT_FILL`, `STROKE_COLOR` — color bindings (use specific fill scopes; `ALL_FILLS` covers all three fill scopes together)
 - `TEXT_CONTENT` — string variables for text layers
 - `FONT_SIZE`, `FONT_WEIGHT`, `LINE_HEIGHT`, `LETTER_SPACING` — typography
 - `CORNER_RADIUS`, `WIDTH_HEIGHT`, `GAP` — layout/spacing

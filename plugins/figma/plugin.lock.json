@@ -1,53 +1,86 @@
 {
   "lockVersion": 1,
   "pluginId": "com.openai.figma",
-  "pluginVersion": "0.1.0",
+  "pluginVersion": "2.0.7",
   "generatedBy": "codex plugin pack (draft)",
-  "generatedAt": "2026-02-24T17:00:00Z",
+  "generatedAt": "2026-04-07T17:15:42Z",
   "skills": [
     {
-      "id": "figma-core",
-      "vendoredPath": "skills/figma",
+      "id": "figma-code-connect",
+      "vendoredPath": "skills/figma-code-connect-components",
       "source": {
         "type": "github",
-        "repo": "openai/skills",
-        "path": "skills/figma",
-        "ref": "<pin-commit-or-tag>"
+        "repo": "figma/mcp-server-guide",
+        "path": "skills/figma-code-connect",
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
       },
-      "integrity": "sha256-<fill-during-pack>"
+      "integrity": "sha256-ed5fbc2887dedc0924d798324433d4c2173a235d10d4115ef88d86e54a0d6aae"
     },
     {
       "id": "figma-implement-design",
       "vendoredPath": "skills/figma-implement-design",
       "source": {
         "type": "github",
-        "repo": "openai/skills",
+        "repo": "figma/mcp-server-guide",
         "path": "skills/figma-implement-design",
-        "ref": "<pin-commit-or-tag>"
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
       },
-      "integrity": "sha256-<fill-during-pack>"
+      "integrity": "sha256-0ff1a899d0814857733b5dc6734810a872b6a5ef115dc644857ef0536a33b0b7"
     },
     {
       "id": "figma-create-design-system-rules",
       "vendoredPath": "skills/figma-create-design-system-rules",
       "source": {
         "type": "github",
-        "repo": "openai/skills",
+        "repo": "figma/mcp-server-guide",
         "path": "skills/figma-create-design-system-rules",
-        "ref": "<pin-commit-or-tag>"
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
       },
-      "integrity": "sha256-<fill-during-pack>"
+      "integrity": "sha256-401da565f9882e74fef37e9f08b7afc7530d8f4740734b5b476949d5013a086c"
     },
     {
-      "id": "figma-code-connect-components",
-      "vendoredPath": "skills/figma-code-connect-components",
+      "id": "figma-create-new-file",
+      "vendoredPath": "skills/figma-create-new-file",
       "source": {
         "type": "github",
-        "repo": "openai/skills",
-        "path": "skills/figma-code-connect-components",
-        "ref": "<pin-commit-or-tag>"
+        "repo": "figma/mcp-server-guide",
+        "path": "skills/figma-create-new-file",
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
       },
-      "integrity": "sha256-<fill-during-pack>"
+      "integrity": "sha256-b3a45dfd8af628262311cfd0bac8dcbc19affc6b873a9c8421a58707b725e349"
+    },
+    {
+      "id": "figma-generate-design",
+      "vendoredPath": "skills/figma-generate-design",
+      "source": {
+        "type": "github",
+        "repo": "figma/mcp-server-guide",
+        "path": "skills/figma-generate-design",
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
+      },
+      "integrity": "sha256-e24a1878e623df60e49dc2b83eda1fb576618ecdb599f7131aa1c468ec52f738"
+    },
+    {
+      "id": "figma-generate-library",
+      "vendoredPath": "skills/figma-generate-library",
+      "source": {
+        "type": "github",
+        "repo": "figma/mcp-server-guide",
+        "path": "skills/figma-generate-library",
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
+      },
+      "integrity": "sha256-c033109baf9efb58b1939c116efdcc0ed3fb010886b5f47702814d034610dc17"
+    },
+    {
+      "id": "figma-use",
+      "vendoredPath": "skills/figma-use",
+      "source": {
+        "type": "github",
+        "repo": "figma/mcp-server-guide",
+        "path": "skills/figma-use",
+        "ref": "500e8738438ed1204eaf23e61280d872f47534fd"
+      },
+      "integrity": "sha256-acc22d53e4ef1f03f435e53f65a6b65f7785e109cdaad97a9d660e1f72c8da3f"
     }
   ]
 }
