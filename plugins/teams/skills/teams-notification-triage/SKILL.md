@@ -7,6 +7,12 @@ description: Triage recent Microsoft Teams activity into a priority queue or tas
 
 Use this skill to produce a priority queue or task list from recent Teams activity. This is a proxy workflow over the available Teams signals, not a native notification-feed view.
 
+## Related Skills
+
+| Workflow | Skill |
+| --- | --- |
+| Turn confirmed follow-ups into Microsoft Planner tasks | [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md) |
+
 ## Start Here
 
 - If the user provided a time window, use it and anchor it to explicit local dates.
@@ -26,6 +32,7 @@ Use this skill to produce a priority queue or task list from recent Teams activi
 5. For mention checks, inspect message-history results and use `TeamsMessageResult.mentions`. Do not use Teams search results as the source of truth for mention detection.
 6. Prioritize messages likely needing a reply, creating a follow-up, or changing the user's plan.
 7. If some channel activity is unreadable or artifact-only, say so and keep it out of the main triage buckets.
+8. If the user asks you to track tasks from triage, show the proposed task list first or route to the Planner skill; do not silently create tasks while presenting an attention queue.
 
 ## Formatting
 
@@ -51,6 +58,7 @@ Format the triage as:
 
 - Keep the triage compact; aim for 3–15 bullets total.
 - Treat *Tasks for you* as the primary section whenever the goal is a personal action list.
+- Make *Tasks for you* a triage bucket, not proof that a Planner task exists. Say "Planner task" only after reading or writing Planner.
 - Include *Can ignore for now* only when the user explicitly asked to filter noise.
 - Preserve exact chat, team, and channel names.
 - Use *Notes* to explain proxy behavior, coverage gaps, or the lack of channel unread markers.

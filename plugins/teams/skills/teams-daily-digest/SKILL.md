@@ -7,6 +7,12 @@ description: Create a daily Microsoft Teams digest from selected chats, channels
 
 Use this skill to produce a daily digest of important Teams activity from selected chats, channels, or teams.
 
+## Related Skills
+
+| Workflow | Skill |
+| --- | --- |
+| Create or update Microsoft Planner tasks from digest follow-ups | [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md) |
+
 ## Start Here
 
 - If the user did not name chats, channels, teams, or topics, ask first before making Teams tool calls.
@@ -26,6 +32,7 @@ Use this skill to produce a daily digest of important Teams activity from select
 5. If the user named topics but not exact containers, use `list_recent_threads` as a shortlist and expand only chats or channels whose recent activity plausibly matches the topic.
 6. Prioritize decisions, blockers, asks, ownership changes, timeline shifts, and notable replies.
 7. Group the digest by channel, chat, or workstream, depending on what makes the summary easiest to scan.
+8. If the digest identifies follow-ups and the user wants them tracked, route to the Planner skill. Do not create Planner tasks as a side effect of a digest request.
 
 ## Formatting
 
@@ -49,6 +56,9 @@ Format the digest as:
 *Needs attention*
 - ...
 
+*Planner candidates*
+- <optional follow-ups that could become tasks, only when task tracking is relevant>
+
 *Notes*
 - <gaps, sparse results, or caveats>
 ```
@@ -56,4 +66,5 @@ Format the digest as:
 - Keep the digest compact; aim for 4–10 bullets total across all sections.
 - Preserve exact team, channel, and chat names.
 - Include *Needs attention* only for items requiring user action, decisions, or input.
+- Include *Planner candidates* only when the user asked for tasks or the Teams activity contains concrete follow-ups worth turning into tasks.
 - Add a coverage note when the scope is broad, partly unreadable, or based on recent-thread discovery rather than exhaustive reads.

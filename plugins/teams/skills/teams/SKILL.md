@@ -7,7 +7,7 @@ description: Summarize Microsoft Teams conversations, triage unread or recent ac
 
 ## Overview
 
-Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, or manage Planner follow-ups from Teams context. Keep answers grounded in exact Teams context, preserve thread intent, and use the write path that matches the user's requested action.
+Use this skill to route Microsoft Teams work into the right workflow: summarize channels, review recent activity, draft replies, send messages, extract follow-ups, or manage Planner tasks from Teams context. Keep answers grounded in exact Teams context, preserve thread intent, and use the write path that matches the user's requested action.
 
 ## Related Skills
 
@@ -38,6 +38,7 @@ Use this skill to route Microsoft Teams work into the right workflow: summarize 
 - Real outbound Teams mentions require structured mention inputs with exact Entra user IDs. Do not rely on plain `@name` text.
 - Planner in this plugin is the Microsoft Planner task surface reached from Teams workflows. Treat it as shared Microsoft task infrastructure, while keeping this plugin focused on Teams-originated follow-ups.
 - For unbounded channel summaries, start with `list_channel_messages(top=50)`. Do not probe larger values by default because the underlying endpoint rejects oversized reads.
+- If Teams review produces action items and the user wants tracked work instead of a message draft or private list, route to [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md).
 
 ## DM Routing
 
@@ -68,7 +69,7 @@ Use this skill to route Microsoft Teams work into the right workflow: summarize 
 - "Summarize the latest Teams thread with design and tell me what follow-ups came out of it."
 - "Check what likely needs my attention in Teams and separate unread chats from recent channel activity."
 - "Draft a short Teams reply that confirms the rollout plan and asks for final QA sign-off."
-- "Turn this Teams meeting follow-up list into Planner tasks."
+- "Turn this Teams meeting follow-up list into Planner tasks in the launch plan."
 
 ## Light Fallback
 

@@ -12,6 +12,7 @@ Use this skill to identify Teams messages that likely need a reply and produce d
 | Workflow | Skill |
 | --- | --- |
 | Refine or send the final Teams text | [../teams-messages/SKILL.md](../teams-messages/SKILL.md) |
+| Create Microsoft Planner tasks instead of replying in Teams | [../teams-planner-task-management/SKILL.md](../teams-planner-task-management/SKILL.md) |
 
 ## Start Here
 
@@ -34,6 +35,7 @@ Use this skill to identify Teams messages that likely need a reply and produce d
    - then recent mentions detected from message-history reads
 4. To detect recent mentions, get the caller profile and match `TeamsMessageResult.mentions` against the caller's user ID from direct message-history reads. Do not rely on Teams search hits for mention detection.
 5. If the context is incomplete, write the smallest useful clarifying reply instead of guessing.
+6. If a message contains a follow-up but no reply is needed, say that directly. If the user wants it tracked, route the follow-up to the Planner skill instead of drafting a performative Teams reply.
 
 ## Drafting Rules
 
