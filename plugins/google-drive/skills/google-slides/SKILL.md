@@ -52,7 +52,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
 - Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
 - If a candidate slide has little useful extracted text but may still contain relevant evidence in a chart, screenshot, or diagram, inspect its thumbnail before ruling it out.
-- If the thumbnail response includes inline image content, base64 image data, or an image-bearing data wrapper, ingest that directly as slide image input. The response may also include `contentUrl` metadata, but if inline image data is present, inspect that directly instead of downloading the URL or relying only on metadata.
+- If the thumbnail response includes an `image_asset_pointer`, image content part, or other rendered image artifact, inspect that returned image directly as the slide image input. The response may also include `contentUrl` metadata; prefer the returned image content for visual understanding instead of downloading that URL or relying only on metadata.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
 - If the write can change anything visible on the slide, such as text wrapping, shape styling, arrow direction, accent bars, chart placement, or connector styling, follow [visual-change-loop](./visual-change-loop.md) before the first `batch_update`.
 

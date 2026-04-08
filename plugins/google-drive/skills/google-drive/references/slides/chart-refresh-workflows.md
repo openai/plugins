@@ -51,7 +51,7 @@ Use this guidance when the user asks to refresh, update, replace, or repair a ch
 
 - A chart refresh or replacement is only complete when the chart slide was re-read after the write and the visual result was checked with a thumbnail when the image itself matters.
 - Do not claim success just because the write call succeeded or because adjacent chart labels changed.
-- When thumbnail responses already include inline image content, inspect that directly instead of downloading the `contentUrl` just to look at the same slide.
+- When thumbnail responses include an `image_asset_pointer`, image content part, or other rendered image artifact, inspect that returned image directly instead of downloading the `contentUrl` just to look at the same slide.
 - When the refresh or replacement changed visible layout, placeholder cleanup, or nearby styling, follow [visual-change-loop](./visual-change-loop.md) and keep the review loop going through the third fresh visual pass.
 - Verify both of these things before declaring success:
   - the chart graphic itself now matches the intended source chart

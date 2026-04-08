@@ -19,6 +19,7 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 
 2. Start with a thumbnail.
 - Fetch a `LARGE` thumbnail when spacing, clipping, or shape alignment matters.
+- Inspect the image returned by `get_slide_thumbnail` directly. That may appear as an `image_asset_pointer`, an image content part, or another rendered image artifact in the tool response; do not require base64 bytes before starting visual review.
 - Use that thumbnail as the primary visual signal, but not as the only signal for overflow or collision checks.
 - Write down the 2-4 concrete visible issues you are fixing in the next pass.
 
