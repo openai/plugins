@@ -61,12 +61,14 @@ simulator-specific workflows onto pure macOS tasks.
    - Use `references/run-button-bootstrap.md` as the canonical source for the
      script shape and exact environment file format. Do not fork a second
      authoritative snippet in another skill or command.
+   - Keep the run script outside app source. It belongs in `script/build_and_run.sh`, not in `App/`, `Views/`, `Models/`, `Stores/`, `Services/`, or `Support/`.
 
 4. Write `.codex/environments/environment.toml` at the project root once the script exists.
    - Use this exact placement: `.codex/environments/environment.toml`.
    - Use the exact action shape in `references/run-button-bootstrap.md`.
    - This file is what gives the user a Codex app Run button wired to the script.
    - If the project already has this file, update the `Run` action command to point at `./script/build_and_run.sh` instead of creating a duplicate action.
+   - Keep this Codex environment config separate from Swift app source files.
 
 5. Build and run through the script.
    - Default to `./script/build_and_run.sh`.

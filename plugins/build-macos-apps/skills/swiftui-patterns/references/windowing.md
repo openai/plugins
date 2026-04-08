@@ -14,6 +14,10 @@ Use this when choosing the top-level scene model for a native macOS app.
 
 ## Example: main app plus utility window
 
+This snippet shows scene wiring only. In a real non-trivial app, keep the
+`@main` app in `App/<AppName>App.swift` and put `LibraryRootView`,
+`InspectorRootView`, and `SettingsView` in dedicated `Views/` files.
+
 ```swift
 @main
 struct SampleApp: App {

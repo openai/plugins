@@ -23,8 +23,37 @@ Choose a track based on your goal:
 - Before creating the scaffold, check whether the workspace is already inside a git repo with `git rev-parse --is-inside-work-tree`. If not, run `git init` at the project root so Codex app git-backed features are available from the start. Do not initialize a nested repo inside an existing parent checkout.
 - For a new app scaffold, also create one project-local `script/build_and_run.sh` and `.codex/environments/environment.toml` so the Codex app Run button works immediately. Use the exact bootstrap contract from `build-run-debug` and its `references/run-button-bootstrap.md` file rather than inventing a second variant here.
 - Decide which state is app-wide, scene-scoped, or window-scoped before writing views.
+- Sketch file and module boundaries before writing the full UI. For any non-trivial app, create the folder structure first and split files by responsibility from the start.
+- Use a single Swift file only for tiny throwaway examples or snippets: roughly under 50 lines, one screen, no persistence, no networking/process client, and no reusable models. Anything beyond that should be multi-file immediately.
 - Use system-adaptive colors and materials by default (`Color.primary`, `Color.secondary`, semantic foreground styles, `.regularMaterial`, etc.) so the app follows Light/Dark mode automatically. Do not hardcode white or light backgrounds unless the user explicitly asks for a fixed theme, and do not reach for opaque `windowBackgroundColor` fills for root panes by default.
 - Pick the references for the first feature surface you need: windowing, commands, split layouts, or settings.
+
+## New App File Structure
+
+For any non-trivial macOS app, start with this shape instead of putting the app,
+all views, models, stores, services, and helpers in one Swift file:
+
+- `App/<AppName>App.swift`: the `@main` app type and `AppDelegate` only.
+- `Views/ContentView.swift`: root layout and high-level composition only.
+- `Views/SidebarView.swift`, `Views/DetailView.swift`, `Views/ComposerView.swift`, etc.: feature views named after their primary type.
+- `Models/*.swift`: value models, identifiers, and selection enums.
+- `Stores/*.swift`: persistence and state stores.
+- `Services/*.swift`: app-server, network, process, or platform clients.
+- `Support/*.swift`: small formatters, resolvers, extensions, and glue helpers.
+
+Keep files small and named after the primary type they contain. If a file starts
+collecting unrelated views, models, stores, networking clients, and helper
+extensions, split it before adding more behavior.
+
+## Pre-Edit Checklist For New App Scaffolds
+
+Before writing the full UI:
+
+1. Choose the scene model.
+2. Choose state ownership: app-wide, scene-scoped, window-scoped, or view-local.
+3. Sketch file and module boundaries.
+4. Create the folder structure before filling in the UI.
+5. Keep `script/build_and_run.sh` and `.codex/environments/environment.toml` separate from app source.
 
 ## General Rules To Follow
 
@@ -148,6 +177,7 @@ Choose the ownership location first, then the wrapper. Do not turn simple deskto
 ## Anti-Patterns
 
 - One huge `ContentView` pretending the whole app is a single screen.
+- A single Swift file containing the `@main` app, all views, models, stores, networking/process clients, formatters, and extensions. This is acceptable only for tiny throwaway snippets under the new-app threshold above.
 - Touch-first interaction models ported directly from iOS without desktop affordances.
 - Hiding core actions behind gestures with no menu, toolbar, or keyboard path.
 - Building a menu-bar-plus-window app around only a `Window(...)` scene and then expecting the main window to appear at launch. Use `WindowGroup(..., id:)` for the primary launch window and reserve `Window(...)` for auxiliary/on-demand windows.
@@ -165,9 +195,10 @@ Choose the ownership location first, then the wrapper. Do not turn simple deskto
 1. Define the scene type and ownership model before writing child views.
 2. Decide which actions live in content, toolbars, commands, inspectors, or settings.
 3. Sketch the selection model and layout: sidebar-detail, editor-inspector, document window, or utility window.
-4. Build with small, focused subviews and explicit inputs rather than giant computed fragments.
-5. Add keyboard shortcuts and menu or toolbar exposure for actions that matter on desktop.
-6. Validate the flow with a build and a quick usability pass: multiwindow assumptions, settings entry points, and selection stability.
+4. Create the file/folder structure for app entrypoint, root layout, feature views, models, stores, services, and support helpers.
+5. Build with small, focused subviews and explicit inputs rather than giant computed fragments.
+6. Add keyboard shortcuts and menu or toolbar exposure for actions that matter on desktop.
+7. Validate the flow with a build and a quick usability pass: multiwindow assumptions, settings entry points, and selection stability.
 
 ## Component References
 

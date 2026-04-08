@@ -16,6 +16,11 @@ Use this when the app primarily lives in the macOS menu bar instead of a traditi
 
 ## Example
 
+This snippet shows scene wiring only. In a real non-trivial app, keep the
+`@main` app and `AppDelegate` in `App/<AppName>App.swift`, and put the menu bar,
+root content, and supporting models/services in separate files named after their
+primary types.
+
 ```swift
 import AppKit
 

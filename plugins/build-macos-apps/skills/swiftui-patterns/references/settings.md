@@ -14,6 +14,10 @@ Use this when building a native macOS settings window with SwiftUI.
 
 ## Example
 
+This snippet shows scene wiring only. In a real non-trivial app, keep the
+`@main` app in `App/<AppName>App.swift` and put settings content in a dedicated
+view file such as `Views/SettingsView.swift`.
+
 ```swift
 @main
 struct SampleApp: App {
