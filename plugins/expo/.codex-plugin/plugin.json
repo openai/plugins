@@ -1,0 +1,48 @@
+{
+  "name": "expo",
+  "version": "1.0.0",
+  "description": "Official Expo skills for building, deploying, upgrading, and debugging Expo and React Native apps.",
+  "author": {
+    "name": "Expo Team",
+    "email": "support@expo.dev",
+    "url": "https://expo.dev"
+  },
+  "homepage": "https://docs.expo.dev/skills/",
+  "repository": "https://github.com/expo/skills/tree/main/plugins/expo",
+  "license": "MIT",
+  "keywords": [
+    "expo",
+    "react-native",
+    "expo-router",
+    "codex-run-actions",
+    "eas",
+    "mobile",
+    "ios",
+    "android",
+    "deployment",
+    "upgrades",
+    "native-modules"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Expo",
+    "shortDescription": "Build, deploy, upgrade, and debug Expo and React Native apps",
+    "longDescription": "Official Expo-authored skills for building Expo Router UI, authoring API routes, configuring data fetching and styling, writing Expo native modules, creating dev clients, upgrading Expo SDKs, wiring Codex app Run actions, and deploying Expo apps with EAS workflows, builds, hosting, TestFlight, App Store, and Play Store guidance.",
+    "developerName": "Expo",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://expo.dev/",
+    "privacyPolicyURL": "https://expo.dev/privacy",
+    "termsOfServiceURL": "https://expo.dev/terms",
+    "defaultPrompt": "Use Expo when building, deploying, upgrading, debugging, or wiring Codex app Run actions for Expo and React Native apps.",
+    "composerIcon": "./assets/expo.png",
+    "logo": "./assets/expo.png",
+    "screenshots": [],
+    "brandColor": "#000020"
+  }
+}
