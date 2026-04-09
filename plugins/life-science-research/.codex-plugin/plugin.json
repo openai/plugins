@@ -44,6 +44,8 @@
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
     "defaultPrompt": "Use Life Science: Research as a general life-sciences research copilot. Start with the research-router-skill for broad or ambiguous requests: determine the user's research task, normalize the core entities, and select the smallest relevant set of skills across genetics, omics, biology, chemistry, structure, literature, and clinical evidence. If the work cleanly decomposes into independent evidence lanes and Codex subagents are available, use bounded parallel subagent analysis for retrieval and intermediate summaries, but keep scoping, conflict resolution, and final synthesis with the coordinating agent. Return a concise evidence-backed answer with key findings, caveats, and next steps instead of dumping raw source output unless the user asks for it.",
     "brandColor": "#166534",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
