@@ -24,6 +24,7 @@
     "oslog"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Build macOS Apps",
     "shortDescription": "Build, debug, instrument, and implement macOS apps with SwiftUI and AppKit guidance",

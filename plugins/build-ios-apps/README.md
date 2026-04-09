@@ -17,6 +17,7 @@ It currently includes these skills:
 - building and refactoring SwiftUI UI using current platform patterns
 - reviewing or adopting iOS 26+ Liquid Glass APIs
 - auditing SwiftUI performance and guiding profiling workflows
+- looking up Swift and Apple-platform API docs through SwiftDoc MCP
 - debugging iOS apps on simulators with XcodeBuildMCP-backed flows
 - restructuring large SwiftUI views toward smaller, more stable compositions
 
@@ -35,6 +36,7 @@ with this shape:
 - `.mcp.json`
   - plugin-local MCP config
   - wires in XcodeBuildMCP for simulator build/run/debug workflows
+  - wires in SwiftDoc MCP for Swift and Apple-platform documentation lookup
 
 - `agents/`
   - plugin-level agent metadata

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "swiftdoc": {
+      "type": "http",
+      "url": "https://sosumi.ai/mcp"
+    }
+  }
+}

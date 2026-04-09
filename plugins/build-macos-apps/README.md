@@ -31,6 +31,7 @@ It currently includes these skills:
 - triaging failing unit, integration, and UI-hosted macOS tests
 - debugging launch failures, crashes, linker problems, and runtime regressions
 - inspecting signing identities, entitlements, hardened runtime, and Gatekeeper issues
+- looking up Swift and Apple-platform API docs through SwiftDoc MCP
 - preparing packaging and notarization workflows for distribution
 
 ## What It Does Not Cover
@@ -52,6 +53,10 @@ with this shape:
   - required plugin manifest
   - defines plugin metadata and points Codex at the plugin contents
 
+- `.mcp.json`
+  - plugin-local MCP config
+  - wires in SwiftDoc MCP for Swift and Apple-platform documentation lookup
+
 - `agents/`
   - plugin-level agent metadata
   - currently includes `agents/openai.yaml` for the OpenAI surface
@@ -66,8 +71,8 @@ with this shape:
 
 ## Notes
 
-This plugin is currently skills-first at the plugin level. It does not ship a
-plugin-local `.mcp.json`, matching the public `plugins/build-ios-apps` shape.
+This plugin combines skills with a small plugin-local `.mcp.json` for
+documentation lookup.
 
 The default posture is shell-first. Unlike the iOS build plugin, this plugin
 does not assume simulator tooling or touch-driven UI inspection for its main
