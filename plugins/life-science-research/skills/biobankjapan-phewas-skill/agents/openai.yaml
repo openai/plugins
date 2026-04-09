@@ -1,0 +1,3 @@
+interface:
+  display_name: "BioBank Japan PheWAS"
+  short_description: "Fetch BioBank Japan PheWAS associations"

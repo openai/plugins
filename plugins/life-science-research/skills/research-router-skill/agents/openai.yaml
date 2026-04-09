@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Router"
+  short_description: "Route broad life-sciences research across the right skills"
+  default_prompt: "Interpret this life-sciences research question, normalize the key entities, choose the smallest useful set of skills, and synthesize a concise evidence-backed answer. Use subagents only when the work cleanly decomposes into independent evidence lanes."
