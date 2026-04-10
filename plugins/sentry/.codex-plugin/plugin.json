@@ -1,6 +1,6 @@
 {
   "name": "sentry",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Investigate Sentry with the official CLI and expert SDK setup guidance from Codex.",
   "author": {
     "name": "OpenAI",
