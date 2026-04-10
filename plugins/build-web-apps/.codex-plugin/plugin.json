@@ -1,7 +1,7 @@
 {
   "name": "build-web-apps",
   "version": "0.1.0",
-  "description": "Build web apps with workflows for UI reviews, React improvements, deployment, payments, and database design.",
+  "description": "Build web apps with workflows for UI reviews, React improvements, component design, and database design.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -14,8 +14,6 @@
     "build-web-apps",
     "build",
     "react",
-    "vercel",
-    "stripe",
     "supabase",
     "shadcn",
     "full-stack",
@@ -25,8 +23,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Build Web Apps",
-    "shortDescription": "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases",
-    "longDescription": "Use Build Web Apps to review and improve a web app's UI, apply React and Next.js guidance, deploy projects to Vercel, wire up Stripe payments, and design or tune Supabase/Postgres schemas and queries, all with plugin-local Vercel, Stripe, and Supabase MCP support.",
+    "shortDescription": "Build, review, and scale web apps across UI, React, components, and databases",
+    "longDescription": "Use Build Web Apps to review and improve a web app's UI, apply React and Next.js guidance, compose shadcn/ui components, and design or tune Supabase/Postgres schemas and queries with plugin-local Supabase MCP support.",
     "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [
@@ -37,7 +35,7 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Review this app's UI, improve the React implementation, wire up payments or database changes, and help deploy it",
+    "defaultPrompt": "Review this app's UI, improve the React implementation, compose components, and wire up database changes",
     "brandColor": "#111111",
     "composerIcon": "./assets/build-web-apps-small.svg",
     "logo": "./assets/app-icon.png",
