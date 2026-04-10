@@ -50,16 +50,16 @@ The following fields can be bound to variables via `style.setBoundVariable(field
 
 To unbind: `style.setBoundVariable(field, null)`
 
-**Important: `setBoundVariable` is NOT available on `TextStyle` in headless `use_figma` mode.**
+**Important: `setBoundVariable` is NOT available on `TextStyle` in `use_figma`.**
 
-It is only available in interactive plugin context (UI plugins, Figma editor). When running through `use_figma` (MCP, assistant headless runtime), calling `ts.setBoundVariable(...)` will throw `"not a function"`. In this context, set raw values directly instead:
+It is only available in interactive plugin context (UI plugins, Figma editor). When running through `use_figma`, calling `ts.setBoundVariable(...)` will throw `"not a function"`. Set raw values directly instead:
 
 ```js
-// In use_figma (headless) — variable binding not available
+// In use_figma — variable binding not available on TextStyle
 const ts = figma.createTextStyle();
 ts.fontSize = 24; // set directly; cannot bind to a variable
 
-// In a real interactive plugin — variable binding works
+// In an interactive plugin — variable binding works
 const ts = figma.createTextStyle();
 ts.setBoundVariable("fontSize", fontSizeVariable);
 ```
@@ -68,7 +68,7 @@ If live variable binding on text styles is required, the recommended approach is
 
 1. Create the text styles with raw values via `use_figma`
 2. Open the file in Figma and bind variables interactively via the Styles panel, OR
-3. Use an interactive plugin that runs in the Figma editor (not headless)
+3. Use an interactive plugin that runs in the Figma editor
 
 ### Applying a text style to a node
 
@@ -77,8 +77,8 @@ Once you have a `TextStyle`, apply it to a `TextNode` by assigning its `id` to t
 ## Common gotchas
 
 - **Font must be loaded before setting `fontName`**: Call `await figma.loadFontAsync({ family, style })` before creating or modifying a text style's font.
-- **Font style names are file-dependent**: Font style names like `"SemiBold"` vs `"Semi Bold"` vary by font provider and Figma file. Always probe by calling `loadFontAsync` and catching errors to discover the correct style string rather than guessing.
-- **`setBoundVariable` not available headless**: `TextStyle.setBoundVariable()` throws `"not a function"` in `use_figma` / headless mode. Set raw values instead and bind interactively if needed.
+- **Font style names are file-dependent**: Font style names like `"SemiBold"` vs `"Semi Bold"` vary by font provider and Figma file. Always call `await figma.listAvailableFontsAsync()` to discover exact style strings before loading — never guess or probe with try/catch.
+- **`setBoundVariable` not available in `use_figma`**: `TextStyle.setBoundVariable()` throws `"not a function"` in `use_figma`. Set raw values instead and bind interactively if needed.
 - **Styles are not automatically applied**: Creating a `TextStyle` has no effect on any node until you assign its ID to a text node.
 - **`getLocalTextStyles()` is deprecated**: Always use `getLocalTextStylesAsync()`.
 - **Names are not unique**: Two text styles can share the same name. Match by ID or `key` when looking up a known style, not by name alone.
@@ -87,4 +87,4 @@ Once you have a `TextStyle`, apply it to a `TextNode` by assigning its `id` to t
 
 ## Code patterns
 
-For runnable code examples (listing, creating, probing fonts, type ramps, applying styles), see [text-style-patterns.md](../text-style-patterns.md).
+For runnable code examples (listing, creating, discovering available fonts, type ramps, applying styles), see [text-style-patterns.md](../text-style-patterns.md).

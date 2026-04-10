@@ -184,17 +184,13 @@ Run these `use_figma` snippets at the start of every build. All are read-only an
 ### List All Pages
 
 ```javascript
-(async () => {
-  try {
-    const pages = figma.root.children.map((p, i) => ({
-      index: i,
-      name: p.name,
-      id: p.id,
-      childCount: p.children.length
-    }));
-    figma.closePlugin(JSON.stringify({ pages }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})();
+const pages = figma.root.children.map((p, i) => ({
+  index: i,
+  name: p.name,
+  id: p.id,
+  childCount: p.children.length
+}));
+return { pages };
 ```
 
 Interpret: note page names for naming convention (are they PascalCase? sentence case?), count separator pages (`---`), identify existing component pages vs foundations pages.
@@ -202,19 +198,15 @@ Interpret: note page names for naming convention (are they PascalCase? sentence 
 ### List Variable Collections With Modes
 
 ```javascript
-(async () => {
-  try {
-    const collections = await figma.variables.getLocalVariableCollectionsAsync();
-    const result = collections.map(c => ({
-      id: c.id,
-      name: c.name,
-      modes: c.modes,                    // [{modeId, name}, ...]
-      variableCount: c.variableIds.length,
-      defaultModeId: c.defaultModeId
-    }));
-    figma.closePlugin(JSON.stringify({ collections: result }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})();
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
+const result = collections.map(c => ({
+  id: c.id,
+  name: c.name,
+  modes: c.modes,                    // [{modeId, name}, ...]
+  variableCount: c.variableIds.length,
+  defaultModeId: c.defaultModeId
+}));
+return { collections: result };
 ```
 
 Interpret: identify existing primitive/semantic split, note mode names (do they use "Light/Dark" or "SDS Light/SDS Dark"?), count variables to understand scope.
@@ -222,29 +214,25 @@ Interpret: identify existing primitive/semantic split, note mode names (do they 
 ### List Variables in a Collection (with names, types, scopes, and sample values)
 
 ```javascript
-(async () => {
-  try {
-    const collections = await figma.variables.getLocalVariableCollectionsAsync();
-    const targetName = "Color"; // change to the collection you want to inspect
-    const coll = collections.find(c => c.name === targetName);
-    if (!coll) { figma.closePlugin(JSON.stringify({ error: `Collection "${targetName}" not found` })); return; }
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
+const targetName = "Color"; // change to the collection you want to inspect
+const coll = collections.find(c => c.name === targetName);
+if (!coll) { return { error: `Collection "${targetName}" not found` }; }
 
-    const allVars = await figma.variables.getLocalVariablesAsync();
-    const vars = allVars.filter(v => v.variableCollectionId === coll.id);
+const allVars = await figma.variables.getLocalVariablesAsync();
+const vars = allVars.filter(v => v.variableCollectionId === coll.id);
 
-    const result = vars.map(v => ({
-      id: v.id,
-      name: v.name,
-      resolvedType: v.resolvedType,
-      scopes: v.scopes,
-      codeSyntax: v.codeSyntax,
-      // First mode value only, for a sample
-      sampleValue: v.valuesByMode[coll.defaultModeId]
-    }));
+const result = vars.map(v => ({
+  id: v.id,
+  name: v.name,
+  resolvedType: v.resolvedType,
+  scopes: v.scopes,
+  codeSyntax: v.codeSyntax,
+  // First mode value only, for a sample
+  sampleValue: v.valuesByMode[coll.defaultModeId]
+}));
 
-    figma.closePlugin(JSON.stringify({ collection: coll.name, variableCount: result.length, variables: result }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})();
+return { collection: coll.name, variableCount: result.length, variables: result };
 ```
 
 Interpret: check if variables use `ALL_SCOPES` (bad), check naming convention (slash-separated hierarchy?), check if code syntax is set, identify alias chains.
@@ -252,24 +240,21 @@ Interpret: check if variables use `ALL_SCOPES` (bad), check naming convention (s
 ### List Component Sets with Properties
 
 ```javascript
-(async () => {
-  try {
-    await figma.setCurrentPageAsync(figma.currentPage); // ensures page context
-    const componentSets = figma.currentPage.findAll(n => n.type === 'COMPONENT_SET');
-    const result = componentSets.map(cs => ({
-      id: cs.id,
-      name: cs.name,
-      variantCount: cs.children.length,
-      properties: Object.entries(cs.componentPropertyDefinitions).map(([key, def]) => ({
-        name: key,
-        type: def.type,
-        variantOptions: def.variantOptions || null,
-        defaultValue: def.defaultValue
-      }))
-    }));
-    figma.closePlugin(JSON.stringify({ componentSets: result, count: result.length }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})();
+// To inspect a specific page, switch to it first:
+// await figma.setCurrentPageAsync(targetPage);
+const componentSets = figma.currentPage.findAll(n => n.type === 'COMPONENT_SET');
+const result = componentSets.map(cs => ({
+  id: cs.id,
+  name: cs.name,
+  variantCount: cs.children.length,
+  properties: Object.entries(cs.componentPropertyDefinitions).map(([key, def]) => ({
+    name: key,
+    type: def.type,
+    variantOptions: def.variantOptions || null,
+    defaultValue: def.defaultValue
+  }))
+}));
+return { componentSets: result, count: result.length };
 ```
 
 Note: to search ALL pages, iterate `figma.root.children` and `setCurrentPageAsync` for each.
@@ -277,53 +262,45 @@ Note: to search ALL pages, iterate `figma.root.children` and `setCurrentPageAsyn
 ### List All Styles
 
 ```javascript
-(async () => {
-  try {
-    const [textStyles, effectStyles, paintStyles] = await Promise.all([
-      figma.getLocalTextStylesAsync(),
-      figma.getLocalEffectStylesAsync(),
-      figma.getLocalPaintStylesAsync()
-    ]);
+const [textStyles, effectStyles, paintStyles] = await Promise.all([
+  figma.getLocalTextStylesAsync(),
+  figma.getLocalEffectStylesAsync(),
+  figma.getLocalPaintStylesAsync()
+]);
 
-    figma.closePlugin(JSON.stringify({
-      textStyles: textStyles.map(s => ({ id: s.id, name: s.name, fontSize: s.fontSize, fontName: s.fontName })),
-      effectStyles: effectStyles.map(s => ({ id: s.id, name: s.name, effectCount: s.effects.length })),
-      paintStyles: paintStyles.map(s => ({ id: s.id, name: s.name })),
-      counts: { text: textStyles.length, effect: effectStyles.length, paint: paintStyles.length }
-    }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})();
+return {
+  textStyles: textStyles.map(s => ({ id: s.id, name: s.name, fontSize: s.fontSize, fontName: s.fontName })),
+  effectStyles: effectStyles.map(s => ({ id: s.id, name: s.name, effectCount: s.effects.length })),
+  paintStyles: paintStyles.map(s => ({ id: s.id, name: s.name })),
+  counts: { text: textStyles.length, effect: effectStyles.length, paint: paintStyles.length }
+};
 ```
 
 ### Check Naming Conventions on an Existing Component
 
 ```javascript
-(async () => {
-  try {
-    // Replace with the node ID of an existing component to analyze
-    const node = await figma.getNodeByIdAsync("YOUR_NODE_ID");
-    if (!node) { figma.closePlugin(JSON.stringify({ error: "Node not found" })); return; }
+// Replace with the node ID of an existing component to analyze
+const node = await figma.getNodeByIdAsync("YOUR_NODE_ID");
+if (!node) { return { error: "Node not found" }; }
 
-    // Check fills for variable bindings
-    const fillInfo = [];
-    if ('fills' in node && Array.isArray(node.fills)) {
-      for (const fill of node.fills) {
-        if (fill.type === 'SOLID' && fill.boundVariables?.color) {
-          fillInfo.push({ type: 'variable_alias', id: fill.boundVariables.color.id });
-        } else if (fill.type === 'SOLID') {
-          fillInfo.push({ type: 'hardcoded', r: fill.color.r, g: fill.color.g, b: fill.color.b });
-        }
-      }
+// Check fills for variable bindings
+const fillInfo = [];
+if ('fills' in node && Array.isArray(node.fills)) {
+  for (const fill of node.fills) {
+    if (fill.type === 'SOLID' && fill.boundVariables?.color) {
+      fillInfo.push({ type: 'variable_alias', id: fill.boundVariables.color.id });
+    } else if (fill.type === 'SOLID') {
+      fillInfo.push({ type: 'hardcoded', r: fill.color.r, g: fill.color.g, b: fill.color.b });
     }
+  }
+}
 
-    figma.closePlugin(JSON.stringify({
-      name: node.name,
-      type: node.type,
-      fills: fillInfo,
-      pluginData: node.getPluginData('dsb_key') || null
-    }));
-  } catch(e) { figma.closePluginWithFailure(e.toString()); }
-})();
+return {
+  name: node.name,
+  type: node.type,
+  fills: fillInfo,
+  sharedPluginData: node.getSharedPluginData('dsb', 'key') || null
+};
 ```
 
 ---
@@ -371,7 +348,7 @@ search_design_system({
       "variableType": "COLOR",
       "variableSetKey": "set1key",
       "key": "var1key",
-      "scopes": ["FILL_COLOR"],
+      "scopes": ["FRAME_FILL", "SHAPE_FILL"],
       "variableCollectionName": "Colors"
     }
   ],

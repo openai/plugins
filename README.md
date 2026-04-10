@@ -12,5 +12,6 @@ Highlighted richer examples in this repo include:
 - `plugins/figma` for `use_figma`, Code to Canvas, Code Connect, and design system rules
 - `plugins/notion` for planning, research, meetings, and knowledge capture
 - `plugins/build-ios-apps` for SwiftUI implementation, refactors, performance, and debugging
+- `plugins/build-macos-apps` for macOS SwiftUI/AppKit workflows, build/run/debug loops, and packaging guidance
 - `plugins/build-web-apps` for deployment, UI, payments, and database workflows
 - `plugins/netlify`, `plugins/render`, and `plugins/google-slides` for additional public skill- and MCP-backed plugin bundles

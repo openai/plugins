@@ -1,0 +1,3 @@
+interface:
+  display_name: "GTEx eQTL"
+  short_description: "Fetch GTEx eQTL associations"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Window Management"
+  short_description: "Customize SwiftUI window chrome, drag regions, behavior, and placement"
+  default_prompt: "Use $window-management to tailor SwiftUI macOS windows with scene/window modifiers, including titlebar and toolbar styling, WindowDragGesture drag regions, minimize/restoration behavior, default and ideal placement, plain window style, and launch behavior."

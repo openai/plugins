@@ -1,0 +1,4 @@
+interface:
+  display_name: "Signing & Entitlements"
+  short_description: "Inspect codesign, entitlements, and Gatekeeper failures"
+  default_prompt: "Use $signing-entitlements to inspect a macOS app or binary, classify the signing or entitlement problem, and explain the minimum fix path."

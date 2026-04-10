@@ -48,10 +48,11 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - When answering a topic question such as churn, pipeline, or ARR, inspect every plausible slide in the relevant section before concluding that the answer lives on only one slide.
 - For chart refresh or chart replacement work, follow [chart-refresh-workflows](./chart-refresh-workflows.md). Do not rely on `get_presentation_text` alone for chart workflows because chart-only slide elements may be omitted from text-only reads.
 - If the task is to swap screenshot placeholders or other static chart content for charts from an existing connected source, keep the source artifacts grounded before the first write. If the source is Google Sheets, also read [sheets-chart-replacement](./sheets-chart-replacement.md) so chart IDs, placeholder geometry, and write scope stay grounded.
+- When creating or updating a deck from multiple source presentations, identify the relevant source decks and slides before writing. Keep the source facts tied to the target slide plan so the final synthesis can be checked against the material that supported it.
 - For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
 - Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
 - If a candidate slide has little useful extracted text but may still contain relevant evidence in a chart, screenshot, or diagram, inspect its thumbnail before ruling it out.
-- If the thumbnail response includes inline image content, base64 image data, or an image-bearing data wrapper, ingest that directly as slide image input. The response may also include `contentUrl` metadata, but if inline image data is present, inspect that directly instead of downloading the URL or relying only on metadata.
+- If the thumbnail response includes an `image_asset_pointer`, image content part, or other rendered image artifact, inspect that returned image directly as the slide image input. The response may also include `contentUrl` metadata; prefer the returned image content for visual understanding instead of downloading that URL or relying only on metadata.
 - Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
 - If the write can change anything visible on the slide, such as text wrapping, shape styling, arrow direction, accent bars, chart placement, or connector styling, follow [visual-change-loop](./visual-change-loop.md) before the first `batch_update`.
 
@@ -94,6 +95,7 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Remove chart-area instructional text that becomes obsolete after replacement, such as text containing `PLACEHOLDER`, `INSERT`, or explicit directions to replace the static content, unless the user explicitly asks to keep it.
 - After chart replacement, verify both that the chart rendered in the intended area and that obsolete placeholder or instructional text no longer remains on the slide.
 - For deck-wide or multi-slide content edits such as translation, terminology normalization, or repeated copy updates, work in explicit slide spans and re-read the edited span before advancing.
+- When the user asks to review, show, summarize, or confirm edited content, re-read the affected slides after the write and base the response on the post-edit deck state rather than the intended diff or a successful `batch_update` response.
 - In multi-slide mode, confirm the last slide in the just-edited span actually changed before starting the next span. Do not assume coverage from object ID numbering or from a successful write response alone.
 - Before calling a multi-slide edit done, reconcile the final deck against the original slide checklist so no slide in scope was skipped.
 - When the user asked for a live Google Slides deck, keep the workflow native. Do not export to a downloadable file or ask for a local re-upload when `create_from_template`, `create_presentation`, or `import_presentation` can keep the work inside Google Slides.
@@ -124,6 +126,8 @@ Confirm the runtime exposes the relevant Google Slides actions before editing:
 - Say whether any placeholder or instructional chart text remained after the update.
 - Distinguish clearly between a proposed plan and changes that were actually applied.
 - Say which presentation and slides were read or changed.
+- For multi-source synthesis, name the source presentations and slides used plus the final presentation and slides that contain the synthesized material, with enough concise evidence for the user to verify the result.
+- When reporting edited content, use the post-edit readback if the task asked to review, show, summarize, or confirm the result.
 - Call out any remaining issues that need a narrower workflow or human design judgment.
 
 ## Example Requests

@@ -72,7 +72,7 @@ The same applies to `COMPONENT_SET` nodes — `addComponentProperty` always retu
 
 ## MUST return ALL created/mutated node IDs
 
-Every script that creates or mutates nodes on the canvas must track and return all affected node IDs in the `figma.closePlugin()` response. Without these IDs, subsequent calls cannot reference, validate, or clean up those nodes.
+Every script that creates or mutates nodes on the canvas must track and return all affected node IDs in the return value. Without these IDs, subsequent calls cannot reference, validate, or clean up those nodes.
 
 ```js
 // WRONG — only returns the parent frame ID, loses track of children
@@ -81,7 +81,7 @@ const rect = figma.createRectangle()
 const text = figma.createText()
 frame.appendChild(rect)
 frame.appendChild(text)
-figma.closePlugin(JSON.stringify({ nodeId: frame.id }))
+return { nodeId: frame.id }
 
 // CORRECT — returns all created node IDs in a structured response
 const frame = figma.createFrame()
@@ -89,20 +89,20 @@ const rect = figma.createRectangle()
 const text = figma.createText()
 frame.appendChild(rect)
 frame.appendChild(text)
-figma.closePlugin(JSON.stringify({
+return {
   createdNodeIds: [frame.id, rect.id, text.id],
   rootNodeId: frame.id
-}))
+}
 
 // CORRECT — when mutating existing nodes, return those IDs too
 const nodes = figma.currentPage.findAll(n => n.name === 'Card')
 for (const n of nodes) {
   n.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
 }
-figma.closePlugin(JSON.stringify({
+return {
   mutatedNodeIds: nodes.map(n => n.id),
   count: nodes.length
-}))
+}
 ```
 
 ## Colors are 0–1 range
@@ -164,16 +164,21 @@ c2.name = "variant=secondary, size=md"
 figma.combineAsVariants([c1, c2], figma.currentPage)
 ```
 
-## Page switching: sync setter throws
+## Page switching: sync setter does NOT work
 
-The sync setter `figma.currentPage = page` **throws an error** in `use_figma` runtimes (MCP, evals, assistant). Use `await figma.setCurrentPageAsync(page)` instead — it switches the page and loads its content.
+The sync setter `figma.currentPage = page` does **NOT work** in `use_figma` — it throws `"Setting figma.currentPage is not supported"`. You **must** use `await figma.setCurrentPageAsync(page)` instead, which switches the page and loads its content.
+
+Note: **reading** `figma.currentPage` is fine — it's only the **assignment** (`figma.currentPage = ...`) that throws.
 
 ```js
-// WRONG — throws "Setting figma.currentPage is not supported in this runtime"
+// WRONG — throws "Setting figma.currentPage is not supported"
 figma.currentPage = targetPage
 
 // CORRECT — async method switches and loads content
 await figma.setCurrentPageAsync(targetPage)
+
+// ALSO CORRECT — reading currentPage is fine
+const page = figma.currentPage  // works
 ```
 
 ## `get_metadata` only sees one page — use `use_figma` to discover all pages
@@ -186,7 +191,7 @@ A Figma file can have multiple pages (canvas nodes). `get_metadata` operates on 
 
 // CORRECT — use use_figma to list pages, then inspect each one
 const pages = figma.root.children.map(p => `${p.name} id=${p.id} children=${p.children.length}`);
-figma.closePlugin(pages.join('\n'));
+return pages.join('\n');
 ```
 
 Icons, variables, and components may live on pages other than the first. Always enumerate all pages before concluding that the file has no existing assets.
@@ -197,27 +202,38 @@ Icons, variables, and components may live on pages other than the first. Always 
 // WRONG — throws "not implemented" error
 figma.notify("Done!")
 
-// CORRECT — use closePlugin for messaging
-figma.closePlugin("Done!")
+// CORRECT — return a value to send data back to the agent
+return "Done!"
 ```
 
-## Script must always terminate
+## `getPluginData()` / `setPluginData()` are not supported
+
+These APIs are not available in `use_figma`. Use `getSharedPluginData()` / `setSharedPluginData()` instead (these ARE supported), or track nodes by returning IDs.
 
 ```js
-// WRONG — no closePlugin call, script hangs
-(async () => {
-  figma.createRectangle()
-})()
+// WRONG — not supported in use_figma
+node.setPluginData('my_key', 'my_value')
+const val = node.getPluginData('my_key')
 
-// CORRECT — always close
-(async () => {
-  try {
-    figma.createRectangle()
-    figma.closePlugin("created")
-  } catch(e) {
-    figma.closePluginWithFailure(e.toString())
-  }
-})()
+// CORRECT — use shared plugin data (requires a namespace)
+node.setSharedPluginData('my_namespace', 'my_key', 'my_value')
+const val = node.getSharedPluginData('my_namespace', 'my_key')
+
+// ALSO CORRECT — return node IDs and track them across calls
+const rect = figma.createRectangle()
+return { nodeId: rect.id }
+// Then pass nodeId as a string literal in the next use_figma call
+```
+
+## Script must always return a value
+
+```js
+// WRONG — no return, caller gets no useful response
+figma.createRectangle()
+
+// CORRECT — return a result (objects are auto-serialized, errors are auto-captured)
+const rect = figma.createRectangle()
+return { nodeId: rect.id }
 ```
 
 ## setBoundVariable for paint fields only works on SOLID paints
@@ -238,24 +254,24 @@ const colorCollection = figma.variables.createVariableCollection("Colors")
 // Components all show the first mode's values by default!
 
 // CORRECT — set explicit mode on each component to get variant-specific values
-component.setExplicitVariableModeForCollection(colorCollection.id, targetModeId)
+component.setExplicitVariableModeForCollection(colorCollection, targetModeId)
 ```
 
-## `TextStyle.setBoundVariable` is not available in headless use_figma
+## `TextStyle.setBoundVariable` is not available in `use_figma`
 
-`setBoundVariable` exists on `TextStyle` in the typed API but is **not available** when running scripts through `use_figma` (MCP, headless assistant mode). Calling it will throw `"not a function"`.
+`setBoundVariable` exists on `TextStyle` in the typed API but is **not available** in `use_figma`. Calling it will throw `"not a function"`.
 
 ```js
-// WRONG — throws "not a function" in use_figma / headless
+// WRONG — throws "not a function" in use_figma
 const ts = figma.createTextStyle()
 ts.setBoundVariable("fontSize", fontSizeVar)
 
-// CORRECT (headless) — set raw values; bind variables interactively in Figma later
+// CORRECT — set raw values; bind variables interactively in Figma later
 const ts = figma.createTextStyle()
 ts.fontSize = 24
 ```
 
-This only affects `TextStyle`. Variable binding on **nodes** (`node.setBoundVariable(...)`) and on **paint objects** (`figma.variables.setBoundVariableForPaint(...)`) still works in headless mode as expected.
+This only affects `TextStyle`. Variable binding on **nodes** (`node.setBoundVariable(...)`) and on **paint objects** (`figma.variables.setBoundVariableForPaint(...)`) still works in `use_figma` as expected.
 
 If live variable binding on text styles is required, create the styles with raw values via `use_figma`, then bind variables interactively through the Figma Styles panel or a full interactive plugin.
 
@@ -279,28 +295,34 @@ style.letterSpacing = { value: 5, unit: "PERCENT" }    // percent-based
 
 This applies to both `TextStyle` and `TextNode` properties. The same rule applies inside `use_figma`, interactive plugins, and any other plugin API context.
 
-## Font style names are file-dependent — probe before assuming
+## Font style names are file-dependent — use `listAvailableFontsAsync` to discover them
 
-Font style names vary per provider and per Figma file. `"SemiBold"` and `"Semi Bold"` are different strings. Loading a font with the wrong style string **throws silently or errors** — there is no canonical list.
+Font style names vary per provider and per Figma file. `"SemiBold"` and `"Semi Bold"` are different strings. Loading a font with the wrong style string **throws** — never guess style names.
+
+Use `figma.listAvailableFontsAsync()` to discover all available fonts and their exact style strings before loading:
 
 ```js
 // WRONG — guessing style names
 await figma.loadFontAsync({ family: "Inter", style: "SemiBold" }) // may throw
 
-// CORRECT — probe which style names are available
-const candidates = ["SemiBold", "Semi Bold", "Semibold"]
-for (const style of candidates) {
-  try {
-    await figma.loadFontAsync({ family: "Inter", style })
-    // capture the one that works
-    break
-  } catch (_) {}
+// CORRECT — discover available styles, then load
+const allFonts = await figma.listAvailableFontsAsync()
+const interFonts = allFonts.filter(f => f.fontName.family === "Inter")
+// interFonts[i].fontName → { family: "Inter", style: "Semi Bold" } (exact string)
+
+const desired = interFonts.find(f => f.fontName.style === "Semi Bold")
+if (desired) {
+  await figma.loadFontAsync(desired.fontName)
+} else {
+  // Fall back to a known-safe style
+  const fallback = interFonts.find(f => f.fontName.style === "Regular")
+  if (fallback) await figma.loadFontAsync(fallback.fontName)
 }
 ```
 
-When building a type ramp script, always verify font styles against the target file before hardcoding them.
+When building a type ramp script, always call `listAvailableFontsAsync()` first to verify font styles against the target file before hardcoding them. If a `loadFontAsync` call fails, use `listAvailableFontsAsync()` to inspect what fonts are actually available and pick the closest match.
 
-## combineAsVariants does NOT auto-layout in headless mode
+## combineAsVariants does NOT auto-layout in `use_figma`
 
 ```js
 // WRONG — all variants stack at position (0, 0), resulting in a tiny ComponentSet
@@ -402,6 +424,8 @@ content.layoutGrow = 1  // NOW it correctly fills remaining space
 
 ## `resize()` resets `primaryAxisSizingMode` and `counterAxisSizingMode` to FIXED
 
+`resize(w, h)` silently resets **both** sizing modes to `FIXED`. If you call it after setting `HUG`, the frame locks to the exact pixel value you passed — even a throwaway like `1`.
+
 ```js
 // WRONG — resize() after setting sizing mode overwrites it back to FIXED
 const frame = figma.createComponent()
@@ -410,16 +434,26 @@ frame.primaryAxisSizingMode = 'AUTO'  // hug height
 frame.counterAxisSizingMode = 'FIXED'
 frame.resize(300, 10)  // BUG: resets BOTH axes to 'FIXED'! Height stays at 10px forever.
 
+// ESPECIALLY DANGEROUS — throwaway values when you only care about one axis
+const comp = figma.createComponent()
+comp.layoutMode = 'VERTICAL'
+comp.layoutSizingHorizontal = 'FIXED'
+comp.layoutSizingVertical = 'HUG'
+comp.resize(280, 1)  // BUG: "I only want width=280" but this locks height to 1px!
+// HUG was reset to FIXED by resize(), frame is now permanently 280×1
+
 // CORRECT — call resize() FIRST, then set sizing modes
 const frame = figma.createComponent()
 frame.layoutMode = 'VERTICAL'
-frame.resize(300, 10)  // set initial dimensions first
+frame.resize(300, 40)  // use a reasonable default, never 0 or 1
 frame.counterAxisSizingMode = 'FIXED'  // keep width fixed at 300
 frame.primaryAxisSizingMode = 'AUTO'   // NOW set height to hug — this sticks!
 // Or use the modern shorthand (equivalent):
 // frame.layoutSizingHorizontal = 'FIXED'
 // frame.layoutSizingVertical = 'HUG'
 ```
+
+**Rule of thumb**: Never pass a throwaway/garbage value (like `1` or `0`) to `resize()` for an axis you intend to be `HUG`. Either call `resize()` before setting sizing modes, or use a reasonable default that won't cause visual bugs if the mode reset goes unnoticed.
 
 ## Node positions don't auto-reset after reparenting
 
@@ -515,7 +549,7 @@ const bgColor = figma.variables.createVariable("Background/Default", coll, "COLO
 
 // CORRECT — restrict to relevant property pickers
 const bgColor = figma.variables.createVariable("Background/Default", coll, "COLOR")
-bgColor.scopes = ["FRAME_FILL", "SHAPE_FILL", "EFFECT_COLOR"]  // fill pickers only
+bgColor.scopes = ["FRAME_FILL", "SHAPE_FILL"]  // fill pickers only
 
 const textColor = figma.variables.createVariable("Text/Default", coll, "COLOR")
 textColor.scopes = ["TEXT_FILL"]  // text color picker only

@@ -1,0 +1,3 @@
+interface:
+  display_name: "UKB-TOPMed PheWAS"
+  short_description: "Fetch UKB-TOPMed PheWAS associations"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "View Refactor"
+  short_description: "Refactor macOS SwiftUI views and scenes toward stable desktop structure"
+  default_prompt: "Use $view-refactor to split oversized macOS scenes, stabilize sidebar and selection structure, extract commands and toolbar logic, and keep AppKit escape hatches narrow."

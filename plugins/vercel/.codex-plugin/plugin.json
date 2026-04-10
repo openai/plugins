@@ -1,7 +1,7 @@
 {
   "name": "vercel",
   "version": "0.21.0",
-  "description": "Comprehensive Vercel ecosystem plugin with Codex-compatible skills and MCP.",
+  "description": "Build and deploy web apps and agents",
   "author": {
     "name": "Vercel Labs",
     "url": "https://github.com/vercel"
@@ -29,7 +29,7 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Vercel",
-    "shortDescription": "Vercel ecosystem guidance for Codex",
+    "shortDescription": "Build and deploy web apps and agents",
     "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills and the official Vercel MCP server. Packages the upstream vercel/vercel-plugin skills, agents, and commands under the local `vercel` plugin identity for the Codex plugin marketplace.",
     "developerName": "Vercel Labs",
     "category": "Coding",

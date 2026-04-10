@@ -33,6 +33,18 @@
  *   `frameIds` is an ordered list of IDs for the root frame and each section frame.
  */
 async function createDocumentationPage(pageName, config, runId) {
+  // Verify required fonts are available before loading
+  const allFonts = await figma.listAvailableFontsAsync()
+  const requiredStyles = ['Bold', 'Regular', 'Medium']
+  for (const style of requiredStyles) {
+    const found = allFonts.some((f) => f.fontName.family === 'Inter' && f.fontName.style === style)
+    if (!found) {
+      const interFonts = allFonts.filter((f) => f.fontName.family === 'Inter')
+      throw new Error(
+        `Font "Inter ${style}" not available. Available Inter styles: ${interFonts.map((f) => f.fontName.style).join(', ') || 'none'}`,
+      )
+    }
+  }
   await figma.loadFontAsync({ family: 'Inter', style: 'Bold' })
   await figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
   await figma.loadFontAsync({ family: 'Inter', style: 'Medium' })

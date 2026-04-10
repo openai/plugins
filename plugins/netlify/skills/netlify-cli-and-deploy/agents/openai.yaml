@@ -1,0 +1,6 @@
+interface:
+  display_name: "CLI & Deploy"
+  short_description: "Use the Netlify CLI to link sites, deploy, and manage environment variables"
+  icon_small: "./assets/netlify-small.svg"
+  icon_large: "./assets/netlify.png"
+  default_prompt: "Help me set up the Netlify CLI, link this project to a Netlify site, and deploy it."

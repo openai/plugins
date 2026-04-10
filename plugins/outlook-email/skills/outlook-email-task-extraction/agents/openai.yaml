@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Extraction"
+  short_description: "Pull tasks, owners, and deadlines out of email"
+  default_prompt: "Use $outlook-email-task-extraction to extract action items, owners, deadlines, and blockers from this Outlook thread or mailbox slice."

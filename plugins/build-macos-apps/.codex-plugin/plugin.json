@@ -1,0 +1,47 @@
+{
+  "name": "build-macos-apps",
+  "version": "0.1.2",
+  "description": "Build, run, test, debug, instrument, and implement local macOS apps using Xcode, SwiftUI, AppKit interop, unified logging, and shell-first desktop workflows.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "macos",
+    "swift",
+    "swiftui",
+    "appkit",
+    "xcode",
+    "swiftpm",
+    "debugging",
+    "codesign",
+    "logging",
+    "telemetry",
+    "oslog"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Build macOS Apps",
+    "shortDescription": "Build, debug, instrument, and implement macOS apps with SwiftUI and AppKit guidance",
+    "longDescription": "macOS development workflows for discovering local projects, building and running desktop apps, implementing native SwiftUI scenes, bridging into AppKit when necessary, adding lightweight Logger telemetry, triaging test failures, inspecting signing and entitlements, and debugging desktop-specific build or runtime errors.",
+    "developerName": "OpenAI",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": "Build/refactor native macOS UI, inspect AppKit interop, add telemetry, or debug a macOS app",
+    "screenshots": [],
+    "brandColor": "#1F6FEB",
+    "composerIcon": "./assets/build-macos-apps-small.svg",
+    "logo": "./assets/app-icon.png"
+  }
+}

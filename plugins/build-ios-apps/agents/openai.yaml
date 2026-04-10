@@ -1,6 +1,6 @@
 interface:
   display_name: "Build iOS Apps"
-  short_description: "Build, refine, and debug iOS apps with SwiftUI and Xcode workflows"
+  short_description: "Build, refine, and debug iOS apps with App Intents, SwiftUI, and Xcode workflows"
   icon_small: "./assets/build-ios-apps-small.svg"
   icon_large: "./assets/app-icon.png"
-  default_prompt: "Use Build iOS Apps to build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an iOS app on a simulator."
+  default_prompt: "Use Build iOS Apps to design App Intents or App Shortcuts, build or refactor SwiftUI UI, audit performance, adopt modern iOS APIs, or debug an iOS app on a simulator."

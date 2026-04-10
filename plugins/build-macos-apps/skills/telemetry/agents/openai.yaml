@@ -1,0 +1,4 @@
+interface:
+  display_name: "Telemetry"
+  short_description: "Add lightweight Logger instrumentation and verify macOS runtime events"
+  default_prompt: "Use $telemetry to add focused Logger instrumentation for macOS windows, sidebar, menu, and menu bar actions, then verify the emitted events with Console or log stream after running the app."

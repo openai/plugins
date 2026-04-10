@@ -22,7 +22,7 @@
 
 ### Page Context
 
-Page context resets between `use_figma` calls — `figma.currentPage` always starts on the first page. Use `await figma.setCurrentPageAsync(page)` at the start of each invocation to switch to the correct page.
+Page context resets between `use_figma` calls — `figma.currentPage` always starts on the first page. Use `await figma.setCurrentPageAsync(page)` at the start of each invocation to switch to the correct page. The sync setter `figma.currentPage = page` does **NOT work** and will throw — always use the async method.
 
 ```javascript
 const targetPage = figma.root.children.find(p => p.name === "My Page");
@@ -30,16 +30,19 @@ await figma.setCurrentPageAsync(targetPage);
 // targetPage.children is now populated
 ```
 
-### Closing the Plugin
+### Returning Results
 
-Every execution **must** call `figma.closePlugin()` on success and `figma.closePluginWithFailure()` on error:
+Scripts are automatically wrapped in an async IIFE with error handling. Just write plain JS and use `return` to send data back to the agent:
 
 ```javascript
-figma.closePlugin("Success message describing what was done");
-figma.closePluginWithFailure("Description of what went wrong");
+// Return an object — auto-serialized to JSON
+return { nodeId: frame.id, count: 5 }
+
+// Return a string
+return "Created 3 components"
 ```
 
-`figma.notify()` does **not** exist. Return all information via the close message string.
+Errors are automatically captured — no try/catch needed. `figma.notify()` does **not** exist. Return all information via the `return` value.
 
 ### Working Incrementally
 

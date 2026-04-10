@@ -1,6 +1,6 @@
 # /connect-figma-components
 
-Create or update Figma Code Connect mappings for components.
+Create or update parserless Figma Code Connect template files for components.
 
 ## Arguments
 
@@ -10,10 +10,10 @@ Create or update Figma Code Connect mappings for components.
 ## Workflow
 
 1. Fetch metadata and identify component nodes.
-2. Check existing Code Connect mappings.
+2. Check existing Code Connect templates or mappings.
 3. For unmapped components, inspect the codebase for candidate implementations.
-4. Present matches and create mappings after confirmation when needed.
-5. Summarize connected/skipped/unresolved components.
+4. Present matches and create `.figma.js` templates after confirmation when needed.
+5. Summarize created/skipped/unresolved components.
 
 ## Escalation
 
