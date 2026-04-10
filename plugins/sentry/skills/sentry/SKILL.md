@@ -1,128 +1,244 @@
 ---
 name: "sentry"
-description: "Use when the user asks to inspect Sentry issues or events, summarize recent production errors, or pull basic Sentry health data via the Sentry API; perform read-only queries with the bundled script and require `SENTRY_AUTH_TOKEN`."
+description: "Guide for using the Sentry CLI to inspect issues, events, traces, spans, logs, dashboards, organizations, projects, and authenticated API data from Codex via `npx -y sentry@latest`. Also covers setting up Sentry SDKs by fetching expert setup guides from skills.sentry.dev."
 ---
 
+# Sentry
 
-# Sentry (Read-only Observability)
+This skill covers two capabilities:
+1. Querying Sentry with the official CLI via `npx -y sentry@latest`
+2. Setting up Sentry SDKs by fetching expert setup guides from the Sentry Skills Registry
 
-## Quick start
+## Querying Sentry Data
 
-- If not already authenticated, ask the user to provide a valid `SENTRY_AUTH_TOKEN` (read-only scopes such as `project:read`, `event:read`) or to log in and create one before running commands.
-- Set `SENTRY_AUTH_TOKEN` as an env var.
-- Optional defaults: `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_BASE_URL`.
-- Defaults: org/project `{your-org}`/`{your-project}`, time range `24h`, environment `prod`, limit 20 (max 50).
-- Always call the Sentry API (no heuristics, no caching).
-
-If the token is missing, give the user these steps:
-1. Create a Sentry auth token: https://sentry.io/settings/account/api/auth-tokens/
-2. Create a token with read-only scopes such as `project:read`, `event:read`, and `org:read`.
-3. Set `SENTRY_AUTH_TOKEN` as an environment variable in their system.
-4. Offer to guide them through setting the environment variable for their OS/shell if needed.
-- Never ask the user to paste the full token in chat. Ask them to set it locally and confirm when ready.
-
-## Core tasks (use bundled script)
-
-Use `scripts/sentry_api.py` for deterministic API calls. It handles pagination and retries once on transient errors.
-
-## Bundled script path
+Use the Sentry CLI as the primary interface. In Codex, the zero-install path is:
 
 ```bash
-export SENTRY_API="plugins/sentry/skills/sentry/scripts/sentry_api.py"
+npx -y sentry@latest ...
 ```
 
-If you are running from an installed plugin copy instead of this repo checkout, use the same
-`skills/sentry/scripts/sentry_api.py` path inside the installed plugin directory.
+### Core rules
 
-### 1) List issues (ordered by most recent)
+- Prefer CLI commands over raw API calls.
+- Use `--json` for structured output when you need to parse results.
+- Use `--fields` to keep JSON payloads small.
+- Use `--limit` aggressively.
+- Prefer direct lookup by ID over list-then-filter when the identifier is already known.
+- Let the CLI auto-detect org/project context when possible; add explicit `org/project` scoping when detection fails or resolves incorrectly.
+- Never print or store auth tokens.
+- Do not dump large raw JSON into the conversation context.
+
+### Authentication
+
+- Prefer CLI-native auth with:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  --project {your-project} \
-  list-issues \
-  --environment prod \
-  --time-range 24h \
-  --limit 20 \
-  --query "is:unresolved"
+npx -y sentry@latest auth login
 ```
 
-### 2) Resolve an issue short ID to issue ID
+- To verify auth status:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  --project {your-project} \
-  list-issues \
-  --query "ABC-123" \
-  --limit 1
+npx -y sentry@latest auth status --json
 ```
 
-Use the returned `id` for issue detail or events.
+- Token-based auth is allowed when interactive login is not appropriate, but do not ask the user to paste tokens into chat.
+- If the user is not authenticated, tell them to run `npx -y sentry@latest auth login` locally and confirm when ready.
 
-### 3) Issue detail
+### Common commands
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  issue-detail \
-  1234567890
+npx -y sentry@latest issue list --limit 5
+npx -y sentry@latest issue view PROJ-123
+npx -y sentry@latest issue explain PROJ-123
+npx -y sentry@latest issue plan PROJ-123
+npx -y sentry@latest event list PROJ-123 --limit 10
+npx -y sentry@latest event view my-org/my-project/<event-id>
+npx -y sentry@latest trace list --limit 5
+npx -y sentry@latest trace view my-org/my-project/<trace-id>
+npx -y sentry@latest trace logs my-org/<trace-id>
+npx -y sentry@latest span list my-org/my-project/<trace-id>
+npx -y sentry@latest log list --limit 20
+npx -y sentry@latest dashboard list
+npx -y sentry@latest org list
+npx -y sentry@latest project list
+npx -y sentry@latest schema issues
+npx -y sentry@latest api /api/0/organizations/my-org/
 ```
 
-### 4) Issue events
+### Large JSON handling
+
+Sentry JSON can be very large. Do not paste raw `--json` output into context.
+
+Use a temp file, then inspect it with `jq`:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  issue-events \
-  1234567890 \
-  --environment prod \
-  --time-range 24h \
-  --limit 20
+npx -y sentry@latest trace view my-org/my-project/<trace-id> --json > /tmp/sentry-trace.json
+jq '.spans[] | {op, description, duration}' /tmp/sentry-trace.json
 ```
-
-### 5) Event detail (no stack traces by default)
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  --project {your-project} \
-  event-detail \
-  abcdef1234567890
+npx -y sentry@latest issue list --json --fields shortId,title,status,count --limit 10 > /tmp/sentry-issues.json
+jq '.[] | {shortId, title, status, count}' /tmp/sentry-issues.json
 ```
 
-## API requirements
+Guidance:
+- Default to temp files for `--json` output.
+- Extract only the fields needed for the current question.
+- Prefer `--fields` plus `jq` over wide tables or full payloads.
+- Use `--period` for time filters instead of inventing custom date logic.
 
-Always use these endpoints (GET only):
+### Workflow patterns
 
-- List issues: `/api/0/projects/{org_slug}/{project_slug}/issues/`
-- Issue detail: `/api/0/organizations/{org_slug}/issues/{issue_id}/`
-- Events for issue: `/api/0/organizations/{org_slug}/issues/{issue_id}/events/`
-- Event detail: `/api/0/projects/{org_slug}/{project_slug}/events/{event_id}/`
+#### Investigate an issue
 
-## Inputs and defaults
+```bash
+npx -y sentry@latest issue list --query "is:unresolved" --limit 5
+npx -y sentry@latest issue view @latest
+npx -y sentry@latest issue explain @latest
+npx -y sentry@latest issue plan @latest
+```
 
-- `org_slug`: default to `{your-org}` (required for issue detail, issue events, and event detail).
-- `project_slug`: default to `{your-project}` (required for list issues and event detail).
-- `time_range`: default `24h` (pass as `statsPeriod` for list issues and issue events).
-- `environment`: default `prod` (used by list issues and issue events).
-- `limit`: default 20, max 50 (paginate until limit reached).
-- `search_query`: optional `query` parameter.
-- `issue_short_id`: resolve via list-issues query first.
+#### Explore traces and performance
 
-## Output formatting rules
+```bash
+npx -y sentry@latest trace list --limit 5
+npx -y sentry@latest trace view my-org/my-project/<trace-id>
+npx -y sentry@latest span list my-org/my-project/<trace-id>
+npx -y sentry@latest trace logs my-org/<trace-id>
+```
 
-- Issue list: show title, short_id, status, first_seen, last_seen, count, environments, top_tags; order by most recent.
-- Event detail: include culprit, timestamp, environment, release, url.
-- If no results, state explicitly.
-- Redact PII in output (emails, IPs). Do not print raw stack traces.
-- Never echo auth tokens.
+#### Inspect logs
 
-## Golden test inputs
+```bash
+npx -y sentry@latest log list --limit 20
+npx -y sentry@latest log list --query "severity:error" --limit 20
+```
 
-- Org: `{your-org}`
-- Project: `{your-project}`
-- Issue short ID: `{ABC-123}`
+#### Explore schema or raw API
 
-Example prompt: “List the top 10 open issues for prod in the last 24h.”
-Expected: ordered list with titles, short IDs, counts, last seen.
+```bash
+npx -y sentry@latest schema
+npx -y sentry@latest schema "GET /api/0/organizations/{organization_id_or_slug}/issues/"
+npx -y sentry@latest api /api/0/organizations/my-org/projects/
+```
+
+### Command families to prefer
+
+- `auth`: login, status, identity
+- `issue`: list, events, view, explain, plan
+- `event`: list, view
+- `trace`: list, view, logs
+- `span`: list, view
+- `log`: list, view
+- `dashboard`: list, view
+- `org`: list, view
+- `project`: list, view
+- `schema`: explore supported API surfaces
+- `api`: authenticated fallback for endpoints not covered by higher-level commands
+
+## Setting Up Sentry in a Project
+
+When the user asks to set up Sentry, install Sentry, add monitoring, configure Sentry for a platform, or upgrade an SDK, fetch the appropriate skill from the Sentry Skills Registry.
+
+### Required flow
+
+Do not jump straight into installation steps.
+
+1. Detect the platform from the project files.
+2. Tell the user what platform was detected and which Sentry SDK skill matches it.
+3. Confirm that recommendation before fetching the specific SDK skill.
+4. Read the fetched SDK skill carefully and follow it instead of improvising.
+
+### Fetch the Sentry skills
+
+Use `curl -sL` to download the full skill markdown. Do not use summarizing fetch tools for these long skill files.
+
+```bash
+curl -sL https://skills.sentry.dev/sdks
+curl -sL https://skills.sentry.dev/workflows
+curl -sL https://skills.sentry.dev/features
+curl -sL https://skills.sentry.dev/<skill-name>/SKILL.md
+```
+
+### Entry points
+
+- Platform detection and SDK install: `https://skills.sentry.dev/sdks`
+- Workflow skills: `https://skills.sentry.dev/workflows`
+- Feature skills: `https://skills.sentry.dev/features`
+- Full index: `https://skills.sentry.dev/`
+
+### SDK skills by platform
+
+- Android: `https://skills.sentry.dev/sentry-android-sdk/SKILL.md`
+- Browser JavaScript: `https://skills.sentry.dev/sentry-browser-sdk/SKILL.md`
+- Cloudflare Workers/Pages: `https://skills.sentry.dev/sentry-cloudflare-sdk/SKILL.md`
+- Apple platforms: `https://skills.sentry.dev/sentry-cocoa-sdk/SKILL.md`
+- .NET: `https://skills.sentry.dev/sentry-dotnet-sdk/SKILL.md`
+- Elixir: `https://skills.sentry.dev/sentry-elixir-sdk/SKILL.md`
+- Flutter / Dart: `https://skills.sentry.dev/sentry-flutter-sdk/SKILL.md`
+- Go: `https://skills.sentry.dev/sentry-go-sdk/SKILL.md`
+- NestJS: `https://skills.sentry.dev/sentry-nestjs-sdk/SKILL.md`
+- Next.js: `https://skills.sentry.dev/sentry-nextjs-sdk/SKILL.md`
+- Node.js / Bun / Deno: `https://skills.sentry.dev/sentry-node-sdk/SKILL.md`
+- PHP: `https://skills.sentry.dev/sentry-php-sdk/SKILL.md`
+- Python: `https://skills.sentry.dev/sentry-python-sdk/SKILL.md`
+- React Native / Expo: `https://skills.sentry.dev/sentry-react-native-sdk/SKILL.md`
+- React: `https://skills.sentry.dev/sentry-react-sdk/SKILL.md`
+- Ruby: `https://skills.sentry.dev/sentry-ruby-sdk/SKILL.md`
+- Svelte / SvelteKit: `https://skills.sentry.dev/sentry-svelte-sdk/SKILL.md`
+
+### Workflow and feature skills
+
+- Fix issues from Sentry: `https://skills.sentry.dev/sentry-fix-issues/SKILL.md`
+- Resolve Sentry PR review comments: `https://skills.sentry.dev/sentry-code-review/SKILL.md`
+- Review PRs for Seer bug predictions: `https://skills.sentry.dev/sentry-pr-code-review/SKILL.md`
+- Upgrade Sentry JS SDK: `https://skills.sentry.dev/sentry-sdk-upgrade/SKILL.md`
+- Create alerts: `https://skills.sentry.dev/sentry-create-alert/SKILL.md`
+- OpenTelemetry Collector setup: `https://skills.sentry.dev/sentry-otel-exporter-setup/SKILL.md`
+- AI agent monitoring: `https://skills.sentry.dev/sentry-setup-ai-monitoring/SKILL.md`
+
+### Platform detection
+
+When the user does not specify a platform, detect it from project files:
+
+- `package.json` with `next` -> Next.js
+- `package.json` with `@nestjs/core` -> NestJS
+- `package.json` with `react-native` -> React Native
+- `package.json` with `react` and no framework -> React
+- `package.json` alone -> Node.js / Bun / Deno
+- `build.gradle` with Android plugin -> Android
+- `Podfile` or `*.xcodeproj` -> Apple platforms
+- `pubspec.yaml` -> Flutter
+- `requirements.txt` or `pyproject.toml` -> Python
+- `go.mod` -> Go
+- `Gemfile` -> Ruby
+- `composer.json` -> PHP
+- `mix.exs` -> Elixir
+- `*.csproj` or `*.sln` -> .NET
+- `wrangler.toml` -> Cloudflare
+- `svelte.config.js` -> Svelte
+
+Use these priority rules when multiple matches are possible:
+
+- Prefer Next.js over React or generic Node.js.
+- Prefer NestJS over generic Node.js.
+- Prefer Cloudflare over generic Node.js.
+- Prefer React Native over React.
+- Prefer the framework-specific skill over the language-only skill when both match.
+
+After detection, state the recommendation explicitly, for example:
+
+```text
+I found a Next.js app, so the right Sentry setup skill is sentry-nextjs-sdk.
+If that matches your intent, I’ll fetch that skill and follow it.
+```
+
+Then fetch the matching SDK skill and follow it directly. If there is no clear match, fall back to Sentry docs.
+
+## Output expectations
+
+- Summarize findings instead of dumping raw payloads.
+- Call out when no results are returned.
+- Mention the concrete commands used when that helps the user reproduce or refine the search.
+- Redact obvious secrets or PII if they appear in command output.

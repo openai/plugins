@@ -1,7 +1,7 @@
 {
   "name": "sentry",
   "version": "0.1.0",
-  "description": "Inspect recent issues and events in Sentry from Codex.",
+  "description": "Investigate Sentry with the official CLI and expert SDK setup guidance from Codex.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -18,8 +18,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Sentry",
-    "shortDescription": "Inspect recent Sentry issues and events",
-    "longDescription": "Use Sentry skills to inspect recent issues, review events, and summarize production errors with a read-only workflow.",
+    "shortDescription": "Investigate issues, traces, logs, and SDK setup with Sentry CLI",
+    "longDescription": "Use Sentry skills to query issues, events, traces, spans, logs, dashboards, organizations, and projects through the official Sentry CLI, and fetch expert SDK setup workflows from skills.sentry.dev when the task is installation or configuration.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [
@@ -30,7 +30,8 @@
     "privacyPolicyURL": "https://sentry.io/privacy/",
     "termsOfServiceURL": "https://sentry.io/terms/",
     "defaultPrompt": [
-      "Inspect recent Sentry issues and summarize the top production errors"
+      "Inspect recent Sentry issues, traces, or logs and summarize likely root cause and next steps",
+      "Help install or configure the right Sentry SDK for this project"
     ],
     "composerIcon": "./assets/sentry-small.svg",
     "logo": "./assets/sentry.png",
