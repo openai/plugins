@@ -1,6 +1,6 @@
 # Figma Plugin
 
-This plugin packages the Figma MCP server and Figma-driven workflows in
+This plugin packages Figma-driven design-to-code workflows in
 `plugins/figma`.
 
 It currently includes these skills:
@@ -16,7 +16,7 @@ It currently includes these skills:
 ## What It Covers
 
 - translating Figma frames and components into production-ready UI code
-- inspecting design context, variables, metadata, and screenshots through Figma MCP
+- inspecting design context and screenshots through the connected Figma tools
 - creating parserless Code Connect template files for published Figma components
 - generating project-specific design system rules for Figma-to-code workflows
 - creating or updating full screens and design system libraries in Figma
@@ -38,10 +38,6 @@ with this shape:
   - plugin-local app dependency manifest
   - points Codex at the connected Figma integration used by the bundled skills
 
-- `.mcp.json`
-  - plugin-local MCP server configuration
-  - points Codex at the official Figma MCP server at `https://mcp.figma.com/mcp`
-
 - `agents/`
   - plugin-level agent metadata
   - currently includes `agents/openai.yaml` for the OpenAI surface
@@ -59,9 +55,10 @@ with this shape:
 
 ## Notes
 
-This plugin is app-backed through `.app.json` and also includes Figma MCP
-configuration through `.mcp.json`. The workflows assume that Figma tools are
-available and that the user can supply Figma URLs with node IDs when needed.
+This plugin is app-backed through `.app.json` and uses the connected Figma
+integration for the bundled skills. The workflows assume that the Figma tools
+are available and that the user can supply Figma URLs with node IDs when
+needed.
 
 The current skill set is focused on these workflows:
 
@@ -74,4 +71,4 @@ Use of the Figma skills and related files is governed by the Figma Developer
 Terms. See `LICENSE.txt` and the per-skill license files for details.
 
 This public repo keeps the bundled skills plus the example command, hook, and UI
-scaffolding alongside the app-backed and MCP-backed plugin wiring.
+scaffolding alongside the app-backed plugin wiring.

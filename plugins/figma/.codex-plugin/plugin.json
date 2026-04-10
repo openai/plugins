@@ -1,13 +1,13 @@
 {
   "name": "figma",
   "version": "2.0.7",
-  "description": "Plugin that includes the Figma MCP server and Skills for common workflows.",
+  "description": "Figma workflows for design implementation, Code Connect templates, and design system rule generation.",
   "author": {
     "name": "Figma",
     "url": "https://www.figma.com"
   },
-  "homepage": "https://github.com/figma/mcp-server-guide",
-  "repository": "https://github.com/figma/mcp-server-guide",
+  "homepage": "https://www.figma.com",
+  "repository": "https://github.com/openai/plugins",
   "license": "LicenseRef-Figma-Developer-Terms",
   "keywords": [
     "figma",
@@ -19,11 +19,10 @@
   "skills": "./skills/",
   "hooks": "./hooks.json",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Figma",
-    "shortDescription": "Design-to-code workflows powered by Figma MCP",
-    "longDescription": "Figma workflows for implementing designs in code, creating Code Connect templates and mappings, generating or updating Figma designs, building design system libraries, and creating project-specific design system rules with the official Figma MCP server.",
+    "shortDescription": "Design-to-code workflows powered by the Figma integration",
+    "longDescription": "Figma workflows for implementing designs in code, creating Code Connect templates for published Figma components, and generating project-specific design system rules for repeatable Figma-to-code work.",
     "developerName": "Figma",
     "category": "Design",
     "capabilities": [
