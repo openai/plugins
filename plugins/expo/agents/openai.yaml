@@ -1,0 +1,6 @@
+interface:
+  display_name: "Expo"
+  short_description: "Build, deploy, upgrade, and debug Expo and React Native apps"
+  icon_small: "./assets/expo.png"
+  icon_large: "./assets/expo.png"
+  default_prompt: "Use Expo when building Expo Router UI, API routes, native modules, dev clients, data fetching, styling, Codex app Run actions, EAS workflows, deployments, or SDK upgrades."
