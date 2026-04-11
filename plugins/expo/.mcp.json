@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "expo": {
-      "type": "streamable_http",
-      "url": "https://mcp.expo.dev/mcp"
-    }
-  }
-}

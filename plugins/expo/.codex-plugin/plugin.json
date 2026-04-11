@@ -24,7 +24,6 @@
     "native-modules"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Expo",
     "shortDescription": "Build, deploy, upgrade, and debug Expo and React Native apps",
