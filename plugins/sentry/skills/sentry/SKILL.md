@@ -1,13 +1,11 @@
 ---
 name: "sentry"
-description: "Guide for using the Sentry CLI to inspect issues, events, traces, spans, logs, dashboards, organizations, projects, and authenticated API data from Codex via `npx -y sentry@latest`. Also covers setting up Sentry SDKs by fetching expert setup guides from skills.sentry.dev."
+description: "Use when the user wants to inspect Sentry data from Codex with the official CLI: issues, events, traces, spans, logs, dashboards, orgs, projects, schema, or authenticated API access. This skill is for investigation and querying, not SDK installation or instrumentation changes."
 ---
 
-# Sentry
+# Sentry CLI
 
-This skill covers two capabilities:
-1. Querying Sentry with the official CLI via `npx -y sentry@latest`
-2. Setting up Sentry SDKs by fetching expert setup guides from the Sentry Skills Registry
+Use this skill for read and investigate workflows inside Sentry. If the user wants to install Sentry, update instrumentation, turn on new SDK features, or fetch guidance from `skills.sentry.dev`, route to `../sentry-setup/SKILL.md` immediately.
 
 ## Querying Sentry Data
 
@@ -23,10 +21,29 @@ npx -y sentry@latest ...
 - Use `--json` for structured output when you need to parse results.
 - Use `--fields` to keep JSON payloads small.
 - Use `--limit` aggressively.
+- Prefer `--period` for time filters.
 - Prefer direct lookup by ID over list-then-filter when the identifier is already known.
 - Let the CLI auto-detect org/project context when possible; add explicit `org/project` scoping when detection fails or resolves incorrectly.
 - Never print or store auth tokens.
 - Do not dump large raw JSON into the conversation context.
+- Prefer noun-first commands exactly as the CLI exposes them: `issue list`, `trace view`, `event list`, `schema`, `api`.
+
+### Use this skill for
+
+- Investigating recent errors or unresolved issues
+- Reading issue details, events, traces, spans, logs, dashboards, orgs, or projects
+- Asking Sentry for Seer explanations or plans on an issue
+- Exploring the Sentry API surface with `schema`
+- Using authenticated raw API access when the dedicated command family is not enough
+
+### Do not use this skill for
+
+- Installing Sentry into an app
+- Adding or updating `instrumentation.ts`, `global-error.tsx`, SDK init files, or DSNs
+- Turning on features like Replay, Profiling, Logs, AI monitoring, or Crons in source code
+- SDK upgrades or instrumentation migrations
+
+For those tasks, switch to `../sentry-setup/SKILL.md`.
 
 ### Authentication
 
@@ -44,6 +61,17 @@ npx -y sentry@latest auth status --json
 
 - Token-based auth is allowed when interactive login is not appropriate, but do not ask the user to paste tokens into chat.
 - If the user is not authenticated, tell them to run `npx -y sentry@latest auth login` locally and confirm when ready.
+
+### Fast validation
+
+Before relying on a command family for the first time in a session, it is reasonable to confirm the CLI surface:
+
+```bash
+npx -y sentry@latest --help
+npx -y sentry@latest auth --help
+npx -y sentry@latest issue --help
+npx -y sentry@latest trace --help
+```
 
 ### Common commands
 
@@ -64,6 +92,19 @@ npx -y sentry@latest org list
 npx -y sentry@latest project list
 npx -y sentry@latest schema issues
 npx -y sentry@latest api /api/0/organizations/my-org/
+```
+
+### When to use `schema` vs `api`
+
+- Use `schema` first when you need to discover the shape of an endpoint or confirm the supported path.
+- Use `api` only after checking whether a dedicated command family already exists.
+- Prefer `issue`, `event`, `trace`, `span`, `log`, `dashboard`, `org`, and `project` over `api`.
+
+Examples:
+
+```bash
+npx -y sentry@latest schema "GET /api/0/organizations/{organization_id_or_slug}/issues/"
+npx -y sentry@latest api /api/0/organizations/my-org/projects/ --json
 ```
 
 ### Large JSON handling
@@ -87,6 +128,7 @@ Guidance:
 - Extract only the fields needed for the current question.
 - Prefer `--fields` plus `jq` over wide tables or full payloads.
 - Use `--period` for time filters instead of inventing custom date logic.
+- If a single trace or issue dump is large, summarize the subset you actually inspected instead of presenting the whole file.
 
 ### Workflow patterns
 
@@ -98,6 +140,8 @@ npx -y sentry@latest issue view @latest
 npx -y sentry@latest issue explain @latest
 npx -y sentry@latest issue plan @latest
 ```
+
+If the user already gave an issue short ID, skip the list step and go straight to `issue view`, `issue events`, `issue explain`, or `issue plan`.
 
 #### Explore traces and performance
 
@@ -115,10 +159,18 @@ npx -y sentry@latest log list --limit 20
 npx -y sentry@latest log list --query "severity:error" --limit 20
 ```
 
+#### Inspect events
+
+```bash
+npx -y sentry@latest event list PROJ-123 --limit 20
+npx -y sentry@latest event view my-org/my-project/<event-id>
+```
+
 #### Explore schema or raw API
 
 ```bash
 npx -y sentry@latest schema
+npx -y sentry@latest schema issues
 npx -y sentry@latest schema "GET /api/0/organizations/{organization_id_or_slug}/issues/"
 npx -y sentry@latest api /api/0/organizations/my-org/projects/
 ```
@@ -137,108 +189,10 @@ npx -y sentry@latest api /api/0/organizations/my-org/projects/
 - `schema`: explore supported API surfaces
 - `api`: authenticated fallback for endpoints not covered by higher-level commands
 
-## Setting Up Sentry in a Project
-
-When the user asks to set up Sentry, install Sentry, add monitoring, configure Sentry for a platform, or upgrade an SDK, fetch the appropriate skill from the Sentry Skills Registry.
-
-### Required flow
-
-Do not jump straight into installation steps.
-
-1. Detect the platform from the project files.
-2. Tell the user what platform was detected and which Sentry SDK skill matches it.
-3. Confirm that recommendation before fetching the specific SDK skill.
-4. Read the fetched SDK skill carefully and follow it instead of improvising.
-
-### Fetch the Sentry skills
-
-Use `curl -sL` to download the full skill markdown. Do not use summarizing fetch tools for these long skill files.
-
-```bash
-curl -sL https://skills.sentry.dev/sdks
-curl -sL https://skills.sentry.dev/workflows
-curl -sL https://skills.sentry.dev/features
-curl -sL https://skills.sentry.dev/<skill-name>/SKILL.md
-```
-
-### Entry points
-
-- Platform detection and SDK install: `https://skills.sentry.dev/sdks`
-- Workflow skills: `https://skills.sentry.dev/workflows`
-- Feature skills: `https://skills.sentry.dev/features`
-- Full index: `https://skills.sentry.dev/`
-
-### SDK skills by platform
-
-- Android: `https://skills.sentry.dev/sentry-android-sdk/SKILL.md`
-- Browser JavaScript: `https://skills.sentry.dev/sentry-browser-sdk/SKILL.md`
-- Cloudflare Workers/Pages: `https://skills.sentry.dev/sentry-cloudflare-sdk/SKILL.md`
-- Apple platforms: `https://skills.sentry.dev/sentry-cocoa-sdk/SKILL.md`
-- .NET: `https://skills.sentry.dev/sentry-dotnet-sdk/SKILL.md`
-- Elixir: `https://skills.sentry.dev/sentry-elixir-sdk/SKILL.md`
-- Flutter / Dart: `https://skills.sentry.dev/sentry-flutter-sdk/SKILL.md`
-- Go: `https://skills.sentry.dev/sentry-go-sdk/SKILL.md`
-- NestJS: `https://skills.sentry.dev/sentry-nestjs-sdk/SKILL.md`
-- Next.js: `https://skills.sentry.dev/sentry-nextjs-sdk/SKILL.md`
-- Node.js / Bun / Deno: `https://skills.sentry.dev/sentry-node-sdk/SKILL.md`
-- PHP: `https://skills.sentry.dev/sentry-php-sdk/SKILL.md`
-- Python: `https://skills.sentry.dev/sentry-python-sdk/SKILL.md`
-- React Native / Expo: `https://skills.sentry.dev/sentry-react-native-sdk/SKILL.md`
-- React: `https://skills.sentry.dev/sentry-react-sdk/SKILL.md`
-- Ruby: `https://skills.sentry.dev/sentry-ruby-sdk/SKILL.md`
-- Svelte / SvelteKit: `https://skills.sentry.dev/sentry-svelte-sdk/SKILL.md`
-
-### Workflow and feature skills
-
-- Fix issues from Sentry: `https://skills.sentry.dev/sentry-fix-issues/SKILL.md`
-- Resolve Sentry PR review comments: `https://skills.sentry.dev/sentry-code-review/SKILL.md`
-- Review PRs for Seer bug predictions: `https://skills.sentry.dev/sentry-pr-code-review/SKILL.md`
-- Upgrade Sentry JS SDK: `https://skills.sentry.dev/sentry-sdk-upgrade/SKILL.md`
-- Create alerts: `https://skills.sentry.dev/sentry-create-alert/SKILL.md`
-- OpenTelemetry Collector setup: `https://skills.sentry.dev/sentry-otel-exporter-setup/SKILL.md`
-- AI agent monitoring: `https://skills.sentry.dev/sentry-setup-ai-monitoring/SKILL.md`
-
-### Platform detection
-
-When the user does not specify a platform, detect it from project files:
-
-- `package.json` with `next` -> Next.js
-- `package.json` with `@nestjs/core` -> NestJS
-- `package.json` with `react-native` -> React Native
-- `package.json` with `react` and no framework -> React
-- `package.json` alone -> Node.js / Bun / Deno
-- `build.gradle` with Android plugin -> Android
-- `Podfile` or `*.xcodeproj` -> Apple platforms
-- `pubspec.yaml` -> Flutter
-- `requirements.txt` or `pyproject.toml` -> Python
-- `go.mod` -> Go
-- `Gemfile` -> Ruby
-- `composer.json` -> PHP
-- `mix.exs` -> Elixir
-- `*.csproj` or `*.sln` -> .NET
-- `wrangler.toml` -> Cloudflare
-- `svelte.config.js` -> Svelte
-
-Use these priority rules when multiple matches are possible:
-
-- Prefer Next.js over React or generic Node.js.
-- Prefer NestJS over generic Node.js.
-- Prefer Cloudflare over generic Node.js.
-- Prefer React Native over React.
-- Prefer the framework-specific skill over the language-only skill when both match.
-
-After detection, state the recommendation explicitly, for example:
-
-```text
-I found a Next.js app, so the right Sentry setup skill is sentry-nextjs-sdk.
-If that matches your intent, I’ll fetch that skill and follow it.
-```
-
-Then fetch the matching SDK skill and follow it directly. If there is no clear match, fall back to Sentry docs.
-
 ## Output expectations
 
 - Summarize findings instead of dumping raw payloads.
 - Call out when no results are returned.
 - Mention the concrete commands used when that helps the user reproduce or refine the search.
 - Redact obvious secrets or PII if they appear in command output.
+- If the user actually wants installation or instrumentation work, say that you are switching to `../sentry-setup/SKILL.md`.
