@@ -16,6 +16,7 @@ Outbound Outlook email writes are plain-text only. When drafting, replying, sche
 - Thread briefs that capture the latest status, decisions, deadlines, and next actions.
 - Inbox triage summaries that group messages by urgency, follow-up state, or owner.
 - Draft replies or forwards that are ready to review before sending.
+- Delayed-send plans that make clear what will be sent later, when it will go out, and what still needs confirmation before scheduling.
 - Task and commitment summaries that identify owner, due date, blocker, and likely next step.
 - Subscription-cleanup plans that separate unsubscribe, archive, and mailbox-organization actions.
 
@@ -35,9 +36,10 @@ Outbound Outlook email writes are plain-text only. When drafting, replying, sche
 2. Use `fetch_message` or `fetch_messages_batch` only when the user explicitly needs fuller body content, longer context, or tighter evidence for task extraction.
 3. Use `list_attachments` and `fetch_attachment` when attachment metadata or file contents change the answer.
 4. Use draft-first actions for write preparation: `create_reply_draft`, `create_forward_draft`, or `draft_email`.
-5. Use mailbox-organization actions only with clear user intent: `mark_email_read_state`, `move_email`, `set_message_categories`, `create_category`, `create_mail_folder`.
-6. For newsletter cleanup, inspect `get_unsubscribe_info` before assuming a safe unsubscribe path. `unsubscribe_via_mailto` only covers `mailto:` targets.
-7. For delegated or shared mailbox work, route to [../outlook-email-shared-mailboxes/SKILL.md](../outlook-email-shared-mailboxes/SKILL.md). Do not use signed-in-user actions such as `list_messages`, `fetch_message`, `send_email`, `mark_email_read_state`, or `move_email` for another mailbox.
+5. Use `schedule_email` when the user explicitly wants a delayed send or send-later workflow rather than an immediate send.
+6. Use mailbox-organization actions only with clear user intent: `mark_email_read_state`, `move_email`, `set_message_categories`, `create_category`, `create_mail_folder`.
+7. For newsletter cleanup, inspect `get_unsubscribe_info` before assuming a safe unsubscribe path. `unsubscribe_via_mailto` only covers `mailto:` targets.
+8. For delegated or shared mailbox work, route to [../outlook-email-shared-mailboxes/SKILL.md](../outlook-email-shared-mailboxes/SKILL.md). Do not use signed-in-user actions such as `list_messages`, `fetch_message`, `send_email`, `mark_email_read_state`, or `move_email` for another mailbox.
 
 ## Workflow
 
@@ -50,12 +52,13 @@ Outbound Outlook email writes are plain-text only. When drafting, replying, sche
 7. If you create a draft and the user later approves sending that draft, prefer sending or updating the existing draft artifact instead of recreating the same reply from scratch.
 8. Avoid orphaned drafts. If you must change send paths after drafting, reuse the draft when possible or explicitly tell the user that a stale draft remains and what you did about it.
 9. Separate mailbox analysis from action. Be explicit about whether you are summarizing, drafting, proposing a send, or suggesting triage.
-10. Only send, move, archive, delete, or otherwise change Outlook mailbox state when the user has clearly asked for that action.
-11. For category-based triage or verification, prefer `list_messages` or mailbox-wide search/list results over `fetch_message`. Treat `fetch_message` category readback as unreliable if it returns `categories: null` after a successful category write.
-12. When forwarding via the Outlook connector, pass recipients as structured email-address objects rather than raw strings. If a forward call fails schema validation, inspect the expected recipient shape before retrying.
-13. Before forwarding, confirm that the source message match is unique enough for the requested description. If the user refers to "that email" or describes a message indirectly, verify there is exactly one plausible mailbox match or stop and ask.
-14. Before forwarding to a named person, confirm that the recipient identity is unique enough in mailbox context. If multiple plausible addresses exist for that person, stop and ask which one to use.
-15. If the forward target and source message were inferred from search rather than directly specified by message ID or exact address, say what you matched before sending.
+10. If the user wants the email to go out later, restate the exact send-later timestamp and timezone before calling `schedule_email`.
+11. Only send, schedule, move, archive, delete, or otherwise change Outlook mailbox state when the user has clearly asked for that action.
+12. For category-based triage or verification, prefer `list_messages` or mailbox-wide search/list results over `fetch_message`. Treat `fetch_message` category readback as unreliable if it returns `categories: null` after a successful category write.
+13. When forwarding via the Outlook connector, pass recipients as structured email-address objects rather than raw strings. If a forward call fails schema validation, inspect the expected recipient shape before retrying.
+14. Before forwarding, confirm that the source message match is unique enough for the requested description. If the user refers to "that email" or describes a message indirectly, verify there is exactly one plausible mailbox match or stop and ask.
+15. Before forwarding to a named person, confirm that the recipient identity is unique enough in mailbox context. If multiple plausible addresses exist for that person, stop and ask which one to use.
+16. If the forward target and source message were inferred from search rather than directly specified by message ID or exact address, say what you matched before sending.
 
 ## What Stays In The Base Skill
 
@@ -72,6 +75,7 @@ Keep these workflows in the base Outlook Email skill instead of splitting them f
 
 - Preserve recipients, subject lines, dates, links, and quoted facts from the source thread unless the user asks to change them.
 - Treat send, delete, move, and broad mailbox cleanup actions as explicit operations that require clear user intent.
+- Treat delayed send as a write, not just a draft. Confirm the intended send time, timezone, and recipient set before scheduling.
 - If multiple threads or similarly named mailboxes are in scope, identify the intended thread before drafting or acting.
 - If a reply depends on missing facts, provide the draft plus a short list of what still needs confirmation instead of sending.
 - Treat proposed times, acceptance of invitations, ETA promises, status claims, and references to other threads as high-risk facts that require explicit confirmation when they are not already established in the mailbox context.
@@ -89,6 +93,7 @@ Keep these workflows in the base Outlook Email skill instead of splitting them f
 - When multiple messages matter, reference the sender and timestamp of the message that drives the next action.
 - If a draft requires follow-up details, list them immediately after the draft.
 - Before sending, explicitly note any assumptions you checked and any missing facts you asked the user to confirm.
+- Before scheduling a send, state the final send time with weekday, date, local time, and timezone.
 - If you are sending a previously created draft, say so explicitly. If you are not sending that draft, explain why and what happened to it.
 - Before forwarding an inferred message, state the matched source thread and matched recipient in one short line so the user can see what will be sent where.
 
@@ -98,6 +103,7 @@ Keep these workflows in the base Outlook Email skill instead of splitting them f
 - "Draft a reply that confirms the plan and asks for the final approval date."
 - "Go through my unread Outlook inbox and group messages into urgent, waiting, and low priority."
 - "Prepare a short forward that gives leadership the current status from this email thread."
+- "Draft this update now, but schedule it to send tomorrow at 8:30 AM Eastern."
 - "Before you send anything, tell me what assumptions need my confirmation."
 - "I drafted that earlier; now send the draft I approved."
 - "Show me unread mail in the support shared mailbox and draft the safest next response."
