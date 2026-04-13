@@ -1,0 +1,38 @@
+{
+  "name": "turbo-tax",
+  "version": "1.0.0",
+  "description": "Use TurboTax in Codex through the connected app.",
+  "author": {
+    "name": "Intuit",
+    "url": "https://turbotax.intuit.com/"
+  },
+  "homepage": "https://turbotax.intuit.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "turbo-tax",
+    "turbotax",
+    "taxes",
+    "finance"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "TurboTax",
+    "shortDescription": "Use TurboTax through the connected app",
+    "longDescription": "Use TurboTax in Codex through the connected app for tax-related workflows and account tasks.",
+    "developerName": "Intuit",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://turbotax.intuit.com/",
+    "defaultPrompt": [
+      "Use TurboTax to help with this task"
+    ],
+    "brandColor": "#D24735",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}
