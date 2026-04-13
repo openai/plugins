@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "paper": {
+      "type": "http",
+      "url": "http://127.0.0.1:29979/mcp",
+      "note": "Paper Desktop exposes this local MCP server while the desktop app is running with a document open."
+    }
+  }
+}

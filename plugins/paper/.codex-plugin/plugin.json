@@ -1,0 +1,54 @@
+{
+  "name": "paper",
+  "version": "0.1.0",
+  "description": "Design in Paper and move between live canvas work and production code.",
+  "author": {
+    "name": "Paper",
+    "email": "team@paper.design",
+    "url": "https://paper.design"
+  },
+  "homepage": "https://paper.design",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "paper",
+    "design",
+    "canvas",
+    "html",
+    "css",
+    "design-to-code",
+    "code-to-design",
+    "prototyping",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Paper",
+    "shortDescription": "Read and write Paper canvases from Codex",
+    "longDescription": "Use Paper to move between live canvas design work and production code. Codex can read Paper artboards, styles, and text, then generate implementation-ready code or create new Paper layouts from the patterns already in your repo.",
+    "developerName": "Paper",
+    "category": "Design",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://paper.design",
+    "privacyPolicyURL": "https://paper.design/legal/privacy",
+    "termsOfServiceURL": "https://paper.design/legal/tos",
+    "defaultPrompt": [
+      "Implement the selected Paper design in this codebase",
+      "Create a Paper settings page using this repo's styles and tokens",
+      "Read this Paper artboard and turn it into production-ready UI code"
+    ],
+    "brandColor": "#81ADEC",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/app-icon.png",
+    "screenshots": [
+      "./assets/barley-layout.png",
+      "./assets/barley-feedback.png",
+      "./assets/barley-responsive-frames.png"
+    ]
+  }
+}
