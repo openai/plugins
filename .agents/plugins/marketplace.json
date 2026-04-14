@@ -60,10 +60,7 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL",
-        "products": [
-          "codex"
-        ]
+        "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
     },
@@ -75,10 +72,7 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL",
-        "products": [
-          "codex"
-        ]
+        "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
     },
@@ -90,10 +84,7 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL",
-        "products": [
-          "codex"
-        ]
+        "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
     },
@@ -105,10 +96,7 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL",
-        "products": [
-          "codex"
-        ]
+        "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
     },
