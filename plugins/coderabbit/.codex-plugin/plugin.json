@@ -1,0 +1,41 @@
+{
+  "name": "coderabbit",
+  "version": "1.1.0",
+  "description": "AI-powered code review in Codex, powered by CodeRabbit.",
+  "author": {
+    "name": "CodeRabbit AI",
+    "email": "support@coderabbit.ai",
+    "url": "https://coderabbit.ai"
+  },
+  "homepage": "https://docs.coderabbit.ai/cli/overview",
+  "repository": "https://github.com/coderabbitai/codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "ai",
+    "coderabbit",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CodeRabbit",
+    "shortDescription": "Run AI-powered code review for your current changes",
+    "longDescription": "Run CodeRabbit review workflows in Codex to inspect diffs, surface actionable findings, and turn review output into follow-up fixes.",
+    "developerName": "CodeRabbit",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://coderabbit.ai",
+    "privacyPolicyURL": "https://www.coderabbit.ai/privacy-policy",
+    "termsOfServiceURL": "https://www.coderabbit.ai/terms-of-service",
+    "brandColor": "#FF570A",
+    "composerIcon": "./assets/coderabbit-small.png",
+    "logo": "./assets/coderabbit.png",
+    "defaultPrompt": [
+      "Review my current changes and provide feedback"
+    ],
+    "screenshots": []
+  }
+}
