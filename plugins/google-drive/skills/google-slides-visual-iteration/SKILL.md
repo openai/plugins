@@ -59,7 +59,8 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - When the tool returns an `image_asset_pointer`, image content part, thumbnail artifact, or other rendered image in `content`, treat that as analyzable visual input for this workflow and inspect it directly.
 - Do not wait for image bytes, a data URL, or base64 image content before reviewing the slide. A returned image artifact from `get_slide_thumbnail` is the slide screenshot for this loop.
 - If `get_slide_thumbnail` succeeds, treat that as the visual verification path for this workflow even if the transcript view looks metadata-shaped. Do not abandon the thumbnail loop just because the runtime shows a thumbnail artifact, asset pointer, URL, or metadata wrapper instead of inline pixels in the message body.
-- The response may also include `contentUrl` metadata, but prefer the returned image content instead of downloading the URL or switching to another image-analysis path.
+- If the thumbnail response only exposes a thumbnail URL or `contentUrl`, curl the rendered image to a local PNG before visual review, for example `curl -L "$contentUrl" -o /tmp/slides-thumb-<slide-id>.png`.
+- Inspect the saved local PNG with the available image-viewing path before diagnosing overlap, clipping, padding, footer collisions, text rendering, or before claiming visual verification.
 - Do not switch to deck export, PDF rendering, or other fallback rendering paths when the thumbnail tool already succeeded. Only use a fallback path if the thumbnail action itself failed or is unavailable.
 
 4. Diagnose concrete visual problems.
@@ -100,6 +101,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 
 6. Verify immediately.
 - Call `get_slide_thumbnail` again after every batch update.
+- If the fresh thumbnail is URL-backed, curl the new URL to a local PNG and inspect that new file. Do not reuse a PNG from before the write.
 - State which issues are now fixed, which issues remain, and whether the pass introduced any new regressions.
 - Confirm the targeted issue cluster is actually fixed before moving on.
 - Verify that small target or benchmark text changed along with the main headline value when both were in scope.
