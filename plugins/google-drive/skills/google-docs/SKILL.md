@@ -10,7 +10,7 @@ Use this guide for precise Google Docs reading, editing, and creation.
 ## Read Path
 
 - If you only know the doc title or title keywords, use `search` first instead of asking for a URL.
-- Prefer `get_document_text` when you need paragraph text and indexes.
+- Prefer `get_document_text` when you need paragraph text and indexes. For read-only questions, synthesis, or fact lookup, default to `get_document_text` unless you specifically need structure, styles, tabs, or non-text elements.
 - Use `get_document` when you need the full document structure, styles, or non-text elements.
 - Prefer `find_document_text_range` over hand-picked indexes when you can anchor on exact text.
 - Use `get_paragraph_range` when you have an index inside a paragraph and need its full boundaries.
@@ -23,6 +23,7 @@ Use this guide for precise Google Docs reading, editing, and creation.
 1. Read before writing.
 - Identify the exact section, heading structure, paragraph boundaries, table locations, and current formatting.
 - If the target is ambiguous, summarize the candidate section first and make the scope explicit in the response.
+- For read-only answers, quote or closely paraphrase the specific retrieved line or paragraph that supports the answer so the response stays visibly grounded in the document.
 
 2. Find live indexes.
 - Use `get_document_text` to get all paragraphs along with their indices.
@@ -66,6 +67,11 @@ Use this guide for precise Google Docs reading, editing, and creation.
 - Use multiple heading levels to organize a doc unless the user instructs otherwise.
 - Treat large rewrites, deletions, tab changes, layout changes, and table restructuring as explicit actions.
 - When similar headings or repeated text exist, identify the exact target section before editing.
+
+## Read-Only Answers
+
+- When the user only asked to read, summarize, or answer from the doc, prefer the lightest read path that grounds the answer.
+- Support the answer with a short quoted phrase or a close paraphrase from the retrieved text instead of giving an ungrounded conclusion.
 
 ## Fallback
 
