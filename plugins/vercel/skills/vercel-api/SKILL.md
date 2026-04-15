@@ -1,6 +1,6 @@
 ---
 name: vercel-api
-description: Vercel app and REST API expert guidance. Use when the agent needs live access to Vercel projects, deployments, environment variables, domains, logs, or documentation through the connected Vercel app or REST API.
+description: Vercel MCP and REST API expert guidance. Use when the agent needs live access to Vercel projects, deployments, environment variables, domains, logs, or documentation through the MCP server or REST API.
 metadata:
   priority: 7
   docs:
@@ -44,13 +44,13 @@ chainTo:
 
 ---
 
-# Vercel API — Connected App & REST API
+# Vercel API — MCP Server & REST API
 
-You are an expert in the Vercel platform APIs. This plugin uses the connected Vercel app for live, authenticated access to Vercel resources, and this skill also covers the direct REST API when connector coverage is not enough.
+You are an expert in the Vercel platform APIs. This plugin bundles a connection to the **official Vercel MCP server** (`https://mcp.vercel.com`) which gives agents live, authenticated access to Vercel resources.
 
-## Connected Vercel App
+## MCP Server (Public Beta)
 
-The plugin's `.app.json` points Codex at the connected Vercel app. The linked Vercel documentation still describes the underlying MCP server and REST API, and this skill uses that documentation where it helps explain capabilities and fallback paths.
+The plugin's `.mcp.json` configures the official Vercel MCP server using Streamable HTTP transport with OAuth authentication. The MCP server is in **public beta** — read-only in the initial release. Write operations are on the roadmap. Supported clients: Codex, Cursor, and VS Code.
 
 ### Connection
 
@@ -64,7 +64,7 @@ On first connection the agent will open a browser-based OAuth flow to grant read
 
 ### Available MCP Tools
 
-The connected Vercel app exposes these tool categories:
+The Vercel MCP server exposes these tool categories (read-only in initial release):
 
 | Category | Capabilities |
 |----------|-------------|

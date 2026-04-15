@@ -18,6 +18,7 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Hugging Face",
     "shortDescription": "Inspect models, datasets, Spaces, and research",

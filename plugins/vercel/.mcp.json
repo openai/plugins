@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com",
+      "note": "Official Vercel MCP server. Uses OAuth — on first connection the agent will be prompted to authorize via Vercel. Read-only in initial release: search docs, list projects/deployments, inspect logs."
+    }
+  }
+}

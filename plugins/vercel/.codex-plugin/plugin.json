@@ -26,11 +26,11 @@
     "discord-bot"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Vercel",
     "shortDescription": "Build and deploy web apps and agents",
-    "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills and the connected Vercel app. Packages the upstream vercel/vercel-plugin skills, agents, and commands under the local `vercel` plugin identity for the Codex plugin marketplace.",
+    "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills and the official Vercel MCP server. Packages the upstream vercel/vercel-plugin skills, agents, and commands under the local `vercel` plugin identity for the Codex plugin marketplace.",
     "developerName": "Vercel Labs",
     "category": "Coding",
     "capabilities": ["Interactive", "Write"],
@@ -40,7 +40,7 @@
     "defaultPrompt": [
       "Audit this repo for Vercel deployment risks",
       "Which Vercel tools fit this app best",
-      "Help wire the Vercel app into this workflow"
+      "Help wire Vercel MCP into this workflow"
     ],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",

@@ -5,7 +5,7 @@ This directory packages the upstream [vercel/vercel-plugin](https://github.com/v
 ## What is included
 
 - `skills/` from the upstream plugin (47 skills with retrieval metadata for Codex discovery)
-- `.app.json` for the connected Vercel app
+- `.mcp.json` for the official Vercel MCP server
 - `vercel.md` ecosystem reference graph
 - `agents/` specialist agent definitions
 - `commands/` slash command definitions
@@ -62,7 +62,7 @@ A text-form relational graph covering:
 | `turborepo` | Monorepo orchestration, caching, remote caching, --affected, pruned subsets |
 | `v0-dev` | AI code generation, agentic intelligence, GitHub integration |
 | `vercel-agent` | AI-powered code review, incident investigation, SDK installation, PR analysis |
-| `vercel-api` | Connected Vercel app and REST API guidance — projects, deployments, env vars, domains, logs |
+| `vercel-api` | Vercel MCP Server and REST API — projects, deployments, env vars, domains, logs |
 | `vercel-cli` | All CLI commands — deploy, env, dev, domains, cache management, MCP integration, marketplace |
 | `vercel-firewall` | DDoS, WAF, rate limiting, bot filter, custom rules |
 | `vercel-flags` | Feature flags, Flags Explorer, gradual rollouts, A/B testing, provider adapters |
@@ -105,7 +105,6 @@ After installing, skills are discovered automatically via Codex's metadata-based
 ```text
 vercel/
 ├── .codex-plugin/plugin.json       # Plugin manifest
-├── .app.json                        # Connected Vercel app manifest
 ├── vercel.md                        # Ecosystem graph + conventions
 ├── skills/                          # 47 skills discovered via SKILL.md metadata
 │   ├── agent-browser/
