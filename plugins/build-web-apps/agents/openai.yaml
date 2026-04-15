@@ -7,9 +7,18 @@ interface:
 
 dependencies:
   tools:
-    - type: "app"
+    - type: "mcp"
       value: "stripe"
-      description: "Connected Stripe app"
-    - type: "app"
+      description: "Stripe MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.stripe.com"
+    - type: "mcp"
       value: "vercel"
-      description: "Connected Vercel app"
+      description: "Vercel MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.vercel.com"
+    - type: "mcp"
+      value: "supabase"
+      description: "Supabase MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.supabase.com/mcp"

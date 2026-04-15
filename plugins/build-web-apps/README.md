@@ -11,14 +11,15 @@ It currently includes these skills:
 - `supabase-best-practices`
 - `web-design-guidelines`
 
-It is scaffolded to use these connected apps:
+It is scaffolded to use these plugin-local MCP servers:
 
 - `stripe`
 - `vercel`
+- `supabase`
 
 ## What It Covers
 
-- deployment and hosting operations through the Vercel app
+- deployment and hosting operations through Vercel MCP
 - React and Next.js performance guidance sourced from Vercel best practices
 - shadcn/ui composition, styling, and component usage guidance
 - Stripe integration design across payments, subscriptions, Connect, and Treasury
@@ -39,10 +40,10 @@ with this shape:
   - required plugin manifest
   - defines plugin metadata and points Codex at the plugin contents
 
-- `.app.json`
-  - plugin-local app dependency manifest
-  - points Codex at the connected Stripe and Vercel apps used by the bundled
-    workflows
+- `.mcp.json`
+  - plugin-local MCP dependency manifest
+  - bundles the Stripe, Vercel, and Supabase MCP endpoints used by bundled
+    skills
 
 - `agents/`
   - plugin-level agent metadata
@@ -54,11 +55,11 @@ with this shape:
 
 ## Notes
 
-This plugin is app-backed through `.app.json` and currently combines:
+This plugin is MCP-backed through `.mcp.json` and currently combines:
 
 - Vercel deployment workflows
 - React and Next.js optimization guidance
 - shadcn/ui frontend implementation guidance
 - Stripe integration guidance
-- Supabase/Postgres optimization guidance without a plugin-local Supabase app
+- Supabase/Postgres optimization guidance
 - web design and UI review guidance

@@ -22,11 +22,11 @@
     "ui-review"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Build Web Apps",
     "shortDescription": "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases",
-    "longDescription": "Use Build Web Apps to review and improve a web app's UI, apply React and Next.js guidance, deploy projects to Vercel, wire up Stripe payments, and design or tune Postgres schemas and queries, with connected Vercel and Stripe apps plus bundled database guidance.",
+    "longDescription": "Use Build Web Apps to review and improve a web app's UI, apply React and Next.js guidance, deploy projects to Vercel, wire up Stripe payments, and design or tune Supabase/Postgres schemas and queries, all with plugin-local Vercel, Stripe, and Supabase MCP support.",
     "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [
