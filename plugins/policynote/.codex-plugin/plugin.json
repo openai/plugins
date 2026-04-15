@@ -15,7 +15,7 @@
     "shortDescription": "Use the PolicyNote app to access structured policy and regulatory intelligence from around the world.",
     "longDescription": "Use the PolicyNote app to access structured policy and regulatory intelligence from around the world. Search legislation, regulatory actions, policy updates, and government activity across jurisdictions.\n\nThe app enables developers, analysts, and policy professionals to retrieve policy data programmatically and integrate it into internal tools, research workflows, dashboards, or monitoring systems. Queries return structured information about policy developments, government sources, and regulatory changes.\n\nPolicyNote helps teams track public policy activity, build alerts, power analysis tools, and integrate government intelligence into their applications.",
     "developerName": "FiscalNote",
-    "category": "Productivity",
+    "category": "Research",
     "capabilities": [],
     "defaultPrompt": [
       "Summarize the relevant policy context from PolicyNote"

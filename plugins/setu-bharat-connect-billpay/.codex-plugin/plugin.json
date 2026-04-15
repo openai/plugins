@@ -15,7 +15,7 @@
     "shortDescription": "This app helps you pay your utility bills through simple conversation.",
     "longDescription": "This app helps you pay your utility bills through simple conversation. Instead of navigating apps or filling forms, you can just tell the assistant what you want to do\u2014like paying your electricity, broadband, or other utility bills. The app finds the right biller, fetches the exact bill amount, and guides you through payment step by step. You can check pending bills, view bill amounts before paying, confirm whether a payment was successful and ask for a summary of your bill expenses. For steps that need extra care, such as verification or confirmation, the app clearly guides you through them so nothing happens without your approval. People like this app because it removes friction from routine bill payments. You don\u2019t need to remember biller details or jump between screens\u2014just ask, review, and pay, all in one conversation.",
     "developerName": "Setu",
-    "category": "Research",
+    "category": "Lifestyle",
     "capabilities": [],
     "defaultPrompt": [
       "Check the relevant bill payment context in Setu"

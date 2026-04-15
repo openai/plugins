@@ -14,7 +14,7 @@
     "displayName": "SendGrid",
     "shortDescription": "Connector for interacting with the SendGrid email API.",
     "developerName": "OpenAI",
-    "category": "Productivity",
+    "category": "Coding",
     "capabilities": [],
     "websiteURL": "https://sendgrid.com/",
     "privacyPolicyURL": "https://www.twilio.com/legal/privacy",

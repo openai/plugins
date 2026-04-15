@@ -15,7 +15,7 @@
     "shortDescription": "Search government contracts, awards, and vendors directly from ChatGPT.",
     "longDescription": "Search government contracts, awards, and vendors directly from ChatGPT. GovTribe brings U.S. procurement intelligence into your AI workflow\u2014find relevant opportunities across federal agencies; analyze vendor competition; explore teaming partners; and track agency spending patterns. Whether you're researching new markets, conducting competitive analysis, or preparing a proposal, get instant access to billions in public sector data without leaving your conversation.",
     "developerName": "Government Executive Media Group LLC",
-    "category": "Productivity",
+    "category": "Research",
     "capabilities": [],
     "defaultPrompt": [
       "Pull the relevant opportunity context from GovTribe"

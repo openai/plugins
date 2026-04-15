@@ -15,7 +15,7 @@
     "shortDescription": "Connect your Razorpay account to access your payment data through conversation.",
     "longDescription": "Connect your Razorpay account to access your payment data through conversation.\nAsk ChatGPT about your payments, orders, refunds, settlements, QR codes, payment links etc. Get instant answers to questions like \"Show me today's payments,\" \"What's the status of my recent settlements,\" or \"Find refunds from last week.\"\nPerfect for merchants who want quick insights without navigating dashboards. View transaction details, track settlement timelines, check saved payment methods, and analyze your payment activity\u2014all through natural language.\n\nWhat you can do:\n1. Retrieve payment and order details\n2. Check refund and settlement status\n3. View QR code and payment link activity\n4. Track payouts and reconciliation data\n5. Access saved customer payment methods\n\nRead-only access\u2014your data stays secure, and no transactions are executed through this app.",
     "developerName": "Razorpay Software Private Limited",
-    "category": "Research",
+    "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
       "Check the relevant payment context in Razorpay"

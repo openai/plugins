@@ -15,7 +15,7 @@
     "shortDescription": "Particl Market Research helps teams answer ecommerce research questions directly in ChatGPT.",
     "longDescription": "Particl Market Research helps teams answer ecommerce research questions directly in ChatGPT. It supports company discovery, product catalog research, product detail and variant analysis, market leader discovery, market trend analysis, marketing asset discovery, retail event tracking, sales timeseries, and product mix breakdowns.\n\nThe app uses your authenticated Particl account and returns structured market intelligence data from Particl APIs.",
     "developerName": "Particl",
-    "category": "Productivity",
+    "category": "Research",
     "capabilities": [],
     "defaultPrompt": [
       "Pull the relevant market snapshot from Particl"

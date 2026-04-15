@@ -324,7 +324,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Research"
+      "category": "Productivity"
     },
     {
       "name": "coderabbit",
@@ -420,7 +420,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Research"
+      "category": "Productivity"
     },
     {
       "name": "carta-crm",
@@ -432,7 +432,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Research"
+      "category": "Productivity"
     },
     {
       "name": "cb-insights",
@@ -636,7 +636,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Productivity"
+      "category": "Research"
     },
     {
       "name": "egnyte",
@@ -708,7 +708,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Productivity"
+      "category": "Research"
     },
     {
       "name": "granola",
@@ -936,7 +936,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Productivity"
+      "category": "Research"
     },
     {
       "name": "pipedrive",
@@ -972,7 +972,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Productivity"
+      "category": "Research"
     },
     {
       "name": "pylon",
@@ -1032,7 +1032,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Research"
+      "category": "Productivity"
     },
     {
       "name": "read-ai",
@@ -1116,7 +1116,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Productivity"
+      "category": "Coding"
     },
     {
       "name": "setu-bharat-connect-billpay",
@@ -1128,7 +1128,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Research"
+      "category": "Lifestyle"
     },
     {
       "name": "signnow",
