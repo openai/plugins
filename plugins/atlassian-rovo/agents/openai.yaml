@@ -1,0 +1,5 @@
+interface:
+  display_name: "Atlassian Rovo"
+  short_description: "Manage Jira and Confluence fast"
+  icon_small: "./assets/app-icon.png"
+  icon_large: "./assets/app-icon.png"

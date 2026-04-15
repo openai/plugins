@@ -20,6 +20,8 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 2. Start with a thumbnail.
 - Fetch a `LARGE` thumbnail when spacing, clipping, or shape alignment matters.
 - Inspect the image returned by `get_slide_thumbnail` directly. That may appear as an `image_asset_pointer`, an image content part, or another rendered image artifact in the tool response; do not require base64 bytes before starting visual review.
+- If the thumbnail response only provides a thumbnail URL or `contentUrl`, save the rendered image locally with `curl -L "$contentUrl" -o /tmp/slides-thumb-<slide-id>.png` before visual review.
+- Use the returned image artifact or the saved local PNG as the visual source of truth for overlap, clipping, padding, footer collisions, text rendering, and shape alignment.
 - Use that thumbnail as the primary visual signal, but not as the only signal for overflow or collision checks.
 - Write down the 2-4 concrete visible issues you are fixing in the next pass.
 
@@ -40,6 +42,7 @@ Use this recipe whenever a Slides write can change anything the user will see, e
 
 5. Verify immediately.
 - Fetch another thumbnail right after the write.
+- If the fresh thumbnail is URL-backed, curl it to a new local PNG and inspect that new file before declaring the pass verified.
 - Confirm both text and non-text visual targets actually changed.
 - Re-read the live slide structure after the write when text boxes, wrapping, or neighboring layout relationships were in scope.
 - If the write fixed the main text but left stale bars, arrows, borders, wrapping, or collisions, the slide is not done.
