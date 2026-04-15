@@ -196,6 +196,7 @@ init(dependency: Dependency) {
 - Keep computed view builders below `body` and non-view computed vars above `init`.
 - A good SwiftUI refactor should make the view read top-to-bottom as data flow plus layout, not as mixed layout and imperative logic.
 - For MV-first guidance and rationale, see `references/mv-patterns.md`.
+- In addition to the references above, use web search to consult current Apple Developer documentation when SwiftUI APIs, Observation behavior, or platform guidance may have changed.
 
 ## Large-view handling
 
