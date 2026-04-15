@@ -1,0 +1,3 @@
+interface:
+  display_name: "bioRxiv / medRxiv"
+  short_description: "Fetch bioRxiv and medRxiv preprint summaries"

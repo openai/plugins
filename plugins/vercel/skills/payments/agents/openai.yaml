@@ -1,0 +1,3 @@
+interface:
+  display_name: "Payments"
+  short_description: "Stripe payments integration guidance — native Vercel Marketplace setup, checkout sessions, webhook handling..."

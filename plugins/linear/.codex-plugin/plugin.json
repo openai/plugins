@@ -1,5 +1,6 @@
 {
   "name": "linear",
+  "version": "0.0.0",
   "description": "Find and reference issues and projects.",
   "author": {
     "name": "OpenAI",
@@ -14,11 +15,14 @@
   "interface": {
     "displayName": "Linear",
     "shortDescription": "Find and reference issues and projects.",
+    "longDescription": "Manage issues, projects, and team workflows in Linear from Codex.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://linear.app/",
     "privacyPolicyURL": "https://linear.app/privacy",
+    "termsOfServiceURL": "https://linear.app/terms",
+    "brandColor": "#5E6AD2",
     "defaultPrompt": [
       "Triage or update relevant issues for this task with clear next actions"
     ],

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Bgee"
+  short_description: "Fetch Bgee expression summaries"

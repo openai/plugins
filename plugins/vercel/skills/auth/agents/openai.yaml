@@ -1,0 +1,3 @@
+interface:
+  display_name: "Auth"
+  short_description: "Authentication integration guidance — Clerk (native Vercel Marketplace), Descope, and Auth0 setup for Next...."

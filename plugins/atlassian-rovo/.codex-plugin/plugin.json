@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Manage Jira and Confluence fast",
   "author": {
+    "name": "Atlassian",
     "url": "https://www.atlassian.com"
   },
   "homepage": "https://www.atlassian.com",
@@ -17,6 +18,7 @@
     "displayName": "Atlassian Rovo",
     "shortDescription": "Manage Jira and Confluence fast",
     "longDescription": "Manage Jira and Confluence fast",
+    "developerName": "Atlassian",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
@@ -24,10 +26,12 @@
     ],
     "websiteURL": "https://www.atlassian.com",
     "privacyPolicyURL": "https://www.atlassian.com/legal/privacy-policy",
+    "termsOfServiceURL": "https://www.atlassian.com/legal/cloud-terms-of-service",
     "defaultPrompt": [
       "Create Jira tasks in project Vita MVP"
     ],
     "screenshots": [],
+    "brandColor": "#0052CC",
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png"
   }

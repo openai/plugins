@@ -1,0 +1,3 @@
+interface:
+  display_name: "MetaboLights"
+  short_description: "Fetch MetaboLights study summaries"

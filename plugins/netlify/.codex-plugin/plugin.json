@@ -31,6 +31,7 @@
     "websiteURL": "https://www.netlify.com",
     "privacyPolicyURL": "https://www.netlify.com/privacy/",
     "termsOfServiceURL": "https://www.netlify.com/legal/terms-of-use/",
+    "brandColor": "#00AD9F",
     "defaultPrompt": [
       "Deploy this project to Netlify and return the preview URL plus any required fixes"
     ],

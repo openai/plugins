@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Playtest"
+  short_description: "Run browser-game playtests and QA"
+  default_prompt: "Playtest the browser game, check core interactions and visual state changes, and report concrete issues."

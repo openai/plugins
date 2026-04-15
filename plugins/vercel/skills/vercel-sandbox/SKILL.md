@@ -64,32 +64,6 @@ metadata:
       - "codesandbox.io"
       - "stackblitz"
     minScore: 4
-retrieval:
-  aliases:
-    - code sandbox
-    - microvm
-    - isolated execution
-    - safe code runner
-  intents:
-    - run untrusted code
-    - execute code safely
-    - create sandbox
-    - isolate code execution
-  entities:
-    - Vercel Sandbox
-    - Firecracker
-    - microVM
-    - isolated execution
-chainTo:
-  -
-    pattern: 'from\s+[''""]vm2[''""]|require\s*\(\s*[''""]vm2[''""\)]|new\s+VM\('
-    targetSkill: vercel-sandbox
-    message: 'vm2 detected — it has known security vulnerabilities. Reloading Vercel Sandbox guidance for Firecracker microVM-based safe execution.'
-  -
-    pattern: 'child_process.*exec\(|execSync\(|spawn\(.*\{.*shell:\s*true'
-    targetSkill: ai-sdk
-    message: 'Shell exec for code execution detected — loading AI SDK guidance for tool-calling patterns that pair with Vercel Sandbox for safe agent execution.'
-
 ---
 
 # Vercel Sandbox

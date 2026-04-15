@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Search, create, edit designs",
   "author": {
+    "name": "Canva",
     "url": "https://www.canva.com"
   },
   "homepage": "https://www.canva.com",
@@ -13,6 +14,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Canva",
+    "developerName": "Canva",
     "shortDescription": "Search, create, edit designs",
     "longDescription": "Search, create, edit designs",
     "category": "Productivity",
@@ -20,6 +22,7 @@
     "websiteURL": "https://www.canva.com",
     "privacyPolicyURL": "https://www.canva.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://www.canva.com/policies/terms-of-use/",
+    "brandColor": "#00C4CC",
     "defaultPrompt": [
       "Create or adapt a Canva design for presentations, resized social variants, or translated versions"
     ],

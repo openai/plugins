@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Game Foundations"
+  short_description: "Set browser-game architecture before implementation"
+  default_prompt: "Establish the core architecture for this browser game before implementation starts."

@@ -1,0 +1,3 @@
+interface:
+  display_name: "NCBI Datasets"
+  short_description: "Fetch NCBI Datasets summaries"

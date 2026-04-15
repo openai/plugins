@@ -1,0 +1,3 @@
+interface:
+  display_name: "Bootstrap"
+  short_description: "Project bootstrapping orchestrator for repos that depend on Vercel-linked resources (databases, auth, and m..."

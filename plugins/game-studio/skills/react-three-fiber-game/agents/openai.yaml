@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Three Fiber Game"
+  short_description: "Build React-hosted 3D browser games"
+  default_prompt: "Build this 3D browser game with React Three Fiber and keep the 3D runtime aligned with the React app shell."

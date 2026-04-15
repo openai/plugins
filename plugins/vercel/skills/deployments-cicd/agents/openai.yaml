@@ -1,0 +1,3 @@
+interface:
+  display_name: "Deployments Cicd"
+  short_description: "Vercel deployment and CI/CD expert guidance"

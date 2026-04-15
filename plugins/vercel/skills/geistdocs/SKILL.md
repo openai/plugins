@@ -57,35 +57,6 @@ metadata:
       - "storybook"
       - "docusaurus"
     minScore: 6
-retrieval:
-  aliases:
-    - vercel docs template
-    - documentation template
-    - docs site
-    - fumadocs
-  intents:
-    - create documentation site
-    - set up docs
-    - build docs page
-    - configure geistdocs
-    - add docs content
-  entities:
-    - Geistdocs
-    - Fumadocs
-    - MDX
-    - GeistdocsProvider
-validate:
-  -
-    pattern: from\s+['"]fumadocs
-    message: 'Geistdocs wraps Fumadocs — prefer importing from geistdocs components rather than fumadocs directly unless extending internals'
-    severity: warn
-    skipIfFileContains: "fumadocs-core|fumadocs-ui/provider"
-chainTo:
-  -
-    pattern: 'from\s+[''""]nextra[''""]|require\s*\(\s*[''""]nextra[''""\)]'
-    targetSkill: nextjs
-    message: 'Nextra detected — Geistdocs replaces Nextra as the Vercel documentation template. Loading Next.js guidance for migration.'
-
 ---
 
 # Geistdocs — Vercel Documentation Template

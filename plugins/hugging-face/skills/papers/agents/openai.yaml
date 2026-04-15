@@ -1,0 +1,3 @@
+interface:
+  display_name: "Papers"
+  short_description: "Look up and analyze Hugging Face paper pages and metadata"

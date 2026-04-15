@@ -1,0 +1,3 @@
+interface:
+  display_name: "ChEBI"
+  short_description: "Fetch ChEBI compound summaries"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "EFO Ontology"
+  short_description: "Resolve EFO terms and ontology expansions"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Deploy to Vercel"
+  short_description: "Deploy applications and websites to Vercel"

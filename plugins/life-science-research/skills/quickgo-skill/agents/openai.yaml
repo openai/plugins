@@ -1,0 +1,3 @@
+interface:
+  display_name: "QuickGO"
+  short_description: "Fetch QuickGO ontology and annotation summaries"

@@ -1,0 +1,7 @@
+interface:
+  display_name: "CodeRabbit Review"
+  short_description: "Run CodeRabbit against the current changes"
+  icon_small: "../../assets/coderabbit-small.png"
+  icon_large: "../../assets/coderabbit.png"
+  brand_color: "#FF570A"
+  default_prompt: "Use CodeRabbit to review the current diff, summarize the findings, and suggest concrete follow-up fixes."

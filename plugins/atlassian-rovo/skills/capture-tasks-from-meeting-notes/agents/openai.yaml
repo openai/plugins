@@ -1,5 +1,3 @@
 interface:
   display_name: "Capture Tasks From Meeting Notes"
   short_description: "Extract action items and create Jira tasks"
-  icon_small: "./assets/app-icon.png"
-  icon_large: "./assets/app-icon.png"

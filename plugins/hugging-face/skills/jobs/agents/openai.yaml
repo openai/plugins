@@ -1,0 +1,3 @@
+interface:
+  display_name: "Jobs"
+  short_description: "Run workloads on Hugging Face Jobs infrastructure"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Sign In With Vercel"
+  short_description: "Sign in with Vercel guidance — OAuth 2.0/OIDC identity provider for user authentication via Vercel accounts"

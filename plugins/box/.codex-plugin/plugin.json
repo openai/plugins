@@ -1,5 +1,6 @@
 {
   "name": "box",
+  "version": "0.0.0",
   "description": "Search and reference your documents",
   "author": {
     "name": "OpenAI",
@@ -14,11 +15,14 @@
   "interface": {
     "displayName": "Box",
     "shortDescription": "Search and reference your documents",
+    "longDescription": "Search and reference your documents in Box and work safely with Box content flows from Codex.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://www.box.com/home",
     "privacyPolicyURL": "https://www.box.com/legal/privacypolicy",
+    "termsOfServiceURL": "https://www.box.com/legal/terms",
+    "brandColor": "#0061D5",
     "defaultPrompt": [
       "Find a Box file and summarize the key points"
     ],

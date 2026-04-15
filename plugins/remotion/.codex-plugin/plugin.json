@@ -37,6 +37,7 @@
 			"Make an animated call-to-action subscribe button for our YouTube channel",
 			"Use Remotion to add captions and audio to a video composition."
 		],
+		"screenshots": [],
 		"brandColor": "#0B84F3",
 		"composerIcon": "./assets/icon.png",
 		"logo": "./assets/logo.png"

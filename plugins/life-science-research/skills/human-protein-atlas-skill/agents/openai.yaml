@@ -1,0 +1,3 @@
+interface:
+  display_name: "Human Protein Atlas"
+  short_description: "Fetch Human Protein Atlas summaries"

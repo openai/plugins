@@ -1,0 +1,3 @@
+interface:
+  display_name: "cBioPortal"
+  short_description: "Fetch cBioPortal study and mutation summaries"

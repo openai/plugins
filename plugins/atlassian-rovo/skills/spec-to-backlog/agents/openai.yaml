@@ -1,5 +1,3 @@
 interface:
   display_name: "Spec to Backlog"
   short_description: "Convert Confluence specs into Jira backlogs"
-  icon_small: "./assets/app-icon.png"
-  icon_large: "./assets/app-icon.png"

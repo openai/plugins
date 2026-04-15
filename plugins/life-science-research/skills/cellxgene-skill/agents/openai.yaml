@@ -1,0 +1,3 @@
+interface:
+  display_name: "CELLxGENE"
+  short_description: "Fetch CELLxGENE collection summaries"

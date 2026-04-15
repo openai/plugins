@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shadcn"
+  short_description: "shadcn/ui expert guidance — CLI, component installation, composition patterns, custom registries, theming,..."

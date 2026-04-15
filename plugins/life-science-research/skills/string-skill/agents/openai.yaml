@@ -1,0 +1,3 @@
+interface:
+  display_name: "STRING"
+  short_description: "Fetch STRING network summaries"

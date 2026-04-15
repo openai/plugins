@@ -38,49 +38,6 @@ metadata:
       - "pagination"
     noneOf: []
     minScore: 6
-retrieval:
-  aliases:
-    - data fetching
-    - client cache
-    - stale while revalidate
-    - react hooks data
-  intents:
-    - refresh stale client cache after a mutation
-    - fetch and cache API data on the client side
-    - add infinite scroll or paginated data loading
-    - keep UI in sync with server data automatically
-    - revalidate cached data after updating a record
-  entities:
-    - useSWR
-    - useSWRMutation
-    - useSWRInfinite
-    - mutate
-    - SWRConfig
-    - fetcher
-  examples:
-    - refresh stale client cache after mutation
-    - load more items on scroll
-    - revalidate data when the window regains focus
-    - fetch data client side with caching
-    - add infinite scrolling to load more items
-chainTo:
-  -
-    pattern: 'from\s+[''\"](openai|@anthropic-ai/sdk|anthropic)[''"]|new\s+(OpenAI|Anthropic)\('
-    targetSkill: ai-sdk
-    message: 'Direct AI provider SDK detected alongside SWR — loading AI SDK guidance for unified streaming and provider-agnostic patterns.'
-  -
-    pattern: 'from\s+[''""]@vercel/(postgres|kv)[''""]'
-    targetSkill: vercel-storage
-    message: '@vercel/postgres and @vercel/kv are sunset — loading Vercel Storage guidance for Neon and Upstash migration.'
-  -
-    pattern: 'useEffect\s*\([^)]*\)\s*\{[^}]*fetch\s*\(|useEffect\s*\(\s*\(\)\s*=>\s*\{[^}]*fetch\s*\('
-    targetSkill: swr
-    message: 'Manual useEffect+fetch pattern detected — SWR provides automatic caching, deduplication, revalidation, and error retry. Replace with useSWR for cleaner data fetching.'
-  -
-    pattern: 'from\s+[''\"](axios)[''"]|require\s*\(\s*[''\"](axios)[''"]'
-    targetSkill: swr
-    message: 'Axios detected in React component — SWR with a native fetch wrapper provides caching, deduplication, and revalidation that axios alone cannot. Use useSWR with a fetcher function instead.'
-
 ---
 
 # SWR — React Hooks for Data Fetching

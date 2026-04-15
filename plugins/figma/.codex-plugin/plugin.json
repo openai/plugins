@@ -17,7 +17,6 @@
     "design-system"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks.json",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Figma",

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Stripe Best Practices"
+  short_description: "Guide Stripe integration decisions and migrations"

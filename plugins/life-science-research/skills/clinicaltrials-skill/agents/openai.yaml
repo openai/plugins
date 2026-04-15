@@ -1,0 +1,3 @@
+interface:
+  display_name: "ClinicalTrials.gov"
+  short_description: "Fetch ClinicalTrials.gov study summaries"

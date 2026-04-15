@@ -1,0 +1,3 @@
+interface:
+  display_name: "Rhea"
+  short_description: "Fetch Rhea reaction summaries"

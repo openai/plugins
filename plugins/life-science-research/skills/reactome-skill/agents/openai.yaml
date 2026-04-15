@@ -1,0 +1,3 @@
+interface:
+  display_name: "Reactome"
+  short_description: "Fetch Reactome pathway summaries"

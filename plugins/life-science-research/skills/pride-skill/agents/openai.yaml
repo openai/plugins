@@ -1,0 +1,3 @@
+interface:
+  display_name: "PRIDE"
+  short_description: "Fetch PRIDE proteomics summaries"

@@ -1,7 +1,6 @@
 ---
 name: ai-generation-persistence
 description: "AI generation persistence patterns — unique IDs, addressable URLs, database storage, and cost tracking for every LLM generation"
-summary: "Persist every AI generation: unique ID, save to DB/Blob, addressable URL /chat/[id], track token cost"
 metadata:
   priority: 6
   docs:
@@ -71,40 +70,6 @@ metadata:
       - "github actions"
       - "ci workflow"
     minScore: 6
-validate:
-  -
-    pattern: "streamText\\(|generateText\\("
-    message: "Ensure this AI generation is persisted with a unique ID (nanoid/cuid2) — generations are expensive assets that should be saved and addressable via URL"
-    severity: warn
-    skipIfFileContains: "nanoid|cuid|createId|randomUUID|uuid"
-retrieval:
-  aliases:
-    - ai storage
-    - generation history
-    - llm persistence
-    - ai audit
-  intents:
-    - save ai generations
-    - track llm costs
-    - store completions
-    - persist ai output
-  entities:
-    - generation ID
-    - addressable URL
-    - cost tracking
-    - LLM generation
-chainTo:
-  -
-    pattern: 'streamText\s*\(|generateText\s*\('
-    targetSkill: ai-gateway
-    message: 'AI generation call without cost tracking — loading AI Gateway guidance for OIDC auth, usage attribution, and per-generation cost visibility.'
-    skipIfFileContains: 'gateway\(|@ai-sdk/gateway|ai-gateway|providerOptions.*gateway|usage.*cost|trackUsage'
-  -
-    pattern: 'from\s+[''"]@vercel/blob[''""]'
-    targetSkill: vercel-storage
-    message: 'Vercel Blob import detected for generation persistence — loading Storage guidance for blob upload patterns, ETags, and client upload helpers.'
-    skipIfFileContains: 'put\(\s*.*\{.*access|del\(\s*.*url'
-
 ---
 
 # AI Generation Persistence

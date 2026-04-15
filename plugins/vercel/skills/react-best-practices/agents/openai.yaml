@@ -1,0 +1,3 @@
+interface:
+  display_name: "React Best Practices"
+  short_description: "React best-practices reviewer for TSX files"

@@ -1,3 +1,6 @@
+policy:
+  allow_implicit_invocation: false
+
 interface:
   display_name: "Create New Figma File"
   short_description: "Create a new blank Figma or FigJam file"

@@ -54,38 +54,6 @@ metadata:
       - "aws deploy"
       - "heroku"
     minScore: 6
-retrieval:
-  aliases:
-    - vercel command line
-    - vc cli
-    - deploy command
-    - vercel terminal
-  intents:
-    - deploy from cli
-    - link project
-    - manage domains
-    - view logs from terminal
-  entities:
-    - vercel CLI
-    - vercel deploy
-    - vercel env
-    - vercel link
-    - vercel logs
-chainTo:
-  -
-    pattern: '"crons"\s*:'
-    targetSkill: cron-jobs
-    message: 'Cron configuration detected in vercel.json — loading Cron Jobs guidance for schedule syntax, CRON_SECRET verification, and function handler patterns.'
-  -
-    pattern: '"functions"\s*:\s*\{|"maxDuration"\s*:|"memory"\s*:'
-    targetSkill: vercel-functions
-    message: 'Functions configuration detected in vercel.json — loading Vercel Functions guidance for runtime options, streaming, and Fluid Compute.'
-    skipIfFileContains: '"crons"\s*:'
-  -
-    pattern: '"redirects"\s*:\s*\[|"rewrites"\s*:\s*\[|"headers"\s*:\s*\['
-    targetSkill: routing-middleware
-    message: 'Routing rules in vercel.json — loading Routing Middleware guidance for platform-level request interception patterns.'
-
 ---
 
 # Vercel CLI
