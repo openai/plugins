@@ -60,5 +60,4 @@ This plugin is app-backed through `.app.json` and currently combines:
 - React and Next.js optimization guidance
 - shadcn/ui frontend implementation guidance
 - Stripe integration guidance
-- Supabase/Postgres optimization guidance
 - web design and UI review guidance
