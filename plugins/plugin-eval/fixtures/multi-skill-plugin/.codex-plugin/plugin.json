@@ -1,0 +1,34 @@
+{
+  "name": "multi-skill-plugin",
+  "version": "0.1.0",
+  "description": "Multi-skill plugin fixture for plugin-eval tests.",
+  "author": {
+    "name": "Plugin Eval",
+    "email": "support@example.com",
+    "url": "https://example.com/"
+  },
+  "homepage": "https://example.com/",
+  "repository": "https://example.com/repo",
+  "license": "MIT",
+  "keywords": ["fixture", "plugin-eval", "multi-skill"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Multi Skill Plugin",
+    "shortDescription": "Plugin fixture with two skills",
+    "longDescription": "A plugin fixture that exposes two skills so nested skill findings can be aggregated.",
+    "developerName": "Plugin Eval",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://example.com/",
+    "privacyPolicyURL": "https://example.com/privacy",
+    "termsOfServiceURL": "https://example.com/terms",
+    "defaultPrompt": [
+      "Evaluate the multi-skill plugin fixture.",
+      "Compare both skills in this fixture."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/multi.svg",
+    "logo": "./assets/multi.svg",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Plugin Eval">
+  <rect width="256" height="256" rx="48" fill="#0F766E"/>
+  <path d="M72 66h78c22.091 0 40 17.909 40 40v14h-24v-14c0-8.837-7.163-16-16-16H72V66Z" fill="#D1FAE5"/>
+  <path d="M66 118h64c19.882 0 36 16.118 36 36v36H66v-72Z" fill="#ECFDF5"/>
+  <path d="M170 138h20v54h-20zM202 114h20v78h-20z" fill="#A7F3D0"/>
+  <circle cx="100" cy="154" r="12" fill="#0F766E"/>
+  <path d="M128 164c-4.418 0-8-3.582-8-8s3.582-8 8-8h14v16h-14Z" fill="#0F766E"/>
+</svg>
