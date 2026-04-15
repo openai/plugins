@@ -1,0 +1,43 @@
+{
+  "name": "temporal",
+  "version": "0.2.0",
+  "description": "Comprehensive skill for the entire Temporal lifecycle — developing applications, using the Temporal CLI, running and managing Temporal Server, and working with Temporal Cloud.",
+  "author": {
+    "name": "Temporal",
+    "url": "https://temporal.io/"
+  },
+  "homepage": "https://temporal.io/",
+  "repository": "https://github.com/temporalio/codex-temporal-plugin",
+  "license": "MIT",
+  "keywords": [
+    "temporal",
+    "workflow",
+    "durable-execution",
+    "python",
+    "typescript",
+    "go",
+    "java",
+    "microservices",
+    "distributed-systems"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Temporal",
+    "shortDescription": "Develop, run, and manage Temporal applications across the entire platform lifecycle",
+    "longDescription": "Comprehensive guidance for working with Temporal — developing workflows, activities, and workers across Python, TypeScript, Go, and Java SDKs; using the Temporal CLI for local development and operations; running and managing self-hosted Temporal Server; and working with Temporal Cloud for production deployments.",
+    "developerName": "Temporal",
+    "category": "Coding",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://temporal.io/",
+    "privacyPolicyURL": "https://temporal.io/global-privacy-policy",
+    "termsOfServiceURL": "https://temporal.io/terms-of-service",
+    "brandColor": "#141414",
+    "defaultPrompt": ["Create a workflow using Temporal."],
+    "composerIcon": "./assets/temporal-logo.svg",
+    "logo": "./assets/temporal-logo.svg",
+    "screenshots": []
+  }
+}
