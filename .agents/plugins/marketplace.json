@@ -387,18 +387,6 @@
       "category": "Coding"
     },
     {
-      "name": "neon-postgres",
-      "source": {
-        "source": "local",
-        "path": "./plugins/neon-postgres"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Coding"
-    },
-    {
       "name": "remotion",
       "source": {
         "source": "local",
