@@ -19,7 +19,7 @@
     "sql"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Neon Postgres",
     "shortDescription": "Manage Neon Serverless Postgres projects and databases",
