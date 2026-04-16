@@ -1,0 +1,43 @@
+name: Sync skills from render-oss/skills
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout plugin repo
+        uses: actions/checkout@v4
+
+      - name: Sync skills
+        run: ./scripts/sync-skills.sh --repo "https://github.com/render-oss/skills"
+        env:
+          GIT_TERMINAL_PROMPT: "0"
+
+      - name: Create pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Sync skills from render-oss/skills"
+          title: "Sync skills from render-oss/skills"
+          body: |
+            Automated update of bundled skills from [render-oss/skills](https://github.com/render-oss/skills).
+
+            Review the synced skill changes before merging.
+          branch: sync-skills
+          labels: skills-sync
+          delete-branch: true
+
+      - name: Enable auto-merge
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Render"
+  short_description: "Deploy, debug, monitor, and migrate apps on Render."
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  default_prompt: "Use Render to validate service configs, debug deploy failures, and monitor service health."

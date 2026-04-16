@@ -1,0 +1,45 @@
+{
+  "name": "render",
+  "version": "0.1.0",
+  "description": "Skills for deploying, debugging, monitoring, and migrating apps on Render.",
+  "author": {
+    "name": "Render",
+    "email": "support@render.com",
+    "url": "https://render.com"
+  },
+  "homepage": "https://github.com/renderinc/render-codex-plugin",
+  "repository": "https://github.com/renderinc/render-codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "render",
+    "deploy",
+    "cloud",
+    "blueprint",
+    "monitoring",
+    "debugging"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Render",
+    "shortDescription": "Deploy, debug, monitor, and migrate apps on Render.",
+    "longDescription": "Provides skills for deploying apps with Blueprints, debugging failed deploys, monitoring service health and metrics, building Render Workflows, and migrating from Heroku.",
+    "developerName": "Render",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://render.com/",
+    "privacyPolicyURL": "https://render.com/privacy",
+    "termsOfServiceURL": "https://render.com/terms",
+    "brandColor": "#8a05ff",
+    "defaultPrompt": [
+      "How are my Render services doing?",
+      "Help me validate my render.yaml for Render.",
+      "Debug a failed Render deployment."
+    ],
+    "composerIcon": "./assets/logo.svg",
+    "screenshots": [],
+    "logo": "./assets/logo.svg"
+  }
+}
