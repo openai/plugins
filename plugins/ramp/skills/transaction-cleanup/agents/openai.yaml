@@ -1,0 +1,14 @@
+interface:
+  display_name: "Ramp Transaction Cleanup"
+  short_description: "Complete missing Ramp transaction details"
+  icon_small: "./assets/app-icon.png"
+  icon_large: "./assets/app-icon.png"
+  default_prompt: "Use $transaction-cleanup to find Ramp transactions with missing items and prepare safe updates."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "ramp"
+      description: "Ramp MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.ramp.com/mcp"
