@@ -12,7 +12,7 @@ Use this skill when the goal is to create time, not just inspect time.
 - Use `search_events` to map the day's current fragmentation and identify movable candidates.
 - Use `read_event` or `read_event_all_fields` when one candidate meeting needs a closer look before proposing a move.
 - Use `create_event` when the user explicitly wants a temporary hold or focus block once the target slot is grounded.
-- Use `update_event`, `update_event_series`, or `update_event_following` only after the proposal is clear and the correct scope of change is grounded.
+- Use `update_event` only after the proposal is clear and set `update_scope` to `this_instance`, `entire_series`, or `this_and_following` once the correct scope of change is grounded.
 
 ## Workflow
 

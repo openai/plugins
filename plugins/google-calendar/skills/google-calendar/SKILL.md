@@ -22,14 +22,17 @@ Use this skill to turn raw calendar data into clear scheduling decisions, remind
 
 1. Read the relevant calendar state first so the request is grounded in actual events, calendars, and time windows.
 2. Normalize relative time language into explicit dates, times, and timezone-aware ranges before reasoning about availability.
-3. When the user leaves something ambiguous, inspect previous calendar data for a clear precedent before choosing a default. Follow established patterns when they are obvious, such as using the user's usual meeting duration if similar events are consistently 30 minutes.
-4. If a found event belongs to a recurring series and the user wants a series-level change, read the master series or recurrence details before editing. Do not infer the cadence or scope from a single occurrence when `recurring_event_id` or equivalent series evidence is available.
-5. For room-finding requests, do not assume there is a reliable global room search. In this V1 flow, mine a reasonable window of past meetings, locations, and resource attendees to build a candidate room list, then compare availability on that concrete set.
-6. For bulk reminder or classification-based edit requests, inspect a reasonable upcoming window first instead of asking for extra scoping immediately. If the prompt does not bound the horizon, use a narrow default such as the next 30 days and say so.
-7. When notes, prep context, or missing details matter, inspect the event payload before proposing a change.
-8. For free-slot and temporary-hold requests, if the prompt already gives the window and duration, search within that range and move directly to proposing or placing the hold. Prefer a transparent hold for temporary placeholders unless the user clearly wants a blocking focus block.
-9. Surface conflicts, transparent holds, and missing meeting details before suggesting a write.
-10. If the request is still ambiguous after checking for precedent or scanning a reasonable bounded window, summarize the candidate slots or exact diff before writing anything.
+3. Keep reads bounded. Use explicit `time_min` and `time_max` whenever possible, avoid unbounded broad searches, and choose a small default window when the user does not state one.
+4. When a bounded search returns too much, page within that same window before widening the date range. For longer historical, precedent, or preference discovery, chunk the search into smaller windows instead of one giant pull.
+5. When the user leaves something ambiguous, inspect previous calendar data for a clear precedent before choosing a default. Follow established patterns when they are obvious, such as using the user's usual meeting duration if similar events are consistently 30 minutes.
+6. If a found event belongs to a recurring series and the user wants a series-level change, read the master series or recurrence details before editing. Do not infer the cadence or scope from a single occurrence when `recurring_event_id` or equivalent series evidence is available.
+7. Use the connector's `update_event` action for recurring edits and set `update_scope` to `this_instance`, `entire_series`, or `this_and_following` as needed. If the series is COUNT-based and the tool requires an explicit recurrence for a future-only split, preserve and restate the recurrence rule or explain that the connector cannot safely infer the split from one occurrence.
+8. For room-finding requests, do not assume there is a reliable global room search. In this V1 flow, mine a reasonable window of past meetings, locations, and resource attendees to build a candidate room list, then compare availability on that concrete set.
+9. For bulk reminder or classification-based edit requests, inspect a reasonable upcoming window first instead of asking for extra scoping immediately. If the prompt does not bound the horizon, use a narrow default such as the next 30 days and say so.
+10. When notes, prep context, or missing details matter, inspect the event payload before proposing a change.
+11. For free-slot and temporary-hold requests, if the prompt already gives the window and duration, search within that range and move directly to proposing or placing the hold. Prefer a transparent hold for temporary placeholders unless the user clearly wants a blocking focus block.
+12. Surface conflicts, transparent holds, and missing meeting details before suggesting a write.
+13. If the request is still ambiguous after checking for precedent or scanning a reasonable bounded window, summarize the candidate slots or exact diff before writing anything.
 
 ## Write Safety
 
