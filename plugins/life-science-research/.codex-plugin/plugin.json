@@ -29,7 +29,7 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Life Science: Research",
+    "displayName": "Life Science Research",
     "shortDescription": "General life-sciences research with routing, evidence synthesis, and optional parallel subagent analysis",
     "longDescription": "Internal life-science research workflows that help Codex interpret a user's research question, normalize the relevant entities, choose the right skills, and synthesize evidence-backed answers across public resources. The plugin spans human genetics, functional genomics, expression, pathways, protein structure, chemistry, pharmacology, literature, clinical evidence, and public study discovery, with a research-router entrypoint for broad tasks and optional subagent-assisted parallel work when evidence lanes are independent.",
     "developerName": "OpenAI",
