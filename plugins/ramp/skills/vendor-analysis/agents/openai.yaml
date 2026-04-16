@@ -11,4 +11,4 @@ dependencies:
       value: "ramp"
       description: "Ramp MCP server"
       transport: "streamable_http"
-      url: "https://demo-mcp.ramp.com/mcp"
+      url: "https://mcp.ramp.com/mcp"

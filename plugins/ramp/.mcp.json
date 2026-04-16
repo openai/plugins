@@ -2,7 +2,7 @@
   "mcpServers": {
     "ramp": {
       "type": "streamable_http",
-      "url": "https://demo-mcp.ramp.com/mcp"
+      "url": "https://mcp.ramp.com/mcp"
     }
   }
 }
