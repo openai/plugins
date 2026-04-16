@@ -19,6 +19,8 @@
     "defaultPrompt": [
       "Pull the latest Moody's context for this company"
     ],
-    "screenshots": []
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }
