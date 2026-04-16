@@ -1,0 +1,14 @@
+interface:
+  display_name: "Ramp Vendor Analysis"
+  short_description: "Analyze Ramp vendor spend and ownership data"
+  icon_small: "./assets/app-icon.png"
+  icon_large: "./assets/app-icon.png"
+  default_prompt: "Use $ramp-vendor-analysis to analyze vendor spend, identify top vendors, and summarize ownership and renewal risk."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "ramp"
+      description: "Ramp MCP server"
+      transport: "streamable_http"
+      url: "https://demo-mcp.ramp.com/mcp"
