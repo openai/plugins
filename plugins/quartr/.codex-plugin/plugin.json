@@ -1,0 +1,31 @@
+{
+  "name": "quartr",
+  "version": "1.0.0",
+  "description": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers...",
+  "author": {
+    "name": "Quartr",
+    "url": "https://quartr.com"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Quartr",
+    "shortDescription": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers...",
+    "longDescription": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers live and recorded earnings calls, real-time and historical transcripts with speaker identification, slide presentations, filings, reports, and event summaries. Best-in-class reliability and timeliness. Ideal for financial research, investment analysis, and building data-driven workflows on top of institutional-grade public company data.\n\nYou can use Quartr for:\n\nEarnings call analysis:\n\"List forward-looking statements for NVIDIA from recent transcripts and filings that reference expected progress or results in the upcoming earnings release.\"\n\nCompetitive intelligence:\n\"Compare how semiconductor companies talk about the same end markets and demand.\"\n\nKPI tracking:\n\"What KPIs has Spotify introduced, stopped emphasizing, or reframed across its last eight quarters?\"\n\nNarrative assessment:\n\"What were the most recurring themes in analyst questions during Eli Lilly's last two earnings calls? Highlight key areas of focus and concern.\"",
+    "developerName": "Quartr",
+    "category": "Research",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Find the latest relevant Quartr materials"
+    ],
+    "screenshots": [],
+    "websiteURL": "https://quartr.com",
+    "privacyPolicyURL": "https://quartr.com/terms-of-service/privacy-policy",
+    "termsOfServiceURL": "https://quartr.com/terms-of-service",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  },
+  "homepage": "https://quartr.com"
+}

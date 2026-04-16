@@ -1,0 +1,31 @@
+{
+  "name": "semrush",
+  "version": "1.0.0",
+  "description": "The Semrush MCP provides structured, quantitative SEO and traffic data for domains, keywords, backlinks, an...",
+  "author": {
+    "name": "Semrush Holdings, Inc.",
+    "url": "https://www.semrush.com/"
+  },
+  "homepage": "https://www.semrush.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Semrush",
+    "shortDescription": "The Semrush MCP provides structured, quantitative SEO and traffic data for domains, keywords, backlinks, an...",
+    "longDescription": "The Semrush MCP provides structured, quantitative SEO and traffic data for domains, keywords, backlinks, and market-level audience insights. It returns factual datasets including domain analytics, keyword metrics, backlink profiles, traffic data across time periods and channels, geographic and demographic distributions, and competitive or industry-level indicators. The model should invoke this MCP whenever a user requests website metrics, traffic statistics, keyword data, competitor comparisons, or market/audience breakdowns that require authoritative data rather than inference. It should also be used when a user\u2019s question requires data-driven evaluation of a specific domain, even if the query is phrased as advice or improvement guidance.",
+    "developerName": "Semrush Holdings, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.semrush.com/",
+    "privacyPolicyURL": "https://www.semrush.com/company/legal/privacy-policy/",
+    "termsOfServiceURL": "https://www.semrush.com/company/legal/terms-of-service/",
+    "defaultPrompt": [
+      "Analyze traffic sources breakdown for nike.com"
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  }
+}
