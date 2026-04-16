@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "Alpaca",
     "shortDescription": "Stop watching the markets.",
-    "longDescription": "Stop watching the markets. Turn your words into insights with Alpaca.\nAsk ChatGPT real market questions and get live answers you can act on, including historical data, snapshots, quotes, and option chain information. Stock, options, and crypto market data embedded right into your conversation so you can turn analysis into automated actions.\n\"How has AAPL's stock performed this quarter vs GOOG?\"\n\"Show me the SPY option chain that expires next Friday.\"\n\"When has BTC's price reached $100k USD this year?\"",
+    "longDescription": "Stop watching the markets. Turn your words into insights with Alpaca.\nAsk Codex real market questions and get live answers you can act on, including historical data, snapshots, quotes, and option chain information. Stock, options, and crypto market data embedded right into your conversation so you can turn analysis into automated actions.\n\"How has AAPL's stock performed this quarter vs GOOG?\"\n\"Show me the SPY option chain that expires next Friday.\"\n\"When has BTC's price reached $100k USD this year?\"",
     "category": "Research",
     "capabilities": [],
     "websiteURL": "https://alpaca.markets/",

@@ -1,7 +1,7 @@
 {
   "name": "channel99",
   "version": "1.0.0",
-  "description": "Channel99 real time go to market intelligence connects ChatGPT directly to Channel99\u2019s performance marketin...",
+  "description": "Channel99 real time go to market intelligence connects Codex directly to Channel99\u2019s performance marketin...",
   "author": {
     "name": "Channel99 Inc. ",
     "url": "https://www.channel99.com/"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Channel99",
-    "shortDescription": "Channel99 real time go to market intelligence connects ChatGPT directly to Channel99\u2019s performance marketin...",
-    "longDescription": "Channel99 real time go to market intelligence connects ChatGPT directly to Channel99\u2019s performance marketing intelligence. giving AI assistants real-time access to unified B2B marketing data and insights.. Powered by Channel99\u2019s advanced attribution, account identification, and AI-driven analytics. The Channel99 connection enables natural-language queries that deliver accurate campaign performance, spend efficiency, audience engagement and cross channel attribution insights eliminating manual data pulls, siloed dashboards and complex API engineering. \n\nMarketers, analysts, and business leaders can ask ChatGPT strategic questions like \u201cWhich channels drove the most high-value engagement last quarter?\u201d or \u201cWhere should we reallocate budget to improve pipeline efficiency?\u201d and get precise, context-aware results powered by Channel99\u2019s industry leading performance data. \n\nDeveloped by Channel99 a B2B marketing technology company dedicated to improving ROI, lowering acquisition costs, and bringing financial transparency to digital marketing investments.",
+    "shortDescription": "Channel99 real time go to market intelligence connects Codex directly to Channel99\u2019s performance marketin...",
+    "longDescription": "Channel99 real time go to market intelligence connects Codex directly to Channel99\u2019s performance marketing intelligence. giving AI assistants real-time access to unified B2B marketing data and insights.. Powered by Channel99\u2019s advanced attribution, account identification, and AI-driven analytics. The Channel99 connection enables natural-language queries that deliver accurate campaign performance, spend efficiency, audience engagement and cross channel attribution insights eliminating manual data pulls, siloed dashboards and complex API engineering. \n\nMarketers, analysts, and business leaders can ask Codex strategic questions like \u201cWhich channels drove the most high-value engagement last quarter?\u201d or \u201cWhere should we reallocate budget to improve pipeline efficiency?\u201d and get precise, context-aware results powered by Channel99\u2019s industry leading performance data. \n\nDeveloped by Channel99 a B2B marketing technology company dedicated to improving ROI, lowering acquisition costs, and bringing financial transparency to digital marketing investments.",
     "developerName": "Channel99 Inc. ",
     "category": "Productivity",
     "capabilities": [],

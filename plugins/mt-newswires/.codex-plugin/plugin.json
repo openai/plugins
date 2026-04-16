@@ -1,7 +1,7 @@
 {
   "name": "mt-newswires",
   "version": "1.0.0",
-  "description": "MT Newswires brings real-time global financial news directly into ChatGPT \u2014 providing original, unbiased an...",
+  "description": "MT Newswires brings real-time global financial news directly into Codex \u2014 providing original, unbiased an...",
   "author": {
     "name": "MT Newswires",
     "url": "https://www.mtnewswires.com"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "MT Newswires",
-    "shortDescription": "MT Newswires brings real-time global financial news directly into ChatGPT \u2014 providing original, unbiased an...",
-    "longDescription": "MT Newswires brings real-time global financial news directly into ChatGPT \u2014 providing original, unbiased and comprehensive multi-asset class coverage of capital markets and economies in over 180 topics.\n\nPowered by a global newsroom trusted by the largest banks, brokerages, professional trading, wealth management and research applications globally, every story is built for AI \u2014 so you get answers grounded in live market intelligence, not stale data.\n\nWhat you can do:\n\u2022 Get the latest news on any ticker and analyze price impact\n\u2022 Monitor energy sector developments across global equities \n\u2022 Track macro events and global central bank signals in real time\n\u2022 Screen for earnings, M&A, and market-moving headlines\n\nExample prompts:\n\u2192 \"What is the latest news for NVIDIA and has it influenced the stock's price?\"\n\u2192 \"Summarize the major analyst rating change developments from the past hour.\"\n\u2192 \"What macro events are driving markets today?\"",
+    "shortDescription": "MT Newswires brings real-time global financial news directly into Codex \u2014 providing original, unbiased an...",
+    "longDescription": "MT Newswires brings real-time global financial news directly into Codex \u2014 providing original, unbiased and comprehensive multi-asset class coverage of capital markets and economies in over 180 topics.\n\nPowered by a global newsroom trusted by the largest banks, brokerages, professional trading, wealth management and research applications globally, every story is built for AI \u2014 so you get answers grounded in live market intelligence, not stale data.\n\nWhat you can do:\n\u2022 Get the latest news on any ticker and analyze price impact\n\u2022 Monitor energy sector developments across global equities \n\u2022 Track macro events and global central bank signals in real time\n\u2022 Screen for earnings, M&A, and market-moving headlines\n\nExample prompts:\n\u2192 \"What is the latest news for NVIDIA and has it influenced the stock's price?\"\n\u2192 \"Summarize the major analyst rating change developments from the past hour.\"\n\u2192 \"What macro events are driving markets today?\"",
     "developerName": "MT Newswires",
     "category": "Research",
     "capabilities": [],

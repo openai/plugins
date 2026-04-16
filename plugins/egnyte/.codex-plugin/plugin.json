@@ -1,7 +1,7 @@
 {
   "name": "egnyte",
   "version": "1.0.0",
-  "description": "Work with documents and files stored in Egnyte directly from ChatGPT.",
+  "description": "Work with documents and files stored in Egnyte directly from Codex.",
   "author": {
     "url": "https://www.egnyte.com",
     "name": "Egnyte Inc"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Egnyte",
-    "shortDescription": "Work with documents and files stored in Egnyte directly from ChatGPT.",
-    "longDescription": "Work with documents and files stored in Egnyte directly from ChatGPT. Search across folders, retrieve relevant files, and extract key information to answer questions or generate summaries.\n\nQuickly surface insights from contracts, reports, and internal documents. Combine information from multiple files to create concise summaries, stakeholder updates, or draft written content grounded in your team\u2019s internal materials.",
+    "shortDescription": "Work with documents and files stored in Egnyte directly from Codex.",
+    "longDescription": "Work with documents and files stored in Egnyte directly from Codex. Search across folders, retrieve relevant files, and extract key information to answer questions or generate summaries.\n\nQuickly surface insights from contracts, reports, and internal documents. Combine information from multiple files to create concise summaries, stakeholder updates, or draft written content grounded in your team\u2019s internal materials.",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://www.egnyte.com",

@@ -13,7 +13,7 @@
   "interface": {
     "displayName": "Readwise",
     "shortDescription": "The official app for Readwise and Reader.",
-    "longDescription": "The official app for Readwise and Reader. \n\nThis app allows you to have chatgpt semantically search through all of your highlights, and any content saved to your Reader library.\n\nMore than that, it can do basically anything you can do in Reader! Triage your inbox, organize your library, catch up on your feed, and much more -- just ask :)",
+    "longDescription": "The official app for Readwise and Reader. \n\nThis app allows you to have Codex semantically search through all of your highlights, and any content saved to your Reader library.\n\nMore than that, it can do basically anything you can do in Reader! Triage your inbox, organize your library, catch up on your feed, and much more -- just ask :)",
     "developerName": "Readwise Inc.",
     "category": "Research",
     "capabilities": [],

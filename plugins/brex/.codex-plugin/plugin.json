@@ -1,7 +1,7 @@
 {
   "name": "brex",
   "version": "1.0.0",
-  "description": "Connect Brex to ChatGPT and review your company finances through natural conversation \u2014 at ChatGPT speed.",
+  "description": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
   "author": {
     "name": "Brex Inc.",
     "url": "https://brex.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Brex",
-    "shortDescription": "Connect Brex to ChatGPT and review your company finances through natural conversation \u2014 at ChatGPT speed.",
-    "longDescription": "Connect Brex to ChatGPT and review your company finances through natural conversation \u2014 at ChatGPT speed.\n\nFor finance teams: Analyze spend, detect anomalies, and run custom queries and reports instantly to accelerate decisions and do more with less.\n\nFor employees: See how much you can spend, ask policy questions, check reimbursement status, manage travel, and more right in ChatGPT.\n\nAccess is role-aware by default: employees see only what applies to them, while admins retain full visibility and control.",
+    "shortDescription": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
+    "longDescription": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.\n\nFor finance teams: Analyze spend, detect anomalies, and run custom queries and reports instantly to accelerate decisions and do more with less.\n\nFor employees: See how much you can spend, ask policy questions, check reimbursement status, manage travel, and more right in Codex.\n\nAccess is role-aware by default: employees see only what applies to them, while admins retain full visibility and control.",
     "developerName": "Brex Inc.",
     "category": "Productivity",
     "capabilities": [],

@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "BioRender",
     "shortDescription": "BioRender helps scientists create professional figures in minutes.",
-    "longDescription": "BioRender helps scientists create professional figures in minutes. Access thousands of scientifically accurate templates and icons directly in ChatGPT to visualize protocols, pathways, molecular structures, and more. Brainstorm with your team, communicate research concepts, or build publication-ready figures for presentations, manuscripts, grant proposals, and posters.",
+    "longDescription": "BioRender helps scientists create professional figures in minutes. Access thousands of scientifically accurate templates and icons directly in Codex to visualize protocols, pathways, molecular structures, and more. Brainstorm with your team, communicate research concepts, or build publication-ready figures for presentations, manuscripts, grant proposals, and posters.",
     "category": "Design",
     "capabilities": [],
     "websiteURL": "https://biorender.com/",

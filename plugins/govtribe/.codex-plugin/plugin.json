@@ -1,7 +1,7 @@
 {
   "name": "govtribe",
   "version": "1.0.0",
-  "description": "Search government contracts, awards, and vendors directly from ChatGPT.",
+  "description": "Search government contracts, awards, and vendors directly from Codex.",
   "author": {
     "name": "Government Executive Media Group LLC",
     "url": "https://govtribe.com/"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "GovTribe",
-    "shortDescription": "Search government contracts, awards, and vendors directly from ChatGPT.",
-    "longDescription": "Search government contracts, awards, and vendors directly from ChatGPT. GovTribe brings U.S. procurement intelligence into your AI workflow\u2014find relevant opportunities across federal agencies; analyze vendor competition; explore teaming partners; and track agency spending patterns. Whether you're researching new markets, conducting competitive analysis, or preparing a proposal, get instant access to billions in public sector data without leaving your conversation.",
+    "shortDescription": "Search government contracts, awards, and vendors directly from Codex.",
+    "longDescription": "Search government contracts, awards, and vendors directly from Codex. GovTribe brings U.S. procurement intelligence into your AI workflow\u2014find relevant opportunities across federal agencies; analyze vendor competition; explore teaming partners; and track agency spending patterns. Whether you're researching new markets, conducting competitive analysis, or preparing a proposal, get instant access to billions in public sector data without leaving your conversation.",
     "developerName": "Government Executive Media Group LLC",
     "category": "Research",
     "capabilities": [],

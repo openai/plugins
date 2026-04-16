@@ -1,7 +1,7 @@
 {
   "name": "windsor-ai",
   "version": "1.0.0",
-  "description": "Windsor.ai connects your marketing and business data sources to ChatGPT so you can ask questions in natural...",
+  "description": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
   "author": {
     "name": "Windsor.ai",
     "url": "https://windsor.ai"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Windsor.ai",
-    "shortDescription": "Windsor.ai connects your marketing and business data sources to ChatGPT so you can ask questions in natural...",
-    "longDescription": "Windsor.ai connects your marketing and business data sources to ChatGPT so you can ask questions in natural language and get answers from your connected accounts.\n\nCommon data sources customers connect include: Google Ads, Meta (Facebook) Ads, Instagram, LinkedIn Ads, LinkedIn Company Pages, TikTok Ads, GA4, Google Search Console, YouTube Analytics, Google Business Profile, HubSpot, Salesforce, Shopify, Klaviyo, Amazon Ads, Microsoft Ads (Bing), Google Merchant Center, Stripe, GoHighLevel, and more.  \ufffc",
+    "shortDescription": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
+    "longDescription": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural language and get answers from your connected accounts.\n\nCommon data sources customers connect include: Google Ads, Meta (Facebook) Ads, Instagram, LinkedIn Ads, LinkedIn Company Pages, TikTok Ads, GA4, Google Search Console, YouTube Analytics, Google Business Profile, HubSpot, Salesforce, Shopify, Klaviyo, Amazon Ads, Microsoft Ads (Bing), Google Merchant Center, Stripe, GoHighLevel, and more.  \ufffc",
     "developerName": "Windsor.ai",
     "category": "Productivity",
     "capabilities": [],

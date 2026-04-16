@@ -1,7 +1,7 @@
 {
   "name": "fireflies",
   "version": "1.0.0",
-  "description": "The Fireflies app brings your meetings and knowledge directly into ChatGPT.",
+  "description": "The Fireflies app brings your meetings and knowledge directly into Codex.",
   "author": {
     "url": "https://fireflies.ai",
     "name": "Fireflies"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Fireflies",
-    "shortDescription": "The Fireflies app brings your meetings and knowledge directly into ChatGPT.",
-    "longDescription": "The Fireflies app brings your meetings and knowledge directly into ChatGPT.\n\nAnalyze any conversation\u2014sales, customer success, product, recruiting\u2014for insights, action items, and sentiment. Track feature requests and pain points, update CRMs or systems of record, and instantly retrieve context from your organization's meetings.\n\nWith Fireflies and ChatGPT, centralize your company knowledge and turn every conversation into searchable, actionable insights.",
+    "shortDescription": "The Fireflies app brings your meetings and knowledge directly into Codex.",
+    "longDescription": "The Fireflies app brings your meetings and knowledge directly into Codex.\n\nAnalyze any conversation\u2014sales, customer success, product, recruiting\u2014for insights, action items, and sentiment. Track feature requests and pain points, update CRMs or systems of record, and instantly retrieve context from your organization's meetings.\n\nWith Fireflies and Codex, centralize your company knowledge and turn every conversation into searchable, actionable insights.",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://fireflies.ai",

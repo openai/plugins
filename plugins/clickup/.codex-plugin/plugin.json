@@ -1,15 +1,15 @@
 {
   "name": "clickup",
   "version": "1.0.0",
-  "description": "Turn ChatGPT into your ClickUp command center.",
+  "description": "Turn Codex into your ClickUp command center.",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [],
   "apps": "./.app.json",
   "interface": {
     "displayName": "ClickUp",
-    "shortDescription": "Turn ChatGPT into your ClickUp command center.",
-    "longDescription": "Turn ChatGPT into your ClickUp command center. Ask anything, find everything, take action - without breaking your flow.\n\u2022 Deep workspace search:  Ask questions naturally, get precise answers from across all your work\n\u2022 Action in the same breath: Find, create, update, and manage work in ChatGPT\n\u2022 Zero context switching:  Go from question to answer to action without leaving the conversation",
+    "shortDescription": "Turn Codex into your ClickUp command center.",
+    "longDescription": "Turn Codex into your ClickUp command center. Ask anything, find everything, take action - without breaking your flow.\n\u2022 Deep workspace search:  Ask questions naturally, get precise answers from across all your work\n\u2022 Action in the same breath: Find, create, update, and manage work in Codex\n\u2022 Zero context switching:  Go from question to answer to action without leaving the conversation",
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [

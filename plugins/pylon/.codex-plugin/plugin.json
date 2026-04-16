@@ -1,7 +1,7 @@
 {
   "name": "pylon",
   "version": "1.0.0",
-  "description": "Access Pylon's customer support platform directly from ChatGPT to search, manage, and resolve customer issues.",
+  "description": "Access Pylon's customer support platform directly from Codex to search, manage, and resolve customer issues.",
   "author": {
     "name": "Pylon Labs Inc.",
     "url": "https://www.usepylon.com/"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Pylon",
-    "shortDescription": "Access Pylon's customer support platform directly from ChatGPT to search, manage, and resolve customer issues.",
-    "longDescription": "Access Pylon's customer support platform directly from ChatGPT to search, manage, and resolve\ncustomer issues. Stay on top of your support queue while connecting ChatGPT's insights to real customer conversations.\n\nYou can use the Pylon app to:\n  \u2022 Check your queue: \"What Pylon issues are assigned to me that need a response?\"\n  \u2022 Research customers: \"Summarize recent issues from Acme Corp and flag any escalations.\"\n  \u2022 Update issues: \"Mark the billing issue from Sarah as resolved and add a note that we issued a refund.\"",
+    "shortDescription": "Access Pylon's customer support platform directly from Codex to search, manage, and resolve customer issues.",
+    "longDescription": "Access Pylon's customer support platform directly from Codex to search, manage, and resolve\ncustomer issues. Stay on top of your support queue while connecting Codex's insights to real customer conversations.\n\nYou can use the Pylon app to:\n  \u2022 Check your queue: \"What Pylon issues are assigned to me that need a response?\"\n  \u2022 Research customers: \"Summarize recent issues from Acme Corp and flag any escalations.\"\n  \u2022 Update issues: \"Mark the billing issue from Sarah as resolved and add a note that we issued a refund.\"",
     "developerName": "Pylon Labs Inc.",
     "category": "Productivity",
     "capabilities": [],

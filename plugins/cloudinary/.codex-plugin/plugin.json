@@ -1,7 +1,7 @@
 {
   "name": "cloudinary",
   "version": "1.0.0",
-  "description": "Manage, search, and transform your Cloudinary media library \u2014 directly from ChatGPT.",
+  "description": "Manage, search, and transform your Cloudinary media library \u2014 directly from Codex.",
   "author": {
     "url": "https://cloudinary.com/",
     "name": "Cloudinary"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Cloudinary",
-    "shortDescription": "Manage, search, and transform your Cloudinary media library \u2014 directly from ChatGPT.",
-    "longDescription": "Manage, search, and transform your Cloudinary media library \u2014 directly from ChatGPT.\n\nThe Cloudinary app connects your Cloudinary account to ChatGPT, giving you full control over your visual assets through natural language. Upload, organize, tag, transform, and analyze images or videos without leaving the chat. \n\nWhat You Can Do\n- Upload assets from URLs, local files, or base64 data \u2014 automatically analyze, tag, or moderate them.\n- Browse and search your entire media library using smart filters or text queries (tags, format, date, size, etc.).\n- Organize your library \u2014 create folders, rename files, manage metadata, and clean up obsolete assets.\n- Transform images or videos with Cloudinary\u2019s powerful syntax \u2014 resize, crop, watermark, apply filters, or optimize for delivery.\n- Generate archives and backups, or restore previous versions when needed.\n- Analyze assets with AI \u2014 detect faces, extract text, get color palettes, and accessibility scores.\n- Monitor usage \u2014 track storage, bandwidth, and transformation credits in real time.\n- Visual search \u2014 find visually similar images by uploading an example or describing it.\n\nPerfect For\n- Developers who want to experiment with Cloudinary API commands in natural language.\n- Marketers & designers managing campaign visuals and brand assets.\n- Teams automating content workflows with ChatGPT or building multi-agent setups.\n\nTurn ChatGPT into a powerful media management assistant with the Cloudinary app.",
+    "shortDescription": "Manage, search, and transform your Cloudinary media library \u2014 directly from Codex.",
+    "longDescription": "Manage, search, and transform your Cloudinary media library \u2014 directly from Codex.\n\nThe Cloudinary app connects your Cloudinary account to Codex, giving you full control over your visual assets through natural language. Upload, organize, tag, transform, and analyze images or videos without leaving the chat. \n\nWhat You Can Do\n- Upload assets from URLs, local files, or base64 data \u2014 automatically analyze, tag, or moderate them.\n- Browse and search your entire media library using smart filters or text queries (tags, format, date, size, etc.).\n- Organize your library \u2014 create folders, rename files, manage metadata, and clean up obsolete assets.\n- Transform images or videos with Cloudinary\u2019s powerful syntax \u2014 resize, crop, watermark, apply filters, or optimize for delivery.\n- Generate archives and backups, or restore previous versions when needed.\n- Analyze assets with AI \u2014 detect faces, extract text, get color palettes, and accessibility scores.\n- Monitor usage \u2014 track storage, bandwidth, and transformation credits in real time.\n- Visual search \u2014 find visually similar images by uploading an example or describing it.\n\nPerfect For\n- Developers who want to experiment with Cloudinary API commands in natural language.\n- Marketers & designers managing campaign visuals and brand assets.\n- Teams automating content workflows with Codex or building multi-agent setups.\n\nTurn Codex into a powerful media management assistant with the Cloudinary app.",
     "category": "Coding",
     "capabilities": [],
     "websiteURL": "https://cloudinary.com/",

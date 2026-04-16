@@ -1,7 +1,7 @@
 {
   "name": "demandbase",
   "version": "1.0.0",
-  "description": "Demandbase integration with ChatGPT gives sales, marketing, and GTM teams seamless access to rich B2B data...",
+  "description": "Demandbase integration with Codex gives sales, marketing, and GTM teams seamless access to rich B2B data...",
   "author": {
     "name": "Demandbase Inc",
     "url": "https://www.demandbase.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Demandbase",
-    "shortDescription": "Demandbase integration with ChatGPT gives sales, marketing, and GTM teams seamless access to rich B2B data...",
-    "longDescription": "Demandbase integration with ChatGPT gives sales, marketing, and GTM teams seamless access to rich B2B data directly inside ChatGPT for easier account targeting and engagement.\n\nThis app connects ChatGPT to Demandbase via a secure MCP connection, letting you access both first and third party data:\nThird-Party Data (3P): Search and retrieve industry-leading company and contact data from Demandbase, including firmographics, technographics, family tree, company news, and leadership profiles.\n\nFirst-Party Data (1P): Securely access your own Demandbase 1P data such as known accounts, contacts, CRM entities, engagement, and in-pipeline opportunities\n\nWhat you can do:\nSearch companies by name, location, size, revenue, or industry\nDiscover decision-makers and influencers by role or job level\nFetch full company profiles including recent news and competitors\nTap into 1P signals like engagement, MQA status, or activity\n\nWho it\u2019s for:\nSales reps looking for fast answers about a target account in real time\nMarketers enriching leads or refining personas\nRevOps and Enablement teams embedding intelligence into workflows\nAI product teams creating agent workflows\n\n\nNote: This requires Demandbase licences, please contact PartnerSupport@demandbase.com.",
+    "shortDescription": "Demandbase integration with Codex gives sales, marketing, and GTM teams seamless access to rich B2B data...",
+    "longDescription": "Demandbase integration with Codex gives sales, marketing, and GTM teams seamless access to rich B2B data directly inside Codex for easier account targeting and engagement.\n\nThis app connects Codex to Demandbase via a secure MCP connection, letting you access both first and third party data:\nThird-Party Data (3P): Search and retrieve industry-leading company and contact data from Demandbase, including firmographics, technographics, family tree, company news, and leadership profiles.\n\nFirst-Party Data (1P): Securely access your own Demandbase 1P data such as known accounts, contacts, CRM entities, engagement, and in-pipeline opportunities\n\nWhat you can do:\nSearch companies by name, location, size, revenue, or industry\nDiscover decision-makers and influencers by role or job level\nFetch full company profiles including recent news and competitors\nTap into 1P signals like engagement, MQA status, or activity\n\nWho it\u2019s for:\nSales reps looking for fast answers about a target account in real time\nMarketers enriching leads or refining personas\nRevOps and Enablement teams embedding intelligence into workflows\nAI product teams creating agent workflows\n\n\nNote: This requires Demandbase licences, please contact PartnerSupport@demandbase.com.",
     "developerName": "Demandbase Inc",
     "category": "Productivity",
     "capabilities": [],

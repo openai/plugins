@@ -1,7 +1,7 @@
 {
   "name": "responsive",
   "version": "1.0.0",
-  "description": "The Responsive App makes it easy to work with your organization\u2019s data inside ChatGPT.",
+  "description": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
   "author": {
     "name": "RFPIO Inc. (d/b/a Responsive)",
     "url": "https://www.responsive.io"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Responsive",
-    "shortDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside ChatGPT.",
-    "longDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside ChatGPT. Search your Content Library and generate responses so you can move faster with trusted information and without switching tools.",
+    "shortDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
+    "longDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex. Search your Content Library and generate responses so you can move faster with trusted information and without switching tools.",
     "developerName": "RFPIO Inc. (d/b/a Responsive)",
     "category": "Productivity",
     "capabilities": [],

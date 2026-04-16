@@ -1,7 +1,7 @@
 {
   "name": "common-room",
   "version": "1.0.0",
-  "description": "Embed complete buyer intelligence directly within ChatGPT.",
+  "description": "Embed complete buyer intelligence directly within Codex.",
   "author": {
     "name": "Common Room",
     "url": "https://commonroom.io"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Common Room",
-    "shortDescription": "Embed complete buyer intelligence directly within ChatGPT.",
-    "longDescription": "Embed complete buyer intelligence directly within ChatGPT. Research accounts and contacts, surface buying signals, and browse activity history - all through natural language. Build prospect lists of net-new companies by industry, size, tech stack, or location. Filter and sort contacts by segment, role, lead score, or website visits. Every result is grounded\u00a0in real context, real prioritization, and real revenue opportunity directly from your CRM fields, scores, enrichment, and signals - so you always know what's actually happening in your accounts.\n\nYou can use the Common Room MCP to:\n\n\u00a0Account Research:\n\u00a0\"Tell me about Datadog and create a plan on how to approach the account\"\n\n\u00a0Contact Lookup:\n\u00a0\"Research jane.doe@company.com\u00a0using Common Room\"\n\n\u00a0Prospect:\n\u00a0\"Find SaaS companies in the US using Snowflake with 200\u20131000 employees\"\n\n\u00a0Filter by Segment and Role:\n\u00a0\"Show me all Economic Buyers in my 'Champions changing jobs' segment\"\n\n\u00a0Surface High-Intent Contacts:\n\u00a0\"Find contacts at ICP companies who have visited our pricing page this week\"\n\n\u00a0Track Website Visitors:\n\u00a0\"Who visited our pricing page in the last 7 days?\"",
+    "shortDescription": "Embed complete buyer intelligence directly within Codex.",
+    "longDescription": "Embed complete buyer intelligence directly within Codex. Research accounts and contacts, surface buying signals, and browse activity history - all through natural language. Build prospect lists of net-new companies by industry, size, tech stack, or location. Filter and sort contacts by segment, role, lead score, or website visits. Every result is grounded\u00a0in real context, real prioritization, and real revenue opportunity directly from your CRM fields, scores, enrichment, and signals - so you always know what's actually happening in your accounts.\n\nYou can use the Common Room MCP to:\n\n\u00a0Account Research:\n\u00a0\"Tell me about Datadog and create a plan on how to approach the account\"\n\n\u00a0Contact Lookup:\n\u00a0\"Research jane.doe@company.com\u00a0using Common Room\"\n\n\u00a0Prospect:\n\u00a0\"Find SaaS companies in the US using Snowflake with 200\u20131000 employees\"\n\n\u00a0Filter by Segment and Role:\n\u00a0\"Show me all Economic Buyers in my 'Champions changing jobs' segment\"\n\n\u00a0Surface High-Intent Contacts:\n\u00a0\"Find contacts at ICP companies who have visited our pricing page this week\"\n\n\u00a0Track Website Visitors:\n\u00a0\"Who visited our pricing page in the last 7 days?\"",
     "developerName": "Common Room",
     "category": "Productivity",
     "capabilities": [],

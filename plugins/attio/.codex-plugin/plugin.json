@@ -1,7 +1,7 @@
 {
   "name": "attio",
   "version": "1.0.0",
-  "description": "Attio connects ChatGPT directly to your CRM workspace, letting you manage customer relationships through na...",
+  "description": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through na...",
   "author": {
     "name": "Attio Ltd",
     "url": "https://attio.com"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Attio",
-    "shortDescription": "Attio connects ChatGPT directly to your CRM workspace, letting you manage customer relationships through na...",
-    "longDescription": "Attio connects ChatGPT directly to your CRM workspace, letting you manage customer relationships through natural conversation. \n\nSearch and filter contacts, companies, and deals with flexible queries. Create, update, and organize records without switching between screens. Add notes, manage tasks, and track your sales pipeline\u2014all through simple requests. \n\nKey capabilities: \n- Search records using powerful filters (find companies by size, industry, last contact date) \n- Create and update people, companies, and deal records \n- Manage notes attached to any record \n- Track and complete tasks \n- Navigate lists and organize your data \n\nWhether you're preparing for a meeting, updating deal stages, or researching prospects, Attio brings your CRM data into your conversation \u2014 no manual data entry required.",
+    "shortDescription": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through na...",
+    "longDescription": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through natural conversation. \n\nSearch and filter contacts, companies, and deals with flexible queries. Create, update, and organize records without switching between screens. Add notes, manage tasks, and track your sales pipeline\u2014all through simple requests. \n\nKey capabilities: \n- Search records using powerful filters (find companies by size, industry, last contact date) \n- Create and update people, companies, and deal records \n- Manage notes attached to any record \n- Track and complete tasks \n- Navigate lists and organize your data \n\nWhether you're preparing for a meeting, updating deal stages, or researching prospects, Attio brings your CRM data into your conversation \u2014 no manual data entry required.",
     "developerName": "Attio Ltd",
     "category": "Productivity",
     "capabilities": [],

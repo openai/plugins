@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "Dow Jones Factiva",
     "shortDescription": "The Factiva Connector, enables authorized users to search Factiva\u2019s global news archive, including premium...",
-    "longDescription": "The Factiva Connector, enables authorized users to search Factiva\u2019s global news archive, including premium Dow Jones sources, and incorporate insights from that content into their ChatGPT responses.  \n\nUsers can research companies, industries, and markets and ground their  answers in licensed content, complete with citations and direct links to original articles.\n\nA subscription to Factiva is required. \n\nFactiva content may not be shared outside your organization or used for machine learning or AI training purposes. This connector may only be used with your organization\u2019s ChatGPT instance.",
+    "longDescription": "The Factiva Connector, enables authorized users to search Factiva\u2019s global news archive, including premium Dow Jones sources, and incorporate insights from that content into their Codex responses.  \n\nUsers can research companies, industries, and markets and ground their  answers in licensed content, complete with citations and direct links to original articles.\n\nA subscription to Factiva is required. \n\nFactiva content may not be shared outside your organization or used for machine learning or AI training purposes. This connector may only be used with your organization\u2019s Codex instance.",
     "developerName": "Factiva, Inc.",
     "category": "Research",
     "capabilities": [],

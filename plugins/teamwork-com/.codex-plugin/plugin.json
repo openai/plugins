@@ -1,7 +1,7 @@
 {
   "name": "teamwork-com",
   "version": "1.0.0",
-  "description": "Connect to sync Teamwork projects and tasks for use in ChatGPT.",
+  "description": "Connect to sync Teamwork projects and tasks for use in Codex.",
   "author": {
     "name": "OpenAI",
     "url": "https://www.teamwork.com/"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Teamwork.com",
-    "shortDescription": "Connect to sync Teamwork projects and tasks for use in ChatGPT.",
-    "longDescription": "Connect to sync Teamwork projects and tasks for use in ChatGPT.",
+    "shortDescription": "Connect to sync Teamwork projects and tasks for use in Codex.",
+    "longDescription": "Connect to sync Teamwork projects and tasks for use in Codex.",
     "developerName": "OpenAI",
     "category": "Productivity",
     "capabilities": [],

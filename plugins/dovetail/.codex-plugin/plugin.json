@@ -1,7 +1,7 @@
 {
   "name": "dovetail",
   "version": "1.0.0",
-  "description": "Connect Dovetail inside ChatGPT to turn customer feedback into decisions without leaving your conversation.",
+  "description": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
   "author": {
     "name": "Dovetail",
     "url": "https://dovetail.com"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Dovetail ",
-    "shortDescription": "Connect Dovetail inside ChatGPT to turn customer feedback into decisions without leaving your conversation.",
-    "longDescription": "Connect Dovetail inside ChatGPT to turn customer feedback into decisions without leaving your conversation. Search your Dovetail workspace for relevant projects, notes, docs, and themes, and get results back instantly. Ask things like \u201cSummarize top friction points impacting enterprise renewal conversations\u201d to surface evidence in seconds.",
+    "shortDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
+    "longDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation. Search your Dovetail workspace for relevant projects, notes, docs, and themes, and get results back instantly. Ask things like \u201cSummarize top friction points impacting enterprise renewal conversations\u201d to surface evidence in seconds.",
     "developerName": "Dovetail",
     "category": "Productivity",
     "capabilities": [],
