@@ -1,0 +1,31 @@
+{
+  "name": "hostinger",
+  "version": "1.0.0",
+  "description": "Hostinger Horizons lets you build real websites and apps just by describing what you want.",
+  "author": {
+    "name": "Hostinger",
+    "url": "https://hostinger.com"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Hostinger",
+    "shortDescription": "Hostinger Horizons lets you build real websites and apps just by describing what you want.",
+    "longDescription": "Hostinger Horizons lets you build real websites and apps just by describing what you want. Designed for people with no technical background, it turns ideas into working products in minutes. When you're happy with the result, launch instantly with one click.",
+    "developerName": "Hostinger",
+    "category": "Coding",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Check the relevant Hostinger site or account status"
+    ],
+    "screenshots": [],
+    "websiteURL": "https://hostinger.com",
+    "privacyPolicyURL": "https://www.hostinger.com/legal/privacy-policy",
+    "termsOfServiceURL": "https://www.hostinger.com/legal/universal-terms-of-service-agreement",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  },
+  "homepage": "https://hostinger.com"
+}

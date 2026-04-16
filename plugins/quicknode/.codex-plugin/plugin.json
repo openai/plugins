@@ -1,0 +1,31 @@
+{
+  "name": "quicknode",
+  "version": "1.0.0",
+  "description": "Manage your Quicknode infrastructure directly in OpenAI.",
+  "author": {
+    "name": "Quicknode",
+    "url": "https://www.quicknode.com/"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Quicknode",
+    "shortDescription": "Manage your Quicknode infrastructure directly in OpenAI.",
+    "longDescription": "Manage your Quicknode infrastructure directly in OpenAI. Create and manage endpoints, monitor logs and usage, configure security and rate limits, and review billing from one conversation.",
+    "developerName": "Quicknode",
+    "category": "Coding",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Use QuickNode to inspect the relevant chain data"
+    ],
+    "screenshots": [],
+    "websiteURL": "https://www.quicknode.com/",
+    "privacyPolicyURL": "https://www.quicknode.com/privacy",
+    "termsOfServiceURL": "https://www.quicknode.com/terms",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  },
+  "homepage": "https://www.quicknode.com/"
+}

@@ -11,16 +11,18 @@ Use this skill when the goal is to create time, not just inspect time.
 
 - Use `search_events` to map the day's current fragmentation and identify movable candidates.
 - Use `read_event` or `read_event_all_fields` when one candidate meeting needs a closer look before proposing a move.
+- Use `create_event` when the user explicitly wants a temporary hold or focus block once the target slot is grounded.
 - Use `update_event`, `update_event_series`, or `update_event_following` only after the proposal is clear and the correct scope of change is grounded.
 
 ## Workflow
 
-1. Start by identifying the target: today, tomorrow, this afternoon, a specific day, or a broader window.
+1. Start by identifying the target: today, tomorrow, this afternoon, a specific day, or a broader window. If the user already gave a concrete window or duration, work inside it before asking follow-up questions.
 2. Optimize for contiguous free blocks, not raw free-minute totals.
 3. Identify which meetings are likely fixed and which are more movable before proposing changes.
-4. Look for the smallest edit set that creates a meaningful uninterrupted block.
-5. Prefer solutions that reduce fragmentation across the rest of the day, not just one local gap.
-6. If no clean block exists, show the best partial win and what tradeoff it requires.
+4. If the user explicitly wants a temporary hold or focus block rather than a reschedule plan, choose the best qualifying free slot and create the hold once the slot is clear.
+5. Look for the smallest edit set that creates a meaningful uninterrupted block.
+6. Prefer solutions that reduce fragmentation across the rest of the day, not just one local gap.
+7. If no clean block exists, show the best partial win and what tradeoff it requires.
 
 ## Prioritization Heuristics
 
@@ -33,4 +35,5 @@ Use this skill when the goal is to create time, not just inspect time.
 
 - Show the before-and-after effect of the proposal.
 - Name the block of time created and the minimum meetings that would need to move.
+- When creating a hold, state the exact slot and whether the hold is transparent or busy.
 - If suggesting multiple options, keep them short and explain the tradeoff for each.

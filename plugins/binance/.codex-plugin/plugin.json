@@ -1,0 +1,31 @@
+{
+  "name": "binance",
+  "version": "1.0.0",
+  "description": "Binance for ChatGPT lets you access and explore Binance public, read-only market data using natural language.",
+  "author": {
+    "name": "Binance",
+    "url": "https://www.binance.com"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Binance",
+    "shortDescription": "Binance for ChatGPT lets you access and explore Binance public, read-only market data using natural language.",
+    "longDescription": "Binance for ChatGPT lets you access and explore Binance public, read-only market data using natural language. Retrieve current and historical prices, order books, recent trades, candlesticks (klines), and exchange metadata across Spot, Futures, and Options. No authentication is required. This app does not access user accounts and does not support trading or transactions.\n\nMarket data is provided \u201cas is\u201d from Binance\u2019s public APIs and may be delayed, incomplete, or subject to change. This information is for informational purposes only and should not be relied upon for trading or financial decisions. Binance makes no representations or warranties regarding accuracy or timeliness and disclaims all liability arising from use of this data.",
+    "developerName": "Binance",
+    "category": "Research",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Show the latest Binance market context for this asset"
+    ],
+    "screenshots": [],
+    "websiteURL": "https://www.binance.com",
+    "privacyPolicyURL": "https://www.binance.com/en/privacy",
+    "termsOfServiceURL": "https://www.binance.com/en/terms",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  },
+  "homepage": "https://www.binance.com"
+}

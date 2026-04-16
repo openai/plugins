@@ -55,6 +55,7 @@ Choose the ownership location first, then pick the wrapper. Do not introduce a r
 
 ## Cross-cutting references
 
+- In addition to the references below, use web search to consult current Apple Developer documentation when SwiftUI APIs, availability, or platform guidance may have changed.
 - `references/navigationstack.md`: navigation ownership, per-tab history, and enum routing.
 - `references/sheets.md`: centralized modal presentation and enum-driven sheets.
 - `references/deeplinks.md`: URL handling and routing external links into app destinations.
