@@ -16,7 +16,9 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - If the request starts as "find X and then update it," do the Drive discovery step first instead of guessing the target.
 
 2. Stay in the base Google Drive workflow for Drive-native tasks.
-- Use the base workflow for search, fetch, recent files, folders, sharing, copying, deleting, exporting, and other file-lifecycle work that is not primarily about editing Docs, Sheets, or Slides content.
+- Use the base workflow for search, fetch, recent files, folders, sharing, copying, deleting, exporting, revision history, file moves, and other file-lifecycle work that is not primarily about editing Docs, Sheets, or Slides content.
+- For version-history requests, including "previous version," "revision history," "what changed since the last version," or "compare to the prior revision," ground the file, fetch the current content, use `list_file_revisions`, fetch the immediately previous revision or the user-named revision with `fetch_file_revision`, then compare the fetched revision against the current content. Do not say previous versions are unsupported until you have checked whether revision tools are available for the target file.
+- For file move requests, ground the source file and target folder, read the file metadata including its current parents, then use `update_file` with `addParents` for the target folder and `removeParents` for only the verified source parent or parents that should no longer contain it. Preserve unrelated parents, and verify the move by reading metadata or listing the target folder before the final response.
 
 3. Route to the narrowest sibling skill that matches the file type and job.
 - Drive, Docs, Sheets, or Slides comment creation, comment replies, comment resolution, or review-by-comments: use [google-drive-comments](../google-drive-comments/SKILL.md).

@@ -1,0 +1,33 @@
+{
+  "name": "minimal-plugin",
+  "version": "0.1.0",
+  "description": "Minimal plugin fixture for plugin-eval tests.",
+  "author": {
+    "name": "Plugin Eval",
+    "email": "support@example.com",
+    "url": "https://example.com/"
+  },
+  "homepage": "https://example.com/",
+  "repository": "https://example.com/repo",
+  "license": "MIT",
+  "keywords": ["fixture", "plugin-eval"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Minimal Plugin",
+    "shortDescription": "Small valid plugin fixture",
+    "longDescription": "A minimal but valid plugin manifest and one bundled skill for plugin-eval testing.",
+    "developerName": "Plugin Eval",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://example.com/",
+    "privacyPolicyURL": "https://example.com/privacy",
+    "termsOfServiceURL": "https://example.com/terms",
+    "defaultPrompt": [
+      "Evaluate the minimal plugin fixture."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/minimal.svg",
+    "logo": "./assets/minimal.svg",
+    "screenshots": []
+  }
+}

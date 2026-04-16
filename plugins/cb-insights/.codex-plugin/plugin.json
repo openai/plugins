@@ -1,0 +1,31 @@
+{
+  "name": "cb-insights",
+  "version": "1.0.0",
+  "description": "Unleash ChatGPT as your private markets research agent.",
+  "author": {
+    "name": "CB Insights",
+    "url": "https://cbinsights.com"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "CB Insights",
+    "shortDescription": "Unleash ChatGPT as your private markets research agent.",
+    "longDescription": "Unleash ChatGPT as your private markets research agent. Source companies, build market maps, draft investment memos, and monitor competitors \u2014 all powered by CB Insights\u2019 predictive intelligence. Tap into 11M+ double-validated company profiles, leading coverage of recent equity deals, proprietary taxonomies, unique scores, hidden signals, and over 20 years of bleeding edge technology research to identify and analyze relevant, high-potential companies ahead of your competition.\n\nBuilt for corporate strategists seeking acquisition targets, VCs screening deal flow, and business development teams hunting new partners. If your work involves private companies, CB Insights delivers the insight you need to make your next move first.",
+    "developerName": "CB Insights",
+    "category": "Research",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Pull the latest market context from CB Insights"
+    ],
+    "screenshots": [],
+    "websiteURL": "https://cbinsights.com",
+    "privacyPolicyURL": "https://www.cbinsights.com/privacy-policy",
+    "termsOfServiceURL": "https://legal.cbinsights.com",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  },
+  "homepage": "https://cbinsights.com"
+}

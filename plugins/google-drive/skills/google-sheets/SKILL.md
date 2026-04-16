@@ -20,6 +20,7 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 9. Before the first write-heavy `batch_update`, read `./references/batch-update-recipes.md` for request-shape recall.
 10. Cluster logically related edits into one `batch_update` so the batch is coherent and atomic. Avoid both mega-batches and one-request micro-batches.
 11. If the user asks to clean, normalize, or restructure data, summarize the intended table shape before writing.
+12. For exact-row, fixed-count, or report-style tasks, keep the findings narrowly scoped to the requested conclusions only. Do not add extra metrics, adjacent commentary, or bonus rows unless the user asked for them.
 
 ## Output Conventions
 

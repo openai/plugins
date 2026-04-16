@@ -1,0 +1,30 @@
+{
+  "name": "monday-com",
+  "version": "1.0.0",
+  "description": "A powerful MCP connector enabling AI agents to seamlessly interact with monday.com.",
+  "author": {
+    "url": "https://monday.com",
+    "name": "Monday.com"
+  },
+  "homepage": "https://monday.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Monday.com",
+    "shortDescription": "A powerful MCP connector enabling AI agents to seamlessly interact with monday.com.",
+    "longDescription": "A powerful MCP connector enabling AI agents to seamlessly interact with monday.com. This connector provides comprehensive access to monday.com features including board management, item operations, dashboards, and more, allowing AI assistants to help manage projects, gain insights, and automate workflows within monday.com.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://monday.com",
+    "privacyPolicyURL": "https://monday.com/l/privacy/privacy-policy/",
+    "defaultPrompt": [
+      "Check the marketing campaign status in monday.com"
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "developerName": "Monday.com"
+  }
+}

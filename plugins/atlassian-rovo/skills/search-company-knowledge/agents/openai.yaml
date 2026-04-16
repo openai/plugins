@@ -1,0 +1,5 @@
+interface:
+  display_name: "Search Company Knowledge"
+  short_description: "Search Confluence, Jira, and internal Atlassian context"
+  icon_small: "./assets/app-icon.png"
+  icon_large: "./assets/app-icon.png"

@@ -67,6 +67,7 @@ Read these references as needed:
   - `https://developer.apple.com/documentation/appintents/making-actions-and-content-discoverable-and-widely-available`
   - `https://developer.apple.com/documentation/appintents/creating-your-first-app-intent`
   - `https://developer.apple.com/documentation/appintents/adopting-app-intents-to-support-system-experiences`
+- In addition to the links above, use web search to consult current Apple Developer documentation when App Intents APIs or platform behavior may have changed.
 - A good first pass often includes one open-app intent, one action intent, one or two entity types, and a small `AppShortcutsProvider`.
 - Good example families to cover are:
   - open a destination or editor in the app
