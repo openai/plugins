@@ -1,0 +1,4 @@
+interface:
+  display_name: "Render Workflows"
+  short_description: "Set up and validate Render Workflows projects"
+  default_prompt: "Help me scaffold, inspect, or validate a Render Workflows project and tell me the next steps to test or deploy it."
