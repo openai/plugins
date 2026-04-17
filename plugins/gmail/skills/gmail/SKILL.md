@@ -1,6 +1,6 @@
 ---
 name: gmail
-description: Manage Gmail inbox triage, mailbox search, thread summaries, action extraction, reply drafting, and email forwarding through connected Gmail data. Use when the user wants to inspect a mailbox or thread, search email with Gmail query syntax, summarize messages, extract decisions and follow-ups, prepare replies or forwarded messages, or organize messages with explicit confirmation before send, archive, delete, or label actions.
+description: Manage Gmail inbox triage, mailbox search, thread summaries, action extraction, reply drafting, and email forwarding through connected Gmail data. Use when the user wants to inspect a mailbox or thread, search email with Gmail query syntax, summarize messages, extract decisions and follow-ups, prepare replies or forwarded messages, or organize messages when they clearly ask for send, archive, delete, or label actions.
 ---
 
 # Gmail
@@ -41,13 +41,14 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 5. Common system labels to use in `tags` include `INBOX`, `STARRED`, `TRASH`, `DRAFT`, `SENT`, `SPAM`, `UNREAD`, and `IMPORTANT`. For All Mail, prefer Gmail query syntax such as `in:anywhere` rather than guessing a tag value.
 6. Use Gmail-native `batch_read_email` when you need the body of multiple shortlisted emails, and escalate to `read_email_thread` only when the surrounding conversation changes the answer.
 7. Use `search_email_ids` only when the next tool specifically needs message IDs and the richer `search_emails` response would not help you decide what to do.
-8. Summarize before writing when the request is ambiguous, and keep analysis separate from actions like send, archive, trash, or label changes unless the user explicitly asked for them.
+8. Summarize before writing when the request is ambiguous, and keep analysis separate from actions like send, archive, trash, or label changes unless the user explicitly asked for them. A direct command in the current request, such as "label recruiter cold emails" or "delete emails related to calendar updates," is explicit user intent once the matching messages are reasonably identified.
 
 ## Write Safety
 
 - Preserve exact recipients, subject lines, quoted facts, dates, and links from the source thread unless the user asks to change them.
 - When drafting a reply, call out any assumptions, missing context, or information that still needs confirmation.
-- Treat send, archive, trash, label, and move operations as explicit actions that require clear user intent.
+- Treat send, archive, trash, label, and move operations as explicit actions that require clear user intent in the current request. When the user directly asks for the action and the target messages are reasonably identifiable, proceed after the needed search or inspection instead of asking for another confirmation.
+- Ask a concise confirmation question before acting only when the target set is ambiguous, the match quality is low, the action would send externally with inferred content or recipients, or the user asked for analysis without asking for a mailbox change.
 - If a thread has multiple possible recipients or parallel conversations, identify the intended thread before drafting or acting.
 - When supporting context such as policy docs, CRM notes, or Slack history is unavailable, do not foreground that limitation unless it materially changes the recommendation. Prefer a draft grounded in the email thread itself, and mention missing internal context only as a brief confidence note when necessary.
 
