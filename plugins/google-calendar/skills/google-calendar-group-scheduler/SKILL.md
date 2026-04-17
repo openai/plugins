@@ -11,15 +11,17 @@ Use this skill when the scheduling problem is the task.
 
 - Use `get_availability` for attendee and room/resource busy windows once you know the concrete calendar IDs.
 - Use `search_events` when you need event context, candidate-room history, or a clearer read on what is creating conflicts.
+- Use `read_event` or `search_events_all_fields` when the attendee emails, manager contact, room email, or full source-event details need to be recovered from existing calendar events.
 
 ## Workflow
 
 1. Ground the scheduling problem first: date window, duration, timezone, required attendees, optional attendees, and any hard constraints such as "this week", "afternoons only", or "avoid lunch".
 2. Normalize the request into explicit candidate windows before ranking anything.
-3. Rank slots, do not enumerate everything. Optimize for a short list of strong options.
-4. Prefer slots that minimize conflict cost, are reasonably fair across timezones, and avoid fragmenting the day for the most constrained attendees.
-5. If no perfect slot exists, return the best compromise and state exactly who is impacted.
-6. If the meeting also needs a room, first narrow to attendee-compatible slots, then check likely rooms or resources against those shortlisted times.
+3. If attendee or room identities are referenced indirectly, such as "my manager", "same attendees", or "the room we usually use", search a bounded relevant window and read the likely source event before asking the user for contact details.
+4. Rank slots, do not enumerate everything. Optimize for a short list of strong options.
+5. Prefer slots that minimize conflict cost, are reasonably fair across timezones, and avoid fragmenting the day for the most constrained attendees.
+6. If no perfect slot exists, return the best compromise and state exactly who is impacted.
+7. If the meeting also needs a room, first narrow to attendee-compatible slots, then check likely rooms or resources against those shortlisted times.
 
 ## Ranking Heuristics
 
