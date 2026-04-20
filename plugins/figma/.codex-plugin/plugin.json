@@ -40,7 +40,7 @@
     ],
     "brandColor": "#0D99FF",
     "composerIcon": "./assets/figma-small.svg",
-    "logo": "./assets/figma.png",
+    "logo": "./assets/figma-small.svg",
     "screenshots": []
   }
 }
