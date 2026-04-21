@@ -1,0 +1,3 @@
+interface:
+  display_name: "Evaluate Skill"
+  short_description: "Evaluate a local Codex skill"

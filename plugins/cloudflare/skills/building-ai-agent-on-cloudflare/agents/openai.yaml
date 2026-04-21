@@ -1,0 +1,3 @@
+interface:
+  display_name: "Building AI Agents on Cloudflare"
+  short_description: "Build stateful AI agents on Cloudflare Workers"

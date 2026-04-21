@@ -1,0 +1,3 @@
+interface:
+  display_name: "Durable Objects"
+  short_description: "Build stateful coordination on Cloudflare Workers"

@@ -19,7 +19,7 @@
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://www.demandbase.com",
-    "privacyPolicyURL": "http://demandbase.com/privacy/",
+    "privacyPolicyURL": "https://demandbase.com/privacy/",
     "termsOfServiceURL": "https://www.demandbase.com/terms-of-use/",
     "defaultPrompt": [
       "List the top 10 VP contacts at Demandbase"

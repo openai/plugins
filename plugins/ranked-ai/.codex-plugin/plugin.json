@@ -20,7 +20,7 @@
     "capabilities": [],
     "websiteURL": "https://www.ranked.ai",
     "privacyPolicyURL": "https://www.ranked.ai/legal/privacy",
-    "termsOfServiceURL": "http://localhost:8000//www.ranked.ai/legal/terms",
+    "termsOfServiceURL": "https://www.ranked.ai/legal/terms",
     "defaultPrompt": [
       "Show rankings for project"
     ],

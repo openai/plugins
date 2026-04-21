@@ -1,0 +1,3 @@
+interface:
+  display_name: "Workers Best Practices"
+  short_description: "Write and review production-grade Workers code"

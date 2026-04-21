@@ -1,0 +1,3 @@
+interface:
+  display_name: "Evaluate Plugin"
+  short_description: "Evaluate a local Codex plugin"

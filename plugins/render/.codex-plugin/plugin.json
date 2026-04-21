@@ -32,7 +32,7 @@
     "websiteURL": "https://render.com/",
     "privacyPolicyURL": "https://render.com/privacy",
     "termsOfServiceURL": "https://render.com/terms",
-    "brandColor": "#8a05ff",
+    "brandColor": "#8A05FF",
     "defaultPrompt": [
       "How are my Render services doing?",
       "Help me validate my render.yaml for Render.",
