@@ -32,7 +32,9 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 - Always reference the spreadsheet, sheet name, and range when describing findings or planned edits.
 - For `batch_update` work, use a compact table or list with the request type, target range or sheet, proposed change, and reason.
 
-## References
+## Task To Reference Map
 
-- For raw Sheets write shapes and example `batch_update` bodies, read `./references/batch-update-recipes.md`.
-- For uploading a locally created `.xlsx` to Google Drive, read `./references/upload-xlsx-to-drive.md`.
+| Task area | Required reference file |
+| --- | --- |
+| Raw Sheets write shapes and example `batch_update` bodies | `references/batch-update-recipes.md` |
+| Uploading a locally created `.xlsx` to Google Drive | `references/upload-xlsx-to-drive.md` |
