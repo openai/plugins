@@ -1,6 +1,6 @@
 ---
 name: google-docs
-description: Connector-first Google Docs editing in local Codex plugin sessions with no Browser Use, node_repl-aware runtime boundaries, target-document checks, connector-readback verification, and reference routing for formatting, citations, tables, and write-safety.
+description: Connector-first Google Docs editing in local Codex plugin sessions with no Browser Use, target-document checks, connector-readback verification, and reference routing for formatting, citations, tables, and write-safety.
 ---
 
 # Google Docs
@@ -11,8 +11,8 @@ Use this skill for connector-first editing of Google Docs in Codex local-plugin 
 
 This file is intentionally minimal and only covers:
 
-1. connector loading and runtime boundaries in the Codex `node_repl` world
-2. mandatory routing to reference files
+1. connector loading and runtime boundaries in the Codex local-plugin environment
+2. stateful operation and mandatory routing to reference files
 
 All formatting, citation, table, and production rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
@@ -22,10 +22,15 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 This plugin is for the local Codex plugin environment.
 
 1. Use Google Docs connector or app tools directly from Codex when they are available.
-2. Use `node_repl` only for source processing or small JavaScript utilities that are not connector calls.
+2. Keep connector calls separate from any local helper processing.
 3. Do not use embedded-runtime helper snippets or assumed global connector bindings.
-4. Connector tools are not called from inside `node_repl`. Treat connector calls and `node_repl` helper work as separate execution surfaces.
-5. This environment has no Browser Use or rendered visual inspection. Do not require browser foregrounding, screenshots, cursor placement, rendered-page scans, or visible-tab checks.
+4. This environment has no Browser Use or rendered visual inspection. Do not require browser foregrounding, screenshots, cursor placement, rendered-page scans, or visible-tab checks.
+
+## Stateful Operation
+
+Maintain working state for the active document task instead of re-deriving context from scratch after every step.
+Keep the target URL, document id, `tabId`, source materials, resolved sections or tables, live indexes, write batches, and verification status current as the task progresses.
+Refresh that state before connector writes when source gathering, document switches, connector errors, or runtime resets could make it stale.
 
 ## Non-Negotiable Output Invariant
 
@@ -77,24 +82,29 @@ Before any content write or edit operation:
 3. Read `references/reference-request-shapes-and-write-safety.md`.
 4. Read every task-specific file from the matrix below.
 5. If the task spans multiple categories, read all matching files.
-6. If uncertain, read every file in `references/` except the archive.
+6. If uncertain, read every file in `references/`.
 
 Do not execute content edits until the required references are read in the current turn.
 
 ## Connector Load Checklist
 
-1. Confirm the exact target Google Doc URL and attach to that exact doc through the available Google Docs connector/app tools.
-2. Resolve and record the document id and, if present, the working `tabId`.
-3. Treat target-document identity as a hard precondition for connector writes.
-4. Before each edit pass, identify the section or range being edited through connector reads.
-5. Before every connector write batch, re-read `references/reference-foreground-guard.md` and re-confirm the target document id, URL, and `tabId` when applicable.
-6. Do not use Browser Use, visible tab checks, or rendered-page inspection as requirements in this environment.
-7. Read via connector first, using the current tool names for the Google Docs actions:
-   - get document text
-   - get full document structure
-8. If the document has tabs, resolve the correct `tabId` and carry it through all reads and writes.
-9. If the source doc is a template, create a copy before any edits.
-10. Do not claim the connector is unavailable, read-only, or blocked unless the current session has already established that through actual capability evidence in this run.
+1. Confirm the exact target Google Doc URL or document id and attach to that exact doc through the available Google Docs connector/app tools.
+2. If the user only gives a title or title keywords, use the connector/app search path to identify candidate docs before asking for a URL.
+3. Resolve and record the document id and, if present, the working `tabId`.
+4. Treat target-document identity as a hard precondition for connector writes.
+5. Before each edit pass, identify the section or range being edited through connector reads.
+6. Before every connector write batch, re-read `references/reference-foreground-guard.md` and re-confirm the target document id, URL, and `tabId` when applicable.
+7. Do not use Browser Use, visible tab checks, or rendered-page inspection as requirements in this environment.
+8. Read via connector first, choosing the narrowest current Google Docs action that fits the task:
+   - use `get_document_text` when paragraph text and indexes are enough
+   - use `get_document` when full structure, styles, tabs, or non-text elements matter
+   - use `find_document_text_range` when exact source text can anchor the target range
+   - use `get_paragraph_range` or `get_document_paragraph_range` when an index must expand to paragraph boundaries
+   - use `get_tables` before editing or rebuilding table content
+9. Re-read after substantial edits so later writes use live indexes and current structure.
+10. If the document has tabs, resolve the correct `tabId` and carry it through all reads and writes.
+11. If the source doc is a template, create a copy before any edits.
+12. Do not claim the connector is unavailable, read-only, or blocked unless the current session has already established that through actual capability evidence in this run.
 
 ## Task To Reference Map
 

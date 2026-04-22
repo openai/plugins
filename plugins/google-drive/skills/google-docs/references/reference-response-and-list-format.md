@@ -19,3 +19,9 @@ When to read: any task that writes answer content, takeaways, risks, or supporti
 7. If a section is not supposed to be a list, remove both real list formatting and any literal bullet glyphs carried over from source material.
 8. When normalizing a label-and-body section out of list form, remove list formatting from the label paragraphs too, not only the inserted answer paragraphs.
 9. Never leave an empty list paragraph behind after deleting or rewriting content. Clean up the dangling bullet explicitly.
+
+## Spacing And Native Formatting
+
+1. Do not add blank paragraphs solely for visual spacing. Use paragraph style, table structure, or section structure instead.
+2. Do not leave inserted content unformatted unless the user explicitly asks for plain text.
+3. Preserve existing headings, paragraph styles, links, dates, and table structure unless the user asks to change them.

@@ -5,6 +5,9 @@ When to read: any task that writes through connector APIs.
 ## `google_docs_batch_update` Request Shape
 
 Always pass `requests` as structured objects, not stringified JSON.
+Pass `write_control` as an object when using it, not as stringified JSON.
+For concurrency-sensitive writes, prefer the latest connector-visible revision id in `write_control`; set either `requiredRevisionId` or `targetRevisionId`, not both.
+Requests execute in order, so sequence dependent edits deliberately.
 
 Bad:
 
@@ -39,6 +42,20 @@ If document tabs exist, include the resolved `tabId` on all relevant reads and w
 - `batch_update`
 
 Missing `tabId` is a common reason edits land in the wrong location.
+
+## Request Key Reference
+
+When the connector supports the corresponding Google Docs request shape, use the native request key instead of plain-text approximations:
+
+- Text: `replaceAllText`, `insertText`, `deleteContentRange`, `replaceNamedRangeContent`
+- Text and paragraph formatting: `updateTextStyle`, `updateParagraphStyle`, `createParagraphBullets`, `deleteParagraphBullets`
+- Named ranges: `createNamedRange`, `deleteNamedRange`
+- Images and embedded objects: `insertInlineImage`, `replaceImage`, `deletePositionedObject`
+- Tables: `insertTable`, `insertTableRow`, `insertTableColumn`, `deleteTableRow`, `deleteTableColumn`, `updateTableColumnProperties`, `updateTableCellStyle`, `updateTableRowStyle`, `mergeTableCells`, `unmergeTableCells`, `pinTableHeaderRows`
+- Document layout and structure: `updateDocumentStyle`, `updateSectionStyle`, `insertPageBreak`, `insertSectionBreak`
+- Headers, footers, and notes: `createHeader`, `deleteHeader`, `createFooter`, `deleteFooter`, `createFootnote`
+- Tabs: `addDocumentTab`, `deleteTab`, `updateDocumentTabProperties`
+- People: `insertPerson`
 
 ## Range Safety
 
@@ -84,4 +101,4 @@ Before destructive writes:
 12. If one connector write into a target cell fails, do not generalize that failure to the whole table. Re-read the table, confirm the intended cell again, and retry with a smaller pilot write before changing methods.
 13. If a connector path looks fragile, prefer the smallest connector write that preserves exact target identity and supports immediate readback verification.
 14. A markdown draft, shadow section, or externalized answer set is not an acceptable substitute for filling the intended existing table unless the user explicitly approves that substitution.
-15. Do not let the absence of an obvious `node_repl` helper binding or convenience wrapper stand in for connector capability detection. If the session exposes connector tools, use them directly or verify their availability explicitly. This blind plugin has no browser-only editing fallback.
+15. Do not let the absence of an obvious convenience wrapper stand in for connector capability detection. If the session exposes connector tools, use them directly or verify their availability explicitly. This blind plugin has no browser-only editing fallback.

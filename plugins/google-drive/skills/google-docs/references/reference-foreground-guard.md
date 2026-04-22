@@ -14,7 +14,7 @@ It is not enough that:
 
 1. a URL was mentioned earlier
 2. a document title looks similar
-3. a previous connector read returned some Google Doc
+3. a connector read returned some Google Doc
 4. the intended section name exists in multiple documents or tabs
 
 Before writing, confirm the target document URL or id, document title when available, and resolved `tabId` when the document has tabs.

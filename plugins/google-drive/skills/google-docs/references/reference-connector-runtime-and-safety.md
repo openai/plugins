@@ -5,20 +5,20 @@ When to read: always, before any content edits.
 ## Runtime Attachment
 
 1. Confirm the target working doc URL and attach to that exact doc through the available Google Docs connector/app tools; do not leave editing work on a stale or different document.
-2. This plugin runs in a blind Codex local-plugin environment. Use `node_repl` for source processing or helper code, not for Google Docs connector calls.
-3. Connector calls are separate from `node_repl`; do not call Google Docs connector actions from inside `node_repl` or through embedded-runtime helper snippets.
+2. This plugin runs in a blind Codex local-plugin environment. Use Google Docs connector/app tools directly for document reads and writes.
+3. Keep connector calls separate from local helper processing, and do not rely on embedded-runtime helper snippets or assumed global connector bindings.
 4. Browser Use, visible-tab checks, cursor placement, screenshots, and rendered-page scans are unavailable and must not be required for success.
 5. Reuse the current resolved target document id and `tabId` when available, but re-confirm them before writes.
 6. Avoid repeated speculative attach or probe loops when a known document id and `tabId` can be reused.
 7. Treat target document identity as a hard precondition for connector writes.
 8. If the task uses source Docs, Slides, Slack, search results, or any other source material, re-confirm the destination Google Doc identity before writing.
-9. Establish connector capability from evidence, not assumption. A missing `node_repl` helper binding or an inconvenient table target is not proof that the Google Docs connector is read-only or unavailable.
+9. Establish connector capability from evidence, not assumption. Missing convenience wrappers or an inconvenient table target are not proof that the Google Docs connector is read-only or unavailable.
 
 ## Target-Document Invariant
 
 1. If the agent is using the Google Docs connector to modify a document, the connector-visible document id and `tabId` must match the intended target before the write happens.
 2. It is not enough that the URL was logged earlier or the title looks right.
-3. A previous target confirmation goes stale after source gathering, switching between documents or document tabs, connector errors, or runtime reset.
+3. Target confirmation goes stale after source gathering, switching between documents or document tabs, connector errors, or runtime reset.
 4. Re-read `reference-foreground-guard.md` before each write batch when there is any risk that target identity changed.
 5. End-state matters too: final readback must prove the intended destination document contains the intended edits.
 
@@ -26,7 +26,7 @@ When to read: always, before any content edits.
 
 1. Before each edit pass, resolve the target section, paragraph, table, or cell through connector reads.
 2. State or record the exact section name, range, table number, row, and column before writing when useful.
-3. Before final handoff, re-read the edited area from the connector rather than relying on prior offsets.
+3. Before final handoff, re-read the edited area from the connector rather than relying on saved offsets.
 
 ## Required Write-Batch Check
 
