@@ -1,17 +1,17 @@
 # Batch Update Recipes
 
-Use these patterns as copy-and-fill templates. Do not invent raw `batch_update` objects from scratch when one of these fits.
+Use these patterns as copy-and-fill request templates for `mcp__codex_apps__google_drive_batch_update_presentation`. Do not invent raw Slides request objects from scratch when one of these fits.
 
 ## Rules
 
 - Each request object must set exactly one request type key.
-- Use live `objectId` values from `get_slide`.
+- Use live `objectId` values from `mcp__codex_apps__google_drive_get_slide`.
 - Classify the target as a text box, shape, line or connector, or image before choosing a request family.
 - Remember that Slides `translateX` and `translateY` place the element's upper-left corner, not its center.
 - When centering a new element relative to another object, compute the target top-left from the desired visual center and the new element's rendered width and height.
 - Keep batches small.
 - Re-fetch a thumbnail after every batch.
-- If the batch changed visible layout or styling, continue through [visual-change-loop](./visual-change-loop.md) and do not stop before the third fresh review.
+- After every `mcp__codex_apps__google_drive_batch_update_presentation` call, continue through [thumbnail visual verification](./reference-thumbnail-visual-verification.md) and do not move on until the slide passes its recheck.
 - Prefer exact field masks. Do not use guessed field names.
 
 ## Duplicate a strong slide
@@ -650,7 +650,7 @@ Use this for a small benchmark, caption, or one-line helper label.
 ## Common Failure Modes
 
 - Wrong request key count: one object containing both `insertText` and `deleteObject`
-- Guessed IDs instead of IDs from `get_slide`
+- Guessed IDs instead of IDs from `mcp__codex_apps__google_drive_get_slide`
 - Updating the main headline value text and forgetting the smaller target or benchmark text box nearby
 - Treating an arrow or accent bar as “uneditable” without first checking whether it is a shape or a line
 - Using `updateShapeProperties` on a connector or `updateLineProperties` on a filled shape

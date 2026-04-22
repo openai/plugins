@@ -26,11 +26,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - Google Sheets range inspection, table cleanup, data restructuring, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
 - Google Sheets formula design or repair: use [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md).
 - Google Sheets chart creation or repair: use [google-sheets-chart-builder](../google-sheets-chart-builder/SKILL.md).
-- Google Slides deck summary, content edits, new deck creation, or import handoff: use [google-slides](../google-slides/SKILL.md).
-- Google Slides visual cleanup: use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
-- Google Slides PPT/PPTX/ODP import: use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
-- Google Slides repeated-layout repair: use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md).
-- Google Slides template migration: use [google-slides-template-migration](../google-slides-template-migration/SKILL.md).
+- Google Slides deck summary, content edits, new deck creation, import, visual cleanup, structural repair, or template migration: use [google-slides](../google-slides/SKILL.md).
 
 ## Routing Rules
 
@@ -55,7 +51,3 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - Sheets formulas: [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md)
 - Sheets charts: [google-sheets-chart-builder](../google-sheets-chart-builder/SKILL.md)
 - Slides: [google-slides](../google-slides/SKILL.md)
-- Slides visual iteration: [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md)
-- Slides import: [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md)
-- Slides template surgery: [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md)
-- Slides template migration: [google-slides-template-migration](../google-slides-template-migration/SKILL.md)
