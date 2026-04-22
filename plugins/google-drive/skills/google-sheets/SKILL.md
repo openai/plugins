@@ -7,15 +7,6 @@ description: Analyze and edit connected Google Sheets with range precision. Use 
 
 Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet, range, headers, and formulas that matter.
 
-## Default Routing
-
-Unless the user asks otherwise:
-
-1. New Google Sheets spreadsheet: first check whether the `$Spreadsheets` skill is installed, then check whether `$Excel` is installed.
-2. If either skill is installed, use the first available skill in that order to create a local `.xlsx`, then upload it with `mcp__codex_apps__google_drive_upload_file` as an `.xlsx` file.
-3. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
-4. Existing Google Sheets edits: use Google Sheets MCP directly.
-
 ## Workflow
 
 1. If the spreadsheet or tab is not already grounded, identify it first and read metadata before deeper reads or writes.
