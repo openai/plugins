@@ -109,9 +109,3 @@ Do not execute content edits until the required references are read in the curre
 | Native table creation, local table-style matching, population, styling, and acceptance checks | `references/reference-table-formatting-deep-dive.md` |
 | Figures, diagrams, image preparation, insertion, and figure-block placement | `references/reference-figures-and-image-insertion.md` |
 | Section completeness, source-list formatting, typography consistency, connector-observable comparison, and final production pass | `references/reference-section-completeness-and-final-pass.md` |
-
-## Archive
-
-Historical context only:
-
-- `references/reference-full-skill-archive-2026-03-11.md`
