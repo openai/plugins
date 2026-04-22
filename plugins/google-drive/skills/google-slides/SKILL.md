@@ -1,157 +1,139 @@
 ---
 name: google-slides
-description: Inspect, create, import, summarize, and update Google Slides presentations through connected Google Slides data. Use when the user wants to find a deck, read slide structure, summarize a presentation or specific slide, understand charts, graphs, or other slide visuals by combining slide text with thumbnail-based image understanding, create a new presentation, import a `.ppt`, `.pptx`, or `.odp`, or make general content edits in Google Slides. For visual polish on an existing deck, such as formatting cleanup, alignment fixes, overflow cleanup, or slide-by-slide deck cleanup, prefer `google-slides-visual-iteration`.
+description: Google Slides work for finding, reading, summarizing, creating, importing, visual cleanup, template migration, structural repair, and content edits in native Slides decks.
 ---
 
 # Google Slides
 
-## Overview
+Use this skill for Google Slides work in Codex local-plugin sessions.
 
-Use this skill as the default entrypoint for Google Slides work. Stay here for deck search, summaries, general content edits, imports, native deck copies, and new presentation creation. If the user primarily wants to make an existing deck look better by fixing formatting, overflow, spacing, alignment, or visual polish, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
-Use this base skill when the request spans multiple Google Slides workflows or when no more focused Slides skill is a better fit.
-Keep chart refresh and chart replacement workflows here when the job is to update a chart area from a connected source, such as Google Sheets, without broader deck redesign.
-For slide-reading and summary tasks, combine structural deck reads with slide thumbnails when the slide contains charts, graphs, diagrams, screenshots, or other content that cannot be understood from text alone.
-When the request is to replace screenshot placeholders or other static chart content with charts from an existing connected source, such as Google Sheets, stay in this reference unless the job is mainly visual cleanup. If the source is Google Sheets, read [sheets-chart-replacement](./sheets-chart-replacement.md).
-When a write can change rendered text flow, geometry, colors, shapes, lines, connectors, charts, arrows, or accent bars on a live slide, read [visual-change-loop](./visual-change-loop.md) before the first write even if the request is not primarily visual cleanup.
+## Purpose Of This File
 
-## Specialized Skills
+This file is intentionally minimal and only covers:
 
-- For importing a local presentation file into native Google Slides first, prefer [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
-- For visual cleanup of an existing deck, prefer [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
-- For repairing broken repeated layout structure inside a deck, prefer [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md).
-- For moving content onto a company or team template deck, prefer [google-slides-template-migration](../google-slides-template-migration/SKILL.md).
+1. connector loading and runtime boundaries in the Codex `node_repl` world
+2. mandatory routing to reference files
+3. routing to workflow references
 
-## Required Tooling
+Detailed write, chart, thumbnail, creation, and final-pass rules live in `references/`.
+Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
 
-Confirm the runtime exposes the relevant Google Slides actions before editing:
-- `search_presentations` when the user does not provide a target deck
-- `get_presentation` or `get_presentation_text`
-- `get_slide`
-- `batch_update`
-- `create_presentation` for new decks
-- `create_from_template` when the user wants a translated, branded, or otherwise transformed copy of an existing Google Slides deck
-- `import_presentation` when starting from a local `.ppt`, `.pptx`, or `.odp`
-- `get_slide_thumbnail` when visual verification matters
+## Runtime Model
 
-## Workflow
+1. Use Google Slides connector or app tools directly from Codex when they are available.
+2. Use `node_repl` only for source processing or small JavaScript utilities that are not connector calls.
+3. Do not use embedded-runtime helper snippets or assumed global connector bindings.
+4. Connector tools are not called from inside `node_repl`. Treat connector calls and `node_repl` helper work as separate execution surfaces.
+5. Browser Use is not the Slides editing path. Use connector reads, slide structure, and thumbnails.
 
-1. Identify the target presentation.
-- If the user names a deck but does not provide a URL, search for it first.
-- If the user wants a new deck that preserves the structure or layout of an existing Google Slides deck, create the working copy with `create_from_template` before editing so the output stays native to Google Slides.
-- If the user provides a local presentation file, tell the user you are importing it into native Google Slides first, then use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
+## Default Routing
 
-2. Read before writing.
-- Use `get_presentation` or `get_presentation_text` to capture slide order, titles, and overall structure.
-- When the request rewrites, translates, or updates multiple slides, follow [deck-scope-verification](./deck-scope-verification.md) before the first write so the full in-scope slide list is explicit.
-- Use `get_slide` before any slide-level write so object IDs and layout context come from the live deck.
-- For Q&A, evidence-finding, or "where in the deck is X?" requests, build an explicit candidate slide list first. Do not stop at the first keyword hit if the topic could appear across a section, in appendix evidence, or in both summary and detail slides.
-- When answering a topic question such as churn, pipeline, or ARR, inspect every plausible slide in the relevant section before concluding that the answer lives on only one slide.
-- For chart refresh or chart replacement work, follow [chart-refresh-workflows](./chart-refresh-workflows.md). Do not rely on `get_presentation_text` alone for chart workflows because chart-only slide elements may be omitted from text-only reads.
-- If the task is to swap screenshot placeholders or other static chart content for charts from an existing connected source, keep the source artifacts grounded before the first write. If the source is Google Sheets, also read [sheets-chart-replacement](./sheets-chart-replacement.md) so chart IDs, placeholder geometry, and write scope stay grounded.
-- When creating or updating a deck from multiple source presentations, identify the relevant source decks and slides before writing. Keep the source facts tied to the target slide plan so the final synthesis can be checked against the material that supported it.
-- For slide summaries or inspection, do not rely on text extraction alone when a slide contains charts, graphs, screenshots, diagrams, or image-heavy content.
-- Use `get_slide_thumbnail` alongside text/structure reads when visual evidence matters so the summary reflects both what the slide says and what the slide shows.
-- If a candidate slide has little useful extracted text but may still contain relevant evidence in a chart, screenshot, or diagram, inspect its thumbnail before ruling it out.
-- If the thumbnail response includes an `image_asset_pointer`, image content part, or other rendered image artifact, inspect that returned image directly as the slide image input.
-- If the thumbnail response only exposes a thumbnail URL or `contentUrl`, curl the rendered image to a local PNG, for example `curl -L "$contentUrl" -o /tmp/slides-thumb-<slide-id>.png`, then inspect that local image before making or reporting visual judgments.
-- Do not claim visual inspection from slide JSON, text extraction, geometry, or thumbnail metadata alone.
-- Treat the slide page size as a hard boundary for every shape, text box, image, and color band you create.
-- If the write can change anything visible on the slide, such as text wrapping, shape styling, arrow direction, accent bars, chart placement, or connector styling, follow [visual-change-loop](./visual-change-loop.md) before the first `batch_update`.
+Unless the user asks otherwise:
 
-3. Apply default creation polish when making a new presentation.
-- Do not ask the user to specify visual styling unless the request depends on a specific brand, template, or aesthetic.
-- First create the base version of each slide with the right structure, content, and layout. Then do a second polish pass before moving on.
-- Make the slides feel pretty and visually appealing by default, not merely correct.
-- Make new decks look intentionally designed by default rather than leaving them as raw black text on white slides.
-- Keep the styling lightweight but visibly designed: use a restrained color palette, clear title/body hierarchy, comfortable spacing, and simple visual accents that improve scanability.
-- Do not default to a plain white background with only colored title text. Use background color, tinted sections, colored bands, or colored cards so most slides have visible color surfaces, not just colored text.
-- Add graphics, icons, diagrams, or simple visual motifs when they help explain the point or make the slide feel designed, but do not add decorative elements that overwhelm the content.
-- In the polish pass, improve color, spacing, hierarchy, alignment, and slide-level composition without changing the meaning of the content.
-- Keep all content inside a safe content frame inset from the slide edges, including a visible bottom margin. If you use a full-bleed header band, footer band, or background block, size it exactly to the slide bounds rather than past them.
-- Keep slide titles to one line at most. If a title would wrap, shorten it or split the content across slides instead of using a multi-line title.
-- When content is naturally a list of points, render it as an actual bullet list instead of stacked prose lines or repeated paragraph blocks.
-- When using bullets, put each bullet on its own line. Do not combine multiple bullets into one paragraph or line, and do not fake bullets with plain paragraphs when true list formatting is available.
-- If body text, cards, or labels would run wide or tall, shorten them, reduce density, or split the content across slides instead of letting any element exceed the slide frame.
-- Use color to create structure such as title emphasis, section separators, callout boxes, light background shapes, or full-slide background treatment, but do not overdecorate the deck.
-- Preserve user control over substantive design choices. Apply a clean default look, but do not invent a heavy brand system or overly specific theme unless the user asks.
+1. New Google Slides deck: first check whether the `PowerPoint` skill is installed.
+2. If `PowerPoint` is installed, create a local `.pptx` with that skill, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
+3. If `PowerPoint` is not installed, create the deck directly with Google Slides MCP.
+4. Existing Google Slides edit: use Google Slides MCP directly.
 
-4. Route only when the job is narrower than general Slides work.
-- Stay in this skill for deck summaries, slide-by-slide reviews, new presentation creation, chart refresh or chart replacement from a connected chart source such as Google Sheets, small content edits, and isolated formatting fixes on specific slides.
-- Use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md) when the source is a local presentation file.
-- Use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) when the user asks to fix a slide visually, clean up formatting, make a deck look better, or correct spacing, overlap, alignment, cropping, density, overflow, or other layout cleanup where the slide image matters.
-- Stay in this skill when the request spans narrow source-data edits, such as Google Sheets edits, plus chart replacement in Slides, and route to visual iteration only when post-replacement layout cleanup is the primary job.
-- Use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md) when the repeated layout structure is broken.
-- Use [google-slides-template-migration](../google-slides-template-migration/SKILL.md) when content should move onto a company or team template deck.
+## Non-Negotiable Output Invariant
 
-5. Keep writes grounded.
-- Restate the target slide numbers, titles, or object IDs before making changes.
-- Prefer small `batch_update` requests over large speculative batches.
-- Send `batch_update` requests as structured request objects in the expected tool shape, not as JSON strings or stringified arrays.
-- For chart refresh or chart replacement requests, inspect the live slide structure first and decide whether the slide contains a linked chart, a shape placeholder, or static chart content.
-- If the slide already contains a linked chart and the user wants the existing chart updated in place, prefer a raw chart refresh request in `batch_update`, then verify with a thumbnail that the chart itself updated.
-- If the slide contains a shape placeholder or static chart content and the user wants the chart graphic updated, treat that as a chart replacement workflow rather than a failed refresh.
-- When a source workbook already contains matching charts, reuse those existing charts before creating temporary or new charts. Only create a new source chart when no suitable existing chart is available.
-- For shape placeholders, replace the placeholder object with the chart graphic directly and preserve the intended chart-area footprint.
-- For static chart content, preserve the existing chart footprint as closely as possible and replace the old graphic rather than layering a second chart on top.
-- If the user does not require the result to stay linked to the source workbook, prefer a non-linked chart insertion path when it reduces extra link behavior without changing the visible result.
-- Remove chart-area instructional text that becomes obsolete after replacement, such as text containing `PLACEHOLDER`, `INSERT`, or explicit directions to replace the static content, unless the user explicitly asks to keep it.
-- After chart replacement, verify both that the chart rendered in the intended area and that obsolete placeholder or instructional text no longer remains on the slide.
-- For deck-wide or multi-slide content edits such as translation, terminology normalization, or repeated copy updates, work in explicit slide spans and re-read the edited span before advancing.
-- When the user asks to review, show, summarize, or confirm edited content, re-read the affected slides after the write and base the response on the post-edit deck state rather than the intended diff or a successful `batch_update` response.
-- In multi-slide mode, confirm the last slide in the just-edited span actually changed before starting the next span. Do not assume coverage from object ID numbering or from a successful write response alone.
-- Before calling a multi-slide edit done, reconcile the final deck against the original slide checklist so no slide in scope was skipped.
-- When the user asked for a live Google Slides deck, keep the workflow native. Do not export to a downloadable file or ask for a local re-upload when `create_from_template`, `create_presentation`, or `import_presentation` can keep the work inside Google Slides.
-- If the task depends on how the slide looks, fetch a thumbnail before editing and verify again after the write.
-- If the task is to summarize, interpret, or sanity-check a visual slide, fetch a thumbnail and use it as evidence for charts, graphs, screenshots, diagrams, and other non-textual content rather than summarizing only the extracted text.
-- When fixing slide formatting, use a tight loop: take a thumbnail, identify visible spacing/alignment/cropping/regression issues, send a focused `batch_update`, then take another thumbnail to verify the result.
-- Run at least 3 verified formatting passes when layout or styling changed, and continue to a fourth only if the slide still has meaningful issues. Switch to [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md) if the job turns into slide-by-slide formatting across a larger set of slides.
-- After creating a new slide or applying layout-heavy changes, immediately verify that no text, shape, image, or color band extends beyond the slide boundary. If the editor would require horizontal or vertical scrolling to see the whole slide, or if the lowest text sits in the bottom safety margin, treat that as a failure and fix it before moving on.
-- When supplying `objectId` values in `batch_update`, use valid Google Slides IDs that are 5-50 characters long and start with an alphanumeric character or `_`. Prefer descriptive IDs like `slide02`, `slide02_title`, or `slide02_body`; do not use very short IDs like `s2` or `i0`.
-- If you need to create a slide and edit its placeholders in the same `batch_update`, create the slide with valid placeholder ID mappings first, then reference those placeholder IDs in later requests in the same batch.
-- Any write that can change visible layout or styling must follow [visual-change-loop](./visual-change-loop.md). Do not stop at a successful API response without thumbnail verification.
+Inserted or edited content must match the target deck's existing structure and connector-observable presentation closely enough that it reads as native deck content.
+Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder text, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
 
-## Write Safety
+For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
 
-- Preserve slide order, titles, body text, charts, notes, and supporting evidence unless the user asks for a change.
-- Use live object IDs from the current deck state. Never guess IDs or request shapes.
-- Before deleting slides, rewriting multiple slides, or changing the layout pattern across a section, state exactly which slides will change and what kind of change you are about to make.
-- Do not promise pixel-perfect fidelity when importing Office formats into Google Slides.
-- When creating a new deck, default to readable structure plus visible color treatment, not a bare text dump.
-- Never leave text boxes, shapes, or header bands hanging outside the slide frame unless they are intentional full-bleed elements sized exactly to the slide edges.
+## Canonical Workflow Bias
 
-## Output
+Prefer one simple proven workflow over a large tree of recovery branches.
+When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
+Do not let accumulated edge-case guardrails turn a straightforward Slides task into a long blocker-analysis exercise.
 
-- Reference slide numbers and titles when summarizing or planning edits.
-- For slide summaries that involve charts, graphs, or other visuals, distinguish clearly between what comes from extracted text and what comes from thumbnail-based visual understanding.
-- For Q&A or evidence-location requests, say which slide range or candidate slides were inspected before giving the answer. Do not imply exhaustive coverage if you only checked one likely slide.
-- For chart update requests, say explicitly whether the chart itself was refreshed, whether a placeholder or static chart content block was replaced from an existing source chart such as a Google Sheets chart, whether a new source chart had to be created first, or whether only surrounding text changed.
-- Say whether any placeholder or instructional chart text remained after the update.
-- Distinguish clearly between a proposed plan and changes that were actually applied.
-- Say which presentation and slides were read or changed.
-- For multi-source synthesis, name the source presentations and slides used plus the final presentation and slides that contain the synthesized material, with enough concise evidence for the user to verify the result.
-- When reporting edited content, use the post-edit readback if the task asked to review, show, summarize, or confirm the result.
-- Call out any remaining issues that need a narrower workflow or human design judgment.
+For deck creation and editing tasks, prefer this general sequence when viable:
 
-## Example Requests
+1. gather the required source material
+2. attach to or create the destination presentation
+3. read the deck structure and target slides
+4. establish the slide checklist or slide plan
+5. write small, grounded batches with live object IDs
+6. verify through connector readback and post-batch thumbnails
+7. stop once the deck is clean, complete, and scannable
 
-- "Find the Q2 board deck and summarize the storyline slide by slide."
-- "Read slide 8 and summarize both the chart and the surrounding text."
-- "Which slides in this deck discuss churn, and what does each one say?"
-- "Refresh the linked chart on slide 6 from its source workbook and verify the updated visual."
-- "Replace the ARR, churn, and pipeline static chart content with charts from the metrics spreadsheet without leaving placeholder text behind."
-- "Open this Google Sheet and Google Slides deck, make a few targeted chart-data edits, and replace the chart placeholder screenshots with the existing Sheets charts."
-- "Create a new Google Slides presentation from this outline."
-- "Translate this deck into Japanese and save it as a new Google Slides deck without leaving Slides."
-- "Import this PPTX into Google Slides and then clean up the layout."
-- "Update slide 6 so the title and chart description match the latest numbers."
+If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
 
-## Light Fallback
+## Release-Blocker Checklist
 
-If the presentation is missing or the Google Slides connector does not return deck data, say that Google Slides access may be unavailable, the wrong deck may be in scope, or the file may need to be imported first.
+Before final handoff, explicitly verify these with connector readback and thumbnails where relevant:
 
-## References
+1. the target presentation id, title, and URL are the intended deck
+2. every edited slide in scope was read after the write
+3. every slide touched by a batch update has a fresh post-write thumbnail check
+4. every changed chart is refreshed or replaced in the intended footprint, with obsolete placeholder text removed unless the user asked to keep it
+5. every new or edited shape, image, table, and text box stays inside the slide bounds unless intentionally full-bleed
+6. no slide in a multi-slide task was skipped, duplicated, or left in a mixed old/new state
+7. no visual property is claimed as verified unless connector data or a fresh thumbnail supports it
+8. final presentation output is an editable Google Slides deck, not one PNG per slide; verify editable components with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`
 
-- [deck-scope-verification](./deck-scope-verification.md)
-- [chart-refresh-workflows](./chart-refresh-workflows.md)
-- [sheets-chart-replacement](./sheets-chart-replacement.md)
-- [visual-change-loop](./visual-change-loop.md)
+**Slides**
+
+* Content: ensure the content covers everything requested by the user and ensure the storytelling of the overall deck is coherent.
+* Search: use `web.run`'s `image_query` for efficient image search instead of `search_query`.
+* Visual assets: DO NOT use Python to draw any images; DO NOT use programmatic vector shapes for visuals; DO NOT use programmatic drawings of any sort. Use image search or imagegen instead! By default, DO NOT reuse the same image more than once (unless it's a background). Not only do you need to prepare visuals for the main concept, you also need to get decorative visuals. Before sourcing or generating visuals, be mindful of the desired aspect ratio, placement, and cropping options on the slide. For example, if you intend to place text to the left of the image containing a person, you should ask imagegen to put the person on the right side of the image.
+* Default styling: use one composition instead of a collection of UI panels. UI-like styling typically includes card grids, pills, badges, button-like text boxes, tab or navigation patterns, repeated modular panels, dense dashboard-style layouts, and other component-library aesthetics that imply interactivity. Use stylized text boxes less, favoring a flat structure on the canvas.
+* Visual storytelling: Prioritize visual storytelling by default, favoring real images, generated visuals, diagrams, plots, and charts to convey concepts whenever appropriate rather than relying solely on plain text, especially when the user does not provide assets. As a general rule of thumb, aim for approximately 2-4 visual assets per slide, including meaningful styling elements, adjusting as needed based on the topic, complexity, and overall theme of the task.
+* Connectors in diagrams: In the final implementation, create connectors (arrows/edges) before creating entity nodes, so edges appear behind nodes and never cross through node shapes or labels. If this ordering is awkward during early iteration, you may create nodes first in the initial draft, then switch to connectors-first in the revised code.
+* Overlap: You MUST fix ALL unintended overlap errors before you deliver the slides! It's of paramount importance!
+* Font size: When a template is provided, match its font sizes. Avoid overly small text. When no template or style guidance is given, a good rule of thumb is at least 42pt for deck titles, 32pt for slide titles, and 17pt for body text. If you see overflow/overlap, try cutting content before shrinking text further to improve text layout.
+* Text layout: when there is too much text, shorten it. Inspect visually for unexpected text wrapping. NEVER put 2 lines of text into a title/banner text box meant for a single line of text.
+* Diagrams implementation: use native PowerPoint shapes for simple diagrams; use Graphviz for complex relational/topological/network-like diagrams; use imagegen for highly aesthetic, illustrative, or scientific infographic diagrams (e.g. chemical structures, circuit diagrams, etc.).
+* Title slide: Keep the title slide minimal and simple. Avoid cramming in too much information.
+* When to use diagrams: Prefer data-driven charts or plots when applicable; use diagrams only when they improve the storytelling (not to fill empty space).
+
+If any check fails, the task is not complete.
+
+## Required Read Order (No Skips)
+
+Before any content write or edit operation:
+
+1. Read `references/reference-connector-runtime-and-safety.md`.
+2. Read `references/reference-target-presentation-guard.md`.
+3. Read `references/reference-google-slides-mcp-discovery.md`.
+4. Read `references/reference-request-shapes-and-write-safety.md`.
+5. Read `references/reference-thumbnail-visual-verification.md`.
+6. Read every task-specific file from the matrix below.
+7. If the task spans multiple categories, read all matching files.
+8. If uncertain, read every file in `references/`.
+
+Do not execute content edits until the required references are read in the current turn.
+
+## Connector Load Checklist
+
+1. Confirm the exact target Google Slides URL or presentation id.
+2. Resolve and record the presentation id, title, slide count, and target slide object IDs.
+3. Treat target-presentation identity as a hard precondition for connector writes.
+4. Before each edit pass, identify the slide, object IDs, and current geometry through connector reads.
+5. Before every connector write batch, re-read `references/reference-target-presentation-guard.md` and re-confirm the target presentation and slide object IDs.
+6. Read via connector first, using the current Google Slides actions:
+   - get presentation, text, or outline
+   - get slide
+   - get slide thumbnail before and after batch updates, and when visual evidence matters
+7. If the source is a template or existing deck that should be preserved, create a copy before editing.
+8. Do not claim the connector is unavailable, read-only, or blocked unless the current session has established that through capability evidence.
+
+## Task To Reference Map
+
+| Task area | Required reference file |
+| --- | --- |
+| Runtime attachment, target identity, safety, and recovery | `references/reference-connector-runtime-and-safety.md` |
+| Confirming the target presentation before every write batch | `references/reference-target-presentation-guard.md` |
+| Google Slides MCP discovery, connector wrapper vs official Slides API mapping, method catalog, and batchUpdate request catalog | `references/reference-google-slides-mcp-discovery.md` |
+| Batch update request shape, live object IDs, geometry, and write safety | `references/reference-request-shapes-and-write-safety.md` |
+| Deck summaries, candidate slides, multi-slide edits, translation, or deck-wide changes | `references/reference-read-before-write-and-deck-scope.md` |
+| Any layout, styling, image, chart, or placement change | `references/reference-thumbnail-visual-verification.md` |
+| New deck creation or copy-from-template workflows | `references/reference-new-deck-and-final-pass.md` |
+| Local `.ppt`, `.pptx`, or `.odp` import | `references/reference-import-presentation.md` |
+| Visual cleanup, overflow, spacing, alignment, or deck polish | `references/reference-visual-iteration.md` |
+| Migrating source content onto a template deck | `references/reference-template-migration.md` |
+| Detailed template migration playbook | `references/reference-migration-playbook.md` |
+| Template migration archetype mapping | `references/reference-slide-archetype-mapping.md` |
+| Chart refresh, chart replacement, or Sheets-sourced chart work | `references/reference-chart-workflows.md` |
+| Copy-and-fill raw batch update examples | `references/reference-batch-update-recipes.md` |

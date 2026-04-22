@@ -1,77 +1,121 @@
 ---
 name: google-docs
-description: Inspect and edit Google Docs documents with raw document reads and index-aware batch updates. Use when the user wants to read document text or structure, find paragraph indexes, rewrite sections in place, edit tables, or apply style-aware document changes with Google Docs tools.
+description: Connector-first Google Docs editing in local Codex plugin sessions with no Browser Use, target-document checks, connector-readback verification, and reference routing for formatting, citations, tables, and write-safety.
 ---
 
 # Google Docs
 
-Use this guide for precise Google Docs reading, editing, and creation.
+Use this skill for connector-first editing of Google Docs in Codex local-plugin sessions where Browser Use and rendered visual inspection are unavailable.
 
-## Read Path
+## Purpose Of This File
 
-- If you only know the doc title or title keywords, use `search` first instead of asking for a URL.
-- Prefer `get_document` for Docs-native reads. It returns the raw document and tab content, and replaces the synthesized `get_document_text` view that is being phased out.
-- Prefer `find_document_text_range` over hand-picked indexes when you can anchor on exact text.
-- Use `get_document_paragraph_range` when you have an index inside a paragraph and need its full boundaries.
-- Use `get_document_tables` before editing or rebuilding table content.
-- If the doc has tabs, use `get_document` to identify the right tab and carry `tab_id` through follow-up reads.
-- Re-read after substantial edits so later writes use live indexes.
+This file is intentionally minimal and only covers:
 
-## Workflow
+1. connector loading and runtime boundaries in the Codex local-plugin environment
+2. stateful operation and mandatory routing to reference files
 
-1. Read before writing.
-- Identify the exact section, heading structure, paragraph boundaries, table locations, and current formatting.
-- If the target is ambiguous, summarize the candidate section first and make the scope explicit in the response.
-- For read-only answers, quote or closely paraphrase the specific retrieved line or paragraph from `get_document` that supports the answer so the response stays visibly grounded in the document.
+All formatting, citation, table, and production rules live in `references/`.
+Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
 
-2. Find live indexes.
-- Use `find_document_text_range` when you can anchor on exact text.
-- Use `get_document` when you need to inspect the current body, tab content, or nearby structure before resolving ranges.
-- Use `get_document_paragraph_range` when you need a single paragraph's range around an index.
-- Do not guess offsets after prior writes.
-- After many edits, call `get_document` again before the next batch.
+## Runtime Model
 
-3. Build a `batch_update_document`.
-- All document changes go through `batch_update_document`.
-- IMPORTANT: `batch_update_document.requests` must be an array of structured request objects. Do not JSON-stringify Docs API requests.
-- `batch_update_document.write_control` must also be an object, and not a JSON-stringified string.
-- Requests execute in order, so sequence dependent edits deliberately.
-- For concurrency-sensitive writes, prefer `write_control` with the latest `revisionId`. Set either `requiredRevisionId` or `targetRevisionId`, never both.
+This plugin is for the local Codex plugin environment.
 
-4. Preserve Docs-native formatting.
-- Use heading levels and paragraph styles to organize the document.
-- Build lists with inserted text plus Docs list or paragraph styling. Do not fake bullets or numbering with literal `-`, `*`, or `1.` characters alone.
-- Do not add blank paragraphs for spacing. Use styles instead.
-- Do not leave the document unformatted unless the user explicitly asks.
+1. Use Google Docs connector or app tools directly from Codex when they are available.
+2. Keep connector calls separate from any local helper processing.
+3. Do not use embedded-runtime helper snippets or assumed global connector bindings.
+4. This environment has no Browser Use or rendered visual inspection. Do not require browser foregrounding, screenshots, cursor placement, rendered-page scans, or visible-tab checks.
 
-5. Verify the write.
-- After finishing all edits, call `get_document` one more time.
-- Confirm the text landed in the intended place and indexes still line up before ending.
+## Stateful Operation
 
-## Allowed `batch_update_document` Request Types
+Maintain working state for the active document task instead of re-deriving context from scratch after every step.
+Keep the target URL, document id, `tabId`, source materials, resolved sections or tables, live indexes, write batches, and verification status current as the task progresses.
+Refresh that state before connector writes when source gathering, document switches, connector errors, or runtime resets could make it stale.
 
-- Text: `replaceAllText`, `insertText`, `deleteContentRange`, `replaceNamedRangeContent`
-- Text and paragraph formatting: `updateTextStyle`, `updateParagraphStyle`, `createParagraphBullets`, `deleteParagraphBullets`
-- Named ranges: `createNamedRange`, `deleteNamedRange`
-- Images and embedded objects: `insertInlineImage`, `replaceImage`, `deletePositionedObject`
-- Tables: `insertTable`, `insertTableRow`, `insertTableColumn`, `deleteTableRow`, `deleteTableColumn`, `updateTableColumnProperties`, `updateTableCellStyle`, `updateTableRowStyle`, `mergeTableCells`, `unmergeTableCells`, `pinTableHeaderRows`
-- Document layout and structure: `updateDocumentStyle`, `updateSectionStyle`, `insertPageBreak`, `insertSectionBreak`
-- Headers, footers, and notes: `createHeader`, `deleteHeader`, `createFooter`, `deleteFooter`, `createFootnote`
-- Tabs: `addDocumentTab`, `deleteTab`, `updateDocumentTabProperties`
-- People: `insertPerson`
+## Non-Negotiable Output Invariant
 
-## Write Rules
+Inserted or edited content must match the surrounding document's existing structure and connector-observable presentation closely enough that it should read as native template content.
+This is launch-blocking, not cosmetic. Treat missing section hierarchy, mismatched heading level, font family, font size, bolding, link coverage, table styling, or template-shape drift visible in connector data as a failed output that must be corrected before handoff. Do not claim rendered visual verification when the model cannot see the document.
 
-- Preserve existing headings, styles, links, dates, and table structure when editing unless the user asks to change them.
-- Use multiple heading levels to organize a doc unless the user instructs otherwise.
-- Treat large rewrites, deletions, tab changes, layout changes, and table restructuring as explicit actions.
-- When similar headings or repeated text exist, identify the exact target section before editing.
+For presentation-oriented documents, structural completeness is not enough. A document can have all requested sections, headings, tables, and placeholders resolved while still being too dense, monotonous, or hard to scan. Treat readability, hierarchy, and appropriate use of visual devices as part of completion, not as optional polish.
 
-## Read-Only Answers
+## Canonical Workflow Bias
 
-- When the user only asked to read, summarize, or answer from the doc, prefer the lightest read path that still keeps the answer grounded in the raw document response.
-- Support the answer with a short quoted phrase or a close paraphrase from the retrieved text instead of giving an ungrounded conclusion.
+Prefer one simple proven workflow over a large tree of recovery branches.
+When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
+Do not let accumulated edge-case guardrails turn a straightforward document task into a long blocker-analysis exercise.
+For document-creation and document-editing tasks, prefer this general sequence when viable:
 
-## Fallback
+1. gather the required source material
+2. create or attach to the destination document
+3. establish the heading and section skeleton
+4. fill the core text or structured content
+5. decide which content should stay prose, become a table, become a short card, or become a compact visual block
+6. verify and normalize formatting
+7. add secondary elements such as tables, links, or connector-supported figures only after the core structure is stable
+8. stop once the document is clean, complete, and scannable
 
-If document content or write tools are unavailable, say that Google Docs access or tooling is missing and ask the user to reconnect or clarify the target document.
+For any secondary element that cannot be verified through connector reads, either use a connector-supported path with readback or clearly state the verification limit.
+
+If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
+
+## Release-Blocker Checklist
+
+Before final handoff, explicitly verify these with connector readback:
+
+1. every new or edited table has the intended rows, columns, cell text, table anchor, style requests, and column widths where the connector exposes them
+2. every new or edited heading, label, and body block matches surrounding connector-visible style fields such as named style, font family, font size, bolding, links, and list state
+3. every inserted figure or image uses a connector-supported insertion path and is present in connector readback; if rendered placement cannot be inspected, say so plainly
+4. when available, export the document as `text/html` through Google Drive and use the generated markup/CSS as a rendered-structure proxy for heading tags, font families, font sizes, table cells, fills, widths, and paragraph ordering
+5. the document is not relying on one repeated structure everywhere; for example, a long run of similar tables or identical header colors should be treated as a design smell unless the source template clearly calls for it
+6. if neither connector readback nor HTML export exposes enough data to prove a rendered visual property, do not assert that property as verified
+
+If any check fails, the task is not complete.
+If a simple known-good workflow is available and the run instead collapses into repeated fallback experiments, the task is also not complete.
+
+## Required Read Order (No Skips)
+
+Before any content write or edit operation:
+
+1. Read `references/reference-connector-runtime-and-safety.md`.
+2. Read `references/reference-foreground-guard.md` for target-document identity checks.
+3. Read `references/reference-request-shapes-and-write-safety.md`.
+4. Read every task-specific file from the matrix below.
+5. If the task spans multiple categories, read all matching files.
+6. If uncertain, read every file in `references/`.
+
+Do not execute content edits until the required references are read in the current turn.
+
+## Connector Load Checklist
+
+1. Confirm the exact target Google Doc URL or document id and attach to that exact doc through the available Google Docs connector/app tools.
+2. If the user only gives a title or title keywords, use the connector/app search path to identify candidate docs before asking for a URL.
+3. Resolve and record the document id and, if present, the working `tabId`.
+4. Treat target-document identity as a hard precondition for connector writes.
+5. Before each edit pass, identify the section or range being edited through connector reads.
+6. Before every connector write batch, re-read `references/reference-foreground-guard.md` and re-confirm the target document id, URL, and `tabId` when applicable.
+7. Do not use Browser Use, visible tab checks, or rendered-page inspection as requirements in this environment.
+8. Read via connector first, choosing the narrowest current Google Docs action that fits the task:
+   - use `get_document_text` when paragraph text and indexes are enough
+   - use `get_document` when full structure, styles, tabs, or non-text elements matter
+   - use `find_document_text_range` when exact source text can anchor the target range
+   - use `get_paragraph_range` or `get_document_paragraph_range` when an index must expand to paragraph boundaries
+   - use `get_tables` before editing or rebuilding table content
+9. Re-read after substantial edits so later writes use live indexes and current structure.
+10. If the document has tabs, resolve the correct `tabId` and carry it through all reads and writes.
+11. If the source doc is a template, create a copy before any edits.
+12. Do not claim the connector is unavailable, read-only, or blocked unless the current session has already established that through actual capability evidence in this run.
+
+## Task To Reference Map
+
+| Task area | Required reference file |
+| --- | --- |
+| Runtime attachment, section targeting, safety, and recovery | `references/reference-connector-runtime-and-safety.md` |
+| Confirming the target Google Doc before every write batch | `references/reference-foreground-guard.md` |
+| Request objects, tab-aware calls, range-safe writes, sampling the local style baseline, and connector-readback verification when style metadata is incomplete | `references/reference-request-shapes-and-write-safety.md` |
+| Header and prompt structure, including bolding the question being answered and matching local heading/body typography | `references/reference-headings-and-question-format.md` |
+| Response structure, list behavior, and one-idea-per-bullet formatting | `references/reference-response-and-list-format.md` |
+| Citation formatting and hyperlink requirements | `references/reference-citations-and-hyperlinks.md` |
+| Native table creation, local table-style matching, population, styling, and acceptance checks | `references/reference-table-formatting-deep-dive.md` |
+| Figures, diagrams, image preparation, insertion, and figure-block placement | `references/reference-figures-and-image-insertion.md` |
+| Section completeness, source-list formatting, typography consistency, connector-observable comparison, and final production pass | `references/reference-section-completeness-and-final-pass.md` |
