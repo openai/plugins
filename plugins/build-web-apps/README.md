@@ -1,63 +1,14 @@
 # Build Web Apps Plugin
 
-This plugin packages builder-oriented workflows in `plugins/build-web-apps`.
+Builder workflows for frontend apps, shadcn/ui, Stripe, and Supabase/Postgres.
 
-It currently includes these skills:
+## Skills
 
-- `deploy-to-vercel`
-- `react-best-practices`
+- `frontend-app-builder`
 - `shadcn-best-practices`
 - `stripe-best-practices`
 - `supabase-best-practices`
-- `web-design-guidelines`
 
-It is scaffolded to use these connected apps:
+## Purpose
 
-- `stripe`
-- `vercel`
-
-## What It Covers
-
-- deployment and hosting operations through the Vercel app
-- React and Next.js performance guidance sourced from Vercel best practices
-- shadcn/ui composition, styling, and component usage guidance
-- Stripe integration design across payments, subscriptions, Connect, and Treasury
-- Supabase/Postgres schema, performance, and RLS best practices
-- UI review guidance against web interface design guidelines
-- end-to-end product building workflows that span frontend, backend, payments,
-  and deployment
-
-## Plugin Structure
-
-The plugin now lives at:
-
-- `plugins/build-web-apps/`
-
-with this shape:
-
-- `.codex-plugin/plugin.json`
-  - required plugin manifest
-  - defines plugin metadata and points Codex at the plugin contents
-
-- `.app.json`
-  - plugin-local app dependency manifest
-  - points Codex at the connected Stripe and Vercel apps used by the bundled
-    workflows
-
-- `agents/`
-  - plugin-level agent metadata
-  - currently includes `agents/openai.yaml` for the OpenAI surface
-
-- `skills/`
-  - the actual skill payload
-  - currently includes deployment, UI, payments, and database-focused skills
-
-## Notes
-
-This plugin is app-backed through `.app.json` and currently combines:
-
-- Vercel deployment workflows
-- React and Next.js optimization guidance
-- shadcn/ui frontend implementation guidance
-- Stripe integration guidance
-- web design and UI review guidance
+Use for web app builds that need frontend implementation with generated visual assets and browser testing, plus focused shadcn/ui, Stripe, or Supabase/Postgres guidance when those areas are needed.

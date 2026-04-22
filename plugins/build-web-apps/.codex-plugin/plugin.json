@@ -1,7 +1,7 @@
 {
   "name": "build-web-apps",
   "version": "0.1.0",
-  "description": "Build web apps with workflows for UI reviews, React improvements, deployment, payments, and database design.",
+  "description": "Build web apps with frontend asset design, browser testing, UI components, payments, and database guidance.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,20 +13,22 @@
   "keywords": [
     "build-web-apps",
     "build",
-    "react",
-    "vercel",
+    "product-apps",
+    "frontend",
+    "image-generation",
+    "browser-testing",
     "stripe",
     "supabase",
     "shadcn",
     "full-stack",
-    "ui-review"
+    "frontend-qa"
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Build Web Apps",
-    "shortDescription": "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases",
-    "longDescription": "Use Build Web Apps to review and improve a web app's UI, apply React and Next.js guidance, deploy projects to Vercel, wire up Stripe payments, and design or tune Postgres schemas and queries, with connected Vercel and Stripe apps plus bundled database guidance.",
+    "shortDescription": "Build frontend-focused web apps with generated assets, browser testing, payments, and databases",
+    "longDescription": "Use Build Web Apps to create frontend application surfaces with Codex-generated visual assets, verify them with the Browser plugin and built-in app browser, compose shadcn/ui, wire Stripe payments, and design or tune Supabase/Postgres data flows.",
     "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [
@@ -37,7 +39,9 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Review this app's UI, improve the React implementation, wire up payments or database changes, and help deploy it",
+    "defaultPrompt": [
+      "Build a frontend app with generated visual assets and browser verification."
+    ],
     "brandColor": "#111111",
     "composerIcon": "./assets/build-web-apps-small.svg",
     "logo": "./assets/app-icon.png",

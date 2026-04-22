@@ -1,15 +1,11 @@
 interface:
   display_name: "Build Web Apps"
-  short_description: "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases"
+  short_description: "Build frontend-focused web apps"
   icon_small: "./assets/build-web-apps-small.svg"
   icon_large: "./assets/app-icon.png"
-  default_prompt: "Use Build Web Apps to review a web app's UI, improve the React implementation, wire up payments or database changes, and help deploy it."
+  default_prompt: "Build a frontend app with generated visual assets and browser verification."
 
 dependencies:
   tools:
     - type: "app"
       value: "stripe"
-      description: "Connected Stripe app"
-    - type: "app"
-      value: "vercel"
-      description: "Connected Vercel app"
