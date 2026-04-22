@@ -9,7 +9,7 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 
 ## Default Routing
 
-1. Net-new Google Sheets creation: if the `$Spreadsheets` or `$Excel` skill exists, you MUST use the available spreadsheet authoring skill to create a local `.xlsx` first. After creating the local `.xlsx`, import it into Google Drive with the available MCP import or upload tool.
+1. Net-new Google Sheets creation: if the `$Spreadsheets` or `$Excel` skill exists, you MUST use the available spreadsheet authoring skill to create a local `.xlsx` first. After creating the local `.xlsx`, read `./references/upload-xlsx-to-drive.md`, then upload it to Google Drive as an `.xlsx`.
 2. Editing existing Google Sheets: use the Google Sheets connector directly.
 
 ## Workflow
@@ -35,3 +35,4 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 ## References
 
 - For raw Sheets write shapes and example `batch_update` bodies, read `./references/batch-update-recipes.md`.
+- For uploading a locally created `.xlsx` to Google Drive, read `./references/upload-xlsx-to-drive.md`.
