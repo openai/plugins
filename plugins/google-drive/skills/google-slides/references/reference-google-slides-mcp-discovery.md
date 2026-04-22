@@ -3,7 +3,7 @@
 `mcp__codex_apps__google_drive_*` tools are very similar to the Google Slides API, but has some small differences. 
 Use this file to understand the differences, so you know how to call `mcp__codex_apps__google_drive_*` tools correctly. 
 
-This file does not define new tools. It explains how to translate between the public Google Slides API shape and the Google Drive Codex MCP wrapper shape so agents stop mixing REST fields, connector wrapper fields, and raw batchUpdate request bodies.
+This file does not define new tools. It explains how to translate between the public Google Slides API shape and the Google Drive MCP wrapper shape so agents stop mixing REST fields, connector wrapper fields, and raw batchUpdate request bodies.
 
 When in doubt, you can always curl the official Slides discovery for the underlying API: `https://slides.googleapis.com/$discovery/rest?version=v1`.
 
@@ -20,11 +20,11 @@ When in doubt, you can always curl the official Slides discovery for the underly
 - Treat Drive file lifecycle operations and Slides content operations as separate surfaces: `_create_file` and `_update_file` are Drive operations; `_batch_update_presentation` is the Slides content update wrapper.
 
 
-## Google Slides API vs Google Drive Codex MCP
+## Google Slides API vs Google Drive MCP
 
 Use this table when translating examples from `https://slides.googleapis.com/$discovery/rest?version=v1`, public Google Slides docs, or prior REST habits into connector calls.
 
-| Concept | Public Google Slides API | Google Drive Codex MCP | What the model should do |
+| Concept | Public Google Slides API | Google Drive MCP | What the model should do |
 | --- | --- | --- | --- |
 | Call surface | HTTP REST methods such as `POST /v1/presentations/{presentationId}:batchUpdate`. | MCP tools named `mcp__codex_apps__google_drive_*`. | Call the MCP tool directly; do not construct REST URLs. |
 | Auth | OAuth scopes and bearer tokens are explicit in discovery docs. | Auth is handled by the connector. | Do not ask the user for OAuth tokens or scopes. |
@@ -179,7 +179,7 @@ Use this table when translating examples from `https://slides.googleapis.com/$di
 
 ## Connector Differences From Official Slides Discovery
 
-| Area | Official discovery | Google Drive Codex MCP | Model consequence |
+| Area | Official discovery | Google Drive MCP | Model consequence |
 | --- | --- | --- | --- |
 | Target id | REST path parameter `presentationId`. | Wrapper arg `presentation_id` or `presentation_url`. | Do not put `presentationId` inside the request body. |
 | Wrapper naming | Body field `writeControl`. | Wrapper field `write_control`. | Use snake_case only at wrapper level. |
