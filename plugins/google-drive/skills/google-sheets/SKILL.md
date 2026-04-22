@@ -7,6 +7,11 @@ description: Analyze and edit connected Google Sheets with range precision. Use 
 
 Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet, range, headers, and formulas that matter.
 
+## Default Routing
+
+1. Net-new Google Sheets creation: if the `$Spreadsheets` or `$Excel` skill exists, you MUST use the available spreadsheet authoring skill to create a local `.xlsx` first. After creating the local `.xlsx`, import it into Google Drive with the available MCP import or upload tool.
+2. Editing existing Google Sheets: use the Google Sheets connector directly.
+
 ## Workflow
 
 1. If the spreadsheet or tab is not already grounded, identify it first and read metadata before deeper reads or writes.
