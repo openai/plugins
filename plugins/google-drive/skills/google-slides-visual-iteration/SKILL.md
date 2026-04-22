@@ -49,7 +49,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Before declaring a visual element blocked, classify it as a shape, a line or connector, or an image. Then choose the matching raw request family from [batch-update-recipes](./batch-update-recipes.md).
 - When positioning a new text box relative to another object, remember that Slides transforms use the text box's upper-left corner, not its center. Compute the target top-left from the desired visual center and the new text box footprint before writing.
 - If the user provides or implies a stronger manually polished target slide, treat that target as an explicit alignment and styling reference rather than trying to invent the layout card by card.
-- If the current write changes visible text flow, geometry, or styling, follow [visual-change-loop](./visual-change-loop.md) and treat this reference as the slide-local expanded version of that recipe.
+- If the current write changes visible text flow, geometry, or styling, follow [visual-change-loop](../google-drive/references/slides/visual-change-loop.md) and treat this reference as the slide-local expanded version of that recipe.
 
 3. Start with a thumbnail.
 - Call `get_slide_thumbnail` first.
@@ -70,6 +70,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Look for text too close to edges or neighboring elements.
 - Look for text overflow, clipping, or density that makes the slide feel compressed.
 - Look for overlapping text boxes, shapes, charts, and images.
+- After overlap and overflow checks, apply the Text Alignment Guideline in [visual-change-loop](../google-drive/references/slides/visual-change-loop.md) to every slide.
 - Look for adjacent text boxes whose copy is colliding, wrapping into the neighboring lane, or reading like one crowded block instead of two separate elements.
 - Look for misaligned images, cards, icons, and text blocks.
 - Look for grouped boxes, cards, or sections whose header text, body starts, icons, or internal padding do not sit on the same visual plane.
@@ -107,6 +108,7 @@ If a dedicated visual-iteration tool exists in the runtime, use it. Otherwise, e
 - Verify that small target or benchmark text changed along with the main headline value when both were in scope.
 - Verify that accent bars, arrow shapes, borders, and connector strokes changed visually, not just the text around them.
 - Verify that newly placed text labels sit optically centered in their intended lane or container. If the text looks one line low or offset relative to nearby elements, treat that as unfinished geometry.
+- After overlap and overflow verification, re-check text alignment using the Text Alignment Guideline in [visual-change-loop](../google-drive/references/slides/visual-change-loop.md) before declaring the pass clean.
 - Re-read the slide structure after passes that touched text boxes, wrapping, or neighboring text lanes. If the thumbnail and refreshed geometry disagree about whether two boxes are still risky, err on the side of caution and keep editing.
 - If a fix introduced a new collision, imbalance, or cramped layout, correct that next instead of blindly continuing.
 - If adjacent text boxes still crowd or overlap after a pass, keep working the slide until both boxes have clean separation and readable padding.
@@ -264,7 +266,7 @@ The Slides connector exposes raw `batch_update` requests. That means:
 - [deck-scope-verification](./deck-scope-verification.md)
 - [batch-update-recipes](./batch-update-recipes.md)
 - [sheets-chart-replacement](./sheets-chart-replacement.md)
-- [visual-change-loop](./visual-change-loop.md)
+- [visual-change-loop](../google-drive/references/slides/visual-change-loop.md)
 
 ## Example Prompts
 
