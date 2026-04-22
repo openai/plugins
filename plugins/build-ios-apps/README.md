@@ -5,6 +5,8 @@ This plugin packages iOS and Swift workflows in `plugins/build-ios-apps`.
 It currently includes these skills:
 
 - `ios-debugger-agent`
+- `ios-ettrace-performance`
+- `ios-memgraph-leaks`
 - `ios-app-intents`
 - `swiftui-liquid-glass`
 - `swiftui-performance-audit`
@@ -17,6 +19,8 @@ It currently includes these skills:
 - building and refactoring SwiftUI UI using current platform patterns
 - reviewing or adopting iOS 26+ Liquid Glass APIs
 - auditing SwiftUI performance and guiding profiling workflows
+- capturing symbolicated ETTrace simulator profiles for focused app flows
+- capturing and comparing iOS memgraphs to root-cause leaks
 - debugging iOS apps on simulators with XcodeBuildMCP-backed flows
 - restructuring large SwiftUI views toward smaller, more stable compositions
 
