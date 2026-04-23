@@ -28,7 +28,7 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 ## Default Routing
 
 1. New Google Sheets creation: first check whether the `$Spreadsheets` skill is installed, then check whether `$Excel` is installed.
-2. If either skill is installed, YOU MUST use the first available skill in that order to create a local `.xlsx` as a scratch workbook. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md` and deliver it as a native Google Sheet.
+2. If either skill is installed, YOU MUST use the first available skill in that order to create a local `.xlsx` as a scratch workbook. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md`.
 3. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 4. Existing Google Sheets edit: use Google Sheets MCP directly.
 
@@ -55,11 +55,10 @@ Do not execute content edits until the required references are read in the curre
 
 ## Release-Blocker Checklist
 
-For new Google Sheets created from a local `.xlsx`, explicitly verify before final handoff:
+Before final handoff, explicitly verify:
 
-1. The delivered artifact is a native Google Sheet, not a kept-source `.xlsx` upload.
-2. The Google Sheet title does not have a `.xlsx` suffix unless the user explicitly requested an Office file.
-3. The final answer references only the Google Sheet link or id. Do not cite the local scratch `.xlsx` path as a deliverable.
+1. Your final answer must only reference the gsuite link. Do not cite the local xlsx in your final answer.
+2. Your Google Sheet title must not have .xlsx suffix.
 
 ## Connector Load Checklist
 
@@ -76,6 +75,6 @@ For new Google Sheets created from a local `.xlsx`, explicitly verify before fin
 | --- | --- |
 | Existing spreadsheet edit workflow, grounding, validation-backed cells, output conventions, and write planning | `references/reference-edit-workflow.md` |
 | Raw Sheets write shapes and example `batch_update` bodies | `references/reference-batch-update-recipes.md` |
-| Importing a locally created `.xlsx` as a native Google Sheet | `references/reference-upload-xlsx-to-drive.md` |
+| Uploading a locally created `.xlsx` to Google Drive | `references/reference-upload-xlsx-to-drive.md` |
 | Formula design, repair, rollout, or syntax refresh | `references/reference-formula-patterns.md` |
 | Chart creation, repair, chart-spec recall, or repositioning | `references/reference-chart-recipes.md` |
