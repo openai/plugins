@@ -19,9 +19,8 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 ## Default Routing
 
-1. New Google Sheets creation: first check whether `$Spreadsheets` is installed, then whether `$Excel` is installed.
-2. If either skill is installed, use the first available skill in that order to create a local intermediate `.xlsx`.
-3. Upload the `.xlsx` to Google Drive as a native Google Sheet. Before uploading, read `references/reference-upload-xlsx-to-drive.md`.
+1. New Google Sheets creation: first check whether `$Spreadsheets` or `$Excel` skill is installed.
+2. If either skill is installed, use that skill to create a local `.xlsx`. Then upload the `.xlsx` to Google Drive. Read `references/reference-upload-xlsx-to-drive.md`.
 4. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 5. Existing Google Sheets edits: use Google Sheets MCP directly.
 
