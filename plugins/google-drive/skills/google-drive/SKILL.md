@@ -23,9 +23,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 3. Route to the narrowest sibling skill that matches the file type and job.
 - Drive, Docs, Sheets, or Slides comment creation, comment replies, comment resolution, or review-by-comments: use [google-drive-comments](../google-drive-comments/SKILL.md).
 - Google Docs content summary, revision planning, prose rewriting, or section edits: use [google-docs](../google-docs/SKILL.md).
-- Google Sheets range inspection, table cleanup, data restructuring, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
-- Google Sheets formula design or repair: use [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md).
-- Google Sheets chart creation or repair: use [google-sheets-chart-builder](../google-sheets-chart-builder/SKILL.md).
+- Google Sheets range inspection, table cleanup, data restructuring, formula design or repair, chart creation or repair, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
 - Google Slides deck summary, content edits, new deck creation, import, visual cleanup, structural repair, or template migration: use [google-slides](../google-slides/SKILL.md).
 
 ## Routing Rules
@@ -48,6 +46,4 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - Comments: [google-drive-comments](../google-drive-comments/SKILL.md)
 - Docs: [google-docs](../google-docs/SKILL.md)
 - Sheets: [google-sheets](../google-sheets/SKILL.md)
-- Sheets formulas: [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md)
-- Sheets charts: [google-sheets-chart-builder](../google-sheets-chart-builder/SKILL.md)
 - Slides: [google-slides](../google-slides/SKILL.md)

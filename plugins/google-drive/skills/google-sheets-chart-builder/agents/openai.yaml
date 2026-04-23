@@ -1,6 +1,0 @@
-interface:
-  display_name: "Google Sheets Chart Builder"
-  short_description: "Build and revise charts with better spec recall"
-  icon_small: "./assets/google-sheets-small.svg"
-  icon_large: "./assets/google-sheets.png"
-  default_prompt: "Use $google-sheets-chart-builder to create or repair a Google Sheets chart, choose a sensible chart type, and use the right chart request shapes."
