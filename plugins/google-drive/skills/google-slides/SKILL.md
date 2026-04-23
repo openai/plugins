@@ -30,8 +30,8 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 Unless the user asks otherwise:
 
-1. New Google Slides deck: first check whether the `$Presentations` skill is installed, then check whether `$PowerPoint` is installed.
-2. If either skill is installed, use the first available skill in that order to create a local `.pptx`, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
+1. New Google Slides deck: first check whether the `$Presentations` skill or the `$PowerPoint` is installed.
+2. If either skill is installed, use either the `$Presentations` skill or the `$PowerPoint` skill to create a local `.pptx`, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
 3. If neither skill is installed, create the deck directly with Google Slides MCP.
 4. Existing Google Slides edit: use Google Slides MCP directly.
 
