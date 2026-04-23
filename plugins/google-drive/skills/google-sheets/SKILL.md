@@ -12,31 +12,32 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 This file is intentionally minimal and only covers:
 
 1. routing to the right spreadsheet workflow
-2. connector loading and runtime boundaries
 3. stateful operation and mandatory routing to reference files
 
 Detailed editing, formula, chart, upload, and batch-update rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
 
-## Runtime Model
-
-1. Use Google Sheets connector or app tools directly from Codex when they are available.
-2. Keep connector calls separate from local helper processing.
-3. Do not use embedded-runtime helper snippets or assumed global connector bindings.
-4. Connector tools are not called from inside local spreadsheet builders. Treat connector calls and local `.xlsx` authoring as separate execution surfaces.
-
 ## Default Routing
 
 1. New Google Sheets creation: first check whether the `$Spreadsheets` skill or the `$Excel` skill is installed.
-2. If either skill is installed, YOU MUST use the `$Spreadsheets` or `$Excel` skill to create a local `.xlsx`. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md`. But, do not reference this `.xlsx` in your final answer.
+2. If either skill is installed, YOU MUST use the `$Spreadsheets` or `$Excel` skill to create a local `.xlsx`. Then upload `xlsx` to Google Drive. Read `references/reference-upload-xlsx-to-drive.md`. 
 3. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 4. Existing Google Sheets edit: use Google Sheets MCP directly.
 
-## Stateful Operation
+## Canonical Workflow Bias
 
-Maintain working state for the active spreadsheet task instead of re-deriving context from scratch after every step.
-Keep the spreadsheet URL or id, sheet names, `sheetId` values, ranges, headers, formulas, validation constraints, pending write batches, and verification status current as the task progresses.
-Refresh that state before connector writes when source gathering, spreadsheet switches, connector errors, or runtime resets could make it stale.
+Prefer one simple proven workflow over a large tree of recovery branches.
+When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
+Do not let accumulated edge-case guardrails turn a straightforward Slides task into a long blocker-analysis exercise.
+
+For sheet creation and editing tasks, prefer this general sequence when viable:
+
+1. gather the required source material
+2. pick the correct default routing
+4. establish the sheet checklist or sheet plan
+7. stop once the sheet is clean, complete, and scannable
+
+If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
 
 ## Required Read Order (No Skips)
 
@@ -53,7 +54,7 @@ If Default Routing uses connector edit workflow:
 
 Do not execute content edits until the required references are read in the current turn.
 
-## Release-Blocker Checklist
+## Final Answer Requirement
 
 Before final handoff, explicitly verify:
 

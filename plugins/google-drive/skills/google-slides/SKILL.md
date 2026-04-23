@@ -72,7 +72,7 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 6. no slide in a multi-slide task was skipped, duplicated, or left in a mixed old/new state
 7. no visual property is claimed as verified unless connector data or a fresh thumbnail supports it
 8. final presentation output is an editable Google Slides deck, not one PNG per slide; verify editable components with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`
-9. Do not cite the local pptx path as a deliverable. Your final answer must only reference the gsuite link. 
+9. Do not cite the local pptx path as a deliverable in your final answer. Your final answer must only reference the gsuite link. 
 
 **Slides**
 
