@@ -1,7 +1,7 @@
 interface:
   display_name: "Google Sheets"
-  short_description: "Find sheets, inspect ranges, and plan batch updates"
+  short_description: "Create native sheets and inspect ranges"
   icon_small: "./assets/google-sheets-small.svg"
   icon_large: "./assets/google-sheets.png"
   brand_color: "#0F9D58"
-  default_prompt: "Use $google-sheets to find the right spreadsheet, inspect a range, search rows, or plan an exact batch_update."
+  default_prompt: "Use $google-sheets to create a native Sheet, inspect a range, search rows, or plan an exact batch_update."
