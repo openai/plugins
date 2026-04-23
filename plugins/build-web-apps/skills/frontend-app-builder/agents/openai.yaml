@@ -1,4 +1,4 @@
 interface:
   display_name: "Frontend App Builder"
-  short_description: "Build frontend apps with generated assets and browser testing"
-  default_prompt: "Build a frontend app with generated visual assets and browser verification."
+  short_description: "Build frontend apps from faithful high-taste image concepts"
+  default_prompt: "Design a new landing page for my new SaaS product."

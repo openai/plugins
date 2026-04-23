@@ -1,6 +1,6 @@
 # Build Web Apps Plugin
 
-Builder workflows for frontend apps, shadcn/ui, Stripe, and Supabase/Postgres.
+Builder workflows for frontend apps, designing new websites, shadcn/ui, Stripe, and Supabase/Postgres.
 
 ## Skills
 

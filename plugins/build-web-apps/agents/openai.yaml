@@ -3,7 +3,7 @@ interface:
   short_description: "Build frontend-focused web apps"
   icon_small: "./assets/build-web-apps-small.svg"
   icon_large: "./assets/app-icon.png"
-  default_prompt: "Build a frontend app with generated visual assets and browser verification."
+  default_prompt: "Build a high-quality frontend app with a polished user experience."
 
 dependencies:
   tools:

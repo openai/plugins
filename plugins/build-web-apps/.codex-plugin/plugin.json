@@ -31,17 +31,11 @@
     "longDescription": "Use Build Web Apps to create frontend application surfaces with Codex-generated visual assets, verify them with the Browser plugin and built-in app browser, compose shadcn/ui, wire Stripe payments, and design or tune Supabase/Postgres data flows.",
     "developerName": "OpenAI",
     "category": "Coding",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
+    "capabilities": ["Interactive", "Read", "Write"],
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": [
-      "Build a frontend app with generated visual assets and browser verification."
-    ],
+    "defaultPrompt": ["Design a new landing page for my new SaaS product."],
     "brandColor": "#111111",
     "composerIcon": "./assets/build-web-apps-small.svg",
     "logo": "./assets/app-icon.png",
