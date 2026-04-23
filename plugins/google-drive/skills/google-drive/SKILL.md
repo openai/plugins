@@ -23,7 +23,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 3. Route to the narrowest sibling skill that matches the file type and job.
 - Drive, Docs, Sheets, or Slides comment creation, comment replies, comment resolution, or review-by-comments: use [google-drive-comments](../google-drive-comments/SKILL.md).
 - Google Docs content summary, revision planning, prose rewriting, or section edits: use [google-docs](../google-docs/SKILL.md).
-- Google Sheets creation, range inspection, table cleanup, data restructuring, formula design or repair, chart creation or repair, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
+- Google Sheets creation, local spreadsheet import, range inspection, table cleanup, data restructuring, formula design or repair, chart creation or repair, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
 - Google Slides deck summary, content edits, new deck creation, import, visual cleanup, structural repair, or template migration: use [google-slides](../google-slides/SKILL.md).
 
 ## Routing Rules
@@ -34,6 +34,8 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
   - Deck -> Slides skill
 - If the user wants to find a file and then edit it, do both in one flow: Drive for discovery, then the file-type skill for the edit.
 - If the user wants a Google Workspace outcome but has not named a file type yet, start with Drive discovery instead of asking them to choose among separate Google plugins.
+- If the user asks to create a new Google Sheet, route to the Sheets skill. The Sheets skill should prefer the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or `$Excel` skill to create a local `.xlsx`, then import it as native Google Sheets.
+- If the user asks to import a local `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets, route to the Sheets skill and use native Google Sheets conversion by default. Preserve the source file type only when the user explicitly asks for that.
 
 ## Write Safety
 

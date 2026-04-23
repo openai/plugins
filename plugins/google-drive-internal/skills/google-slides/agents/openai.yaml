@@ -1,7 +1,0 @@
-interface:
-  display_name: "Google Slides"
-  short_description: "Inspect decks and handle Slides content edits"
-  icon_small: "./assets/google-slides-small.svg"
-  icon_large: "./assets/google-slides.png"
-  brand_color: "#F9AB00"
-  default_prompt: "Use $google-slides to inspect a deck, summarize a slide with both text and chart/image understanding, import a PPTX, create a presentation, or make a precise content edit in Google Slides."

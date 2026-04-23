@@ -19,8 +19,8 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 ## Default Routing
 
-1. New Google Sheets creation: first check whether `$Spreadsheets` or `$Excel` skill is installed.
-2. If either skill is installed, YOU MUST use that skill to create a local `.xlsx`. Then upload the `.xlsx` to Google Drive. Read `references/reference-upload-xlsx-to-drive.md`.
+1. New Google Sheets creation: first check whether the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or the `$Excel` skill is installed.
+2. If either is installed, YOU MUST use `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` or `$Excel` to create a local `.xlsx`. Then import the `.xlsx` into Drive as a native Google Sheets spreadsheet. Read `references/reference-import-spreadsheet-to-native-sheets.md`.
 4. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 5. Existing Google Sheets edits: use Google Sheets MCP directly.
 
@@ -45,9 +45,9 @@ If a simple verified workflow is viable, use it. Do not drift into speculative a
 
 ## Required Read Order (No Skips)
 
-If Default Routing uses `$Spreadsheets` or `$Excel`:
-1. Read `$Spreadsheets` or `$Excel` skills
-2. Read `references/reference-upload-xlsx-to-drive.md`
+If Default Routing uses `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` or `$Excel`:
+1. Read the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin skill or `$Excel` skill
+2. Read `references/reference-import-spreadsheet-to-native-sheets.md`
 
 If Default Routing uses connector edit workflow:
 
@@ -60,7 +60,7 @@ Do not execute content edits until the required references are read in the curre
 
 ## Final Answer Requirement
 
-If the `$Spreadsheets` skill or the `$Excel` skill is installed, you MUST use those skills to create a local `.xlsx` and upload it to Google Drive.
+If the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or the `$Excel` skill is installed, you MUST use one of them to create a local `.xlsx` and import it to Google Drive with `upload_mode: "native_google_sheets"`.
 Even though you created a local `.xlsx`, do not cite the local path in the final answer. The final answer cites only the Google Spreadsheet link.
 
 ## Connector Load Checklist
@@ -78,6 +78,6 @@ Even though you created a local `.xlsx`, do not cite the local path in the final
 | --- | --- |
 | Existing spreadsheet edit workflow, grounding, validation-backed cells, output conventions, and write planning | `references/reference-edit-workflow.md` |
 | Raw Sheets write shapes and example `batch_update` bodies | `references/reference-batch-update-recipes.md` |
-| Uploading a locally created `.xlsx` to Google Drive | `references/reference-upload-xlsx-to-drive.md` |
+| Importing a locally created `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets | `references/reference-import-spreadsheet-to-native-sheets.md` |
 | Formula design, repair, rollout, or syntax refresh | `references/reference-formula-patterns.md` |
 | Chart creation, repair, chart-spec recall, or repositioning | `references/reference-chart-recipes.md` |

@@ -267,18 +267,6 @@
       }
     },
     {
-      "name": "google-drive-internal",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-drive-internal"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "notion",
       "source": {
         "source": "local",
