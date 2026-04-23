@@ -30,8 +30,8 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 Unless the user asks otherwise:
 
-1. New Google Slides deck: first check whether the `$Presentations` skill or the `$PowerPoint` is installed.
-2. If either skill is installed, YOU MUST use either the `$Presentations` skill or the `$PowerPoint` skill to create a local `.pptx`, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
+1. New Google Slides deck: first check whether the `[@presentations](plugin://presentations@openai-primary-runtime)` plugin or the `$PowerPoint` skill is installed.
+2. If either is installed, YOU MUST use `[@presentations](plugin://presentations@openai-primary-runtime)` or `$PowerPoint` to create a local `.pptx`, then import it into Drive as a native Google Slides presentation with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
 3. If neither skill is installed, create the deck directly with Google Slides MCP.
 4. Existing Google Slides edit: use Google Slides MCP directly.
 
@@ -41,7 +41,7 @@ Inserted or edited content must match the target deck's existing structure and c
 Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder text, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
 
 For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
-If the `$Presentations` skill or the `$PowerPoint` skill is installed, you MUST use those skills to create a local `.pptx` and upload it to Google Drive.
+If the `[@presentations](plugin://presentations@openai-primary-runtime)` plugin or the `$PowerPoint` skill is installed, you MUST use one of them to create a local `.pptx` and import it to Google Drive with `upload_mode: "native_google_slides"`.
 
 ## Canonical Workflow Bias
 
@@ -105,7 +105,7 @@ Before any content write or edit operation:
 7. If the task spans multiple categories, read all matching files.
 8. If uncertain, read every file in `references/`.
 
-For net-new local `.pptx` creation, if Default Routing uses `$Presentations` or `$PowerPoint`, read the selected authoring skill before creating the deck.
+For net-new local `.pptx` creation, if Default Routing uses `[@presentations](plugin://presentations@openai-primary-runtime)` or `$PowerPoint`, read the selected authoring skill before creating the deck.
 
 Do not execute content edits until the required references are read in the current turn.
 
