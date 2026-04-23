@@ -31,7 +31,7 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 Unless the user asks otherwise:
 
 1. New Google Slides deck: first check whether the `$Presentations` skill or the `$PowerPoint` is installed.
-2. If either skill is installed, use either the `$Presentations` skill or the `$PowerPoint` skill to create a local `.pptx`, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
+2. If either skill is installed, YOU MUST use either the `$Presentations` skill or the `$PowerPoint` skill to create a local `.pptx`, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
 3. If neither skill is installed, create the deck directly with Google Slides MCP.
 4. Existing Google Slides edit: use Google Slides MCP directly.
 
@@ -41,6 +41,7 @@ Inserted or edited content must match the target deck's existing structure and c
 Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder text, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
 
 For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
+If the `$Presentations` skill or the `$PowerPoint` skill is installed, you MUST use those skills to create a local `.pptx` and upload it to Google Drive.
 
 ## Canonical Workflow Bias
 

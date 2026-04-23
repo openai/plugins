@@ -20,11 +20,11 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 ## Default Routing
 
 1. New Google Sheets creation: first check whether `$Spreadsheets` or `$Excel` skill is installed.
-2. If either skill is installed, use that skill to create a local `.xlsx`. Then upload the `.xlsx` to Google Drive. Read `references/reference-upload-xlsx-to-drive.md`.
+2. If either skill is installed, YOU MUST use that skill to create a local `.xlsx`. Then upload the `.xlsx` to Google Drive. Read `references/reference-upload-xlsx-to-drive.md`.
 4. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 5. Existing Google Sheets edits: use Google Sheets MCP directly.
 
-Do not reference the local `.xlsx` in the final answer. The final deliverable is the native Google Sheet link only.
+Do not reference the local `.xlsx` in the final answer. Your final answer includes the Google Spreadsheet link only.
 
 ## Canonical Workflow Bias
 
@@ -60,10 +60,8 @@ Do not execute content edits until the required references are read in the curre
 
 ## Final Answer Requirement
 
-Before final handoff, explicitly verify:
-
-1. The Google Sheet title does not have a `.xlsx` suffix.
-2. Even though you created a local `.xlsx`, do not return it in the final answer. The final answer references only the GSuite link. Do not cite the local `.xlsx` path as a deliverable.
+If the `$Spreadsheets` skill or the `$Excel` skill is installed, you MUST use those skills to create a local `.xlsx` and upload it to Google Drive.
+Even though you created a local `.xlsx`, do not cite the local path in the final answer. The final answer cites only the Google Spreadsheet link.
 
 ## Connector Load Checklist
 
