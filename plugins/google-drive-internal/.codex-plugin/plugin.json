@@ -1,0 +1,44 @@
+{
+  "name": "google-drive-internal",
+  "version": "0.1.0",
+  "description": "Use the internal Google Drive connector as the single entrypoint for Drive, Docs, Sheets, and Slides work.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://workspace.google.com/products/drive/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "google-drive",
+    "google-drive-internal",
+    "google-docs",
+    "google-sheets",
+    "google-slides",
+    "productivity"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Google Drive Internal",
+    "shortDescription": "Work across Drive, Docs, Sheets, and Slides",
+    "longDescription": "Use the internal Google Drive connector as one unified Google file plugin for search, file organization, sharing, and Google Docs, Google Sheets, and Google Slides workflows.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "websiteURL": "https://workspace.google.com/products/drive/",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "defaultPrompt": [
+      "Find the right Drive file, then summarize a Doc, update a Sheet, or edit a Slides deck"
+    ],
+    "brandColor": "#0F9D58",
+    "screenshots": []
+  }
+}
