@@ -57,8 +57,9 @@ Do not execute content edits until the required references are read in the curre
 
 Before final handoff, explicitly verify:
 
-1. Your final answer must only reference the gsuite link. Do not cite the local xlsx in your final answer.
-2. Your Google Sheet title must not have .xlsx suffix.
+1. The delivered artifact is a native Google Sheet, not a kept-source `.xlsx` upload.
+2. The Google Sheet title does not have a `.xlsx` suffix unless the user explicitly requested an Office file.
+3. The final answer references only the Google Sheet link or id. Do not cite the local scratch `.xlsx` path as a deliverable.
 
 ## Connector Load Checklist
 
