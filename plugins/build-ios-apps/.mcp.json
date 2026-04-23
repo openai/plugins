@@ -6,6 +6,10 @@
       "env": {
         "XCODEBUILDMCP_ENABLED_WORKFLOWS": "simulator,ui-automation,debugging,logging"
       }
+    },
+    "swiftdoc": {
+      "type": "http",
+      "url": "https://sosumi.ai/mcp"
     }
   }
 }
