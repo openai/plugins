@@ -31,7 +31,7 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 Unless the user asks otherwise:
 
 1. New Google Slides deck: first check whether the `$Presentations` skill is installed, then check whether `$PowerPoint` is installed.
-2. If either skill is installed, use the first available skill in that order to create a local `.pptx`, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
+2. If either skill is installed, use the first available skill in that order to create a local `.pptx` as a scratch deck, then import it with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
 3. If neither skill is installed, create the deck directly with Google Slides MCP.
 4. Existing Google Slides edit: use Google Slides MCP directly.
 
@@ -72,6 +72,8 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 6. no slide in a multi-slide task was skipped, duplicated, or left in a mixed old/new state
 7. no visual property is claimed as verified unless connector data or a fresh thumbnail supports it
 8. final presentation output is an editable Google Slides deck, not one PNG per slide; verify editable components with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`
+9. the Google Slides title does not have a `.pptx` suffix
+10. the final answer references only the GSuite link. Do not cite the local scratch `.pptx` path as a deliverable
 
 **Slides**
 

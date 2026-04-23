@@ -58,7 +58,7 @@ Do not execute content edits until the required references are read in the curre
 Before final handoff, explicitly verify:
 
 1. The Google Sheet title does not have a `.xlsx` suffix.
-2. The final answer references only the Google Sheet link or id. Do not cite the local scratch `.xlsx` path as a deliverable.
+2. The final answer references only the GSuite link. Do not cite the local scratch `.xlsx` path as a deliverable.
 
 ## Connector Load Checklist
 
