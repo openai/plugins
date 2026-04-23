@@ -27,10 +27,8 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 ## Default Routing
 
-Unless the user asks otherwise:
-
 1. New Google Sheets creation: first check whether the `$Spreadsheets` skill is installed, then check whether `$Excel` is installed.
-2. If either skill is installed, use the first available skill in that order to create a local `.xlsx`. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md`, then upload it to Google Drive as an `.xlsx`.
+2. If either skill is installed, YOU MUST use the first available skill in that order to create a local `.xlsx`. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md`, upload it to Google Drive as an `.xlsx`.
 3. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 4. Existing Google Sheets edit: use Google Sheets MCP directly.
 
@@ -42,12 +40,11 @@ Refresh that state before connector writes when source gathering, spreadsheet sw
 
 ## Required Read Order (No Skips)
 
-Before net-new local `.xlsx` creation and upload:
+If Default Routing uses `$Spreadsheets` or `$Excel`:
+1. Read `$Spreadsheets` or `$Excel` skills
+2. Read `references/reference-upload-xlsx-to-drive.md`
 
-1. If Default Routing uses `$Spreadsheets` or `$Excel`, read the selected authoring skill before creating the workbook.
-2. Read `references/reference-upload-xlsx-to-drive.md` before uploading to Google Drive.
-
-Before any existing spreadsheet content write or edit operation:
+If Default Routing uses connector edit workflow:
 
 1. Read `references/reference-edit-workflow.md`.
 2. Read every task-specific file from the matrix below.
