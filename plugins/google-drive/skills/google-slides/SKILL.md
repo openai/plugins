@@ -103,6 +103,8 @@ Before any content write or edit operation:
 7. If the task spans multiple categories, read all matching files.
 8. If uncertain, read every file in `references/`.
 
+For net-new local `.pptx` creation, if Default Routing uses `$Presentations` or `$PowerPoint`, read the selected authoring skill before creating the deck.
+
 Do not execute content edits until the required references are read in the current turn.
 
 ## Connector Load Checklist

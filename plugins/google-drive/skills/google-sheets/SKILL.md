@@ -1,6 +1,6 @@
 ---
 name: google-sheets
-description: Analyze and edit connected Google Sheets with range precision. Use when the user wants to find a spreadsheet, inspect tabs or ranges, search rows, plan formulas, create or repair charts, clean or restructure tables, write concise summaries, or make explicit cell-range updates.
+description: Analyze and edit connected Google Sheets with range precision. Use when the user wants to create Google Sheets, find a spreadsheet, inspect tabs or ranges, search rows, plan formulas, create or repair charts, clean or restructure tables, write concise summaries, or make explicit cell-range updates.
 ---
 
 # Google Sheets
@@ -27,8 +27,12 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 ## Default Routing
 
-1. Net-new Google Sheets creation: if the `$Spreadsheets` or `$Excel` skill exists, you MUST use the available spreadsheet authoring skill to create a local `.xlsx` first. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md`, then upload it to Google Drive as an `.xlsx`.
-2. Editing existing Google Sheets: use the Google Sheets connector directly.
+Unless the user asks otherwise:
+
+1. New Google Sheets creation: first check whether the `$Spreadsheets` skill is installed, then check whether `$Excel` is installed.
+2. If either skill is installed, use the first available skill in that order to create a local `.xlsx`. After creating the local `.xlsx`, read `references/reference-upload-xlsx-to-drive.md`, then upload it to Google Drive as an `.xlsx`.
+3. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
+4. Existing Google Sheets edit: use Google Sheets MCP directly.
 
 ## Stateful Operation
 
@@ -37,6 +41,11 @@ Keep the spreadsheet URL or id, sheet names, `sheetId` values, ranges, headers, 
 Refresh that state before connector writes when source gathering, spreadsheet switches, connector errors, or runtime resets could make it stale.
 
 ## Required Read Order (No Skips)
+
+Before net-new local `.xlsx` creation and upload:
+
+1. If Default Routing uses `$Spreadsheets` or `$Excel`, read the selected authoring skill before creating the workbook.
+2. Read `references/reference-upload-xlsx-to-drive.md` before uploading to Google Drive.
 
 Before any existing spreadsheet content write or edit operation:
 
@@ -47,10 +56,6 @@ Before any existing spreadsheet content write or edit operation:
 
 Do not execute content edits until the required references are read in the current turn.
 
-For read-only questions, read `references/reference-edit-workflow.md`.
-
-For net-new `.xlsx` upload, read `references/reference-upload-xlsx-to-drive.md` before uploading to Google Drive.
-
 ## Connector Load Checklist
 
 1. Confirm the exact target Google Sheet URL or spreadsheet id before editing an existing spreadsheet.
@@ -59,7 +64,6 @@ For net-new `.xlsx` upload, read `references/reference-upload-xlsx-to-drive.md` 
 4. Read spreadsheet metadata before deeper reads or writes.
 5. Before each edit pass, identify the exact sheet, range, headers, formulas, and validation constraints being edited through connector reads.
 6. Re-read target cells before writing when live values, formulas, formatting, or validation could affect the write.
-7. Do not claim the connector is unavailable, read-only, or blocked unless the current session has established that through capability evidence.
 
 ## Task To Reference Map
 
