@@ -12,30 +12,35 @@ Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet
 This file is intentionally minimal and only covers:
 
 1. routing to the right spreadsheet workflow
-3. stateful operation and mandatory routing to reference files
+2. stateful operation and mandatory routing to reference files
 
 Detailed editing, formula, chart, upload, and batch-update rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
 
 ## Default Routing
 
-1. New Google Sheets creation: first check whether the `$Spreadsheets` skill or the `$Excel` skill is installed.
-2. If either skill is installed, YOU MUST use the `$Spreadsheets` or `$Excel` skill to create a local `.xlsx`. Then upload `xlsx` to Google Drive. Read `references/reference-upload-xlsx-to-drive.md`. 
-3. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
-4. Existing Google Sheets edit: use Google Sheets MCP directly.
+1. New Google Sheets creation: first check whether `$Spreadsheets` is installed, then whether `$Excel` is installed.
+2. If either skill is installed, use the first available skill in that order to create a local intermediate `.xlsx`.
+3. Upload the `.xlsx` to Google Drive as a native Google Sheet. Before uploading, read `references/reference-upload-xlsx-to-drive.md`.
+4. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
+5. Existing Google Sheets edits: use Google Sheets MCP directly.
+
+Do not reference the local `.xlsx` in the final answer. The final deliverable is the native Google Sheet link only.
 
 ## Canonical Workflow Bias
 
 Prefer one simple proven workflow over a large tree of recovery branches.
-When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
-Do not let accumulated edge-case guardrails turn a straightforward Slides task into a long blocker-analysis exercise.
+When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible fallback path.
+Do not let accumulated edge-case guardrails turn a straightforward Sheets task into a long blocker-analysis exercise.
 
-For sheet creation and editing tasks, prefer this general sequence when viable:
+For sheet creation and editing tasks, prefer this sequence when viable:
 
-1. gather the required source material
-2. pick the correct default routing
-4. establish the sheet checklist or sheet plan
-7. stop once the sheet is clean, complete, and scannable
+1. Gather the required source material.
+2. Pick the correct default routing.
+3. Establish the sheet checklist or sheet plan.
+4. Build or edit the sheet.
+5. Verify the sheet is clean, complete, native, and scannable.
+6. Stop once the verified workflow has succeeded.
 
 If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
 
@@ -59,7 +64,7 @@ Do not execute content edits until the required references are read in the curre
 Before final handoff, explicitly verify:
 
 1. The Google Sheet title does not have a `.xlsx` suffix.
-2. The final answer references only the GSuite link. Do not cite the local `.xlsx` path as a deliverable.
+2. Even though you created a local `.xlsx`, do not return it in the final answer. The final answer references only the GSuite link. Do not cite the local `.xlsx` path as a deliverable.
 
 ## Connector Load Checklist
 
