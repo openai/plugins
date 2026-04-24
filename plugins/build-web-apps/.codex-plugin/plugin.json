@@ -24,7 +24,6 @@
     "frontend-qa"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Build Web Apps",
     "shortDescription": "Build frontend-focused web apps with generated assets, browser testing, payments, and databases",
