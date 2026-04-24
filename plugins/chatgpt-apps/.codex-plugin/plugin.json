@@ -1,0 +1,42 @@
+{
+  "name": "chatgpt-apps",
+  "version": "0.1.0",
+  "description": "Skills that help developers build ChatGPT Apps and prepare app submission materials from local app and MCP server codebases.",
+  "author": {
+    "name": "OpenAI"
+  },
+  "homepage": "https://developers.openai.com/apps-sdk/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "Apache-2.0",
+  "keywords": [
+    "chatgpt-apps",
+    "apps-sdk",
+    "build",
+    "mcp",
+    "submissions",
+    "tool-hints"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ChatGPT Apps",
+    "shortDescription": "Build ChatGPT Apps and prepare submission materials.",
+    "longDescription": "A set of Codex skills for building ChatGPT Apps and preparing submission artifacts. Skills can scaffold or refactor Apps SDK projects, inspect local MCP servers, check tool hint annotations against implementation behavior, and generate tool-hint-justifications.json for the onboard submission form.",
+    "developerName": "OpenAI",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://developers.openai.com/apps-sdk/",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": [
+      "Build a ChatGPT app from my local MCP server and widget idea.",
+      "Generate tool hint justifications for my MCP server.",
+      "Check my MCP tool annotations for a ChatGPT Apps submission."
+    ],
+    "brandColor": "#10A37F",
+    "screenshots": []
+  }
+}
