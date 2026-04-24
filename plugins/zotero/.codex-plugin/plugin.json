@@ -1,0 +1,48 @@
+{
+  "name": "zotero",
+  "version": "0.1.0",
+  "description": "Work with Zotero from Codex: search your library, export BibTeX, insert citations, and import references through the Zotero desktop app.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "zotero",
+    "citations",
+    "bibliography",
+    "bibtex",
+    "references",
+    "research",
+    "papers",
+    "latex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Zotero",
+    "shortDescription": "Find papers and add citations from Zotero",
+    "longDescription": "Connect Codex to your Zotero desktop library so it can find saved papers, export BibTeX, add citation keys to drafts, read indexed attachment text when you ask, and import new reference records into Zotero with your approval.",
+    "developerName": "OpenAI",
+    "category": "Research",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "defaultPrompt": [
+      "@Zotero find papers in my library about transformers and add citations to my draft",
+      "@Zotero export my Zotero library to references.bib",
+      "@Zotero search my Zotero library and show the BibTeX keys"
+    ],
+    "brandColor": "#EF4444",
+    "screenshots": []
+  }
+}

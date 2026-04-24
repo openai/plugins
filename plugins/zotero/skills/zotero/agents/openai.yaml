@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zotero"
+  short_description: "Search Zotero and add citations"
+  default_prompt: "Use $Zotero to search my Zotero library, export BibTeX, and add citations to my draft."
