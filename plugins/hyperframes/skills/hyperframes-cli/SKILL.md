@@ -1,6 +1,6 @@
 ---
 name: hyperframes-cli
-description: HyperFrames CLI tool — hyperframes init, lint, preview, render, transcribe, tts, doctor, browser, info, upgrade, compositions, docs, benchmark. Use when scaffolding a project, linting or validating compositions, previewing in the studio, rendering to video, transcribing audio, generating TTS, or troubleshooting the HyperFrames environment.
+description: HyperFrames CLI tool — hyperframes init, lint, inspect, preview, render, transcribe, tts, doctor, browser, info, upgrade, compositions, docs, benchmark. Use when scaffolding a project, linting, validating, inspecting visual layout in compositions, previewing in the studio, rendering to video, transcribing audio, generating TTS, or troubleshooting the HyperFrames environment.
 ---
 
 # HyperFrames CLI
@@ -12,10 +12,11 @@ Everything runs through `npx hyperframes`. Requires Node.js >= 22 and FFmpeg.
 1. **Scaffold** — `npx hyperframes init my-video`
 2. **Write** — author HTML composition (see the `hyperframes` skill)
 3. **Lint** — `npx hyperframes lint`
-4. **Preview** — `npx hyperframes preview`
-5. **Render** — `npx hyperframes render`
+4. **Visual inspect** — `npx hyperframes inspect`
+5. **Preview** — `npx hyperframes preview`
+6. **Render** — `npx hyperframes render`
 
-Lint before preview — catches missing `data-composition-id`, overlapping tracks, unregistered timelines.
+Lint and inspect before preview. `lint` catches missing `data-composition-id`, overlapping tracks, and unregistered timelines. `inspect` opens the rendered composition in headless Chrome, seeks through the timeline, and reports text spilling out of bubbles/containers or off the canvas.
 
 ## Scaffolding
 
@@ -42,6 +43,27 @@ npx hyperframes lint --json           # machine-readable
 
 Lints `index.html` and all files in `compositions/`. Reports errors (must fix), warnings (should fix), and info (with `--verbose`).
 
+## Visual Inspect
+
+```bash
+npx hyperframes inspect                 # inspect rendered layout over the timeline
+npx hyperframes inspect ./my-project    # specific project
+npx hyperframes inspect --json          # agent-readable findings
+npx hyperframes inspect --samples 15    # denser timeline sweep
+npx hyperframes inspect --at 1.5,4,7.25 # explicit hero-frame timestamps
+```
+
+Use this after `lint` and `validate`, especially for compositions with speech bubbles, cards, captions, or tight typography. It reports:
+
+- Text extending outside the nearest visual container or bubble
+- Text clipped by its own fixed-width/fixed-height box
+- Text extending outside the composition canvas
+- Children escaping clipping containers
+
+Errors should be fixed before rendering. Warnings are surfaced for agent review; add `--strict` to fail on warnings too. Repeated static issues are collapsed by default so JSON output stays compact for LLM context windows. If overflow is intentional for an entrance/exit animation, mark the element or ancestor with `data-layout-allow-overflow`. If a decorative element should never be audited, mark it with `data-layout-ignore`.
+
+`npx hyperframes layout` remains available as a compatibility alias for the same visual inspection pass.
+
 ## Previewing
 
 ```bash
@@ -50,6 +72,20 @@ npx hyperframes preview --port 4567       # custom port (default 3002)
 ```
 
 Hot-reloads on file changes. Opens the studio in your browser automatically.
+
+When handing a project back to the user, use the Studio project URL, not the
+source `index.html` path:
+
+```text
+http://localhost:<port>/#project/<project-name>
+```
+
+Use the actual port from the preview output and the project directory name. For
+example, after `npx hyperframes preview --port 3017` in `codex-openai-video`,
+report `http://localhost:3017/#project/codex-openai-video`.
+
+Treat `index.html` as source-code context only. It is fine to link it as an
+implementation file, but do not label it as the project or preview surface.
 
 ## Rendering
 

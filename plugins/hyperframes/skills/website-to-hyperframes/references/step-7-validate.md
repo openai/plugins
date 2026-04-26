@@ -71,6 +71,32 @@ npx hyperframes preview
 
 Open the studio in a browser. Scrub through every beat.
 
+### Handoff URL
+
+The Studio URL is the project handoff surface. In the final response, report the
+active preview URL with the project hash:
+
+```text
+http://localhost:<port>/#project/<project-name>
+```
+
+Use the actual port selected by `hyperframes preview` and the project name shown
+by the preview command. If you run `hyperframes preview --port 3017` for a
+project directory named `codex-openai-video`, the project URL is:
+
+```text
+http://localhost:3017/#project/codex-openai-video
+```
+
+Do **not** present `index.html` as the project link. `index.html` is the source
+file for agents and editors; the user-facing project is the running HyperFrames
+Studio preview. You may include source file links as secondary context, but the
+primary "Project" or "Preview" line must be the localhost Studio URL.
+
+If a render was also requested, still include the Studio URL first so the user
+can scrub and inspect the project. Include the MP4 path as the rendered output,
+not as a replacement for the project URL.
+
 ## Render (on-demand only)
 
 **Do NOT render automatically as part of the pipeline.** Preview is the delivery — the user scrubs, spots anything they want tweaked, and you iterate. Rendering to MP4 takes minutes of wall-clock time per pass and is wasted work if the user wants changes.

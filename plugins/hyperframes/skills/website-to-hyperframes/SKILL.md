@@ -83,9 +83,12 @@ Build each composition following the storyboard. After each one: self-review for
 
 **Read:** [references/step-7-validate.md](references/step-7-validate.md)
 
-Lint, validate, snapshot, preview. Deliver the preview to the user first — only render to MP4 on explicit request.
+Lint, validate, snapshot, preview. Deliver the localhost Studio project URL
+(`http://localhost:<port>/#project/<project-name>`) to the user first — only
+render to MP4 on explicit request. Do not treat `index.html` as the project
+handoff link; it is source-code context only.
 
-**Gate:** `npx hyperframes lint` and `npx hyperframes validate` pass with zero errors.
+**Gate:** `npx hyperframes lint` and `npx hyperframes validate` pass with zero errors, and the final response includes the active Studio project URL.
 
 ---
 
