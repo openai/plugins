@@ -57,8 +57,9 @@ Hero or section:
 
 Content-heavy pages:
 
-- If one image would cram the design, generate coordinated section or state concepts.
-- Keep one accepted layout concept responsible for overall structure.
+- For multi-section websites and long landing pages, default to coordinated section concepts: one image per major section, with an optional overview only for full-page rhythm.
+- Avoid one huge full-page screenshot when it would reduce section detail, weaken hierarchy, or make implementation matching harder.
+- Keep one accepted layout concept responsible for overall structure and section order.
 - All supporting concepts must share brand language, typography, palette, component geometry, asset style, spacing, and density.
 
 ## Asset Planning
@@ -78,6 +79,7 @@ Content-heavy pages:
 - Reject concepts that are header-only for full-surface asks, cluttered, generic, repetitive, under-specified, unreadable, over-decorated, or impractical to implement.
 - Extract a design system before coding: native aspect, layout, section order, copy, nav, CTAs, palette, spacing scale, content typography, UI chrome typography, reusable component families, variants, container model, assets, state, and responsive continuation.
 - Treat the accepted concept as the visual spec. Match composition, hierarchy, palette, gradients, typography, spacing, imagery, components, container model, and asset treatment. Do not strip text or branding out of generated product/background assets just because app UI text should stay code-native.
+- For multi-section pages, implement and verify one section or contiguous viewport at a time. Compare the browser screenshot to that section's concept, fix visible drift, then move to the next section.
 - Build an allowed above-the-fold copy list from the accepted concept and user-provided copy. Do not add new hero, nav, eyebrow/kicker, CTA, label, subtitle, category, or proof text unless it is recorded as an intentional deviation. Semantic H1 or heading-level changes must not invent visible explanatory copy.
 - Do not add decorative hero eyebrows, pills, badges, gradients, or overlays that were not in the accepted design. Images must blend with the surrounding background through matching color, lighting, crop, transparency, edges, and shadow.
 - Do not add UI that does not exist in the design. Generate missing section/state concepts when visual consistency is uncertain.
