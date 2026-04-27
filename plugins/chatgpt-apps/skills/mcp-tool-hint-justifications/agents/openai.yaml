@@ -1,0 +1,3 @@
+interface:
+  display_name: "MCP Tool Hint Justifications"
+  short_description: "Generate Apps SDK tool hint justification files"
