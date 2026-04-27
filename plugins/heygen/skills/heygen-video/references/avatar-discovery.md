@@ -1,4 +1,38 @@
-# Avatar Discovery & Voice Selection
+# Avatar Discovery & Voice Selection (heygen-video)
+
+This guide covers *avatar discovery for video generation* — how heygen-video
+finds an appropriate presenter (or skips presenter entirely) before calling
+the Video Agent. For *avatar creation*, see `heygen-avatar` and
+[`heygen-avatar/references/avatar-creation.md`](https://github.com/heygen-com/skills/blob/master/heygen-avatar/references/avatar-creation.md).
+
+## Path 0: Resolve workspace AVATAR files first
+
+Before any HeyGen catalog lookup, check the workspace root for an
+applicable `AVATAR-*.md` file. These are written by `heygen-avatar`
+and contain `Group ID` + `Voice ID` ready to use, with no API call
+needed.
+
+Resolution precedence:
+
+| Request signal | File to read |
+|---|---|
+| Named subject ("video with Eve", "Cleo's update") | `AVATAR-<NAME>.md` |
+| Agent self-reference ("video of yourself", "give us your update") | `AVATAR-AGENT.md` (symlink) |
+| User self-reference ("video of me", "my video update") | `AVATAR-USER.md` (symlink) |
+| No subject in request | Skip to Path A |
+
+`AVATAR-AGENT.md` and `AVATAR-USER.md` are role-based symlinks maintained
+by `heygen-avatar` Phase 5; they resolve to the current agent's / user's
+named AVATAR file at read time. Treat them like any other AVATAR file
+once read.
+
+If the resolved file has a populated HeyGen section, extract `Group ID`
+and `Voice ID` and proceed to Frame Check. Skip Path A entirely. If the
+file exists but the HeyGen section is empty, run `heygen-avatar` Phase 2
+first.
+
+If no file applies (no name match, no role alias, generic catalog
+browsing requested) — fall through to Path A below.
 
 ## Path A: Discover Existing Avatars
 
@@ -76,59 +110,14 @@ After avatar is settled, confirm voice preferences (accent, delivery style, lang
 
 ## Path B: Create a New Avatar
 
-Two modes:
+If no existing avatar fits and the user wants one created, route to the
+`heygen-avatar` skill. See
+[`heygen-avatar/references/avatar-creation.md`](https://github.com/heygen-com/skills/blob/master/heygen-avatar/references/avatar-creation.md)
+for the full creation API surface (photo / prompt / digital twin), file
+input formats, and identity field mappings.
 
-**Mode 1 — New character** (omit `avatar_group_id`): Creates a new person with their own group.
-**Mode 2 — New look** (include `avatar_group_id`): Adds a variation to an existing character.
-
-Always use Mode 2 when the avatar already exists and you're creating a variant (different outfit, orientation fix, bg change). Only use Mode 1 for genuinely new characters.
-
-Three creation types:
-
-**Photo avatar (from user's photo):**
-
-**MCP:** `create_photo_avatar(name=<name>, file=<file_object>, avatar_group_id=<optional>)`
-**CLI:**
-```bash
-heygen avatar create -d '{
-  "type": "photo",
-  "name": "My Avatar",
-  "file": {"type": "url", "url": "https://example.com/headshot.jpg"},
-  "avatar_group_id": "<optional>"
-}'
-```
-Photo requirements: JPEG or PNG, min 512x512, clear front-facing face, good lighting.
-
-**AI-generated avatar (from text prompt):**
-
-**MCP:** `create_prompt_avatar(name=<name>, prompt=<appearance>, avatar_group_id=<optional>)`
-**CLI:**
-```bash
-heygen avatar create -d '{
-  "type": "prompt",
-  "name": "Tech Presenter",
-  "prompt": "Young professional woman, modern workspace, confident smile",
-  "avatar_group_id": "<optional>"
-}'
-```
-Prompt max: 1000 characters. Optional: up to 3 `reference_images`.
-
-**Video avatar (from user's video recording):**
-
-**MCP:** `create_digital_twin(name=<name>, file=<file_object>, avatar_group_id=<optional>)`
-**CLI:**
-```bash
-heygen avatar create -d '{
-  "type": "video",
-  "name": "My Video Avatar",
-  "file": {"type": "asset_id", "asset_id": "<uploaded_asset_id>"},
-  "avatar_group_id": "<optional>"
-}'
-```
-
-All three return `avatar_item` with `id` (look_id) and `group_id` — use `id` as `avatar_id` for videos.
-
-Files: `{"type": "url", "url": "..."}`, `{"type": "asset_id", "asset_id": "..."}` (from `heygen asset create --file <path>`), or `{"type": "base64", "data": "...", "content_type": "..."}`.
+After `heygen-avatar` finishes, an `AVATAR-<NAME>.md` file is written and
+heygen-video resumes here at Path 0 to pick it up.
 
 ---
 
@@ -150,7 +139,9 @@ Also accepts `image_asset_id`. Fastest path for one-off talking-head video.
 
 ---
 
-## Voice Selection
+## Voice Selection (downstream)
+
+Voice catalog browsing for video generation:
 
 **MCP:** `list_voices(type=private)` then `list_voices(type=public, language=<lang>, gender=<gender>)`
 **CLI:**
@@ -160,6 +151,10 @@ heygen voice list --type private --limit 20
 # Public voices with filters
 heygen voice list --type public --engine starfish --language en --gender female --limit 20
 ```
+
+For voice *design* (semantic search by description) and the full voice
+selection workflow during avatar setup, see
+[`heygen-avatar/references/avatar-creation.md`](https://github.com/heygen-com/skills/blob/master/heygen-avatar/references/avatar-creation.md).
 
 ---
 

@@ -1,4 +1,5 @@
 ---
+version: 3.1.0 # x-release-please-version
 name: heygen-avatar
 description: |
   Create a persistent HeyGen avatar — a reusable face + voice identity for the agent,
@@ -25,6 +26,39 @@ allowed-tools: Bash, WebFetch, Read, Write, mcp__heygen__*
 # HeyGen Avatar Designer
 
 Create and manage HeyGen avatars for anyone: the agent, the user, or named characters. Handles identity extraction, avatar generation, voice selection, and saves everything to `AVATAR-<NAME>.md` for consistent reuse.
+
+## Files & Paths
+
+This skill reads and writes the following. No other files are accessed without explicit user instruction.
+
+| Operation | Path | Purpose |
+|-----------|------|---------|
+| Read | `SOUL.md`, `IDENTITY.md` | Extract identity details when creating an avatar for the agent |
+| Read | `AVATAR-<NAME>.md` | Load existing avatar identity (for variant looks, voice updates) |
+| Write | `AVATAR-<NAME>.md` | Save new avatar identity after creation |
+| Write | `AVATAR-AGENT.md`, `AVATAR-USER.md` (symlinks) | Role aliases, see Phase 5 |
+| Temp write | `/tmp/openclaw/uploads/` | Voice preview audio (downloaded for user playback, deleted after session) |
+| Remote upload | HeyGen (via `heygen asset create` or MCP) | User-provided photos uploaded to HeyGen for digital-twin creation |
+
+Assets are only uploaded to HeyGen when the user explicitly provides them.
+
+## Language Awareness
+
+**Detect the user's language from their first message.** Store as `user_language` (e.g., `en`, `ja`, `es`, `ko`, `zh`, `fr`, `de`, `pt`).
+
+1. **Communicate with the user in their language.** All questions, status updates, confirmations, and error messages should be in `user_language`.
+2. **Voice design prompts and selection respect `user_language`.** When designing or selecting a voice, specify the target language so the voice library returns matches that speak it.
+3. **Technical directives stay in English** — enum values (`Young Adult`, `Realistic`, `landscape`, etc.) are API-level and not translated.
+
+## UX Rules
+
+1. **Be concise.** No avatar IDs, group IDs, or raw API payloads in chat. Report the result (avatar created, ready to use) not the plumbing.
+2. **No internal jargon.** Never mention internal phase names ("Phase 0", "Phase 5 Symlink Maintenance") to the user. The user sees natural conversation: "Setting up your avatar\u2026" not "Running Phase 2 avatar creation."
+3. **One or two questions per phase.** Don't batch-ask. Walk phases in order, ask the smallest set of questions needed to proceed.
+4. **Read workspace files before asking.** `SOUL.md`, `IDENTITY.md`, `AVATAR-*.md` at the workspace root contain identity. Check them first. Only ask the user for what's genuinely missing.
+5. **Don't narrate skill internals.** Never say "let me read the workflow," "checking the reference files," "loading the avatar discovery guide." Read silently. The user sees questions and results, not internal navigation.
+6. **Don't announce what you're about to do.** Skip meta-commentary like "Creating the avatar now." Just do the work. If a step takes time, the next thing the user hears should be the result (or a checkpoint question).
+7. **Never narrate transport choice.** MCP vs CLI is internal. Pick the transport silently and never mention it. If both are unavailable, ask the user to configure one without explaining why.
 
 ## Start Here (Critical)
 
@@ -70,10 +104,24 @@ Try to read `SOUL.md` from the workspace root.
 Every avatar gets one file: `AVATAR-<NAME>.md` at the workspace root.
 
 ```
-AVATAR-EVE.md      ← agent
-AVATAR-KEN.md      ← user
-AVATAR-CLEO.md     ← named character
+AVATAR-EVE.md      ← agent      (named, canonical)
+AVATAR-KEN.md      ← user       (named, canonical)
+AVATAR-CLEO.md     ← character  (named, canonical)
 ```
+
+The skill also maintains two **role-based symlinks** alongside the named
+files, for generic lookups by consumer skills (e.g., heygen-video) when the
+request doesn't carry a specific name ("make a video of yourself" → read
+the agent alias; "make a video of me" → read the user alias):
+
+```
+AVATAR-AGENT.md → AVATAR-<CURRENT-AGENT-NAME>.md   (symlink)
+AVATAR-USER.md  → AVATAR-<CURRENT-USER-NAME>.md    (symlink)
+```
+
+Named files are the single source of truth; aliases are pointers and never
+drift. Phase 5 of the workflow maintains them. Named characters get NO
+role alias — they are referenced by name only.
 
 Format:
 ```markdown
@@ -138,6 +186,18 @@ Then check `AVATAR-<NAME>.md` at the workspace root:
 - **AVATAR file exists but HeyGen section empty** → skip to Phase 2.
 - **No AVATAR file** → proceed to Phase 1.
 
+**Role alias staleness check.** Before proceeding, also check whether the
+role alias for this target is already pointing at the right named file:
+
+- For **agent target**: read `AVATAR-AGENT.md` (follow symlink) and
+  compare to `AVATAR-<CURRENT-AGENT-NAME>.md`. If they differ (e.g.,
+  `AVATAR-AGENT.md` → `AVATAR-OLD-NAME.md` because the agent identity
+  changed since the last run), re-link in Phase 5 even if no other
+  changes are made. The named file is canonical, but the alias must
+  match the *current* identity, not the historical one.
+- For **user target**: same check on `AVATAR-USER.md`.
+- For **named character**: no alias to check.
+
 **Optional existing-avatar check** (only useful on the user path when the user might already have avatars in their HeyGen account). If Phase 0 target = **user** AND no `AVATAR-<USER>.md` exists, list their HeyGen avatars first:
 
 **MCP:** `list_avatar_groups(ownership=private)`
@@ -178,6 +238,8 @@ For agents and named characters, skip this entire step — go straight to Type A
 
 ### Phase 2 — Avatar Creation
 
+📖 **Full creation API surface (photo / prompt / digital twin), file input formats, identity field → enum mapping, response shape → [references/avatar-creation.md](references/avatar-creation.md)**
+
 Two modes:
 
 **Mode 1 — New character** (omit `avatar_group_id`):
@@ -204,6 +266,8 @@ File options for Type B:
 - `{ "type": "url", "url": "https://..." }` — public image URL
 - `{ "type": "asset_id", "asset_id": "<id>" }` — from `heygen asset create --file <path>`
 - `{ "type": "base64", "media_type": "image/png", "data": "<base64>" }` — inline
+
+📖 **When to use each (URL vs asset_id vs base64), upload routing, and edge cases → [references/asset-routing.md](references/asset-routing.md)**
 
 **Response:** Returns `avatar_item.id` (look ID) and `avatar_item.group_id` (character identity).
 
@@ -285,7 +349,59 @@ Update the HeyGen section of `AVATAR-<NAME>.md` to match the canonical format:
 
 Confirm the avatar is saved and that other skills (like heygen-video) will pick it up automatically. Communicate in `user_language`.
 
-### Phase 5 — Test (Optional)
+### Phase 5 — Maintain Role Alias
+
+After writing the named `AVATAR-<NAME>.md`, create or update a role-based
+symlink alongside it so other skills can do generic lookups without
+resolving the agent / user name first.
+
+Based on the Phase 0 target:
+
+- **Agent target** → symlink `AVATAR-AGENT.md` → `AVATAR-<NAME>.md`
+- **User target** → symlink `AVATAR-USER.md` → `AVATAR-<NAME>.md`
+- **Named character** → no role alias. Named characters are referenced by
+  name only (e.g., `AVATAR-CLEO.md`); they are not the agent or the user.
+
+**Implementation (run from the workspace root, with fs-fallback):**
+
+The `cd` to workspace root is mandatory — bare relative paths in `ln -s`
+resolve from the agent's current working directory, not where SOUL.md
+lives. The `|| echo` clause handles filesystems that reject symlinks
+(Windows without dev mode, some cloud-mounted storage) without aborting
+Phase 5.
+
+```bash
+# Agent
+cd "$WORKSPACE_ROOT" && ln -sf AVATAR-<NAME>.md AVATAR-AGENT.md \
+  || echo "role alias skipped: fs doesn't support symlinks"
+
+# User
+cd "$WORKSPACE_ROOT" && ln -sf AVATAR-<NAME>.md AVATAR-USER.md \
+  || echo "role alias skipped: fs doesn't support symlinks"
+```
+
+Use a relative link target (just the filename, no path prefix) so the
+alias survives if the workspace is moved or copied.
+
+`ln -sf` is unlink-then-symlink under the hood, not strictly atomic.
+Fine for single-user workspaces; if concurrent agents ever write the
+same alias, expect interleaving and add explicit locking then.
+
+**Why symlink, not copy:** removes the duplicate-file drift class
+(content can never diverge between named file and alias). It does NOT
+remove staleness drift — if `IDENTITY.md` changes the agent name without
+re-running heygen-avatar, `AVATAR-AGENT.md` keeps pointing at the *old*
+named file. Phase 0 mismatch-and-re-alias handles this on the next
+invocation; until then, the alias is stale-but-pointing-somewhere-valid,
+not broken.
+
+**Multi-agent workspace caveat:** one role alias per workspace is
+last-writer-wins. If two agents ever share a workspace and both run
+heygen-avatar, only the most recent run's identity is reachable via
+`AVATAR-AGENT.md`. Named files for both still exist. We accept this
+limit — multi-agent shared workspaces are out of scope for v1.
+
+### Phase 6 — Test (Optional)
 
 If the user wants to see their avatar in action:
 
@@ -313,7 +429,18 @@ Each iteration updates the AVATAR file. The file is always the source of truth.
 
 ## Video Producer Integration
 
-`heygen-video` reads AVATAR files for group_id and voice_id. "Make a video with Eve" → reads `AVATAR-EVE.md` → gets Group ID + Voice ID → resolves fresh look_id at runtime. No AVATAR file → falls back to stock avatars or asks user.
+`heygen-video` reads AVATAR files for group_id and voice_id. Resolution
+order:
+
+1. **Named request** ("Make a video with Eve") → read `AVATAR-EVE.md`.
+2. **Agent self-reference** ("make a video of yourself", "give us a video
+update") → read `AVATAR-AGENT.md` (symlink to current agent's named file).
+3. **User self-reference** ("make a video of me", "my video update") → read
+`AVATAR-USER.md` (symlink to current user's named file).
+4. **No AVATAR file or symlink** → fall back to stock avatars or ask user.
+
+The alias targets are resolved by the OS at read time, so consumer skills
+simply `cat AVATAR-AGENT.md` and get whatever the current agent's avatar is.
 
 ## Error Handling
 
@@ -322,3 +449,5 @@ Each iteration updates the AVATAR file. The file is always the source of truth.
 - Voice match poor → show all available voices, let user browse
 - Asset upload fails → skip reference image, try prompt-only creation
 - Existing avatar file with stale HeyGen IDs → offer to regenerate or keep
+
+📖 **Known issues, retry patterns, broken voice previews, error → action mapping → [references/troubleshooting.md](references/troubleshooting.md)**

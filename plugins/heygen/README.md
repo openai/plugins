@@ -18,7 +18,7 @@ If you'd rather not use the app, the skills also support the HeyGen CLI: install
 
 ## Source of truth
 
-The skills are authored in [`heygen-com/skills`](https://github.com/heygen-com/skills) (under `heygen-avatar/` and `heygen-video/` at the repo root) and mirrored here. File issues about skill content on that repo.
+The skills are authored in [`heygen-com/skills`](https://github.com/heygen-com/skills) (under `heygen-avatar/` and `heygen-video/` at the repo root, each with its own `references/` subdirectory) and mirrored here. The only structural delta in this mirror is the wrapping `skills/` parent directory required by the Codex plugin convention. File issues about skill content on that repo.
 
 ## License
 
