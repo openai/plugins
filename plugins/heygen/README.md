@@ -4,17 +4,17 @@ OpenAI Codex plugin for [HeyGen](https://heygen.com) — create AI avatar videos
 
 ## What's included
 
-Two skills that chain together, plus the official HeyGen MCP server:
+Two skills that chain together, wired to the HeyGen ChatGPT app:
 
 - **heygen-avatar** — turn a photo into a persistent digital twin. Handles avatar lookup, instant-avatar creation, voice selection (or voice cloning), and writes an `AVATAR` file the video skill reads back.
 - **heygen-video** — generate identity-first presenter videos via the HeyGen v3 Video Agent pipeline. Encodes the prompting, asset routing, aspect-ratio correction, and avatar/voice resolution that good HeyGen videos need.
-- **HeyGen MCP** (`https://mcp.heygen.com/mcp/v1/`) — official HTTP MCP server bundled via `.mcp.json`. The skills auto-detect it and use it instead of the CLI.
+- **HeyGen app reference** — `.app.json` points at the curated [HeyGen ChatGPT app](https://chatgpt.com/apps/heygen/asdk_app_69418aad55e08191aa5e437b649ca2e4). The skills detect the app's tools at runtime and use them.
 
 ## Requirements
 
-Installing the plugin wires up the HeyGen MCP server automatically (OAuth on first use), and that's enough for the skills to work end-to-end.
+Installing the plugin connects the HeyGen ChatGPT app automatically (OAuth on first use). That's enough for the skills to work end-to-end — runs on the user's existing HeyGen plan credits.
 
-If you'd rather not use MCP, the skills also support the HeyGen CLI: install it from <https://static.heygen.ai/cli/install.sh> and export `HEYGEN_API_KEY` (get one at <https://app.heygen.com/api>). The skills detect MCP first and fall back to the CLI.
+If you'd rather not use the app, the skills also support the HeyGen CLI: install it from <https://static.heygen.ai/cli/install.sh> and export `HEYGEN_API_KEY` (get one at <https://app.heygen.com/api>). The skills detect the app first and fall back to the CLI.
 
 ## Source of truth
 
