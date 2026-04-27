@@ -23,6 +23,7 @@
     "avatar-video"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "HeyGen",
     "shortDescription": "Avatar videos and personalized video messages",
