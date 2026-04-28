@@ -1405,6 +1405,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Design"
+    },
+    {
+      "name": "heygen",
+      "source": {
+        "source": "local",
+        "path": "./plugins/heygen"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
     }
   ]
 }
