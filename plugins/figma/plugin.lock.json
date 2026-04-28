@@ -7,7 +7,7 @@
   "skills": [
     {
       "id": "figma-code-connect",
-      "vendoredPath": "skills/figma-code-connect-components",
+      "vendoredPath": "skills/figma-code-connect",
       "source": {
         "type": "github",
         "repo": "figma/mcp-server-guide",

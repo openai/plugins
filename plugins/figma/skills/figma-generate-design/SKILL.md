@@ -388,7 +388,7 @@ For detailed API patterns and gotchas, load these from the [figma-use](../figma-
 
 ## Error Recovery
 
-Follow the error recovery process from [figma-use](../figma-use/SKILL.md#6-error-recovery--self-correction):
+Follow the error recovery process from [figma-use](../figma-use/SKILL.md#7-error-recovery--self-correction):
 
 1. **STOP** on error — do not retry immediately.
 2. **Read the error message carefully** to understand what went wrong.
