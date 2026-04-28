@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Diagram"
+  short_description: "Create editable FigJam diagrams from Mermaid"
+  default_prompt: "Generate an editable FigJam diagram from this request, choosing the right Mermaid diagram type and syntax."
