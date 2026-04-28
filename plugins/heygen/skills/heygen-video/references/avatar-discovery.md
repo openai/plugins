@@ -104,7 +104,7 @@ After avatar is settled, confirm voice preferences (accent, delivery style, lang
 
 **ALWAYS show a playable voice preview.** Each voice response includes `preview_audio_url` — share it.
 
-**Handling missing/broken previews:** Some voices return bare `s3://` paths or `null`. When this happens: note "(no preview available)" and offer to generate a short TTS sample via the app's preview flow or `heygen voice speech create --text "<sample>" --voice-id <id> --input-type plain_text --language en --locale en-US` (CLI).
+**Handling missing/broken previews:** Some voices may not expose a usable preview URL and can return `null`. When this happens: note "(no preview available)" and offer to generate a short TTS sample via the app's preview flow or `heygen voice speech create --text "<sample>" --voice-id <id> --input-type plain_text --language en --locale en-US` (CLI).
 
 ---
 
