@@ -178,17 +178,28 @@ node.fills = [
 
 ### Setting Up Auto Layout
 
+**Prefer `figma.createAutoLayout()`** — it returns a frame with `layoutMode` already set and both axes hugging content, so children can immediately use `layoutSizingHorizontal/Vertical = "FILL"`.
+
+```javascript
+const frame = figma.createAutoLayout(); // HORIZONTAL by default
+const column = figma.createAutoLayout("VERTICAL");
+
+// Customize from there as usual:
+frame.itemSpacing = 16;
+frame.paddingTop = 24;
+frame.paddingBottom = 24;
+frame.paddingLeft = 24;
+frame.paddingRight = 24;
+```
+
+If you need a non-auto-layout frame, use `figma.createFrame()` and set the properties manually:
+
 ```javascript
 const frame = figma.createFrame();
 frame.layoutMode = "VERTICAL";              // or "HORIZONTAL"
 frame.primaryAxisSizingMode = "AUTO";       // Hug main axis
 frame.counterAxisSizingMode = "FIXED";      // Fixed cross axis
 frame.resize(360, 1);                        // Width fixed, height auto
-frame.itemSpacing = 16;                      // Gap between children
-frame.paddingTop = 24;
-frame.paddingBottom = 24;
-frame.paddingLeft = 24;
-frame.paddingRight = 24;
 ```
 
 ### Alignment
@@ -338,7 +349,7 @@ group.name = "Grouped Elements";
 ```javascript
 const section = figma.createSection();
 section.name = "My Section";
-section.resizeWithoutConstraints(800, 600);
+section.resize(800, 600); // `resize` and `resizeWithoutConstraints` are equivalent on sections
 section.x = 0;
 section.y = 0;
 // IMPORTANT: Sections don't auto-resize — always resize after adding content

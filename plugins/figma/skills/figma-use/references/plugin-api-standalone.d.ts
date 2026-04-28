@@ -1066,6 +1066,32 @@ interface PluginAPI {
    */
   createFrame(): FrameNode
   /**
+   * Note: This API is only available via `use_figma` in the MCP server
+   *
+   * Creates a new frame with auto layout already enabled. Both axes default to hug content
+   * (`primaryAxisSizingMode = "AUTO"`, `counterAxisSizingMode = "AUTO"`), so children can
+   * immediately use `layoutSizingHorizontal/Vertical = "FILL"` after being appended.
+   *
+   * @remarks
+   *
+   * Prefer this over `createFrame()` whenever you need an auto-layout parent. Since `layoutMode` is
+   * already set, children can use `FILL` sizing immediately after being appended.
+   *
+   * The default direction is `"HORIZONTAL"`. Pass `"VERTICAL"` for a column layout.
+   *
+   * ```ts title="Create an auto-layout frame"
+   * const row = figma.createAutoLayout()
+   * const column = figma.createAutoLayout("VERTICAL")
+   *
+   * row.itemSpacing = 16
+   * row.paddingTop = 24
+   * row.paddingBottom = 24
+   * row.paddingLeft = 24
+   * row.paddingRight = 24
+   * ```
+   */
+  createAutoLayout(direction?: 'HORIZONTAL' | 'VERTICAL'): FrameNode
+  /**
    * Note: This API is only available in Figma Design
    *
    * Creates a new, empty component.
@@ -10777,6 +10803,16 @@ interface SectionNode
    *
    */
   resizeWithoutConstraints(width: number, height: number): void
+  /**
+   * Resizes the section node. Sections do not propagate constraints to their
+   * children, so this behaves equivalently to {@link SectionNode.resizeWithoutConstraints}
+   * and is provided to match the resize ergonomics of other resizable nodes.
+   *
+   * @param width - New width of the node. Must be >= 0.01
+   * @param height - New height of the node. Must be >= 0.01
+   *
+   */
+  resize(width: number, height: number): void
 }
 /**
  * @see https://developers.figma.com/docs/plugins/api/SlideNode
@@ -11287,6 +11323,105 @@ interface LinearRepeatModifier extends RepeatModifier {
 interface RadialRepeatModifier extends RepeatModifier {
   /** Type of repeat modifier. */
   repeatType: 'RADIAL'
+}
+
+// ============================================================
+// Additional APIs (available via use_figma)
+// ============================================================
+
+/**
+ * Result returned by node.query(). Iterable with for...of.
+ */
+interface QueryResult {
+  /** Number of matched nodes */
+  readonly length: number
+  /** First matched node, or null */
+  first(): SceneNode | null
+  /** Last matched node, or null */
+  last(): SceneNode | null
+  /** Convert to regular array */
+  toArray(): SceneNode[]
+  /** Iterate with callback. Returns this for chaining. */
+  each(callback: (node: SceneNode, index: number) => void): QueryResult
+  /** Map to new array */
+  map<T>(callback: (node: SceneNode, index: number) => T): T[]
+  /** Filter to new QueryResult */
+  filter(callback: (node: SceneNode, index: number) => boolean): QueryResult
+  /** Extract property values from all matched nodes */
+  values(keys: string[]): Record<string, unknown>[]
+  /** Set properties on all matched nodes */
+  set(props: Record<string, unknown>): QueryResult
+  /** Sub-query within matched nodes */
+  query(selector: string): QueryResult
+  [Symbol.iterator](): Iterator<SceneNode>
+}
+
+/**
+ * Options for node.screenshot()
+ */
+interface ScreenshotOptions {
+  /** Export scale. Default: 0.5 (auto-capped so max output dimension ≤ 1024px). */
+  scale?: number
+  /** When false, includes overlapping content from sibling nodes. Default: true. */
+  contentsOnly?: boolean
+}
+
+// Additional node methods
+interface BaseNodeMixin {
+  /**
+   * Set multiple properties at once. Returns this for chaining.
+   * Priority keys (e.g. layoutMode) are applied first regardless of object key order.
+   * width/height are routed through resize() automatically.
+   *
+   * @example
+   * node.set({ opacity: 0.5, cornerRadius: 8, name: "Card" })
+   */
+  set(props: Record<string, unknown>): this
+
+  /**
+   * CSS-like selector query within this node's subtree.
+   * Selector syntax: type (FRAME, TEXT), [attr=val], >, :first-child, :nth-child(n), comma unions.
+   *
+   * @example
+   * frame.query('TEXT[name=Title]')
+   * figma.currentPage.query('FRAME[name^=Card] > TEXT')
+   */
+  query(selector: string): QueryResult
+
+  /**
+   * Test if this node matches a CSS-like selector.
+   */
+  matches(selector: string): boolean
+
+  /**
+   * Capture a PNG screenshot of this node and return it inline in the response.
+   *
+   * @example
+   * await frame.screenshot()                          // default scale
+   * await frame.screenshot({ scale: 2 })              // hi-res
+   * await frame.screenshot({ contentsOnly: false })   // include overlapping content
+   */
+  screenshot(options?: ScreenshotOptions): Promise<void>
+
+  /**
+   * Show/hide a shimmer overlay on this node indicating work in progress.
+   */
+  placeholder: boolean
+}
+
+// Additional figma.* APIs
+interface PluginAPI {
+  /** File I/O namespace for writing images and data. */
+  readonly io: {
+    /**
+     * Write a file (.png, .json, .csv). For images, data should be a Uint8Array from exportAsync().
+     *
+     * @example
+     * const bytes = await node.exportAsync({ format: 'PNG' })
+     * figma.io.write('screenshot.png', bytes)
+     */
+    write(path: string, data: Uint8Array | string): void
+  }
 }
 
 // prettier-ignore
