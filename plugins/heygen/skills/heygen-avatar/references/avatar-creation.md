@@ -7,7 +7,7 @@ the reference when you need exact arguments, edge cases, or alternative
 creation paths.
 
 For *avatar discovery* (finding an existing avatar at video time), see
-[`heygen-video/references/avatar-discovery.md`](https://github.com/heygen-com/skills/blob/master/heygen-video/references/avatar-discovery.md).
+[`../../heygen-video/references/avatar-discovery.md`](../../heygen-video/references/avatar-discovery.md).
 
 ---
 
@@ -16,11 +16,11 @@ For *avatar discovery* (finding an existing avatar at video time), see
 `heygen-avatar` Phase 2 supports three creation types. Pick based on what
 the user provides:
 
-| User input | Type | API |
+| User input | Type | Flow |
 |---|---|---|
-| A photo of a real person | `photo` | `create_photo_avatar` |
-| A description of an appearance | `prompt` | `create_prompt_avatar` |
-| A short video recording of a real person | `video` | `create_digital_twin` |
+| A photo of a real person | `photo` | Photo avatar creation |
+| A description of an appearance | `prompt` | Prompt-based avatar creation |
+| A short video recording of a real person | `video` | Digital-twin creation |
 
 All three accept an optional `avatar_group_id`:
 - **Omit it** to create a new character (new group).
@@ -118,11 +118,11 @@ All three types return:
 }
 ```
 
-- `id` is the **look_id** — what you pass downstream as `avatar_id` to
-  `create_video_agent` for video generation.
+- `id` is the **look_id** — what you pass downstream as `avatar_id` for
+  HeyGen video generation.
 - `group_id` is the **character identity** — stable across looks. Save
   this in the AVATAR-<NAME>.md file. Always resolve fresh look_ids at
-  video time via `list_avatar_looks(group_id=<id>)` rather than caching
+  video time via the avatar-looks flow rather than caching
   a specific look_id.
 
 ---
@@ -173,6 +173,6 @@ heygen voice list --type public --engine starfish --language en --gender female 
 
 **Handling missing/broken previews:** Some voices return bare `s3://`
 paths or `null`. When this happens: note "(no preview available)" and
-offer to generate a short TTS sample via `create_speech` (the app) or
+offer to generate a short TTS sample via the app or
 `heygen voice speech create --text "<sample>" --voice-id <id>
 --input-type plain_text --language en --locale en-US` (CLI).

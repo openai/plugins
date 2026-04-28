@@ -84,9 +84,9 @@ Try to read `SOUL.md` from the workspace root.
 
 **Mode selection is silent.** Detect once at the start of the session, pick a mode, move on. Never narrate transport choice ("CLI is broken", "switching to the app") — the user doesn't care how calls are made.
 
-**HeyGen app (preferred):** If the HeyGen app tools are available through the installed app, use them. The app authenticates via OAuth and runs against the user's existing HeyGen plan credits.
+**HeyGen app (preferred):** If the HeyGen app is available through the installed app integration, use it. The app authenticates via OAuth and runs against the user's existing HeyGen plan credits.
 
-**CLI fallback:** If the app tools are not available AND the `heygen` binary runs cleanly (`heygen --version` exits 0), use it. Auth: `HEYGEN_API_KEY` env OR `heygen auth login` (persists to `~/.heygen/credentials`). If the CLI is missing, errors on `--version`, or auth is not set, silently skip it.
+**CLI fallback:** If the app is not available AND the `heygen` binary runs cleanly (`heygen --version` exits 0), use it. Auth: `HEYGEN_API_KEY` env OR `heygen auth login` (persists to `~/.heygen/credentials`). If the CLI is missing, errors on `--version`, or auth is not set, silently skip it.
 
 **Neither available:** Only if the app is unavailable AND the CLI doesn't work, tell the user once: "To use this skill, connect the HeyGen app or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`."
 
@@ -199,7 +199,7 @@ role alias for this target is already pointing at the right named file:
 
 **Optional existing-avatar check** (only useful on the user path when the user might already have avatars in their HeyGen account). If Phase 0 target = **user** AND no `AVATAR-<USER>.md` exists, list their HeyGen avatars first:
 
-**App:** use the HeyGen app tool for listing private avatar groups
+**App:** use the HeyGen app to list private avatar groups
 **CLI:** `heygen avatar list --ownership private`
 
 If the list is non-empty, present the options and ask which to use or whether to create new. If empty, proceed to Phase 1. Skip this check entirely for agent and named-character targets — those live in AVATAR-*.md, not the HeyGen catalog.

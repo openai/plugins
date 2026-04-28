@@ -73,7 +73,7 @@ Video Agent rejects `text/html` content type in the `files[]` array. Web pages (
 
 **Symptom:** Video generation fails or produces errors immediately after creating a new avatar. The avatar exists in the HeyGen dashboard but videos referencing it fail.
 
-**Root Cause:** Avatar creation is asynchronous. `heygen avatar create` (and `create_photo_avatar` / `create_prompt_avatar` the app tools) return success immediately, but the avatar image is still being processed. If you submit a video request before processing completes, it fails.
+**Root Cause:** Avatar creation is asynchronous. `heygen avatar create` (and the equivalent creation flow in the HeyGen app) return success immediately, but the avatar image is still being processed. If you submit a video request before processing completes, it fails.
 
 **Detection:** Poll with `heygen avatar looks list --group-id <group_id>` (or check the avatar-looks view in the HeyGen app). The avatar is NOT ready until:
 - `preview_image_url` is non-null

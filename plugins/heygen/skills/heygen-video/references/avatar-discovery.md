@@ -3,7 +3,7 @@
 This guide covers *avatar discovery for video generation* — how heygen-video
 finds an appropriate presenter (or skips presenter entirely) before calling
 the Video Agent. For *avatar creation*, see `heygen-avatar` and
-[`heygen-avatar/references/avatar-creation.md`](https://github.com/heygen-com/skills/blob/master/heygen-avatar/references/avatar-creation.md).
+[`../../heygen-avatar/references/avatar-creation.md`](../../heygen-avatar/references/avatar-creation.md).
 
 ## Path 0: Resolve workspace AVATAR files first
 
@@ -50,8 +50,8 @@ Avoids the 2-call group→looks pattern.
 **If user wants to browse**, use the group-first flow:
 
 **App:**
-1. `list_avatar_groups(ownership=private)` — list groups (each group = one person)
-2. `list_avatar_looks(group_id=<group_id>)` — show looks for chosen group
+1. Browse private avatar groups (each group = one person)
+2. Open a group to view its available looks
 
 **CLI:**
 ```bash
@@ -104,7 +104,7 @@ After avatar is settled, confirm voice preferences (accent, delivery style, lang
 
 **ALWAYS show a playable voice preview.** Each voice response includes `preview_audio_url` — share it.
 
-**Handling missing/broken previews:** Some voices return bare `s3://` paths or `null`. When this happens: note "(no preview available)" and offer to generate a short TTS sample via `create_speech` (the app) or `heygen voice speech create --text "<sample>" --voice-id <id> --input-type plain_text --language en --locale en-US` (CLI).
+**Handling missing/broken previews:** Some voices return bare `s3://` paths or `null`. When this happens: note "(no preview available)" and offer to generate a short TTS sample via the app's preview flow or `heygen voice speech create --text "<sample>" --voice-id <id> --input-type plain_text --language en --locale en-US` (CLI).
 
 ---
 
@@ -112,7 +112,7 @@ After avatar is settled, confirm voice preferences (accent, delivery style, lang
 
 If no existing avatar fits and the user wants one created, route to the
 `heygen-avatar` skill. See
-[`heygen-avatar/references/avatar-creation.md`](https://github.com/heygen-com/skills/blob/master/heygen-avatar/references/avatar-creation.md)
+[`../../heygen-avatar/references/avatar-creation.md`](../../heygen-avatar/references/avatar-creation.md)
 for the full creation API surface (photo / prompt / digital twin), file
 input formats, and identity field mappings.
 
@@ -154,7 +154,7 @@ heygen voice list --type public --engine starfish --language en --gender female 
 
 For voice *design* (semantic search by description) and the full voice
 selection workflow during avatar setup, see
-[`heygen-avatar/references/avatar-creation.md`](https://github.com/heygen-com/skills/blob/master/heygen-avatar/references/avatar-creation.md).
+[`../../heygen-avatar/references/avatar-creation.md`](../../heygen-avatar/references/avatar-creation.md).
 
 ---
 

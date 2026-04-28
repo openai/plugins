@@ -44,7 +44,7 @@ When the user provides files, URLs, or references, route each asset to the right
 ## Executing Routes
 
 ### Path A (Contextualize)
-- URLs: Use `web_fetch` to retrieve publicly accessible content
+- URLs: retrieve publicly accessible content with the environment's standard web/content fetch capability
 - For auth-walled content you cannot access: ask the user to paste the text directly
 - Extract 3-5 most important points relevant to the video
 - Weave naturally into the script. Don't dump. Integrate.
@@ -52,7 +52,7 @@ When the user provides files, URLs, or references, route each asset to the right
 ### Path B (Attach)
 Upload to HeyGen:
 
-**App:** upload via the asset tool (depends on environment).
+**App:** upload through the HeyGen app's asset flow when available.
 **CLI:** `heygen asset create --file /path/to/file.png`
 
 Max 32MB per file. Returns JSON with the new `asset_id`.
@@ -81,6 +81,6 @@ In the learning log entry, record:
 - **When in doubt, do both (A+B).** Over-providing costs nothing.
 - **Always describe attached assets in the prompt.** Uploading without description = ignored.
 - **Auth-walled content is YOUR job.** Bridge the gap between your access and Video Agent's.
-- **URLs that fail:** Try `web_fetch`. If login/paywall/404 → tell the user, ask for content directly. Never silently fabricate.
+- **URLs that fail:** Try the environment's standard web/content fetch capability. If login/paywall/404 → tell the user, ask for content directly. Never silently fabricate.
 - **HTML URLs cannot go in `files[]`.** Video Agent rejects `text/html`. Web pages are ALWAYS Path A only.
 - **Prefer download→upload→asset_id** over `files[]{url}`. HeyGen's servers often blocked by CDN/WAF.

@@ -75,17 +75,17 @@ Detect in this order:
 
 1. **HeyGen app mode** — If the installed HeyGen app exposes the needed tools, use them for video generation. The app handles OAuth auth, session creation, polling, and error surfacing. Frame Check still runs before submission.
 2. **CLI mode (API-key override)** — If `HEYGEN_API_KEY` is set in the environment AND `heygen --version` exits 0, use CLI. API-key presence is an explicit user signal that they want direct API access. No question asked.
-3. **CLI mode (fallback)** — If app tools are not available AND `heygen --version` exits 0, use CLI. Auth via `heygen auth login` (persists to `~/.heygen/credentials`).
+3. **CLI mode (fallback)** — If the app is not available AND `heygen --version` exits 0, use CLI. Auth via `heygen auth login` (persists to `~/.heygen/credentials`).
 4. **Neither** — tell the user once: "To use this skill, connect the HeyGen app or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`."
 
 **Hard rules:**
 - **Never call `curl api.heygen.com/...`** — every mode routes through its own surface.
-- **HeyGen app mode:** use the app tools when available.
+- **HeyGen app mode:** use the app when available.
 - **CLI mode:** only use `heygen ...` commands. Run `heygen <noun> <verb> --help` to discover arguments.
 - **Never cross over.** Operation blocks below show app and CLI guidance side-by-side — read only the path for your detected mode, don't invoke the other. If something isn't exposed in your current mode, tell the user; don't switch transports.
 ### HeyGen app path
 
-Use the installed HeyGen app tools for video generation, avatar discovery, voice listing, and style browsing when they are available in the environment.
+Use the installed HeyGen app for video generation, avatar discovery, voice listing, and style browsing when it is available in the environment.
 
 ### CLI command groups (CLI mode only)
 
