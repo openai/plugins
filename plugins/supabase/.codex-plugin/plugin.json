@@ -32,6 +32,11 @@
     "websiteURL": "https://supabase.com",
     "privacyPolicyURL": "https://supabase.com/privacy",
     "termsOfServiceURL": "https://supabase.com/terms",
+    "defaultPrompt": [
+      "Use Supabase to set up Auth and protected routes for my app.",
+      "Review my Supabase schema and RLS policies for security issues.",
+      "Optimize my Postgres queries and indexes using Supabase best practices."
+    ],
     "brandColor": "#3ECF8E",
     "logo": "./assets/logo.svg"
   }
