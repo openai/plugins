@@ -1,0 +1,38 @@
+{
+  "name": "supabase",
+  "version": "0.1.4",
+  "description": "Access your Supabase projects and perform tasks like managing tables, fetching config, and querying data.",
+  "author": {
+    "name": "Supabase",
+    "email": "support@supabase.io",
+    "url": "https://supabase.com"
+  },
+  "homepage": "https://supabase.com",
+  "repository": "https://github.com/supabase-community/codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "supabase",
+    "postgres",
+    "database",
+    "backend",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Supabase",
+    "shortDescription": "Supabase skills and MCP tools for Codex",
+    "longDescription": "Official Supabase plugin for Codex. Includes agent skills for Supabase development and Postgres best practices, plus MCP server integration for managing your Supabase projects directly from Codex.",
+    "developerName": "Supabase",
+    "category": "Coding",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://supabase.com",
+    "privacyPolicyURL": "https://supabase.com/privacy",
+    "termsOfServiceURL": "https://supabase.com/terms",
+    "brandColor": "#3ECF8E",
+    "logo": "./assets/logo.svg"
+  }
+}
