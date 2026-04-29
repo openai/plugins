@@ -17,6 +17,7 @@
     "frontend",
     "image-generation",
     "browser-testing",
+    "frontend-debugging",
     "stripe",
     "supabase",
     "shadcn",

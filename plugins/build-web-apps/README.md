@@ -5,6 +5,7 @@ Builder workflows for frontend apps, designing new websites, shadcn/ui, Stripe, 
 ## Skills
 
 - `frontend-app-builder`
+- `frontend-testing-debugging`
 - `react-best-practices`
 - `shadcn-best-practices`
 - `stripe-best-practices`
