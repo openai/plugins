@@ -22,6 +22,8 @@
 ```js
 figma.createRectangle()
 figma.createFrame()
+figma.createAutoLayout()        // Frame with auto layout enabled, both axes hug — prefer over createFrame() for layout containers
+figma.createAutoLayout("VERTICAL") // Same but vertical direction
 figma.createComponent()         // Creates a ComponentNode
 figma.createText()
 figma.createEllipse()
@@ -315,3 +317,4 @@ node.parent                    // Parent node
 | `figma.loadAllPagesAsync()` | Not implemented |
 | `figma.variables.extendLibraryCollectionByKeyAsync()` | Not implemented |
 | `figma.teamLibrary.*` | Not implemented (requires LiveGraph) |
+| `figma.getLocalComponents*()` | **Does not exist** — unlike styles, there is no `getLocalComponents()` or `getLocalComponentSetsAsync()` (or any `getLocalComponent*` variant). Use `findAll(n => n.type === 'COMPONENT')` / `findAll(n => n.type === 'COMPONENT_SET')` to locate components in the current file. |

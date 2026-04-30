@@ -9,8 +9,12 @@
 - Page context and plugin lifecycle pitfalls
 - Auto Layout and sizing order pitfalls (including HUG/FILL interactions)
 - Variant layout and geometry pitfalls
+- Font loading and text/typography pitfalls
 - Variable scopes and mode pitfalls
 - Node cleanup and empty-fill pitfalls
+- Type-specific method calls without node type guards
+- Non-existent property writes and "object is not extensible"
+- width/height are read-only — use resize()
 - detachInstance() and node ID invalidation
 
 
@@ -42,8 +46,7 @@ frame.x = maxX + 100  // 100px gap from rightmost existing content
 frame.y = 0
 
 // NOT NEEDED — child nodes inside a parent don't need overlap scanning
-const card = figma.createFrame()
-card.layoutMode = 'VERTICAL'
+const card = figma.createAutoLayout('VERTICAL')
 const label = figma.createText()
 card.appendChild(label)  // positioned by auto-layout, no x/y needed
 ```
@@ -257,24 +260,6 @@ const colorCollection = figma.variables.createVariableCollection("Colors")
 component.setExplicitVariableModeForCollection(colorCollection, targetModeId)
 ```
 
-## `TextStyle.setBoundVariable` is not available in `use_figma`
-
-`setBoundVariable` exists on `TextStyle` in the typed API but is **not available** in `use_figma`. Calling it will throw `"not a function"`.
-
-```js
-// WRONG — throws "not a function" in use_figma
-const ts = figma.createTextStyle()
-ts.setBoundVariable("fontSize", fontSizeVar)
-
-// CORRECT — set raw values; bind variables interactively in Figma later
-const ts = figma.createTextStyle()
-ts.fontSize = 24
-```
-
-This only affects `TextStyle`. Variable binding on **nodes** (`node.setBoundVariable(...)`) and on **paint objects** (`figma.variables.setBoundVariableForPaint(...)`) still works in `use_figma` as expected.
-
-If live variable binding on text styles is required, create the styles with raw values via `use_figma`, then bind variables interactively through the Figma Styles panel or a full interactive plugin.
-
 ## `lineHeight` and `letterSpacing` must be objects, not bare numbers
 
 ```js
@@ -297,30 +282,7 @@ This applies to both `TextStyle` and `TextNode` properties. The same rule applie
 
 ## Font style names are file-dependent — use `listAvailableFontsAsync` to discover them
 
-Font style names vary per provider and per Figma file. `"SemiBold"` and `"Semi Bold"` are different strings. Loading a font with the wrong style string **throws** — never guess style names.
-
-Use `figma.listAvailableFontsAsync()` to discover all available fonts and their exact style strings before loading:
-
-```js
-// WRONG — guessing style names
-await figma.loadFontAsync({ family: "Inter", style: "SemiBold" }) // may throw
-
-// CORRECT — discover available styles, then load
-const allFonts = await figma.listAvailableFontsAsync()
-const interFonts = allFonts.filter(f => f.fontName.family === "Inter")
-// interFonts[i].fontName → { family: "Inter", style: "Semi Bold" } (exact string)
-
-const desired = interFonts.find(f => f.fontName.style === "Semi Bold")
-if (desired) {
-  await figma.loadFontAsync(desired.fontName)
-} else {
-  // Fall back to a known-safe style
-  const fallback = interFonts.find(f => f.fontName.style === "Regular")
-  if (fallback) await figma.loadFontAsync(fallback.fontName)
-}
-```
-
-When building a type ramp script, always call `listAvailableFontsAsync()` first to verify font styles against the target file before hardcoding them. If a `loadFontAsync` call fails, use `listAvailableFontsAsync()` to inspect what fonts are actually available and pick the closest match.
+Font style names vary per provider and per Figma file. Always call `figma.listAvailableFontsAsync()` to discover exact style strings before loading — never guess or probe with try/catch. See [text-style-patterns.md](text-style-patterns.md#discovering-available-font-styles) for the discovery + load pattern.
 
 ## combineAsVariants does NOT auto-layout in `use_figma`
 
@@ -349,18 +311,30 @@ for (const child of cs.children) {
 cs.resizeWithoutConstraints(maxX + 40, maxY + 40)
 ```
 
-## COLOR variable values use {r, g, b, a} (with alpha)
+## Paint `color` must not include `a` — use `opacity` at the paint level instead
+
+Paint `color` only accepts `{r, g, b}`. Adding `a` to it throws `"Unrecognized key(s) in object: 'a' at [0].color"`. This is a common mistake coming from CSS `rgba()` muscle memory.
+
+Alpha/opacity belongs at the **paint level** as `opacity`, not inside `color`.
 
 ```js
-// Paint colors use {r, g, b} (no alpha — opacity is a separate paint property)
-node.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
+// WRONG — 'a' is not valid inside color; throws validation error
+node.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1, a: 0.1 } }]
 
-// But COLOR variable values use {r, g, b, a} — alpha maps to paint opacity
+// CORRECT — opacity goes at the paint level
+node.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 }, opacity: 0.1 }]
+
+// CORRECT — fully opaque (no opacity needed)
+node.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 } }]
+```
+
+**COLOR variable values are the exception** — they do use `{r, g, b, a}`:
+
+```js
+// Variable values use {r, g, b, a} — this is correct for variables only
 const colorVar = figma.variables.createVariable("bg", collection, "COLOR")
 colorVar.setValueForMode(modeId, { r: 1, g: 0, b: 0, a: 1 })  // opaque red
 colorVar.setValueForMode(modeId, { r: 0, g: 0, b: 0, a: 0 })  // fully transparent
-
-// ⚠️ Don't confuse: {r, g, b} for paint colors vs {r, g, b, a} for variable values
 ```
 
 ## `layoutSizingVertical`/`layoutSizingHorizontal` = `'FILL'` requires auto-layout parent FIRST
@@ -377,22 +351,29 @@ parent.appendChild(child)            // parent must have layoutMode set
 child.layoutSizingVertical = 'FILL'  // Works!
 ```
 
+**Tip:** use `figma.createAutoLayout()` (or `figma.createAutoLayout('VERTICAL')`) instead of `figma.createFrame()` when you want a parent that supports `FILL` children. It returns a frame with `layoutMode` already set and both axes hugging content, so you don't have to remember the property dance.
+
+```js
+const parent = figma.createAutoLayout()  // layoutMode = 'HORIZONTAL', sizing = AUTO
+const child = figma.createFrame()
+parent.appendChild(child)
+child.layoutSizingHorizontal = 'FILL'    // Works immediately
+```
+
 ## HUG parents collapse FILL children
 
 A `HUG` parent cannot give `FILL` children meaningful size. If children have `layoutSizingHorizontal = "FILL"` but the parent is `"HUG"`, the children collapse to minimum size. The parent must be `"FILL"` or `"FIXED"` for FILL children to expand. This is a common cause of truncated text in select fields, inputs, and action rows.
 
 ```js
 // WRONG — parent hugs, so FILL children get zero extra space
-const parent = figma.createFrame()
-parent.layoutMode = 'HORIZONTAL'
+const parent = figma.createAutoLayout()
 parent.layoutSizingHorizontal = 'HUG'
 const child = figma.createFrame()
 parent.appendChild(child)
 child.layoutSizingHorizontal = 'FILL'  // collapses to min size!
 
 // CORRECT — parent must be FIXED or FILL for FILL children to expand
-const parent = figma.createFrame()
-parent.layoutMode = 'HORIZONTAL'
+const parent = figma.createAutoLayout()
 parent.resize(400, 50)
 parent.layoutSizingHorizontal = 'FIXED'  // or 'FILL' if inside another auto-layout
 const child = figma.createFrame()
@@ -408,9 +389,7 @@ child.layoutSizingHorizontal = 'FILL'  // expands to fill remaining 400px
 const parent = figma.createComponent()
 parent.layoutMode = 'VERTICAL'
 parent.primaryAxisSizingMode = 'AUTO'  // hug contents
-const content = figma.createFrame()
-content.layoutMode = 'VERTICAL'
-content.primaryAxisSizingMode = 'AUTO'
+const content = figma.createAutoLayout('VERTICAL')
 parent.appendChild(content)
 content.layoutGrow = 1  // BUG: content compresses, children hidden!
 
@@ -421,6 +400,29 @@ parent.primaryAxisSizingMode = 'FIXED'
 parent.resizeWithoutConstraints(300, 500)
 content.layoutGrow = 1  // NOW it correctly fills remaining space
 ```
+
+## `width` and `height` are read-only — use `resize()`
+
+`node.width` and `node.height` are read-only. Assigning to them throws `"TypeError: no setter for property"`. Use `resize()` or `resizeWithoutConstraints()` instead.
+
+Note: `x` and `y` are **not** read-only and can be set directly.
+
+```js
+// WRONG — throws "no setter for property"
+node.width = 300
+node.height = 64
+
+// CORRECT — use resize() to change dimensions
+node.resize(300, 64)           // change both
+node.resize(300, node.height)  // change width only
+node.resize(node.width, 64)    // change height only
+
+// CORRECT — x and y are writable directly
+node.x = 100
+node.y = 200
+```
+
+For sections and component sets, use `resizeWithoutConstraints()` instead of `resize()` (see the sections gotcha above).
 
 ## `resize()` resets `primaryAxisSizingMode` and `counterAxisSizingMode` to FIXED
 
@@ -499,7 +501,7 @@ section.appendChild(someNode) // node may be outside section bounds
 const section = figma.createSection()
 section.name = "My Section"
 section.appendChild(someNode)
-section.resizeWithoutConstraints(
+section.resize(
   Math.max(someNode.width + 100, 800),
   Math.max(someNode.height + 100, 600)
 )
@@ -613,6 +615,49 @@ When constructing a `var(--name)` string from a Figma variable name, replace BOT
 
     // Preferred — use the source CSS name directly
     v.setVariableCodeSyntax('WEB', `var(${token.cssVar})`)  // e.g. '--color-bg-brand-secondary-hover'
+
+## Calling type-specific methods without checking node type
+
+Some methods only exist on specific node types. Calling them on the wrong type throws "TypeError: not a function". Always guard with a type check before calling type-specific methods.
+
+```js
+// WRONG — node might not be a TextNode
+const node = await figma.getNodeByIdAsync('952:1253');
+const segments = node.getStyledTextSegments(['hyperlink']); // TypeError if node isn't TEXT
+
+// CORRECT — check type first
+const node = await figma.getNodeByIdAsync('952:1253');
+if (!node || node.type !== 'TEXT') return { error: `Expected TextNode, got ${node?.type ?? 'null'}` };
+const segments = node.getStyledTextSegments(['hyperlink']);
+```
+
+Common type-specific methods and the types that have them:
+
+| Method | Node type required |
+|--------|-------------------|
+| `getStyledTextSegments()` | `TEXT` |
+| `setRangeFontName()`, `setRangeFontSize()` | `TEXT` |
+| `createInstance()` | `COMPONENT` |
+| `addComponentProperty()` | `COMPONENT`, `COMPONENT_SET` |
+| `createVariant()` | `COMPONENT_SET` |
+
+## Setting a non-existent property throws "object is not extensible"
+
+Figma plugin API node objects are non-extensible — you cannot add new properties to them. Setting a property name that doesn't exist on a node type throws `"Cannot add property X, object is not extensible"` (surfaced as `"object is not extensible"`). This only fires on **write**, and only for properties not defined on that node type.
+
+```js
+// WRONG — 'strokeDashes' does not exist on VectorNode; throws "object is not extensible"
+const v = figma.createVector()
+v.strokeDashes = [4, 8]  // Error!
+
+// CORRECT — the actual property is dashPattern
+v.dashPattern = [4, 8]
+
+// WRONG — any invented property name throws the same error
+node.customColor = '#ff0000'  // Error — not a real API property
+```
+
+**How to avoid this**: Before setting any property, verify it exists on the node type by grepping [plugin-api-standalone.d.ts](plugin-api-standalone.d.ts). Property names that sound plausible but aren't in the typings will always throw.
 
 ## `detachInstance()` invalidates ancestor node IDs
 

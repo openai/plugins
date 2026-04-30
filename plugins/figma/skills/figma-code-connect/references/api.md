@@ -281,6 +281,18 @@ if (icon) {
 }
 ```
 
+#### `getSlot(propName: string): ResultSection[] | undefined`
+
+Reads a Figma component property whose type is **`SLOT`** (not **INSTANCE_SWAP**). Returns a `ResultSection[]` containing a slot section (`type: 'SLOT'`). Returns `undefined` if the property is missing or invalid. Do not call `executeTemplate()` on this value — unlike `getInstanceSwap()`, it is not an `InstanceHandle`.
+
+```javascript
+const content = instance.getSlot('Content')
+
+export default {
+  example: figma.code`<Card>${content}</Card>`
+}
+```
+
 #### `getPropertyValue(propName: string): string | boolean`
 
 Gets the raw property value without mapping.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "use_figma FigJam"
+  short_description: "Use Figma's use_figma tool in FigJam files"
+  default_prompt: "Use the FigJam-specific use_figma workflow to create or modify FigJam content."

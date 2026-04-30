@@ -15,7 +15,7 @@ This skill provides a structured workflow for translating Figma designs into pro
 - Use this skill when the deliverable is code in the user's repository.
 - If the user asks to create/edit/delete nodes inside Figma itself, switch to [figma-use](../figma-use/SKILL.md).
 - If the user asks to build or update a full-page screen in Figma from code or a description, switch to [figma-generate-design](../figma-generate-design/SKILL.md).
-- If the user asks only for Code Connect mappings, switch to [figma-code-connect-components](../figma-code-connect-components/SKILL.md).
+- If the user asks only for Code Connect mappings, switch to [figma-code-connect](../figma-code-connect/SKILL.md).
 - If the user asks to author reusable agent rules (`CLAUDE.md`/`AGENTS.md`), switch to [figma-create-design-system-rules](../figma-create-design-system-rules/SKILL.md).
 
 ## Prerequisites

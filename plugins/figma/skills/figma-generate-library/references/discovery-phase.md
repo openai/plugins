@@ -147,7 +147,7 @@ CSS `0 4px 6px -1px rgba(0,0,0,0.1)` → Figma:
 |---|---|
 | `font-size: 16px` | FLOAT variable (scope `FONT_SIZE`) or Text Style `fontSize` |
 | `line-height: 1.5` | Text Style `lineHeight: {value: 24, unit: "PIXELS"}` |
-| `font-weight: 600` | Text Style `fontName: {family: "Inter", style: "Semi Bold"}` |
+| `font-weight: 600` | STRING variable (scope `FONT_STYLE`, holds a font-specific style name like `"Regular"` — discover via `listAvailableFontsAsync()`) or Text Style `fontName.style` |
 | `letter-spacing: -0.02em` | Text Style `letterSpacing: {value: -2, unit: "PERCENT"}` |
 | `font-family: "Inter"` | STRING variable (scope `FONT_FAMILY`) or Text Style `fontName.family` |
 
