@@ -1,11 +1,12 @@
 ---
 name: google-docs
-description: Connector-first Google Docs editing in local Codex plugin sessions with no Browser Use, target-document checks, connector-readback verification, and reference routing for formatting, citations, tables, and write-safety.
+description: Documents-first net-new Google Docs creation plus connector-first Google Docs editing in local Codex plugin sessions, with target-document checks, connector-readback verification, and reference routing for formatting, citations, tables, and write-safety.
 ---
 
 # Google Docs
 
-Use this skill for connector-first editing of Google Docs in Codex local-plugin sessions where Browser Use and rendered visual inspection are unavailable.
+Use this skill for Google Docs work in Codex local-plugin sessions where Browser Use and rendered visual inspection are unavailable.
+Net-new Google Doc deliverables must be authored through `[@documents](plugin://documents@openai-primary-runtime)` as local `.docx` files first, then uploaded as native Google Docs.
 
 ## Purpose Of This File
 
@@ -16,6 +17,17 @@ This file is intentionally minimal and only covers:
 
 All formatting, citation, table, and production rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
+
+## Default Routing
+
+Use this routing:
+
+1. Net-new Google Docs creation: use `[@documents](plugin://documents@openai-primary-runtime)` to create a local `.docx` first, including that skill's DOCX QA workflow.
+2. Upload and convert the `.docx` into Drive as a native Google Docs document. Read `references/reference-import-docx-to-native-docs.md`.
+3. If the Documents plugin is unavailable, do not create the net-new Google Doc directly. Report that the required local Documents authoring path is unavailable.
+4. Existing Google Docs reads, summaries, edits, comments, and template-preserving modifications: use Google Docs connector or app tools directly.
+
+Do not reference the local `.docx` in the final answer after successful native import. The final answer includes the Google Docs link only.
 
 ## Runtime Model
 
@@ -44,7 +56,8 @@ For presentation-oriented documents, structural completeness is not enough. A do
 Prefer one simple proven workflow over a large tree of recovery branches.
 When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
 Do not let accumulated edge-case guardrails turn a straightforward document task into a long blocker-analysis exercise.
-For document-creation and document-editing tasks, prefer this general sequence when viable:
+For net-new Google Doc deliverables, follow Default Routing first.
+For existing document editing tasks and follow-on edits after a DOCX import, prefer this general sequence when viable:
 
 1. gather the required source material
 2. create or attach to the destination document
@@ -76,6 +89,13 @@ If a simple known-good workflow is available and the run instead collapses into 
 ## Required Read Order (No Skips)
 
 Before any content write or edit operation:
+
+If Default Routing uses `[@documents](plugin://documents@openai-primary-runtime)`:
+
+1. Read the `[@documents](plugin://documents@openai-primary-runtime)` plugin skill.
+2. Read `references/reference-import-docx-to-native-docs.md`.
+
+If Default Routing uses connector edit workflow:
 
 1. Read `references/reference-connector-runtime-and-safety.md`.
 2. Read `references/reference-foreground-guard.md` for target-document identity checks.
@@ -111,6 +131,7 @@ Do not execute content edits until the required references are read in the curre
 | Task area | Required reference file |
 | --- | --- |
 | Runtime attachment, section targeting, safety, and recovery | `references/reference-connector-runtime-and-safety.md` |
+| Importing a locally created `.docx` into native Google Docs | `references/reference-import-docx-to-native-docs.md` |
 | Confirming the target Google Doc before every write batch | `references/reference-foreground-guard.md` |
 | Request objects, tab-aware calls, range-safe writes, sampling the local style baseline, and connector-readback verification when style metadata is incomplete | `references/reference-request-shapes-and-write-safety.md` |
 | Header and prompt structure, including bolding the question being answered and matching local heading/body typography | `references/reference-headings-and-question-format.md` |
