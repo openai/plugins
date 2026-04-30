@@ -1,0 +1,43 @@
+{
+  "name": "codex-security",
+  "version": "0.1.0",
+  "description": "Codex Security workflows for security scans, analysis, and investigation.",
+  "author": {
+    "name": "OpenAI"
+  },
+  "homepage": "https://github.com/openai/openai/tree/master/plugins/codex-security",
+  "repository": "https://github.com/openai/openai/tree/master/plugins/codex-security",
+  "license": "Proprietary",
+  "keywords": [
+    "security",
+    "code-review",
+    "diff-review",
+    "appsec",
+    "threat-modeling"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Security",
+    "shortDescription": "Security scanning for your codebase",
+    "longDescription": "Codex Security packages reusable workflows for security scans, analysis, validation, and investigation across code, diffs, and related artifacts.",
+    "developerName": "OpenAI",
+    "category": "Engineering",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": [
+      "Scan this entire codebase using subagents",
+      "Scan this diff, branch, or folder",
+      "Create a threat model for this codebase"
+    ],
+    "brandColor": "#111111",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}
