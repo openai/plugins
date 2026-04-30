@@ -5,8 +5,8 @@
   "author": {
     "name": "OpenAI"
   },
-  "homepage": "https://github.com/openai/openai/tree/master/plugins/codex-security",
-  "repository": "https://github.com/openai/openai/tree/master/plugins/codex-security",
+  "homepage": "https://openai.com/index/codex-security-now-in-research-preview/",
+  "repository": "https://github.com/openai/plugins",
   "license": "Proprietary",
   "keywords": [
     "security",
