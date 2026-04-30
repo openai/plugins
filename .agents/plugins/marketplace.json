@@ -1167,18 +1167,6 @@
       "category": "Research"
     },
     {
-      "name": "salesforce",
-      "source": {
-        "source": "local",
-        "path": "./plugins/salesforce"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "semrush",
       "source": {
         "source": "local",
