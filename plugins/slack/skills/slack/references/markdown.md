@@ -4,9 +4,9 @@ Use this reference when writing Slack-ready text for these skills.
 
 ## Authoring Contract
 
-- Write clean Markdown-style text plus explicit Slack mention syntax.
+- Write clean Markdown-style text. Use explicit Slack mention syntax for actual sends, but use human-readable Slack profile names in draft bodies.
 - The active Slack runtime may convert Markdown into Slack mrkdwn or blocks before sending. Follow the live tool contract if it is more specific than this file.
-- Keep Slack-specific mention syntax for users and channels. Use user-group mention syntax only when the runtime can actually resolve the group.
+- Keep Slack-specific mention syntax for users and channels in direct sends, scheduled messages, and canvases. Use user-group mention syntax only when the runtime can actually resolve the group.
 
 ## Common Syntax
 
@@ -19,7 +19,8 @@ Use this reference when writing Slack-ready text for these skills.
 | Code block | `` ```text``` `` |
 | Quote | `> text` |
 | Link | `[label](https://example.com)` |
-| User mention | `<@U123456>` |
+| User mention in sends, scheduled messages, and canvases | `<@U123456>` |
+| User reference in drafts | Resolved human-readable profile name, such as `Jane Doe` |
 | Channel mention | `<#C123456>` |
 | User group mention | `<!subteam^S123456>` |
 | Bulleted list | `- item` |
@@ -29,5 +30,6 @@ Use this reference when writing Slack-ready text for these skills.
 
 - Prefer short paragraphs and `-` bullets for Slack posts.
 - Use heading-like standalone lines sparingly. Keep them short.
-- Do not rely on bare `@name` text for mentions.
+- Do not rely on bare `@name` text for mentions in actual sends, scheduled messages, or canvases.
+- In draft bodies, do not expose raw Slack user IDs such as `U123456`, `@U123456`, or `<@U123456>` unless the user explicitly asks for raw Slack mention markup.
 - Avoid `@here`, `@channel`, and similar broad notifications unless the user explicitly asked for them.
