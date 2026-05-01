@@ -5,10 +5,9 @@ Zoom is a Codex connector plugin that gives Codex access to live Zoom meeting co
 ## What This Plugin Includes
 
 - plugin manifest: [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json)
-- local marketplace metadata: [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json)
+- repo marketplace entry: [`../../.agents/plugins/marketplace.json`](../../.agents/plugins/marketplace.json)
 - Zoom app mapping: [`.app.json`](.app.json)
 - branding assets: [`assets/`](assets/)
-- local sideload guide: [`sideload.md`](sideload.md)
 
 This plugin contains the Zoom app mapping, connector metadata, and branding assets.
 
@@ -20,10 +19,6 @@ Use `Zoom` when you want Codex to work with live Zoom context, such as:
 - retrieving summaries, transcripts, recordings, and related meeting assets
 - pulling meeting context into a coding or follow-up workflow
 - working with Zoom data through the authenticated app connector
-
-## Local Testing
-
-For local sideload testing, see [`sideload.md`](sideload.md).
 
 ## Using In Codex
 

@@ -9,5 +9,5 @@ Changes here should stay limited to:
 - connector-facing metadata
 - app mapping
 - plugin branding assets
-- marketplace and sideload setup
+- marketplace setup
 - user-facing connector documentation
