@@ -1,0 +1,6 @@
+interface:
+  display_name: "Zoom Developers"
+  short_description: "Use Zoom Developers reviewer agents for scope audits and integration reviews"
+  icon_small: "./assets/zoom-small.svg"
+  icon_large: "./assets/app-icon.svg"
+  default_prompt: "Use Zoom Developers reviewer agents to audit scopes and review Zoom integrations for architectural and implementation issues."
