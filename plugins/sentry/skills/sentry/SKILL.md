@@ -1,128 +1,198 @@
 ---
 name: "sentry"
-description: "Use when the user asks to inspect Sentry issues or events, summarize recent production errors, or pull basic Sentry health data via the Sentry API; perform read-only queries with the bundled script and require `SENTRY_AUTH_TOKEN`."
+description: "Use when the user wants to inspect Sentry data from Codex with the official CLI: issues, events, traces, spans, logs, dashboards, orgs, projects, schema, or authenticated API access. This skill is for investigation and querying, not SDK installation or instrumentation changes."
 ---
 
+# Sentry CLI
 
-# Sentry (Read-only Observability)
+Use this skill for read and investigate workflows inside Sentry. If the user wants to install Sentry, update instrumentation, turn on new SDK features, or fetch guidance from `skills.sentry.dev`, route to `../sentry-setup/SKILL.md` immediately.
 
-## Quick start
+## Querying Sentry Data
 
-- If not already authenticated, ask the user to provide a valid `SENTRY_AUTH_TOKEN` (read-only scopes such as `project:read`, `event:read`) or to log in and create one before running commands.
-- Set `SENTRY_AUTH_TOKEN` as an env var.
-- Optional defaults: `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_BASE_URL`.
-- Defaults: org/project `{your-org}`/`{your-project}`, time range `24h`, environment `prod`, limit 20 (max 50).
-- Always call the Sentry API (no heuristics, no caching).
-
-If the token is missing, give the user these steps:
-1. Create a Sentry auth token: https://sentry.io/settings/account/api/auth-tokens/
-2. Create a token with read-only scopes such as `project:read`, `event:read`, and `org:read`.
-3. Set `SENTRY_AUTH_TOKEN` as an environment variable in their system.
-4. Offer to guide them through setting the environment variable for their OS/shell if needed.
-- Never ask the user to paste the full token in chat. Ask them to set it locally and confirm when ready.
-
-## Core tasks (use bundled script)
-
-Use `scripts/sentry_api.py` for deterministic API calls. It handles pagination and retries once on transient errors.
-
-## Bundled script path
+Use the Sentry CLI as the primary interface. In Codex, the zero-install path is:
 
 ```bash
-export SENTRY_API="plugins/sentry/skills/sentry/scripts/sentry_api.py"
+npx -y sentry@latest ...
 ```
 
-If you are running from an installed plugin copy instead of this repo checkout, use the same
-`skills/sentry/scripts/sentry_api.py` path inside the installed plugin directory.
+### Core rules
 
-### 1) List issues (ordered by most recent)
+- Prefer CLI commands over raw API calls.
+- Use `--json` for structured output when you need to parse results.
+- Use `--fields` to keep JSON payloads small.
+- Use `--limit` aggressively.
+- Prefer `--period` for time filters.
+- Prefer direct lookup by ID over list-then-filter when the identifier is already known.
+- Let the CLI auto-detect org/project context when possible; add explicit `org/project` scoping when detection fails or resolves incorrectly.
+- Never print or store auth tokens.
+- Do not dump large raw JSON into the conversation context.
+- Prefer noun-first commands exactly as the CLI exposes them: `issue list`, `trace view`, `event list`, `schema`, `api`.
+
+### Use this skill for
+
+- Investigating recent errors or unresolved issues
+- Reading issue details, events, traces, spans, logs, dashboards, orgs, or projects
+- Asking Sentry for Seer explanations or plans on an issue
+- Exploring the Sentry API surface with `schema`
+- Using authenticated raw API access when the dedicated command family is not enough
+
+### Do not use this skill for
+
+- Installing Sentry into an app
+- Adding or updating `instrumentation.ts`, `global-error.tsx`, SDK init files, or DSNs
+- Turning on features like Replay, Profiling, Logs, AI monitoring, or Crons in source code
+- SDK upgrades or instrumentation migrations
+
+For those tasks, switch to `../sentry-setup/SKILL.md`.
+
+### Authentication
+
+- Prefer CLI-native auth with:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  --project {your-project} \
-  list-issues \
-  --environment prod \
-  --time-range 24h \
-  --limit 20 \
-  --query "is:unresolved"
+npx -y sentry@latest auth login
 ```
 
-### 2) Resolve an issue short ID to issue ID
+- To verify auth status:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  --project {your-project} \
-  list-issues \
-  --query "ABC-123" \
-  --limit 1
+npx -y sentry@latest auth status --json
 ```
 
-Use the returned `id` for issue detail or events.
+- Token-based auth is allowed when interactive login is not appropriate, but do not ask the user to paste tokens into chat.
+- If the user is not authenticated, tell them to run `npx -y sentry@latest auth login` locally and confirm when ready.
 
-### 3) Issue detail
+### Fast validation
+
+Before relying on a command family for the first time in a session, it is reasonable to confirm the CLI surface:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  issue-detail \
-  1234567890
+npx -y sentry@latest --help
+npx -y sentry@latest auth --help
+npx -y sentry@latest issue --help
+npx -y sentry@latest trace --help
 ```
 
-### 4) Issue events
+### Common commands
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  issue-events \
-  1234567890 \
-  --environment prod \
-  --time-range 24h \
-  --limit 20
+npx -y sentry@latest issue list --limit 5
+npx -y sentry@latest issue view PROJ-123
+npx -y sentry@latest issue explain PROJ-123
+npx -y sentry@latest issue plan PROJ-123
+npx -y sentry@latest event list PROJ-123 --limit 10
+npx -y sentry@latest event view my-org/my-project/<event-id>
+npx -y sentry@latest trace list --limit 5
+npx -y sentry@latest trace view my-org/my-project/<trace-id>
+npx -y sentry@latest trace logs my-org/<trace-id>
+npx -y sentry@latest span list my-org/my-project/<trace-id>
+npx -y sentry@latest log list --limit 20
+npx -y sentry@latest dashboard list
+npx -y sentry@latest org list
+npx -y sentry@latest project list
+npx -y sentry@latest schema issues
+npx -y sentry@latest api /api/0/organizations/my-org/
 ```
 
-### 5) Event detail (no stack traces by default)
+### When to use `schema` vs `api`
+
+- Use `schema` first when you need to discover the shape of an endpoint or confirm the supported path.
+- Use `api` only after checking whether a dedicated command family already exists.
+- Prefer `issue`, `event`, `trace`, `span`, `log`, `dashboard`, `org`, and `project` over `api`.
+
+Examples:
 
 ```bash
-python3 "$SENTRY_API" \
-  --org {your-org} \
-  --project {your-project} \
-  event-detail \
-  abcdef1234567890
+npx -y sentry@latest schema "GET /api/0/organizations/{organization_id_or_slug}/issues/"
+npx -y sentry@latest api /api/0/organizations/my-org/projects/ --json
 ```
 
-## API requirements
+### Large JSON handling
 
-Always use these endpoints (GET only):
+Sentry JSON can be very large. Do not paste raw `--json` output into context.
 
-- List issues: `/api/0/projects/{org_slug}/{project_slug}/issues/`
-- Issue detail: `/api/0/organizations/{org_slug}/issues/{issue_id}/`
-- Events for issue: `/api/0/organizations/{org_slug}/issues/{issue_id}/events/`
-- Event detail: `/api/0/projects/{org_slug}/{project_slug}/events/{event_id}/`
+Use a temp file, then inspect it with `jq`:
 
-## Inputs and defaults
+```bash
+npx -y sentry@latest trace view my-org/my-project/<trace-id> --json > /tmp/sentry-trace.json
+jq '.spans[] | {op, description, duration}' /tmp/sentry-trace.json
+```
 
-- `org_slug`: default to `{your-org}` (required for issue detail, issue events, and event detail).
-- `project_slug`: default to `{your-project}` (required for list issues and event detail).
-- `time_range`: default `24h` (pass as `statsPeriod` for list issues and issue events).
-- `environment`: default `prod` (used by list issues and issue events).
-- `limit`: default 20, max 50 (paginate until limit reached).
-- `search_query`: optional `query` parameter.
-- `issue_short_id`: resolve via list-issues query first.
+```bash
+npx -y sentry@latest issue list --json --fields shortId,title,status,count --limit 10 > /tmp/sentry-issues.json
+jq '.[] | {shortId, title, status, count}' /tmp/sentry-issues.json
+```
 
-## Output formatting rules
+Guidance:
+- Default to temp files for `--json` output.
+- Extract only the fields needed for the current question.
+- Prefer `--fields` plus `jq` over wide tables or full payloads.
+- Use `--period` for time filters instead of inventing custom date logic.
+- If a single trace or issue dump is large, summarize the subset you actually inspected instead of presenting the whole file.
 
-- Issue list: show title, short_id, status, first_seen, last_seen, count, environments, top_tags; order by most recent.
-- Event detail: include culprit, timestamp, environment, release, url.
-- If no results, state explicitly.
-- Redact PII in output (emails, IPs). Do not print raw stack traces.
-- Never echo auth tokens.
+### Workflow patterns
 
-## Golden test inputs
+#### Investigate an issue
 
-- Org: `{your-org}`
-- Project: `{your-project}`
-- Issue short ID: `{ABC-123}`
+```bash
+npx -y sentry@latest issue list --query "is:unresolved" --limit 5
+npx -y sentry@latest issue view @latest
+npx -y sentry@latest issue explain @latest
+npx -y sentry@latest issue plan @latest
+```
 
-Example prompt: “List the top 10 open issues for prod in the last 24h.”
-Expected: ordered list with titles, short IDs, counts, last seen.
+If the user already gave an issue short ID, skip the list step and go straight to `issue view`, `issue events`, `issue explain`, or `issue plan`.
+
+#### Explore traces and performance
+
+```bash
+npx -y sentry@latest trace list --limit 5
+npx -y sentry@latest trace view my-org/my-project/<trace-id>
+npx -y sentry@latest span list my-org/my-project/<trace-id>
+npx -y sentry@latest trace logs my-org/<trace-id>
+```
+
+#### Inspect logs
+
+```bash
+npx -y sentry@latest log list --limit 20
+npx -y sentry@latest log list --query "severity:error" --limit 20
+```
+
+#### Inspect events
+
+```bash
+npx -y sentry@latest event list PROJ-123 --limit 20
+npx -y sentry@latest event view my-org/my-project/<event-id>
+```
+
+#### Explore schema or raw API
+
+```bash
+npx -y sentry@latest schema
+npx -y sentry@latest schema issues
+npx -y sentry@latest schema "GET /api/0/organizations/{organization_id_or_slug}/issues/"
+npx -y sentry@latest api /api/0/organizations/my-org/projects/
+```
+
+### Command families to prefer
+
+- `auth`: login, status, identity
+- `issue`: list, events, view, explain, plan
+- `event`: list, view
+- `trace`: list, view, logs
+- `span`: list, view
+- `log`: list, view
+- `dashboard`: list, view
+- `org`: list, view
+- `project`: list, view
+- `schema`: explore supported API surfaces
+- `api`: authenticated fallback for endpoints not covered by higher-level commands
+
+## Output expectations
+
+- Summarize findings instead of dumping raw payloads.
+- Call out when no results are returned.
+- Mention the concrete commands used when that helps the user reproduce or refine the search.
+- Redact obvious secrets or PII if they appear in command output.
+- If the user actually wants installation or instrumentation work, say that you are switching to `../sentry-setup/SKILL.md`.
