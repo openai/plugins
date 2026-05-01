@@ -1,5 +1,5 @@
 {
-  "name": "zoom-developers-plugin-codex",
+  "name": "zoom-developers",
   "version": "1.0.0",
   "description": "Zoom Developers plugin for building Zoom integrations in Codex",
   "author": {
@@ -7,6 +7,7 @@
     "url": "https://github.com/zoom"
   },
   "homepage": "https://developers.zoom.us/",
+  "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [
     "zoom",
