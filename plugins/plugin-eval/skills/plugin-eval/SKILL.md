@@ -27,11 +27,12 @@ plugin-eval start <path> --request "<user request>" --format markdown
    - "What should I run next?" -> `plugin-eval start <path> --request "What should I run next?" --format markdown`
 4. If the user wants rewrite help after evaluation, route to `../improve-skill/SKILL.md`.
 5. If the user wants a custom rubric, route to `../metric-pack-designer/SKILL.md`.
-6. If the user names a skill instead of giving a path, resolve it locally before running commands:
+6. If the user wants plugin design guidance, app/tool best practices, hero prompt planning, or submission readiness, route to `../plugin-best-practices/SKILL.md`.
+7. If the user names a skill instead of giving a path, resolve it locally before running commands:
    - check `~/.codex/skills/<skill-name>` first
    - then check any repo-local `skills/<skill-name>` directory
    - if the name is still ambiguous, ask one short clarifying question before continuing
-7. When the request sounds like "analysis" rather than just "evaluate", do the fuller path:
+8. When the request sounds like "analysis" rather than just "evaluate", do the fuller path:
    - run the report
    - initialize `.plugin-eval/benchmark.json`
    - surface the setup questions that will refine the starter scenarios
@@ -48,6 +49,8 @@ plugin-eval start <path> --request "<user request>" --format markdown
 - `Measure the real token usage of this skill.`
 - `Help me benchmark this plugin.`
 - `What should I run next?`
+- `Review this plugin against Codex plugin best practices.`
+- `Help me prepare this plugin for submission.`
 
 ## Matching Commands
 
@@ -72,9 +75,11 @@ plugin-eval benchmark <path>
 - When the user asks for an analysis of a named skill, do not stop at the report if benchmark setup is still missing.
 - When the user is asking about a skill specifically, hand off to `../evaluate-skill/SKILL.md`.
 - When the user is asking about a plugin bundle, hand off to `../evaluate-plugin/SKILL.md`.
+- When the user is asking what makes a plugin good, how to design MCP tools, how to plan hero prompts, or how to prepare for submission, hand off to `../plugin-best-practices/SKILL.md`.
 
 ## References
 
 - `../../references/chat-first-workflows.md`
 - `../../references/technical-design.md`
 - `../../references/evaluation-result-schema.md`
+- `../../references/plugin-best-practices.md`
