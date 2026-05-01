@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plugin Best Practices"
+  short_description: "Review Codex plugin design and readiness"
+  default_prompt: "Use $plugin-best-practices to review this Codex plugin design and tell me what to fix before submission."
