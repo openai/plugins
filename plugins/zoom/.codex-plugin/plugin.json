@@ -1,0 +1,49 @@
+{
+  "name": "zoom",
+  "version": "1.0.0",
+  "description": "Zoom connector for Codex",
+  "author": {
+    "name": "Zoom",
+    "url": "https://github.com/zoom"
+  },
+  "homepage": "https://developers.zoom.us/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "zoom",
+    "codex-plugin",
+    "connector",
+    "meetings",
+    "transcripts",
+    "recordings",
+    "docs"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Zoom",
+    "shortDescription": "Connect Codex to Zoom meeting intelligence.",
+    "longDescription": "Zoom connects Codex to your Zoom meeting intelligence so you can search meetings, retrieve summaries, transcripts, recordings, and related assets, and use live Zoom context directly inside Codex.",
+    "developerName": "Zoom",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://developers.zoom.us/",
+    "privacyPolicyURL": "https://www.zoom.com/en/trust/privacy/",
+    "termsOfServiceURL": "https://www.zoom.com/en/trust/terms/",
+    "defaultPrompt": [
+      "Search my Zoom meetings and pull the relevant summaries, transcripts, and recordings."
+    ],
+    "brandColor": "#0B5CFF",
+    "composerIcon": "./assets/zoom-small.svg",
+    "logo": "./assets/app-icon.svg",
+    "screenshots": [
+      "./assets/screenshot-1.png",
+      "./assets/screenshot-2.png",
+      "./assets/screenshot-3.png",
+      "./assets/screenshot-4.png"
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Zoom</title>
+  <rect width="128" height="128" rx="30" fill="#0B5CFF"/>
+  <path fill="#fff" d="M34 43h39a15 15 0 0 1 15 15v12a15 15 0 0 1-15 15H34a8 8 0 0 1-8-8V51a8 8 0 0 1 8-8Zm62 14 15-10v34L96 71V57Z"/>
+</svg>
