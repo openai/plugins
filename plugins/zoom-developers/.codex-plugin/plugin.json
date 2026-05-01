@@ -1,0 +1,44 @@
+{
+  "name": "zoom-developers-plugin-codex",
+  "version": "1.0.0",
+  "description": "Zoom Developers plugin for building Zoom integrations in Codex",
+  "author": {
+    "name": "Zoom",
+    "url": "https://github.com/zoom"
+  },
+  "homepage": "https://developers.zoom.us/",
+  "license": "MIT",
+  "keywords": [
+    "zoom",
+    "developers",
+    "codex-plugin",
+    "rest-api",
+    "meeting-sdk",
+    "video-sdk",
+    "webhooks",
+    "oauth"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Zoom Developers",
+    "shortDescription": "Build Zoom integrations in Codex.",
+    "longDescription": "Zoom Developers helps engineers choose the right Zoom product surface, design implementation plans, run deterministic setup and debugging workflows, review integrations with focused agents, and build across Zoom APIs and SDKs inside Codex.",
+    "developerName": "Zoom",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://developers.zoom.us/",
+    "privacyPolicyURL": "https://www.zoom.com/en/trust/privacy/",
+    "termsOfServiceURL": "https://www.zoom.com/en/trust/terms/",
+    "defaultPrompt": [
+      "Plan and build a Zoom integration."
+    ],
+    "brandColor": "#0B5CFF",
+    "composerIcon": "./assets/zoom-small.svg",
+    "logo": "./assets/app-icon.svg",
+    "screenshots": []
+  }
+}
