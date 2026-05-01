@@ -7,17 +7,12 @@ Zoom Developers is a Codex plugin for planning, building, and debugging Zoom int
 This repository is packaged as a Codex plugin:
 
 - plugin manifest: [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json)
-- local marketplace metadata for sideload testing: [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json)
+- marketplace catalog entry: [`../../.agents/plugins/marketplace.json`](../../.agents/plugins/marketplace.json)
 - deterministic command workflows: [`commands/`](commands/)
 - focused reviewer agents: [`agents/`](agents/)
 - reusable workflows and references: [`skills/`](skills/)
-- local sideload guide: [`sideload.md`](sideload.md)
 
 This plugin contains local developer guidance, commands, skills, and reviewer agents.
-
-## Local Testing
-
-For local sideload testing, see [`sideload.md`](sideload.md).
 
 ## Using In Codex
 
