@@ -1,9 +1,32 @@
 ---
 name: frontend-testing-debugging
-description: "Use when testing or debugging rendered frontend apps: local dev servers, UI regressions, interaction bugs, console errors, responsive layout, and visual QA. Check whether the Browser plugin is available and use it first when it is; otherwise use regular Playwright with the recorded reason."
+description: "Use when testing, debugging, or making targeted improvements to rendered frontend apps through the Build Web Apps or web dev plugin: local dev servers, UI regressions, interaction bugs, console errors, responsive layout, and visual QA. Check whether the Browser plugin is available and use it first when it is; otherwise use regular Playwright with the recorded reason."
 ---
 
 # Frontend Testing Debugging
+
+## Invocation Contract
+
+This skill should work from normal user prompts. Do not require the user to spell out Browser routing, screenshots, report shape, or fallback policy.
+
+Use this skill when the user asks to use the Build Web Apps plugin, web dev plugin, frontend dev plugin, or frontend testing/debugging skill for a rendered frontend change, test, or bug investigation.
+
+Examples that should trigger this full workflow:
+
+- `please make an improvement to the web dashboard transaction search area and use the web dev plugin`
+- `use the frontend dev plugin to polish this dashboard`
+- `debug this UI with the Build Web Apps plugin`
+- `test this localhost app and fix the broken interaction`
+
+From a brief prompt, infer the target surface from the repo, currently open app/browser URL, nearby files, or running dev server. If the target URL is unclear, inspect the repo scripts and running local ports before asking the user.
+
+For any code change to a rendered frontend surface, do the validation loop by default:
+
+1. Identify the target flow.
+2. Choose the Browser path below.
+3. Make the smallest useful edit.
+4. Validate the rendered behavior.
+5. Reply with the QA final response report.
 
 ## Choose The Browser Path
 
@@ -81,25 +104,28 @@ Do not install new browser dependencies unless the task requires it and the user
 - For reference-driven work, compare the rendered screenshot against the reference and keep a short mismatch ledger.
 - A passing build is not enough when rendered validation was requested.
 
-## HTML Test Report
+## QA Final Response Report
 
-For any non-trivial rendered UI validation run, create a self-contained HTML report outside the repo so it does not pollute the git diff. Default path:
+For any non-trivial rendered UI validation run, write the final response like a QA engineer verifying a code change. The response should make it easy for the user or PR reviewer to understand what changed, what was tested, what evidence proves it, and what remains untested.
 
-`/tmp/frontend-test-report-<timestamp>.html`
+Use this shape:
 
-The report should include:
+- **Summary**: one or two bullets explaining the user-visible change and whether QA passed.
+- **Environment**: URL, viewport(s), Browser availability classification, and fallback reason if Playwright was used.
+- **Changes Verified**: files or surfaces changed, plus the specific user-facing behavior expected.
+- **Checks**: a pass/fail table for page identity, blank-page check, framework overlay check, console health, screenshot evidence, and interaction proof.
+- **Interaction Loop**: exact interaction path tested, including the control or workflow exercised and the observed state change.
+- **Evidence**: embed screenshots in the chat response for visual UI validation by default. Include as many screenshots as are useful to prove the relevant before, after, interaction, responsive, error, or fixed states.
+- **Commands / Browser APIs**: list the key command and Browser API sequence used, without dumping noisy logs.
+- **Remaining Risk**: untested viewports, flows, browsers, data states, or known limitations.
 
-- Target flow, URL, viewport(s), Browser availability classification, and fallback reason if Playwright was used.
-- A pass/fail table for page identity, blank-page check, framework overlay check, console health, screenshot evidence, and interaction proof.
-- Findings with reproduction steps, evidence, likely owner or file, fix made, and remaining blocker.
-- Screenshots embedded as `data:image/png;base64,...` URLs so the report remains portable even when chat-rendered images fail to load.
-- Console errors and warnings, trimmed DOM evidence, and the command or Browser API sequence used.
+If issues were found, lead with **Findings** before the summary. Each finding should include what the user sees, reproduction steps, screenshot/DOM/console evidence, likely owner or file when known, and the fix made or remaining blocker.
 
-Do not include credentials, auth tokens, cookies, API keys, secret values, or sensitive personal, financial, medical, legal, or HR data in reports. If visible evidence contains sensitive data, redact it, omit the screenshot or DOM excerpt, and say what was omitted and why.
+When using Browser screenshots that should be shown to the user, emit or display the screenshot through the Browser runtime so it can be referenced in chat. When using Playwright screenshots, save them outside the repo and reference them in chat. Include multiple screenshots when they help verify distinct states or flows.
 
-When using Browser screenshots, convert the screenshot image with `.toBase64()` and embed the returned string in an `<img>` tag. When using Playwright screenshots, base64-encode the saved PNG before writing the report.
+Do not create separate HTML reports by default. Only create a standalone report file when the user explicitly asks for one, and write it outside the repo unless the user explicitly asks for committed artifacts.
 
-Do not write reports, screenshots, traces, or temporary scripts into the repo unless the user explicitly asks for committed artifacts. If a report path is generated, include it in the final response.
+Do not write reports, screenshots, traces, or temporary scripts into the repo unless the user explicitly asks for committed artifacts.
 
 ## Related Skills
 
@@ -109,14 +135,6 @@ Do not write reports, screenshots, traces, or temporary scripts into the repo un
 
 ## Final Response
 
-If issues were found, lead with findings:
-
-- What the user sees.
-- Reproduction steps.
-- Evidence from screenshot, DOM, console, URL, or logs.
-- Likely owner or file, when known.
-- Fix made or remaining blocker.
-
-If the flow passed, include URL, viewports, Browser method used or Playwright fallback reason, interactions or visual surfaces tested, console/runtime status, report path, fixes made, and remaining untested surfaces.
+Use the QA final response report format above. Keep it concise, but include enough concrete evidence that a PR reviewer can trust the validation without rerunning it immediately.
 
 If Browser was absent and Playwright was used, end by suggesting that the user install the Browser plugin for a better frontend development experience with in-app navigation, screenshots, DOM snapshots, console logs, and interaction validation.
