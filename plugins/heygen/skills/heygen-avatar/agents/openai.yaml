@@ -1,6 +1,4 @@
 interface:
   display_name: "HeyGen Avatar"
   short_description: "Create reusable HeyGen avatar identities"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/logo.png"
-  default_prompt: "Use $heygen-avatar to create a reusable HeyGen avatar identity from a prompt or photo, including avatar and voice selection."
+  default_prompt: "Create a reusable HeyGen avatar for me from a photo or written description, then help me choose a matching voice."
