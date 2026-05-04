@@ -115,13 +115,15 @@ Use this shape:
 - **Changes Verified**: files or surfaces changed, plus the specific user-facing behavior expected.
 - **Checks**: a pass/fail table for page identity, blank-page check, framework overlay check, console health, screenshot evidence, and interaction proof.
 - **Interaction Loop**: exact interaction path tested, including the control or workflow exercised and the observed state change.
-- **Evidence**: embed screenshots in the chat response for visual UI validation by default. Include as many screenshots as are useful to prove the relevant before, after, interaction, responsive, error, or fixed states.
+- **Evidence**: describe the screenshot evidence in the QA sections, then place the actual screenshots together at the end of the response as consecutive images. Include as many screenshots as are useful to prove the relevant before, after, interaction, responsive, error, or fixed states.
 - **Commands / Browser APIs**: list the key command and Browser API sequence used, without dumping noisy logs.
 - **Remaining Risk**: untested viewports, flows, browsers, data states, or known limitations.
 
 If issues were found, lead with **Findings** before the summary. Each finding should include what the user sees, reproduction steps, screenshot/DOM/console evidence, likely owner or file when known, and the fix made or remaining blocker.
 
 When using Browser screenshots that should be shown to the user, emit or display the screenshot through the Browser runtime so it can be referenced in chat. When using Playwright screenshots, save them outside the repo and reference them in chat. Include multiple screenshots when they help verify distinct states or flows.
+
+Do not interleave screenshots throughout the written report. Put a short **Screenshots** section at the very end, and make it a consecutive image gallery with one image per line. Add short labels only when they clarify the state, for example `Before`, `After`, `Filtered results`, `Empty state`, or `Mobile`.
 
 Do not create separate HTML reports by default. Only create a standalone report file when the user explicitly asks for one, and write it outside the repo unless the user explicitly asks for committed artifacts.
 
