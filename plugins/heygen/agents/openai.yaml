@@ -1,0 +1,6 @@
+interface:
+  display_name: "HeyGen"
+  short_description: "Create avatar videos and personalized video messages"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/logo.png"
+  default_prompt: "Use HeyGen to create avatar videos, build a digital identity from a photo, and send personalized video messages."

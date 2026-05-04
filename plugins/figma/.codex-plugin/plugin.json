@@ -37,8 +37,8 @@
       "Create Code Connect templates for my components",
       "Build or update a screen in Figma"
     ],
-    "brandColor": "#0D99FF",
-    "composerIcon": "./assets/figma-small.svg",
+    "brandColor": "#1ABCFE",
+    "composerIcon": "./assets/figma.png",
     "logo": "./assets/figma.png",
     "screenshots": []
   }

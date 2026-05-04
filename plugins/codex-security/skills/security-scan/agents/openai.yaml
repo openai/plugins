@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Scan"
+  short_description: "Run security scan"
+  default_prompt: "Use $security-scan to run a security scan of the target repository or code change and identify vulnerabilities."
