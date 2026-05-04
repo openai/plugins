@@ -1,0 +1,6 @@
+interface:
+  display_name: "HeyGen Video"
+  short_description: "Generate presenter-led HeyGen videos"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/logo.png"
+  default_prompt: "Use $heygen-video to generate presenter-led HeyGen videos, personalized updates, demos, explainers, or avatar-based video messages."
