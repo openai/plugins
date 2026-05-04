@@ -186,8 +186,7 @@ project/
 │   │   ├── animations.json
 │   │   ├── assets-catalog.json
 │   │   └── detected-libraries.json
-│   ├── AGENTS.md
-│   └── CLAUDE.md
+│   └── AGENTS.md
 └── compositions/
     ├── beat-1-hook.html
     ├── beat-2-features.html

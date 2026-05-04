@@ -9,7 +9,7 @@ Hosted at `https://mcp.render.com/mcp` (recommended, auto-updates). Requires a R
 Alternative: run locally via Docker or binary (see [Render MCP docs](https://render.com/docs/mcp-server)).
 Source: [render-mcp-server](https://github.com/render-oss/render-mcp-server)
 
-**Detecting the user's tool:** Infer the AI tool from this skill's install path (`~/.cursor/skills/` = Cursor, `~/.claude/skills/` = Claude Code, `~/.codex/skills/` = Codex). If the path doesn't match a known tool, ask the user which tool they're using, then follow the matching section below.
+**Detecting the user's tool:** Infer the AI tool from this skill's install path (`~/.cursor/skills/` = Cursor, `~/.codex/skills/` = Codex). If the path doesn't match a known tool, ask the user which tool they're using, then follow the matching section below.
 
 ### Cursor
 
@@ -33,20 +33,6 @@ https://dashboard.render.com/u/*/settings#api-keys
 ```
 
 3. Restart Cursor, then retry `list_services()`.
-
-### Claude Code
-
-1. Get a Render API key:
-```
-https://dashboard.render.com/u/*/settings#api-keys
-```
-
-2. Add the MCP server with Claude Code (replace `<YOUR_API_KEY>`):
-```bash
-claude mcp add --transport http render https://mcp.render.com/mcp --header "Authorization: Bearer <YOUR_API_KEY>"
-```
-
-3. Restart Claude Code, then retry `list_services()`.
 
 ### Codex
 

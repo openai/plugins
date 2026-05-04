@@ -14,7 +14,7 @@
   "interface": {
     "displayName": "Daloopa",
     "shortDescription": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any pub...",
-    "longDescription": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any public financial documents, with hyperlinks to source document overlaying each data point. Provides a zero-hallucination foundation for any quantitative financial analysis in Claude.",
+    "longDescription": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any public financial documents, with hyperlinks to source document overlaying each data point. Provides a zero-hallucination foundation for any quantitative financial analysis in Codex.",
     "category": "Research",
     "capabilities": [],
     "websiteURL": "https://daloopa.com/",

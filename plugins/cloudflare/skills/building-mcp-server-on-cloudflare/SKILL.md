@@ -141,20 +141,13 @@ Server accessible at `https://[worker-name].[account].workers.dev/mcp`
 
 ### Step 5: Connect Clients
 
-**Claude Desktop** (`claude_desktop_config.json`):
+**Codex MCP client setup:**
 
-```json
-{
-  "mcpServers": {
-    "my-server": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://my-mcp.workers.dev/mcp"]
-    }
-  }
-}
+```bash
+codex mcp add my-server -- npx mcp-remote https://my-mcp.workers.dev/mcp
 ```
 
-Restart Claude Desktop after updating config.
+Restart Codex after updating the MCP configuration.
 
 ## Tool Patterns
 

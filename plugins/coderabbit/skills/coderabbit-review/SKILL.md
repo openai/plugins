@@ -57,7 +57,7 @@ coderabbit review --agent --base main
 coderabbit review --agent --base-commit <sha>
 ```
 
-If any of `AGENTS.md`, `.coderabbit.yaml`, or `CLAUDE.md` exist in the repo root, pass them with `-c` to improve review quality.
+If `AGENTS.md` or `.coderabbit.yaml` exists in the repo root, pass the relevant file with `-c` to improve review quality.
 
 ## Output Handling
 

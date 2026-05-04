@@ -1,8 +1,8 @@
 # Skill authoring best practices
 
-> Learn how to write effective Skills that Claude can discover and use successfully.
+> Learn how to write effective Skills that Codex can discover and use successfully.
 
-Good Skills are concise, well-structured, and tested with real usage. This guide provides practical authoring decisions to help you write Skills that Claude can discover and use effectively.
+Good Skills are concise, well-structured, and tested with real usage. This guide provides practical authoring decisions to help you write Skills that Codex can discover and use effectively.
 
 For conceptual background on how Skills work, see the [Skills overview](/en/docs/agents-and-tools/agent-skills/overview).
 
@@ -10,21 +10,21 @@ For conceptual background on how Skills work, see the [Skills overview](/en/docs
 
 ### Concise is key
 
-The [context window](https://platform.claude.com/docs/en/build-with-claude/context-windows) is a public good. Your Skill shares the context window with everything else Claude needs to know, including:
+The context window is a public good. Your Skill shares the context window with everything else Codex needs to know, including:
 
 * The system prompt
 * Conversation history
 * Other Skills' metadata
 * Your actual request
 
-Not every token in your Skill has an immediate cost. At startup, only the metadata (name and description) from all Skills is pre-loaded. Claude reads SKILL.md only when the Skill becomes relevant, and reads additional files only as needed. However, being concise in SKILL.md still matters: once Claude loads it, every token competes with conversation history and other context.
+Not every token in your Skill has an immediate cost. At startup, only the metadata (name and description) from all Skills is pre-loaded. Codex reads SKILL.md only when the Skill becomes relevant, and reads additional files only as needed. However, being concise in SKILL.md still matters: once Codex loads it, every token competes with conversation history and other context.
 
-**Default assumption**: Claude is already very smart
+**Default assumption**: Codex is already very smart
 
-Only add context Claude doesn't already have. Challenge each piece of information:
+Only add context Codex doesn't already have. Challenge each piece of information:
 
-* "Does Claude really need this explanation?"
-* "Can I assume Claude knows this?"
+* "Does Codex really need this explanation?"
+* "Can I assume Codex knows this?"
 * "Does this paragraph justify its token cost?"
 
 **Good example: Concise** (approximately 50 tokens):
@@ -54,7 +54,7 @@ recommend pdfplumber because it's easy to use and handles most cases well.
 First, you'll need to install it using pip. Then you can use the code below...
 ```
 
-The concise version assumes Claude knows what PDFs are and how libraries work.
+The concise version assumes Codex knows what PDFs are and how libraries work.
 
 ### Set appropriate degrees of freedom
 
@@ -124,10 +124,10 @@ python scripts/migrate.py --verify --backup
 Do not modify the command or add additional flags.
 ````
 
-**Analogy**: Think of Claude as a robot exploring a path:
+**Analogy**: Think of Codex as a robot exploring a path:
 
 * **Narrow bridge with cliffs on both sides**: There's only one safe way forward. Provide specific guardrails and exact instructions (low freedom). Example: database migrations that must run in exact sequence.
-* **Open field with no hazards**: Many paths lead to success. Give general direction and trust Claude to find the best route (high freedom). Example: code reviews where context determines the best approach.
+* **Open field with no hazards**: Many paths lead to success. Give general direction and trust Codex to find the best route (high freedom). Example: code reviews where context determines the best approach.
 
 ### Test with all models you plan to use
 
@@ -135,11 +135,11 @@ Skills act as additions to models, so effectiveness depends on the underlying mo
 
 **Testing considerations by model**:
 
-* **Claude Haiku** (fast, economical): Does the Skill provide enough guidance?
-* **Claude Sonnet** (balanced): Is the Skill clear and efficient?
-* **Claude Opus** (powerful reasoning): Does the Skill avoid over-explaining?
+* **Fast model** (economical): Does the Skill provide enough guidance?
+* **Balanced model**: Is the Skill clear and efficient?
+* **Frontier model** (powerful reasoning): Does the Skill avoid over-explaining?
 
-What works perfectly for Opus might need more detail for Haiku. If you plan to use your Skill across multiple models, aim for instructions that work well with all of them.
+What works perfectly for a frontier model might need more detail for a faster model. If you plan to use your Skill across multiple models, aim for instructions that work well with all of them.
 
 ## Skill structure
 
@@ -196,7 +196,7 @@ The `description` field enables Skill discovery and should include both what the
 
 **Be specific and include key terms**. Include both what the Skill does and specific triggers/contexts for when to use it.
 
-Each Skill has exactly one description field. The description is critical for skill selection: Claude uses it to choose the right Skill from potentially 100+ available Skills. Your description must provide enough detail for Claude to know when to select this Skill, while the rest of SKILL.md provides the implementation details.
+Each Skill has exactly one description field. The description is critical for skill selection: Codex uses it to choose the right Skill from potentially 100+ available Skills. Your description must provide enough detail for Codex to know when to select this Skill, while the rest of SKILL.md provides the implementation details.
 
 Effective examples:
 
@@ -234,7 +234,7 @@ description: Does stuff with files
 
 ### Progressive disclosure patterns
 
-SKILL.md serves as an overview that points Claude to detailed materials as needed, like a table of contents in an onboarding guide. For an explanation of how progressive disclosure works, see [How Skills work](/en/docs/agents-and-tools/agent-skills/overview#how-skills-work) in the overview.
+SKILL.md serves as an overview that points Codex to detailed materials as needed, like a table of contents in an onboarding guide. For an explanation of how progressive disclosure works, see [How Skills work](/en/docs/agents-and-tools/agent-skills/overview#how-skills-work) in the overview.
 
 **Practical guidance:**
 
@@ -248,7 +248,7 @@ A basic Skill starts with just a SKILL.md file containing metadata and instructi
 
 <img src="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=87782ff239b297d9a9e8e1b72ed72db9" alt="Simple SKILL.md file showing YAML frontmatter and markdown body" data-og-width="2048" width="2048" data-og-height="1153" height="1153" data-path="images/agent-skills-simple-file.png" data-optimize="true" data-opv="3" srcset="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?w=280&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=c61cc33b6f5855809907f7fda94cd80e 280w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?w=560&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=90d2c0c1c76b36e8d485f49e0810dbfd 560w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?w=840&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=ad17d231ac7b0bea7e5b4d58fb4aeabb 840w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?w=1100&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=f5d0a7a3c668435bb0aee9a3a8f8c329 1100w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?w=1650&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=0e927c1af9de5799cfe557d12249f6e6 1650w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file.png?w=2500&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=46bbb1a51dd4c8202a470ac8c80a893d 2500w" />
 
-As your Skill grows, you can bundle additional content that Claude loads only when needed:
+As your Skill grows, you can bundle additional content that Codex loads only when needed:
 
 <img src="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=a5e0aa41e3d53985a7e3e43668a33ea3" alt="Bundling additional reference files like reference.md and forms.md." data-og-width="2048" width="2048" data-og-height="1327" height="1327" data-path="images/agent-skills-bundling-content.png" data-optimize="true" data-opv="3" srcset="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?w=280&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=f8a0e73783e99b4a643d79eac86b70a2 280w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?w=560&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=dc510a2a9d3f14359416b706f067904a 560w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?w=840&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=82cd6286c966303f7dd914c28170e385 840w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?w=1100&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=56f3be36c77e4fe4b523df209a6824c6 1100w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?w=1650&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=d22b5161b2075656417d56f41a74f3dd 1650w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-content.png?w=2500&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=3dd4bdd6850ffcc96c6c45fcb0acd6eb 2500w" />
 
@@ -292,11 +292,11 @@ with pdfplumber.open("file.pdf") as pdf:
 **Examples**: See [EXAMPLES.md](EXAMPLES.md) for common patterns
 ````
 
-Claude loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
+Codex loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
 
 #### Pattern 2: Domain-specific organization
 
-For Skills with multiple domains, organize content by domain to avoid loading irrelevant context. When a user asks about sales metrics, Claude only needs to read sales-related schemas, not finance or marketing data. This keeps token usage low and context focused.
+For Skills with multiple domains, organize content by domain to avoid loading irrelevant context. When a user asks about sales metrics, Codex only needs to read sales-related schemas, not finance or marketing data. This keeps token usage low and context focused.
 
 ```
 bigquery-skill/
@@ -348,13 +348,13 @@ For simple edits, modify the XML directly.
 **For OOXML details**: See [OOXML.md](OOXML.md)
 ```
 
-Claude reads REDLINING.md or OOXML.md only when the user needs those features.
+Codex reads REDLINING.md or OOXML.md only when the user needs those features.
 
 ### Avoid deeply nested references
 
-Claude may partially read files when they're referenced from other referenced files. When encountering nested references, Claude might use commands like `head -100` to preview content rather than reading entire files, resulting in incomplete information.
+Codex may partially read files when they're referenced from other referenced files. When encountering nested references, Codex might use commands like `head -100` to preview content rather than reading entire files, resulting in incomplete information.
 
-**Keep references one level deep from SKILL.md**. All reference files should link directly from SKILL.md to ensure Claude reads complete files when needed.
+**Keep references one level deep from SKILL.md**. All reference files should link directly from SKILL.md to ensure Codex reads complete files when needed.
 
 **Bad example: Too deep**:
 
@@ -382,7 +382,7 @@ Here's the actual information...
 
 ### Structure longer reference files with table of contents
 
-For reference files longer than 100 lines, include a table of contents at the top. This ensures Claude can see the full scope of available information even when previewing with partial reads.
+For reference files longer than 100 lines, include a table of contents at the top. This ensures Codex can see the full scope of available information even when previewing with partial reads.
 
 **Example**:
 
@@ -403,7 +403,7 @@ For reference files longer than 100 lines, include a table of contents at the to
 ...
 ```
 
-Claude can then read the complete file or jump to specific sections as needed.
+Codex can then read the complete file or jump to specific sections as needed.
 
 For details on how this filesystem-based architecture enables progressive disclosure, see the [Runtime environment](#runtime-environment) section in the Advanced section below.
 
@@ -411,7 +411,7 @@ For details on how this filesystem-based architecture enables progressive disclo
 
 ### Use workflows for complex tasks
 
-Break complex operations into clear, sequential steps. For particularly complex workflows, provide a checklist that Claude can copy into its response and check off as it progresses.
+Break complex operations into clear, sequential steps. For particularly complex workflows, provide a checklist that Codex can copy into its response and check off as it progresses.
 
 **Example 1: Research synthesis workflow** (for Skills without code):
 
@@ -498,7 +498,7 @@ Run: `python scripts/verify_output.py output.pdf`
 If verification fails, return to Step 2.
 ````
 
-Clear steps prevent Claude from skipping critical validation. The checklist helps both Claude and you track progress through multi-step workflows.
+Clear steps prevent Codex from skipping critical validation. The checklist helps both Codex and you track progress through multi-step workflows.
 
 ### Implement feedback loops
 
@@ -524,7 +524,7 @@ This pattern greatly improves output quality.
 5. Finalize and save the document
 ```
 
-This shows the validation loop pattern using reference documents instead of scripts. The "validator" is STYLE\_GUIDE.md, and Claude performs the check by reading and comparing.
+This shows the validation loop pattern using reference documents instead of scripts. The "validator" is STYLE\_GUIDE.md, and Codex performs the check by reading and comparing.
 
 **Example 2: Document editing process** (for Skills with code):
 
@@ -593,7 +593,7 @@ Choose one term and use it throughout the Skill:
 * Mix "field", "box", "element", "control"
 * Mix "extract", "pull", "get", "retrieve"
 
-Consistency helps Claude understand and follow instructions.
+Consistency helps Codex understand and follow instructions.
 
 ## Common patterns
 
@@ -688,11 +688,11 @@ chore: update dependencies and refactor error handling
 Follow this style: type(scope): brief description, then detailed explanation.
 ````
 
-Examples help Claude understand the desired style and level of detail more clearly than descriptions alone.
+Examples help Codex understand the desired style and level of detail more clearly than descriptions alone.
 
 ### Conditional workflow pattern
 
-Guide Claude through decision points:
+Guide Codex through decision points:
 
 ```markdown  theme={null}
 ## Document modification workflow
@@ -715,7 +715,7 @@ Guide Claude through decision points:
 ```
 
 <Tip>
-  If workflows become large or complicated with many steps, consider pushing them into separate files and tell Claude to read the appropriate file based on the task at hand.
+  If workflows become large or complicated with many steps, consider pushing them into separate files and tell Codex to read the appropriate file based on the task at hand.
 </Tip>
 
 ## Evaluation and iteration
@@ -726,9 +726,9 @@ Guide Claude through decision points:
 
 **Evaluation-driven development:**
 
-1. **Identify gaps**: Run Claude on representative tasks without a Skill. Document specific failures or missing context
+1. **Identify gaps**: Run Codex on representative tasks without a Skill. Document specific failures or missing context
 2. **Create evaluations**: Build three scenarios that test these gaps
-3. **Establish baseline**: Measure Claude's performance without the Skill
+3. **Establish baseline**: Measure Codex's performance without the Skill
 4. **Write minimal instructions**: Create just enough content to address the gaps and pass evaluations
 5. **Iterate**: Execute evaluations, compare against baseline, and refine
 
@@ -753,51 +753,51 @@ This approach ensures you're solving actual problems rather than anticipating re
   This example demonstrates a data-driven evaluation with a simple testing rubric. We do not currently provide a built-in way to run these evaluations. Users can create their own evaluation system. Evaluations are your source of truth for measuring Skill effectiveness.
 </Note>
 
-### Develop Skills iteratively with Claude
+### Develop Skills iteratively with Codex
 
-The most effective Skill development process involves Claude itself. Work with one instance of Claude ("Claude A") to create a Skill that will be used by other instances ("Claude B"). Claude A helps you design and refine instructions, while Claude B tests them in real tasks. This works because Claude models understand both how to write effective agent instructions and what information agents need.
+The most effective Skill development process involves Codex itself. Work with one instance of Codex ("Codex A") to create a Skill that will be used by other instances ("Codex B"). Codex A helps you design and refine instructions, while Codex B tests them in real tasks. This works because Codex models understand both how to write effective agent instructions and what information agents need.
 
 **Creating a new Skill:**
 
-1. **Complete a task without a Skill**: Work through a problem with Claude A using normal prompting. As you work, you'll naturally provide context, explain preferences, and share procedural knowledge. Notice what information you repeatedly provide.
+1. **Complete a task without a Skill**: Work through a problem with Codex A using normal prompting. As you work, you'll naturally provide context, explain preferences, and share procedural knowledge. Notice what information you repeatedly provide.
 
 2. **Identify the reusable pattern**: After completing the task, identify what context you provided that would be useful for similar future tasks.
 
    **Example**: If you worked through a BigQuery analysis, you might have provided table names, field definitions, filtering rules (like "always exclude test accounts"), and common query patterns.
 
-3. **Ask Claude A to create a Skill**: "Create a Skill that captures this BigQuery analysis pattern we just used. Include the table schemas, naming conventions, and the rule about filtering test accounts."
+3. **Ask Codex A to create a Skill**: "Create a Skill that captures this BigQuery analysis pattern we just used. Include the table schemas, naming conventions, and the rule about filtering test accounts."
 
    <Tip>
-     Claude models understand the Skill format and structure natively. You don't need special system prompts or a "writing skills" skill to get Claude to help create Skills. Simply ask Claude to create a Skill and it will generate properly structured SKILL.md content with appropriate frontmatter and body content.
+     Codex models understand the Skill format and structure natively. You don't need special system prompts or a "writing skills" skill to get Codex to help create Skills. Simply ask Codex to create a Skill and it will generate properly structured SKILL.md content with appropriate frontmatter and body content.
    </Tip>
 
-4. **Review for conciseness**: Check that Claude A hasn't added unnecessary explanations. Ask: "Remove the explanation about what win rate means - Claude already knows that."
+4. **Review for conciseness**: Check that Codex A hasn't added unnecessary explanations. Ask: "Remove the explanation about what win rate means - Codex already knows that."
 
-5. **Improve information architecture**: Ask Claude A to organize the content more effectively. For example: "Organize this so the table schema is in a separate reference file. We might add more tables later."
+5. **Improve information architecture**: Ask Codex A to organize the content more effectively. For example: "Organize this so the table schema is in a separate reference file. We might add more tables later."
 
-6. **Test on similar tasks**: Use the Skill with Claude B (a fresh instance with the Skill loaded) on related use cases. Observe whether Claude B finds the right information, applies rules correctly, and handles the task successfully.
+6. **Test on similar tasks**: Use the Skill with Codex B (a fresh instance with the Skill loaded) on related use cases. Observe whether Codex B finds the right information, applies rules correctly, and handles the task successfully.
 
-7. **Iterate based on observation**: If Claude B struggles or misses something, return to Claude A with specifics: "When Claude used this Skill, it forgot to filter by date for Q4. Should we add a section about date filtering patterns?"
+7. **Iterate based on observation**: If Codex B struggles or misses something, return to Codex A with specifics: "When Codex used this Skill, it forgot to filter by date for Q4. Should we add a section about date filtering patterns?"
 
 **Iterating on existing Skills:**
 
 The same hierarchical pattern continues when improving Skills. You alternate between:
 
-* **Working with Claude A** (the expert who helps refine the Skill)
-* **Testing with Claude B** (the agent using the Skill to perform real work)
-* **Observing Claude B's behavior** and bringing insights back to Claude A
+* **Working with Codex A** (the expert who helps refine the Skill)
+* **Testing with Codex B** (the agent using the Skill to perform real work)
+* **Observing Codex B's behavior** and bringing insights back to Codex A
 
-1. **Use the Skill in real workflows**: Give Claude B (with the Skill loaded) actual tasks, not test scenarios
+1. **Use the Skill in real workflows**: Give Codex B (with the Skill loaded) actual tasks, not test scenarios
 
-2. **Observe Claude B's behavior**: Note where it struggles, succeeds, or makes unexpected choices
+2. **Observe Codex B's behavior**: Note where it struggles, succeeds, or makes unexpected choices
 
-   **Example observation**: "When I asked Claude B for a regional sales report, it wrote the query but forgot to filter out test accounts, even though the Skill mentions this rule."
+   **Example observation**: "When I asked Codex B for a regional sales report, it wrote the query but forgot to filter out test accounts, even though the Skill mentions this rule."
 
-3. **Return to Claude A for improvements**: Share the current SKILL.md and describe what you observed. Ask: "I noticed Claude B forgot to filter test accounts when I asked for a regional report. The Skill mentions filtering, but maybe it's not prominent enough?"
+3. **Return to Codex A for improvements**: Share the current SKILL.md and describe what you observed. Ask: "I noticed Codex B forgot to filter test accounts when I asked for a regional report. The Skill mentions filtering, but maybe it's not prominent enough?"
 
-4. **Review Claude A's suggestions**: Claude A might suggest reorganizing to make rules more prominent, using stronger language like "MUST filter" instead of "always filter", or restructuring the workflow section.
+4. **Review Codex A's suggestions**: Codex A might suggest reorganizing to make rules more prominent, using stronger language like "MUST filter" instead of "always filter", or restructuring the workflow section.
 
-5. **Apply and test changes**: Update the Skill with Claude A's refinements, then test again with Claude B on similar requests
+5. **Apply and test changes**: Update the Skill with Codex A's refinements, then test again with Codex B on similar requests
 
 6. **Repeat based on usage**: Continue this observe-refine-test cycle as you encounter new scenarios. Each iteration improves the Skill based on real agent behavior, not assumptions.
 
@@ -807,18 +807,18 @@ The same hierarchical pattern continues when improving Skills. You alternate bet
 2. Ask: Does the Skill activate when expected? Are instructions clear? What's missing?
 3. Incorporate feedback to address blind spots in your own usage patterns
 
-**Why this approach works**: Claude A understands agent needs, you provide domain expertise, Claude B reveals gaps through real usage, and iterative refinement improves Skills based on observed behavior rather than assumptions.
+**Why this approach works**: Codex A understands agent needs, you provide domain expertise, Codex B reveals gaps through real usage, and iterative refinement improves Skills based on observed behavior rather than assumptions.
 
-### Observe how Claude navigates Skills
+### Observe how Codex navigates Skills
 
-As you iterate on Skills, pay attention to how Claude actually uses them in practice. Watch for:
+As you iterate on Skills, pay attention to how Codex actually uses them in practice. Watch for:
 
-* **Unexpected exploration paths**: Does Claude read files in an order you didn't anticipate? This might indicate your structure isn't as intuitive as you thought
-* **Missed connections**: Does Claude fail to follow references to important files? Your links might need to be more explicit or prominent
-* **Overreliance on certain sections**: If Claude repeatedly reads the same file, consider whether that content should be in the main SKILL.md instead
-* **Ignored content**: If Claude never accesses a bundled file, it might be unnecessary or poorly signaled in the main instructions
+* **Unexpected exploration paths**: Does Codex read files in an order you didn't anticipate? This might indicate your structure isn't as intuitive as you thought
+* **Missed connections**: Does Codex fail to follow references to important files? Your links might need to be more explicit or prominent
+* **Overreliance on certain sections**: If Codex repeatedly reads the same file, consider whether that content should be in the main SKILL.md instead
+* **Ignored content**: If Codex never accesses a bundled file, it might be unnecessary or poorly signaled in the main instructions
 
-Iterate based on these observations rather than assumptions. The 'name' and 'description' in your Skill's metadata are particularly critical. Claude uses these when deciding whether to trigger the Skill in response to the current task. Make sure they clearly describe what the Skill does and when it should be used.
+Iterate based on these observations rather than assumptions. The 'name' and 'description' in your Skill's metadata are particularly critical. Codex uses these when deciding whether to trigger the Skill in response to the current task. Make sure they clearly describe what the Skill does and when it should be used.
 
 ## Anti-patterns to avoid
 
@@ -854,7 +854,7 @@ The sections below focus on Skills that include executable scripts. If your Skil
 
 ### Solve, don't punt
 
-When writing scripts for Skills, handle error conditions rather than punting to Claude.
+When writing scripts for Skills, handle error conditions rather than punting to Codex.
 
 **Good example: Handle errors explicitly**:
 
@@ -876,15 +876,15 @@ def process_file(path):
         return ''
 ```
 
-**Bad example: Punt to Claude**:
+**Bad example: Punt to Codex**:
 
 ```python  theme={null}
 def process_file(path):
-    # Just fail and let Claude figure it out
+    # Just fail and let Codex figure it out
     return open(path).read()
 ```
 
-Configuration parameters should also be justified and documented to avoid "voodoo constants" (Ousterhout's law). If you don't know the right value, how will Claude determine it?
+Configuration parameters should also be justified and documented to avoid "voodoo constants" (Ousterhout's law). If you don't know the right value, how will Codex determine it?
 
 **Good example: Self-documenting**:
 
@@ -907,7 +907,7 @@ RETRIES = 5   # Why 5?
 
 ### Provide utility scripts
 
-Even if Claude could write a script, pre-made scripts offer advantages:
+Even if Codex could write a script, pre-made scripts offer advantages:
 
 **Benefits of utility scripts**:
 
@@ -918,9 +918,9 @@ Even if Claude could write a script, pre-made scripts offer advantages:
 
 <img src="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=4bbc45f2c2e0bee9f2f0d5da669bad00" alt="Bundling executable scripts alongside instruction files" data-og-width="2048" width="2048" data-og-height="1154" height="1154" data-path="images/agent-skills-executable-scripts.png" data-optimize="true" data-opv="3" srcset="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?w=280&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=9a04e6535a8467bfeea492e517de389f 280w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?w=560&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=e49333ad90141af17c0d7651cca7216b 560w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?w=840&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=954265a5df52223d6572b6214168c428 840w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?w=1100&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=2ff7a2d8f2a83ee8af132b29f10150fd 1100w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?w=1650&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=48ab96245e04077f4d15e9170e081cfb 1650w, https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-scripts.png?w=2500&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=0301a6c8b3ee879497cc5b5483177c90 2500w" />
 
-The diagram above shows how executable scripts work alongside instruction files. The instruction file (forms.md) references the script, and Claude can execute it without loading its contents into context.
+The diagram above shows how executable scripts work alongside instruction files. The instruction file (forms.md) references the script, and Codex can execute it without loading its contents into context.
 
-**Important distinction**: Make clear in your instructions whether Claude should:
+**Important distinction**: Make clear in your instructions whether Codex should:
 
 * **Execute the script** (most common): "Run `analyze_form.py` to extract fields"
 * **Read it as reference** (for complex logic): "See `analyze_form.py` for the field extraction algorithm"
@@ -962,7 +962,7 @@ python scripts/fill_form.py input.pdf fields.json output.pdf
 
 ### Use visual analysis
 
-When inputs can be rendered as images, have Claude analyze them:
+When inputs can be rendered as images, have Codex analyze them:
 
 ````markdown  theme={null}
 ## Form layout analysis
@@ -973,20 +973,20 @@ When inputs can be rendered as images, have Claude analyze them:
    ```
 
 2. Analyze each page image to identify form fields
-3. Claude can see field locations and types visually
+3. Codex can see field locations and types visually
 ````
 
 <Note>
   In this example, you'd need to write the `pdf_to_images.py` script.
 </Note>
 
-Claude's vision capabilities help understand layouts and structures.
+Codex's vision capabilities help understand layouts and structures.
 
 ### Create verifiable intermediate outputs
 
-When Claude performs complex, open-ended tasks, it can make mistakes. The "plan-validate-execute" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it.
+When Codex performs complex, open-ended tasks, it can make mistakes. The "plan-validate-execute" pattern catches errors early by having Codex first create a plan in a structured format, then validate that plan with a script before executing it.
 
-**Example**: Imagine asking Claude to update 50 form fields in a PDF based on a spreadsheet. Without validation, Claude might reference non-existent fields, create conflicting values, miss required fields, or apply updates incorrectly.
+**Example**: Imagine asking Codex to update 50 form fields in a PDF based on a spreadsheet. Without validation, Codex might reference non-existent fields, create conflicting values, miss required fields, or apply updates incorrectly.
 
 **Solution**: Use the workflow pattern shown above (PDF form filling), but add an intermediate `changes.json` file that gets validated before applying changes. The workflow becomes: analyze → **create plan file** → **validate plan** → execute → verify.
 
@@ -994,18 +994,18 @@ When Claude performs complex, open-ended tasks, it can make mistakes. The "plan-
 
 * **Catches errors early**: Validation finds problems before changes are applied
 * **Machine-verifiable**: Scripts provide objective verification
-* **Reversible planning**: Claude can iterate on the plan without touching originals
+* **Reversible planning**: Codex can iterate on the plan without touching originals
 * **Clear debugging**: Error messages point to specific problems
 
 **When to use**: Batch operations, destructive changes, complex validation rules, high-stakes operations.
 
-**Implementation tip**: Make validation scripts verbose with specific error messages like "Field 'signature\_date' not found. Available fields: customer\_name, order\_total, signature\_date\_signed" to help Claude fix issues.
+**Implementation tip**: Make validation scripts verbose with specific error messages like "Field 'signature\_date' not found. Available fields: customer\_name, order\_total, signature\_date\_signed" to help Codex fix issues.
 
 ### Package dependencies
 
 Skills run in the code execution environment with platform-specific limitations:
 
-* **claude.ai**: Can install packages from npm and PyPI and pull from GitHub repositories
+* **Codex app**: Can install packages from npm and PyPI and pull from GitHub repositories
 * **Anthropic API**: Has no network access and no runtime package installation
 
 List required packages in your SKILL.md and verify they're available in the [code execution tool documentation](/en/docs/agents-and-tools/tool-use/code-execution-tool).
@@ -1016,24 +1016,24 @@ Skills run in a code execution environment with filesystem access, bash commands
 
 **How this affects your authoring:**
 
-**How Claude accesses Skills:**
+**How Codex accesses Skills:**
 
 1. **Metadata pre-loaded**: At startup, the name and description from all Skills' YAML frontmatter are loaded into the system prompt
-2. **Files read on-demand**: Claude uses bash Read tools to access SKILL.md and other files from the filesystem when needed
+2. **Files read on-demand**: Codex uses bash Read tools to access SKILL.md and other files from the filesystem when needed
 3. **Scripts executed efficiently**: Utility scripts can be executed via bash without loading their full contents into context. Only the script's output consumes tokens
 4. **No context penalty for large files**: Reference files, data, or documentation don't consume context tokens until actually read
 
-* **File paths matter**: Claude navigates your skill directory like a filesystem. Use forward slashes (`reference/guide.md`), not backslashes
+* **File paths matter**: Codex navigates your skill directory like a filesystem. Use forward slashes (`reference/guide.md`), not backslashes
 * **Name files descriptively**: Use names that indicate content: `form_validation_rules.md`, not `doc2.md`
 * **Organize for discovery**: Structure directories by domain or feature
   * Good: `reference/finance.md`, `reference/sales.md`
   * Bad: `docs/file1.md`, `docs/file2.md`
 * **Bundle comprehensive resources**: Include complete API docs, extensive examples, large datasets; no context penalty until accessed
-* **Prefer scripts for deterministic operations**: Write `validate_form.py` rather than asking Claude to generate validation code
+* **Prefer scripts for deterministic operations**: Write `validate_form.py` rather than asking Codex to generate validation code
 * **Make execution intent clear**:
   * "Run `analyze_form.py` to extract fields" (execute)
   * "See `analyze_form.py` for the extraction algorithm" (read as reference)
-* **Test file access patterns**: Verify Claude can navigate your directory structure by testing with real requests
+* **Test file access patterns**: Verify Codex can navigate your directory structure by testing with real requests
 
 **Example:**
 
@@ -1046,7 +1046,7 @@ bigquery-skill/
     └── product.md (usage analytics)
 ```
 
-When the user asks about revenue, Claude reads SKILL.md, sees the reference to `reference/finance.md`, and invokes bash to read just that file. The sales.md and product.md files remain on the filesystem, consuming zero context tokens until needed. This filesystem-based model is what enables progressive disclosure. Claude can navigate and selectively load exactly what each task requires.
+When the user asks about revenue, Codex reads SKILL.md, sees the reference to `reference/finance.md`, and invokes bash to read just that file. The sales.md and product.md files remain on the filesystem, consuming zero context tokens until needed. This filesystem-based model is what enables progressive disclosure. Codex can navigate and selectively load exactly what each task requires.
 
 For complete details on the technical architecture, see [How Skills work](/en/docs/agents-and-tools/agent-skills/overview#how-skills-work) in the Skills overview.
 
@@ -1068,7 +1068,7 @@ Where:
 * `BigQuery` and `GitHub` are MCP server names
 * `bigquery_schema` and `create_issue` are the tool names within those servers
 
-Without the server prefix, Claude may fail to locate the tool, especially when multiple MCP servers are available.
+Without the server prefix, Codex may fail to locate the tool, especially when multiple MCP servers are available.
 
 ### Avoid assuming tools are installed
 
@@ -1117,7 +1117,7 @@ Before sharing a Skill, verify:
 
 ### Code and scripts
 
-* [ ] Scripts solve problems rather than punt to Claude
+* [ ] Scripts solve problems rather than punt to Codex
 * [ ] Error handling is explicit and helpful
 * [ ] No "voodoo constants" (all values justified)
 * [ ] Required packages listed in instructions and verified as available
@@ -1140,8 +1140,8 @@ Before sharing a Skill, verify:
     Create your first Skill
   </Card>
 
-  <Card title="Use Skills in Claude Code" icon="terminal" href="/en/docs/claude-code/skills">
-    Create and manage Skills in Claude Code
+  <Card title="Use Skills in Codex" icon="terminal" href="https://developers.openai.com/codex/skills/">
+    Create and manage Skills in Codex
   </Card>
 
   <Card title="Use Skills with the API" icon="code" href="/en/api/skills-guide">

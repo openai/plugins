@@ -154,7 +154,7 @@ SFTConfig(max_seq_length=512)  # TypeError!
 
 ### Approach 1: UV Scripts (Recommended—Default Choice)
 
-UV scripts use PEP 723 inline dependencies for clean, self-contained training. **This is the primary approach for Claude Code.**
+UV scripts use PEP 723 inline dependencies for clean, self-contained training. **This is the primary approach for Codex.**
 
 ```python
 hf_jobs("uv", {
@@ -201,7 +201,7 @@ trainer.push_to_hub()
 ```
 
 **Benefits:** Direct MCP tool usage, clean code, dependencies declared inline (PEP 723), no file saving required, full control
-**When to use:** Default choice for all training tasks in Claude Code, custom training logic, any scenario requiring `hf_jobs()`
+**When to use:** Default choice for all training tasks in Codex, custom training logic, any scenario requiring `hf_jobs()`
 
 #### Working with Scripts
 
@@ -336,10 +336,10 @@ uvx trl-jobs sft \
 ```
 
 **Benefits:** Pre-configured settings, automatic Trackio integration, automatic Hub push, one-line commands
-**When to use:** User working in terminal directly (not Claude Code context), quick local experimentation
+**When to use:** User working in terminal directly (not Codex context), quick local experimentation
 **Repository:** https://github.com/huggingface/trl-jobs
 
-⚠️ **In Claude Code context, prefer using `hf_jobs()` MCP tool (Approach 1) when available.**
+⚠️ **In Codex context, prefer using `hf_jobs()` MCP tool (Approach 1) when available.**
 
 ## Hardware Selection
 
@@ -710,7 +710,7 @@ Add to PEP 723 header:
 4. **Always enable Hub push** - Environment is ephemeral; without push, all results lost
 5. **Include Trackio** - Use example scripts as templates for real-time monitoring
 6. **Offer cost estimation** - When parameters are known, use `scripts/estimate_cost.py`
-7. **Use UV scripts (Approach 1)** - Default to `hf_jobs("uv", {...})` with inline scripts; TRL maintained scripts for standard training; avoid bash `trl-jobs` commands in Claude Code
+7. **Use UV scripts (Approach 1)** - Default to `hf_jobs("uv", {...})` with inline scripts; TRL maintained scripts for standard training; avoid bash `trl-jobs` commands in Codex
 8. **Use hf_doc_fetch/hf_doc_search** for latest TRL documentation
 9. **Validate dataset format** before training with dataset inspector (see Dataset Validation section)
 10. **Choose appropriate hardware** for model size; use LoRA for models >7B

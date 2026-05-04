@@ -106,7 +106,7 @@ Deep Research Example:
 
 | Operation Type | Recommended Timeout |
 |----------------|---------------------|
-| Simple LLM calls (GPT-4, Claude-3) | 30 seconds |
+| Simple LLM calls (GPT-4, GPT-5) | 30 seconds |
 | Reasoning models (o1, o3, extended thinking) | 300 seconds (5 min) |
 | Web searches | 300 seconds (5 min) |
 | Simple tool execution | 30-60 seconds |

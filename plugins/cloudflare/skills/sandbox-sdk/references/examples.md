@@ -10,7 +10,7 @@ All examples: https://github.com/cloudflare/sandbox-sdk/tree/main/examples
 | `code-interpreter` | AI code execution with Workers AI | `src/index.ts` |
 | `openai-agents` | OpenAI Agents SDK integration | `src/index.ts` |
 | `opencode` | OpenCode agent integration | `src/index.ts` |
-| `claude-code` | Claude Code agent integration | `src/index.ts` |
+| `codex-app-server` | Codex app server integration | `src/index.ts` |
 | `typescript-validator` | TypeScript compilation/validation | `src/index.ts` |
 | `authentication` | Auth patterns for sandboxes | `src/index.ts` |
 

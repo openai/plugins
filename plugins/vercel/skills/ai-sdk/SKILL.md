@@ -96,7 +96,7 @@ You are an expert in the Vercel AI SDK v6. The AI SDK is the leading TypeScript 
 - `@ai-sdk/azure` now uses the Responses API by default — use `azure.chat()` for the previous Chat Completions API behavior.
 - `@ai-sdk/azure` uses `azure` (not `openai`) as the key for `providerMetadata` and `providerOptions`.
 - `@ai-sdk/google-vertex` uses `vertex` (not `google`) as the key for `providerMetadata` and `providerOptions`.
-- `@ai-sdk/anthropic` supports native structured outputs via `structuredOutputMode` option (Claude Sonnet 4.5+).
+- `@ai-sdk/anthropic` supports native structured outputs via `structuredOutputMode` option (Anthropic Sonnet 4.5+).
 
 ## Installation
 
@@ -778,7 +778,7 @@ Run `npx @ai-sdk/codemod upgrade` (or `npx @ai-sdk/codemod v6`) to auto-migrate.
 - New: `isToolUIPart` → `isStaticToolUIPart`; `isToolOrDynamicToolUIPart` → `isToolUIPart`
 - New: `getToolName` → `getStaticToolName`; `getToolOrDynamicToolName` → `getToolName`
 - New: `@ai-sdk/azure` defaults to Responses API; use `azure.chat()` for Chat Completions
-- New: `@ai-sdk/anthropic` `structuredOutputMode` for native structured outputs (Claude Sonnet 4.5+)
+- New: `@ai-sdk/anthropic` `structuredOutputMode` for native structured outputs (Anthropic Sonnet 4.5+)
 - New: `@ai-sdk/langchain` rewritten — `toBaseMessages()`, `toUIMessageStream()`, `LangSmithDeploymentTransport`
 - New: Provider-specific tools — Anthropic (memory, code execution), OpenAI (shell, patch), Google (maps, RAG), xAI (search, code)
 - `unknown` finish reason removed → now returned as `other`

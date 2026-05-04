@@ -10,7 +10,7 @@ Once it's teased a spec out of the conversation, it shows it to you in chunks sh
 
 After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
 
-Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for Claude to be able to work autonomously for a couple hours at a time without deviating from the plan you put together.
+Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for Codex to be able to work autonomously for a couple hours at a time without deviating from the plan you put together.
 
 There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
 
@@ -26,41 +26,7 @@ Thanks!
 
 ## Installation
 
-**Note:** Installation differs by platform. Claude Code or Cursor have built-in plugin marketplaces. Codex and OpenCode require manual setup.
-
-### Claude Code Official Marketplace
-
-Superpowers is available via the [official Claude plugin marketplace](https://claude.com/plugins/superpowers)
-
-Install the plugin from Claude marketplace:
-
-```bash
-/plugin install superpowers@claude-plugins-official
-```
-
-### Claude Code (via Plugin Marketplace)
-
-In Claude Code, register the marketplace first:
-
-```bash
-/plugin marketplace add obra/superpowers-marketplace
-```
-
-Then install the plugin from this marketplace:
-
-```bash
-/plugin install superpowers@superpowers-marketplace
-```
-
-### Cursor (via Plugin Marketplace)
-
-In Cursor Agent chat, install from marketplace:
-
-```text
-/add-plugin superpowers
-```
-
-or search for "superpowers" in the plugin marketplace.
+**Note:** Installation differs by platform. Codex uses the install instructions below; Cursor and other tools may provide their own marketplaces.
 
 ### Codex
 
@@ -71,6 +37,16 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 ```
 
 **Detailed docs:** [docs/README.codex.md](docs/README.codex.md)
+
+### Cursor (via Plugin Marketplace)
+
+In Cursor Agent chat, install from marketplace:
+
+```text
+/add-plugin superpowers
+```
+
+or search for "superpowers" in the plugin marketplace.
 
 ### OpenCode
 
@@ -156,7 +132,7 @@ Start a new session in your chosen platform and ask for something that should tr
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success
 
-Read more: [Superpowers for Claude Code](https://blog.fsck.com/2025/10/09/superpowers/)
+Read more: [Superpowers](https://blog.fsck.com/2025/10/09/superpowers/)
 
 ## Contributing
 

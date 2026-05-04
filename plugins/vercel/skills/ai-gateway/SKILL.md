@@ -483,7 +483,7 @@ GPT-5.4 Pro targets maximum performance on complex tasks. Use standard GPT-5.4 f
 ## Supported Providers
 
 - OpenAI (GPT-5.x including GPT-5.4 and GPT-5.4 Pro, o-series)
-- Anthropic (Claude 4.x)
+- Anthropic (4.x models)
 - Google (Gemini)
 - xAI (Grok)
 - Mistral

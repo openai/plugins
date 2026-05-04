@@ -10,7 +10,7 @@ npx hyperframes capture <URL> -o <project-dir>/capture
 
 Example: `npx hyperframes capture https://stripe.com -o videos/stripe-launch/capture`
 
-Keeping the capture artifacts (`screenshots/`, `assets/`, `extracted/`, `AGENTS.md`, `CLAUDE.md`) in a dedicated `capture/` subfolder keeps them isolated from the later build files (`SCRIPT.md`, `STORYBOARD.md`, `DESIGN.md`, `compositions/`, `index.html`, `narration.wav`, `transcript.json`, `renders/`, `snapshots/`), which all live at `<project-dir>/` root.
+Keeping the capture artifacts (`screenshots/`, `assets/`, `extracted/`, `AGENTS.md`) in a dedicated `capture/` subfolder keeps them isolated from the later build files (`SCRIPT.md`, `STORYBOARD.md`, `DESIGN.md`, `compositions/`, `index.html`, `narration.wav`, `transcript.json`, `renders/`, `snapshots/`), which all live at `<project-dir>/` root.
 
 For exploratory captures that aren't becoming a video yet, `-o captures/<name>` at the repo root is fine — the isolation convention only matters when you're building a video on top of the capture.
 

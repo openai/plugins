@@ -4,16 +4,7 @@ A collection of [Agent Skills](https://www.anthropic.com/engineering/equipping-a
 
 ## Installing
 
-These skills work with any agent that supports the Agent Skills standard, including Claude Code, OpenCode, OpenAI Codex, and Pi.
-
-### Claude Code
-
-Install using the [plugin marketplace](https://code.claude.com/docs/en/discover-plugins#add-from-github):
-
-```
-/plugin marketplace add cloudflare/skills
-/plugin install cloudflare@cloudflare
-```
+These skills work with any agent that supports the Agent Skills standard, including OpenAI Codex, OpenCode, and Pi.
 
 ### Cursor
 
@@ -33,7 +24,6 @@ Clone this repo and copy the skill folders into the appropriate directory for yo
 
 | Agent | Skill Directory | Docs |
 |-------|-----------------|------|
-| Claude Code | `~/.claude/skills/` | [docs](https://code.claude.com/docs/en/skills) |
 | Cursor | `~/.cursor/skills/` | [docs](https://cursor.com/docs/context/skills) |
 | OpenCode | `~/.config/opencode/skills/` | [docs](https://opencode.ai/docs/skills/) |
 | OpenAI Codex | `~/.codex/skills/` | [docs](https://developers.openai.com/codex/skills/) |

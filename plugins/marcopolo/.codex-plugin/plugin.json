@@ -1,7 +1,7 @@
 {
   "name": "marcopolo",
   "version": "1.0.0",
-  "description": "MarcoPolo spins up a secure container where Claude can work with your actual data.",
+  "description": "MarcoPolo spins up a secure container where Codex can work with your actual data.",
   "author": {
     "name": "Immersa, Inc.",
     "url": "https://marcopolo.dev"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "MarcoPolo",
-    "shortDescription": "MarcoPolo spins up a secure container where Claude can work with your actual data.",
-    "longDescription": "MarcoPolo spins up a secure container where Claude can work with your actual data. Connect to your databases, APIs, S3, lakehouses, CRMs, Jira, logs and much more\u2014using scoped credentials that are never exposed to the model. \n\nClaude gets DuckDB, Python, a shell, and a set of tools to explore, query, transform, and analyze data across systems. The workspace persists over time, so that you can build on your work. \n\nPrep a report, understand your data, debug an issue, or review the latest metrics right here in the conversation.",
+    "shortDescription": "MarcoPolo spins up a secure container where Codex can work with your actual data.",
+    "longDescription": "MarcoPolo spins up a secure container where Codex can work with your actual data. Connect to your databases, APIs, S3, lakehouses, CRMs, Jira, logs and much more\u2014using scoped credentials that are never exposed to the model. \n\nCodex gets DuckDB, Python, a shell, and a set of tools to explore, query, transform, and analyze data across systems. The workspace persists over time, so that you can build on your work. \n\nPrep a report, understand your data, debug an issue, or review the latest metrics right here in the conversation.",
     "developerName": "Immersa, Inc.",
     "category": "Coding",
     "capabilities": [],
