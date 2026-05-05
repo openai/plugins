@@ -1,6 +1,10 @@
 # Superpowers
 
-Superpowers is a complete software development workflow for your coding agents, built on top of a set of composable "skills" and some initial instructions that make sure your agent uses them.
+Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
+
+## Quickstart
+
+Give your agent Superpowers: [Claude Code](#claude-code), [Codex CLI](#codex-cli), [Codex App](#codex-app), [Factory Droid](#factory-droid), [Gemini CLI](#gemini-cli), [OpenCode](#opencode), [Cursor](#cursor), [GitHub Copilot CLI](#github-copilot-cli).
 
 ## How it works
 
@@ -10,7 +14,7 @@ Once it's teased a spec out of the conversation, it shows it to you in chunks sh
 
 After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
 
-Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for Codex to be able to work autonomously for a couple hours at a time without deviating from the plan you put together.
+Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for Claude to be able to work autonomously for a couple hours at a time without deviating from the plan you put together.
 
 There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
 
@@ -26,60 +30,126 @@ Thanks!
 
 ## Installation
 
-**Note:** Installation differs by platform. Codex uses the install instructions below; Cursor and other tools may provide their own marketplaces.
+Installation differs by harness. If you use more than one, install Superpowers separately for each one.
 
-### Codex
+### Claude Code
 
-Tell Codex:
+Superpowers is available via the [official Claude plugin marketplace](https://claude.com/plugins/superpowers)
 
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
-```
+#### Official Marketplace
 
-**Detailed docs:** [docs/README.codex.md](docs/README.codex.md)
+- Install the plugin from Anthropic's official marketplace:
 
-### Cursor (via Plugin Marketplace)
+  ```bash
+  /plugin install superpowers@claude-plugins-official
+  ```
 
-In Cursor Agent chat, install from marketplace:
+#### Superpowers Marketplace
 
-```text
-/add-plugin superpowers
-```
+The Superpowers marketplace provides Superpowers and some other related plugins for Claude Code.
 
-or search for "superpowers" in the plugin marketplace.
+- Register the marketplace:
 
-### OpenCode
+  ```bash
+  /plugin marketplace add obra/superpowers-marketplace
+  ```
 
-Tell OpenCode:
+- Install the plugin from this marketplace:
 
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-```
+  ```bash
+  /plugin install superpowers@superpowers-marketplace
+  ```
 
-**Detailed docs:** [docs/README.opencode.md](docs/README.opencode.md)
+### Codex CLI
 
-### GitHub Copilot CLI
+Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
 
-```bash
-copilot plugin marketplace add obra/superpowers-marketplace
-copilot plugin install superpowers@superpowers-marketplace
-```
+- Open the plugin search interface:
+
+  ```bash
+  /plugins
+  ```
+
+- Search for Superpowers:
+
+  ```bash
+  superpowers
+  ```
+
+- Select `Install Plugin`.
+
+### Codex App
+
+Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
+
+- In the Codex app, click on Plugins in the sidebar.
+- You should see `Superpowers` in the Coding section.
+- Click the `+` next to Superpowers and follow the prompts.
+
+### Factory Droid
+
+- Register the marketplace:
+
+  ```bash
+  droid plugin marketplace add https://github.com/obra/superpowers
+  ```
+
+- Install the plugin:
+
+  ```bash
+  droid plugin install superpowers@superpowers
+  ```
 
 ### Gemini CLI
 
-```bash
-gemini extensions install https://github.com/obra/superpowers
-```
+- Install the extension:
 
-To update:
+  ```bash
+  gemini extensions install https://github.com/obra/superpowers
+  ```
 
-```bash
-gemini extensions update superpowers
-```
+- Update later:
 
-### Verify Installation
+  ```bash
+  gemini extensions update superpowers
+  ```
 
-Start a new session in your chosen platform and ask for something that should trigger a skill (for example, "help me plan this feature" or "let's debug this issue"). The agent should automatically invoke the relevant superpowers skill.
+### OpenCode
+
+OpenCode uses its own plugin install; install Superpowers separately even if you
+already use it in another harness.
+
+- Tell OpenCode:
+
+  ```
+  Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+  ```
+
+- Detailed docs: [docs/README.opencode.md](docs/README.opencode.md)
+
+### Cursor
+
+- In Cursor Agent chat, install from marketplace:
+
+  ```text
+  /add-plugin superpowers
+  ```
+
+- Or search for "superpowers" in the plugin marketplace.
+
+### GitHub Copilot CLI
+
+- Register the marketplace:
+
+  ```bash
+  copilot plugin marketplace add obra/superpowers-marketplace
+  ```
+
+- Install the plugin:
+
+  ```bash
+  copilot plugin install superpowers@superpowers-marketplace
+  ```
 
 ## The Basic Workflow
 
@@ -132,26 +202,23 @@ Start a new session in your chosen platform and ask for something that should tr
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success
 
-Read more: [Superpowers](https://blog.fsck.com/2025/10/09/superpowers/)
+Read [the original release announcement](https://blog.fsck.com/2025/10/09/superpowers/).
 
 ## Contributing
 
-Skills live directly in this repository. To contribute:
+The general contribution process for Superpowers is below. Keep in mind that we don't generally accept contributions of new skills and that any updates to skills must work across all of the coding agents we support.
 
 1. Fork the repository
-2. Create a branch for your skill
-3. Follow the `writing-skills` skill for creating and testing new skills
-4. Submit a PR
+2. Switch to the 'dev' branch
+3. Create a branch for your work
+4. Follow the `writing-skills` skill for creating and testing new and modified skills
+5. Submit a PR, being sure to fill in the pull request template.
 
 See `skills/writing-skills/SKILL.md` for the complete guide.
 
 ## Updating
 
-Skills update automatically when you update the plugin:
-
-```bash
-/plugin update superpowers
-```
+Superpowers updates are somewhat coding-agent dependent, but are often automatic.
 
 ## License
 
