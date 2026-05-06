@@ -77,7 +77,7 @@ Trigger on any of these signals:
 - **Use Studio when:** Non-developers need to modify flows. Multi-step logic with branching. Rapid prototyping. SEs strongly recommend this over hand-coded state machines.
 - **Use custom TwiML when:** Developer team wants full code control. Flows are simple (< 3 levels). Need dynamic behavior from external APIs.
 - **Use TwiML Bins when:** Static responses only. No logic. Fastest to deploy.
-**Skills to install:** `twilio-voice-twiml`, `twilio-studio-workflows`
+**Skills to install:** `twilio-voice-twiml`
 
 ### Level 2: AI-Powered Self-Service
 **Developer says:** "I want AI to handle the easy questions before routing to humans."
@@ -104,7 +104,7 @@ Trigger on any of these signals:
 - `<Record>` verb is NOT for recording calls — it's voicemail-style. This is the #1 mistake developers make.
 - For mid-call control (pause during credit card), use the Recordings REST API
 
-**Skills to install:** `twilio-taskrouter-routing`, `twilio-conference-calls`, `twilio-call-recordings`, `twilio-studio-workflows`
+**Skills to install:** `twilio-taskrouter-routing`, `twilio-conference-calls`, `twilio-call-recordings`
 
 ### Level 4: Intelligent Contact Center
 **Developer says:** "I want AI analytics, real-time coaching, and customer context for my agents."
@@ -178,7 +178,6 @@ Product Skills to Install:
 - twilio-messaging-webhooks (if inbound SMS)
 - twilio-email-send (if email channel with Twilio Account SID + Auth Token) or twilio-sendgrid-email-send (if email channel with SendGrid API key)
 - twilio-conversations-api (if omnichannel threading)
-- twilio-studio-workflows (if self-service IVR — Level 1+)
 - twilio-taskrouter-routing (if multi-agent — Level 3+)
 - twilio-conference-calls (if transfers/coaching — Level 3+)
 - twilio-call-recordings (if recording needed — Level 3+)

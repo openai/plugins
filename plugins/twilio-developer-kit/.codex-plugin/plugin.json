@@ -1,7 +1,7 @@
 {
   "name": "twilio-developer-kit",
   "version": "0.2.0",
-  "description": "Twilio Skills provide procedural knowledge for AI coding agents — which APIs to use, in what order, and what to avoid. Covers Messaging, Voice, Verify, SendGrid, Conversations AI, and 30+ products.",
+  "description": "Twilio Skills provide procedural knowledge for AI coding agents — which APIs to use, in what order, and what to avoid. Covers Messaging, Voice, Verify, SendGrid, and 30+ products.",
   "author": {
     "name": "Twilio",
     "url": "https://www.twilio.com"
@@ -21,14 +21,19 @@
     "email",
     "compliance",
     "conversation-relay",
-    "api",
-    "segment"
+    "conversation-memory",
+    "conversation-intelligence",
+    "conversation-orchestrator",
+    "agent-connect",
+    "enterprise-knowledge",
+    "apple-messages-for-business",
+    "api"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Twilio Developer Kit",
     "shortDescription": "Twilio Skills for building, debugging, and shipping on Twilio",
-    "longDescription": "Procedural knowledge that guides AI coding agents to the right Twilio APIs for any use case. Covers channel selection, production best practices, compliance requirements, and common pitfalls across Messaging, Voice, Verify, SendGrid, Conversations AI, and 30+ products. Skills follow a progressive disclosure architecture — your agent sees lightweight metadata at startup and loads full guidance only when a task matches.",
+    "longDescription": "Procedural knowledge that guides AI coding agents to the right Twilio APIs for any use case. Covers channel selection, production best practices, compliance requirements, and common pitfalls across Messaging, Voice, Verify, SendGrid, and 30+ products. Skills follow a progressive disclosure architecture — your agent sees lightweight metadata at startup and loads full guidance only when a task matches.",
     "developerName": "Twilio",
     "category": "APIs",
     "capabilities": ["Read", "Write"],
@@ -37,7 +42,7 @@
       "Help me send an SMS notification with delivery tracking",
       "What Twilio API should I use to build a user verification flow?",
       "How do I register for A2P 10DLC before sending US SMS?",
-      "Build me an AI voice agent with Twilio Conversation"
+      "Build me an AI voice agent with Twilio"
     ],
     "brandColor": "#F22F46",
     "logo": "./assets/logo.svg"

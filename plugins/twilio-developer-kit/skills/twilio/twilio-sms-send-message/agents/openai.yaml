@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-sms-send-message"
+  short_description: "Twilio skill guidance for twilio-sms-send-message"
+  icon_small: "../../../assets/logo.svg"
+  icon_large: "../../../assets/logo.svg"
+  brand_color: "#F22F46"

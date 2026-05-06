@@ -11,6 +11,8 @@ description: >
 
 ## Overview
 
+> **Agent safety:** Always confirm recipients, subject, and content with the user before sending. Email is irreversible once delivered. Never send email autonomously without explicit user approval — especially for batch sends to multiple recipients.
+
 **Twilio Email is a separate product from SendGrid.** Both send email, but they use different APIs, credentials, templating languages, and endpoints. If you have a SendGrid API key (`SG.`-prefix), use `twilio-sendgrid-email-send` instead.
 
 | | Twilio Email (this skill) | SendGrid |

@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-regulatory-compliance-bundles"
+  short_description: "Twilio skill guidance for twilio-regulatory-compliance-bundles"
+  icon_small: "../../../assets/logo.svg"
+  icon_large: "../../../assets/logo.svg"
+  brand_color: "#F22F46"

@@ -100,7 +100,7 @@ Trigger on any of these signals:
 - Trigger logic: Real-time (event-triggered) vs batch (scheduled audience sync)
 - Reverse ETL: Push Segment audiences to Twilio for targeting, pull delivery data back to Segment for attribution
 - Phone validation: Always validate before bulk sends — saves money and protects sender reputation
-**Skills to install:** + `twilio-segment-connections`, `twilio-lookup-phone-intelligence`
+**Skills to install:** + `twilio-lookup-phone-intelligence`
 
 ## Step 4: Qualify Context — Compliance
 
@@ -170,7 +170,6 @@ Product Skills to Install:
 - twilio-compliance-onboarding (if US SMS)
 - twilio-content-template-builder (if multi-channel templates)
 - twilio-lookup-phone-intelligence (if bulk sends — validate first)
-- twilio-segment-connections (if CDP integration — Level 3)
 
 Setup Skills:
 - twilio-account-setup

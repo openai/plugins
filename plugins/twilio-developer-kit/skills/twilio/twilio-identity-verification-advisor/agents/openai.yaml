@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-identity-verification-advisor"
+  short_description: "Twilio skill guidance for twilio-identity-verification-advisor"
+  icon_small: "../../../assets/logo.svg"
+  icon_large: "../../../assets/logo.svg"
+  brand_color: "#F22F46"

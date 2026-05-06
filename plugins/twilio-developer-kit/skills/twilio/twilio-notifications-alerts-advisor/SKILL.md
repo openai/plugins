@@ -120,7 +120,7 @@ Send SMS → wait for StatusCallback →
 - Event source: Your backend webhook → Twilio Function → API call (simplest). Or Segment event → Engage → Twilio (most sophisticated).
 - Analytics: Log delivery status (queued → sent → delivered/failed) for SLA monitoring
 - Scheduling: Use Twilio's scheduling (SMS: up to 7 days) or your own job scheduler for complex timing
-**Skills to install:** + `twilio-messaging-services`, optionally `twilio-segment-connections`
+**Skills to install:** + `twilio-messaging-services`
 
 ## Decision Rules
 

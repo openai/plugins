@@ -71,7 +71,7 @@ Trigger on any of these signals:
 - Engine: Google (wider language support) vs Deepgram (better accuracy, lower latency)
 - Track: Inbound audio, outbound audio, or both
 - Recording method: `<Dial record="record-from-answer">` for simplicity, or Recordings REST API for control
-**Skills to install:** `twilio-real-time-transcription`, `twilio-call-recordings`
+**Skills to install:** `twilio-call-recordings`
 
 ### Level 2: Coach — Real-Time Intelligence
 **Developer says:** "I want to detect sentiment, prompt agents with next-best-response, or monitor script adherence live."
@@ -154,7 +154,7 @@ These affect which capabilities to recommend and how to set expectations — imp
 - **Google STT:** Wider language support, good for international contact centers. Choose when multi-lingual support is the priority.
 - **Deepgram:** Lower latency, better accuracy for English. Choose for English-primary contact centers or noisy environments.
 - **Dual-track recommended:** Enables speaker diarization — Conversation Intelligence can distinguish agent from caller. Single-track reduces script adherence and sentiment accuracy.
-- Implementation gotchas (callback format, ordering, short utterances) are documented in the `twilio-real-time-transcription` skill.
+- Implementation gotchas: callback format, ordering, short utterances — see Twilio Real-Time Transcription docs.
 
 ### Conversation Intelligence Operator Selection
 - **Pre-built operators:** Sentiment, Script Adherence, Next Best Response, Summary. Start here — immediate value, no custom configuration.
@@ -198,7 +198,6 @@ After qualifying the developer, recommend:
 Recommended Architecture: [Level 1-4 description]
 
 Product Skills to Install:
-- twilio-real-time-transcription (if Level 1+, voice)
 - twilio-call-recordings (if Level 1+, recording needed)
 - twilio-conversation-intelligence (if Level 2+)
 - twilio-customer-memory (if Level 3+)

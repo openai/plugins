@@ -1,0 +1,10 @@
+interface:
+  display_name: "twilio-ai-agent-architect"
+  short_description: "Planning skill for AI-powered conversational agents. Qualifies the developer's use case across outcome sophistication, entry point, and customer profile to recommend the right Twilio Conversations architecture and implementation skills."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#EF223A"
+  default_prompt: "How do I build an AI agent that is context aware across channels on Twilio?"
+
+policy:
+  allow_implicit_invocation: true
