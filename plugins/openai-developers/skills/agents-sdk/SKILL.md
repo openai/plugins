@@ -40,19 +40,26 @@ Agents SDK apps usually need `OPENAI_API_KEY` for live runs. Use the `openai-pla
 
 ## Build Workflow
 
-1. Inspect the target repo. Read `README.md`, dependency files, app entrypoints, existing examples, and any domain-specific `skills/` or policy files.
+1. Inspect the target repo.
+   Read `README.md`, dependency files, app entrypoints, existing examples, and any domain-specific `skills/` or policy files.
 
-2. Define the app contract. Capture the agent goal, input shape, expected output, tools, state, approval gates, and the local command that proves the workflow.
+2. Define the app contract.
+   Capture the agent goal, input shape, expected output, tools, state, approval gates, and the local command that proves the workflow.
 
-3. Set up dependencies using the repo's existing package manager. For Python projects, prefer `uv`; add the Agents SDK package as `openai-agents` when the project owns dependencies.
+3. Set up dependencies using the repo's existing package manager.
+   For Python projects, prefer `uv`; add the Agents SDK package as `openai-agents` when the project owns dependencies.
 
-4. Start with one agent. Use a single `Agent` with clear static `instructions` and `Runner.run` until the workflow proves it needs specialists, handoffs, structured outputs, or sandbox execution.
+4. Start with one agent.
+   Use a single `Agent` with clear static `instructions` and `Runner.run` until the workflow proves it needs specialists, handoffs, structured outputs, or sandbox execution.
 
-5. Add tools deliberately. Use `@function_tool` for deterministic local actions such as lookups, calculations, file transforms, API calls, or validation. Keep side effects narrow and tool schemas explicit.
+5. Add tools deliberately.
+   Use `@function_tool` for deterministic local actions such as lookups, calculations, file transforms, API calls, or validation. Keep side effects narrow and tool schemas explicit.
 
-6. Add sandbox only for workspace tasks. Use `SandboxAgent` when the agent must inspect files, run shell commands, use workspace skills, or create artifacts in an isolated environment. Keep ordinary business workflows on normal `Agent` plus tools.
+6. Add sandbox only for workspace tasks.
+   Use `SandboxAgent` when the agent must inspect files, run shell commands, use workspace skills, or create artifacts in an isolated environment. Keep ordinary business workflows on normal `Agent` plus tools.
 
-7. Make it runnable. Provide a local smoke command, sample input, and expected observable output. If there is a UI, wire it to the agent path and verify the core workflow, not just rendering. For HTTP apps that may be deployed, make `uv run python main.py` start the web service when `PORT` is present. Keep CLI-only smoke behavior behind explicit arguments or the no-`PORT` path. Expose `/health` for readiness.
+7. Make it runnable.
+   Provide a local smoke command, sample input, and expected observable output. If there is a UI, wire it to the agent path and verify the core workflow, not just rendering. For HTTP apps that may be deployed, make `uv run python main.py` start the web service when `PORT` is present. Keep CLI-only smoke behavior behind explicit arguments or the no-`PORT` path. Expose `/health` for readiness.
 
 For every new prototype or substantial app build, prefer:
 
@@ -151,9 +158,11 @@ Use the Deployment Manager from `openai-cookbook` for local deployments. Default
    make -C "$MANAGER_DIR" health
    ```
 
-4. Let the manager own extraction and deployment records. The helper imports the project, creates or reuses a matching deployment, starts it, and prints JSON with `manager_url`, `deployment`, and `app_url`. For `local-docker`, it may generate or reuse an app-level `Dockerfile`. If that changes the app worktree, report it and do not revert user files.
+4. Let the manager own extraction and deployment records.
+   The helper imports the project, creates or reuses a matching deployment, starts it, and prints JSON with `manager_url`, `deployment`, and `app_url`. For `local-docker`, it may generate or reuse an app-level `Dockerfile`. If that changes the app worktree, report it and do not revert user files.
 
-5. Verify the result. Check manager health, the app `/health` readiness endpoint, and deployment sessions/containers when available.
+5. Verify the result.
+   Check manager health, the app `/health` readiness endpoint, and deployment sessions/containers when available.
 
    ```bash
    curl -fsS http://127.0.0.1:8732/api/health
