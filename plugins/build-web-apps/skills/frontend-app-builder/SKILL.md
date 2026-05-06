@@ -29,18 +29,11 @@ The two priorities of this skill outrank everything else:
 11. Final handoff is blocked until you use `view_image` on both the accepted concept and the latest browser screenshot. This cannot be skipped or replaced with browser inspection alone. Judge the pair directly: is this agency-signoff faithfully implemented, and would a great, highly skilled design agency sign off on this exact implementation of the accepted design? If not, keep fixing.
 12. Remove temporary QA artifacts before handoff unless the user or task explicitly asks to keep them.
 
-## OpenAI API Key Gate
+## Coordinate With Other Installed Skills
 
-For app requests that mention AI, generated outputs, model-backed features, or
-user-input-driven generation, treat the work as OpenAI API-backed unless the
-user names another provider or says not to use OpenAI.
+This skill owns visual concepting and faithful frontend implementation. Use other installed skills when the app needs capabilities outside frontend design. Provider setup should not block Image Gen-only concept work, but implementation and verification of provider-backed behavior should coordinate through the installed skill for that capability. Avoid placeholder setup instructions when another installed skill covers that setup.
 
-If `openai-developers:openai-platform-api-key` is available, use it before Image
-Gen, planning, coding, smoke tests, or placeholder `OPENAI_API_KEY`
-instructions. If it is unavailable, perform the same minimal gate directly:
-check for `OPENAI_API_KEY` without printing it, ask whether to reuse an existing
-key or set up a new one, and stop until the user answers. Do not treat an
-existing key, env file, or mock UI as permission to proceed.
+For AI/model-generated output, use `openai-developers:openai-platform-api-key` when available unless the user names another provider or explicitly says not to use OpenAI. When that skill is available, always use its credential flow instead of fake keys, placeholder env vars, or manual API-key setup instructions.
 
 ## Image Gen Workflow
 
