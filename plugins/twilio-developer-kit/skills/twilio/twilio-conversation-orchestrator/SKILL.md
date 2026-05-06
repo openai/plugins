@@ -628,8 +628,8 @@ for (const conv of list.conversations) {
 
 ## Related Resources
 
-- [Conversation Intelligence Skill](/.claude/skills/twilio-conversation-intelligence/SKILL.md) — Intelligence Configuration, Language Operators, real-time and post-conversation analysis
-- [Customer Memory Skill](/.claude/skills/twilio-customer-memory/SKILL.md) — Memory Store, profiles, traits, observations, Recall
-- [ConversationRelay Skill](/.claude/skills/twilio-voice-conversation-relay/SKILL.md) — Voice AI agent setup with WebSocket streaming
-- [Agent Connect Skill](/.claude/skills/twilio-agent-connect/SKILL.md) — AI-to-human escalation via TAC SDK
-- [Debugging Skill](/.claude/skills/twilio-debugging-observability/SKILL.md) — Error triage, Event Streams, linkage chain verification
+- [Conversation Intelligence Skill](../twilio-conversation-intelligence/SKILL.md) — Intelligence Configuration, Language Operators, real-time and post-conversation analysis
+- [Customer Memory Skill](../twilio-customer-memory/SKILL.md) — Memory Store, profiles, traits, observations, Recall
+- [ConversationRelay Skill](../twilio-voice-conversation-relay/SKILL.md) — Voice AI agent setup with WebSocket streaming
+- [Agent Connect Skill](../twilio-agent-connect/SKILL.md) — AI-to-human escalation via TAC SDK
+- [Debugging Skill](../twilio-debugging-observability/SKILL.md) — Error triage, Event Streams, linkage chain verification

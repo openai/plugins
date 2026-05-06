@@ -613,6 +613,5 @@ Known measures: `Conversation.Count`, `OperatorResult.Count`
 
 ## Related Resources
 
-- [Conversation Orchestrator Skill](/.claude/skills/conversation-orchestrator/SKILL.md) — Conversation Orchestrator setup: Memory Store, Conversation Configuration, capture rules, participant types
-- [Twilio Conversations (unified stack)](/.claude/skills/conversations/SKILL.md) — End-to-end integration guide for Conversation Orchestrator + Conversation Memory + Intelligence v3 pipeline
-
+- [Conversation Orchestrator Skill](../twilio-conversation-orchestrator/SKILL.md) — Conversation Orchestrator setup: Memory Store, Conversation Configuration, capture rules, participant types
+- [Customer Memory Skill](../twilio-customer-memory/SKILL.md) — Memory Store, profiles, traits, observations, Recall
