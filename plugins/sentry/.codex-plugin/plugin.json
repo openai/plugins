@@ -3,9 +3,8 @@
   "version": "0.2.0",
   "description": "Investigate Sentry with the official CLI and use a separate setup skill for instrumentation and SDK features.",
   "author": {
-    "name": "OpenAI",
-    "email": "support@openai.com",
-    "url": "https://openai.com/"
+    "name": "Sentry",
+    "url": "https://sentry.io/"
   },
   "homepage": "https://sentry.io/",
   "repository": "https://github.com/openai/plugins",
@@ -20,7 +19,7 @@
     "displayName": "Sentry",
     "shortDescription": "Investigate with Sentry CLI and separate setup guidance",
     "longDescription": "Use Sentry skills to query issues, events, traces, spans, logs, dashboards, organizations, and projects through the official Sentry CLI, and route installation, instrumentation, and feature work to a dedicated setup skill backed by current guidance from skills.sentry.dev.",
-    "developerName": "OpenAI",
+    "developerName": "Sentry",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
