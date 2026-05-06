@@ -1,16 +1,13 @@
 # OpenAI API Troubleshooting Evals
 
-Use this matrix to test both implicit activation and correct failure routing for
-`openai-api-troubleshooting`.
+Use this matrix to test both implicit activation and correct failure routing for `openai-api-troubleshooting`.
 
 ## 1. Triggering tests
 
 ### Should activate
 
-- "My OpenAI API request fails with `ENOTFOUND api.openai.com` from inside a
-  Codex sandbox before any HTTP response comes back. What should I do?"
-- "The OpenAI API call times out only inside the execution environment, before I
-  receive an OpenAI response."
+- "My OpenAI API request fails with `ENOTFOUND api.openai.com` from inside a Codex sandbox before any HTTP response comes back. What should I do?"
+- "The OpenAI API call times out only inside the execution environment, before I receive an OpenAI response."
 - "I get `401 invalid_api_key` when I call the OpenAI API."
 - "My request returns `429 insufficient_quota`."
 - "My request returns `429 rate_limit_exceeded`."
@@ -37,20 +34,13 @@ should I do?
 **Pass criteria**
 
 - Identifies that no OpenAI API response exists yet.
-- Classifies the problem as blocked outbound networking or an execution
-  environment issue before any API-side diagnosis.
-- Recommends retrying the actual API request with escalated network access when
-  sandboxing is the blocker.
-- Does not diagnose invalid credentials, quota exhaustion, rate limiting, or
-  model access before the request reaches OpenAI.
+- Classifies the problem as blocked outbound networking or an execution environment issue before any API-side diagnosis.
+- Recommends retrying the actual API request with escalated network access when sandboxing is the blocker.
+- Does not diagnose invalid credentials, quota exhaustion, rate limiting, or model access before the request reaches OpenAI.
 
 ### T2 - Sandboxed outbound network failure during task execution
 
-Use this case for interactive verification of the escalation path. Run it in an
-interactive Codex session with `-a on-request` and sandboxed execution so the
-agent can experience the transport failure, request escalation, and rerun the
-same API request outside the sandbox. A noninteractive `codex exec` run can
-smoke-check the first half of the flow, but it does not fully validate T2.
+Use this case for interactive verification of the escalation path. Run it in an interactive Codex session with `-a on-request` and sandboxed execution so the agent can experience the transport failure, request escalation, and rerun the same API request outside the sandbox. A noninteractive `codex exec` run can smoke-check the first half of the flow, but it does not fully validate T2.
 
 **Prompt**
 
@@ -63,15 +53,10 @@ have taken the correct next diagnostic action.
 
 **Pass criteria**
 
-- Runs an actual API-request command first without escalating unrelated setup or
-  inspection commands.
-- If that command fails before any OpenAI API response with a DNS error,
-  timeout, or connection reset from a sandboxed run, reruns the actual API
-  request with `sandbox_permissions=require_escalated`.
+- Runs an actual API-request command first without escalating unrelated setup or inspection commands.
+- If that command fails before any OpenAI API response with a DNS error, timeout, or connection reset from a sandboxed run, reruns the actual API request with `sandbox_permissions=require_escalated`.
 - Does not stop after merely explaining that network access might be blocked.
-- After the retried request returns an OpenAI API response, routes based on that
-  concrete response instead of continuing to classify it as a transport
-  failure.
+- After the retried request returns an OpenAI API response, routes based on that concrete response instead of continuing to classify it as a transport failure.
 
 ### T3 - Authentication failure
 
@@ -84,8 +69,7 @@ My OpenAI API request returns 401 invalid_api_key. What should I check next?
 **Pass criteria**
 
 - Classifies the issue as authentication or missing-key related.
-- Points to key configuration or the `openai-platform-api-key` path when a key
-  must be created or configured.
+- Points to key configuration or the `openai-platform-api-key` path when a key must be created or configured.
 - Does not recommend escalated network access as the primary fix.
 
 ### T4 - Quota exhaustion
@@ -99,8 +83,7 @@ What does that mean?
 
 **Pass criteria**
 
-- Treats the issue as quota or credit exhaustion rather than ordinary rate
-  limiting.
+- Treats the issue as quota or credit exhaustion rather than ordinary rate limiting.
 - Mentions the relevant billing or limits follow-up path.
 - Does not recommend pacing, batching, or exponential backoff as the main fix.
 
@@ -117,8 +100,7 @@ I do?
 
 - Treats the issue as rate limiting rather than exhausted credits.
 - Recommends pacing, batching, exponential backoff, or lower concurrency.
-- Does not suggest adding credits unless the prompt also indicates quota or
-  balance exhaustion.
+- Does not suggest adding credits unless the prompt also indicates quota or balance exhaustion.
 
 ### T6 - Model or project access
 
@@ -149,35 +131,22 @@ Use these rows when creating a sheet-backed `skill-eval-runner` experiment.
 
 ## 4. Manual verification
 
-Use T2 outside `skill-eval-runner`; the runner launches child rollouts without a
-sandbox boundary, so it is not the right harness for proving the escalation
-handshake itself.
+Use T2 outside `skill-eval-runner`; the runner launches child rollouts without a sandbox boundary, so it is not the right harness for proving the escalation handshake itself.
 
-For a full T2 pass, run the prompt in an interactive Codex session with
-`-a on-request` and sandboxed execution, then verify this sequence in the trace:
+For a full T2 pass, run the prompt in an interactive Codex session with `-a on-request` and sandboxed execution, then verify this sequence in the trace:
 
 1. The agent runs an actual API request inside the sandbox.
-2. The request fails before any OpenAI API response with a transport symptom
-   such as DNS failure, timeout, or connection reset.
-3. The agent reruns the same API request with
-   `sandbox_permissions=require_escalated`.
-4. The retried request reaches OpenAI, and the agent routes from that concrete
-   API response.
+2. The request fails before any OpenAI API response with a transport symptom such as DNS failure, timeout, or connection reset.
+3. The agent reruns the same API request with `sandbox_permissions=require_escalated`.
+4. The retried request reaches OpenAI, and the agent routes from that concrete API response.
 
-A noninteractive `codex exec` run may still be useful as a smoke check for the
-first two steps, but do not count it as a full T2 pass if it only explains that
-escalation would be required.
+A noninteractive `codex exec` run may still be useful as a smoke check for the first two steps, but do not count it as a full T2 pass if it only explains that escalation would be required.
 
 ## 5. Review guidance
 
 - Compare `with_skill_explicit`, `with_skill_implicit`, and `no_skill` arms.
-- Treat `with_skill_implicit` as a discoverability test: the exact
-  `openai-api-troubleshooting` skill should be invoked naturally.
-- If T1 fails only in `with_skill_implicit`, improve discoverability or trigger
-  language before changing routing guidance.
+- Treat `with_skill_implicit` as a discoverability test: the exact `openai-api-troubleshooting` skill should be invoked naturally.
+- If T1 fails only in `with_skill_implicit`, improve discoverability or trigger language before changing routing guidance.
 - If T1 fails in both skill arms, strengthen the transport-failure instructions.
-- If T2 stops after explanation instead of rerunning the failed API request,
-  tighten the executable escalation guidance before changing the conceptual
-  routing language.
-- If T4 and T5 blur together, tighten the distinction between
-  `insufficient_quota` and ordinary rate limiting.
+- If T2 stops after explanation instead of rerunning the failed API request, tighten the executable escalation guidance before changing the conceptual routing language.
+- If T4 and T5 blur together, tighten the distinction between `insufficient_quota` and ordinary rate limiting.
