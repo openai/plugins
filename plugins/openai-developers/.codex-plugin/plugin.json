@@ -1,0 +1,44 @@
+{
+  "name": "openai-developers",
+  "version": "0.1.0",
+  "description": "Create and save OpenAI API keys from Codex without exposing plaintext keys in normal tool output.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://platform.openai.com/",
+  "repository": "https://github.com/openai/plugins/tree/main/plugins/openai-developers",
+  "license": "Proprietary",
+  "keywords": [
+    "openai-platform",
+    "api-key",
+    "codex",
+    "connector"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "OpenAI Developers",
+    "shortDescription": "Develop AI apps and agents with the OpenAI API following OpenAI best practices",
+    "longDescription": "Use OpenAI Developers in Codex to build AI applications and agents with OpenAI docs and the OpenAI API. Connect to the OpenAI Platform (platform.openai.com) and see your Codex-built apps work right out of the box with real OpenAI API keys.",
+    "developerName": "OpenAI",
+    "category": "Engineering",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://platform.openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "composerIcon": "./assets/openai-platform.png",
+    "logo": "./assets/openai-platform.png",
+    "defaultPrompt": [
+      "Create an OpenAI API key to use in this project",
+      "Build an app that uses AI to generate haikus",
+      "Build an agent with the Agents SDK"
+    ],
+    "brandColor": "#10A37F",
+    "screenshots": []
+  }
+}
