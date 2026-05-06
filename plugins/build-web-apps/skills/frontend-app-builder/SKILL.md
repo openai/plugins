@@ -31,7 +31,7 @@ The two priorities of this skill outrank everything else:
 
 ## Coordinate With Other Installed Skills
 
-This skill owns visual concepting and faithful frontend implementation. Use other installed skills when the app needs capabilities outside frontend design. Provider setup should not block Image Gen-only concept work, but implementation and verification of provider-backed behavior should coordinate through the installed skill for that capability. Avoid placeholder setup instructions when another installed skill covers that setup.
+This skill owns visual concepting and faithful frontend implementation. Use other installed skills when the app needs capabilities outside frontend design. Provider setup should not block Image Gen concepting, static UI work, or design review that does not exercise provider-backed behavior, but implementation and verification of provider-backed behavior should coordinate through the installed skill for that capability. Avoid placeholder setup instructions when another installed skill covers that setup.
 
 For AI/model-generated output, use `openai-developers:openai-platform-api-key` when available unless the user names another provider or explicitly says not to use OpenAI. When that skill is available, always use its credential flow instead of fake keys, placeholder env vars, or manual API-key setup instructions.
 
