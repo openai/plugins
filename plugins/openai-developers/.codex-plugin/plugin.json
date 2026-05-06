@@ -15,8 +15,7 @@
     "api-key",
     "agents-sdk",
     "agents",
-    "codex",
-    "connector"
+    "codex"
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
