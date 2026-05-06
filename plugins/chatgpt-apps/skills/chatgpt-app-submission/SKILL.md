@@ -1,6 +1,6 @@
 ---
 name: chatgpt-app-submission
-description: Inspect a ChatGPT Apps MCP server codebase and generate chatgpt-app-submission.json with app info suggestions, tool hint justifications, test cases, and negative test cases, then report review-check findings for submission review.
+description: Inspect a ChatGPT Apps MCP server codebase and generate chatgpt-app-submission.json with app info suggestions, tool hint justifications, test cases, and negative test cases, then report review-check findings and outputSchema warnings for submission review.
 ---
 
 # ChatGPT App Submission
@@ -11,12 +11,12 @@ Use this skill when a developer needs a `chatgpt-app-submission.json` file for a
 
 1. Inspect the MCP server codebase from the current working directory.
 2. Read repo metadata, package metadata, README files, app manifests, tool descriptors, resource templates, and widget metadata needed to understand the app.
-3. Find every exposed MCP tool and its declared `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations.
+3. Find every exposed MCP tool, its declared `readOnlyHint`, `openWorldHint`, and `destructiveHint` annotations, and whether it declares `outputSchema`.
 4. Read each tool implementation and any called helper functions needed to understand side effects.
 5. Compare tool annotations, tool names, tool descriptions, and CSP values against actual behavior. If any value is missing, stale, misleading, or inconsistent, ask the developer for approval before updating source.
 6. Generate concise review-facing app info suggestions, tool hint justifications, positive test cases, and negative test cases.
 7. Write `chatgpt-app-submission.json` in the current working directory.
-8. Print review-check findings in the final response and explain what the developer should do with each finding before submission.
+8. Print review-check findings and any missing `outputSchema` warnings in the final response, and explain what the developer should do with each finding before submission.
 
 Do not infer behavior from the tool name alone. Use the real tool implementation and declared annotations. If a tool calls into another module or API client, inspect enough of that path to know whether it reads, writes, deletes, sends, publishes, or changes external state.
 
@@ -40,6 +40,12 @@ Use the Apps SDK review meanings:
 ChatGPT Apps submissions require every tool to set all three hints explicitly. Missing or null hints are submission blockers, even if MCP clients may have protocol-level defaults.
 
 If a hint is missing, null, or does not match the actual behavior you found in code, stop before writing the JSON and ask the developer for approval to update the MCP server source. In the approval request, list each affected tool, the missing/current hint value, the behavior you observed, and the recommended explicit hint value. If the developer approves, make the smallest source change that sets the correct hint explicitly, then generate JSON using the updated values. If the developer does not approve or the correct edit location is ambiguous, do not generate misleading JSON; report the mismatch and the blocked update.
+
+## Output Schema Warnings
+
+While inspecting exposed MCP tools, record each tool whose descriptor or source definition omits `outputSchema` or sets it to `null`. Missing `outputSchema` is not a blocker for generating `chatgpt-app-submission.json`, and the submission JSON does not include output schemas.
+
+Do not infer or invent output schemas for this warning. Use the actual MCP tool descriptor or source definition. In the final response, include a concise warning for any missing tools: `Add an outputSchema so models can use this tool's results more reliably. See https://modelcontextprotocol.io/specification/draft/server/tools#tool.` Include the affected tool names. If every tool declares `outputSchema`, do not include an outputSchema warning.
 
 ## Tool Descriptor and CSP Rules
 
@@ -147,4 +153,4 @@ For each finding, explain the practical next step: update source, update submiss
 
 ## Final Response
 
-After writing the file, summarize the app info fields generated, number of tools covered, positive test case count, and negative test case count. Then include a `Review findings` section with any sensitive data solicitation, tool data use, tool naming, or weak CSP findings and what to do with each one. If generation is blocked, lead with the exact missing hints or source ambiguity.
+After writing the file, summarize the app info fields generated, number of tools covered, positive test case count, and negative test case count. Then include a `Review findings` section with any sensitive data solicitation, tool data use, tool naming, weak CSP findings, or missing `outputSchema` warnings and what to do with each one. If generation is blocked, lead with the exact missing hints or source ambiguity.

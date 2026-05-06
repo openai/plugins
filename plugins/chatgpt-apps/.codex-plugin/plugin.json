@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-apps",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Skills that help developers build ChatGPT Apps and prepare app submission materials from local app and MCP server codebases.",
   "author": {
     "name": "OpenAI"
