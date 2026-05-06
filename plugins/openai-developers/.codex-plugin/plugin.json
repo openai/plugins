@@ -1,7 +1,7 @@
 {
   "name": "openai-developers",
-  "version": "0.1.0",
-  "description": "Create and save OpenAI API keys from Codex without exposing plaintext keys in normal tool output.",
+  "version": "0.1.2",
+  "description": "Build OpenAI apps and agents, configure API keys, and develop Agents SDK projects from Codex.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,6 +13,8 @@
   "keywords": [
     "openai-platform",
     "api-key",
+    "agents-sdk",
+    "agents",
     "codex",
     "connector"
   ],

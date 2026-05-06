@@ -6,6 +6,7 @@ This plugin is the Codex-facing bundle for OpenAI developer workflows. It pairs 
 
 - `.codex-plugin/plugin.json` declares the Codex plugin metadata and user-facing `OpenAI Developers` brand.
 - `.app.json` exposes the `openai-platform` app connector used to work with the OpenAI Platform.
+- `skills/agents-sdk/` builds, runs, evaluates, and deploys Agents SDK apps through a single lifecycle workflow.
 - `skills/openai-platform-api-key/` handles encrypted API-key creation and local project setup.
 - `skills/openai-api-troubleshooting/` classifies common runtime API failures and routes users to the right next step.
 - `assets/openai-platform.png` is intentionally shared by both the plugin tile and the bundled OpenAI Platform app tile.
