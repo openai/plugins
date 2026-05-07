@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-content-template-builder"
+  short_description: "Twilio skill guidance for twilio-content-template-builder"
+  icon_small: "../../../assets/logo.svg"
+  icon_large: "../../../assets/logo.svg"
+  brand_color: "#F22F46"
