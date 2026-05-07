@@ -1,0 +1,3 @@
+interface:
+  display_name: "OpenAI API Troubleshooting"
+  short_description: "Diagnose OpenAI API failures to unblock development"
