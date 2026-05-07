@@ -48,6 +48,7 @@ Provide at least one anchor source:
 - Primary entrypoint: `scripts/map_locus_to_gene.py`
 - This script:
   - resolves trait/EFO and anchor variants,
+  - resolves seed and anchor rsID coordinates directly through NCBI RefSNP/dbSNP placements,
   - gathers locus-to-gene evidence through the chained skills,
   - writes mapping JSON and summary markdown,
   - optionally renders figures when plotting deps are available.
@@ -117,8 +118,8 @@ Use these skills in order. Skip only when an earlier step is not needed by provi
 2. `gwas-catalog-skill`
    - Discover anchor variants for the trait/EFO scope.
    - Pull association/study metadata for locus context.
-3. `variant-coordinate-finder-skill`
-   - Normalize each anchor to rsID plus GRCh37/GRCh38 coordinates.
+3. Built-in NCBI RefSNP coordinate resolution
+   - Normalize each anchor rsID to GRCh37/GRCh38 top-level chromosome placements.
 4. `opentargets-skill`
    - Retrieve credible set context, L2G predictions, and colocalisation evidence per locus.
 5. `gtex-eqtl-skill`
@@ -312,6 +313,7 @@ Confidence label:
 Fail the run when any of the following occurs:
 
 - No anchors after normalization.
+- Unresolved GRCh38 coordinates should be surfaced as `status=degraded`, not treated as an analytically clean pass.
 - Any locus has candidate genes without score fields.
 - `overall_score` outside `0..1`.
 - Summary section order mismatch.
@@ -332,7 +334,8 @@ Return:
   "mapping_output_path": "./output/locus_to_gene_mapping.json",
   "summary_output_path": "./output/locus_to_gene_summary.md",
   "figure_paths": [],
-  "warnings": []
+  "warnings": [],
+  "limitations": []
 }
 ```
 

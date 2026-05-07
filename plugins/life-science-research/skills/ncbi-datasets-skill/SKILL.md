@@ -21,7 +21,7 @@ description: Submit compact NCBI Datasets v2 requests for assembly, genome, taxo
 - Required field: `path`
 - Optional fields: `params`, `record_path`, `response_format`, `max_items`, `max_depth`, `timeout_sec`, `save_raw`, `raw_output_path`
 - Common Datasets patterns:
-  - `{"path":"genome/taxon/assembly_descriptors","params":{"taxons":"9606"}}`
+  - `{"path":"genome/taxon/9606/dataset_report","params":{"page_size":10},"record_path":"reports","max_items":10}`
   - `{"path":"genome/accession/GCF_000001405.40/dataset_report"}`
   - `{"path":"taxonomy/taxon/9606"}`
 
@@ -32,7 +32,7 @@ description: Submit compact NCBI Datasets v2 requests for assembly, genome, taxo
 
 ## Execution
 ```bash
-echo '{"path":"genome/taxon/assembly_descriptors","params":{"taxons":"9606"}}' | python scripts/ncbi_datasets.py
+echo '{"path":"genome/taxon/9606/dataset_report","params":{"page_size":10},"record_path":"reports","max_items":10}' | python scripts/ncbi_datasets.py
 ```
 
 ## References

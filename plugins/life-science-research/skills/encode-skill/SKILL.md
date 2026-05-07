@@ -23,7 +23,7 @@ description: Submit compact ENCODE REST API requests for object lookups, portal-
 - Optional fields: `method`, `params`, `headers`, `json_body`, `form_body`, `record_path`, `response_format`, `max_items`, `max_depth`, `timeout_sec`, `save_raw`, `raw_output_path`
 - Common ENCODE patterns:
   - `{"base_url":"https://www.encodeproject.org","path":"biosamples/ENCBS000AAA/","params":{"frame":"object","format":"json"},"headers":{"Accept":"application/json"}}`
-  - `{"base_url":"https://www.encodeproject.org","path":"search/","params":{"type":"Experiment","assay_title":"RNA-seq","limit":10,"format":"json"},"record_path":"@graph","headers":{"Accept":"application/json"},"max_items":10}`
+  - `{"base_url":"https://www.encodeproject.org","path":"search/","params":{"type":"Experiment","assay_term_name":"RNA-seq","limit":10,"format":"json"},"record_path":"@graph","headers":{"Accept":"application/json"},"max_items":10}`
 
 ## Output
 - Success returns `ok`, `source`, `path`, `method`, `status_code`, `warnings`, and either compact `records` or a compact `summary`.
@@ -32,7 +32,7 @@ description: Submit compact ENCODE REST API requests for object lookups, portal-
 
 ## Execution
 ```bash
-echo '{"base_url":"https://www.encodeproject.org","path":"search/","params":{"type":"Experiment","assay_title":"RNA-seq","limit":10,"format":"json"},"record_path":"@graph","headers":{"Accept":"application/json"},"max_items":10}' | python scripts/rest_request.py
+echo '{"base_url":"https://www.encodeproject.org","path":"search/","params":{"type":"Experiment","assay_term_name":"RNA-seq","limit":10,"format":"json"},"record_path":"@graph","headers":{"Accept":"application/json"},"max_items":10}' | python scripts/rest_request.py
 ```
 
 ## References

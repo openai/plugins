@@ -14,6 +14,7 @@ description: Submit compact QuickGO requests for GO terms, annotations, and onto
 ## Execution behavior
 - Return concise markdown summaries from the script JSON by default.
 - Prefer these paths: `ontology/go/terms/<id>`, `annotation/search`, and ontology child or ancestor endpoints.
+- Treat `annotation/search` as upstream-fragile when QuickGO's annotation Solr backend is unavailable; fall back to ontology term lookup or UniProt GO annotations when appropriate.
 - If the user needs the full payload, set `save_raw=true` and report the saved file path.
 
 ## Input
@@ -31,7 +32,7 @@ description: Submit compact QuickGO requests for GO terms, annotations, and onto
 
 ## Execution
 ```bash
-echo '{"base_url":"https://www.ebi.ac.uk/QuickGO/services","path":"annotation/search","params":{"geneProductId":"P04637","limit":10},"headers":{"Accept":"application/json"},"record_path":"results","max_items":10}' | python scripts/rest_request.py
+echo '{"base_url":"https://www.ebi.ac.uk/QuickGO/services","path":"ontology/go/terms/GO:0006915","headers":{"Accept":"application/json"},"record_path":"results","max_items":10}' | python scripts/rest_request.py
 ```
 
 ## References

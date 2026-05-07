@@ -7,20 +7,21 @@ description: Submit compact RNAcentral API requests for RNA entry browsing, sing
 - Use `scripts/rest_request.py` for all RNAcentral calls.
 - Use `base_url=https://rnacentral.org/api/v1`.
 - Keep the trailing slash on collection and record paths to avoid redirects.
-- Start with `rna/` for browsing and `rna/<URS>/` or `rna/<URS>/xrefs/` for targeted lookups.
+- Start with targeted lookups such as `rna/<URS>/<taxid>` because broad `rna/` browsing can be slow or time out.
 - Re-run requests in long conversations instead of relying on older tool output.
 
 ## Execution behavior
 - Return concise markdown summaries from the script JSON by default.
 - Return raw JSON only if the user explicitly asks for machine-readable output.
-- Prefer these paths: `rna/`, `rna/<URS>/`, and `rna/<URS>/xrefs/`.
+- Prefer these paths: `rna/<URS>/<taxid>`, `rna/<URS>/`, `rna/<URS>/xrefs/`, and targeted `rna/` searches with `q` plus small `page_size`.
 
 ## Input
 - Read one JSON object from stdin.
 - Required fields: `base_url`, `path`
 - Optional fields: `method`, `params`, `headers`, `json_body`, `form_body`, `record_path`, `response_format`, `max_items`, `max_depth`, `timeout_sec`, `save_raw`, `raw_output_path`
 - Common RNAcentral patterns:
-  - `{"base_url":"https://rnacentral.org/api/v1","path":"rna/","params":{"page_size":10},"record_path":"results","max_items":10}`
+  - `{"base_url":"https://rnacentral.org/api/v1","path":"rna/URS000075C808/9606","max_items":10}`
+  - `{"base_url":"https://rnacentral.org/api/v1","path":"rna/","params":{"q":"TP53","page_size":10},"record_path":"results","max_items":10}`
   - `{"base_url":"https://rnacentral.org/api/v1","path":"rna/URS0000000001/"}`
   - `{"base_url":"https://rnacentral.org/api/v1","path":"rna/URS0000000001/xrefs/","record_path":"results","max_items":10}`
 
@@ -31,7 +32,7 @@ description: Submit compact RNAcentral API requests for RNA entry browsing, sing
 
 ## Execution
 ```bash
-echo '{"base_url":"https://rnacentral.org/api/v1","path":"rna/","params":{"page_size":10},"record_path":"results","max_items":10}' | python scripts/rest_request.py
+echo '{"base_url":"https://rnacentral.org/api/v1","path":"rna/URS000075C808/9606","max_items":10}' | python scripts/rest_request.py
 ```
 
 ## References
