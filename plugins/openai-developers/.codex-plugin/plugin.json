@@ -1,7 +1,7 @@
 {
   "name": "openai-developers",
   "version": "1.0.0",
-  "description": "Build with OpenAI APIs and Agents SDK, and create and save OpenAI API keys from Codex.",
+  "description": "Build with OpenAI APIs, Agents SDK, and ChatGPT Apps, and create and save OpenAI API keys from Codex.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -15,18 +15,23 @@
     "api-key",
     "agents-sdk",
     "agents",
+    "chatgpt-apps",
+    "apps-sdk",
+    "mcp",
+    "submissions",
     "codex"
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "OpenAI Developers",
-    "shortDescription": "Develop AI apps and agents with the OpenAI API and Agents SDK following OpenAI best practices",
-    "longDescription": "Use OpenAI Developers in Codex to build AI applications and agents with OpenAI docs, the OpenAI API, and Agents SDK. Connect to the OpenAI Platform (platform.openai.com) and see your Codex-built apps work right out of the box with real OpenAI API keys. Run and locally deploy Agents SDK projects through the Deployment Manager.",
+    "shortDescription": "Develop AI apps, agents, and ChatGPT Apps with OpenAI best practices",
+    "longDescription": "Use OpenAI Developers in Codex to build AI applications, agents, and ChatGPT Apps with OpenAI docs, the OpenAI API, Apps SDK, and Agents SDK. Connect to the OpenAI Platform (platform.openai.com) and see your Codex-built apps work right out of the box with real OpenAI API keys. Run and locally deploy Agents SDK projects through the Deployment Manager, scaffold ChatGPT Apps, and prepare ChatGPT Apps submission artifacts.",
     "developerName": "OpenAI",
     "category": "Engineering",
     "capabilities": [
       "Interactive",
+      "Read",
       "Write"
     ],
     "websiteURL": "https://platform.openai.com/",
@@ -37,7 +42,9 @@
     "defaultPrompt": [
       "Create an OpenAI API key to use in this project",
       "Build an app that uses AI to generate haikus",
-      "Build an agent with the Agents SDK"
+      "Build an agent with the Agents SDK",
+      "Build a ChatGPT app from my local MCP server and widget idea.",
+      "Generate a ChatGPT Apps submission import file for my MCP server."
     ],
     "brandColor": "#10A37F",
     "screenshots": []

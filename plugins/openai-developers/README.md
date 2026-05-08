@@ -1,6 +1,6 @@
 # OpenAI Developers Plugin
 
-This plugin is the Codex-facing bundle for OpenAI developer workflows. It pairs OpenAI Platform workflows with Codex's native OpenAI docs skill guidance so users can build AI applications and agents, then connect those projects to `platform.openai.com`.
+This plugin is the Codex-facing bundle for OpenAI developer workflows. It pairs OpenAI Platform workflows with Codex's native OpenAI docs skill guidance so users can build AI applications, agents, and ChatGPT Apps, then connect those projects to `platform.openai.com`.
 
 ## What Is Included
 
@@ -10,6 +10,8 @@ This plugin is the Codex-facing bundle for OpenAI developer workflows. It pairs 
 - `skills/openai-api-troubleshooting/` classifies common runtime API failures and routes users to the right next step.
 - `assets/openai-platform.png` is intentionally shared by both the plugin tile and the bundled OpenAI Platform app tile.
 - `skills/agents-sdk/` builds, runs, deploys and evaluates Agents SDK apps.
+- `skills/build-chatgpt-app/` scaffolds, refactors, and troubleshoots ChatGPT Apps SDK projects.
+- `skills/chatgpt-app-submission/` generates `chatgpt-app-submission.json` for ChatGPT Apps submissions.
 
 ## Local Validation
 
