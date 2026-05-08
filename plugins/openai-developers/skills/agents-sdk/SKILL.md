@@ -1,6 +1,6 @@
 ---
 name: agents-sdk
-description: Build, run, deploy, and evaluate OpenAI Agents SDK apps from Codex. Use when the user asks to create or adapt an Agents SDK app, build from a prompt or Codex thread, prepare a runnable agent prototype, add a focused eval harness, or deploy locally through the Agents SDK Deployment Manager.
+description: Build, run, deploy, and evaluate OpenAI Agents SDK apps from Codex. Use when the user asks to create or adapt an Agents SDK app, build from a prompt or Codex thread, prepare a runnable agent prototype, generate or run evals, or deploy locally through the Agents SDK Deployment Manager.
 ---
 
 # Agents SDK
@@ -24,15 +24,22 @@ Use this skill to turn an idea, repo, or prior Codex thread into a small runnabl
 - Follow current docs for SDK semantics and the target repo for packaging, naming, and command conventions.
 - Keep generated app files, eval files, and deployment-generated files separate in the final summary.
 
-## Intake
+## Request Routing
 
-Classify the request before editing:
+Classify the work before editing:
 
-- New app from prompt or idea: build the smallest runnable Agents SDK app that proves the workflow.
-- Existing app or demo: inspect the repo and add the smallest Agents SDK layer needed to make the workflow agentic.
-- Prior Codex work: turn thread IDs, session links, rollout JSONL paths, or pasted summaries into a short build brief before writing code.
-- Evals request: add a focused local eval harness against the real agent path.
-- Deployment-only request: deploy the existing app without rebuilding unless deployment reveals a small required fix.
+- New app: build the smallest runnable Agents SDK app that proves the workflow.
+- Existing app: inspect the repo, then add the smallest agent layer needed.
+- Prior Codex work: turn thread links, rollout JSONL, or summaries into a short
+  build brief before implementation.
+- Evals: add a focused harness against the app's real agent path.
+- Deployment-only: deploy the existing app; avoid rebuilding unless deploy
+  reveals a small required fix.
+
+Ask clarifying questions only when a product choice blocks implementation. If
+the user already asked to build, implement, or deploy, state assumptions and keep
+moving. A planning brief should lead directly into implementation unless the
+user explicitly asked for planning only.
 
 ## API Access
 
@@ -92,7 +99,7 @@ When the source is prior Codex work, create a compact brief before building:
 
 Prefer the newest user direction when threads conflict. Keep secrets out of the brief and mention missing environment variable names only.
 
-If the user already asked to build after planning, continue from the brief into the build workflow. Otherwise ask for approval before implementing.
+If the user already asked to build after planning, continue from the brief into the build workflow.
 
 ## Eval Workflow
 
@@ -142,6 +149,7 @@ Use the Deployment Manager from `openai-cookbook` for local deployments. Default
    Useful options:
 
    ```bash
+   lsof -nP -iTCP:<port> -sTCP:LISTEN
    make -C "$MANAGER_DIR" deploy PROJECT_PATH=/path/to/app APP_PORT=8421
    make -C "$MANAGER_DIR" deploy PROJECT_PATH=/path/to/app TARGET=local-process
    make -C "$MANAGER_DIR" deploy PROJECT_PATH=/path/to/app SANDBOX_BACKEND=docker

@@ -1,6 +1,6 @@
 {
   "name": "openai-developers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build with OpenAI APIs and Agents SDK, and create and save OpenAI API keys from Codex.",
   "author": {
     "name": "OpenAI",
