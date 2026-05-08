@@ -41,10 +41,8 @@
     "logo": "./assets/openai-platform.png",
     "defaultPrompt": [
       "Create an OpenAI API key to use in this project",
-      "Build an app that uses AI to generate haikus",
       "Build an agent with the Agents SDK",
-      "Build a ChatGPT app from my local MCP server and widget idea.",
-      "Generate a ChatGPT Apps submission import file for my MCP server."
+      "Build a ChatGPT app from my local MCP server and widget idea."
     ],
     "brandColor": "#10A37F",
     "screenshots": []
