@@ -18,7 +18,7 @@ GWAS_BASE = "https://www.ebi.ac.uk/gwas/rest/api"
 EFO_BASE = "https://www.ebi.ac.uk/ols4/api"
 OT_BASE = "https://api.platform.opentargets.org/api/v4/graphql"
 GNOMAD_BASE = "https://gnomad.broadinstitute.org/api"
-REFSNP_BASE = "https://api.ncbi.nlm.nih.gov/variation/v0/beta/refsnp"
+REFSNP_BASE = "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp"
 
 DEFAULT_LOCUS_PADDING_BP = 1_000_000
 REFSEQ_CHROMOSOMES = {f"NC_{i:06d}": str(i) for i in range(1, 23)}

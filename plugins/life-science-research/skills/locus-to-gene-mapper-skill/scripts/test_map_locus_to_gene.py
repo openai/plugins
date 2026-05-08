@@ -122,6 +122,12 @@ def refsnp_payload() -> dict:
 
 
 class RefSnpResolutionTests(unittest.TestCase):
+    def test_refsnp_base_uses_current_numeric_lookup_endpoint(self) -> None:
+        self.assertEqual(
+            map_locus_to_gene.REFSNP_BASE,
+            "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp",
+        )
+
     def test_resolve_refsnp_coordinates_uses_top_level_grch_placements(self) -> None:
         with mock.patch.object(map_locus_to_gene, "safe_get_json", return_value=refsnp_payload()):
             coords = map_locus_to_gene.resolve_refsnp_coordinates("rs7903146", [], [])
