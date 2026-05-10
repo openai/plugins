@@ -150,6 +150,7 @@ SwiftUI runs on the main actor. Keep synchronous work off the main thread and ou
 
 - Prefer `.task { ... }` for view-scoped async work because SwiftUI cancels it with the view lifecycle.
 - Avoid `Task.detached` for view-initiated work unless the lifetime and cancellation story are explicit.
+- Do not assume `.task` or `async` makes CPU-heavy synchronous work leave the main actor. Move expensive parsing, image decoding, formatting, or database work into a non-main-actor helper or service; in Swift 6.2+ use `@concurrent` when an async helper must explicitly hop off the caller's actor.
 - Flag heavy `.onAppear` and `.onChange` handlers, especially for text input, geometry, timers, and scrolling.
 - Avoid per-row network `.task` work in large lists unless it is cached, bounded, or intentionally coordinated.
 

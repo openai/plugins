@@ -266,10 +266,6 @@ Better alternatives:
 
 If the value is derived from inputs, document or encode the exact input-change path that refreshes it.
 
-### `@ObservationIgnored` should be surgical
-
-Use it for mutable non-render state such as caches, tasks, cancellables, services, and lazy dependencies that views do not read. Do not apply it to immutable `let` dependencies or blanket-ignore model state just to silence updates.
-
 ### `equatable()` is conditional guidance
 
 Use `equatable()` only when:
