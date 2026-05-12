@@ -294,7 +294,7 @@ function ResourceSection({
           <button
             key={item.id}
             type="button"
-            className="grid min-h-[62px] w-full grid-cols-[20px_minmax(0,1fr)_18px] items-center gap-4 py-3 text-left transition hover:bg-control"
+            className="resource-row relative grid min-h-[62px] w-full grid-cols-[20px_minmax(0,1fr)_18px] items-center gap-4 py-3 text-left"
             onClick={() => {
               if (kind === "skill") {
                 onOpen({ kind, item: item as SkillSummary });
