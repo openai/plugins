@@ -97,7 +97,10 @@
 
 # Marketplace JSON sample spec
 
-`marketplace.json` always lives at `<repo-root>/.agents/plugins/marketplace.json`.
+`marketplace.json` depends on where the plugin should live:
+
+- Personal plugin: `~/.agents/plugins/marketplace.json`
+- Repo/team plugin: `<repo-root>/.agents/plugins/marketplace.json`
 
 ```json
 {
@@ -112,8 +115,10 @@
         "source": "local",
         "path": "./plugins/linear"
       },
-      "installPolicy": "AVAILABLE",
-      "authPolicy": "ON_INSTALL",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     }
   ]
@@ -137,7 +142,11 @@
 - `name` (`string`): Plugin identifier. Match the plugin folder name and `plugin.json` `name`.
 - `source` (`object`): Plugin source descriptor.
   - `source` (`string`): Use `local` for this repo workflow.
-  - `path` (`string`): Relative plugin path, always `./plugins/<plugin-name>`.
+  - `path` (`string`): Relative plugin path based on the marketplace root.
+    - Personal plugin in `~/.agents/plugins/marketplace.json`: `./plugins/<plugin-name>`
+    - Repo/team plugin: `./plugins/<plugin-name>`
+  - The same relative path convention is used for both personal and repo/team marketplaces.
+    - Example: with `~/.agents/plugins/marketplace.json`, `./plugins/<plugin-name>` resolves to `~/plugins/<plugin-name>`.
 - `policy` (`object`): Marketplace policy block. Always include it.
   - `installation` (`string`): Availability policy.
     - Allowed values: `NOT_AVAILABLE`, `AVAILABLE`, `INSTALLED_BY_DEFAULT`
@@ -156,3 +165,9 @@
 - Treat `policy.products` as an override and omit it unless explicitly requested.
 - Append new entries unless the user explicitly requests reordering.
 - Replace an existing entry for the same plugin only when overwrite is intentional.
+- Default new plugin creation to the personal marketplace.
+- If the current Git repo already has `.agents/plugins/marketplace.json` and the user has not said
+  personal or team, ask which marketplace to update before creating the entry.
+- Choose marketplace location to match the selected destination:
+  - Personal plugin: `~/.agents/plugins/marketplace.json`
+  - Repo/team plugin: `<repo-root>/.agents/plugins/marketplace.json`
