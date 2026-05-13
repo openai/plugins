@@ -1,0 +1,42 @@
+@import "./codex-theme.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .resource-row::before {
+    position: absolute;
+    inset: 4px 6px;
+    border-radius: var(--codex-radius-md);
+    background: var(--codex-control);
+    content: "";
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  .resource-row:hover::before,
+  .resource-row:focus-visible::before {
+    opacity: 1;
+  }
+
+  .resource-row:focus-visible {
+    outline: none;
+  }
+
+  .resource-row > * {
+    position: relative;
+    z-index: 1;
+  }
+}

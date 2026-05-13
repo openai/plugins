@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "plugin-builder": {
+      "command": "node",
+      "args": [
+        "./mcp/server.js"
+      ],
+      "cwd": "."
+    }
+  }
+}

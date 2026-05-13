@@ -1,0 +1,30 @@
+{
+  "name": "plugin-builder",
+  "version": "0.1.0",
+  "description": "Create local Codex plugins with the bundled Plugin Creator skill, then review and share the result from a polished right-side app.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "license": "Proprietary",
+  "keywords": [
+    "plugin",
+    "builder",
+    "sharing",
+    "mcp-app"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Plugin Builder",
+    "shortDescription": "Create, review, and share newly built local plugins",
+    "longDescription": "Use the bundled Plugin Creator skill to scaffold a local plugin, then open a read-only Codex app that inspects the plugin's real local contents and continues into View or Share in the desktop app.",
+    "developerName": "OpenAI",
+    "category": "Developer Tools",
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "screenshots": []
+  }
+}
