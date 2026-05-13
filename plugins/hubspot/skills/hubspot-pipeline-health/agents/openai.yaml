@@ -1,0 +1,5 @@
+interface:
+  display_name: "Pipeline Health"
+  short_description: "Assess deal risk and stale pipeline"
+  brand_color: "#FF7A59"
+  default_prompt: "Use $hubspot-pipeline-health to audit open deals, stale stages, owner coverage, and next actions."
