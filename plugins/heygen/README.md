@@ -14,6 +14,8 @@ Two skills that chain together:
 
 Installing the plugin connects the HeyGen ChatGPT app automatically (OAuth on first use). That is enough for the skills to work end-to-end on the user's existing HeyGen plan credits.
 
+If browser auth succeeds but chat still shows `Authenticate` and does not advance, this is usually a connector/session state issue. Start a new chat session and reconnect the app.
+
 If you'd rather not use the app, the skills also support the HeyGen CLI: install it from <https://static.heygen.ai/cli/install.sh> and export `HEYGEN_API_KEY` (get one at <https://app.heygen.com/api>).
 
 Local file upload note: the current HeyGen app connector accepts hosted HTTPS media URLs or existing HeyGen `asset_id` values for avatar/photo creation. It does not upload local `file://` paths directly. For local photos or videos, upload first with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets` using `multipart/form-data`, then pass the returned `asset_id` into the app or CLI creation flow.

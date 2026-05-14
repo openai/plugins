@@ -92,6 +92,20 @@ If CLI auth is valid, continue in CLI mode for the current run.
 
 ---
 
+## Authenticate Button Loop After Browser Success
+
+**Symptom:** User completes browser auth successfully, returns to Codex, but chat still shows `Authenticate` and repeated clicks do not resolve.
+
+**Root Cause:** Connector/session state in the current chat did not refresh after OAuth callback.
+
+**Fix:** Start a new chat session and reconnect the HeyGen app. Then rerun auth triage:
+```bash
+command -v heygen
+heygen auth status
+```
+
+---
+
 ## Sandbox DNS/Network Failures in Codex
 
 **Symptom:** CLI commands fail with DNS/network errors despite valid auth.
