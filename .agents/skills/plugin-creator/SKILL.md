@@ -61,7 +61,8 @@ python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-
   --marketplace-path <marketplace-json-path>
 ```
 
-Add `--require-marketplace` when the plugin must appear in that marketplace before it is considered done.
+Repo plugins under `<repo-root>/plugins/` are checked against `<repo-root>/.agents/plugins/marketplace.json`
+automatically when that marketplace exists.
 
 ## What this skill creates
 
@@ -180,15 +181,15 @@ The readiness check covers:
   to allow missing metadata and the checker is run with `--allow-missing-openai-yaml`.
 - Existing `agents/openai.yaml` files include `interface.display_name` and
   `interface.short_description`; icon paths are checked when present.
-- The selected or nearest repo marketplace entry has the correct local source path, policy fields,
-  and category when a marketplace is part of the workflow.
+- Repo plugins under `<repo-root>/plugins/` are included in `<repo-root>/.agents/plugins/marketplace.json`
+  with the correct local source path, policy fields, and category.
+- A marketplace passed with `--marketplace-path` has a matching, valid entry for the plugin.
 
 Useful options:
 
 ```bash
 python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-path> \
-  --marketplace-path ./.agents/plugins/marketplace.json \
-  --require-marketplace
+  --marketplace-path ./.agents/plugins/marketplace.json
 ```
 
 ```bash

@@ -160,6 +160,14 @@ def is_plugin_relative_path(value: str) -> bool:
     return value.startswith("./") and not Path(value).is_absolute() and ".." not in Path(value).parts
 
 
+def path_is_relative_to(path: Path, base: Path) -> bool:
+    try:
+        path.relative_to(base)
+    except ValueError:
+        return False
+    return True
+
+
 def load_json(path: Path, issues: list[Issue]) -> Any | None:
     try:
         with path.open() as handle:
@@ -735,10 +743,11 @@ def check_placeholders(plugin_root: Path, issues: list[Issue]) -> None:
             add_issue(issues, "WARN", path, f"Contains possible {label}: {match!r}.")
 
 
-def discover_repo_marketplace(plugin_root: Path) -> Path | None:
+def discover_repo_plugin_marketplace(plugin_root: Path) -> Path | None:
     for parent in plugin_root.parents:
         candidate = parent / ".agents" / "plugins" / "marketplace.json"
-        if candidate.exists():
+        plugins_dir = parent / "plugins"
+        if candidate.exists() and path_is_relative_to(plugin_root, plugins_dir):
             return candidate
     return None
 
@@ -747,7 +756,6 @@ def check_marketplace(
     marketplace_path: Path,
     plugin_name: str,
     issues: list[Issue],
-    require_marketplace: bool,
 ) -> None:
     payload = load_json(marketplace_path, issues)
     if payload is None:
@@ -765,8 +773,7 @@ def check_marketplace(
         None,
     )
     if entry is None:
-        severity = "ERROR" if require_marketplace else "WARN"
-        add_issue(issues, severity, marketplace_path, f"No marketplace entry found for {plugin_name!r}.")
+        add_issue(issues, "ERROR", marketplace_path, f"No marketplace entry found for {plugin_name!r}.")
         return
 
     source = entry.get("source")
@@ -838,12 +845,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("plugin_path", help="Plugin root or .codex-plugin/plugin.json path")
     parser.add_argument(
         "--marketplace-path",
-        help="Optional marketplace.json path to validate against this plugin.",
-    )
-    parser.add_argument(
-        "--require-marketplace",
-        action="store_true",
-        help="Fail if the selected or auto-discovered marketplace lacks this plugin entry.",
+        help=(
+            "Optional marketplace.json path to validate against this plugin. "
+            "Repo plugins under <repo>/plugins are checked against <repo>/.agents/plugins/marketplace.json automatically."
+        ),
     )
     parser.add_argument(
         "--allow-missing-skill-openai",
@@ -886,15 +891,14 @@ def main() -> int:
     if is_non_empty_string(plugin_name):
         if args.marketplace_path:
             marketplace_path = Path(args.marketplace_path).expanduser().resolve()
-            check_marketplace(marketplace_path, plugin_name, issues, args.require_marketplace)
+            check_marketplace(marketplace_path, plugin_name, issues)
         else:
-            marketplace_path = discover_repo_marketplace(plugin_root)
+            marketplace_path = discover_repo_plugin_marketplace(plugin_root)
             if marketplace_path is not None:
                 check_marketplace(
                     marketplace_path,
                     plugin_name,
                     issues,
-                    require_marketplace=args.require_marketplace,
                 )
 
     print_report(plugin_root, issues)
