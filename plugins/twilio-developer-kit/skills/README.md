@@ -15,6 +15,23 @@ Procedural knowledge for AI coding agents building on Twilio. Each skill is a `S
 
 SMS, MMS, WhatsApp, RCS, Voice, Verify, SendGrid, Conversations, TaskRouter, Messaging Services, Compliance (A2P 10DLC, Toll-Free, STIR/SHAKEN), and more.
 
+## Structure
+
+Skills live directly under this directory:
+
+```text
+skills/
+├── twilio-account-setup/
+│   ├── SKILL.md
+│   └── agents/openai.yaml
+├── twilio-sendgrid-email-send/
+│   ├── SKILL.md
+│   └── agents/openai.yaml
+└── ...
+```
+
+There are no product category subfolders; discovery tools should scan `skills/*/SKILL.md`.
+
 ## Format
 
 Each skill is a `SKILL.md` file with YAML frontmatter:

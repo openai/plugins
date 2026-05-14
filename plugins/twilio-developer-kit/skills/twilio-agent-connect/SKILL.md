@@ -1,3 +1,12 @@
+---
+name: twilio-agent-connect
+description: >
+  Use when building or integrating Twilio Agent Connect (TAC) to connect
+  third-party LLM agent runtimes with Twilio Voice, Messaging,
+  ConversationRelay, Conversation Memory, Conversation Orchestrator, or
+  Enterprise Knowledge.
+---
+
 # Twilio Agent Connect
 
 ## Overview
