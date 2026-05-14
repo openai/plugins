@@ -37,7 +37,7 @@ This skill reads and writes the following. No other files are accessed without e
 | Write | `AVATAR-<NAME>.md` | Save new avatar identity after creation |
 | Write | `AVATAR-AGENT.md`, `AVATAR-USER.md` (symlinks) | Role aliases, see Phase 5 |
 | Temp write | `/tmp/heygen/uploads/` | Voice preview audio (downloaded for user playback, deleted after session) |
-| Remote upload | HeyGen (via the app or `heygen asset create`) | User-provided photos uploaded to HeyGen for digital-twin creation |
+| Remote upload | HeyGen (via CLI/API asset upload) | Local photos/videos uploaded to HeyGen before avatar creation |
 
 Assets are only uploaded to HeyGen when the user explicitly provides them.
 
@@ -86,9 +86,11 @@ Try to read `SOUL.md` from the workspace root.
 
 **HeyGen app (preferred):** If the HeyGen app is available through the installed app integration, use it. The app authenticates via OAuth and runs against the user's existing HeyGen plan credits.
 
+**Local media limitation:** The current HeyGen app connector does NOT upload local files. Its photo/video/avatar tools accept only hosted HTTPS URLs or existing HeyGen `asset_id` values. Never pass `file://`, absolute local paths, or Codex attachment paths directly to app tools. For local photos/videos, first upload with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets` using `multipart/form-data`; then pass `{ "type": "asset_id", "asset_id": "..." }` to the app or CLI creation call. If no CLI/API upload path is available, ask the user for an HTTPS image URL or permission to continue with prompt-only creation.
+
 **CLI fallback:** If the app is not available AND the `heygen` binary runs cleanly (`heygen --version` exits 0), use it. Auth: `HEYGEN_API_KEY` env OR `heygen auth login` (persists to `~/.heygen/credentials`). If the CLI is missing, errors on `--version`, or auth is not set, silently skip it.
 
-**Neither available:** Only if the app is unavailable AND the CLI doesn't work, tell the user once: "To use this skill, connect the HeyGen app or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`."
+**Neither available:** Only if the app is unavailable AND the CLI doesn't work, tell the user once: "To use this skill, connect the HeyGen app or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`." If the only missing capability is local media upload, say that local photos need an HTTPS URL or a CLI/API asset upload first.
 
 **API:** v3 only. Never call v1 or v2 endpoints.
 
@@ -229,7 +231,9 @@ Only run this step when Phase 0 target = **user** (real-person digital twin) OR 
 - Otherwise, ask one sentence: *"Got a headshot? It gives better face consistency for videos of you. I can also generate from your description — just say 'skip.'"*
 
 Branch:
-- **Photo provided** → upload via the HeyGen app or `heygen asset create --file <path>`, then Type B (photo) creation in Phase 2.
+- **Photo provided as local file/path** → upload via `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then Type B (photo) creation with the returned `asset_id`.
+- **Photo provided as HTTPS URL or asset_id** → Type B (photo) creation in Phase 2.
+- **Local photo but no upload path available** → ask for an HTTPS image URL or offer prompt-only creation. Do not pass the local path into the app connector.
 - **Skip** → Type A (prompt) creation in Phase 2.
 
 For agents and named characters, skip this entire step — go straight to Type A (prompt) creation.
@@ -258,15 +262,25 @@ Prompt limit is 1000 characters. Be descriptive — include style, features, exp
 
 **Type B — From reference image:**
 
-**App:** use the HeyGen app flow for photo avatar creation.
-**CLI:** `heygen avatar create -d '{"type":"photo","name":"...","file":{"type":"url","url":"..."},"avatar_group_id":"..."}'`
+**App:** use the HeyGen app flow for photo avatar creation only with an HTTPS URL or pre-uploaded `asset_id`.
+**CLI:** `heygen avatar create -d '{"type":"photo","name":"...","file":{"type":"asset_id","asset_id":"..."},"avatar_group_id":"..."}'`
 
 File options for Type B:
 - `{ "type": "url", "url": "https://..." }` — public image URL
 - `{ "type": "asset_id", "asset_id": "<id>" }` — from `heygen asset create --file <path>`
-- `{ "type": "base64", "media_type": "image/png", "data": "<base64>" }` — inline
 
-📖 **When to use each (URL vs asset_id vs base64), upload routing, and edge cases → [references/asset-routing.md](references/asset-routing.md)**
+Do not pass local paths or `file://` URLs to the app connector. Upload local files to an `asset_id` first.
+
+Raw API upload example:
+```bash
+ASSET_ID=$(curl -s -X POST "https://api.heygen.com/v3/assets" \
+  -H "X-Api-Key: $HEYGEN_API_KEY" \
+  -F "file=@/path/to/headshot.jpg" | jq -r '.data.asset_id')
+```
+
+The v3 upload endpoint accepts `multipart/form-data`, auto-detects MIME type from file bytes, and returns `data.asset_id`.
+
+📖 **When to use each (URL vs asset_id), upload routing, and edge cases → [references/asset-routing.md](references/asset-routing.md)**
 
 **Response:** Returns `avatar_item.id` (look ID) and `avatar_item.group_id` (character identity).
 
@@ -446,7 +460,7 @@ simply `cat AVATAR-AGENT.md` and get whatever the current agent's avatar is.
 - Missing SOUL.md/IDENTITY.md → conversational onboarding, write AVATAR file from answers
 - API fails → retry once, then ask user to check API key
 - Voice match poor → show all available voices, let user browse
-- Asset upload fails → skip reference image, try prompt-only creation
+- Asset upload unavailable or fails → ask for an HTTPS URL or skip reference image and try prompt-only creation
 - Existing avatar file with stale HeyGen IDs → offer to regenerate or keep
 
 📖 **Known issues, retry patterns, broken voice previews, error → action mapping → [references/troubleshooting.md](references/troubleshooting.md)**

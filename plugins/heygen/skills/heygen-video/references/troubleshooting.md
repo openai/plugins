@@ -69,6 +69,16 @@ Video Agent rejects `text/html` content type in the `files[]` array. Web pages (
 
 ---
 
+## Local File Paths Rejected by App Connector
+
+**Symptom:** Video creation fails or a `files[]` attachment is rejected because the connector won't accept a local file path or `file://` URL for B-roll, reference images, or screen captures.
+
+**Root Cause:** The current HeyGen app connector does not expose asset upload. It cannot consume `file://`, absolute local paths, or Codex attachment paths directly. `files[]` only accepts hosted HTTPS URLs or existing HeyGen `asset_id` values.
+
+**Fix:** Upload the local file with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then pass `{ "type": "asset_id", "asset_id": "<uploaded_asset_id>" }` (or the bare `asset_id` string where required) into the video-agent `files[]` array. If upload is unavailable, ask for an HTTPS URL or continue without the visual attachment.
+
+---
+
 ## Avatar Not Ready for Video Generation
 
 **Symptom:** Video generation fails or produces errors immediately after creating a new avatar. The avatar exists in the HeyGen dashboard but videos referencing it fail.

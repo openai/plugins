@@ -7,7 +7,7 @@ When the user provides files, URLs, or references, route each asset to the right
 | Path | What happens | When to use |
 |------|-------------|-------------|
 | **A: Contextualize → Prompt** | Read/analyze the asset, extract key info, bake into script. Video Agent never sees the original. | Reference material, auth-walled content, documents where the *information* matters more than the *visual*. |
-| **B: Attach to API** | Upload the raw file via `files[]`. Video Agent analyzes, extracts graphics, uses as frames/B-roll. | Screenshots, branded assets, PDFs with important visual layouts, images the viewer should literally see. |
+| **B: Attach to API** | Attach a file reference via `files[]` (`asset_id` or HTTPS URL). Video Agent analyzes, extracts graphics, uses as frames/B-roll. | Screenshots, branded assets, PDFs with important visual layouts, images the viewer should literally see. |
 | **A+B: Both** | Contextualize for script quality AND attach for visual use. | Long docs where you need to summarize but Video Agent should also have the full source. |
 
 ## Classification Flow
@@ -50,19 +50,30 @@ When the user provides files, URLs, or references, route each asset to the right
 - Weave naturally into the script. Don't dump. Integrate.
 
 ### Path B (Attach)
-Upload to HeyGen:
+Upload local files to HeyGen before passing them to avatar or video tools:
 
-**App:** upload through the HeyGen app's asset flow when available.
-**CLI:** `heygen asset create --file /path/to/file.png`
+**Important:** the current HeyGen app connector does not upload local files. It accepts hosted HTTPS URLs or existing HeyGen `asset_id` values. Never pass `file://`, absolute local paths, or Codex attachment paths directly to app tools.
+
+**CLI/API:** `heygen asset create --file /path/to/file.png` or `POST https://api.heygen.com/v3/assets`
 
 Max 32MB per file. Returns JSON with the new `asset_id`.
 
-Or pass inline in `files[]`:
+Raw API upload:
+```bash
+ASSET_ID=$(curl -s -X POST "https://api.heygen.com/v3/assets" \
+  -H "X-Api-Key: $HEYGEN_API_KEY" \
+  -F "file=@/path/to/file.png" | jq -r '.data.asset_id')
+```
+
+`POST /v3/assets` uses `multipart/form-data`, auto-detects MIME type from file bytes, and returns `data.asset_id`.
+
+Then pass one of these media references:
 ```json
 {"type": "url", "url": "https://example.com/image.png"}
 {"type": "asset_id", "asset_id": "<from upload>"}
-{"type": "base64", "data": "<base64>", "content_type": "image/png"}
 ```
+
+If a local file is provided and no CLI/API upload path is available, ask the user for an HTTPS URL or continue without the visual attachment. Do not retry with the raw local path.
 
 ### Describe Asset Usage in Prompt
 Be SPECIFIC:
@@ -84,3 +95,4 @@ In the learning log entry, record:
 - **URLs that fail:** Try the environment's standard web/content fetch capability. If login/paywall/404 → tell the user, ask for content directly. Never silently fabricate.
 - **HTML URLs cannot go in `files[]`.** Video Agent rejects `text/html`. Web pages are ALWAYS Path A only.
 - **Prefer download→upload→asset_id** over `files[]{url}`. HeyGen's servers often blocked by CDN/WAF.
+- **Local paths must become asset IDs first.** App tools reject local file references.

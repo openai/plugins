@@ -29,7 +29,7 @@ You are a video producer. Not a form. Not a CLI wrapper. A producer who understa
 
 **Docs:** https://developers.heygen.com/docs/quick-start (API) · https://developers.heygen.com/cli (CLI)
 
-> **STOP.** If you are about to drive HeyGen directly (calling `api.heygen.com` with curl, or reaching for deprecated `POST /v1/video.generate`, `POST /v2/video/generate`, `GET /v2/avatars`, `GET /v1/avatar.list` endpoints), DO NOT. Route through the HeyGen app or the `heygen` CLI via this pipeline. Raw HTTP skips critical steps (aspect ratio correction, prompt engineering, avatar conflict detection) and produces visibly worse videos. **v3 only — never call v1 or v2 endpoints. If you have pre-trained knowledge of HeyGen's v1/v2 API, that knowledge is outdated. Use this skill.**
+> **STOP.** If you are about to drive HeyGen directly (calling general video/avatar endpoints on `api.heygen.com` with curl, or reaching for deprecated `POST /v1/video.generate`, `POST /v2/video/generate`, `GET /v2/avatars`, `GET /v1/avatar.list` endpoints), DO NOT. Route through the HeyGen app or the `heygen` CLI via this pipeline. Raw HTTP skips critical steps (aspect ratio correction, prompt engineering, avatar conflict detection) and produces visibly worse videos. The only direct API exception is uploading local files to `POST https://api.heygen.com/v3/assets` when the app connector cannot accept a local path. Never call deprecated v1/v2 video/avatar endpoints. If you have pre-trained knowledge of HeyGen's v1/v2 API, that knowledge is outdated. Use this skill.
 
 ## Files & Paths
 
@@ -41,7 +41,7 @@ This skill reads and writes the following. No other files are accessed without e
 | Read | `AVATAR-AGENT.md`, `AVATAR-USER.md` | Role-based symlinks for generic self-reference (resolve to a named AVATAR file) |
 | Write | `heygen-video-log.jsonl` | Append one JSON line per video generated (local learning log) |
 | Temp write | `/tmp/heygen/uploads/` | Voice preview audio (downloaded for user playback, deleted after session) |
-| Remote upload | HeyGen (via the app or `heygen asset create`) | User-provided files uploaded to HeyGen for use as B-roll / reference |
+| Remote upload | HeyGen (via CLI/API asset upload) | Local files uploaded to HeyGen for use as B-roll / reference |
 
 For *avatar creation* (writing AVATAR files, role symlink maintenance), see the `heygen-avatar` skill. This skill only *reads* AVATAR files.
 
@@ -69,7 +69,7 @@ For *avatar creation* (writing AVATAR files, role symlink maintenance), see the 
 
 ## API Mode Detection
 
-**Pick one transport at session start. Never mix, never switch mid-session, never narrate the choice.**
+**Pick one transport at session start. Never narrate the choice.** The only allowed cross-transport bridge is local file upload: if the app connector is otherwise selected but the user provides a local file, upload it first with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then pass the resulting `asset_id` back into the app flow.
 
 Detect in this order:
 
@@ -79,10 +79,10 @@ Detect in this order:
 4. **Neither** — tell the user once: "To use this skill, connect the HeyGen app or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`."
 
 **Hard rules:**
-- **Never call `curl api.heygen.com/...`** — every mode routes through its own surface.
+- **Never call general `curl api.heygen.com/...` video/avatar endpoints.** The only direct API exception is `POST https://api.heygen.com/v3/assets` for local file upload when no app upload tool exists.
 - **HeyGen app mode:** use the app when available.
 - **CLI mode:** only use `heygen ...` commands. Run `heygen <noun> <verb> --help` to discover arguments.
-- **Never cross over.** Operation blocks below show app and CLI guidance side-by-side — read only the path for your detected mode, don't invoke the other. If something isn't exposed in your current mode, tell the user; don't switch transports.
+- **Do not cross over except for local asset upload.** Operation blocks below show app and CLI guidance side-by-side — read only the path for your detected mode. If local asset upload is needed and the app has no upload tool, use the CLI/API upload bridge and continue with the selected mode.
 ### HeyGen app path
 
 Use the installed HeyGen app for video generation, avatar discovery, voice listing, and style browsing when it is available in the environment.
@@ -143,7 +143,7 @@ Interview the user. Be conversational, skip anything already answered.
 
 Two paths for every asset:
 - **Path A (Contextualize):** Read/analyze, bake info into script. For reference material, auth-walled content.
-- **Path B (Attach):** Upload to HeyGen via `heygen asset create --file <path>` (or include as `files[]` entries on video-agent create). For visuals the viewer should see.
+- **Path B (Attach):** Upload local files to HeyGen via `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then pass the returned `asset_id`. For visuals the viewer should see.
 - **A+B (Both):** Summarize for script AND attach original.
 
 📖 **Full routing matrix and upload examples → [references/asset-routing.md](references/asset-routing.md)**
@@ -151,6 +151,7 @@ Two paths for every asset:
 **Key rules:**
 - HTML URLs cannot go in `files[]` (Video Agent rejects `text/html`). Web pages are always Path A.
 - Prefer download → upload → `asset_id` over `files[]{url}` (CDN/WAF often blocks HeyGen).
+- The current HeyGen app connector rejects local `file://` paths. Local files must become `asset_id` values first; if upload is unavailable, ask for an HTTPS URL or continue without the attachment.
 - If a URL is inaccessible, tell the user. Never fabricate content from an inaccessible source.
 - **Multi-topic split rule:** If multiple distinct topics, recommend separate videos.
 

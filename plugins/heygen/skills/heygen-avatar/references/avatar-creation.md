@@ -32,14 +32,16 @@ change). Only use Mode 1 (new character) for genuinely new identities.
 
 ### Photo avatar (from user's photo)
 
-**App:** use the HeyGen app flow for photo avatar creation.
+**App:** use the HeyGen app flow for photo avatar creation only when the photo is a hosted HTTPS URL or an existing HeyGen `asset_id`. The app connector does not upload local paths.
+
+**Local file:** first run `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then use the returned `asset_id`.
 
 **CLI:**
 ```bash
 heygen avatar create -d '{
   "type": "photo",
   "name": "My Avatar",
-  "file": {"type": "url", "url": "https://example.com/headshot.jpg"},
+  "file": {"type": "asset_id", "asset_id": "<uploaded_asset_id>"},
   "avatar_group_id": "<optional>"
 }'
 ```
@@ -72,7 +74,7 @@ Optional: up to 3 `reference_images` to anchor the generated appearance.
 
 ### Video avatar / digital twin (from a short recording)
 
-**App:** use the HeyGen app flow for digital-twin creation from video.
+**App:** use the HeyGen app flow for digital-twin creation from video only when the video is a hosted HTTPS URL or an existing HeyGen `asset_id`. Upload local recordings to `asset_id` first.
 
 **CLI:**
 ```bash
@@ -88,7 +90,7 @@ heygen avatar create -d '{
 
 ## File Input Formats
 
-`file` accepts three forms:
+`file` accepts these app-safe forms:
 
 ```jsonc
 // Public URL (no auth, no paywall)
@@ -96,10 +98,9 @@ heygen avatar create -d '{
 
 // Pre-uploaded asset (from `heygen asset create --file <path>`)
 { "type": "asset_id", "asset_id": "<id>" }
-
-// Inline base64
-{ "type": "base64", "data": "<base64>", "content_type": "image/png" }
 ```
+
+Do not pass local paths or `file://` URLs to the app connector. The broader API/CLI may support additional encodings, but local files should be converted to `asset_id` first for this plugin flow.
 
 For when each is appropriate, see
 [`references/asset-routing.md`](asset-routing.md).
