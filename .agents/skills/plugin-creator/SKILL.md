@@ -197,6 +197,21 @@ python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-
   --allow-missing-openai-yaml
 ```
 
+When the readiness check reports issues, translate the output into a short user-facing checklist of
+remaining work. Do not just paste raw checker output unless the user asks for it. Keep the checklist
+actionable and grouped by severity:
+
+```markdown
+Remaining before this plugin is ready:
+- [ ] Replace placeholder manifest fields: version, description, author, homepage, repository.
+- [ ] Add real logo and composer icon assets under `assets/`.
+- [ ] Rewrite `interface.defaultPrompt` with 1-3 real starter prompts.
+- [ ] Add the plugin to `.agents/plugins/marketplace.json`.
+
+Worth reviewing:
+- [ ] Add `agents/openai.yaml` metadata for each skill, or explicitly accept the warning.
+```
+
 ## Required behavior
 
 - Outer folder name and `plugin.json` `"name"` are always the same normalized plugin name.
@@ -206,6 +221,8 @@ python3 .agents/skills/plugin-creator/scripts/check_plugin_readiness.py <plugin-
   `create_basic_plugin.py`.
 - Do not call a plugin finished until `scripts/check_plugin_readiness.py` has no `ERROR` findings, or
   until the user explicitly accepts the remaining errors.
+- When readiness issues remain, provide the user a concise checklist of the remaining items to finish,
+  grouped into blocking errors and review-worthy warnings.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
 - Preserve any existing marketplace `interface.displayName`.
 - When generating marketplace entries, always write `policy.installation`, `policy.authentication`, and `category` even if their values are defaults.
