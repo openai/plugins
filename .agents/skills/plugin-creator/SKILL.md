@@ -212,6 +212,24 @@ Worth reviewing:
 - [ ] Add `agents/openai.yaml` metadata for each skill, or explicitly accept the warning.
 ```
 
+After showing the checklist, offer to help complete it interactively. If the user agrees, work
+through the checklist in small batches and rerun the readiness check after each pass.
+
+Recommended order:
+
+1. Identity and manifest copy: display name, description, author, homepage, repository, license,
+   keywords, category, and capabilities.
+2. Interface metadata: brand color, starter prompts, website/privacy/terms URLs, and developer name.
+3. Assets: logo, composer icon, and screenshots. Ask the user to provide assets or permission to
+   create placeholders only when placeholders are acceptable for the current test.
+4. Integration files: skills, hooks, `.app.json`, `.mcp.json`, and `agents/openai.yaml` metadata.
+5. Marketplace: add or update the selected marketplace entry when the plugin should be visible in
+   Codex.
+
+Ask for one batch at a time instead of asking every checklist question at once. Use reasonable
+defaults only for low-risk implementation details. Do not invent publisher identity, legal URLs,
+auth policy, marketplace product gating, or user-provided assets without confirmation.
+
 ## Required behavior
 
 - Outer folder name and `plugin.json` `"name"` are always the same normalized plugin name.
@@ -223,6 +241,8 @@ Worth reviewing:
   until the user explicitly accepts the remaining errors.
 - When readiness issues remain, provide the user a concise checklist of the remaining items to finish,
   grouped into blocking errors and review-worthy warnings.
+- Offer to walk through the remaining checklist interactively; if the user agrees, ask for one batch
+  of values at a time, apply the answers, and rerun the readiness check after each pass.
 - If creating files inside an existing plugin path, use `--force` only when overwrite is intentional.
 - Preserve any existing marketplace `interface.displayName`.
 - When generating marketplace entries, always write `policy.installation`, `policy.authentication`, and `category` even if their values are defaults.
