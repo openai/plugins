@@ -36,6 +36,7 @@
 | Method                              | Returns                     |
 | ----------------------------------- | --------------------------- |
 | `createFrame()`                     | `FrameNode`                 |
+| `createAutoLayout(direction?)`      | `FrameNode`                 |
 | `createComponent()`                 | `ComponentNode`             |
 | `createComponentFromNode(node)`     | `ComponentNode`             |
 | `createRectangle()`                 | `RectangleNode`             |
@@ -435,3 +436,30 @@ ExportSettingsConstraints
 User                    ActiveUser              BaseUser                Image
 Video                   VersionHistoryResult    FindAllCriteria
 ```
+
+---
+
+## Additional APIs (available via use_figma)
+
+### Node Methods
+
+| Method / Property             | Returns / Type    | Description |
+| ----------------------------- | ----------------- | ----------- |
+| `node.query(selector)`        | `QueryResult`     | CSS-like selector search within subtree |
+| `node.matches(selector)`      | `boolean`         | Test if node matches a selector |
+| `node.set(props)`             | `this`            | Set multiple properties at once, chainable |
+| `await node.screenshot(opts?)` | `Promise<void>`  | Capture PNG inline in tool response |
+| `node.placeholder`            | `boolean`         | Show/hide shimmer overlay |
+
+### figma.io Namespace
+
+| Method                        | Returns           | Description |
+| ----------------------------- | ----------------- | ----------- |
+| `figma.io.write(path, data)`  | `void`            | Write image/data to be returned in tool response |
+
+### Types
+
+| Type                | Description |
+| ------------------- | ----------- |
+| `QueryResult`       | Iterable result from `node.query()` with `.first()`, `.last()`, `.each()`, `.map()`, `.filter()`, `.values()`, `.set()`, `.query()` |
+| `ScreenshotOptions` | `{ scale?: number, contentsOnly?: boolean }` |

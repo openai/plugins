@@ -31,14 +31,14 @@ Maps one Figma node to one code component.
 | `source` | string | Yes | Path in the codebase (e.g. `src/components/Button.tsx`) or a URL. |
 | `componentName` | string | Yes | The code component name (e.g. `Button`). |
 | `label` | enum | Yes | Framework label — see Section 4 for valid values. |
-| `template` | string | Optional | Executable JS template code. Providing this creates a **figmadoc** (template) mapping instead of a simple **component_browser** mapping. Requires the `pixie_mcp_enable_writing_code_connect_templates` feature flag. |
+| `template` | string | Optional | Executable JS template code. Providing this creates a **template** mapping instead of a simple **component-path** mapping. Gated behind a server-side feature flag — falls back to a simple mapping when disabled. |
 | `templateDataJson` | string | Optional | JSON string with optional fields: `isParserless`, `imports`, `nestable`, `props`. |
 
 **Two mapping tiers:**
 
-1. **Simple mapping (component_browser):** Only `source`, `componentName`, and `label` provided. Associates the Figma component with a code path + name. Dev Mode generates a basic JSX snippet from Figma prop names. This is the default — use it first.
+1. **Simple mapping (component-path):** Only `source`, `componentName`, and `label` provided. Associates the Figma component with a code path + name. Dev Mode generates a basic JSX snippet from Figma prop names. This is the default — use it first.
 
-2. **Template mapping (figmadoc):** `template` is also provided. The template is executed in a sandboxed QuickJS environment and dynamically renders the snippet based on the actual instance's property values. Use this when precise prop-level Code Connect is required by the user.
+2. **Template mapping:** `template` is also provided. The template is executed in a sandboxed QuickJS environment and dynamically renders the snippet based on the actual instance's property values. Use this when precise prop-level Code Connect is required by the user.
 
 **Common error codes:**
 
@@ -109,7 +109,7 @@ Applies multiple Code Connect mappings in one call. Use after `get_code_connect_
 | `componentName` | string | Yes | Code component name. |
 | `source` | string | Yes | Path in the codebase. |
 | `label` | enum | Yes | Framework label. |
-| `template` | string | Optional | JS template code for figmadoc mapping. |
+| `template` | string | Optional | JS template code for template mapping. |
 | `templateDataJson` | string | Optional | JSON template metadata. |
 
 **Behavior:**
@@ -256,5 +256,5 @@ The response should include `componentName`, `source`, `label`, and a non-empty 
 
 - **Published components only:** `add_code_connect_map` requires the component to be published to a library. If the file is not yet published, the mapping will fail with `CODE_CONNECT_NO_LIBRARY_FOUND`.
 - **One mapping per label per node:** A node can have multiple mappings (one per framework label), but only one per label. Attempting to add a second React mapping to the same node returns `CODE_CONNECT_MAPPING_ALREADY_EXISTS`.
-- **Template mappings are gated:** The `template` parameter requires the `pixie_mcp_enable_writing_code_connect_templates` feature flag. Use simple mappings unless the user explicitly requests template-level Code Connect.
+- **Template mappings are gated:** The `template` parameter is gated behind a server-side feature flag and may not be available in every environment. Use simple mappings unless the user explicitly requests template-level Code Connect.
 - **Start simple, escalate:** Always begin with simple mappings (`source` + `componentName` + `label`). Add `template` only if the user needs precise prop-level snippet rendering.

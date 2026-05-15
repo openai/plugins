@@ -12,6 +12,7 @@
 - Component Properties: addComponentProperty API
 - Linking Properties to Child Nodes (Required)
 - INSTANCE_SWAP: Avoiding Variant Explosion
+- Slots: createSlot and SLOT Properties
 - Discovering Existing Conventions in the File
 - Importing Components by Key
 - Working with Instances (finding variants, setProperties, text overrides, detachInstance)
@@ -129,6 +130,87 @@ iconInstance.componentPropertyReferences = {
 - `characters` — TEXT property on a TextNode
 - `visible` — BOOLEAN property (any node)
 - `mainComponent` — INSTANCE_SWAP property on an InstanceNode
+
+## Slots: createSlot and SLOT Properties
+
+Slots are designated drop zones inside a component where designers can place arbitrary content in instances — more flexible than INSTANCE_SWAP (which only swaps component instances). They appear as `SlotNode` (type `'SLOT'`) in the Plugin API and as a `SLOT`-typed component property.
+
+### Option 1 — `component.createSlot()` (preferred)
+
+Creates a `SlotNode` as a direct child of the component and automatically creates a linked `SLOT` component property. No manual wiring needed.
+
+```javascript
+const card = figma.createComponent();
+card.name = "Card";
+card.layoutMode = "VERTICAL";
+card.primaryAxisSizingMode = "AUTO";
+card.counterAxisSizingMode = "FIXED";
+card.resize(320, 100);
+
+// Creates a SlotNode and auto-wires a SLOT component property
+const contentSlot = card.createSlot();
+contentSlot.name = "Content";
+contentSlot.layoutMode = "VERTICAL"; // GRID is NOT allowed on slots
+contentSlot.resize(320, 200);
+
+// The auto-created property key is accessible via componentPropertyReferences
+const slotPropKey = contentSlot.componentPropertyReferences["slotContentId"];
+// e.g. "Content#7:1"
+```
+
+Multiple slots are supported — each call to `createSlot()` produces a separate slot and property:
+
+```javascript
+const contentSlot = card.createSlot();
+contentSlot.name = "Content";
+
+const footerSlot = card.createSlot();
+footerSlot.name = "Footer";
+
+// Component now has two SLOT properties automatically
+return Object.keys(card.componentPropertyDefinitions);
+// → ["Content#7:1", "Footer#7:2"]
+```
+
+### Option 2 — Manual binding via addComponentProperty
+
+Link a regular frame to a `SLOT` property with `componentPropertyReferences`:
+
+```javascript
+const slotPropKey = component.addComponentProperty("Content", "SLOT", "");
+const slotFrame = figma.createFrame();
+component.appendChild(slotFrame);
+// slotFrame must not have GRID layoutMode, and must be a direct child (not nested inside another slot)
+slotFrame.componentPropertyReferences = { slotContentId: slotPropKey };
+```
+
+### Populating slots in instances
+
+In a component instance, slot nodes are accessible by `findOne()`. Build content and append it to the slot like any other node. In narrow cases the original node handle can be invalidated by the append, so if a post-append edit throws `"Internal Figma Error: Parent not found"`, re-find the sublayer through the slot's `children` and edit through the fresh handle.
+
+```javascript
+const instance = card.createInstance();
+figma.currentPage.appendChild(instance);
+
+const btn = figma.createFrame();
+btn.layoutMode = "HORIZONTAL";
+btn.cornerRadius = 8;
+
+const contentSlot = instance.findOne(n => n.type === "SLOT" && n.name === "Content");
+contentSlot.appendChild(btn);
+
+// If a post-append edit throws "Parent not found", re-find via the slot:
+// const appended = contentSlot.children[contentSlot.children.length - 1];
+// appended.someProperty = ...;
+```
+
+### Slot restrictions
+
+- `GRID` layoutMode is not allowed on slot nodes
+- Widgets, Stickies, and ComponentNodes cannot be appended directly to a slot
+- Frames nested inside another slot cannot themselves be bound to a slot property
+- `instance.setProperties({ [slotPropKey]: ... })` throws — slot content is set by appending children, not via `setProperties`
+- `slotNode.resetSlot()` (in an instance) reverts the slot to its default empty state
 
 ## INSTANCE_SWAP: Avoiding Variant Explosion
 

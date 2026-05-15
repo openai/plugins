@@ -447,7 +447,7 @@ return { created, count: created.length };
 | Effect blur radius | `["EFFECT_FLOAT"]` | FLOAT |
 | Opacity | `["OPACITY"]` | FLOAT |
 | Font family | `["FONT_FAMILY"]` | STRING |
-| Font style (e.g. "Semi Bold") | `["FONT_STYLE"]` | STRING |
+| Font style (font-specific name, e.g. `"Regular"` — varies per font) | `["FONT_STYLE"]` | STRING |
 | Boolean flags | *(scopes not supported)* | BOOLEAN |
 
 **Never use `ALL_SCOPES`** on any variable. It pollutes every picker with irrelevant tokens. The Simple Design System (SDS), the gold standard, uses targeted scopes on every variable.

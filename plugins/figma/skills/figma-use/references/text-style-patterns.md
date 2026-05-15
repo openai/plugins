@@ -73,7 +73,7 @@ function createTextStyleFull(name, fontName, fontSize, lineHeight, letterSpacing
 
 ## Discovering Available Font Styles
 
-Font style names vary per provider and per file (`"SemiBold"` vs `"Semi Bold"`). Use `figma.listAvailableFontsAsync()` to discover exact style strings — never guess or probe with try/catch:
+Font style names vary per provider and per file.  Use `figma.listAvailableFontsAsync()` to discover exact style strings — never guess or probe with try/catch:
 
 ```javascript
 /**
@@ -88,46 +88,11 @@ async function getAvailableFontStyles(family) {
     .filter(f => f.fontName.family === family)
     .map(f => f.fontName.style);
 }
-
-/**
- * Loads a font, falling back to an alternative style if the requested one is unavailable.
- *
- * @param {string} family - Font family name
- * @param {string} preferredStyle - Desired style, e.g. "Semi Bold"
- * @param {string} [fallbackStyle="Regular"] - Fallback if preferred is unavailable
- * @returns {Promise<FontName>} - The FontName that was actually loaded
- */
-async function loadFontWithFallback(family, preferredStyle, fallbackStyle = "Regular") {
-  const allFonts = await figma.listAvailableFontsAsync();
-  const familyFonts = allFonts.filter(f => f.fontName.family === family);
-
-  const match = familyFonts.find(f => f.fontName.style === preferredStyle);
-  if (match) {
-    await figma.loadFontAsync(match.fontName);
-    return match.fontName;
-  }
-
-  const fallback = familyFonts.find(f => f.fontName.style === fallbackStyle);
-  if (fallback) {
-    await figma.loadFontAsync(fallback.fontName);
-    return fallback.fontName;
-  }
-
-  // Last resort: load the first available style in the family
-  if (familyFonts.length > 0) {
-    await figma.loadFontAsync(familyFonts[0].fontName);
-    return familyFonts[0].fontName;
-  }
-
-  throw new Error(`Font family "${family}" not available in this file`);
-}
 ```
 
 ## Creating a Type Ramp (Multi-Step)
 
 Handles font loading, deduplication, and idempotency. Each entry: `[name, fontFamily, fontStyle, fontSize_px, lineHeight, cssVar]`.
-
-**NOTE:** `setBoundVariable` on `TextStyle` is not supported in `use_figma`. This function sets raw values. To bind variables, do it interactively in Figma after creation.
 
 ```javascript
 /**

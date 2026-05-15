@@ -152,12 +152,31 @@ Maintain a state ledger tracking:
 
 ---
 
-## 5. search_design_system — Reuse Decision Matrix
+## 5. Library Discovery and search_design_system — Reuse Decision Matrix
 
 Search FIRST in Phase 0, then again immediately before each component creation.
 
+**Start with `get_libraries`** to understand what libraries are available before searching blindly:
+
 ```
+// Discover all libraries accessible to the file
+get_libraries({ fileKey })
+// Returns:
+//   libraries_added_to_file: [{ name, libraryKey, description, source }, ...]
+//   libraries_available_to_add: [{ name, libraryKey, description, source }, ...]
+//   libraries_available_to_add_next_offset: number | null
+```
+
+Use the returned `libraryKey` values to scope searches to specific libraries via `includeLibraryKeys`. This avoids noisy results when many libraries are available.
+
+If `libraries_available_to_add_next_offset` is non-null, more org libraries are available — call `get_libraries` again with `offset` set to that value. Org libraries page in batches of 20; community UI kits only appear on the first page.
+
+```
+// Search across all libraries (default)
 search_design_system({ query, fileKey, includeComponents: true, includeVariables: true, includeStyles: true })
+
+// Search within a specific library only
+search_design_system({ query, fileKey, includeLibraryKeys: ["lk-abc123..."], includeComponents: true })
 ```
 
 **Reuse if** all of these are true:
