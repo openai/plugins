@@ -57,6 +57,8 @@ return { nodeId: rect.id }
 
 ## Create a Text Node
 
+Canonical text-edit recipe: load font → `await` → mutate → return affected IDs. Inter is preloaded in most environments; for any other family/style you would have hit `Cannot write to node with unloaded font "<family> <style>"` without the load step — the recipe is identical regardless of font.
+
 ```js
 // Find clear space to the right of existing content
 const page = figma.currentPage
@@ -65,6 +67,7 @@ for (const child of page.children) {
   maxX = Math.max(maxX, child.x + child.width)
 }
 
+// Load font BEFORE any text mutation — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Regular" })
 const text = figma.createText()
 text.characters = "Hello World"
@@ -74,7 +77,7 @@ text.textAutoResize = 'WIDTH_AND_HEIGHT'
 text.x = maxX + 100
 text.y = 0
 figma.currentPage.appendChild(text)
-return { nodeId: text.id }
+return { createdNodeIds: [text.id] }
 ```
 
 ## Create Frame with Auto-Layout

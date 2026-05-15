@@ -457,7 +457,7 @@ If the parent is a section, resize it afterward to encompass the new content (se
 
 - **Always wrap code in an async IIFE:** `(async () => { ... })();`
 - **Always call `figma.closePlugin()`** at the end of every code path.
-- **Load fonts** before setting `characters`, `fontSize`, `fontName`, or any other property that affects text layout; not required for `fills` (color) only.
+- **Follow the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids)** for `characters`, `fontSize`, `fontName`, or any property that affects layout; not required for `fills` (color) only.
 - **Check `hasMissingFont`** when editing existing text; do not assume fonts are available.
 - **Use node IDs** from the user message, not `figma.currentPage.selection`.
 - **Use the FigJam palette** with `hex/255` for text color.

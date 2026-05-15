@@ -5,9 +5,28 @@
 ## Contents
 
 - Position after appendChild (critical)
+- Canonical text-edit recipe (font load → await → mutate → return IDs)
 - SLIDE_GRID and SLIDE_ROW are opaque nodes
 - Validation without get_metadata
 - Building multi-element slides incrementally
+
+
+## Canonical text-edit recipe (font load → await → mutate → return IDs)
+
+The same canonical recipe used in Design files applies inside slides — see [figma-use → gotchas.md → Canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids) for the full WRONG/CORRECT pair. Two slide-specific reminders:
+
+1. **Inter preload doesn't cover deck-theme fonts.** Decks frequently switch the theme font to families like `Roboto Mono`, `Merriweather`, or a brand font — those still need an explicit `loadFontAsync` for every (family, style) you mutate.
+2. **When restyling existing slide text, load the node's *current* font, not a hardcoded default.** Slide theme tokens push fonts onto nodes that may differ from what you'd guess. Use `getStyledTextSegments(['fontName'])` and `loadFontAsync` each segment's font before any mutation.
+
+```js
+// Restyle existing slide text without assuming the font
+await Promise.all(
+  textNode.getStyledTextSegments(['fontName'])
+    .map(s => figma.loadFontAsync(s.fontName))
+)
+textNode.characters = "Updated"
+return { mutatedNodeIds: [textNode.id] }
+```
 
 
 ## Position after appendChild (critical)

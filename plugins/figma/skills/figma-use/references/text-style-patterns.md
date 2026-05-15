@@ -2,6 +2,8 @@
 
 > Part of the [use_figma skill](../SKILL.md). How to create, apply, and inspect text styles using the Plugin API.
 >
+> Every example here assumes the [canonical text-edit recipe](gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids): load font → `await` → mutate → return affected IDs. Examples use `Inter` because it's available everywhere, but the rule applies identically to any font family/style.
+>
 > For design system context (when to create text styles, how they relate to tokens, `use_figma` limitations), see [wwds-text-styles](working-with-design-systems/wwds-text-styles.md).
 
 ## Contents

@@ -10,6 +10,8 @@ This skill contains FigJam-specific context for the `use_figma` MCP tool. The [f
 
 **Always pass `skillNames: "figma-use-figjam"` when calling `use_figma` for FigJam operations.** This is a logging parameter used to track skill usage — it does not affect execution.
 
+> **FigJam URL is `figma.com/board/...`.** Do NOT call `figma.createPage()` in FigJam — it throws `TypeError: figma.createPage no such property 'createPage' on the figma global object`. `createPage()` is a Design-file API only (`figma.com/design/...`). FigJam files have a single implicit page; organize content with sections instead (see [create-section](references/create-section.md)).
+
 ## Inspecting FigJam Files
 
 **`get_figjam` is the inspection tool for FigJam files.** It returns the full node tree as XML, including IDs of pages, sections, stickies, connectors, and other nodes you need to reference in subsequent `use_figma` calls.
@@ -32,6 +34,10 @@ ToolSearch query="select:use_figma,get_figjam,get_screenshot,get_metadata,create
 ```
 
 Six sequential `ToolSearch` calls is six round trips before any work happens. One batched call is one round trip.
+
+## Text Mutations — Canonical Recipe
+
+Every FigJam text mutation (sticky/shape/label/table cell/connector text, standalone text nodes) follows the same recipe as Design files: load font → `await` → mutate → return affected IDs. Skipping the load throws `Cannot write to node with unloaded font "<family> <style>"`. See [figma-use → gotchas.md → Canonical text-edit recipe](../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids). FigJam-specific note: sublayer defaults vary (sticky → `Inter Medium`, shape → `Inter Medium`, connector → invalid until set), so always load from `node.text.fontName` rather than hardcoding `{ family: 'Inter', style: 'Regular' }`.
 
 ## Adding Images to a FigJam Board
 

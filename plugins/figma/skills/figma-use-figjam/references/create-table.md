@@ -335,7 +335,7 @@ figma.closePlugin()
 - **Always wrap code in an async IIFE:** `(async () => { ... })();`
 - **Always call `figma.closePlugin()`** at the end of every code path.
 - **Initial table content:** Prefer empty tables unless the user provides data; then include all of it (no placeholders) and do not delete source data when converting. Use a dark header row and default fill elsewhere.
-- **Load fonts** before setting `cell.text.characters` or `cell.text.fills` for any cell (use the first cell’s `text.fontName` or each cell’s as needed).
+- **Follow the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids)** for `cell.text.characters` and `cell.text.fills` — load `cell.text.fontName` (use the first cell’s, or each cell’s if they differ).
 - **Set fill and text color together** when styling cells — use the color presets so light fills get dark text and dark fills get white text.
 - **Use `hex/255` notation** for palette colors (e.g. `h(0xC2, 0xE5, 0xFF)`) so FigJam treats them as palette colors, not custom.
 - **Table API is FigJam-only** — `figma.createTable()` is not available in Figma Design or other editor types.

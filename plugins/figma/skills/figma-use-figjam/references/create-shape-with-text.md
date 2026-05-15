@@ -346,7 +346,7 @@ figma.closePlugin()
 
 - **Always wrap code in an async IIFE:** `(async () => { ... })();`
 - **Always call `figma.closePlugin()`** at the end of every code path.
-- **Load fonts** before setting `shape.text.characters`. ShapeWithText uses **"Inter Medium"** by default — always use `await figma.loadFontAsync(shape.text.fontName)`, never hardcode `{ family: 'Inter', style: 'Regular' }`.
+- **Follow the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids)** for `shape.text.characters` — always load `shape.text.fontName` (ShapeWithText defaults to `Inter Medium`, not Regular); never hardcode the family/style.
 - **Connector text needs explicit font setup.** Unlike shapes, a ConnectorNode's `text.fontName` is invalid by default. To label a connector, first set `connector.text.fontName = { family: 'Inter', style: 'Medium' }` (font must already be loaded), then set `connector.text.characters`. Never call `figma.loadFontAsync(connector.text.fontName)` — it will fail.
 - **Put ALL text content in `shape.text.characters`** — do not split into a short label and a separate description/metadata field. The shape should display the full text the user expects to see, and `fitShapeToText` will size it accordingly.
 - **Never hardcode shape sizes. Always use `fitShapeToText`** to dynamically size shapes based on their text content. Create a measurer TextNode with `textAutoResize: 'HEIGHT'`, use it to measure text, scale shapes until text fits, then call `measurer.remove()`. This prevents text clipping.

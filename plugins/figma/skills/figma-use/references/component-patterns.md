@@ -107,7 +107,12 @@ const iconSlotKey = comp.addComponentProperty('Icon', 'INSTANCE_SWAP', iconCompo
 
 A property that is added but not linked to a child node does **nothing**. You must set `componentPropertyReferences` on the child:
 
+Follows the [canonical text-edit recipe](gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids) — load the font for every (family, style) you'll mutate (here `Inter Regular`; same rule for every other font) before any `characters`/`fontName`/`fontSize` write.
+
 ```javascript
+// Load required font BEFORE any text mutation
+await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+
 // TEXT property → link to a text node's characters
 const labelKey = comp.addComponentProperty('Label', 'TEXT', 'Button');
 const textNode = figma.createText();

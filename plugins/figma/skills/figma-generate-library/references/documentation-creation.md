@@ -4,6 +4,10 @@
 
 This reference covers Phase 2 of the design system build: the cover page, foundations documentation page (color swatches, type specimens, spacing bars, shadow cards, radius demo), page layout dimensions, and inline component documentation. Every code block is complete `use_figma`-ready JavaScript (helper-function form — meant to be embedded in a larger script that uses `return` to send results back).
 
+> **Every text mutation in this file follows the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids):** load font → `await` → mutate → return affected IDs. Examples use `Inter` because it's available everywhere, but `loadFontAsync` is required for every (family, style) pair you mutate — not just Inter.
+
+> **Design files only.** Every snippet here (including `figma.createPage()`) targets Figma Design files (`figma.com/design/...`). `figma.createPage()` throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`).
+
 ---
 
 ## 1. Cover Page

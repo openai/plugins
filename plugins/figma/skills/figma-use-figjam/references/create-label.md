@@ -267,7 +267,7 @@ return pairs.map(({ label, sticky }) => ({ labelId: label.id, stickyId: sticky.i
 
 - **Always wrap code in an async IIFE:** `(async () => { ... })();`
 - **Always call `figma.closePlugin()`** at the end of every code path.
-- **Load fonts** before setting `label.text.characters`. Always use `await figma.loadFontAsync(label.text.fontName)`, never hardcode the font name.
+- **Follow the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids)** for `label.text.characters` — always load `label.text.fontName` dynamically; never hardcode the family/style.
 - **Use fixed size — do NOT use `fitShapeToText`.** Labels are compact by design; their size is fixed at 48×48 (single char) or 64×64 (two chars).
 - **Width must equal height** so the ELLIPSE renders as a perfect circle.
 - **Set `fontSize` explicitly** after loading the font to ensure the character is legible in the small circle.

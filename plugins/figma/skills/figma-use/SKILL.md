@@ -28,11 +28,12 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 5.  **Work incrementally in small steps.** Break large operations into multiple `use_figma` calls. Validate after each step. This is the single most important practice for avoiding bugs.
 6.  Colors are **0–1 range** (not 0–255): `{r: 1, g: 0, b: 0}` = red
 7.  Fills/strokes are **read-only arrays** — clone, modify, reassign
-8.  **Font loading is required before ANY operation on nodes that contain unloaded fonts** — not just text-setting operations. This includes `appendChild`, `insertChild`, `setBoundVariable`, `setExplicitVariableModeForCollection`, `setValueForMode`, and even `findAll` callbacks. If the document has existing text nodes, preload all their fonts at the start of the script. Use `await figma.listAvailableFontsAsync()` to discover available fonts and styles, then `await figma.loadFontAsync({family, style})` to load each one. See [Gotchas](references/gotchas.md) for the full preload pattern.
+8.  **Every text edit follows the canonical recipe: load font → `await` → mutate → return affected node IDs.** Skipping the load throws `Cannot write to node with unloaded font "<family> <style>"`. The rule covers more than `characters` — it applies to any operation on nodes with unloaded fonts (`appendChild`, `insertChild`, `setBoundVariable`, `setExplicitVariableModeForCollection`, `setValueForMode`, `findAll` callbacks touching text). When mutating existing text, load the node's *current* fonts via `getStyledTextSegments(['fontName'])`, not a hardcoded default. Inter is preloaded in most environments so other families surface this bug more often — the recipe is the same for every font. Use `await figma.listAvailableFontsAsync()` first if the style string is unverified. See [Canonical text-edit recipe](references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids).
 9.  **Pages load incrementally** — use `await figma.setCurrentPageAsync(page)` to switch pages and load their content. The sync setter `figma.currentPage = page` does **NOT** work and will throw (see Page Rules below)
 10. `setBoundVariableForPaint` returns a **NEW** paint — must capture and reassign
 11. `createVariable` accepts collection **object or ID string** (object preferred)
 12. **`layoutSizingHorizontal/Vertical = 'FILL'` MUST be set AFTER `parent.appendChild(child)`** — setting before append throws. Same applies to `'HUG'` on non-auto-layout nodes.
+12a. **Use auto-layout for containers that hold related children.** When children have a structural relationship — stacked, side-by-side, aligned, gapped, hugged — wrap them in `figma.createAutoLayout()`, not `figma.createFrame()` with absolute `x`/`y`. Absolute coordinates govern where a container sits on the canvas; auto-layout governs how its children relate inside it. Skipping the container leaves no protection against text reflow, content changes, or overlap.
 13. **Position new top-level nodes away from (0,0).** Nodes appended directly to the page default to (0,0). Scan `figma.currentPage.children` to find a clear position (e.g., to the right of the rightmost node). This only applies to page-level nodes — nodes nested inside other frames or auto-layout containers are positioned by their parent. See [Gotchas](references/gotchas.md).
 14. **On `use_figma` error, STOP. Do NOT immediately retry.** Failed scripts are **atomic** — if a script errors, it is not executed at all and no changes are made to the file. Read the error message carefully, fix the script, then retry. See [Error Recovery](#6-error-recovery--self-correction).
 15. **MUST `return` ALL created/mutated node IDs.** Whenever a script creates new nodes or mutates existing ones on the canvas, collect every affected node ID and return them in a structured object (e.g. `return { createdNodeIds: [...], mutatedNodeIds: [...] }`). This is essential for subsequent calls to reference, validate, or clean up those nodes.
@@ -82,6 +83,8 @@ The agent sees **ONLY** the value you `return`. Everything else is invisible.
 
 `use_figma` works in **design mode** (editorType `"figma"`, the default). FigJam (`"figjam"`) and Slides (`"slides"`) have different sets of available node types — most design nodes are blocked in FigJam, and FigJam-only nodes are blocked in Slides.
 
+**Tell the editor from the URL:** Design = `figma.com/design/...`, FigJam = `figma.com/board/...`, Slides = `figma.com/slides/...`. Confirm before assuming an API is available.
+
 Available in design mode: Rectangle, Frame, Component, Text, Ellipse, Star, Line, Vector, Polygon, BooleanOperation, Slice, Page, Section, TextPath.
 
 **Blocked** in design mode: Sticky, Connector, ShapeWithText, CodeBlock, Slide, SlideRow, SlideGrid, InteractiveSlideElement, Webpage.
@@ -89,6 +92,8 @@ Available in design mode: Rectangle, Frame, Component, Text, Ellipse, Star, Line
 Available in Slides mode: Rectangle, Frame, Component, Text, Ellipse, Star, Line, Vector, Polygon, BooleanOperation, Slice, Section, TextPath, Slide, SlideRow, SlideGrid, InteractiveSlideElement.
 
 **Blocked** in Slides mode: Sticky, Connector, ShapeWithText, CodeBlock, Webpage, Page.
+
+**Design-only APIs (not just node types):** `figma.createPage()` is available only in Design files (`figma.com/design/...`). In both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`) it throws `TypeError: figma.createPage no such property 'createPage' on the figma global object`. Do not emit `figma.createPage()` in FigJam or Slides workflows.
 
 > **Slides note:** There is no dedicated read tool for Slides files yet. Use `use_figma` with read-only scripts for inspection (see Section 6 "Inspect first" pattern), and `get_screenshot` / `await node.screenshot()` for visual context. For Slides-specific API guidance, load the [figma-use-slides](../figma-use-slides/SKILL.md) skill.
 
@@ -186,7 +191,7 @@ figma.currentPage.query('RECTANGLE[name=Divider]').set({
 
 ### `figma.createAutoLayout(direction?, props?)` — auto-layout frames
 
-Creates a frame with auto-layout already enabled and both axes hugging content. **Prefer this over `figma.createFrame()` for any container that needs auto-layout.**
+Creates a frame with auto-layout already enabled and both axes hugging content. **This is the default container whenever children have a structural relationship to each other (see Rule 12a).**
 
 ```js
 // BEFORE — manual setup, easy to get ordering wrong
@@ -333,13 +338,14 @@ Before submitting ANY `use_figma` call, verify:
 - [ ] Fills/strokes are reassigned as new arrays (not mutated in place)
 - [ ] Page switches use `await figma.setCurrentPageAsync(page)` (sync setter `figma.currentPage = page` does NOT work)
 - [ ] `layoutSizingVertical/Horizontal = 'FILL'` is set AFTER `parent.appendChild(child)`
-- [ ] `loadFontAsync()` called before any text property changes (use `listAvailableFontsAsync()` to verify font availability if unsure)
+- [ ] Every text mutation follows the [canonical recipe](references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids): `loadFontAsync` → `await` → mutate `characters`/font/size/etc. → return affected node IDs. Works for ANY font family/style, not just Inter (which only happens to be preloaded).
 - [ ] Style names have already been verified via `listAvailableFontsAsync()` — NOT guessed from memory (`"SemiBold"` vs `"Semi Bold"` is a common footgun)
 - [ ] For `FONT_FAMILY`-scoped variables: every value across every relevant mode is loaded before `setBoundVariable("fontFamily", …)`, `setValueForMode`, or `setExplicitVariableModeForCollection`
 - [ ] `lineHeight`/`letterSpacing` use `{unit, value}` format (not bare numbers)
 - [ ] `resize()` is called BEFORE setting sizing modes (resize resets them to FIXED)
 - [ ] For multi-step workflows: IDs from previous calls are passed as string literals (not variables)
 - [ ] New top-level nodes are positioned away from (0,0) to avoid overlapping existing content
+- [ ] Containers with structurally-related children use `figma.createAutoLayout()`, not absolute x/y (see Rule 12a)
 - [ ] ALL created/mutated node IDs are collected and included in the `return` value
 - [ ] Every async call (`loadFontAsync`, `setCurrentPageAsync`, `importComponentByKeyAsync`, etc.) is `await`ed — no fire-and-forget Promises
 
@@ -388,7 +394,7 @@ Load these as needed based on what your task involves:
 
 | Doc | When to load | What it covers |
 |-----|-------------|----------------|
-| [gotchas.md](references/gotchas.md) | Before any `use_figma` | Every known pitfall with WRONG/CORRECT code examples |
+| [gotchas.md](references/gotchas.md) | Before any `use_figma` | Every known pitfall with WRONG/CORRECT code examples — start with the [canonical text-edit recipe](references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids) |
 | [common-patterns.md](references/common-patterns.md) | Need working code examples | Script scaffolds: shapes, text, auto-layout, variables, components, multi-step workflows |
 | [plugin-api-patterns.md](references/plugin-api-patterns.md) | Creating/editing nodes | Fills, strokes, Auto Layout, effects, grouping, cloning, styles |
 | [api-reference.md](references/api-reference.md) | Need exact API surface | Node creation, variables API, core properties, what works and what doesn't |

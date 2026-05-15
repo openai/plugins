@@ -9,7 +9,7 @@
 - Page context and plugin lifecycle pitfalls
 - Auto Layout and sizing order pitfalls (including HUG/FILL interactions)
 - Variant layout and geometry pitfalls
-- Font loading and text/typography pitfalls
+- Canonical text-edit recipe + font loading and text/typography pitfalls
 - Variable scopes and mode pitfalls
 - Node cleanup and empty-fill pitfalls
 - Type-specific method calls without node type guards
@@ -278,6 +278,36 @@ style.letterSpacing = { value: 5, unit: "PERCENT" }    // percent-based
 ```
 
 This applies to both `TextStyle` and `TextNode` properties. The same rule applies inside `use_figma`, interactive plugins, and any other plugin API context.
+
+## Canonical text-edit recipe (font load → await → mutate → return IDs)
+
+Writing to any text property on a node whose font is not yet loaded throws `Cannot write to node with unloaded font "<family> <style>"`. The fix is always the same four-step recipe — use it verbatim every time you touch text:
+
+```js
+// WRONG — font not loaded; throws Cannot write to node with unloaded font "Inter Regular"
+const node = figma.createText()
+node.characters = "Hello"
+
+// CORRECT — load font, await, mutate, return affected IDs
+await figma.loadFontAsync({ family: "Inter", style: "Regular" })  // any font, not just Inter — see note
+const node = figma.createText()
+node.characters = "Hello"
+return { createdNodeIds: [node.id] }
+```
+
+**This applies to every font, not just Inter.** Inter is preloaded in most environments so the missing-`loadFontAsync` bug often only surfaces with other families (`Roboto Mono`, `Merriweather`, `Figma Hand`, library fonts, etc.). Examples in these docs use `Inter` because it's available everywhere, but the recipe is identical for any family/style pair.
+
+**The same recipe also applies when mutating existing text** — the font already on the node, not a hardcoded default, must be loaded:
+
+```js
+// CORRECT — load the node's own current font(s), then mutate
+const segments = textNode.getStyledTextSegments(['fontName'])
+await Promise.all(segments.map(s => figma.loadFontAsync(s.fontName)))
+textNode.characters = "Updated"
+return { mutatedNodeIds: [textNode.id] }
+```
+
+Font loading is also required for **any** operation on nodes that contain unloaded fonts — `appendChild`, `insertChild`, `setBoundVariable`, `setExplicitVariableModeForCollection`, `setValueForMode`, and even `findAll` callbacks that touch text properties. If the document has existing text nodes you'll traverse, preload their fonts at the start of the script.
 
 ## Font style names are file-dependent — use `listAvailableFontsAsync` to discover them
 

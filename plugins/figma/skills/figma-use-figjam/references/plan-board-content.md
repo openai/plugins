@@ -163,7 +163,10 @@ Sections nest. A board is a section that contains zone sections, which contain c
 
 ### Text
 
+Canonical recipe: load every (family, style) you'll mutate → `await` → mutate → return IDs. Inter is preloaded in most environments but every style still needs an explicit load — and any non-Inter family (e.g. `Merriweather`, `Roboto Mono`, `Figma Hand`) absolutely does. See [figma-use → gotchas.md → Canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids).
+
 ```js
+// Load every (family, style) you'll mutate before any createText / characters write
 await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
 await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 await figma.loadFontAsync({ family: 'Inter', style: 'Semi Bold' });
@@ -200,11 +203,15 @@ Use sparingly. One or two per section max. They work by breaking the visual patt
 **Centering text over shapes:** Always use a frame container. Never position text with manual x/y math.
 
 ```js
+// Load font BEFORE the text.characters write — required for every font, not just Inter
+await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
 const container = figma.createFrame();
 container.resize(56, 56); container.fills = []; container.clipsContent = false;
 const shape = figma.createStar(); shape.resize(56, 56);
 container.appendChild(shape); shape.x = 0; shape.y = 0;
-const text = figma.createText(); text.characters = 'NEW';
+const text = figma.createText();
+text.fontName = { family: 'Inter', style: 'Bold' };
+text.characters = 'NEW';
 container.appendChild(text);
 text.x = (56 - text.width) / 2; text.y = (56 - text.height) / 2;
 ```

@@ -282,6 +282,6 @@ Please see [position-figjam-nodes](position-figjam-nodes.md) - "Positioning Node
 
 - **Always wrap code in an async IIFE:** `(async () => { ... })();`
 - **Always call `figma.closePlugin()`** at the end of every code path.
-- **Load fonts** before setting `sticky.text.characters`.
+- **Follow the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids)** for `sticky.text.characters` — load `sticky.text.fontName` (FigJam sticky default is `Inter Medium`, not Inter Regular), `await`, mutate, return IDs.
 - **Use node IDs** from the user message, not `figma.currentPage.selection`.
 - **Verify changes** by logging before/after values and exporting images when supported.

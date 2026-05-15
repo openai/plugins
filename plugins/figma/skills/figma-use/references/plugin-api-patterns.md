@@ -70,8 +70,10 @@ frame.fills = [{ type: "SOLID", color: { r: 0.98, g: 0.98, b: 0.99 } }];
 
 ### Text
 
+Canonical recipe: load font → `await` → mutate → return affected IDs. This pattern is the same for every font — `Inter` happens to be preloaded so the missing-`loadFontAsync` bug usually only surfaces with other families. See [gotchas.md → Canonical text-edit recipe](gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids).
+
 ```javascript
-// MUST load font before any text operations
+// Load font BEFORE any text mutation — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
 const text = figma.createText();
@@ -444,6 +446,7 @@ iconInstance.componentPropertyReferences = {
 ### Text Style
 
 ```javascript
+// Load font BEFORE setting style.fontName — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
 const style = figma.createTextStyle();

@@ -4,6 +4,8 @@
 
 Protocol for handling failures and incomplete runs across a 20–100+ call design system build.
 
+> **Design files only.** Every snippet here (including `figma.createPage()`) targets Figma Design files (`figma.com/design/...`). `figma.createPage()` throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`).
+
 ---
 
 ## 1. Core Protocol: STOP → Inspect → Fix → Retry

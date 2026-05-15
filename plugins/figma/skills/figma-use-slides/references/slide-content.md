@@ -4,9 +4,12 @@
 
 ## Adding text to a slide
 
+Canonical recipe: load font → `await` → mutate → return affected IDs. Inter is preloaded; for any other family the same `loadFontAsync` step is required or you'll hit `Cannot write to node with unloaded font "<family> <style>"`. See [figma-use → gotchas.md → Canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids).
+
 ```js
 const slide = figma.getNodeById("SLIDE_ID");
 
+// Load font BEFORE any text mutation — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Semi Bold" });
 const title = figma.createText();
 title.fontName = { family: "Inter", style: "Semi Bold" };
@@ -20,7 +23,7 @@ title.y = 80;
 return { createdNodeIds: [title.id] };
 ```
 
-**Font loading is required** before setting text properties. Use `listAvailableFontsAsync()` to discover available fonts. Note: "Inter" uses "Semi Bold" (with a space), not "SemiBold".
+Use `listAvailableFontsAsync()` to discover exact style strings. Note: "Inter" uses "Semi Bold" (with a space), not "SemiBold" — guessing style names is a common cause of the unloaded-font error even when `loadFontAsync` is called.
 
 ## Bulleted and numbered lists
 

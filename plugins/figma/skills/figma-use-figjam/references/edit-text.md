@@ -4,7 +4,7 @@
 
 ## Critical: Load Fonts First
 
-**Always load fonts before modifying text.** This is required or operations will fail.
+Follow the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids) — load font → `await` → mutate → return affected IDs. Skipping the load throws `Cannot write to node with unloaded font "<family> <style>"`. Inter is preloaded in most environments; every other family (and every Inter style you haven't already loaded) still needs an explicit `loadFontAsync`.
 
 ```javascript
 // Load a single font
@@ -45,7 +45,12 @@ figma.closePlugin()
 
 ## Basic Properties
 
+Follows the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids) — load every (family, style) you're about to assign (including the NEW font when changing `fontName`) before any text mutation.
+
 ```javascript
+// Required for any font, not just Inter
+await figma.loadFontAsync({ family: 'Inter', style: 'Bold' })
+
 // Text content
 textNode.characters = 'Hello, World!'
 

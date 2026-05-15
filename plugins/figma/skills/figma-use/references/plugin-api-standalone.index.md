@@ -47,7 +47,7 @@
 | `createVector()`                    | `VectorNode`                |
 | `createText()`                      | `TextNode`                  |
 | `createSection()`                   | `SectionNode`               |
-| `createPage()`                      | `PageNode`                  |
+| `createPage()`                      | `PageNode` — **Design files only** (`figma.com/design/...`); throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`) |
 | `createSlice()`                     | `SliceNode`                 |
 | `createBooleanOperation()`          | `BooleanOperationNode`      |
 | `createTable(rows?, cols?)`         | `TableNode`                 |

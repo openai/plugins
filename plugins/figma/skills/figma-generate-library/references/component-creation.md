@@ -4,6 +4,10 @@
 
 Complete guide for Phase 3: building components with variant matrices, variable bindings, component properties, and documentation.
 
+> **Design files only.** Every snippet here (including `figma.createPage()`) targets Figma Design files (`figma.com/design/...`). `figma.createPage()` throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`).
+>
+> **Every text mutation in this file follows the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids):** load font → `await` → mutate → return affected IDs. Examples use `Inter` because it's available everywhere; `loadFontAsync` is required for every (family, style) pair you mutate, including non-Inter brand fonts.
+
 ---
 
 ## 1. Component Architecture
