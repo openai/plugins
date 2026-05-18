@@ -6,6 +6,10 @@
 
 - Position after appendChild (critical)
 - Canonical text-edit recipe (font load → await → mutate → return IDs)
+- Sequential awaits — batch independent async calls with `Promise.all`
+- Prefer indexed lookups over `findAll`/`findOne` full-tree scans
+- Scope traversal to the smallest known ancestor (a slide, not the page)
+- Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal
 - SLIDE_GRID and SLIDE_ROW are opaque nodes
 - Validation without get_metadata
 - Building multi-element slides incrementally
@@ -27,6 +31,61 @@ await Promise.all(
 textNode.characters = "Updated"
 return { mutatedNodeIds: [textNode.id] }
 ```
+
+
+## Prefer indexed lookups over `findAll` / `findOne` full-tree scans
+
+Same rule as in design files (see [figma-use → gotchas.md → Prefer indexed lookups](../../figma-use/references/gotchas.md#prefer-indexed-lookups-over-findall--findone-full-tree-scans)). On slide trees, the most common offenders are `slide.findAll(n => n.type === 'TEXT')` (use `slide.findAllWithCriteria({ types: ['TEXT'] })`) and `slide.findAll(n => n.type === 'INTERACTIVE_SLIDE_ELEMENT')` (same fix). If you have a slide or element ID, use `figma.getNodeByIdAsync(id)` — never re-scan the tree.
+
+
+## Scope traversal to the smallest known ancestor
+
+Slides specifically: **search inside the specific slide**, not the whole page. `slide.findAllWithCriteria(...)` walks one slide; `figma.currentPage.findAllWithCriteria(...)` walks every slide in the deck. When you have the target slide's ID (passed by the caller or returned from a prior call), always start the traversal there.
+
+```js
+// AVOID — scans every slide in the deck
+const texts = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] })
+
+// PREFER — one slide only
+const slide = await figma.getNodeByIdAsync(SLIDE_ID)
+const texts = slide.findAllWithCriteria({ types: ['TEXT'] })
+```
+
+See [figma-use → gotchas.md → Scope traversal to the smallest known ancestor](../../figma-use/references/gotchas.md#scope-traversal-to-the-smallest-known-ancestor).
+
+
+## Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal
+
+Same rule as in design files (see [figma-use → gotchas.md → Set figma.skipInvisibleInstanceChildren](../../figma-use/references/gotchas.md#set-figmaskipinvisibleinstancechildren--true-for-read-only-traversal)). One line at the top of any read-only slide-inspection script. Decks tend to be component-heavy (icons, logo lockups, repeating frames), so this flag is especially impactful.
+
+```js
+figma.skipInvisibleInstanceChildren = true
+const slide = await figma.getNodeByIdAsync(SLIDE_ID)
+const texts = slide.findAllWithCriteria({ types: ['TEXT'] })
+```
+
+Leave the flag off if you specifically need to read invisible content inside an instance (e.g., inspecting all variants of a deck-template instance).
+
+
+## Sequential awaits — batch independent async calls with `Promise.all`
+
+Same rule as in design files (see [figma-use → gotchas.md → Sequential awaits](../../figma-use/references/gotchas.md#sequential-awaits--batch-independent-async-calls-with-promiseall)). When building decks, the typical offenders are `loadFontAsync` for theme/brand fonts, `getNodeByIdAsync` for cached slide IDs, and `import*ByKeyAsync` for library variables and styles — all independent per call and all batchable.
+
+```js
+// WRONG — sequential round-trips per slide
+for (const id of slideIds) {
+  const slide = await figma.getNodeByIdAsync(id)
+  // ... mutate
+}
+
+// CORRECT — fetch all slides in one batch, then mutate sequentially
+const slides = await Promise.all(slideIds.map(id => figma.getNodeByIdAsync(id)))
+for (const slide of slides) {
+  // ... mutate
+}
+```
+
+`setCurrentPageAsync` is the exception — page-context switches must stay sequential.
 
 
 ## Position after appendChild (critical)

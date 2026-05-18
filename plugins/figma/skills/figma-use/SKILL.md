@@ -14,6 +14,8 @@ Use the `use_figma` tool to execute JavaScript in Figma files via the Plugin API
 
 **If the task involves building or updating a full page, screen, or multi-section layout in Figma from code**, also load [figma-generate-design](../figma-generate-design/SKILL.md). It provides the workflow for discovering design system components via `search_design_system`, importing them, and assembling screens incrementally. Both skills work together: this one for the API rules, that one for the screen-building workflow.
 
+**If the task involves creating or building a component in Figma** (even a single component), also load [figma-generate-library](../figma-generate-library/SKILL.md). It provides the component creation workflow — variable foundations, variant sets, design token bindings — that `figma-use` alone doesn't cover.
+
 Before anything, load [plugin-api-standalone.index.md](references/plugin-api-standalone.index.md) to understand what is possible. When you are asked to write plugin API code, use this context to grep [plugin-api-standalone.d.ts](references/plugin-api-standalone.d.ts) for relevant types, methods, and properties. This is the definitive source of truth for the API surface. It is a large typings file, so do not load it all at once, grep for relevant sections as needed.
 
 IMPORTANT: Whenever you work with design systems, start with [working-with-design-systems/wwds.md](references/working-with-design-systems/wwds.md) to understand the key concepts, processes, and guidelines for working with design systems in Figma. Then load the more specific references for components, variables, text styles, and effect styles as needed.
@@ -32,7 +34,7 @@ IMPORTANT: Whenever you work with design systems, start with [working-with-desig
 9.  **Pages load incrementally** — use `await figma.setCurrentPageAsync(page)` to switch pages and load their content. The sync setter `figma.currentPage = page` does **NOT** work and will throw (see Page Rules below)
 10. `setBoundVariableForPaint` returns a **NEW** paint — must capture and reassign
 11. `createVariable` accepts collection **object or ID string** (object preferred)
-12. **`layoutSizingHorizontal/Vertical = 'FILL'` MUST be set AFTER `parent.appendChild(child)`** — setting before append throws. Same applies to `'HUG'` on non-auto-layout nodes.
+12. **`layoutSizingHorizontal/Vertical` is value-restricted by structural context — `FIXED` always works, `HUG` and `FILL` do not.** `'HUG'` is valid only on an auto-layout frame itself OR on a **TEXT** child of one. `'FILL'` is valid only on a child of an auto-layout frame that is also not absolute-positioned, not inside an immutable frame, and not a canvas-grid child. Practical consequence: append to an auto-layout parent FIRST, then set `HUG`/`FILL` — a newly-created or unparented node can't satisfy the rule yet. The property itself exists on every `SceneNode`; the error is value-rejection, not "no such property". See [Gotchas](references/gotchas.md#layoutsizinghorizontallayoutsizingvertical-value-rules-fixed-hug-fill).
 12a. **Use auto-layout for containers that hold related children.** When children have a structural relationship — stacked, side-by-side, aligned, gapped, hugged — wrap them in `figma.createAutoLayout()`, not `figma.createFrame()` with absolute `x`/`y`. Absolute coordinates govern where a container sits on the canvas; auto-layout governs how its children relate inside it. Skipping the container leaves no protection against text reflow, content changes, or overlap.
 13. **Position new top-level nodes away from (0,0).** Nodes appended directly to the page default to (0,0). Scan `figma.currentPage.children` to find a clear position (e.g., to the right of the rightmost node). This only applies to page-level nodes — nodes nested inside other frames or auto-layout containers are positioned by their parent. See [Gotchas](references/gotchas.md).
 14. **On `use_figma` error, STOP. Do NOT immediately retry.** Failed scripts are **atomic** — if a script errors, it is not executed at all and no changes are made to the file. Read the error message carefully, fix the script, then retry. See [Error Recovery](#6-error-recovery--self-correction).
@@ -55,13 +57,28 @@ Use `await figma.setCurrentPageAsync(page)` to switch pages and load their conte
 const targetPage = figma.root.children.find((p) => p.name === "My Page");
 await figma.setCurrentPageAsync(targetPage);
 // targetPage.children is now populated
+```
 
-// Iterate over all pages
+### Call `setCurrentPageAsync` at most once per `use_figma` invocation — fan multi-page work out in parallel
+
+**One script must switch pages at most once.** Never loop over `figma.root.children` and switch pages inside the loop.
+
+If the work spans multiple pages, **split it into N `use_figma` calls (one per target page) and emit them in parallel** — a single assistant message containing N `use_figma` tool-use blocks. The harness runs them concurrently; each script sets `currentPage` exactly once.
+
+> **Explicit instruction:** when fanning out, you MUST issue the N tool calls in **one message**. Do not send them across multiple turns. Do not await one before issuing the next. Sequential per-page calls are slower than the in-loop pattern this rule replaces and waste the entire benefit of splitting.
+
+```js
+// AVOID — switches pages N times in one script, reloads the file each time
 for (const page of figma.root.children) {
   await figma.setCurrentPageAsync(page);
-  // page.children is now loaded — read or modify them here
+  // ... touch this page ...
 }
+
+// PREFER — read-only discovery call to get page IDs, then in the NEXT message
+// emit N parallel use_figma tool calls (one per page), each setting currentPage once.
 ```
+
+Default to parallel fan-out for any multi-page work — reads and writes alike. See [gotchas.md → Set current page once per `use_figma` call](references/gotchas.md#set-current-page-once-per-use_figma-call--split-multi-page-work-into-parallel-calls) for the full rationale.
 
 ### Across script runs
 
@@ -308,7 +325,7 @@ Step 5: Final verification
 | Error message | Likely cause | How to fix |
 |---|---|---|
 | `"not implemented"` | Used `figma.notify()` | Remove it — use `return` for output |
-| `"node must be an auto-layout frame..."` | Set `FILL`/`HUG` before appending to auto-layout parent | Move `appendChild` before `layoutSizingX = 'FILL'` |
+| `"node must be an auto-layout frame or a child of an auto-layout frame"` / `"FILL can only be set on children of auto-layout frames"` / `"HUG can only be set on auto-layout frames or text children of auto-layout frames"` / `"FILL cannot be set on absolute positioned auto-layout children"` / `"FILL cannot be set on canvas grid children"` | Tried to assign `HUG`/`FILL` to a node whose structural context doesn't allow it (e.g. parent isn't auto-layout, ran before `appendChild`, non-text child trying to `HUG`, absolute-positioned child trying to `FILL`) | Make the parent auto-layout via `figma.createAutoLayout()`; `appendChild` first; reserve `HUG` for the auto-layout frame itself or for TEXT children; for absolute/immutable/grid children use `FIXED` + `resize()`. See [gotchas.md](references/gotchas.md#layoutsizinghorizontallayoutsizingvertical-value-rules-fixed-hug-fill) |
 | `"Setting figma.currentPage is not supported"` | Used sync page setter (`figma.currentPage = page`) which does NOT work | Use `await figma.setCurrentPageAsync(page)` — the only way to switch pages |
 | Property value out of range | Color channel > 1 (used 0–255 instead of 0–1) | Divide by 255 |
 | `"Cannot read properties of null"` | Node doesn't exist (wrong ID, wrong page) | Check page context, verify ID |
@@ -364,17 +381,26 @@ return pages.join('\n');
 ```
 
 **List existing components across all pages:**
+
+`search_design_system` is an option for published components. For on-canvas components, use the two-step fan-out — **don't loop pages inside one script.**
+
+Step 1: one read-only `use_figma` to get page IDs:
 ```js
-const results = [];
-for (const page of figma.root.children) {
-  await figma.setCurrentPageAsync(page);
-  page.findAll(n => {
-    if (n.type === 'COMPONENT' || n.type === 'COMPONENT_SET')
-      results.push(`[${page.name}] ${n.name} (${n.type}) id=${n.id}`);
-    return false;
-  });
-}
-return results.join('\n');
+return figma.root.children.map(p => ({ id: p.id, name: p.name }));
+```
+
+Step 2: in the **next assistant turn, emit one `use_figma` per page in parallel** (a single message containing N tool-use blocks). Each runs:
+```js
+// Read-only inspection — skip invisible instance interiors for the
+// hundreds-of-times-faster findAllWithCriteria.
+figma.skipInvisibleInstanceChildren = true;
+
+const page = await figma.getNodeByIdAsync(PAGE_ID);
+await figma.setCurrentPageAsync(page);
+// findAllWithCriteria uses an indexed type lookup — hundreds of times faster
+// than the findAll(n => n.type === '…') side-effect-in-predicate antipattern.
+const matches = page.findAllWithCriteria({ types: ['COMPONENT', 'COMPONENT_SET'] });
+return matches.map(n => ({ page: page.name, name: n.name, type: n.type, id: n.id }));
 ```
 
 **List existing variable collections and their conventions:**

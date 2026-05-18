@@ -34,9 +34,13 @@ async function createCoverPage(systemName, tagline, version, primaryColorVar) {
   page.name = 'Cover';
   await figma.setCurrentPageAsync(page);
 
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+  // Batch the font loads — sequential awaits would serialize three IPC
+  // round-trips that can run in parallel.
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ]);
 
   const frame = figma.createAutoLayout('VERTICAL');
   frame.name = 'Cover';
@@ -111,9 +115,13 @@ async function createFoundationsPage() {
   page.name = 'Foundations';
   await figma.setCurrentPageAsync(page);
 
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  // Batch the font loads — sequential awaits would serialize three IPC
+  // round-trips that can run in parallel.
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
   // Root scroll frame
   const root = figma.createAutoLayout('VERTICAL');
@@ -211,8 +219,10 @@ async function createColorSwatch(parent, varName, variable) {
  * @param {Variable[]} semanticVars - Variables from the semantic Color collection.
  */
 async function createColorSection(root, primitiveVars, semanticVars) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
   // Section container
   const section = figma.createAutoLayout('VERTICAL');
@@ -307,9 +317,11 @@ Typography specimens show each text style rendered at its actual size with a sam
  * @returns {FrameNode} The specimen row frame.
  */
 async function createTypeSpecimen(parent, styleName, fontFamily, fontStyle, fontSize, lineHeight) {
-  await figma.loadFontAsync({ family: fontFamily, style: fontStyle });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  await Promise.all([
+    figma.loadFontAsync({ family: fontFamily, style: fontStyle }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
   const row = figma.createAutoLayout('VERTICAL');
   row.name = `Type/${styleName}`;
@@ -499,8 +511,10 @@ Elevation documentation shows cards with progressively stronger drop shadows, la
  * @param {DropShadowEffect[]} effects - Array of Figma effect objects.
  */
 async function createShadowCard(parent, name, effects) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ]);
 
   const card = figma.createAutoLayout('VERTICAL');
   card.name = `ShadowCard/${name}`;
@@ -610,8 +624,10 @@ Border radius documentation shows rectangles at each corner radius value, labele
  * @param {Variable} [variable] - Optional Figma Variable to bind corner radius.
  */
 async function createRadiusCard(parent, name, value, variable) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ]);
 
   const wrapper = figma.createAutoLayout('VERTICAL');
   wrapper.name = `Radius/${name}`;
@@ -725,8 +741,10 @@ Each component page should include a documentation frame directly on the canvas,
  * @returns {FrameNode} The documentation frame.
  */
 async function createComponentDocFrame(page, componentName, description, usageNotes) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
   const doc = figma.createAutoLayout('VERTICAL');
   doc.name = '_Doc';

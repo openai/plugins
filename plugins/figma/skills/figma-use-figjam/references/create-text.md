@@ -370,11 +370,15 @@ const parent = branchNode.parent
 const newTopics = ['Topic A', 'Topic B', 'Topic C']
 const Y_SPACING = 40
 
-// Measure total height the new nodes will need
+// Measure total height the new nodes will need.
+// Each newly created text node uses the same default font, so load it once
+// before the loop rather than awaiting per-iteration.
+const probe = figma.createText()
+await figma.loadFontAsync(probe.fontName)
+probe.remove()
 const newTexts = []
 for (const topic of newTopics) {
   const t = figma.createText()
-  await figma.loadFontAsync(t.fontName)
   t.characters = topic
   newTexts.push(t)
 }

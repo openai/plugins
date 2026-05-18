@@ -42,11 +42,15 @@ Available shape types:
 
 ```javascript
 const types = ['SQUARE', 'DIAMOND', 'ELLIPSE', 'ROUNDED_RECTANGLE']
+// All shapes share the same default font — load once before the loop instead
+// of awaiting per-iteration.
+const probe = figma.createShapeWithText()
+await figma.loadFontAsync(probe.text.fontName)
+probe.remove()
 const shapes = []
 for (const type of types) {
   const s = figma.createShapeWithText()
   s.shapeType = type
-  await figma.loadFontAsync(s.text.fontName)
   s.text.characters = type
   shapes.push(s)
 }
@@ -311,11 +315,15 @@ const sizes = items.map((item) => fitShapeToText(item.label, item.type))
 const totalWidth = sizes.reduce((sum, s) => sum + s.w, 0) + (items.length - 1) * spacing
 let curX = 0
 
+// All shapes share the same default font — load once before the loop
+// instead of awaiting per-iteration.
+const probe = figma.createShapeWithText()
+await figma.loadFontAsync(probe.text.fontName)
+probe.remove()
 for (let i = 0; i < items.length; i++) {
   const size = sizes[i]
   const shape = figma.createShapeWithText()
   shape.shapeType = items[i].type
-  await figma.loadFontAsync(shape.text.fontName)
   shape.text.characters = items[i].label
   shape.resize(size.w, size.h)
   const preset = items[i].color

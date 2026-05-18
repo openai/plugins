@@ -233,14 +233,18 @@ return results;
 
 ```javascript
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
+// Batch every getVariableByIdAsync into a single Promise.all — sequential
+// awaits inside the loop would serialize one IPC round-trip per variable.
+const allIds = collections.flatMap(c => c.variableIds);
+const allVars = await Promise.all(
+  allIds.map(id => figma.variables.getVariableByIdAsync(id))
+);
 const scopeGroups = {};
-for (const c of collections) {
-  for (const id of c.variableIds) {
-    const v = await figma.variables.getVariableByIdAsync(id);
-    const key = JSON.stringify(v.scopes);
-    if (!scopeGroups[key]) scopeGroups[key] = [];
-    scopeGroups[key].push(v.name);
-  }
+for (const v of allVars) {
+  if (!v) continue;
+  const key = JSON.stringify(v.scopes);
+  if (!scopeGroups[key]) scopeGroups[key] = [];
+  scopeGroups[key].push(v.name);
 }
 return scopeGroups;
 ```
@@ -284,21 +288,23 @@ The async API returns richer data including code syntax and scopes per variable:
  */
 async function listVariableCollectionsAndVariables() {
   const collections = await figma.variables.getLocalVariableCollectionsAsync();
-  const results = [];
-  for (const collection of collections) {
-    const vars = [];
-    for (const id of collection.variableIds) {
-      const v = await figma.variables.getVariableByIdAsync(id);
-      vars.push([v.name, v.id, v.codeSyntax, v.scopes]);
-    }
-    results.push({
-      name: collection.name,
-      id: collection.id,
-      modes: collection.modes.map(m => [m.name, m.modeId]),
-      variables: vars
-    });
-  }
-  return results;
+  // flatMap every variable ID across all collections into one Promise.all,
+  // then look up per-collection from a Map. Avoids nested Promise.all and
+  // still issues every lookup in parallel.
+  const allIds = collections.flatMap(c => c.variableIds);
+  const fetched = await Promise.all(
+    allIds.map(id => figma.variables.getVariableByIdAsync(id))
+  );
+  const byId = new Map(allIds.map((id, i) => [id, fetched[i]]));
+  return collections.map(collection => ({
+    name: collection.name,
+    id: collection.id,
+    modes: collection.modes.map(m => [m.name, m.modeId]),
+    variables: collection.variableIds
+      .map(id => byId.get(id))
+      .filter(v => v)
+      .map(v => [v.name, v.id, v.codeSyntax, v.scopes])
+  }));
 }
 ```
 

@@ -180,14 +180,12 @@ await textNode.setTextStyleIdAsync(headingStyle.id);
  */
 async function applyTextStyleToMatchingNodes(styleId, nodeNamePattern) {
   const textNodes = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] });
-  let applied = 0;
-  for (const node of textNodes) {
-    if (node.name.includes(nodeNamePattern)) {
-      await node.setTextStyleIdAsync(styleId);
-      applied++;
-    }
-  }
-  return applied;
+  const matching = textNodes.filter(n => n.name.includes(nodeNamePattern));
+  // Batch the style applications with Promise.all — each setTextStyleIdAsync
+  // call is independent, so awaiting them serially in a for-loop multiplies
+  // the IPC latency by the number of matches.
+  await Promise.all(matching.map(n => n.setTextStyleIdAsync(styleId)));
+  return matching.length;
 }
 ```
 

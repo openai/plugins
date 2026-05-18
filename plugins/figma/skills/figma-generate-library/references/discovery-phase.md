@@ -240,9 +240,12 @@ Interpret: check if variables use `ALL_SCOPES` (bad), check naming convention (s
 ### List Component Sets with Properties
 
 ```javascript
+// Read-only inspection — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
 // To inspect a specific page, switch to it first:
 // await figma.setCurrentPageAsync(targetPage);
-const componentSets = figma.currentPage.findAll(n => n.type === 'COMPONENT_SET');
+const componentSets = figma.currentPage.findAllWithCriteria({ types: ['COMPONENT_SET'] });
 const result = componentSets.map(cs => ({
   id: cs.id,
   name: cs.name,
@@ -257,7 +260,7 @@ const result = componentSets.map(cs => ({
 return { componentSets: result, count: result.length };
 ```
 
-Note: to search ALL pages, iterate `figma.root.children` and `setCurrentPageAsync` for each.
+Note: to search ALL pages, **do not iterate `figma.root.children` and `setCurrentPageAsync` inside one script.** Run a cheap discovery call first (`figma.root.children.map(p => ({id: p.id, name: p.name}))`), then in the next assistant turn emit **one `use_figma` per page in parallel** — a single message with N tool-use blocks — each setting `currentPage` once. See [figma-use → gotchas.md → Set current page once per `use_figma` call](../../figma-use/references/gotchas.md#set-current-page-once-per-use_figma-call--split-multi-page-work-into-parallel-calls).
 
 ### List All Styles
 

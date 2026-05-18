@@ -45,9 +45,11 @@ async function createDocumentationPage(pageName, config, runId) {
       )
     }
   }
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' })
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ])
 
   // Create and activate the page
   const page = figma.createPage()

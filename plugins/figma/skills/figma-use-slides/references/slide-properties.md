@@ -44,13 +44,57 @@ if (focused) {
 }
 ```
 
+## speakerNotes
+
+Read and set the presenter/speaker notes for a slide. The value is a **markdown string**.
+
+```js
+const slide = figma.getNodeById("SLIDE_ID");
+
+// Read speaker notes
+const notes = slide.speakerNotes;
+// Returns "" if no notes are set
+
+// Set speaker notes (plain text)
+slide.speakerNotes = "Remember to mention the Q4 goals.";
+
+// Set speaker notes with list formatting
+slide.speakerNotes = "Key points:\n- Revenue grew 20%\n- User base doubled\n- NPS at all-time high";
+
+// Set speaker notes with numbered list
+slide.speakerNotes = "Agenda:\n1. Introduction\n2. Demo\n3. Q&A";
+
+// Clear speaker notes
+slide.speakerNotes = "";
+```
+
+### Supported formatting
+
+The speaker notes editor in Figma Slides supports a subset of markdown formatting:
+
+- **Unordered lists**: `- item` or `* item`
+- **Ordered lists**: `1. item`, `2. item`
+- **Bold**: `**text**`
+- **Italic**: `*text*`
+- **Bold + italic**: `***text***`
+- **Strikethrough**: `~~text~~`
+
+The following markdown is **not supported** and will be stored as raw text (the markdown syntax characters will appear literally in the notes):
+- Headings (`# text`, `## text`)
+- Code blocks (`` `code` `` or ` ``` `)
+- Links (`[text](url)`)
+- Underline
+
 ## InteractiveSlideElementNode
 
 Interactive elements embedded in slides (polls, embeds, etc.). These are read-only — you cannot create them via the Plugin API, but you can detect and inspect them.
 
 ```js
+// Read-only inspection — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
 const slide = figma.getNodeById("SLIDE_ID");
-const interactive = slide.findAll(n => n.type === "INTERACTIVE_SLIDE_ELEMENT");
+const interactive = slide.findAllWithCriteria({ types: ["INTERACTIVE_SLIDE_ELEMENT"] });
 return interactive.map(n => ({
   id: n.id,
   type: n.interactiveSlideElementType,
