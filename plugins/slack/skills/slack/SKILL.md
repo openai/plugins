@@ -47,6 +47,7 @@ If the task will produce outgoing Slack text or perform a Slack write, switch to
 ## Write Safety
 
 - Preserve exact channel names, thread context, links, code snippets, and owners from the source conversation unless the user asks for changes.
+- Before acting on a relative message target such as "last message", "latest reply", "above", or "that message", re-read the destination channel or thread and resolve the target from fresh results. Do not reuse earlier reads for reactions, replies, edits, or other writes.
 - Treat @channel, @here, mass mentions, and customer-facing channels as high-impact. Call them out before posting.
 - Keep post-ready drafts short enough to scan quickly unless the user asks for a long-form announcement.
 - If there are multiple channels or threads with similar topics, identify the intended destination before drafting or posting.
