@@ -1,0 +1,44 @@
+{
+  "name": "expedia",
+  "version": "0.1.0",
+  "description": "Plan trips and book hotels, flights, rental cars, and vacation packages with Expedia.",
+  "author": {
+    "name": "Expedia, Inc.",
+    "url": "https://www.expedia.com"
+  },
+  "homepage": "https://www.expedia.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "expedia",
+    "travel",
+    "hotels",
+    "flights",
+    "rental-cars",
+    "vacation-packages"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Expedia",
+    "shortDescription": "Plan trips and book travel with Expedia",
+    "longDescription": "Search hotels, flights, rental cars, cruises, and vacation packages, compare options, and move from trip planning to booking with Expedia inside ChatGPT.",
+    "developerName": "Expedia, Inc.",
+    "category": "Lifestyle",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.expedia.com",
+    "privacyPolicyURL": "https://www.expedia.com/legal/privacy?currency=USD&langid=1033&siteid=1",
+    "termsOfServiceURL": "https://www.expedia.com/lp/b/terms-of-service",
+    "defaultPrompt": [
+      "Find me family-friendly hotels in Tokyo for a week in July",
+      "Compare round-trip flight options to Lisbon next month",
+      "Plan a weekend trip with hotel, flight, and car rental"
+    ],
+    "brandColor": "#00355F",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
+  }
+}
