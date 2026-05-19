@@ -1,7 +1,6 @@
 ---
 name: build-zoom-virtual-agent
 description: Use when using Virtual Agent.
-disable-model-invocation: true
 ---
 
 # Build Zoom Virtual Agent

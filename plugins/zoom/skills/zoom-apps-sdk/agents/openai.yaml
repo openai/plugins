@@ -1,0 +1,5 @@
+interface:
+  display_name: Zoom Apps SDK
+  short_description: Use when using Apps SDK.
+policy:
+  allow_implicit_invocation: false

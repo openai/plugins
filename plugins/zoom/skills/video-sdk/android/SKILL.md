@@ -3,7 +3,6 @@ name: zoom-video-sdk-android
 description: |
   Zoom Video SDK for Android native apps. Use when building custom Android video experiences
   with full UI control, session tokens, raw media options, and event-driven participant state.
-disable-model-invocation: true
 ---
 
 # Zoom Video SDK (Android)

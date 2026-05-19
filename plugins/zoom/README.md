@@ -45,7 +45,7 @@ Codex can use this plugin through the Zoom app connector plus command, skill, an
 
 The Zoom app connector auth is managed by Codex. It is not exposed as a shell environment variable or raw bearer token.
 
-The developer skills in this curated package are explicit-only: each `SKILL.md` sets `disable-model-invocation: true`, so they are available when invoked directly but should not be selected implicitly from normal task wording.
+The developer skills in this curated package are explicit-only: each bundled developer skill has an `agents/openai.yaml` file with `policy.allow_implicit_invocation: false`, so they are available when invoked directly but should not be selected implicitly from normal task wording.
 
 ## Command Workflows
 

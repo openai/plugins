@@ -1,7 +1,6 @@
 ---
 name: build-zoom-phone-integration
 description: Use when building Phone.
-disable-model-invocation: true
 ---
 
 # Build Zoom Phone Integration

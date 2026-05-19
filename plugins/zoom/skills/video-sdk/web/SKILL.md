@@ -1,7 +1,6 @@
 ---
 name: zoom-video-sdk-web
 description: "Zoom Video SDK for Web - JavaScript/TypeScript integration for browser-based video sessions, real-time communication, screen sharing, recording, and live transcription"
-disable-model-invocation: true
 ---
 
 # Zoom Video SDK - Web Development

@@ -1,7 +1,6 @@
 ---
 name: start
 description: Use when starting Zoom work.
-disable-model-invocation: true
 ---
 
 # Start

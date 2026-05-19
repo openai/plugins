@@ -1,7 +1,6 @@
 ---
 name: zoom-virtual-agent-ios
 description: "Zoom Virtual Agent iOS integration via WKWebView. Use for Swift/Objective-C script injection, message handlers, support_handoff relay, and URL routing policies."
-disable-model-invocation: true
 ---
 
 # Zoom Virtual Agent - iOS

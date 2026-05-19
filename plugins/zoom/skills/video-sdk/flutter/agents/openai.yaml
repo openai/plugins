@@ -1,0 +1,7 @@
+interface:
+  display_name: Zoom Video SDK (Flutter)
+  short_description: Zoom Video SDK for Flutter. Use when building custom video session
+    apps in Flutter with flutter_zoom_videosdk, event-driven architecture, session
+    lifecycle handling, and mobile platform integration patterns.
+policy:
+  allow_implicit_invocation: false

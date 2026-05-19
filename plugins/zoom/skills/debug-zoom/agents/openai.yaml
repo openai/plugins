@@ -1,0 +1,5 @@
+interface:
+  display_name: "/debug-zoom"
+  short_description: Use when debugging issues.
+policy:
+  allow_implicit_invocation: false

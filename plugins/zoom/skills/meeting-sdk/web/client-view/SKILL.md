@@ -4,7 +4,6 @@ description: |
   Zoom Meeting SDK Web - Client View. Full-page Zoom meeting experience with the familiar Zoom interface.
   Uses ZoomMtg global singleton with callback-based API. Ideal for quick integration with minimal
   customization. Provides the same UI as Zoom Web Client.
-disable-model-invocation: true
 ---
 
 # Zoom Meeting SDK Web - Client View

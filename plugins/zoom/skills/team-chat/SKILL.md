@@ -1,7 +1,6 @@
 ---
 name: build-zoom-team-chat-app
 description: Use when building Team Chat.
-disable-model-invocation: true
 ---
 
 # Build Zoom Team Chat App

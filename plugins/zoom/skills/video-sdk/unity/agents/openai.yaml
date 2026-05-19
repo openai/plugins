@@ -1,0 +1,7 @@
+interface:
+  display_name: Zoom Video SDK (Unity)
+  short_description: Zoom Video SDK for Unity wrapper integrations. Use when building
+    custom Unity-based video session experiences and mapping Unity scene/UI state
+    to Video SDK events.
+policy:
+  allow_implicit_invocation: false

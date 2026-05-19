@@ -1,7 +1,6 @@
 ---
 name: plan-zoom-product
 description: Use when choosing products.
-disable-model-invocation: true
 ---
 
 # /plan-zoom-product

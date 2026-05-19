@@ -1,7 +1,6 @@
 ---
 name: setup-zoom-webhooks
 description: Use when building Zoom webhooks.
-disable-model-invocation: true
 ---
 
 # Setup Zoom Webhooks

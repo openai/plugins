@@ -1,7 +1,6 @@
 ---
 name: probe-sdk
 description: Use when using Probe SDK.
-disable-model-invocation: true
 ---
 
 # Zoom Probe SDK

@@ -1,0 +1,5 @@
+interface:
+  display_name: Build Zoom Team Chat App
+  short_description: Use when building Team Chat.
+policy:
+  allow_implicit_invocation: false

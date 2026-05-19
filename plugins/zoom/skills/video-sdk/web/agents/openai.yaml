@@ -1,0 +1,7 @@
+interface:
+  display_name: Zoom Video SDK - Web Development
+  short_description: Zoom Video SDK for Web - JavaScript/TypeScript integration for
+    browser-based video sessions, real-time communication, screen sharing, recording,
+    and live transcription
+policy:
+  allow_implicit_invocation: false

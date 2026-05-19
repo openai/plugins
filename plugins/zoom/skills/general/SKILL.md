@@ -1,7 +1,6 @@
 ---
 name: zoom-general
 description: Use when comparing products.
-disable-model-invocation: true
 ---
 
 # Zoom General

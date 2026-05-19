@@ -4,7 +4,6 @@ description: |
   Zoom Meeting SDK for Windows - Native C++ SDK for embedding Zoom meetings into Windows desktop
   applications. Supports custom UI architecture with raw video/audio data, headless bots, and deep
   integration with meeting features. Includes SDK architecture patterns and Windows message loop handling.
-disable-model-invocation: true
 ---
 
 # Zoom Meeting SDK (Windows)

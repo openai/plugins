@@ -1,0 +1,5 @@
+interface:
+  display_name: Zoom Video SDK UI Toolkit
+  short_description: Use when using Zoom UI Toolkit.
+policy:
+  allow_implicit_invocation: false

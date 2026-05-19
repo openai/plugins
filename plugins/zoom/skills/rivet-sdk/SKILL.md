@@ -1,7 +1,6 @@
 ---
 name: rivet-sdk
 description: Use when using Rivet SDK.
-disable-model-invocation: true
 ---
 
 # Zoom Rivet SDK

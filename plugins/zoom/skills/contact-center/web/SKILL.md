@@ -1,7 +1,6 @@
 ---
 name: zoom-contact-center-web
 description: "Zoom Contact Center SDK for Web. Use for web chat/video/campaign embeds, engagement event handling, app-context integrations, and Smart Embed postMessage workflows."
-disable-model-invocation: true
 ---
 
 # Zoom Contact Center SDK - Web

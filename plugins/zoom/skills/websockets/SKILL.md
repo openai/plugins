@@ -1,7 +1,6 @@
 ---
 name: setup-zoom-websockets
 description: Use when building Zoom WebSockets.
-disable-model-invocation: true
 ---
 
 # Setup Zoom WebSockets

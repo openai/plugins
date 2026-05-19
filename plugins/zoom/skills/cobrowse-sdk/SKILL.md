@@ -1,7 +1,6 @@
 ---
 name: zoom-cobrowse-sdk
 description: Use when using Cobrowse.
-disable-model-invocation: true
 ---
 
 # Zoom Cobrowse SDK

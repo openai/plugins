@@ -1,7 +1,6 @@
 ---
 name: build-zoom-contact-center-app
 description: Use when using Contact Center.
-disable-model-invocation: true
 ---
 
 # Build Zoom Contact Center App

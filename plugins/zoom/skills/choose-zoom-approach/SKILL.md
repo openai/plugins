@@ -1,7 +1,6 @@
 ---
 name: choose-zoom-approach
 description: Use when choosing architecture.
-disable-model-invocation: true
 ---
 
 # Choose Zoom Approach

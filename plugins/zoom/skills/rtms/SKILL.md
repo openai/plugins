@@ -1,7 +1,6 @@
 ---
 name: zoom-rtms
 description: Use when using RTMS.
-disable-model-invocation: true
 ---
 
 # Zoom Realtime Media Streams

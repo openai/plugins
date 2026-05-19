@@ -3,7 +3,6 @@ name: zoom-video-sdk-ios
 description: |
   Zoom Video SDK for iOS native apps. Use when building custom iOS video sessions with
   full UI control, token-based session auth, and event-driven media/participant flows.
-disable-model-invocation: true
 ---
 
 # Zoom Video SDK (iOS)

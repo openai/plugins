@@ -4,7 +4,6 @@ description: |
   Zoom Video SDK for Flutter. Use when building custom video session apps in Flutter with
   flutter_zoom_videosdk, event-driven architecture, session lifecycle handling, and mobile
   platform integration patterns.
-disable-model-invocation: true
 ---
 
 # Zoom Video SDK (Flutter)

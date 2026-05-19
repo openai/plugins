@@ -7,4 +7,4 @@ All notable changes to this plugin are documented in this file.
 - consolidated the Zoom developer workflows into the app-backed `Zoom` plugin
 - added the Zoom build, setup, planning, debugging, skill, command, and reviewer-agent workflows
 - kept the Zoom app mapping and screenshots in this repo
-- marked imported developer skills with `disable-model-invocation: true` for explicit-only use
+- marked imported developer skills with `policy.allow_implicit_invocation: false` for explicit-only use

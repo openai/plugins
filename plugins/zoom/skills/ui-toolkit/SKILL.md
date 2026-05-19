@@ -1,7 +1,6 @@
 ---
 name: ui-toolkit
 description: Use when using Zoom UI Toolkit.
-disable-model-invocation: true
 ---
 
 # Zoom Video SDK UI Toolkit

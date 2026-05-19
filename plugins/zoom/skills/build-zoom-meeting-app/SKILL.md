@@ -1,7 +1,6 @@
 ---
 name: build-zoom-meeting-app
 description: Use when embedding meetings.
-disable-model-invocation: true
 ---
 
 # /build-zoom-meeting-app

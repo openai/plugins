@@ -1,7 +1,6 @@
 ---
 name: scribe
 description: Use when using Scribe.
-disable-model-invocation: true
 ---
 
 # Zoom AI Services Scribe
