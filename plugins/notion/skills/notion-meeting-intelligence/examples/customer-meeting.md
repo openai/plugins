@@ -8,6 +8,8 @@
 ```
 Notion:notion-search
 query: "Acme Corp"
+query_type: "internal"
+filters: {}
 ```
 
 Found:
@@ -18,7 +20,9 @@ Found:
 
 ### 2. Fetch Details
 ```
-Notion:notion-fetch (4 pages)
+Repeat for each Notion page result:
+Notion:notion-fetch
+id: "acme-crm-notes-page-id"
 ```
 
 **Key context**:
@@ -38,6 +42,7 @@ Codex research added:
 ### 4. Create Internal Pre-Read
 ```
 Notion:notion-create-pages
+parent: { page_id: "sales-meeting-prep-parent-id" }
 pages: [{
   properties: {
     title: "Acme Corp Meeting - Pre-Read (Internal)"
@@ -71,6 +76,7 @@ Recommend: $60K/year (mid-range of their budget)
 ### 5. Create Meeting Agenda
 ```
 Notion:notion-create-pages
+parent: { page_id: "sales-meeting-prep-parent-id" }
 pages: [{
   properties: {
     title: "Acme Corp - Product Demo & Q&A"

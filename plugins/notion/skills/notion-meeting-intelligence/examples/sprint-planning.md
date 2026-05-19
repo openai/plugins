@@ -7,8 +7,10 @@
 ### 1. Search for Context
 ```
 Notion:notion-search
-query: "sprint planning" + "product backlog"
+query: "sprint planning product backlog"
+query_type: "internal"
 teamspace_id: "engineering-team"
+filters: {}
 ```
 
 Found:
@@ -19,7 +21,9 @@ Found:
 
 ### 2. Fetch Details
 ```
-Notion:notion-fetch (4 pages)
+Repeat for each Notion page result:
+Notion:notion-fetch
+id: "sprint-planning-context-page-id"
 ```
 
 **Key context**:
@@ -31,7 +35,11 @@ Notion:notion-fetch (4 pages)
 ### 3. Query Current Sprint Tasks
 ```
 Notion:notion-query-data-sources
-query: "SELECT * FROM tasks WHERE Sprint = 'Sprint 24' AND Status != 'Done'"
+data: {
+  data_source_urls: ["collection://tasks-data-source-id"],
+  query: "SELECT * FROM \"collection://tasks-data-source-id\" WHERE Sprint = ? AND Status != ?",
+  params: ["Sprint 24", "Done"]
+}
 ```
 
 3 tasks carrying over (technical debt items)
@@ -39,7 +47,13 @@ query: "SELECT * FROM tasks WHERE Sprint = 'Sprint 24' AND Status != 'Done'"
 ### 4. Create Pre-Read (Internal)
 ```
 Notion:notion-create-pages
-title: "Sprint 25 Planning - Pre-Read (Internal)"
+parent: { page_id: "meeting-prep-parent-id" }
+pages: [{
+  properties: {
+    "title": "Sprint 25 Planning - Pre-Read (Internal)"
+  },
+  content: "[Sprint planning pre-read]"
+}]
 ```
 
 **Pre-read included**:
@@ -52,7 +66,13 @@ title: "Sprint 25 Planning - Pre-Read (Internal)"
 ### 5. Create Agenda
 ```
 Notion:notion-create-pages
-title: "Sprint 25 Planning - Agenda"
+parent: { page_id: "meeting-prep-parent-id" }
+pages: [{
+  properties: {
+    "title": "Sprint 25 Planning - Agenda"
+  },
+  content: "[Sprint planning agenda]"
+}]
 ```
 
 **Agenda**:

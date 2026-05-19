@@ -37,6 +37,7 @@ Extract distinct Q&A pairs from conversation:
 Notion:notion-search
 query: "FAQ deployment"
 query_type: "internal"
+filters: {}
 ```
 
 Found: "Deployment FAQ" database in Engineering Docs
@@ -121,13 +122,12 @@ id: "faq-index-page-id"
 ```
 Notion:notion-update-page
 page_id: "faq-index-page-id"
-command: "insert_content_after"
-selection_with_ellipsis: "## Deployment & Troubleshooting..."
-new_str: "
-- <mention-page url=\"...\">Why does deployment fail with 'port already in use' error?</mention-page>
-- <mention-page url=\"...\">Why do I get 'cannot connect to database' errors?</mention-page>
-- <mention-page url=\"...\">What's the first thing I should check when deployment fails?</mention-page>
-"
+command: "update_content"
+properties: {}
+content_updates: [{
+  old_str: "## Deployment & Troubleshooting",
+  new_str: "## Deployment & Troubleshooting\n- <mention-page url=\"...\">Why does deployment fail with 'port already in use' error?</mention-page>\n- <mention-page url=\"...\">Why do I get 'cannot connect to database' errors?</mention-page>\n- <mention-page url=\"...\">What's the first thing I should check when deployment fails?</mention-page>"
+}]
 ```
 
 ## Summary Provided to User

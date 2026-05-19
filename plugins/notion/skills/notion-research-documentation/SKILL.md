@@ -16,6 +16,12 @@ Pull relevant Notion pages, synthesize findings, and publish clear briefs or rep
 4) Draft in Notion with `Notion:notion-create-pages` using the matching template (quick, summary, comparison, comprehensive).
 5) Link sources and add a references/citations section; update as new info arrives with `Notion:notion-update-page`.
 
+## Tool-call guardrails
+- Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed.
+- Only fetch Notion page, database, or data-source URLs/IDs. Search results can include external connected-source URLs, which are not valid `Notion:notion-fetch` inputs.
+- Create output pages with an explicit `parent` and a `pages` array.
+- When updating an existing report, fetch it first and use `Notion:notion-update-page` with `update_content`, `properties: {}`, and search-and-replace pairs. For property-only updates, use `update_properties` with `content_updates: []`. The current deployed schema expects both top-level fields even when one is unused. Do not invent insertion-only commands.
+
 ## Workflow
 ### 0) If Notion tools are unavailable, pause and ask the user to connect the Notion app:
 1. Enable the bundled Notion app for this plugin or session.
