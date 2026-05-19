@@ -24,8 +24,8 @@
       "Find the top events before churn and summarize product behavior patterns."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://mixpanel.com"
   },
   "homepage": "https://mixpanel.com"

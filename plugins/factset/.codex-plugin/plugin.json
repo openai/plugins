@@ -24,8 +24,8 @@
       "Find recent broker research headlines for a company in FactSet and summarize sentiment."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.factset.com"
   },
   "homepage": "https://www.factset.com"

@@ -24,8 +24,8 @@
       "Create a pipeline review from Close for deals closing this month."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.close.com"
   },
   "homepage": "https://www.close.com"

@@ -24,8 +24,8 @@
       "Compare key metrics for a company against its peer set using LSEG data."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.lseg.com"
   },
   "homepage": "https://www.lseg.com"

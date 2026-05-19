@@ -26,8 +26,8 @@
     "websiteURL": "https://quartr.com",
     "privacyPolicyURL": "https://quartr.com/terms-of-service/privacy-policy",
     "termsOfServiceURL": "https://quartr.com/terms-of-service",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "brandColor": "#000000"
   },
   "homepage": "https://quartr.com"

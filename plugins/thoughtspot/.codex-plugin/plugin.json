@@ -24,8 +24,8 @@
       "Analyze revenue by segment in ThoughtSpot and highlight anomalies worth investigating."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.thoughtspot.com"
   },
   "homepage": "https://www.thoughtspot.com"

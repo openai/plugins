@@ -24,8 +24,8 @@
       "Draft a research memo from Midpage results with citations and open questions."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.midpage.ai"
   },
   "homepage": "https://www.midpage.ai"

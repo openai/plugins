@@ -24,8 +24,8 @@
       "Research a company in ZoomInfo and identify likely outreach hooks."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.zoominfo.com"
   },
   "homepage": "https://www.zoominfo.com"

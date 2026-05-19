@@ -24,8 +24,8 @@
       "Pull Zoho CRM organization settings and users needed to audit access."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/logo.svg",
     "websiteURL": "https://www.zoho.com"
   },
   "homepage": "https://www.zoho.com"

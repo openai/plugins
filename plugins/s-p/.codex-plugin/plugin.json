@@ -24,8 +24,8 @@
       "Find recent S&P research or industry outlook items for a sector and summarize the takeaways."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.spglobal.com"
   },
   "homepage": "https://www.spglobal.com"

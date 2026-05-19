@@ -24,8 +24,8 @@
       "Summarize open Q&A items assigned to me in Datasite with owners and next steps."
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.svg",
-    "logo": "./assets/app-icon.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://www.datasite.com"
   },
   "homepage": "https://www.datasite.com"
