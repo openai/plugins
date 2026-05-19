@@ -1,0 +1,39 @@
+{
+  "name": "codex-approvable-review-tools",
+  "version": "0.1.0",
+  "description": "Codex-approvable PR review policies and daily Slack-driven review triage workflows.",
+  "author": {
+    "name": "Mifan",
+    "email": "[TODO: author@example.com]",
+    "url": "[TODO: https://github.com/author]"
+  },
+  "homepage": "[TODO: https://docs.example.com/plugin]",
+  "repository": "[TODO: https://github.com/author/plugin]",
+  "license": "[TODO: MIT]",
+  "keywords": [
+    "codex",
+    "approvable",
+    "github",
+    "slack",
+    "code-review"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Approvable Review Tools",
+    "shortDescription": "Review approvable PRs and triage daily Slack queues.",
+    "longDescription": "Bundle of two Codex skills: Codex Approvable Review for labeled GitHub review actions, and Daily Slack Codex Approvable Review for surfacing and reviewing eligible PRs from Slack channels.",
+    "developerName": "Mifan",
+    "category": "Coding",
+    "capabilities": [
+      "Review",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Review this PR with Codex Approvable Review.",
+      "Scan these Slack channels for codex-approvable PRs."
+    ],
+    "websiteURL": "[TODO: https://docs.example.com/plugin]",
+    "privacyPolicyURL": "[TODO: https://example.com/privacy]",
+    "termsOfServiceURL": "[TODO: https://example.com/terms]"
+  }
+}

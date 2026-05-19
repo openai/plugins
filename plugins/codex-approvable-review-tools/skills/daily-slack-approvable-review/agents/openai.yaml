@@ -1,0 +1,13 @@
+interface:
+  display_name: "Daily Slack Codex Approvable Review"
+  short_description: "Review daily Slack autostamp PRs"
+  default_prompt: "Use $daily-slack-approvable-review to scan selected Slack channels from the last day, review linked PRs with the codex-approvable label, and tell me what should happen next."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "slack"
+      description: "Read Slack channels, messages, threads, and PR-link provenance."
+    - type: "mcp"
+      value: "github"
+      description: "Inspect PR metadata, diffs, review history, comments, and submit review decisions."

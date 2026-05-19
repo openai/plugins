@@ -1,0 +1,10 @@
+interface:
+  display_name: "Codex Approvable Review"
+  short_description: "Review and approve autostamp PRs"
+  default_prompt: "Use $codex-approvable-review whenever I ask you to review a GitHub PR so you can check whether the codex-approvable policy applies."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "github"
+      description: "Inspect PR labels and submit an approval review when the autostamp policy allows it."

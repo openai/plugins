@@ -1441,6 +1441,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Coding"
+    },
+    {
+      "name": "codex-approvable-review-tools",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex-approvable-review-tools"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
     }
   ]
 }
