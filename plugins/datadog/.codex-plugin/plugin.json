@@ -27,8 +27,8 @@
       "How does the p99 latency for services with the most traffic compare to what we usually see? Provide evidence"
     ],
     "brandColor": "#632CA6",
-    "composerIcon": "./assets/icon.png",
-    "logo": "./assets/logo.png",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
