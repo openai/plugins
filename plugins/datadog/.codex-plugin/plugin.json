@@ -22,7 +22,9 @@
     "privacyPolicyURL": "https://www.datadoghq.com/legal/privacy/",
     "termsOfServiceURL": "https://www.datadoghq.com/legal/terms/",
     "defaultPrompt": [
-      "What are the top errors in my services? Include links and widgets."
+      "What are the top errors in my services? Include links and widgets.",
+      "What monitors are alerting right now for my team's services?",
+      "How does the p99 latency for services with the most traffic compare to what we usually see? Provide evidence"
     ],
     "brandColor": "#632CA6",
     "composerIcon": "./assets/icon.png",
