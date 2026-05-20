@@ -9,6 +9,7 @@
 - 429
 - Webhook verification failures
 - Search quality problems
+- Missing text representation
 - CLI auth problems
 - Codex sandbox network access
 
@@ -67,6 +68,15 @@ When using Box CLI, run `box <command> --help` before the first invocation of an
 - Querying as the wrong actor
 - Expecting search to return content the current identity cannot see
 - Downloading too early instead of returning IDs and metadata first
+
+## Missing text representation
+
+`get_file_content` reads markdown or extracted text. It can fail when Box has neither representation for the selected file.
+
+- Do not retry `get_file_content` on the same file after `Markdown or text representation is not available for this file`.
+- Prefer preview or page-image tools for previewable visual content.
+- Use metadata when it can answer the question without a body read.
+- If document content is still required, choose the smallest fallback allowed by the task and actor permissions.
 
 ## CLI auth problems
 
