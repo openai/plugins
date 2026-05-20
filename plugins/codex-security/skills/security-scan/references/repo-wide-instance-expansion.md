@@ -7,7 +7,7 @@ Use this reference with `repository-wide-scan.md` to avoid representative-only r
 Within the existing scan workflow, keep repository-wide scans instance-aware:
 
 - Discovery should create one candidate per independently vulnerable source/sink/control instance.
-- Validation should preserve or suppress each candidate instance independently.
+- The file-review subagent or parent agent that discovers a candidate should validate and attack-path that candidate instance before it enters cross-file dedupe, then later validation should preserve or suppress each deduped instance independently.
 - The final markdown report may add grouped summaries for readability, but only after each surviving instance has its own finding entry with affected location, source, broken control, sink, impact, and counterevidence.
 - Include suppressed candidates in the phase artifacts with the exact file/line and counterevidence so false-positive controls remain auditable.
 
@@ -15,7 +15,7 @@ This mode improves recall while preserving precision: breadth comes from systema
 
 ## Child Instance Expansion
 
-- When a broad ledger or candidate row names a whole operation family such as "all SQL trigger variants", "all deserialization variants", "all path traversal helpers", "all SSRF modes", "all generated framework adapters", or "all unauthenticated mutation endpoints", split it into child instances keyed by concrete exported function, route branch, sink statement, API mode, parser/deserializer variant, or protected action before validation and final reporting.
+- When a broad ledger or candidate row names a whole operation family such as "all SQL trigger variants", "all deserialization variants", "all path traversal helpers", "all SSRF modes", "all generated framework adapters", or "all unauthenticated mutation endpoints", split it into child instances keyed by concrete exported function, route branch, sink statement, API mode, parser/deserializer variant, or protected action before cross-file dedupe, validation closure, and final reporting.
 - If one root cause creates multiple vulnerable templates, routes, query builders, parser/deserializer variants, path/file helpers, auth/object endpoints, protected actions, shared-helper callers, or config entries, carry each affected file/line through the phases as its own instance unless the runtime path truly cannot be separated.
 - If one route or helper contains multiple same-family sink/control lines, such as `execute`/`executemany`/`executescript`, `pickle.load`/`pickle.loads`/`yaml.load`/`yaml.load_all`, distinct file/path helper calls, insert/select/delete/update query builders, or unauthenticated create/delete/reset/admin/job actions, preserve each operation as a separate instance when attackers can trigger it independently.
 - For repeated vulnerable patterns, keep each independently vulnerable file and sink/control line as its own finding entry through discovery, validation, and final reporting. Do not rely on one representative finding with many extra files when those files can be attacked independently.

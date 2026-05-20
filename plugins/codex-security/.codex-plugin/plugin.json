@@ -1,6 +1,6 @@
 {
   "name": "codex-security",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Codex Security workflows for security scans, analysis, and investigation.",
   "author": {
     "name": "OpenAI"
@@ -31,8 +31,8 @@
     "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
     "defaultPrompt": [
-      "Scan this entire codebase using subagents",
-      "Scan this diff, branch, or folder",
+      "/goal Run a security scan on this codebase using subagents. Do not stop until all in-scope files are covered and all required steps are complete.",
+      "/goal Scan this diff, branch, or folder using subagents. Do not stop until all in-scope files are covered and all required steps are complete.",
       "Create a threat model for this codebase"
     ],
     "brandColor": "#111111",

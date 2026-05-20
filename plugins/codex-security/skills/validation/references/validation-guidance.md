@@ -96,7 +96,7 @@ Use this checklist to keep validation close to the prompt contract:
 - If the code exposes a realistic interface, attempt validation through that interface before concluding when feasible.
 - Keep commands short, non-interactive, and scoped to the touched files or the minimum referenced paths.
 - If validation fails, record what was attempted, why it was inconclusive, and what proof gap remains.
-- Save any PoCs, logs, or crafted inputs under the validation artifacts path from `../../../references/scan-artifacts.md`.
+- Save any PoCs, logs, or crafted inputs under that finding's validation artifacts path from `../../../references/scan-artifacts.md`.
 - When multiple instances are provided, keep each candidate individually marked as survived, suppressed, or uncertain; do not silently omit candidates from the final validation report.
 - For a single standalone validation request, do not infer repository-wide or sibling scope unless the user explicitly asks for expansion or provides a multi-instance candidate list.
 - For a top-level repository-wide security scan, do not narrow validation to one representative finding when discovery supplied a coverage ledger or repeated pattern family.

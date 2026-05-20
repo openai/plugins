@@ -19,21 +19,37 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 
 ## Finding Discovery (Phase 2) Paths
 
-- Runtime inventory: `<artifacts_dir>/runtime_inventory.md`
+### Coverage Planning
+
 - Advisory seed research: `<artifacts_dir>/seed_research.md`
+- Scoped ranking input: `<artifacts_dir>/rank_input.csv` if applicable
+- Scoped ranking output: `<artifacts_dir>/rank_output.csv` if applicable
+- Scoped deep-review input: `<artifacts_dir>/deep_review_input.csv` if applicable
 - Finding discovery report: `<artifacts_dir>/finding_discovery_report.md`
-- Repository-wide exhaustive file checklist: `<artifacts_dir>/exhaustive-file-checklist.md` if applicable
+
+### Deep Review
+
+- Scoped work ledger: `<artifacts_dir>/work_ledger.jsonl` if applicable
+- Scoped raw candidates: `<artifacts_dir>/raw_candidates.jsonl` if applicable
+
+### Candidate Reconciliation
+
+- Candidate findings directory: `<artifacts_dir>/findings/`
+- Per-finding directory: `<artifacts_dir>/findings/<candidate_id>/`
+- Per-finding candidate ledger: `<artifacts_dir>/findings/<candidate_id>/candidate_ledger.jsonl`
+- Scoped dedupe report: `<artifacts_dir>/dedupe_report.md` if applicable
+- Scoped deduped candidates: `<artifacts_dir>/deduped_candidates.jsonl` if applicable
 - Repository-wide coverage ledger: `<artifacts_dir>/repository_coverage_ledger.md`
   - This is a coverage artifact, not a findings list: it should include checked surfaces with not_applicable, suppressed, deferred, or reportable dispositions.
 
 ## Validation (Phase 3) Paths
 
-- Validation report: `<artifacts_dir>/validation_report.md`
-- Validation artifacts: `<artifacts_dir>/validation_artifacts/`
+- Per-finding validation report: `<artifacts_dir>/findings/<candidate_id>/validation_report.md`
+- Per-finding validation artifacts: `<artifacts_dir>/findings/<candidate_id>/validation_artifacts/`
 
 ## Attack-Path Analysis (Phase 4) Paths
 
-- Attack-path analysis report: `<artifacts_dir>/attack_path_analysis_report.md`
+- Per-finding attack-path analysis report: `<artifacts_dir>/findings/<candidate_id>/attack_path_analysis_report.md`
 
 ## Final Report Paths
 

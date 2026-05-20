@@ -19,7 +19,15 @@ If a required input is still missing, stop and ask the user for it before contin
 Use the shared scan artifact path conventions in `../../references/scan-artifacts.md`.
 
 ### Code Diff Workflow
-If the scan target is for a targeted code-diff, follow the procedure in `../security-scan/references/code-diff-scan.md`.
+If the scan target is for a targeted code-diff:
+
+- Read `../security-scan/references/scan-artifacts-and-ledger.md`.
+- Generate `rank_input.csv` deterministically from changed source-like files with `python3 <skill_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --head <head> --out <artifacts_dir>/rank_input.csv`.
+- Copy every diff row into `deep_review_input.csv` with `python3 <skill_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <artifacts_dir>/rank_input.csv --out <artifacts_dir>/deep_review_input.csv`. Diff scans do not rank or drop changed files before deep review.
+- Add directly supporting files required to understand the changed security behavior only when repository evidence shows they are needed. Do not use them to broaden into unrelated repository-wide enumeration.
+- Deep-review every file in `deep_review_input.csv` using the shared scoped file-review rules.
+- Stay anchored to the changed code and directly supporting files. Unchanged siblings are context or negative controls unless the diff newly reaches them, weakens their shared control, or changes a shared sink/helper they depend on.
+- When the diff is too large to review credibly as one parent-agent pass, use approved file-review subagents and follow the shared scoped deep-review rules in `../security-scan/references/scan-artifacts-and-ledger.md#scoped-deep-review`.
 
 ### Repository-Wide Workflow
 
@@ -33,10 +41,10 @@ Use this checklist to keep discovery specific without turning it into validation
 - Treat the commit message and title as potentially incomplete or misleading; trust the actual code path more than the narrative.
 - Follow the entire changed-code chain far enough to understand how the diff affects authorization, trust boundaries, dangerous sinks, or security controls.
 - Prefer multiple distinct finding families only when they come from different root causes; do not split one issue into cosmetic variants, but keep independently reachable instances as separate candidate entries.
-- When the diff changes a shared helper, guard, route pattern, template pattern, or sink wrapper, fan out to sibling call sites that the changed code directly affects, and keep each vulnerable instance addressable.
+- When the diff changes a shared helper, guard, route pattern, template pattern, or sink wrapper, expand to sibling call sites that the changed code directly affects, and keep each vulnerable instance addressable.
 - Look for attacker-controlled input, broken enforcement, or dangerous sinks introduced or made reachable by the change.
 - Stay anchored to the diff and the supporting files it depends on rather than drifting into unrelated repository scanning.
-- For repository-wide scans, stay anchored to the runtime inventory and coverage ledger rather than drifting into arbitrary text search.
+- For repository-wide scans, stay anchored to `rank_input.csv`, `deep_review_input.csv`, and the coverage ledger rather than drifting into arbitrary text search.
 - Do not group many vulnerable files under one candidate when the files have separate line-level source/sink/control evidence.
 - When a dangerous sink has multiple call sites, enumerate each call site with its own source and closest control.
 - When repeated templates, query builders, parser operations, auth/object endpoints, or shared-helper callers are independently reachable, keep each vulnerable file and sink/control line as its own candidate instance even if the final report later groups related prose.
@@ -54,7 +62,7 @@ Use this checklist to keep discovery specific without turning it into validation
 - For shared deserialization, class-resolution, template, and auth controls, treat the resolver/filter/allowlist/denylist/guard line as a candidate location when downstream transports or callers prove reachability. Do not anchor only on the more dramatic transport if the broken control is reusable.
 - For deserialization and object-construction families, enumerate concrete codec, deserializer, converter, and container handlers registered by the parser or serialization config, including array, collection, map, bean, enum, throwable, and generic-object handlers. A top-level parser/config finding does not close a concrete codec row when that codec recursively invokes parsing, type resolution, conversion, or object construction on attacker-controlled data.
 - For file-format object models, enumerate primitive/container helper methods that convert or traverse attacker-controlled document structures, including `to*Array`, `get*`, `getObject`, numeric conversion, `parse*`, iterator, `size`, unchecked casts, and allocation loops. Treat these helpers as candidate root controls when malformed documents can trigger type confusion, exceptions, unbounded traversal, or memory/CPU exhaustion.
-- If the runtime inventory names a central object-model package for an untrusted format, include that package's array, dictionary, node, collection, and primitive conversion helpers as discovery rows before closing the parser family. A parser, filter, or codec finding in a neighboring package does not close unchecked conversion helpers in the core object model.
+- If the repository-wide worklist or coverage ledger identifies a central object-model package for an untrusted format, include that package's array, dictionary, node, collection, and primitive conversion helpers as discovery rows before closing the parser family. A parser, filter, or codec finding in a neighboring package does not close unchecked conversion helpers in the core object model.
 - Object-model helper sweeps create mandatory discovery rows first, not automatic reportable findings. Promote them only when malformed or adversarial input plausibly reaches the helper and the missing type, size, shape, recursion, numeric, or conversion guard can cause crash, denial of service, parser confusion, authorization bypass, or another concrete security impact.
 - Do not suppress deterministic parser/helper crashes as mere robustness when untrusted remote, protocol, document, archive, or package input can reach the missing guard and abort a service, request worker, parser pipeline, or security negotiation. Suppression needs exact containment evidence such as caller-side recovery, input prevalidation equivalent to the missing guard, or a non-security-only boundary.
 - For structured patch/edit/apply APIs such as JSON Patch, Graph Patch, document edits, or config mutations, enumerate concrete request-selected operations like add, remove, replace, move, copy, and test. Keep operation-specific path transforms, array append handling, wildcard selection, or object-binding lines candidate-visible when they feed a shared evaluator or binder.
@@ -76,8 +84,6 @@ Use this checklist to keep discovery specific without turning it into validation
 - In protocol-heavy repositories, inspect low-level version, capability, feature, and negotiation utility classes even if the most obvious candidates are REST/upload/admin hotspots. Search for helper names such as `Version`, `VersionUtil`, `versionCompare`, `versionMatch`, `Capability`, `Feature`, `Negotiation`, `parseInt`, `split`, `matches`, and comparator methods, then close paired validator/parser rows explicitly.
 - For self-service update routes, include guard or predicate methods that compare requested objects against persisted objects. Treat missing checks on security-sensitive scalar fields and collection aliases as candidate locations when they can change identity, trust state, tenant membership, roles, groups, or account recovery properties.
 - When a template or config pattern appears repeatedly, enumerate each affected file/line and note any nearby safe control that should not be reported.
-- In large repository scans, do not let one hotspot cluster consume the whole discovery pass. After promoting one or two obvious findings in the same route, upload, parser, or auth cluster, inspect a disjoint seeded row or low-salience utility/control shard such as protocol/version helpers, central object-model helpers, shared validators, or class-resolution controls before finalizing discovery.
-- In large repositories, bias early coverage inside high-risk subsystems toward leaf runtime validators, comparators, object-model helpers, and operation branches that parse or select untrusted values. Top-level controllers, uploads, admin endpoints, and XML hotspots are entrypoints, not sufficient coverage of the subsystem.
 - For diff-scoped scans, include `relevant_lines` only when the bug overlaps the diff and those lines are genuinely relevant to the issue.
 - For recursive placeholder or template findings, include the helper/parser setup line that enables recursive expansion or expression evaluation along with the resolver/evaluation/render line.
 - Include CWE IDs when known; use an empty list when the class is unclear.
@@ -135,6 +141,7 @@ If there are no plausible candidates, return a no-findings result.
 
 Otherwise, for each candidate include:
 
+- candidate id
 - title
 - affected locations, with labels when more than one applies: `entrypoint/wrapper`, `root_control`, `sink`, and `concrete_implementation`
 - instance key in the form `<family>:<file>:<line>` for repository-wide scans
@@ -150,6 +157,8 @@ Otherwise, for each candidate include:
 - taxonomy with CWE IDs when known
 - enough evidence that a later reviewer can understand why the candidate is technically plausible before validation
 
+When candidates are emitted, create the per-finding directory from `../../references/scan-artifacts.md` and append one discovery receipt to that finding's candidate ledger. The ledger row should identify the candidate, scan scope, discovery status, affected locations, and the discovery artifact or evidence that produced it.
+
 
 ## Hard Rules
 
@@ -157,6 +166,7 @@ Otherwise, for each candidate include:
 - Focus on the actual changes, not the commit message.
 - Stay anchored to the diff and the files it relies on for diff-scoped scans. For repository-wide scans, treat the checked-out repository as in scope and ignore diff-overlap restrictions for affected locations.
 - Candidate discovery is about plausibility, not final severity.
+- Do not emit an untracked candidate. Every candidate finding needs a stable candidate id and a discovery receipt in `findings/<candidate_id>/candidate_ledger.jsonl` so later validation and attack-path analysis can prove coverage for that exact finding.
 - Do not add `relevant_lines` when no bug exists. For diff-scoped scans, add `relevant_lines` only when the bug overlaps the diff and those lines are relevant to the bug.
 - Do not turn discovery into full validation or full severity calibration.
 - Continue reviewing until no additional distinct plausible candidates remain.

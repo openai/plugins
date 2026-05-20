@@ -32,9 +32,11 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
    - large internal repository mode: for repository-wide scans where runtime reproduction requires unavailable internal services, secrets, cloud accounts, service meshes, or local production data, use static trace plus existing tests and deploy/config evidence once the candidate has a complete source/control/sink/impact tuple. Missing internal runtime setup is not suppression evidence.
 4. For non-compiled stacks, attempt to generate PoCs or targeted commands that exercise the vulnerable path and trigger the vulnerability.
 5. For compiled stacks, prefer dynamic validation when it is feasible with bounded setup: build a debug variant or targeted test harness when available, reproduce the vulnerable behavior with a small PoC, then use valgrind, ASan, or a non-interactive debugger trace when those tools materially improve confidence.
-6. Save any PoC files, inputs, or logs under the validation artifacts path from `../../references/scan-artifacts.md`.
+6. Save any PoC files, inputs, or logs under that finding's validation artifacts path from `../../references/scan-artifacts.md`.
 7. If validation is not feasible, document what was tried, what remains uncertain, and the exact proof gap.
 8. Return a clear validation assessment per finding grounded in the evidence, proof gaps, and remaining uncertainty.
+9. Save that finding's visible validation report to its per-finding validation report path from `../../references/scan-artifacts.md`.
+10. Append one validation receipt per candidate id to that finding's candidate ledger path from `../../references/scan-artifacts.md`. The receipt must record the validation method, evidence or exact proof gap, disposition, and validation artifact/report reference for that candidate finding.
 
 ## Usage Guidance
 
@@ -81,15 +83,16 @@ For repository-wide scans, also include a validation closure table with columns:
 ## Hard Rules
 
 - Do not imply validation happened when it did not.
+- Do not leave candidate coverage implicit. Every candidate finding that enters validation must leave a validation receipt in `findings/<candidate_id>/candidate_ledger.jsonl`, even when the result is suppressed, uncertain, or deferred.
 - Prefer realistic local reproduction paths over contrived setups.
 - If a finding depends on missing product assumptions, state the question clearly instead of fabricating the answer.
 - Keep commands short, bounded, and non-interactive.
 - Use stronger validation methods such as crashing PoCs, valgrind, ASan, debugger traces, focused tests, or realistic interface reproduction before falling back to code understanding when the stack and scan scope make that feasible.
 - Calibrate confidence from the validation method and evidence, not from how dangerous the bug class sounds.
-- Keep validation artifacts and the final visible report in the validation paths from `../../references/scan-artifacts.md` so the full scan bundle lives together.
+- Keep validation artifacts and the final visible report in that finding's validation paths from `../../references/scan-artifacts.md` so the full scan bundle lives together.
 - Make a serious, bounded effort to get runtime validation working when it would materially change reportability, confidence, or severity. Consult repository guidance such as `AGENTS.md`, `README.md`, setup docs, test docs, build files, and package-manager metadata to identify the required dependencies, generated files, services, and setup steps.
-- For scans that should not modify the target tree, use a disposable copy or generated-artifact directory under the validation artifacts path for builds, generated clients, patched test harnesses, and PoC files. A no-edit target rule does not forbid output-only build copies when they are needed to validate the original code.
-- For repository-wide scans, update the validation report and closure table as each reportable, suppressed, not_applicable, or deferred row is decided. Do not leave validated rows only in transient notes, terminal logs, or validation artifacts; later phases must be able to reconstruct surviving findings from the saved validation report if the scan is interrupted.
+- For scans that should not modify the target tree, use a disposable copy or generated-artifact directory under that finding's validation artifacts path for builds, generated clients, patched test harnesses, and PoC files. A no-edit target rule does not forbid output-only build copies when they are needed to validate the original code.
+- For repository-wide scans, update each affected finding's validation report and closure table as each reportable, suppressed, not_applicable, or deferred row is decided. Do not leave validated rows only in transient notes, terminal logs, or validation artifacts; later phases must be able to reconstruct surviving findings from the saved per-finding validation reports if the scan is interrupted.
 - For large repository-wide scans, keep setup/build/debug effort proportionate to the candidate and the remaining high-impact coverage ledger. Do not spend the review budget trying to fully reproduce one internal service when static trace, existing tests, and deploy/config evidence are enough to validate or suppress the candidate.
 - In repository-wide validation, once one candidate in a repeated high-impact pattern has a strong proof tuple, switch to sibling candidates from the coverage ledger and validate each by checking the same source, closest control, sink, and impact. Only continue deeper runtime work when it would materially change reportability, severity, or confidence.
 - If a repository-wide shard has a promoted same-family finding plus unresolved seeded or root-control rows, close those sibling rows next as reportable, suppressed, or deferred before replacing the review with a more dramatic neighboring finding. Representative proof improves confidence, but it does not close sibling root controls without exact counterevidence.

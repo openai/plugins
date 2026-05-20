@@ -34,6 +34,8 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
 5. Calibrate impact and likelihood from the repository evidence.
 6. Apply a separate final policy-adjustment pass mechanically using those facts and the calibrated severity.
 7. Drop any candidate whose final policy decision is `ignore`.
+8. Save that finding's visible attack-path report to its per-finding attack-path analysis report path from `../../references/scan-artifacts.md`.
+9. Append one attack-path receipt per candidate id to that finding's candidate ledger path from `../../references/scan-artifacts.md`. The receipt must record the candidate id, attack-path reportability decision, attack-path facts or exact proof gap, and attack-path artifact/report reference for that candidate finding.
 
 ## Scope and Attack Path Checklist
 
@@ -94,12 +96,13 @@ Render attack-path facts using `references/attack-path-facts.md`.
 
 - Prefer repository evidence first, but use network connectivity when it materially helps confirm deployment context, reachable surfaces, or other reportability-relevant facts.
 - Do not invent attack chains that the code does not support.
+- Do not leave candidate coverage implicit. Every candidate finding that reaches attack-path analysis must leave an attack-path receipt in `findings/<candidate_id>/candidate_ledger.jsonl`, even when the final policy decision is `ignore` or the path remains deferred.
 - Do not drop exact affected locations while converting validated findings into attack paths. Repository-wide seeded/root-control rows that survive validation must keep their root-control file:line even when a wrapper, route, or transport is easier to explain.
 - Do not skip a reportable validation row because a neighboring same-family finding has a cleaner story. Either produce attack-path facts for that exact row or make an explicit final policy decision with repository counterevidence.
 - Missing public-ingress evidence is not by itself dispositive counterevidence.
 - Keep attack-path analysis, severity calibration, and final policy suppression as separate sub-stages.
 - Use the final policy-adjustment matrix mechanically rather than re-arguing severity from scratch after the facts are set.
-- Save a final visible report using the attack-path analysis report path from `../../references/scan-artifacts.md`.
+- Save a final visible report for each candidate finding using that finding's attack-path analysis report path from `../../references/scan-artifacts.md`.
 
 -- Considerations for attack path --
 - A finding should count as a real security issue if a realistic attacker could use it from a reasonable attack surface relevant to the product, especially if it is something that is part of the thread model.
