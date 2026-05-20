@@ -12,6 +12,7 @@
 Notion:notion-search
 query: "User Profile API spec"
 query_type: "internal"
+filters: {}
 ```
 
 Found: "User Profile API Specification" in Engineering Specs
@@ -307,6 +308,7 @@ None currently
 Notion:notion-search
 query: "Tasks database"
 query_type: "internal"
+filters: {}
 ```
 
 Found: "Engineering Tasks" database
@@ -353,20 +355,12 @@ pages: [{
 ```
 Notion:notion-update-page
 page_id: "user-profile-api-spec-page-id"
-command: "insert_content_after"
-selection_with_ellipsis: "## Acceptance Criteria..."
-new_str: "
-
----
-
-## Implementation
-
-**Implementation Plan**: <mention-page url=\"...\">Implementation Plan: User Profile API</mention-page>
-
-**Implementation Tasks**: See plan for full task breakdown (20 tasks across 5 phases)
-
-**Status**: Planning complete, ready to start implementation
-"
+command: "update_content"
+properties: {}
+content_updates: [{
+  old_str: "## Acceptance Criteria\n- AC-1: All endpoints return proper HTTP status codes\n- AC-2: Validation errors return 400 with error details\n- AC-3: Unauthorized access returns 401\n- AC-4: Rate limit exceeded returns 429\n- AC-5: Avatar images stored in S3",
+  new_str: "## Acceptance Criteria\n- AC-1: All endpoints return proper HTTP status codes\n- AC-2: Validation errors return 400 with error details\n- AC-3: Unauthorized access returns 401\n- AC-4: Rate limit exceeded returns 429\n- AC-5: Avatar images stored in S3\n\n---\n\n## Implementation\n\n**Implementation Plan**: <mention-page url=\"...\">Implementation Plan: User Profile API</mention-page>\n\n**Implementation Tasks**: See plan for full task breakdown (20 tasks across 5 phases)\n\n**Status**: Planning complete, ready to start implementation"
+}]
 ```
 
 ## Summary Provided to User

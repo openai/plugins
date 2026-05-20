@@ -288,6 +288,11 @@ To search and replace text content across many nodes:
 
 ```javascript
 ;(async () => {
+  // Skip invisible instance interiors — hidden component variants don't need
+  // text replacement, and the flag makes findAllWithCriteria hundreds of
+  // times faster on large boards.
+  figma.skipInvisibleInstanceChildren = true
+
   const searchText = 'Sign Up'
   const replaceText = 'Register'
   const caseSensitive = false

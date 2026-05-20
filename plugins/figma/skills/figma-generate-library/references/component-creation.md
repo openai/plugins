@@ -540,7 +540,7 @@ svgNode.remove();
 
 // Bind the icon fill to a color variable (so it respects themes)
 // Find vector children and bind their fills
-iconComp.findAll(n => n.type === 'VECTOR').forEach(vec => {
+iconComp.findAllWithCriteria({ types: ['VECTOR'] }).forEach(vec => {
   // For stroke-based icons:
   if (vec.strokes.length > 0) {
     const strokePaint = figma.variables.setBoundVariableForPaint(
@@ -619,9 +619,11 @@ const key   = node.getSharedPluginData('dsb', 'key');
 **Idempotency check before creating:** before creating a node, scan the current page for an existing node with the same `key`:
 
 ```javascript
-const existing = figma.currentPage.findAll(n =>
-  n.getSharedPluginData('dsb', 'key') === 'componentset/button'
-);
+// Indexed sharedPluginData lookup — the engine only visits nodes that
+// actually carry the dsb namespace key, not every node on the page.
+const existing = figma.currentPage
+  .findAllWithCriteria({ sharedPluginData: { namespace: 'dsb', keys: ['key'] } })
+  .filter(n => n.getSharedPluginData('dsb', 'key') === 'componentset/button');
 if (existing.length > 0) {
   // Skip creation — already done. Return existing node's ID.
   return { componentSetId: existing[0].id };
@@ -785,8 +787,11 @@ const PAGE_ID = 'PAGE_ID_FROM_STATE';
 const page = await figma.getNodeByIdAsync(PAGE_ID);
 await figma.setCurrentPageAsync(page);
 
-// Idempotency check
-const existing = page.findAll(n => n.getSharedPluginData('dsb', 'key') === 'doc/button');
+// Idempotency check — use the sharedPluginData index instead of a per-node
+// findAll callback.
+const existing = page
+  .findAllWithCriteria({ sharedPluginData: { namespace: 'dsb', keys: ['key'] } })
+  .filter(n => n.getSharedPluginData('dsb', 'key') === 'doc/button');
 if (existing.length > 0) {
   return { docFrameId: existing[0].id };
 }
@@ -861,11 +866,14 @@ await figma.setCurrentPageAsync(page);
 
 const base = await figma.getNodeByIdAsync(BASE_ID);
 
-// Load all variables
+// Load all variables in parallel — sequential awaits in the loop would
+// serialize one IPC round-trip per variable.
+const varEntries = Object.entries(VAR);
+const fetched = await Promise.all(
+  varEntries.map(([, id]) => figma.variables.getVariableByIdAsync(id))
+);
 const vars = {};
-for (const [k, v] of Object.entries(VAR)) {
-  vars[k] = await figma.variables.getVariableByIdAsync(v);
-}
+varEntries.forEach(([k], i) => { vars[k] = fetched[i]; });
 
 const axes = {
   Size:  ['Small', 'Medium', 'Large'],

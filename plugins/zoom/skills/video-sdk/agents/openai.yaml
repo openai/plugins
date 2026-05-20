@@ -1,0 +1,5 @@
+interface:
+  display_name: Build Zoom Video SDK App
+  short_description: Use when using Video SDK.
+policy:
+  allow_implicit_invocation: false

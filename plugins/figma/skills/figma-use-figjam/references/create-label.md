@@ -102,12 +102,16 @@ const size = 48
 const spacing = 16
 const labelLocation = { x: 100, y: 100 }
 
-// Pass 1: create all labels
+// Pass 1: create all labels.
+// All labels share the same default font — load once before the loop instead
+// of awaiting per-iteration.
+const probe = figma.createShapeWithText()
+await figma.loadFontAsync(probe.text.fontName)
+probe.remove()
 const labels = []
 for (let i = 1; i <= count; i++) {
   const label = figma.createShapeWithText()
   label.shapeType = 'ELLIPSE'
-  await figma.loadFontAsync(label.text.fontName)
   label.text.characters = String(i)
   label.resize(size, size)
   label.text.fontSize = 20
@@ -143,12 +147,16 @@ const size = 48
 const spacing = 16
 const labelLocation = { x: 100, y: 100 }
 
-// Pass 1: create all labels
+// Pass 1: create all labels.
+// All labels share the same default font — load once before the loop instead
+// of awaiting per-iteration.
+const probe = figma.createShapeWithText()
+await figma.loadFontAsync(probe.text.fontName)
+probe.remove()
 const labels = []
 for (const letter of letters) {
   const label = figma.createShapeWithText()
   label.shapeType = 'ELLIPSE'
-  await figma.loadFontAsync(label.text.fontName)
   label.text.characters = letter
   label.resize(size, size)
   label.text.fontSize = 20
@@ -211,12 +219,23 @@ const annotations = [
 // targetNodes: the nodes being annotated, one per annotation
 // (derive from node IDs passed in the user message)
 
+// Pre-load the label and sticky default fonts in parallel — both fonts are
+// the same for every iteration, so awaiting inside the loop would needlessly
+// serialize the work.
+const labelProbe = figma.createShapeWithText()
+const stickyProbe = figma.createSticky()
+await Promise.all([
+  figma.loadFontAsync(labelProbe.text.fontName),
+  figma.loadFontAsync(stickyProbe.text.fontName),
+])
+labelProbe.remove()
+stickyProbe.remove()
+
 // Pass 1: create labels and stickies
 const pairs = []
 for (const item of annotations) {
   const label = figma.createShapeWithText()
   label.shapeType = 'ELLIPSE'
-  await figma.loadFontAsync(label.text.fontName)
   label.text.characters = item.number
   label.resize(48, 48)
   label.text.fontSize = 20
@@ -225,7 +244,6 @@ for (const item of annotations) {
   label.text.fills = [{ type: 'SOLID', color: PRESET_BLUE.text }]
 
   const sticky = figma.createSticky()
-  await figma.loadFontAsync(sticky.text.fontName)
   sticky.text.characters = `${item.number}. ${item.text}`
 
   pairs.push({ label, sticky })

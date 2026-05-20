@@ -201,7 +201,10 @@ const btn = figma.createFrame();
 btn.layoutMode = "HORIZONTAL";
 btn.cornerRadius = 8;
 
-const contentSlot = instance.findOne(n => n.type === "SLOT" && n.name === "Content");
+// Use the type-indexed criteria for the type filter, then narrow by name.
+const contentSlot = instance
+  .findAllWithCriteria({ types: ["SLOT"] })
+  .find(n => n.name === "Content");
 contentSlot.appendChild(btn);
 
 // If a post-append edit throws "Parent not found", re-find via the slot:
@@ -244,18 +247,31 @@ This works for icons, avatars, badges, or any swappable nested element.
 
 ### List all existing components across all pages
 
+`search_design_system` (MCP tool) is an option for published components. For on-canvas components, **don't loop pages inside one script** — even for read-only discovery.
+
+**Prefer the two-step fan-out:**
+
 ```javascript
-const results = [];
-for (const page of figma.root.children) {
-  await figma.setCurrentPageAsync(page);
-  page.findAll(n => {
-    if (n.type === 'COMPONENT') results.push(`[${page.name}] ${n.name} (COMPONENT) id=${n.id}`);
-    if (n.type === 'COMPONENT_SET') results.push(`[${page.name}] ${n.name} (COMPONENT_SET) id=${n.id}`);
-    return false;
-  });
-}
-return results.join('\n');
+// Step 1 — one cheap use_figma call, no page switch. Returns the page IDs to fan out over.
+return figma.root.children.map(p => ({ id: p.id, name: p.name }));
 ```
+
+Then in the **next assistant turn, emit one `use_figma` per page in parallel** (a single message with N tool-use blocks). Each script runs:
+
+```javascript
+// Read-only discovery — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
+// Step 2 — one call per page, currentPage set exactly once.
+// The agent MUST issue N of these in parallel in one message — do not loop pages inside the script.
+const page = await figma.getNodeByIdAsync(PAGE_ID); // PAGE_ID supplied by caller
+await figma.setCurrentPageAsync(page);
+// Indexed type lookup — much faster than findAll with a side-effect predicate.
+const matches = page.findAllWithCriteria({ types: ['COMPONENT', 'COMPONENT_SET'] });
+return matches.map(n => ({ pageName: page.name, name: n.name, type: n.type, id: n.id }));
+```
+
+See [gotchas.md → Set current page once per `use_figma` call](gotchas.md#set-current-page-once-per-use_figma-call--split-multi-page-work-into-parallel-calls) for the full rule.
 
 ### Inspect an existing component set's variant naming pattern
 
@@ -268,18 +284,25 @@ return { variantNames, propDefs };
 
 ### Find existing components in the file
 
+`search_design_system` is an option for published components. For on-canvas components, use the two-step fan-out from the section above — **don't loop pages inside one script.**
+
+**Step 1** — one cheap `use_figma` call returns page IDs:
+
 ```javascript
-const components = [];
-for (const page of figma.root.children) {
-  await figma.setCurrentPageAsync(page);
-  page.findAll(n => {
-    if (n.type === 'COMPONENT') {
-      components.push({ name: n.name, id: n.id, page: page.name, w: n.width, h: n.height });
-    }
-    return false;
-  });
-}
-return components;
+return figma.root.children.map(p => ({ id: p.id, name: p.name }));
+```
+
+**Step 2** — the agent MUST emit one `use_figma` per page in parallel (a single message with N tool-use blocks). Each script:
+
+```javascript
+// Read-only discovery — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
+const page = await figma.getNodeByIdAsync(PAGE_ID);
+await figma.setCurrentPageAsync(page);
+// Indexed type lookup — much faster than findAll with a side-effect predicate.
+const components = page.findAllWithCriteria({ types: ['COMPONENT'] });
+return components.map(n => ({ name: n.name, id: n.id, page: page.name, w: n.width, h: n.height }));
 ```
 
 ## Importing Components by Key (Team Libraries)
@@ -287,12 +310,15 @@ return components;
 `importComponentByKeyAsync` and `importComponentSetByKeyAsync` import components from **team libraries** (not the same file you're working in). For components in the current file, use `figma.getNodeByIdAsync()` or `findOne()`/`findAll()` to locate them directly.
 
 ```javascript
-// Import a component from a team library
-const comp = await figma.importComponentByKeyAsync("COMPONENT_KEY");
+// Batch independent imports with Promise.all — sequential awaits multiply
+// IPC latency by the number of imports for no benefit.
+const [comp, set] = await Promise.all([
+  figma.importComponentByKeyAsync("COMPONENT_KEY"),
+  figma.importComponentSetByKeyAsync("COMPONENT_SET_KEY"),
+]);
+
 const instance = comp.createInstance();
 
-// Import a component set from a team library and pick a variant
-const set = await figma.importComponentSetByKeyAsync("COMPONENT_SET_KEY");
 const variant = set.children.find(c =>
   c.type === "COMPONENT" && c.name.includes("size=md")
 ) || set.defaultVariant;
@@ -346,7 +372,7 @@ return propDefs;
 Also check nested instances — a parent component may not expose text properties directly, but its nested child instances might:
 
 ```javascript
-const nestedInstances = instance.findAll(n => n.type === "INSTANCE");
+const nestedInstances = instance.findAllWithCriteria({ types: ["INSTANCE"] });
 const nestedProps = nestedInstances.map(ni => ({
   name: ni.name,
   id: ni.id,
@@ -369,7 +395,10 @@ for (const [key, def] of Object.entries(propDefs)) {
 For nested instances that expose their own TEXT properties, call `setProperties()` on the nested instance:
 
 ```javascript
-const nestedHeading = instance.findOne(n => n.type === "INSTANCE" && n.name === "Text Heading");
+// Use the type-indexed criteria for the type filter, then narrow by name.
+const nestedHeading = instance
+  .findAllWithCriteria({ types: ["INSTANCE"] })
+  .find(n => n.name === "Text Heading");
 if (nestedHeading) {
   nestedHeading.setProperties({ "Text#2104:5": "Actual heading text" });
 }
@@ -378,9 +407,15 @@ if (nestedHeading) {
 **Step 3: Only fall back to direct node.characters for unmanaged text.** If text is NOT controlled by any component property, find text nodes directly. **Always load the node's actual font first** — instance text nodes inherit fonts from the source component, so don't assume Inter Regular:
 
 ```javascript
-const textNodes = instance.findAll(n => n.type === "TEXT");
+const textNodes = instance.findAllWithCriteria({ types: ["TEXT"] });
+// Dedupe fonts and load them in parallel before mutating text. Awaiting
+// loadFontAsync per node in the loop serializes one IPC round-trip per
+// text node and reloads the same font repeatedly.
+const uniqueFonts = [...new Map(
+  textNodes.map(t => [JSON.stringify(t.fontName), t.fontName])
+).values()];
+await Promise.all(uniqueFonts.map(f => figma.loadFontAsync(f)));
 for (const t of textNodes) {
-  await figma.loadFontAsync(t.fontName);
   t.characters = "Updated text";
 }
 ```

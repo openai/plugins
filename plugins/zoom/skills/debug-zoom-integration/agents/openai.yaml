@@ -1,0 +1,5 @@
+interface:
+  display_name: Debug Zoom Integration
+  short_description: Use when isolating failures.
+policy:
+  allow_implicit_invocation: false

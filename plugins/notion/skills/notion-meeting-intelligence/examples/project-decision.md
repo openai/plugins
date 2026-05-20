@@ -320,7 +320,7 @@ We successfully migrated from Redis to Memcached in 2023, which took 6 weeks. Ke
 
 ```
 Notion:notion-create-comment
-parent: { page_id: "agenda-page-id" }
+page_id: "agenda-page-id"
 rich_text: [{
   type: "text",
   text: { content: "📋 Meeting agenda ready! Please review the pre-read before tomorrow's meeting. cc: @Sarah @David @Alice @Bob @Carol" }

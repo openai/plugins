@@ -1,0 +1,5 @@
+interface:
+  display_name: Zoom General
+  short_description: Use when comparing products.
+policy:
+  allow_implicit_invocation: false

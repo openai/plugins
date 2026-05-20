@@ -10838,6 +10838,12 @@ interface SlideNode extends BaseFrameMixin {
    * Read and set whether or not the slide is skipped in the presentation.
    */
   isSkippedSlide: boolean
+  /**
+   * Read and set the speaker notes for this slide as a markdown string. See
+   * the figma-use-slides skill's slide-properties reference for the full
+   * list of supported and unsupported markdown formatting.
+   */
+  speakerNotes: string
 }
 /**
  * @see https://developers.figma.com/docs/plugins/api/SlideRowNode

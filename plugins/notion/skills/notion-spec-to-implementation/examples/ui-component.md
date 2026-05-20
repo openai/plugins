@@ -8,12 +8,15 @@
 ```
 Notion:notion-search
 query: "search component design spec"
+query_type: "internal"
+filters: {}
 ```
 Found: "Global Search Redesign Spec"
 
 ### 2. Fetch & Parse Spec
 ```
 Notion:notion-fetch
+id: "global-search-redesign-spec-page-id"
 ```
 
 **Requirements**:
@@ -27,6 +30,13 @@ Notion:notion-fetch
 ### 3. Create Implementation Plan
 ```
 Notion:notion-create-pages
+parent: { page_id: "engineering-plans-parent-id" }
+pages: [{
+  properties: {
+    "title": "Implementation Plan: Global Search Redesign"
+  },
+  content: "[Implementation plan]"
+}]
 ```
 
 **Plan phases**:
@@ -38,7 +48,16 @@ Notion:notion-create-pages
 
 ### 4. Create Tasks
 ```
-Notion:notion-create-pages (7 tasks)
+Notion:notion-create-pages
+parent: { data_source_id: "collection://engineering-tasks-data-source-id" }
+pages: [{
+  properties: {
+    "Task": "Create SearchInput component",
+    "Status": "To Do",
+    "Priority": "High"
+  },
+  content: "[Task description and acceptance criteria]"
+}]
 ```
 
 **Tasks**:

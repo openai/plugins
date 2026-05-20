@@ -32,59 +32,8 @@ async function bindVariablesToComponent(component, bindings) {
     return { mutatedNodeIds }
   }
 
-  // --- Fills ---
-  if (bindings.fills) {
-    const fillVar = await figma.variables.getVariableByIdAsync(bindings.fills)
-    if (fillVar) {
-      const existingFills = component.fills
-      if (Array.isArray(existingFills) && existingFills.length > 0) {
-        // Bind the color of the first fill to the variable
-        const boundFill = figma.variables.setBoundVariableForPaint(
-          existingFills[0],
-          'color',
-          fillVar,
-        )
-        component.fills = [boundFill, ...existingFills.slice(1)]
-      } else {
-        // No existing fill — create a solid fill bound to the variable
-        const boundFill = figma.variables.setBoundVariableForPaint(
-          { type: 'SOLID', color: { r: 0.5, g: 0.5, b: 0.5 } },
-          'color',
-          fillVar,
-        )
-        component.fills = [boundFill]
-      }
-      mutatedNodeIds.push(component.id)
-    }
-  }
-
-  // --- Strokes ---
-  if (bindings.strokes) {
-    const strokeVar = await figma.variables.getVariableByIdAsync(bindings.strokes)
-    if (strokeVar) {
-      const existingStrokes = component.strokes
-      if (Array.isArray(existingStrokes) && existingStrokes.length > 0) {
-        const boundStroke = figma.variables.setBoundVariableForPaint(
-          existingStrokes[0],
-          'color',
-          strokeVar,
-        )
-        component.strokes = [boundStroke, ...existingStrokes.slice(1)]
-      } else {
-        const boundStroke = figma.variables.setBoundVariableForPaint(
-          { type: 'SOLID', color: { r: 0.5, g: 0.5, b: 0.5 } },
-          'color',
-          strokeVar,
-        )
-        component.strokes = [boundStroke]
-      }
-      if (!mutatedNodeIds.includes(component.id)) {
-        mutatedNodeIds.push(component.id)
-      }
-    }
-  }
-
-  // --- Spacing properties (FLOAT variables bound via setBoundVariable) ---
+  // Batch every getVariableByIdAsync call upfront in a single Promise.all rather
+  // than awaiting per-property — the lookups are independent and IPC-bound.
   const floatBindings = [
     ['paddingTop', 'paddingTop'],
     ['paddingBottom', 'paddingBottom'],
@@ -94,15 +43,75 @@ async function bindVariablesToComponent(component, bindings) {
     ['cornerRadius', 'cornerRadius'],
   ]
 
+  const requestedIds = []
+  if (bindings.fills) requestedIds.push(['fills', bindings.fills])
+  if (bindings.strokes) requestedIds.push(['strokes', bindings.strokes])
+  for (const [bindingKey] of floatBindings) {
+    if (bindings[bindingKey]) requestedIds.push([bindingKey, bindings[bindingKey]])
+  }
+
+  const resolved = await Promise.all(
+    requestedIds.map(([, id]) => figma.variables.getVariableByIdAsync(id)),
+  )
+  const varByKey = {}
+  for (let i = 0; i < requestedIds.length; i++) {
+    varByKey[requestedIds[i][0]] = resolved[i]
+  }
+
+  const markMutated = () => {
+    if (!mutatedNodeIds.includes(component.id)) {
+      mutatedNodeIds.push(component.id)
+    }
+  }
+
+  // --- Fills ---
+  const fillVar = varByKey.fills
+  if (fillVar) {
+    const existingFills = component.fills
+    if (Array.isArray(existingFills) && existingFills.length > 0) {
+      // Bind the color of the first fill to the variable
+      const boundFill = figma.variables.setBoundVariableForPaint(existingFills[0], 'color', fillVar)
+      component.fills = [boundFill, ...existingFills.slice(1)]
+    } else {
+      // No existing fill — create a solid fill bound to the variable
+      const boundFill = figma.variables.setBoundVariableForPaint(
+        { type: 'SOLID', color: { r: 0.5, g: 0.5, b: 0.5 } },
+        'color',
+        fillVar,
+      )
+      component.fills = [boundFill]
+    }
+    markMutated()
+  }
+
+  // --- Strokes ---
+  const strokeVar = varByKey.strokes
+  if (strokeVar) {
+    const existingStrokes = component.strokes
+    if (Array.isArray(existingStrokes) && existingStrokes.length > 0) {
+      const boundStroke = figma.variables.setBoundVariableForPaint(
+        existingStrokes[0],
+        'color',
+        strokeVar,
+      )
+      component.strokes = [boundStroke, ...existingStrokes.slice(1)]
+    } else {
+      const boundStroke = figma.variables.setBoundVariableForPaint(
+        { type: 'SOLID', color: { r: 0.5, g: 0.5, b: 0.5 } },
+        'color',
+        strokeVar,
+      )
+      component.strokes = [boundStroke]
+    }
+    markMutated()
+  }
+
+  // --- Spacing properties (FLOAT variables bound via setBoundVariable) ---
   for (const [bindingKey, figmaProp] of floatBindings) {
-    if (bindings[bindingKey]) {
-      const variable = await figma.variables.getVariableByIdAsync(bindings[bindingKey])
-      if (variable) {
-        component.setBoundVariable(figmaProp, variable)
-        if (!mutatedNodeIds.includes(component.id)) {
-          mutatedNodeIds.push(component.id)
-        }
-      }
+    const variable = varByKey[bindingKey]
+    if (variable) {
+      component.setBoundVariable(figmaProp, variable)
+      markMutated()
     }
   }
 

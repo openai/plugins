@@ -28,14 +28,15 @@ figma.closePlugin()
 
 ### 2. Skip Invisible Instance Children
 
-For large files with many component instances, this significantly speeds up traversal.
+For large files with many component instances, this significantly speeds up traversal — up to hundreds of times faster on `findAllWithCriteria`. See [figma-use → gotchas.md → Set figma.skipInvisibleInstanceChildren](../../figma-use/references/gotchas.md#set-figmaskipinvisibleinstancechildren--true-for-read-only-traversal) for the full rule and caveats. Don't enable it when you specifically need to read or mutate invisible content inside instances.
 
 ```javascript
 // Enable at the start of your script
 figma.skipInvisibleInstanceChildren = true
 
-// Now findAll/findOne will skip hidden content inside instances
-const visibleText = figma.currentPage.findAll((n) => n.type === 'TEXT')
+// Now findAll / findOne / findAllWithCriteria skip hidden content inside
+// instances. Combine with the type-indexed lookup from Tip 1 for max speed.
+const visibleText = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] })
 
 figma.closePlugin()
 ```
@@ -45,13 +46,13 @@ figma.closePlugin()
 Search within a specific node rather than the entire page.
 
 ```javascript
-// ✅ FAST - Search within specific frame
+// ✅ FAST - Search within specific frame, using indexed type lookup
 const frame = await figma.getNodeByIdAsync('123:456')
-if (frame && 'findAll' in frame) {
-  const textInFrame = frame.findAll((n) => n.type === 'TEXT')
+if (frame && 'findAllWithCriteria' in frame) {
+  const textInFrame = frame.findAllWithCriteria({ types: ['TEXT'] })
 }
 
-// ❌ SLOWER - Search entire page
+// ❌ SLOWER - Whole-page predicate scan
 const allText = figma.currentPage.findAll((n) => n.type === 'TEXT')
 
 figma.closePlugin()
@@ -251,11 +252,12 @@ figma.closePlugin()
 ### Content-Based Naming (Name from Text Content)
 
 ```javascript
-const frames = figma.currentPage.findAll((n) => n.type === 'FRAME' && 'children' in n)
+const frames = figma.currentPage.findAllWithCriteria({ types: ['FRAME'] })
 
 let renamed = 0
 for (const frame of frames) {
-  const heading = frame.findOne((n) => n.type === 'TEXT')
+  // Use the type-indexed criteria for type-based searches; take the first match.
+  const heading = frame.findAllWithCriteria({ types: ['TEXT'] })[0]
   if (heading) {
     frame.name = heading.characters.slice(0, 40)
     renamed++
@@ -285,9 +287,10 @@ figma.closePlugin()
 Figma groups layers in the panel by `/` in names (e.g., `icons/arrow`, `icons/check`).
 
 ```javascript
-const icons = figma.currentPage.findAll(
-  (n) => n.type === 'INSTANCE' && n.name.toLowerCase().includes('icon'),
-)
+// Use the type-indexed criteria for the type filter, then narrow by name.
+const icons = figma.currentPage
+  .findAllWithCriteria({ types: ['INSTANCE'] })
+  .filter((n) => n.name.toLowerCase().includes('icon'))
 
 for (const icon of icons) {
   if (!icon.name.startsWith('icons/')) {

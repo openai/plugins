@@ -215,8 +215,8 @@ node.paddingRight = 8
 node.paddingTop = 4
 node.paddingBottom = 4
 node.itemSpacing = 4
-node.layoutSizingHorizontal = 'HUG'     // 'FIXED' | 'HUG' | 'FILL'
-node.layoutSizingVertical = 'HUG'       // 'FIXED' | 'HUG' | 'FILL'
+node.layoutSizingHorizontal = 'HUG'     // 'FIXED' | 'HUG' | 'FILL' — see Gotchas: HUG needs auto-layout frame or TEXT child; FILL needs an auto-layout-child that isn't absolute/immutable/grid
+node.layoutSizingVertical = 'HUG'       // 'FIXED' | 'HUG' | 'FILL' — same value rules as horizontal
 
 // Sizing
 node.resize(width, height)                     // ⚠️ Resets sizing modes to FIXED
@@ -315,13 +315,26 @@ return "success message"        // Return string
 
 ## Node Traversal
 
+These properties and methods are defined on `ChildrenMixin` — they exist on container nodes only (`DocumentNode`, `PageNode`, `FrameNode`, `GroupNode`, `ComponentNode`, `ComponentSetNode`, `InstanceNode`, `SectionNode`, `BooleanOperationNode`). They do **NOT** exist on leaf nodes (`TextNode`, `RectangleNode`, `EllipseNode`, `LineNode`, `PolygonNode`, `StarNode`, `VectorNode`, `SliceNode`). Accessing `.children` on a leaf node throws `TypeError: node.children: no such property 'children' on TEXT node` (or `RECTANGLE`, etc.). The same pattern applies to many other mixin-scoped members (`fills`, `layoutMode`, `x`/`y`, text-only methods) — see [Gotchas → "no such property" errors](gotchas.md#no-such-property-errors--reading-or-calling-members-not-defined-on-the-node-type).
+
 ```js
-node.findAll(pred?)            // Find all descendants matching predicate
-node.findOne(pred?)            // Find first descendant matching predicate
-node.findChildren(pred?)       // Find direct children matching predicate
-node.findChild(pred?)          // Find first direct child matching predicate
-node.children                  // Direct children array
-node.parent                    // Parent node
+node.findAll(pred?)            // Find all descendants matching predicate (ChildrenMixin only)
+node.findOne(pred?)            // Find first descendant matching predicate (ChildrenMixin only)
+node.findChildren(pred?)       // Find direct children matching predicate (ChildrenMixin only)
+node.findChild(pred?)          // Find first direct child matching predicate (ChildrenMixin only)
+node.children                  // Direct children array (ChildrenMixin only)
+node.parent                    // Parent node (all nodes)
+```
+
+To safely descend an arbitrary subtree, guard with a `"children" in node` check or a type check before reading `.children`:
+
+```js
+function walk(node) {
+  // ... do work on node ...
+  if ("children" in node) {
+    for (const child of node.children) walk(child);
+  }
+}
 ```
 
 ---
@@ -336,4 +349,4 @@ node.parent                    // Parent node
 | `figma.loadAllPagesAsync()` | Not implemented |
 | `figma.variables.extendLibraryCollectionByKeyAsync()` | Not implemented |
 | `figma.teamLibrary.*` | Not implemented (requires the team-library backend) |
-| `figma.getLocalComponents*()` | **Does not exist** — unlike styles, there is no `getLocalComponents()` or `getLocalComponentSetsAsync()` (or any `getLocalComponent*` variant). Use `findAll(n => n.type === 'COMPONENT')` / `findAll(n => n.type === 'COMPONENT_SET')` to locate components in the current file. |
+| `figma.getLocalComponents*()` | **Does not exist** — unlike styles, there is no `getLocalComponents()` or `getLocalComponentSetsAsync()` (or any `getLocalComponent*` variant). Use `page.findAllWithCriteria({ types: ['COMPONENT', 'COMPONENT_SET'] })` to locate components in the current file (avoid the slower `findAll(n => n.type === '…')` predicate scan). |

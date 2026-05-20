@@ -1479,6 +1479,18 @@
       "category": "Productivity"
     },
     {
+      "name": "zoom",
+      "source": {
+        "source": "local",
+        "path": "./plugins/zoom"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "similarweb",
       "source": {
         "source": "local",

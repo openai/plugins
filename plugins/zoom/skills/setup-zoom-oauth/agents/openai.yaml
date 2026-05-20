@@ -1,0 +1,5 @@
+interface:
+  display_name: "/setup-zoom-oauth"
+  short_description: Use when setting up OAuth.
+policy:
+  allow_implicit_invocation: false

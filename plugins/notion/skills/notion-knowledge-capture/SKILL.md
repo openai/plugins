@@ -16,6 +16,12 @@ Convert conversations and notes into structured, linkable Notion pages for easy 
 4) Draft the page with `Notion:notion-create-pages` using the database’s schema; include summary, context, source links, and tags/owners.
 5) Link from hub pages and related records; update status/owners with `Notion:notion-update-page` as the source evolves.
 
+## Tool-call guardrails
+- Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed. If several query variants are useful, issue separate searches instead of writing `or` or `+` inside one query string.
+- Only pass Notion page, database, or data-source URLs/IDs to `Notion:notion-fetch`. Search can also surface external connected-source URLs; use those as context or citations, but do not feed them into `notion-fetch`.
+- Create pages with an explicit `parent` and a `pages` array. For database-backed pages, fetch the database first and use the returned `collection://...` data source ID.
+- To edit existing page content, fetch the current page first, then use `Notion:notion-update-page` with `command: "update_content"`, `properties: {}`, and exact `old_str` / full replacement `new_str` pairs. For property-only edits, use `command: "update_properties"` with `content_updates: []`. The current deployed schema expects both top-level fields even when one is unused. Do not invent insertion-only commands.
+
 ## Workflow
 ### 0) If Notion tools are unavailable, pause and ask the user to connect the Notion app:
 1. Enable the bundled Notion app for this plugin or session.

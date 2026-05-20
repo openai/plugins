@@ -94,9 +94,13 @@ Mark resolved components. If all components are resolved, skip 2a-ii and 2a-iii.
 **2a-ii — REQUIRED if unresolved components remain: Inspect existing screens.** Check if the target file already contains screens using the same design system. A single `use_figma` call that walks an existing frame's instances gives you an exact, authoritative component map:
 
 ```js
+// Read-only discovery — skip invisible content inside instances (hidden
+// variants etc.) for the hundreds-of-times-faster findAllWithCriteria.
+figma.skipInvisibleInstanceChildren = true;
+
 const frame = figma.currentPage.findOne(n => n.name === "Existing Screen");
 const uniqueSets = new Map();
-frame.findAll(n => n.type === "INSTANCE").forEach(inst => {
+frame.findAllWithCriteria({ types: ["INSTANCE"] }).forEach(inst => {
   const mc = inst.mainComponent;
   const cs = mc?.parent?.type === "COMPONENT_SET" ? mc.parent : null;
   const key = cs ? cs.key : mc?.key;
@@ -169,22 +173,28 @@ If initial searches return empty, try shorter fragments or different naming conv
 Inspect an existing screen's bound variables for the most authoritative results:
 
 ```js
+// Read-only discovery — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
 const frame = figma.currentPage.findOne(n => n.name === "Existing Screen");
-const varMap = new Map();
-frame.findAll(() => true).forEach(node => {
-  const bv = node.boundVariables;
-  if (!bv) return;
-  for (const [prop, binding] of Object.entries(bv)) {
-    const bindings = Array.isArray(binding) ? binding : [binding];
-    for (const b of bindings) {
-      if (b?.id && !varMap.has(b.id)) {
-        const v = await figma.variables.getVariableByIdAsync(b.id);
-        if (v) varMap.set(b.id, { name: v.name, id: v.id, key: v.key, type: v.resolvedType, remote: v.remote });
-      }
-    }
-  }
-});
-return [...varMap.values()];
+
+// boundVariables can live on any scene node — enumerating every scene type
+// just to feed findAllWithCriteria is roughly the same as findAll(() => true)
+// and is much noisier in script output.
+const uniqueIds = new Set(
+  frame.findAll(() => true).flatMap(n =>
+    Object.values(n.boundVariables ?? {})
+      .flatMap(b => Array.isArray(b) ? b : [b])
+      .map(b => b?.id)
+      .filter(Boolean)
+  )
+);
+const variables = await Promise.all(
+  [...uniqueIds].map(id => figma.variables.getVariableByIdAsync(id))
+);
+return variables
+  .filter(Boolean)
+  .map(v => ({ name: v.name, id: v.id, key: v.key, type: v.resolvedType, remote: v.remote }));
 ```
 
 For library variables (remote = true), import them by key with `figma.variables.importVariableByKeyAsync(key)`. For local variables, use `figma.variables.getVariableByIdAsync(id)` directly.
@@ -196,9 +206,16 @@ See [variable-patterns.md](../figma-use/references/variable-patterns.md) for bin
 Search for styles using `search_design_system` with `includeStyles: true` and terms like "heading", "body", "shadow", "elevation". Or inspect what an existing screen uses:
 
 ```js
+// Read-only discovery — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
 const frame = figma.currentPage.findOne(n => n.name === "Existing Screen");
 const styles = { text: new Map(), effect: new Map() };
-frame.findAll(() => true).forEach(node => {
+
+for (const node of frame.findAll(() => true)) {
+  // textStyleId is on TEXT and TEXT_PATH; effectStyleId is on most scene
+  // shape/container types. Use `in` guards to handle both without an
+  // exhaustive type list.
   if ('textStyleId' in node && node.textStyleId) {
     const s = figma.getStyleById(node.textStyleId);
     if (s) styles.text.set(s.id, { name: s.name, id: s.id, key: s.key });
@@ -207,7 +224,8 @@ frame.findAll(() => true).forEach(node => {
     const s = figma.getStyleById(node.effectStyleId);
     if (s) styles.effect.set(s.id, { name: s.name, id: s.id, key: s.key });
   }
-});
+}
+
 return {
   textStyles: [...styles.text.values()],
   effectStyles: [...styles.effect.values()]
@@ -257,17 +275,20 @@ return { success: true, wrapperId: wrapper.id };
 
 ```js
 const createdNodeIds = [];
-const wrapper = await figma.getNodeByIdAsync("WRAPPER_ID_FROM_STEP_3");
 
-// Import design system components by key
-const buttonSet = await figma.importComponentSetByKeyAsync("BUTTON_SET_KEY");
+// Resolve the wrapper and import every design system dependency in parallel.
+// Sequential awaits here serialize N independent IPC round-trips at the top
+// of every section build; one Promise.all is dramatically faster.
+const [wrapper, buttonSet, bgColorVar, spacingVar, shadowStyle] = await Promise.all([
+  figma.getNodeByIdAsync("WRAPPER_ID_FROM_STEP_3"),
+  figma.importComponentSetByKeyAsync("BUTTON_SET_KEY"),
+  figma.variables.importVariableByKeyAsync("BG_COLOR_VAR_KEY"),
+  figma.variables.importVariableByKeyAsync("SPACING_VAR_KEY"),
+  figma.importStyleByKeyAsync("SHADOW_STYLE_KEY"),
+]);
 const primaryButton = buttonSet.children.find(c =>
   c.type === "COMPONENT" && c.name.includes("variant=primary")
 ) || buttonSet.defaultVariant;
-
-// Import design system variables for colors and spacing
-const bgColorVar = await figma.variables.importVariableByKeyAsync("BG_COLOR_VAR_KEY");
-const spacingVar = await figma.variables.importVariableByKeyAsync("SPACING_VAR_KEY");
 
 // Build section frame with variable bindings (not hardcoded values)
 const section = figma.createAutoLayout();
@@ -279,8 +300,7 @@ const bgPaint = figma.variables.setBoundVariableForPaint(
 );
 section.fills = [bgPaint];
 
-// Import and apply text/effect styles
-const shadowStyle = await figma.importStyleByKeyAsync("SHADOW_STYLE_KEY");
+// Apply the effect style imported above
 section.effectStyleId = shadowStyle.id;
 
 // Create component instances inside the section
@@ -305,7 +325,10 @@ Component instances ship with placeholder text ("Title", "Heading", "Button"). U
 For nested instances that expose their own TEXT properties, call `setProperties()` on the nested instance:
 
 ```js
-const nestedHeading = cardInstance.findOne(n => n.type === "INSTANCE" && n.name === "Text Heading");
+// Use the type-indexed criteria for the type filter, then narrow by name.
+const nestedHeading = cardInstance
+  .findAllWithCriteria({ types: ["INSTANCE"] })
+  .find(n => n.name === "Text Heading");
 if (nestedHeading) {
   nestedHeading.setProperties({ "Text#2104:5": "Actual heading from source code" });
 }
@@ -346,18 +369,14 @@ If you ran `generate_figma_design` in parallel (mandatory when the source contai
 
 1. Find all image nodes in the capture output by searching for fills with `type === "IMAGE"`:
    ```js
+   // Read-only image inventory — skip invisible instance interiors for speed.
+   figma.skipInvisibleInstanceChildren = true;
+
    const capture = await figma.getNodeByIdAsync("CAPTURE_NODE_ID");
-   const imageNodes = [];
-   capture.findAll(n => {
-     if (n.fills && Array.isArray(n.fills)) {
-       for (const fill of n.fills) {
-         if (fill.type === "IMAGE") {
-           imageNodes.push({ name: n.name, id: n.id, imageHash: fill.imageHash });
-           return true;
-         }
-       }
-     }
-     return false;
+   const imageNodes = capture.findAll(() => true).flatMap(n => {
+     if (!Array.isArray(n.fills)) return [];
+     const imageFill = n.fills.find(f => f.type === "IMAGE");
+     return imageFill ? [{ name: n.name, id: n.id, imageHash: imageFill.imageHash }] : [];
    });
    return imageNodes;
    ```
@@ -383,11 +402,14 @@ When updating rather than creating from scratch:
 4. Validate with `get_screenshot` after each modification.
 
 ```js
-// Example: Swap a button variant in an existing screen
-const existingButton = await figma.getNodeByIdAsync("EXISTING_BUTTON_INSTANCE_ID");
+// Example: Swap a button variant in an existing screen.
+// Batch the node lookup and component-set import in parallel — they are
+// independent and awaiting them sequentially serializes two IPC round-trips.
+const [existingButton, buttonSet] = await Promise.all([
+  figma.getNodeByIdAsync("EXISTING_BUTTON_INSTANCE_ID"),
+  figma.importComponentSetByKeyAsync("BUTTON_SET_KEY"),
+]);
 if (existingButton && existingButton.type === "INSTANCE") {
-  // Import the updated component
-  const buttonSet = await figma.importComponentSetByKeyAsync("BUTTON_SET_KEY");
   const newVariant = buttonSet.children.find(c =>
     c.name.includes("variant=primary") && c.name.includes("size=lg")
   ) || buttonSet.defaultVariant;

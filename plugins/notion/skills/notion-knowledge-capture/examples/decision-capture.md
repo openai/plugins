@@ -14,7 +14,9 @@ From conversation, identified:
 ### 2. Find Decision Log
 ```
 Notion:notion-search
-query: "architecture decisions" or "ADR"
+query: "architecture decisions"
+query_type: "internal"
+filters: {}
 ```
 
 Found: "Architecture Decision Records" database
@@ -22,6 +24,7 @@ Found: "Architecture Decision Records" database
 ### 3. Fetch Schema
 ```
 Notion:notion-fetch
+id: "architecture-decision-records-database-id"
 ```
 
 Got properties: Decision (title), Date, Status, Domain, Impact, Deciders, Stakeholders

@@ -180,11 +180,15 @@ const colors = [
 ]
 const spacing = 64
 
-// Pass 1: Create all stickies and set content
+// Pass 1: Create all stickies and set content.
+// Every sticky uses the same default font, so load it once before the loop
+// rather than awaiting per-iteration.
+const probe = figma.createSticky()
+await figma.loadFontAsync(probe.text.fontName)
+probe.remove()
 const stickies = []
 for (let i = 0; i < labels.length; i++) {
   const sticky = figma.createSticky()
-  await figma.loadFontAsync(sticky.text.fontName)
   sticky.text.characters = labels[i]
   sticky.fills = [{ type: 'SOLID', color: colors[i % colors.length] }]
   stickies.push(sticky)
@@ -212,11 +216,15 @@ const items = ['Task A', 'Task B', 'Task C', 'Task D', 'Task E', 'Task F']
 const cols = 3
 const spacing = 64
 
-// Pass 1: Create all stickies and set content
+// Pass 1: Create all stickies and set content.
+// All stickies share the same default font — load once outside the loop
+// instead of awaiting per-iteration.
+const probe = figma.createSticky()
+await figma.loadFontAsync(probe.text.fontName)
+probe.remove()
 const stickies = []
 for (let i = 0; i < items.length; i++) {
   const sticky = figma.createSticky()
-  await figma.loadFontAsync(sticky.text.fontName)
   sticky.text.characters = items[i]
   sticky.fills = [{ type: 'SOLID', color: h(0xff, 0xe2, 0x99) }] // Yellow #FFE299
   stickies.push(sticky)

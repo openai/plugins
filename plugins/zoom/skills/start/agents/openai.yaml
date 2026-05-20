@@ -1,0 +1,5 @@
+interface:
+  display_name: Start
+  short_description: Use when starting Zoom work.
+policy:
+  allow_implicit_invocation: false

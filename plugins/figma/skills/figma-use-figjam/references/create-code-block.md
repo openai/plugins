@@ -65,7 +65,10 @@ return { id: cb.id }
 To place a code block inside a FigJam section, append it to the section instead of the page:
 
 ```javascript
-const section = figma.currentPage.findOne((n) => n.type === 'SECTION' && n.name === 'My Section')
+// Use the type-indexed criteria for the type filter, then narrow by name.
+const section = figma.currentPage
+  .findAllWithCriteria({ types: ['SECTION'] })
+  .find((n) => n.name === 'My Section')
 if (!section) throw new Error('Section not found')
 
 const cb = figma.createCodeBlock()

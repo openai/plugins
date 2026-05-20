@@ -391,12 +391,14 @@ instance.y = 100;
 These methods import components from **team libraries** (not the same file). For components in the current file, use `figma.getNodeByIdAsync()` or `findOne()`/`findAll()`.
 
 ```javascript
-// Import a published component from a team library by its key
-const comp = await figma.importComponentByKeyAsync(componentKey)
-const instance = comp.createInstance()
+// Batch independent imports with Promise.all — sequential awaits multiply
+// IPC latency by the number of imports for no benefit.
+const [comp, set] = await Promise.all([
+  figma.importComponentByKeyAsync(componentKey),
+  figma.importComponentSetByKeyAsync(componentSetKey),
+])
 
-// Import a published component set from a team library by its key
-const set = await figma.importComponentSetByKeyAsync(componentSetKey)
+const instance = comp.createInstance()
 const variant = set.defaultVariant
 const variantInstance = variant.createInstance()
 ```
@@ -490,13 +492,17 @@ clone.name = "Copy of " + originalNode.name;
 ## Finding Nodes
 
 ```javascript
-// Find by name on current page
+// If you already have the node's ID, NEVER scan — use the indexed lookup.
+const known = await figma.getNodeByIdAsync("123:456");
+
+// Find by name on current page (no ID available)
 const node = figma.currentPage.findOne(n => n.name === "My Frame");
 
-// Find all by type
-const allTexts = figma.currentPage.findAll(n => n.type === "TEXT");
+// Find all by type — use findAllWithCriteria, hundreds of times faster than
+// findAll(n => n.type === '…') because the engine uses an internal type index.
+const allTexts = figma.currentPage.findAllWithCriteria({ types: ["TEXT"] });
 
-// Find all by name pattern
+// Find all by name pattern (predicate is fine — criteria doesn't index name)
 const allButtons = figma.currentPage.findAll(n => n.name.startsWith("Button/"));
 ```
 

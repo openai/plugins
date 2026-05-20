@@ -39,6 +39,14 @@ If the task will produce outgoing Slack text or perform a Slack write, switch to
 - If the user asks for Slack analysis only, return the result in chat unless they also asked for Slack delivery.
 - If the user asks for an unsupported Slack write action, say so and offer the closest supported path instead of forcing a draft.
 
+## Tool Rate Limits
+
+- Slack tools have per-minute RPM quotas by bucket, not by individual tool. Treat `slack_search_*` tools as the search bucket, `slack_read_*`, `slack_list_*`, and lookup-style tools as the read bucket, and message, draft, schedule, or canvas creation tools as the send/write bucket.
+- If a Slack tool returns a 429, do not retry immediately and do not switch to an equivalent tool in the same bucket. If the response includes `Retry-After` or another explicit wait hint, follow it. Otherwise wait about 30 seconds before calling that bucket again.
+- If the same bucket returns another 429 during the task, wait about 1 minute before the next retry, then about 2 minutes after the next 429, continuing with exponential backoff as needed.
+- A 429 in one bucket does not imply the other buckets are exhausted. While waiting on one bucket, continue making useful progress with other buckets when that can advance the task safely.
+- If the task cannot be completed without the exhausted bucket after reasonable backoff, explain the rate limit to the user and return the best partial result or next step.
+
 ## DM Routing
 
 - When the same message is meant for multiple specific people, first look for an existing group DM with the right people and prefer that over duplicate one-to-one DMs.
@@ -47,6 +55,7 @@ If the task will produce outgoing Slack text or perform a Slack write, switch to
 ## Write Safety
 
 - Preserve exact channel names, thread context, links, code snippets, and owners from the source conversation unless the user asks for changes.
+- Before acting on a relative message target such as "last message", "latest reply", "above", or "that message", re-read the destination channel or thread and resolve the target from fresh results. Do not reuse earlier reads for reactions, replies, edits, or other writes.
 - Treat @channel, @here, mass mentions, and customer-facing channels as high-impact. Call them out before posting.
 - Keep post-ready drafts short enough to scan quickly unless the user asks for a long-form announcement.
 - If there are multiple channels or threads with similar topics, identify the intended destination before drafting or posting.

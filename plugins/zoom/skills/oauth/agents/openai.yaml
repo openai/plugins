@@ -1,0 +1,5 @@
+interface:
+  display_name: Zoom OAuth
+  short_description: Use when implementing OAuth.
+policy:
+  allow_implicit_invocation: false

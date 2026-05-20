@@ -16,6 +16,12 @@ Convert a Notion spec into linked implementation plans, tasks, and ongoing statu
 4) Find the task database, confirm schema, then create tasks with `Notion:notion-create-pages`.
 5) Link spec ↔ plan ↔ tasks; keep status current with `Notion:notion-update-page`.
 
+## Tool-call guardrails
+- Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed. Run separate searches for alternate phrasings instead of putting `or` in a single query string.
+- Only send Notion page, database, or data-source URLs/IDs to `Notion:notion-fetch`; external connected-source search results are not fetch targets.
+- Create plans and task pages with explicit `parent` and `pages` fields. For task databases, fetch first and use the returned `collection://...` data source ID.
+- To append an implementation section to a spec, fetch the current section text first, then use `Notion:notion-update-page` with `command: "update_content"`, `properties: {}`, and exact `old_str` / `new_str` content. For property-only edits, use `command: "update_properties"` with `content_updates: []`; the current deployed schema expects both top-level fields even when one is unused.
+
 ## Workflow
 
 ### 0) If Notion tools are unavailable, pause and ask the user to connect the Notion app:

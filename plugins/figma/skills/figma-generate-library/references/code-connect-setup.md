@@ -158,17 +158,23 @@ variable.setVariableCodeSyntax('iOS', 'Color.bgPrimary');
 **WEB syntax bulk example:**
 
 ```javascript
-// In use_figma — set WEB code syntax on all variables in a collection
+// In use_figma — set WEB code syntax on every variable in matching collections.
+// flatMap all variable IDs across matching collections into a single
+// Promise.all so the lookups run in parallel across collections too — same
+// pattern as `listVariableCollectionsAndVariables` in variable-patterns.md.
+// setVariableCodeSyntax is sync, so the writes don't need to be batched.
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
-for (const coll of collections) {
-  if (coll.name !== 'Color') continue;
-  for (const varId of coll.variableIds) {
-    const v = await figma.variables.getVariableByIdAsync(varId);
-    if (!v) continue;
-    // Derive: "color/bg/primary" → "var(--color-bg-primary)"
-    const cssName = 'var(--' + v.name.toLowerCase().replace(/\//g, '-').replace(/\s+/g, '-') + ')';
-    v.setVariableCodeSyntax('WEB', cssName);
-  }
+const ids = collections
+  .filter(c => c.name === 'Color')
+  .flatMap(c => c.variableIds);
+const vars = await Promise.all(
+  ids.map(id => figma.variables.getVariableByIdAsync(id))
+);
+for (const v of vars) {
+  if (!v) continue;
+  // Derive: "color/bg/primary" → "var(--color-bg-primary)"
+  const cssName = 'var(--' + v.name.toLowerCase().replace(/\//g, '-').replace(/\s+/g, '-') + ')';
+  v.setVariableCodeSyntax('WEB', cssName);
 }
 ```
 

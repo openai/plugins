@@ -75,6 +75,37 @@ const slideGrid = figma.currentPage.children.find(c => c.type === "SLIDE_GRID");
 slideGrid.children[0].name = "Intro";
 ```
 
+## Speaker Notes
+
+Speaker notes are the presenter's private companion to each slide. They appear in Presenter View (visible only to the speaker, not the audience) and serve as a script, cue sheet, or talking-points reference during a live presentation.
+
+### When to write speaker notes
+
+- **When asked**: If the user asks for speaker notes, presenter notes, talking points, or a script for a deck, write notes for every slide that has substantive content (skip section dividers or purely decorative slides unless there's something to say).
+- **Presenter-ready decks**: If the user explicitly asks for a deck that is ready to present live, speaker notes are useful. Add them when they help the presenter understand pacing, transitions, or context that is not visible on the slide.
+- **Sparse or visual slides**: If a slide is built around a chart, image, metaphor, or provocative question, notes can help explain what the presenter should say. Use screenshots or `node.screenshot()` for image-heavy, chart-heavy, or visually sparse slides when visual context matters, but don't screenshot every slide by default — images spend context budget.
+- **Don't add notes unprompted**: For normal slide edits, layout work, or updates to existing decks, do not populate speaker notes unless the user asks. Adding notes changes the presentation flow and can surprise the deck owner.
+
+### What good speaker notes look like
+
+Speaker notes are for the *presenter*, not the audience. They should feel like a trusted colleague leaning over and whispering "here's what to say." Good notes:
+
+- **Complement the slide, not repeat it.** If the slide says "Revenue grew 40%", the notes shouldn't say "Revenue grew 40%." They should say *why* it grew, what the audience should take away, or what question this usually prompts.
+- **Are concise and scannable.** A presenter glancing down mid-sentence needs to find their place instantly. Use short bullet points, not dense paragraphs. Each point should be one idea.
+- **Include transitions.** The best notes tell the presenter how to *move* between slides: "After the applause dies down..." or "This builds on the previous point — call back to the 40% figure."
+- **Carry context the slide can't.** Data sources ("Source: Q4 FY25 internal metrics, not yet public"), caveats ("Skip this slide if the CFO is in the room"), timing cues ("This is the halfway point — you should be at ~10 minutes"), and anticipated questions ("They'll ask about margins — see appendix slide 14").
+- **Match the presentation's register.** Notes for an investor pitch are precise and rehearsed. Notes for a team retro are casual and flexible. Notes for a keynote might include stage directions. Match the tone to the context.
+
+### What to avoid in speaker notes
+
+- **Full scripts**: Wall-of-text notes encourage reading verbatim, which makes for a terrible presentation. If the user explicitly asks for a script, write one, but default to bullet points.
+- **Formatting for the audience**: Notes aren't visible to the audience. Don't optimize them for readability by non-presenters.
+- **Redundancy with the slide**: If the slide is self-explanatory ("Thank You" with contact info), notes aren't needed. It's fine to leave a slide's notes empty.
+
+### Formatting
+
+`slide.speakerNotes` accepts a markdown string. Prefer bullet lists as the primary structure; bold is useful for emphasis on key phrases the presenter shouldn't skip. See [slide-properties.md](references/slide-properties.md#supported-formatting) for the full list of supported (lists, bold, italic, strikethrough) and unsupported (headings, code blocks, inline code, links) markdown.
+
 ## Inspecting Slides Files
 
 There is no dedicated read tool for Slides files yet. Use `use_figma` with read-only scripts for inspection, and `get_screenshot` / `await node.screenshot()` for visual context.
@@ -96,14 +127,20 @@ return grid.map((row, rowIdx) =>
     row: rowIdx,
     col: colIdx,
     isSkipped: slide.isSkippedSlide,
+    speakerNotes: slide.speakerNotes,
   }))
 );
 ```
 
 **Get text content from a specific slide:**
 ```js
+// Read-only text inventory — skip invisible instance interiors for speed.
+figma.skipInvisibleInstanceChildren = true;
+
 const slide = figma.getNodeById("TARGET_SLIDE_ID");
-const textNodes = slide.findAll(n => n.type === "TEXT");
+// findAllWithCriteria uses an indexed type lookup — much faster than
+// findAll(n => n.type === 'TEXT') on slides with many shapes/images.
+const textNodes = slide.findAllWithCriteria({ types: ["TEXT"] });
 const fontsToLoad = new Set();
 for (const t of textNodes) {
   if (t.fontName !== figma.mixed) {
@@ -135,5 +172,5 @@ Load only the references your task needs:
 - [slide-lifecycle](references/slide-lifecycle.md) — Create, clone, delete, and reorder slides and slide rows
 - [slide-grid](references/slide-grid.md) — Work with the slide grid layout (`getSlideGrid`, `setSlideGrid`)
 - [slide-content](references/slide-content.md) — Build content within slides (text, shapes, auto-layout — SlideNode extends BaseFrameMixin)
-- [slide-properties](references/slide-properties.md) — Slide-specific properties (`isSkippedSlide`, `focusedSlide`, `focusedNode`, `slideThemeId`, `InteractiveSlideElementNode`)
+- [slide-properties](references/slide-properties.md) — Slide-specific properties (`speakerNotes`, `isSkippedSlide`, `focusedSlide`, `focusedNode`, `slideThemeId`, `InteractiveSlideElementNode`)
 - [slide-design](references/slide-design.md) — Design principles for visually interesting, varied decks (color strategy, typography, layout variety, spatial composition, anti-patterns)
