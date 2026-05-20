@@ -1479,18 +1479,6 @@
       "category": "Productivity"
     },
     {
-      "name": "intercom",
-      "source": {
-        "source": "local",
-        "path": "./plugins/intercom"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
       "name": "similarweb",
       "source": {
         "source": "local",
@@ -1615,18 +1603,6 @@
       "source": {
         "source": "local",
         "path": "./plugins/apollo"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "zoho",
-      "source": {
-        "source": "local",
-        "path": "./plugins/zoho"
       },
       "policy": {
         "installation": "AVAILABLE",
