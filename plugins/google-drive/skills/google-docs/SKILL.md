@@ -6,7 +6,7 @@ description: Documents-first net-new Google Docs creation plus connector-first G
 # Google Docs
 
 Use this skill for Google Docs work in Codex local-plugin sessions where Browser Use and rendered visual inspection are unavailable.
-Net-new Google Doc deliverables must be authored through `[@documents](plugin://documents@openai-primary-runtime)` as local `.docx` files first, then uploaded as native Google Docs.
+Net-new Google Doc deliverables must be authored through `[@documents](plugin://documents@openai-primary-runtime)` as local `.docx` files first, using the `google_docs_default` design preset by default, then uploaded as native Google Docs.
 
 ## Purpose Of This File
 
@@ -22,12 +22,20 @@ Latency is not a constraint for this skill, so always read the relevant referenc
 
 Use this routing:
 
-1. Net-new Google Docs creation: use `[@documents](plugin://documents@openai-primary-runtime)` to create a local `.docx` first, including that skill's DOCX QA workflow.
-2. Upload and convert the `.docx` into Drive as a native Google Docs document. Read `references/reference-import-docx-to-native-docs.md`.
+1. Net-new Google Docs creation: use `[@documents](plugin://documents@openai-primary-runtime)` to create a local `.docx` first, explicitly selecting the `google_docs_default` design preset unless the user asked for a special, branded, or highly polished visual treatment.
+2. Upload and convert the `.docx` into Drive as a native Google Docs document. Read `references/reference-import-docx-to-native-docs.md`, then run the repair-only post-import normalization pass described there.
 3. If the Documents plugin is unavailable, do not create the net-new Google Doc directly. Report that the required local Documents authoring path is unavailable.
 4. Existing Google Docs reads, summaries, edits, comments, and template-preserving modifications: use Google Docs connector or app tools directly.
 
+Local DOCX staging hygiene is mandatory for net-new Google Docs. Staging must be non-user-visible and untracked from the start. Do not create DOCX builder or helper scripts with tracked file-edit tools such as `apply_patch`, and do not create helper source files in the workspace or any path surfaced by Changes Made. Prefer the Documents plugin's built-in authoring workflow or a one-shot runtime command that keeps generation code ephemeral and persists only the required `.docx`, render outputs, and scratch assets in a per-task scratch directory. After successful native import and connector readback, remove those local staging artifacts unless the user explicitly asked to keep local files. Cleanup is required as a backstop, not as the visibility control.
+
 Do not reference the local `.docx` in the final answer after successful native import. The final answer includes the Google Docs link only.
+
+## Google Docs Default Preset
+
+For a net-new Google Doc, `google_docs_default` is the default visual contract. Do not let the Documents skill infer `standard_business_brief`, `compact_reference_guide`, or another Word-oriented preset from the content archetype alone. The expected result is a native-feeling Google Doc after import: Arial-based typography, black title/headings/body text, simple title block, restrained spacing, real lists, and no imported Word-template chrome such as blue headings, colored callouts, dense table borders, or running header/footer furniture.
+
+Use a different Documents preset only when the user explicitly asks for a special visual treatment, a branded document, or a more polished formal artifact than a normal Google Doc.
 
 ## Runtime Model
 
@@ -64,7 +72,7 @@ For existing document editing tasks and follow-on edits after a DOCX import, pre
 3. establish the heading and section skeleton
 4. fill the core text or structured content
 5. decide which content should stay prose, become a table, become a short card, or become a compact visual block
-6. verify and normalize formatting
+6. verify and normalize formatting, including the repair-only Google Docs post-import pass for imported DOCX files
 7. add secondary elements such as tables, links, or connector-supported figures only after the core structure is stable
 8. stop once the document is clean, complete, and scannable
 
@@ -77,7 +85,7 @@ If a simple verified workflow is viable, use it. Do not drift into speculative a
 Before final handoff, explicitly verify these with connector readback:
 
 1. every new or edited table has the intended rows, columns, cell text, table anchor, style requests, and column widths where the connector exposes them
-2. every new or edited heading, label, and body block matches surrounding connector-visible style fields such as named style, font family, font size, bolding, links, and list state
+2. every new or edited heading, label, and body block matches surrounding connector-visible style fields such as named style, font family, font size, bolding, links, and list state; imported net-new Docs should read back as Arial-based, black-text documents without obvious blue-heading or Word-template residue
 3. every inserted figure or image uses a connector-supported insertion path and is present in connector readback; if rendered placement cannot be inspected, say so plainly
 4. when available, export the document as `text/html` through Google Drive and use the generated markup/CSS as a rendered-structure proxy for heading tags, font families, font sizes, table cells, fills, widths, and paragraph ordering
 5. the document is not relying on one repeated structure everywhere; for example, a long run of similar tables or identical header colors should be treated as a design smell unless the source template clearly calls for it
@@ -94,6 +102,7 @@ If Default Routing uses `[@documents](plugin://documents@openai-primary-runtime)
 
 1. Read the `[@documents](plugin://documents@openai-primary-runtime)` plugin skill.
 2. Read `references/reference-import-docx-to-native-docs.md`.
+3. For the post-import normalization pass, also read `references/reference-request-shapes-and-write-safety.md`, `references/reference-headings-and-question-format.md`, `references/reference-response-and-list-format.md`, and `references/reference-section-completeness-and-final-pass.md`.
 
 If Default Routing uses connector edit workflow:
 
