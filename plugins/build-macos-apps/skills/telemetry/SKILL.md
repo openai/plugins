@@ -1,6 +1,6 @@
 ---
 name: telemetry
-description: Add lightweight runtime telemetry and debug instrumentation to macOS apps, then verify those events after building and running. Use when wiring `Logger` / `os.Logger`, adding log points for window/sidebar/menu-bar actions, reading runtime logs from Console or `log stream`, or confirming that expected events fire after a local run.
+description: Add and verify lightweight macOS runtime telemetry. Use when wiring Logger events or inspecting logs for windows, sidebars, menus, and actions.
 ---
 
 # Telemetry

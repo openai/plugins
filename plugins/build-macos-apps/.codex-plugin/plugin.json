@@ -38,7 +38,9 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Build/refactor native macOS UI, inspect AppKit interop, add telemetry, or debug a macOS app",
+    "defaultPrompt": [
+      "Build/refactor native macOS UI, inspect AppKit interop, add telemetry, or debug a macOS app"
+    ],
     "screenshots": [],
     "brandColor": "#1F6FEB",
     "composerIcon": "./assets/build-macos-apps-small.svg",

@@ -3,4 +3,4 @@ interface:
   short_description: "Build, debug, instrument, and implement macOS apps with SwiftUI and AppKit guidance"
   icon_small: "./assets/build-macos-apps-small.svg"
   icon_large: "./assets/app-icon.png"
-  default_prompt: "Use Build macOS Apps to build or refactor native macOS UI, inspect windowing and AppKit interop issues, add telemetry, or debug a macOS app."
+  default_prompt: "Build/refactor native macOS UI, inspect AppKit interop, add telemetry, or debug a macOS app."

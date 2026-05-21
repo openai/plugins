@@ -1,6 +1,6 @@
 ---
 name: swiftui-patterns
-description: Best practices and example-driven guidance for building native macOS SwiftUI scenes and components, including windows, commands, toolbars, settings, split views, inspectors, menu bar extras, and keyboard-driven workflows. Use when creating or refactoring macOS SwiftUI UI, choosing scene types, wiring menus or settings, or needing desktop-specific component patterns and examples.
+description: Build macOS SwiftUI scenes and components with desktop patterns. Use when shaping windows, commands, toolbars, settings, split views, or inspectors.
 ---
 
 # SwiftUI Patterns
@@ -71,82 +71,8 @@ Before writing the full UI:
 - Keep primary actions discoverable from both UI chrome and keyboard shortcuts when appropriate.
 - Use SwiftUI-native scenes and views first. If you need low-level window, responder-chain, text system, or panel control, switch to `appkit-interop`.
 
-## Recommended Sidebar Row Pattern
-
-Prefer a native source-list row shape:
-
-```swift
-List(selection: $selection) {
-  ForEach(items) { item in
-    HStack(spacing: 10) {
-      Image(systemName: item.systemImage)
-        .foregroundStyle(.secondary)
-        .frame(width: 16)
-
-      VStack(alignment: .leading, spacing: 2) {
-        Text(item.title)
-          .lineLimit(1)
-
-        if let detail = item.detail {
-          Text(detail)
-            .font(.caption)
-            .foregroundStyle(.secondary)
-            .lineLimit(1)
-        }
-      }
-    }
-    .tag(item.id)
-  }
-}
-.listStyle(.sidebar)
-```
-
-This keeps selection, highlight, spacing, and scanability aligned with standard
-macOS sidebars. Keep each row to one icon maximum and one or two text lines
-maximum, with the second line reserved for a short detail label. Use richer card
-treatments and denser metadata in the detail or inspector content, not in every
-sidebar row.
-
-## Recommended Split-View Background Pattern
-
-Prefer letting the sidebar and split container use system backgrounds, while
-applying custom surfaces only to detail cards or inspector sections:
-
-```swift
-NavigationSplitView {
-  List(selection: $selection) {
-    ForEach(items) { item in
-      Label(item.title, systemImage: item.systemImage)
-        .tag(item.id)
-    }
-  }
-  .listStyle(.sidebar)
-} detail: {
-  ScrollView {
-    VStack(alignment: .leading, spacing: 16) {
-      DetailSummaryCard(item: selectedItem)
-      DetailMetricsCard(item: selectedItem)
-    }
-    .padding()
-  }
-}
-```
-
-Avoid painting the sidebar and root split panes with opaque custom fills by
-default:
-
-```swift
-NavigationSplitView {
-  List(items) { item in
-    SidebarCardRow(item: item)
-  }
-  .listStyle(.sidebar)
-  .background(Color(nsColor: .windowBackgroundColor))
-} detail: {
-  DetailView(item: selectedItem)
-    .background(Color(.white))
-}
-```
+For concrete sidebar row and split-view background examples, read
+`references/split-inspectors.md`.
 
 ## State Ownership Summary
 

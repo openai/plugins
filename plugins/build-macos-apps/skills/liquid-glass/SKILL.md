@@ -1,6 +1,6 @@
 ---
 name: liquid-glass
-description: Implement, refactor, or review modern macOS SwiftUI UI for the new design system and Liquid Glass. Use when adopting Liquid Glass, updating NavigationSplitView, toolbars, search, sheets, and controls, removing custom backgrounds that fight system materials, or building custom glass surfaces with glassEffect, GlassEffectContainer, and glassEffectID.
+description: Implement and review macOS SwiftUI Liquid Glass UI. Use when adopting system glass, removing conflicting custom chrome, or building glass surfaces.
 ---
 
 # Liquid Glass
