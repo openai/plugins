@@ -35,8 +35,7 @@
     "defaultPrompt": [
       "Give me an analysis of the game studio plugin.",
       "Evaluate this plugin.",
-      "Why did this score that way?",
-      "What should I fix first?"
+      "Why did this score that way?"
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/plugin-eval.svg",

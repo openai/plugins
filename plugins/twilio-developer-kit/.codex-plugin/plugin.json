@@ -41,8 +41,7 @@
     "defaultPrompt": [
       "Help me send an SMS notification with delivery tracking",
       "What Twilio API should I use to build a user verification flow?",
-      "How do I register for A2P 10DLC before sending US SMS?",
-      "Build me an AI voice agent with Twilio"
+      "How do I register for A2P 10DLC before sending US SMS?"
     ],
     "brandColor": "#F22F46",
     "logo": "./assets/logo.svg"
