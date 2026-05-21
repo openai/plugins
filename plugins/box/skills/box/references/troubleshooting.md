@@ -71,9 +71,9 @@ When using Box CLI, run `box <command> --help` before the first invocation of an
 
 ## Missing text representation
 
-`get_file_content` reads markdown or extracted text. It can fail when Box has neither representation for the selected file.
+`get_file_content` and Deep Research `fetch` read markdown or extracted text. They can fail when Box has neither representation for the selected file.
 
-- Do not retry `get_file_content` on the same file after `Markdown or text representation is not available for this file`.
+- Do not retry the same `get_file_content` or Deep Research `fetch` text read after `Markdown or text representation is not available for this file`.
 - Prefer preview or page-image tools for previewable visual content.
 - Use metadata when it can answer the question without a body read.
 - If document content is still required, choose the smallest fallback allowed by the task and actor permissions.
