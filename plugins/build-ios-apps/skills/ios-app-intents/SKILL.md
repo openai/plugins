@@ -1,6 +1,6 @@
 ---
 name: ios-app-intents
-description: Design and implement App Intents, app entities, and App Shortcuts for iOS apps so useful actions and content are available to Shortcuts, Siri, Spotlight, widgets, controls, and other intent-driven system surfaces. Use when exposing app actions outside the UI, adding `AppEntity` and `EntityQuery` types, shaping shortcut phrases and display representations, or routing intent execution back into the main app.
+description: Design App Intents, app entities, and App Shortcuts for iOS system surfaces. Use when exposing app actions or content to Shortcuts, Siri, Spotlight, widgets, or controls.
 ---
 
 # iOS App Intents

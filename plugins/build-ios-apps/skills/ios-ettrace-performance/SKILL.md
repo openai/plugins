@@ -1,6 +1,6 @@
 ---
 name: ios-ettrace-performance
-description: Capture and interpret ETTrace profiles for iOS simulator apps, including symbolicated launch and runtime flamegraphs. Use when asked to profile an iOS app flow, gather simulator performance traces, identify CPU-heavy stacks, compare before/after traces, or produce flamegraph evidence for startup, scrolling, navigation, rendering, or other user-visible latency.
+description: Capture and interpret iOS Simulator ETTrace profiles. Use when profiling launch or runtime latency, comparing traces, or finding CPU-heavy stacks.
 ---
 
 # iOS ETTrace Performance
