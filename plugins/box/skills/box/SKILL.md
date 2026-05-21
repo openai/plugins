@@ -55,6 +55,7 @@ Follow these steps in order when coding against Box.
 - Pace Box AI calls at least 1–2 seconds apart. For content-based classification of many files, classify a small sample first to validate the prompt and discover whether cheaper signals (filename, extension, metadata) can sort the remaining files without additional AI calls.
 - Avoid downloading file bodies or routing content through external AI pipelines when Box-native methods (Box AI, search, metadata, previews) can answer the question server-side.
 - For connected Box app or MCP single-file reading, prefer `get_file_content` only when the file is likely to have markdown or extracted-text content. If it says markdown or text representation is unavailable, do not retry the same content call; switch to preview, metadata, or the next scoped fallback.
+- For connected Box previews, avoid `get_file_preview` for files known to exceed 3 MB. Reuse `size` from existing search, listing, or details results when it is already available.
 - Request only the fields the application actually needs, and persist returned Box IDs instead of reconstructing paths later.
 - Run Box CLI commands strictly one at a time. The CLI does not support concurrent invocations and parallel calls cause auth conflicts and dropped operations. For bulk work (organizing, batch moves, batch metadata), default to REST over CLI.
 - Make webhook and event consumers idempotent. Box delivery and retry paths can produce duplicates.
