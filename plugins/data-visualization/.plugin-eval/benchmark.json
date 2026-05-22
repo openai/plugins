@@ -1,0 +1,129 @@
+{
+  "kind": "plugin-eval-benchmark",
+  "schemaVersion": 2,
+  "version": 3,
+  "targetKind": "plugin",
+  "targetName": "build-web-data-visualization",
+  "runner": {
+    "type": "codex-cli",
+    "model": "gpt-5.4",
+    "sandbox": "workspace-write",
+    "approvalPolicy": "never",
+    "extraArgs": []
+  },
+  "workspace": {
+    "sourcePath": "/Users/benlesh/GitHub/openai-data-visualization-plugin",
+    "setupMode": "copy",
+    "preserve": "on-failure"
+  },
+  "targetProvisioning": {
+    "mode": "workspace-plugin-marketplace"
+  },
+  "verifiers": {
+    "commands": [
+      "jq . plugins/data-visualization/.codex-plugin/plugin.json >/dev/null",
+      "git diff --check"
+    ]
+  },
+  "notes": [
+    "These scenarios come from the Earthquake visualization correction loop and are meant to measure fewer-prompt success, not only token cost.",
+    "Benchmark means real codex exec runs now. There is no simulated dry-run mode.",
+    "Score the result against concept-first behavior, implementation contracts, and whether the run avoids known Earthquake regressions."
+  ],
+  "setupQuestions": [
+    "What are the 3 highest-value real tasks this plugin should help complete inside a workspace?",
+    "Which scenario is the must-pass end-to-end task for this plugin?",
+    "What output should exist on disk if the scenario succeeds?",
+    "Which verification command would tell you the result is actually usable?",
+    "What boundary case should this plugin narrow, refuse, or hand off instead of overreaching on?"
+  ],
+  "scenarios": [
+    {
+      "id": "earthquake-concept-first",
+      "title": "Earthquake globe concept-first design",
+      "purpose": "Check whether advanced visual/page design triggers image concepting, approval gating, and a semantic contract before implementation.",
+      "userInput": "Use the local Build Web Data Visualization plugin. Help me visually design an advanced Earthquake activity page with a large 3D globe, recent quake activity, and a selected-event terrain cutaway inspector. I want to see what we are considering before we build.",
+      "successChecklist": [
+        "The run identifies this as advanced 3D/geospatial visual design.",
+        "The run generates or requests a Codex image concept before implementation.",
+        "The run pauses for approval or records why image generation is unavailable.",
+        "The proposed contract keeps labels/data/source notes editable and data-bound."
+      ]
+    },
+    {
+      "id": "earthquake-mark-semantics",
+      "title": "Earthquake mark semantics",
+      "purpose": "Check whether attractive effects are converted into explicit visual encodings instead of decoration.",
+      "userInput": "Use the local Build Web Data Visualization plugin. In an Earthquake Visualization, the spheres and glowing look good but do not correlate to data. Update the plan so magnitude, recency, depth, hover, and selection each have distinct visual meanings.",
+      "successChecklist": [
+        "The run creates a visual encoding ledger.",
+        "Glows, rings, halos, pulses, or thickness each map to data or interaction state.",
+        "Selection is visually distinct from magnitude/depth encodings.",
+        "The legend/key text proves the mapping."
+      ]
+    },
+    {
+      "id": "earthquake-globe-coordinate-audit",
+      "title": "Globe coordinate audit",
+      "purpose": "Check whether custom globe work audits texture, labels, markers, hit testing, fallback, and camera focus as one coordinate system.",
+      "userInput": "Use the local Build Web Data Visualization plugin. The globe land texture, city labels, and earthquake markers are offset; Alaska events show up near Russia. Plan the fix and the verification checks.",
+      "successChecklist": [
+        "The run names longitude origin, wrap policy, projection, and transform ownership.",
+        "The run includes known-place spot checks across the globe.",
+        "The run covers shortest-path rotation for selected events.",
+        "The run covers fallback geometry alignment, not only the WebGL path."
+      ]
+    },
+    {
+      "id": "earthquake-cutaway-interaction",
+      "title": "Cutaway interaction and readiness",
+      "purpose": "Check whether a nonresponsive 3D cutaway is diagnosed through event ownership, render loop timing, WebGL fallback, and interaction QA.",
+      "userInput": "Use the local Build Web Data Visualization plugin. The selected-earthquake cutaway cannot be rotated or zoomed even after a hard reload. Plan the fix and verification path.",
+      "successChecklist": [
+        "The run defines pointer/wheel/keyboard/reset controls and where events are captured.",
+        "The run checks render-loop delta or clock behavior.",
+        "The run checks whether a static fallback is being shown accidentally.",
+        "The run includes live interaction smoke tests and a render-ready signal."
+      ]
+    },
+    {
+      "id": "earthquake-cutaway-domain-scene",
+      "title": "Cutaway terrain and water domain scene",
+      "purpose": "Check whether terrain, bathymetry, water, adaptive scale, and slice geometry are specified before coding.",
+      "userInput": "Use the local Build Web Data Visualization plugin. The earthquake detail popover needs a 3D terrain cutaway with real topography when available, ocean water and shorelines when relevant, adaptive depth scale, and a cut slice that behaves like the chunk moves through a fixed inspection plane.",
+      "successChecklist": [
+        "The run distinguishes epicenter from hypocenter/focus.",
+        "The run includes source/API limits and fallback for terrain/bathymetry.",
+        "The run specifies adaptive depth scale and vertical exaggeration.",
+        "The run defines whether the cut plane is camera/world/object fixed and how cut faces stay aligned.",
+        "The run includes shallow, deep, offshore, coastal, missing-data, and fallback QA cases."
+      ]
+    },
+    {
+      "id": "shareable-persistent-dashboard-state",
+      "title": "Shareable and persistent dashboard state",
+      "purpose": "Check whether interactive visualization guidance makes meaningful selections URL-driven while using storage for private or long-lived settings.",
+      "userInput": "Use the local Build Web Data Visualization plugin. I am building a dashboard where users filter by region and date range, select one customer segment, expand a drill-down inspector, then send the exact view to a teammate. Plan the interaction, persistence, and QA.",
+      "successChecklist": [
+        "The run makes filters, date range, selected segment, active tab or drill-down path, and saved-view id URL-driven where appropriate.",
+        "The run separates URL state from localStorage, IndexedDB, or remote saved-view state.",
+        "The run states that incoming URL state overrides private persisted defaults.",
+        "The run covers copy-link, refresh, invalid URL state, and browser back/forward behavior.",
+        "The run keeps active filters and selections visible when configuration or inspector panels are collapsed."
+      ]
+    },
+    {
+      "id": "color-contrast-semantic-roles",
+      "title": "Color contrast and semantic roles",
+      "purpose": "Check whether color guidance avoids overloaded hue meanings and uses contrast to focus attention on the most important data.",
+      "userInput": "Use the local Build Web Data Visualization plugin. This chart currently uses blue for selected, forecast, current period, and safe status, while all categories are saturated. Revise the color and contrast plan.",
+      "successChecklist": [
+        "The run creates a color-role ledger with separate roles for focus, selection, comparison, warning/status, uncertainty, and context.",
+        "The run uses contrast hierarchy so the key evidence and selected state outrank gridlines, inactive series, and background context.",
+        "The run requires redundant encoding beyond color for important categories or states.",
+        "The run includes WCAG text and non-text contrast checks and grayscale or color-deficiency review.",
+        "The run reduces unnecessary category color or proposes small multiples, labels, grouping, or ordering where better."
+      ]
+    }
+  ]
+}

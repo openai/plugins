@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Report Title</title>
+    <style>
+      :root {
+        --ink: #172033;
+        --muted: #667085;
+        --accent: #2b59c3;
+        --rule: #d9dee8;
+        --panel: #f7f8fb;
+        --paper: #fffdfb;
+      }
+      body {
+        background: var(--paper);
+        font-family: "Source Serif Pro", "Georgia", serif;
+        color: var(--ink);
+        margin: 40px;
+        line-height: 1.5;
+      }
+      header,
+      section {
+        margin-bottom: 28px;
+      }
+      figure {
+        border-top: 1px solid var(--rule);
+        margin: 0 0 32px;
+        padding-top: 22px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      figcaption {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-top: 8px;
+      }
+      .summary {
+        background: var(--panel);
+        border-left: 4px solid var(--accent);
+        padding: 16px 18px;
+      }
+      .figure-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+      .figure-dek {
+        color: var(--muted);
+        margin: 0 0 14px;
+      }
+      .source {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      @media (max-width: 520px) {
+        body {
+          margin: 24px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Report Title</h1>
+      <p>Executive summary or framing paragraph.</p>
+    </header>
+    <section class="summary">
+      <strong>Key finding:</strong> Replace with the primary claim this report supports.
+    </section>
+    <section>
+      <figure>
+        <p class="figure-title">Insight title that states the finding</p>
+        <p class="figure-dek">Metric, geography, time span, denominator, and caveat.</p>
+        <img src="./figure-1.png" alt="Replace with chart-specific alternative text." />
+        <figcaption>Annotation summary and interpretation.</figcaption>
+        <p class="source">Source: Replace with source and method note.</p>
+      </figure>
+    </section>
+  </body>
+</html>
