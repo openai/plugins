@@ -3,8 +3,8 @@ name: airtable-overview
 description: Explains what Airtable is and how data is structured — bases, tables, fields, records, views, automations, and interfaces. Use when you need context about the Airtable data model.
 license: MIT
 metadata:
-    version: '1.0.0'
-    author: airtable
+  version: '1.0.0'
+  author: airtable
 ---
 
 # Airtable Overview

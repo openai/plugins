@@ -1,0 +1,6 @@
+interface:
+  display_name: "Airtable"
+  short_description: "Database and operations layer for your agents"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/logo.png"
+  default_prompt: "Use Airtable to create bases, manage records, and organize structured workflows."
