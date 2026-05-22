@@ -21,7 +21,7 @@
   },
   "verifiers": {
     "commands": [
-      "jq . plugins/data-visualization/.codex-plugin/plugin.json >/dev/null",
+      "jq . plugins/build-web-data-visualization/.codex-plugin/plugin.json >/dev/null",
       "git diff --check"
     ]
   },
