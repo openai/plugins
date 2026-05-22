@@ -3,7 +3,7 @@
   "version": "0.1.19",
   "description": "Design, critique, implement, test, and export web data visualizations in Codex, including charts, maps, dashboards, Gantt, UML, scrollytelling, reports, slides, mobile views, shareable state, and advanced WebGL concepts.",
   "author": {
-    "name": "Ben Lesh"
+    "name": "OpenAI"
   },
   "homepage": "https://openai.com/",
   "repository": "https://github.com/thisdot/openai-data-visualization-plugin",
@@ -57,7 +57,7 @@
     "displayName": "Build Web Data Visualization",
     "shortDescription": "Design, build, test, and export web data visualizations",
     "longDescription": "Use Build Web Data Visualization to choose, design, implement, test, and export browser charts, dashboards, maps, geospatial scenes, WebGL/Three.js, Canvas, D3/SVG, Gantt charts, UML and software diagrams, scrollytelling, reports, PDFs, and slide decks. The plugin favors source-backed data, self-explanatory layouts, mobile and large-screen sibling designs, URL-shareable analysis state, accessible labels and fallbacks, semantic color roles, and visual effects tied to data or interaction state. For advanced page or visual-story work, it guides concept-first design with user-approved large-screen and mobile concepts, binding semantic design contracts, operational workspace shells, and implementation contracts for renderer ownership, coordinates, state, fallbacks, and QA.",
-    "developerName": "Ben Lesh",
+    "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [
       "Interactive",
