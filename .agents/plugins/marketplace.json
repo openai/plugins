@@ -2034,6 +2034,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "ngs-analysis",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ngs-analysis"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
     }
   ]
 }

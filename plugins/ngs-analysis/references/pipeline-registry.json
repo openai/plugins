@@ -1,0 +1,762 @@
+{
+  "schema_version": "0.1.0",
+  "tools": {
+    "nextflow": {
+      "executables": ["nextflow"],
+      "kind": "workflow_runner",
+      "install": {"conda": "bioconda::nextflow"},
+      "notes": "Required for nf-core workflows."
+    },
+    "snakemake": {
+      "executables": ["snakemake"],
+      "python_modules": ["snakemake"],
+      "kind": "workflow_runner",
+      "install": {"conda": "bioconda::snakemake", "pip": "snakemake"},
+      "notes": "Preferred local workflow runner for file-based local or devbox execution without Docker."
+    },
+    "mamba": {
+      "executables": ["mamba"],
+      "kind": "environment_manager",
+      "notes": "Preferred environment manager for local conda environments when available."
+    },
+    "micromamba": {
+      "executables": ["micromamba"],
+      "kind": "environment_manager",
+      "notes": "Conda-compatible environment manager; useful on devboxes where system conda is absent."
+    },
+    "fastqc": {
+      "executables": ["fastqc"],
+      "kind": "qc",
+      "install": {"conda": "bioconda::fastqc"}
+    },
+    "multiqc": {
+      "executables": ["multiqc"],
+      "python_modules": ["multiqc"],
+      "kind": "reporting",
+      "install": {"conda": "bioconda::multiqc", "pip": "multiqc"}
+    },
+    "fastp": {
+      "executables": ["fastp"],
+      "kind": "fastq_preprocessor",
+      "install": {"conda": "bioconda::fastp"}
+    },
+    "cutadapt": {
+      "executables": ["cutadapt"],
+      "python_modules": ["cutadapt"],
+      "kind": "adapter_trimming",
+      "install": {"conda": "bioconda::cutadapt", "pip": "cutadapt"}
+    },
+    "seqkit": {
+      "executables": ["seqkit"],
+      "kind": "fastq_util",
+      "install": {"conda": "bioconda::seqkit"}
+    },
+    "samtools": {
+      "executables": ["samtools"],
+      "kind": "hts_util",
+      "install": {"conda": "bioconda::samtools"}
+    },
+    "bcftools": {
+      "executables": ["bcftools"],
+      "kind": "variant_util",
+      "install": {"conda": "bioconda::bcftools"}
+    },
+    "fgbio": {
+      "executables": ["fgbio"],
+      "kind": "umi_consensus",
+      "install": {"conda": "bioconda::fgbio"},
+      "notes": "Useful for UMI-aware targeted sequencing workflows when a lab protocol does not provide its own consensus step."
+    },
+    "bwa-mem2": {
+      "executables": ["bwa-mem2"],
+      "kind": "aligner",
+      "install": {"conda": "bioconda::bwa-mem2"}
+    },
+    "bowtie2": {
+      "executables": ["bowtie2"],
+      "kind": "aligner",
+      "install": {"conda": "bioconda::bowtie2"}
+    },
+    "bedtools": {
+      "executables": ["bedtools"],
+      "kind": "interval_util",
+      "install": {"conda": "bioconda::bedtools"}
+    },
+    "gatk": {
+      "executables": ["gatk"],
+      "kind": "variant_calling",
+      "install": {"conda": "bioconda::gatk4"},
+      "notes": "GATK4 is open source; best-practice resource bundles are large and should be downloaded deliberately."
+    },
+    "deepvariant": {
+      "executables": ["run_deepvariant"],
+      "kind": "variant_calling",
+      "container_images": ["google/deepvariant:latest"],
+      "notes": "Commonly run by Docker or Singularity rather than a local executable."
+    },
+    "star": {
+      "executables": ["STAR"],
+      "kind": "rna_aligner",
+      "install": {"conda": "bioconda::star"}
+    },
+    "salmon": {
+      "executables": ["salmon"],
+      "kind": "rna_quantification",
+      "install": {"conda": "bioconda::salmon"}
+    },
+    "subread": {
+      "executables": ["featureCounts"],
+      "kind": "rna_counting",
+      "install": {"conda": "bioconda::subread"}
+    },
+    "rscript": {
+      "executables": ["Rscript"],
+      "kind": "statistical_runtime",
+      "install": {"conda": "conda-forge::r-base"},
+      "notes": "R/Bioconductor package checks are workflow-specific; this preflight only verifies that an R runtime exists."
+    },
+    "scanpy": {
+      "python_modules": ["scanpy"],
+      "kind": "single_cell_analysis",
+      "install": {"conda": "conda-forge::scanpy", "pip": "scanpy"}
+    },
+    "kb-python": {
+      "executables": ["kb"],
+      "python_modules": ["kb_python"],
+      "kind": "single_cell_counting",
+      "install": {"pip": "kb-python"}
+    },
+    "macs2": {
+      "executables": ["macs2"],
+      "kind": "peak_calling",
+      "install": {"conda": "bioconda::macs2"}
+    },
+    "deeptools": {
+      "executables": ["bamCoverage", "computeMatrix", "plotProfile", "plotHeatmap"],
+      "kind": "signal_qc",
+      "install": {"conda": "bioconda::deeptools"}
+    },
+    "homer": {
+      "executables": ["findMotifsGenome.pl"],
+      "kind": "motif_enrichment",
+      "install": {"conda": "bioconda::homer"},
+      "notes": "Optional motif enrichment backend for ATAC, ChIP-seq, CUT&RUN, and CUT&Tag peak sets."
+    },
+    "qiime2": {
+      "executables": ["qiime"],
+      "kind": "amplicon_microbiome",
+      "notes": "QIIME2 installation is best done with its published environment file or container for the target release."
+    },
+    "dada2": {
+      "kind": "amplicon_denoising",
+      "install": {"conda": "bioconda::bioconductor-dada2"},
+      "notes": "R/Bioconductor DADA2 backend for ASV inference. The plugin runner checks this as an R package at execution time."
+    },
+    "kraken2": {
+      "executables": ["kraken2"],
+      "kind": "taxonomic_classification",
+      "install": {"conda": "bioconda::kraken2"},
+      "notes": "Databases are large and should be selected before download."
+    },
+    "bracken": {
+      "executables": ["bracken"],
+      "kind": "taxonomic_abundance",
+      "install": {"conda": "bioconda::bracken"}
+    },
+    "metaphlan": {
+      "executables": ["metaphlan"],
+      "kind": "taxonomic_profile",
+      "install": {"conda": "bioconda::metaphlan"}
+    },
+    "kneaddata": {
+      "executables": ["kneaddata"],
+      "kind": "host_depletion",
+      "install": {"conda": "bioconda::kneaddata"},
+      "notes": "Optional shotgun metagenomics host-depletion backend. Requires a prepared host reference database and should be treated as required when --host-reference is supplied."
+    },
+    "humann": {
+      "executables": ["humann"],
+      "kind": "functional_profile",
+      "install": {"conda": "bioconda::humann"}
+    },
+    "bcl-convert": {
+      "executables": ["bcl-convert"],
+      "kind": "bcl_conversion",
+      "license": "free_proprietary",
+      "notes": "Illumina BCL Convert is free for local use but proprietary and distributed as Illumina RPM installers. Do not auto-download without explicit user approval."
+    },
+    "bcl2fastq": {
+      "executables": ["bcl2fastq"],
+      "kind": "bcl_conversion",
+      "license": "legacy_proprietary",
+      "notes": "Legacy Illumina converter. Use only when BCL Convert is unavailable or the run requires legacy compatibility."
+    },
+    "cellranger": {
+      "executables": ["cellranger"],
+      "kind": "single_cell_vendor_pipeline",
+      "license": "eula",
+      "notes": "10x Cell Ranger requires EULA acceptance. Prefer public alternatives unless the user explicitly wants vendor-standard output and has accepted the license."
+    }
+  },
+  "profiles": {
+    "local_light": {
+      "display_name": "Local execution profile",
+      "runner": "snakemake_or_direct_shell",
+      "environment": "mamba_or_micromamba_conda_envs",
+      "containers": "disabled_by_default",
+      "required_tools": ["snakemake"],
+      "preferred_tools": ["fastqc", "multiqc", "fastp", "seqkit", "salmon", "samtools", "bcftools"],
+      "optional_tools": ["cutadapt", "bwa-mem2", "bowtie2", "bedtools", "deeptools", "subread", "scanpy", "star", "macs2", "kraken2", "bracken", "kneaddata", "humann", "bcl-convert", "bcl2fastq"],
+      "first_lanes": ["fastq_qc", "bulk_rnaseq_counts_qc", "bulk_rnaseq_differential_expression", "dna_variant_calling", "scrnaseq_post_count_qc", "epigenomics_peaks", "amplicon_microbiome", "shotgun_metagenomics", "bcl_to_fastq"],
+      "notes": "Use when Docker, Nextflow, or container registry access is unavailable or unstable. This profile runs local workflows over staged or user-provided data."
+    },
+    "production_nfcore": {
+      "display_name": "nf-core execution profile",
+      "runner": "nextflow",
+      "environment": "docker_singularity_conda_or_site_profile",
+      "required_tools": ["nextflow"],
+      "preferred_tools": ["multiqc"],
+      "first_lanes": ["bulk_rnaseq", "scrnaseq", "dna_variant_calling", "dna_germline_variants", "dna_somatic_variants", "atacseq_peaks_qc", "chip_cutrun_peaks_qc", "amplicon_microbiome", "shotgun_metagenomics"],
+      "adapter": "plugins/ngs-analysis/scripts/run_nfcore_pipeline.py",
+      "notes": "Use when the user wants pinned nf-core execution with Nextflow reports, trace, timeline, DAG, and published results captured in a standard run envelope."
+    }
+  },
+  "pipelines": {
+    "bcl_to_fastq": {
+      "display_name": "BCL to FASTQ conversion",
+      "route_when": ["bcl_run_folder", "demultiplex"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_bcl_to_fastq.py",
+      "preferred_tools": ["bcl-convert"],
+      "optional_tools": ["bcl2fastq"],
+      "local_light_tools": ["bcl-convert", "bcl2fastq"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/runinfo.json",
+        "validation/runparameters.json",
+        "validation/samplesheet_summary.json",
+        "validation/runtime_preflight.json",
+        "commands.sh",
+        "logs/bcl_conversion.log",
+        "qc/demux_qc_summary.json",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "public_boundary": "BCL Convert is public to download and free for local use, but proprietary; do not auto-download.",
+      "essential_questions": [
+        "Where is the Illumina run folder containing RunInfo.xml?",
+        "Which SampleSheet.csv should be used?",
+        "Should lanes be split or combined?",
+        "Are UMI bases present in reads or index reads?",
+        "What output directory should receive FASTQs and reports?"
+      ]
+    },
+    "fastq_qc": {
+      "display_name": "FASTQ QC and trimming",
+      "route_when": ["fastq", "qc", "trim"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_fastq_qc.py",
+      "preferred_tools": ["fastqc", "multiqc", "fastp", "cutadapt", "seqkit"],
+      "local_light_tools": ["snakemake", "fastqc", "multiqc", "fastp", "seqkit"],
+      "essential_questions": [
+        "Are reads paired-end or single-end?",
+        "Is there a local sample sheet, or should a single sample be run from explicit R1/R2 paths?",
+        "Are adapters or primer sequences known?",
+        "Is trimming requested or QC-only?",
+        "Which output directory should receive the timestamped run envelope?",
+        "Should outputs preserve the original FASTQs?"
+      ]
+    },
+    "dna_variant_calling": {
+      "display_name": "DNA variant calling with nf-core/sarek",
+      "route_when": ["wgs", "wes", "targeted_panel", "variant_calling"],
+      "preferred_workflow": "nf-core/sarek",
+      "preferred_tools": ["nextflow", "samtools", "bcftools"],
+      "optional_tools": ["bwa-mem2", "gatk", "deepvariant"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_dna_variant_calling.py",
+      "local_light_workflow": "direct_samtools_bcftools_bam_to_vcf",
+      "local_light_tools": ["samtools", "gatk", "bcftools"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/samples.normalized.tsv",
+        "qc/*.flagstat.txt",
+        "qc/*.idxstats.tsv",
+        "variants/*.vcf.gz",
+        "variants/*.bcftools_stats.txt",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "notebooks/vcf_review.marimo.py",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Is this WGS, WES, or targeted panel data?",
+        "Is the analysis germline, tumor-only, tumor-normal, or trio?",
+        "Which reference genome and known-sites resources should be used?",
+        "For WES/panel, where is the target BED file?",
+        "Are UMIs present?",
+        "Should variants be annotated with VEP or SnpEff?"
+      ]
+    },
+    "dna_germline_variants": {
+      "display_name": "Germline DNA variant calling",
+      "route_when": ["germline", "singleton", "cohort", "trio", "family", "inherited_panel"],
+      "preferred_workflow": "nf-core/sarek",
+      "preferred_tools": ["nextflow", "samtools", "bcftools"],
+      "optional_tools": ["bwa-mem2", "gatk", "deepvariant"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_dna_germline_variants.py",
+      "local_light_workflow": "gatk_bqsr_haplotypecaller_joint_genotyping",
+      "local_light_tools": ["snakemake", "bwa-mem2", "samtools", "bcftools"],
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/samples.normalized.tsv",
+        "qc/*.flagstat.txt",
+        "qc/*.idxstats.tsv",
+        "recal/*.recal.table",
+        "recal/*.recal.bam",
+        "gvcf/*.g.vcf.gz",
+        "joint/cohort.joint.vcf.gz",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "notebooks/vcf_review.marimo.py",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Is this WGS, WES, or targeted inherited-panel data?",
+        "Is the sample model singleton, cohort, duo, trio, or family?",
+        "Which reference build, known-sites resources, and annotation cache should be used?",
+        "For WES/panel, where are the target and bait BED files?",
+        "Should outputs be per-sample VCFs, gVCFs, or a jointly called cohort VCF?"
+      ]
+    },
+    "dna_somatic_variants": {
+      "display_name": "Somatic DNA variant calling",
+      "route_when": ["somatic", "tumor_normal", "tumor_only", "cancer_panel"],
+      "preferred_workflow": "nf-core/sarek",
+      "preferred_tools": ["nextflow", "gatk", "samtools", "bcftools"],
+      "optional_tools": ["bwa-mem2", "deepvariant"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_dna_somatic_variants.py",
+      "local_light_workflow": "gatk_mutect2_tumor_normal_or_tumor_only",
+      "local_light_tools": ["gatk", "samtools", "bcftools"],
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/pairs.normalized.tsv",
+        "workflow/somatic_command_plan.json",
+        "qc/somatic_qc_summary.json",
+        "qc/somatic_filter_reasons.tsv",
+        "variants/*.unfiltered.vcf.gz",
+        "variants/*.filtered.vcf.gz",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "notebooks/vcf_review.marimo.py",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Is this tumor-normal, tumor-only, relapse-baseline, or another cancer design?",
+        "Where is the tumor-normal pairing table?",
+        "Which reference build, germline resource, panel-of-normals, and annotation cache should be used?",
+        "For WES/panel, where is the target BED file?",
+        "What allele-fraction, contamination, and tumor-purity constraints should be documented?"
+      ]
+    },
+    "dna_umi_panel_variants": {
+      "display_name": "UMI-aware targeted DNA panel variant calling",
+      "route_when": ["umi_panel", "duplex_panel", "molecular_barcode", "low_frequency_panel"],
+      "preferred_tools": ["fastqc", "multiqc", "samtools", "bcftools"],
+      "optional_tools": ["fgbio", "bwa-mem2", "gatk"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_dna_umi_panel_variants.py",
+      "local_light_workflow": "fgbio_consensus_plus_bcftools_panel_calling",
+      "local_light_tools": ["fgbio", "samtools", "bcftools"],
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/samples.normalized.tsv",
+        "workflow/umi_panel_command_plan.json",
+        "qc/umi_consensus_plan.json",
+        "qc/umi_family_size_summary.tsv",
+        "consensus/*.bam",
+        "variants/*.consensus.vcf.gz",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "notebooks/vcf_review.marimo.py",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Which panel or capture kit and target BED should be used?",
+        "Where are the UMIs encoded: read bases, index reads, single UMI, or duplex UMI?",
+        "Have consensus reads already been generated?",
+        "What minimum allele fraction and intended sensitivity should be documented?",
+        "Which controls or spike-ins should be carried through QC?"
+      ]
+    },
+    "bulk_rnaseq": {
+      "display_name": "Bulk RNA-seq with nf-core/rnaseq",
+      "route_when": ["bulk_rnaseq", "expression_counts", "differential_expression"],
+      "preferred_workflow": "nf-core/rnaseq",
+      "preferred_tools": ["nextflow", "fastqc", "multiqc"],
+      "optional_tools": ["star", "salmon", "subread"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_bulk_rnaseq_counts_qc.py",
+      "secondary_local_executor": "plugins/ngs-analysis/scripts/run_bulk_rnaseq_de.py",
+      "local_light_workflow": "snakemake_salmon_quant_plus_r_de",
+      "local_light_tools": ["snakemake", "fastqc", "multiqc", "salmon", "rscript"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "essential_questions": [
+        "What organism, genome FASTA, and GTF annotation should be used?",
+        "Is the library stranded, reverse-stranded, unstranded, or unknown?",
+        "Are reads paired-end or single-end?",
+        "Is the goal counts only or differential expression too?",
+        "If differential expression is needed, what is the sample metadata and contrast design?"
+      ]
+    },
+    "bulk_rnaseq_counts_qc": {
+      "display_name": "Bulk RNA-seq count generation and QC",
+      "route_when": ["bulk_rnaseq_counts", "fastq_to_counts", "rnaseq_qc"],
+      "preferred_workflow": "nf-core/rnaseq",
+      "preferred_tools": ["nextflow", "fastqc", "multiqc"],
+      "optional_tools": ["star", "salmon", "subread"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_bulk_rnaseq_counts_qc.py",
+      "local_workflow": "plugins/ngs-analysis/workflows/bulk_rnaseq_counts_qc/Snakefile.smk",
+      "local_light_workflow": "snakemake_salmon_quant",
+      "local_light_tools": ["snakemake", "fastqc", "multiqc", "salmon"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/input_summary.json",
+        "validation/validation_summary.json",
+        "logs/snakemake_dry_run.log",
+        "logs/snakemake_execute.log",
+        "fastqc/multiqc/multiqc_browser_helper.html",
+        "rnaseq_salmon/multiqc/multiqc_browser_helper.html",
+        "visualizations/localhost_launch_hint.txt",
+        "rnaseq_salmon/matrices/tpm.tsv",
+        "rnaseq_salmon/matrices/num_reads.tsv",
+        "rnaseq_salmon/matrices/effective_length.tsv",
+        "rnaseq_salmon/matrices/samples.tsv",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "What organism, genome FASTA, and GTF annotation should be used?",
+        "Is strandedness known, unknown, or should it be inferred?",
+        "Are reads paired-end or single-end?",
+        "Should quantification produce gene counts, transcript estimates, or both?",
+        "Where is the sample metadata table that must carry into downstream analysis?"
+      ]
+    },
+    "bulk_rnaseq_differential_expression": {
+      "display_name": "Bulk RNA-seq differential expression",
+      "route_when": ["differential_expression", "rnaseq_de", "counts_to_de"],
+      "preferred_tools": ["rscript"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_bulk_rnaseq_de.py",
+      "local_workflow": "plugins/ngs-analysis/workflows/bulk_rnaseq_differential_expression/run_bulk_de.R",
+      "local_tools": ["Rscript"],
+      "local_r_packages": ["DESeq2", "edgeR", "limma"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/input_summary.json",
+        "validation/validation_summary.json",
+        "logs/validation_dry_run.log",
+        "logs/rscript_execute.log",
+        "manifest/contrast_status.tsv",
+        "results/normalized_counts.tsv",
+        "results/log2_expression_matrix.tsv",
+        "results/<contrast>.tsv",
+        "qc/library_sizes.png",
+        "qc/pca.png",
+        "qc/sample_distance_heatmap.png",
+        "plots/<contrast>_volcano.png",
+        "plots/<contrast>_ma.png",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "notebooks/bulk_rnaseq_de_review.marimo.py",
+        "notebooks/marimo_server.json",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Where are the raw count matrix and sample metadata?",
+        "What are the biological replicates, batch variables, donor pairing, and covariates?",
+        "What design formula and contrasts should be run?",
+        "Which statistical framework should be used: DESeq2, edgeR, limma-voom, or lab standard?",
+        "Which plots and result tables are required?"
+      ]
+    },
+    "scrnaseq": {
+      "display_name": "Single-cell RNA-seq with public alternatives",
+      "route_when": ["scrnaseq_fastq", "snrnaseq_fastq", "single_cell_count_generation"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_scrnaseq_fastq_to_count.py",
+      "preferred_workflow": "nf-core/scrnaseq",
+      "preferred_tools": ["nextflow"],
+      "local_workflow": "plugins/ngs-analysis/workflows/scrnaseq_fastq_to_count/Snakefile.smk",
+      "local_tools": ["snakemake", "star"],
+      "optional_tools": ["kb-python", "star", "cellranger"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "manifest/lineage.tsv",
+        "manifest/working_samplesheet.csv",
+        "manifest/inputs_manifest.tsv",
+        "validation/input_summary.json",
+        "validation/validation_summary.json",
+        "validation/tool_preflight.json",
+        "versions/software_versions.json",
+        "counts/*/Solo.out/Gene/raw/*",
+        "counts/*/Solo.out/Gene/filtered/*",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Is the input raw FASTQ requiring count generation, or a post-count object that should route to scrna-seq-qc?",
+        "Which chemistry or barcode/UMI layout was used?",
+        "Is this single-cell or single-nucleus?",
+        "What organism and reference should be used?",
+        "Should the output stop at a count matrix, or continue to QC, clustering, annotation, and UMAPs?"
+      ]
+    },
+    "scrnaseq_post_count_qc": {
+      "display_name": "scRNA-seq post-count QC, annotation, and UMAP",
+      "route_when": ["h5ad", "matrix", "cellranger_output", "single_cell_qc", "single_cell_annotation", "umap"],
+      "preferred_skill": "scrna-seq-qc",
+      "local_executor": "plugins/ngs-analysis/scripts/run_scrnaseq_post_count_qc.py",
+      "preferred_tools": ["scanpy"],
+      "local_light_tools": ["scanpy"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "manifest/lineage.tsv",
+        "validation/input_summary.json",
+        "validation/tool_preflight.json",
+        "versions/software_versions.json",
+        "qc/threshold_justification.png",
+        "qc/cell_qc_metrics.csv",
+        "tables/cell_qc_summary.tsv",
+        "annotation/cell_labels.csv",
+        "embeddings/umap_coords.csv",
+        "plots/umap_global.png",
+        "plots/umap_by_coarse_label.png",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "notebooks/scrna_qc_review.marimo.py",
+        "notebooks/marimo_server.json",
+        "analysis_with_flags.h5ad",
+        "filtered_view.h5ad",
+        "provenance/analysis_status.json",
+        "summary.md",
+        "artifact_index.json"
+      ],
+      "essential_questions": [
+        "Where is the count matrix, h5ad, h5, rds, or Cell Ranger-style output?",
+        "Are raw counts preserved?",
+        "What organism, tissue, assay type, chemistry, and sample/channel metadata are available?",
+        "Should the endpoint include QC only, annotation, clustering, UMAPs, or downstream differential summaries?",
+        "Is there a matched reference atlas or should marker-based fallback annotation be used?"
+      ]
+    },
+    "epigenomics_peaks": {
+      "display_name": "Epigenomics peak calling",
+      "route_when": ["atacseq", "chipseq", "cutandrun", "cutandtag", "peak_calling"],
+      "preferred_workflows": ["nf-core/atacseq", "nf-core/chipseq", "nf-core/cutandrun"],
+      "preferred_tools": ["nextflow", "fastqc", "multiqc", "macs2", "bedtools"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_fastq_assay_package.py",
+      "local_executor_lane": "epigenomics_peaks",
+      "local_light_tools": ["seqkit", "fastqc", "multiqc"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "manifest/lineage.tsv",
+        "validation/samples.normalized.tsv",
+        "qc/seqkit_stats.tsv",
+        "fastqc/multiqc/multiqc_browser_helper.html",
+        "visualizations/localhost_launch_hint.txt",
+        "peak_calling_readiness.json",
+        "qc_verdict.json after successful execution",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Is this ATAC-seq, ChIP-seq, CUT&RUN, or CUT&Tag?",
+        "What genome and blacklist should be used?",
+        "Are controls available, such as input DNA or IgG?",
+        "Are there biological replicates?",
+        "Is the desired output peaks, bigWigs, QC only, or differential accessibility/binding?"
+      ]
+    },
+    "atacseq_peaks_qc": {
+      "display_name": "ATAC-seq QC and peak calling",
+      "route_when": ["atacseq", "accessibility", "differential_accessibility"],
+      "preferred_workflow": "nf-core/atacseq",
+      "preferred_tools": ["nextflow", "fastqc", "multiqc", "macs2", "bedtools", "deeptools"],
+      "optional_tools": ["homer"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_atacseq_peaks_qc.py",
+      "read_qc_executor": "plugins/ngs-analysis/scripts/run_fastq_assay_package.py --lane epigenomics_peaks",
+      "local_light_workflow": "bowtie2_samtools_macs2_bedtools_deeptools",
+      "local_light_tools": ["samtools", "bowtie2", "macs2", "bedtools", "deeptools"],
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/samples.normalized.tsv",
+        "workflow/atacseq_command_plan.json",
+        "qc/atac_qc_contract.json",
+        "qc/atacseq_qc_summary.tsv",
+        "qc/atacseq_qc_summary.json",
+        "qc/*.flagstat.txt",
+        "qc/*.frip_reads.txt",
+        "qc/*.insert_sizes.txt",
+        "qc/*.tss_matrix.gz",
+        "qc/*.tss_profile.png",
+        "qc/*.tss_heatmap.png",
+        "peaks/*.narrowPeak",
+        "peaks/consensus_peaks.bed",
+        "tracks/*.bw",
+        "tracks/browser_tracks.tsv",
+        "tracks/ucsc_track_lines.txt",
+        "tracks/igv_session.xml",
+        "motifs/motif_summary.tsv",
+        "visualizations/index.html",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "What genome build, blacklist, and mitochondrial contig names should be used?",
+        "Are there biological replicates, conditions, and batches?",
+        "Should outputs include QC only, peaks, consensus peaks, bigWigs, or differential accessibility?",
+        "Should Tn5 shifting be handled by the workflow?",
+        "Which QC gates are required: TSS enrichment, FRiP, insert-size periodicity, blacklist overlap, or replicate concordance?"
+      ]
+    },
+    "chip_cutrun_peaks_qc": {
+      "display_name": "ChIP-seq, CUT&RUN, and CUT&Tag QC and peak calling",
+      "route_when": ["chipseq", "cutandrun", "cutandtag", "differential_binding"],
+      "preferred_workflows": ["nf-core/chipseq", "nf-core/cutandrun"],
+      "preferred_tools": ["nextflow", "fastqc", "multiqc", "macs2", "bedtools", "deeptools"],
+      "optional_tools": ["homer"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_chip_cutrun_peaks_qc.py",
+      "read_qc_executor": "plugins/ngs-analysis/scripts/run_fastq_assay_package.py --lane epigenomics_peaks",
+      "local_light_workflow": "bowtie2_samtools_macs2_bedtools_deeptools",
+      "local_light_tools": ["samtools", "bowtie2", "macs2", "bedtools", "deeptools"],
+      "local_outputs": [
+        "run_manifest.json",
+        "validation/samples.normalized.tsv",
+        "workflow/chip_cutrun_command_plan.json",
+        "qc/chip_cutrun_qc_contract.json",
+        "qc/chip_cutrun_qc_summary.tsv",
+        "qc/chip_cutrun_qc_summary.json",
+        "qc/*.flagstat.txt",
+        "qc/*.frip_reads.txt",
+        "qc/*.insert_sizes.txt",
+        "peaks/*Peak",
+        "peaks/consensus_peaks.bed",
+        "tracks/*.bw",
+        "tracks/browser_tracks.tsv",
+        "tracks/ucsc_track_lines.txt",
+        "tracks/igv_session.xml",
+        "motifs/motif_enrichment_plan.json",
+        "motifs/motif_summary.tsv",
+        "visualizations/index.html",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Is this ChIP-seq, CUT&RUN, or CUT&Tag?",
+        "What target class is being profiled: TF, histone mark, chromatin regulator, or custom?",
+        "Are input DNA, IgG, no-antibody, or spike-in controls available?",
+        "Should peaks be called in narrow or broad mode?",
+        "Should outputs include peaks, bigWigs, consensus peaks, count matrices, or differential binding?"
+      ]
+    },
+    "amplicon_microbiome": {
+      "display_name": "Amplicon microbiome analysis",
+      "route_when": ["amplicon_microbiome", "taxonomic_profile"],
+      "preferred_workflow": "nf-core/ampliseq",
+      "preferred_tools": ["nextflow"],
+      "optional_tools": ["qiime2", "dada2", "cutadapt"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_amplicon_microbiome.py",
+      "read_qc_executor": "plugins/ngs-analysis/scripts/run_fastq_assay_package.py --lane amplicon_microbiome",
+      "local_light_tools": ["qiime2", "dada2", "cutadapt"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "manifest/lineage.tsv",
+        "validation/samples.normalized.tsv",
+        "qc/seqkit_stats.tsv",
+        "fastqc/multiqc/multiqc_browser_helper.html",
+        "visualizations/localhost_launch_hint.txt",
+        "amplicon_analysis_status.json",
+        "qc_verdict.json after successful execution",
+        "qc_interpretation.json after successful execution",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "methods/amplicon_methods.json",
+        "workflow/amplicon_backend_status.json",
+        "workflow/amplicon_backend_plan.json",
+        "workflow/amplicon_backend_command_plan.json",
+        "methods/amplicon_backend_methods.json",
+        "workflow/qiime2_manifest.tsv",
+        "qiime2/table.qza when --backend qiime2 executes",
+        "qiime2/taxonomy.qza when a taxonomy classifier is provided",
+        "dada2/dada2_backend_state.rds when --backend dada2 executes",
+        "tables/alpha_diversity.tsv when --asv-table is provided",
+        "tables/asv_table.tsv or exported ASV table after backend execution",
+        "tables/representative_sequences.fasta when --backend dada2 executes",
+        "visualizations/beta_diversity_pcoa_bray_curtis.png when --asv-table has at least two matched samples or --allow-synthetic-diversity is set",
+        "visualizations/taxa_barplot_<rank>.png when --taxonomy-table is provided",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Which marker was sequenced: 16S, 18S, ITS, COI, or another amplicon?",
+        "What primer sequences and orientation were used?",
+        "Are reads paired-end and should they be merged?",
+        "Which taxonomy database should be used?",
+        "Is the goal ASV table only or diversity/statistical analysis too?"
+      ]
+    },
+    "shotgun_metagenomics": {
+      "display_name": "Shotgun metagenomics profiling",
+      "route_when": ["shotgun_metagenomics", "taxonomic_profile", "functional_profile"],
+      "preferred_workflow": "nf-core/taxprofiler",
+      "preferred_tools": ["nextflow", "kraken2", "bracken"],
+      "optional_tools": ["kneaddata", "metaphlan", "humann"],
+      "local_executor": "plugins/ngs-analysis/scripts/run_shotgun_metagenomics.py",
+      "read_qc_executor": "plugins/ngs-analysis/scripts/run_fastq_assay_package.py --lane shotgun_metagenomics",
+      "local_light_tools": ["kraken2", "bracken", "kneaddata", "humann"],
+      "run_envelope_schema": "plugins/ngs-analysis/references/run-envelope-schema.json",
+      "local_outputs": [
+        "run_manifest.json",
+        "manifest/lineage.tsv",
+        "validation/samples.normalized.tsv",
+        "qc/seqkit_stats.tsv",
+        "fastqc/multiqc/multiqc_browser_helper.html",
+        "visualizations/localhost_launch_hint.txt",
+        "qc_verdict.json after successful execution",
+        "qc_interpretation.json after successful execution",
+        "taxonomic_classification_status.json",
+        "workflow/shotgun_backend_command_plan.json",
+        "qc/metagenomics_database_status.json",
+        "host_depletion/ when --host-reference executes",
+        "taxonomic_classification/*.kraken.report",
+        "taxonomic_classification/*.bracken.tsv",
+        "functional_profile/ when --run-humann executes",
+        "visualizations/index.html",
+        "visualizations/visualization_manifest.json",
+        "visualizations/kraken_top_taxa_barplot.png when Kraken reports are available",
+        "visualizations/bracken_relative_abundance_heatmap.png when Bracken tables are provided",
+        "visualizations/humann_pathway_heatmap.png when HUMAnN pathabundance is provided",
+        "visualizations/humann_gene_family_heatmap.png when HUMAnN genefamilies is provided",
+        "artifact_index.json",
+        "summary.md"
+      ],
+      "essential_questions": [
+        "Should host reads be removed, and what host reference should be used?",
+        "Is the goal taxonomic profiling, functional profiling, assembly, or all of these?",
+        "Which database family should be used: Kraken2/Bracken, MetaPhlAn, HUMAnN, or custom?",
+        "Are reads paired-end or single-end?",
+        "Are there negative controls or batch variables that should be carried into QC?"
+      ]
+    }
+  }
+}

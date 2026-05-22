@@ -1,0 +1,4 @@
+interface:
+  display_name: "NGS Router"
+  short_description: "Route sequencing inputs to the right public analysis workflow"
+  default_prompt: "Inspect my sequencing inputs, ask only the missing essential questions, choose the right public pipeline, and produce a preflight-first analysis plan."

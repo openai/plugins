@@ -1,0 +1,4 @@
+interface:
+  display_name: "scRNA-seq QC"
+  short_description: "Help with scRNA-seq QC workflows"
+  default_prompt: "Build or review a general single-cell RNA-seq QC pipeline and choose dataset-appropriate thresholds, annotation strategy, and visualization outputs."

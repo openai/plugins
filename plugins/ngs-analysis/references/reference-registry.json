@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.1.0",
+  "references": {
+    "grch38_core": {
+      "display_name": "GRCh38 core alignment and variant-calling bundle",
+      "kind": "genome_reference",
+      "genome_build": "GRCh38",
+      "root_env": "NGS_REF_GRCH38_ROOT",
+      "source": "User-provided local bundle, typically GATK resource bundle plus aligner indexes.",
+      "license_note": "Genome FASTA and known-sites resources should be downloaded from their authoritative providers and tracked with checksums.",
+      "estimated_size": "large; depends on FASTA, annotation, aligner indexes, and known-sites resources",
+      "suggested_setup": [
+        "mkdir -p \"$NGS_REF_GRCH38_ROOT\"/known_sites \"$NGS_REF_GRCH38_ROOT\"/blacklists",
+        "samtools faidx \"$NGS_REF_GRCH38_ROOT\"/genome.fa",
+        "gatk CreateSequenceDictionary -R \"$NGS_REF_GRCH38_ROOT\"/genome.fa -O \"$NGS_REF_GRCH38_ROOT\"/genome.dict",
+        "Record source URLs, release versions, and checksums in a project resource manifest before analysis runs."
+      ],
+      "required_files": [
+        "genome.fa",
+        "genome.fa.fai",
+        "genome.dict",
+        "annotation.gtf",
+        "known_sites/dbsnp.vcf.gz",
+        "known_sites/dbsnp.vcf.gz.tbi",
+        "known_sites/mills_and_1000g_gold_standard.indels.vcf.gz",
+        "known_sites/mills_and_1000g_gold_standard.indels.vcf.gz.tbi",
+        "blacklists/encode_blacklist.bed"
+      ]
+    },
+    "grcm39_core": {
+      "display_name": "GRCm39 core mouse reference bundle",
+      "kind": "genome_reference",
+      "genome_build": "GRCm39",
+      "root_env": "NGS_REF_GRCM39_ROOT",
+      "source": "User-provided local FASTA, GTF, indexes, and blacklist resources.",
+      "license_note": "Use an annotation/source pair that matches the FASTA build.",
+      "estimated_size": "large; depends on FASTA, annotation, indexes, and optional known-sites resources",
+      "suggested_setup": [
+        "mkdir -p \"$NGS_REF_GRCM39_ROOT\"/blacklists",
+        "samtools faidx \"$NGS_REF_GRCM39_ROOT\"/genome.fa",
+        "gatk CreateSequenceDictionary -R \"$NGS_REF_GRCM39_ROOT\"/genome.fa -O \"$NGS_REF_GRCM39_ROOT\"/genome.dict",
+        "Keep FASTA, GTF, blacklist, and index files from the same genome-build/release family."
+      ],
+      "required_files": [
+        "genome.fa",
+        "genome.fa.fai",
+        "genome.dict",
+        "annotation.gtf",
+        "blacklists/blacklist.bed"
+      ]
+    },
+    "reduced_micro_genome": {
+      "display_name": "Small local reference bundle",
+      "kind": "reduced_reference",
+      "genome_build": "reduced_local",
+      "root_env": "NGS_REF_REDUCED_ROOT",
+      "source": "Local synthetic or reduced-size test bundle.",
+      "license_note": "Reduced references are for runner validation and should not be used for biological interpretation.",
+      "estimated_size": "small",
+      "suggested_setup": [
+        "Use only for runner validation.",
+        "Create genome.fa, genome.fa.fai, and annotation.gtf together so reduced coordinates remain internally consistent."
+      ],
+      "required_files": [
+        "genome.fa",
+        "genome.fa.fai",
+        "annotation.gtf"
+      ]
+    }
+  }
+}

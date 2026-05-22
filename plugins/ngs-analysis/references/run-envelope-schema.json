@@ -1,0 +1,55 @@
+{
+  "schema_version": "0.4.0",
+  "description": "Common top-level run envelope for plugin-owned NGS execution lanes.",
+  "required_top_level_files": [
+    "run_manifest.json",
+    "config.json",
+    "validation/input_summary.json",
+    "validation/validation_summary.json",
+    "validation/tool_preflight.json",
+    "logs/",
+    "versions/software_versions.json",
+    "manifest/lineage.tsv",
+    "artifact_index.json",
+    "summary.md"
+  ],
+  "manifest_required_fields": [
+    "schema_version",
+    "run_id",
+    "created_at",
+    "lane",
+    "workflow",
+    "run_dir",
+    "status",
+    "execute_requested",
+    "validation_ok",
+    "tool_preflight_ok",
+    "ready_to_execute",
+    "dry_run_performed",
+    "dry_run_ok",
+    "execution_ok",
+    "inputs",
+    "outputs",
+    "method",
+    "audit"
+  ],
+  "status_values": [
+    "prepared",
+    "validated",
+    "blocked",
+    "failed",
+    "completed"
+  ],
+  "notes": [
+    "Preflight validation should precede execution when a workflow supports it.",
+    "Raw sequencing inputs must be treated as read-only unless the user explicitly requests otherwise.",
+    "Assay-specific primary outputs live under lane-specific directories such as fastqc/, rnaseq_salmon/, qc/, results/, and plots/.",
+    "Native review bundles should use visualizations/index.html and visualizations/visualization_manifest.json when the runner generates plots or report links.",
+    "Notebook review surfaces, when present, belong under notebooks/ and should wrap generated artifacts rather than replacing the run envelope.",
+    "run_manifest.json may include full dry_run_result and execution_result objects with started_at, finished_at, returncode, and command detail.",
+    "artifact_index.json should include per-file SHA256 checksums and modification timestamps for provenance.",
+    "audit.parameter_sha256 should hash the declared inputs, outputs, lane, workflow, method, and execute_requested fields.",
+    "manifest/lineage.tsv should describe the declared input-to-output lineage with existence and checksum columns when the referenced files exist.",
+    "Assay-specific methods manifests and backend handoff bundles may live under methods/ and workflow/ and should be listed in outputs when present."
+  ]
+}

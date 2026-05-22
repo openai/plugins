@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bulk RNA-seq DE"
+  short_description: "Deep differential-expression design and result planning"
+  default_prompt: "Plan bulk RNA-seq differential expression from counts, verify design and contrasts, and produce an auditable analysis plan."

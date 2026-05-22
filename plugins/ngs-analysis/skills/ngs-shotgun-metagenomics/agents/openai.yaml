@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shotgun Metagenomics"
+  short_description: "Plan shotgun metagenomics profiling"
+  default_prompt: "Inspect my metagenomic FASTQs, resolve host-depletion and database choices, check public tools, and prepare a taxonomic or functional profiling preflight run."
