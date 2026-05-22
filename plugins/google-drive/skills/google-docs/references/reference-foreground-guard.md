@@ -1,12 +1,12 @@
 # Target Document Guard
 
-When to read: before every connector write batch to a Google Doc, and again before ending the task.
+When to read: when target identity is unknown or stale, and again before ending the task.
 
 ## Rule
 
 The exact working Google Doc must be identified by connector-visible document identity at write time and handoff time.
 
-This environment has no Browser Use and no rendered visual inspection. Do not require a visible browser tab, foregrounding, screenshots, cursor placement, or rendered-page scans.
+This environment has no Browser Use and no live browser-rendered inspection. Do not require a visible browser tab, foregrounding, screenshots, cursor placement, or live rendered-page scans.
 
 ## Hard Precondition
 
@@ -17,14 +17,14 @@ It is not enough that:
 3. a connector read returned some Google Doc
 4. the intended section name exists in multiple documents or tabs
 
-Before writing, confirm the target document URL or id, document title when available, and resolved `tabId` when the document has tabs.
+Before writing, confirm the target document URL or id, document title when available, and resolved `tabId` when the document has tabs. Use current connector readback when it is still fresh; re-read only when identity, tab, or target range state is stale or insufficient.
 
 ## Required Check Before Every Write Batch
 
 1. Confirm the intended working doc URL or document id.
-2. Re-read enough connector metadata to verify the target document identity.
+2. Use current connector metadata to verify the target document identity, or re-read enough metadata if the current state is stale or insufficient.
 3. If the document has tabs, confirm the target `tabId`.
-4. Resolve the target section, paragraph, range, table, or cell from fresh connector data.
+4. Resolve the target section, paragraph, range, table, or cell from current connector data, or from a fresh read if the current data is stale.
 5. Only then issue the connector write.
 
 ## Required Check Before Final Handoff
@@ -32,7 +32,7 @@ Before writing, confirm the target document URL or id, document title when avail
 1. Run connector readback on the edited document.
 2. Confirm the target document id, title, and `tabId` where applicable.
 3. Confirm the inserted or edited content is present in the intended section, range, table, or cell.
-4. Report any rendering or visual-layout property that could not be verified through connector data as an unverified limitation, not as a completed visual check.
+4. Report any rendering or visual-layout property that could not be verified through connector data, HTML export, or PDF-export visual QA as an unverified limitation, not as a completed visual check.
 
 ## Stale Identity Triggers
 
@@ -47,4 +47,4 @@ Treat target identity as stale after any of the following:
 
 ## Failure Rule
 
-If the working doc identity was not freshly confirmed before the current write batch, or final readback does not prove the edits landed in the intended document and location, the target-document precondition failed.
+If the working doc identity was not confirmed from current connector state before the current write batch, or final readback does not prove the edits landed in the intended document and location, the target-document precondition failed.

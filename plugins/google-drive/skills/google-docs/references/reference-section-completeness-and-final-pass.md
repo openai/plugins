@@ -4,9 +4,9 @@ When to read: before final handoff, and before any large section replacement.
 
 ## Critical Invariant
 
-Final output quality is not just structural completeness. In this blind environment, the task is unfinished until connector readback verifies the inserted content, target location, document structure, tab identity, links, tables, and connector-visible style fields.
+Final output quality is not just structural completeness. In this blind environment, the task is unfinished until connector readback verifies the inserted content, target location, document structure, tab identity, links, tables, chips, and connector-visible style fields.
 
-Do not claim rendered visual checks, page fit, crop quality, or visible alignment. If a quality property cannot be verified without seeing the document, report it as unverified rather than complete.
+Do not claim rendered visual checks, page fit, crop quality, or visible alignment from connector readback or HTML export alone. If PDF export and page raster inspection are available, use `reference-pdf-export-visual-qa.md` for rendered-page verification. If a quality property cannot be verified, report it as unverified rather than complete.
 
 ## Final Readback Checklist
 
@@ -18,9 +18,11 @@ Do not claim rendered visual checks, page fit, crop quality, or visible alignmen
 6. Confirm links cover the exact intended labels, with no missing or extra neighboring characters.
 7. Confirm new or edited tables have the intended row count, column count, cell text, table anchor, and connector-visible styling.
 8. Confirm existing template containers were filled in place instead of bypassed with a parallel draft section.
-9. Confirm inserted figures or images are present in connector readback if the task required them.
-10. Confirm no placeholder text, empty bullets, duplicate answer sections, or unintended leftover scaffolding remains.
-11. If connector metadata is insufficient to judge a rendered visual property, state the limitation plainly.
+9. Confirm supported smart chips and building-block-like regions preserve expected element types such as `dateElement`, `person`, and `richLink`; visible text alone is not enough.
+10. Confirm inserted figures or images are present in connector readback if the task required them.
+11. Confirm no placeholder text, unintended empty bullets, duplicate answer sections, or unintended leftover scaffolding remains.
+12. For layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable edits, run PDF-export visual QA when available.
+13. If connector metadata, HTML export, and PDF-export visual QA are insufficient to judge a rendered visual property, state the limitation plainly.
 
 ## HTML Export Proxy
 
@@ -38,6 +40,12 @@ Use the HTML export to verify:
 The export response may wrap HTML inside a JSON string. Parse the wrapper before checking markup when needed. Prefer simple string or structured checks over fragile regexes when escaping is ambiguous.
 
 Do not use HTML export to claim pixel-perfect layout, crop quality, exact page breaks, or final on-screen appearance. It is stronger than raw Docs structure for style sanity checks, but weaker than actual rendered visual inspection.
+
+## PDF Export Visual QA
+
+For layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable edits, run the workflow in `reference-pdf-export-visual-qa.md` when Google Drive PDF export and local PDF page rasterization are available.
+
+PDF export plus page raster inspection is the preferred rendered-page check for native Google Docs in this environment. It verifies the exported document pages, not the live browser editing canvas. Do not use Drive thumbnails as a substitute for this workflow; thumbnails are only a low-resolution first-page smoke signal.
 
 ## Connector-Observable Quality Checks
 
@@ -71,6 +79,9 @@ Use these checks for presentation-oriented documents such as plans, briefs, repo
 3. Check headings, body text, lists, links, citations, tables, and figures through connector data.
 4. Run the design quality checks when the document is presentation-oriented or the user asked for polish, visuals, charts, tables, or readability.
 5. Export `text/html` when available and check generated markup/CSS for rendered-structure sanity.
-6. Apply focused repair writes for any connector-observable, design-quality, or HTML-export mismatch.
-7. Re-read the repaired ranges and re-export HTML if the repair changed layout-sensitive content.
-8. In the final response, distinguish verified connector/HTML facts from unverified rendered visual properties.
+6. Run PDF-export visual QA when the task is layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable and the export/raster toolchain is available.
+7. Apply focused repair writes for any connector-observable, design-quality, HTML-export, or PDF visual mismatch.
+8. Re-read the repaired ranges and re-export HTML/PDF if the repair changed layout-sensitive content.
+9. In the final response, distinguish connector facts, HTML-export checks, PDF-export visual checks, and unverified rendered properties.
+10. If the edit created a skeleton because source notes were unavailable, say that it created a notes skeleton rather than saying it added substantive meeting notes.
+11. If smart-chip or building-block-like content was involved, state whether chip parity was preserved, approximated, or not applicable.
