@@ -34,9 +34,9 @@
     "privacyPolicyURL": "https://deepnote.com/privacy",
     "termsOfServiceURL": "https://deepnote.com/terms",
     "defaultPrompt": [
-      "Search my Deepnote workspace",
-      "Give me links to my Deepnote projects",
-      "Inspect and run a Deepnote notebook"
+      "Summarize my Deepnote workspace and recent notebook activity",
+      "Inspect a Deepnote notebook and explain what it does",
+      "Run a Deepnote notebook and summarize the results"
     ],
     "brandColor": "#3793EF",
     "composerIcon": "./assets/deepnote-icon.svg",
