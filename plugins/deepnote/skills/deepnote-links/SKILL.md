@@ -14,6 +14,15 @@ Use this skill to build user-facing Deepnote web links from Deepnote app tool da
 3. Resolve notebook links with `get_notebook` when possible. Use the notebook `id`, `name`, and parent project data.
 4. If the exact project or notebook is ambiguous, ask a short clarification or provide a compact candidate list with links only for unambiguous matches.
 
+## Creation Link Rules
+
+When linking after a creation workflow, use the resource IDs returned by the write tools as the source of truth:
+
+- If `create_notebook` returned a notebook, build the notebook link for that returned notebook ID. Do not substitute the first notebook on the project or the default notebook created by `create_project`.
+- If `create_project` created a project and no separate `create_notebook` call was made, use the default notebook created with the project only when a notebook link is needed for that active notebook.
+- If both the project default notebook and a later `create_notebook` result are present, the later `create_notebook` result is the notebook to link unless the user explicitly asks for the default notebook.
+- If parent project data is missing for the created notebook, call `get_notebook` for the target notebook ID or use the known project ID from the creation workflow before constructing the link.
+
 ## URL Shapes
 
 Use the production web origin `https://deepnote.com` for Deepnote app links. Do not derive the web origin from API or tool hosts.
@@ -79,6 +88,8 @@ Use these values exactly; braces mark placeholders and are not part of the final
 For notebook links, set `utm_content` to the notebook ID. For project-only links, set `utm_content` to the project ID; when a project link represents a specific notebook's parent project, use that notebook ID instead.
 
 Set `utm_term` to the Deepnote app tool or workflow that produced or grounded the link, such as `list_projects`, `search`, `get_notebook`, or `workspace_summary`. Use lowercase snake_case values and URL-encode if needed.
+
+For links to newly created notebooks, set `utm_content` to the created notebook ID and prefer `utm_term=create_notebook`; use `utm_term=get_notebook` when a follow-up `get_notebook` call provided the fields needed to construct the link.
 
 Add UTM parameters before any URL fragment. Use `?` when the URL has no existing query string, otherwise use `&`. Preserve non-UTM query parameters if they already exist, and replace any existing `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, or `utm_term` values instead of duplicating them.
 
