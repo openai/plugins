@@ -34,18 +34,19 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
   - Deck -> Slides skill
 - If the user wants to find a file and then edit it, do both in one flow: Drive for discovery, then the file-type skill for the edit.
 - If the user wants a Google Workspace outcome but has not named a file type yet, start with Drive discovery instead of asking them to choose among separate Google plugins.
-- If the user asks to create a new Google Doc, route to the Docs skill. The Docs skill must use `[@documents](plugin://documents@openai-primary-runtime)` to create a local `.docx`, then upload and convert it as a native Google Doc.
-- If the user asks to import a local `.docx` into Google Docs, route to the Docs skill and use native Google Docs conversion by default. Preserve the source file type only when the user explicitly asks for that.
+- If the user asks to create a new Google Doc, route to the Docs skill; it owns the mandatory local `.docx` -> native Google Docs import workflow and the explicit-user-override boundary. Do not create a blank Google Doc directly from this router.
+- If the user asks to import a local `.docx` into Google Docs, route to the Docs skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
 - If the user asks to create a new Google Sheet, route to the Sheets skill. The Sheets skill should prefer the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or `$Excel` skill to create a local `.xlsx`, then import it as native Google Sheets.
 - If the user asks to import a local `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets, route to the Sheets skill and use native Google Sheets conversion by default. Preserve the source file type only when the user explicitly asks for that.
-- If the user asks to create a new Google Slides deck, route to the Slides skill. The Slides skill should prefer the `[@presentations](plugin://presentations@openai-primary-runtime)` plugin or `$PowerPoint` skill to create a local `.pptx`, then import it as native Google Slides.
-- If the user asks to import a local `.ppt`, `.pptx`, or `.odp` into Google Slides, route to the Slides skill and use native Google Slides conversion by default.
+- If the user asks to create a new Google Slides deck, route to the Slides skill; it owns the mandatory local `.pptx` -> native Google Slides import workflow and the explicit-user-override boundary. Do not create a blank Google Slides deck directly from this router.
+- If the user asks to import a local `.ppt`, `.pptx`, or `.odp` into Google Slides, route to the Slides skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
 
 ## Write Safety
 
 - Preserve the user's existing file organization, sharing state, and target artifact unless the request clearly asks to change them.
 - When a task can be satisfied by a file-level Drive operation alone, do not load heavier Docs, Sheets, or Slides skills.
 - For write-heavy Sheets or Slides work, read the specialized skill before the first large update so request shapes stay grounded.
+- For any file import or explicit direct create that returns a user-facing Google Workspace link, wait for the write action to complete and verify the created file with connector readback or Drive metadata readback before returning the URL. Use only a URL or id observed from the completed connector result or readback; never synthesize or predict the URL.
 
 ## Related Skills
 
