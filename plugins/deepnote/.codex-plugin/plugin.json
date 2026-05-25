@@ -35,8 +35,8 @@
     "termsOfServiceURL": "https://deepnote.com/terms",
     "defaultPrompt": [
       "Summarize my Deepnote workspace and recent notebook activity",
-      "Inspect a Deepnote notebook and explain what it does",
-      "Run a Deepnote notebook and summarize the results"
+      "Explore active data connections to my Deepnote workspace",
+      "Create a notebook exploring S&P 500 vs. Nasdaq gains over the last 5 years"
     ],
     "brandColor": "#3793EF",
     "composerIcon": "./assets/deepnote-icon.svg",
