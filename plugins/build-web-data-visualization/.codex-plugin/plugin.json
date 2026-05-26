@@ -55,7 +55,7 @@
   "interface": {
     "displayName": "Build Web Data Visualization",
     "shortDescription": "Design, build, test, and export web data visualizations",
-    "longDescription": "Use Build Web Data Visualization to choose, design, implement, test, and export browser charts, dashboards, maps, geospatial scenes, WebGL/Three.js, Canvas, D3/SVG, Gantt charts, UML and software diagrams, scrollytelling, reports, PDFs, and slide decks. The plugin favors source-backed data, self-explanatory layouts, mobile and large-screen sibling designs, URL-shareable analysis state, accessible labels and fallbacks, semantic color roles, and visual effects tied to data or interaction state. For advanced page or visual-story work, it guides concept-first design with user-approved large-screen and mobile concepts, binding semantic design contracts, operational workspace shells, and implementation contracts for renderer ownership, coordinates, state, fallbacks, and QA.",
+    "longDescription": "Use Build Web Data Visualization to choose, design, implement, test, and export browser charts, dashboards, maps, WebGL/Three.js scenes, Canvas/D3 visuals, Gantt charts, UML/software diagrams, scrollytelling, reports, PDFs, and slide decks. It emphasizes source-backed data, accessible responsive layouts, URL-shareable analysis state, and concept-first design for advanced visual stories.",
     "developerName": "OpenAI",
     "category": "Coding",
     "capabilities": [

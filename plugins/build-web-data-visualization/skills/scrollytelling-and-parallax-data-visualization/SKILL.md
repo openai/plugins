@@ -28,7 +28,7 @@ Avoid scrollytelling when the story is clearer as a static chart, direct-label s
    - why scrolling is necessary
    - what the first frame, each key frame, and final frame prove
 2. For fictional, synthetic, or illustrative stories, require a data-rich simulation before storyboarding. Use `../../references/foundations/fictional-data-story-simulation.md` to define entity, temporal, spatial or physical, event, outcome, and derived comparison layers.
-3. For art-directed, image-supported, composite, or existing-page scrollytelling work, use `../../references/foundations/meaning-preserving-visual-design-workflow.md` and `../../references/foundations/mobile-first-responsive-visualization.md`. Generate overall layout, scene, or key-frame concepts with Codex image generation when visual composition, label placement, motion staging, or page integration needs a design pass before implementation. Concept sets must include large-screen and mobile portrait states, plus mobile landscape when the scene uses a wide timeline, map, video, 3D/camera move, two-handed interaction, or orientation-dependent experience. After each generated concept set, show the images, summarize the scene plan and interactions in concise bullets, and pause so the user can approve the design direction or request iteration before scene implementation, file edits, or code generation begins. Iterate with revised concepts until the user agrees on the design.
+3. For art-directed, image-supported, composite, or existing-page scrollytelling work, use `../../references/foundations/meaning-preserving-visual-design-workflow.md` and `../../references/foundations/mobile-first-responsive-visualization.md`. Apply those shared references for Codex concept generation, large-screen/mobile variants, approval or iteration, scene contracts, and implementation deferral.
 4. Choose the scrollytelling technique:
    - graphic sequence
    - animated transition
@@ -81,7 +81,7 @@ Avoid scrollytelling when the story is clearer as a static chart, direct-label s
 - State whether scrollytelling is justified and what would be lost in a simpler format.
 - Name the scrollytelling technique and the reader's path through scenes.
 - Provide a scene contract with trigger/progress ranges and static fallbacks.
-- For Codex image-generated layout or key-frame concepts before approval, provide the large-screen and mobile portrait concept images, optional mobile landscape concept image, concise scene-plan bullets, concise interaction bullets, and an approval question. After approval, provide the user approval status, approved concept paths or screenshot references, binding semantic design contract, locked and flexible elements, data-bound layers, mobile/landscape continuation, approved deviations, and concept-to-result fidelity checks.
+- For Codex image-generated layout or key-frame concepts, use the shared design workflow for concept images, approval status, approved references, binding semantic design contract, locked and flexible elements, data-bound layers, mobile/landscape continuation, approved deviations, and concept-to-result fidelity checks.
 - For every embedded visual layer, provide the specialist owner, mini-brief summary, QA check, and whether delegated fresh context, a local fresh specialist pass, or a lightweight exception was used.
 - For fictional stories, provide the simulated-world data richness contract and the specialist mini-brief for every embedded visualization layer.
 - Name the implementation stack and why it is the lightest reliable option.

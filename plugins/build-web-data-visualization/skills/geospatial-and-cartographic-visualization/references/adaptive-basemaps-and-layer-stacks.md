@@ -123,8 +123,8 @@ When answering a map-design or map-stack request, include:
 - `./point-overlap-strategies.md`
 - `./multiscale-symbols-and-zoom-behavior.md`
 - `./slippy-map-and-product-stack-selection.md`
-- `../../references/foundations/domain-contextual-surfaces.md`
-- `../../references/foundations/sensitive-geopolitical-and-humanitarian-stories.md`
+- `../../../references/foundations/domain-contextual-surfaces.md`
+- `../../../references/foundations/sensitive-geopolitical-and-humanitarian-stories.md`
 
 ## Source Links
 
