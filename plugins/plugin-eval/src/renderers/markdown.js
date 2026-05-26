@@ -37,12 +37,27 @@ function renderNextAction(nextAction) {
 }
 
 function renderBudgets(budgets) {
-  return [
+  const lines = [
     `- trigger_cost_tokens: ${budgets.trigger_cost_tokens.value} (${budgets.trigger_cost_tokens.band})`,
     `- invoke_cost_tokens: ${budgets.invoke_cost_tokens.value} (${budgets.invoke_cost_tokens.band})`,
     `- deferred_cost_tokens: ${budgets.deferred_cost_tokens.value} (${budgets.deferred_cost_tokens.band})`,
-    `- total_tokens: ${budgets.total_tokens.value} (${budgets.total_tokens.band})`,
-  ].join("\n");
+  ];
+
+  if (budgets.explicit_only_invoke_cost_tokens) {
+    lines.push(
+      `- explicit_only_invoke_cost_tokens: ${budgets.explicit_only_invoke_cost_tokens.value} (${budgets.explicit_only_invoke_cost_tokens.band}, unscored)`,
+    );
+  }
+
+  lines.push(`- total_tokens: ${budgets.total_tokens.value} (${budgets.total_tokens.band})`);
+
+  if (budgets.invocation_policy?.explicit_only_skill_count > 0) {
+    lines.push(
+      `- invocation_policy: ${budgets.invocation_policy.implicit_skill_count} implicit skill(s), ${budgets.invocation_policy.explicit_only_skill_count} explicit-only skill(s)`,
+    );
+  }
+
+  return lines.join("\n");
 }
 
 function renderObservedUsage(observedUsage) {
@@ -341,6 +356,11 @@ function renderBudgetExplanation(payload) {
   const whyBullets = [
     `- Budget method: ${budgets.method}.`,
     `- Trigger and invoke tokens matter most because they are closest to always-loaded or frequently-loaded context.`,
+    ...(budgets.invocation_policy?.explicit_only_skill_count > 0
+      ? [
+          `- Explicit-only skills are excluded from trigger and invoke budgets, but their standalone load ceiling is shown separately.`,
+        ]
+      : []),
     ...(budgetPayload.baselineEvidence
       ? [`- Baseline corpus: skills=${budgetPayload.baselineEvidence.skillSamples}, plugins=${budgetPayload.baselineEvidence.pluginSamples}.`]
       : []),
@@ -379,6 +399,14 @@ function renderBudgetExplanation(payload) {
           ? budgets.deferred_cost_tokens.components.map((component) => `- ${component.label}: ${component.tokens} tokens`).join("\n")
           : "- None",
       ),
+      budgets.explicit_only_invoke_cost_tokens
+        ? detailsBlock(
+            "Explicit-only skill components",
+            budgets.explicit_only_invoke_cost_tokens.components.length > 0
+              ? budgets.explicit_only_invoke_cost_tokens.components.map((component) => `- ${component.label}: ${component.tokens} tokens`).join("\n")
+              : "- None",
+          )
+        : "",
       detailsBlock("Use From Codex Chat", renderWorkflowGuide(budgetPayload.workflowGuide)),
     ]),
   ].join("\n");

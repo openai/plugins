@@ -139,27 +139,33 @@ Every metric uses the normalized fields:
 
 ## Budget Model
 
-The budget model is a first-class part of the evaluation result and uses three buckets:
+The budget model is a first-class part of the evaluation result and uses three scored buckets:
 
 - `trigger_cost_tokens`
 - `invoke_cost_tokens`
 - `deferred_cost_tokens`
+
+Policy-aware plugin analyses may also include an unscored visibility bucket:
+
+- `explicit_only_invoke_cost_tokens`
 
 ### Definitions
 
 - `trigger_cost_tokens`: text likely to matter before explicit invocation, such as names, descriptions, and starter prompts
 - `invoke_cost_tokens`: core instruction payloads that are likely loaded when the skill or plugin is invoked
 - `deferred_cost_tokens`: supporting references, scripts, and related text assets that are only pulled in later
+- `explicit_only_invoke_cost_tokens`: skill payloads marked `policy.allow_implicit_invocation: false` in `agents/openai.yaml`; these remain visible as explicit load ceilings but are excluded from implicit trigger/invoke scoring
 
 ### Measurement Mode In V1
 
-The current implementation labels budget analysis as `estimated-static`.
+The current implementation labels budget analysis as `estimated-static` or `estimated-static-policy-aware`.
 
 That means:
 
 - token counts are estimated locally from file contents
 - the estimate is deterministic and repeatable
 - budget bands are calibrated against a baseline corpus of shipped Codex skills and plugins when available locally
+- `estimated-static-policy-aware` honors `agents/openai.yaml` invocation policy, so explicit-only skills do not inflate implicit active-context findings
 
 ### Why Static Estimation First
 

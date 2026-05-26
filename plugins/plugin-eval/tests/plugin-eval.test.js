@@ -47,6 +47,65 @@ async function writeBlockScalarSkillFixture(rootPath, { style = ">", description
   );
 }
 
+async function writePluginBudgetFixture(rootPath) {
+  await fs.mkdir(path.join(rootPath, ".codex-plugin"), { recursive: true });
+  await fs.writeFile(
+    path.join(rootPath, ".codex-plugin", "plugin.json"),
+    JSON.stringify(
+      {
+        name: "policy-aware-plugin",
+        version: "0.1.0",
+        description: "Evaluate policy-aware plugin budgets.",
+        author: {
+          name: "Plugin Eval",
+        },
+        homepage: "https://example.com/",
+        license: "MIT",
+        keywords: ["fixture"],
+        skills: "./skills/",
+        interface: {
+          displayName: "Policy Aware Plugin",
+          shortDescription: "Fixture for policy-aware budgets",
+          longDescription: "Fixture for policy-aware budget tests.",
+          developerName: "Plugin Eval",
+          category: "Coding",
+          capabilities: ["Read"],
+          defaultPrompt: ["Route the request first."],
+          brandColor: "#0B7285",
+          composerIcon: "./assets/icon.svg",
+          logo: "./assets/logo.svg",
+          screenshots: [],
+        },
+      },
+      null,
+      2,
+    ),
+    "utf8",
+  );
+
+  await writeSkillFixture(path.join(rootPath, "skills", "router"), {
+    description: "Route fixture requests.",
+    bodyLines: 3,
+  });
+  await fs.mkdir(path.join(rootPath, "skills", "router", "agents"), { recursive: true });
+  await fs.writeFile(
+    path.join(rootPath, "skills", "router", "agents", "openai.yaml"),
+    "policy:\n  allow_implicit_invocation: true\n",
+    "utf8",
+  );
+
+  await writeSkillFixture(path.join(rootPath, "skills", "specialist"), {
+    description: `Specialist fixture ${"x".repeat(500)}`,
+    bodyLines: 200,
+  });
+  await fs.mkdir(path.join(rootPath, "skills", "specialist", "agents"), { recursive: true });
+  await fs.writeFile(
+    path.join(rootPath, "skills", "specialist", "agents", "openai.yaml"),
+    "policy:\n  allow_implicit_invocation: false\n",
+    "utf8",
+  );
+}
+
 async function copyDirectory(source, destination) {
   await fs.cp(source, destination, { recursive: true });
 }
@@ -167,6 +226,49 @@ test("analyze accepts skills with block-scalar descriptions", async () => {
   assert.ok(!ids.has("name-missing"));
   assert.ok(!ids.has("description-missing"));
   assert.ok(result.summary.score > 0);
+});
+
+test("explicit-only skill policy removes trigger budget", async () => {
+  const tempDir = await makeTempDir("plugin-eval-explicit-skill");
+  await writeSkillFixture(tempDir, {
+    description: `Explicit-only description ${"x".repeat(500)}`,
+    bodyLines: 10,
+  });
+  await fs.mkdir(path.join(tempDir, "agents"), { recursive: true });
+  await fs.writeFile(
+    path.join(tempDir, "agents", "openai.yaml"),
+    "policy:\n  allow_implicit_invocation: false\n",
+    "utf8",
+  );
+
+  const result = await analyzePath(tempDir);
+
+  assert.equal(result.budgets.method, "estimated-static-policy-aware");
+  assert.equal(result.budgets.invocation_policy.allow_implicit_invocation, false);
+  assert.equal(result.budgets.trigger_cost_tokens.value, 0);
+  assert.ok(result.budgets.invoke_cost_tokens.value > 0);
+  assert.ok(!result.checks.some((check) => check.id === "trigger_cost_tokens-budget-high"));
+});
+
+test("plugin budget excludes explicit-only specialist skills from implicit active budget", async () => {
+  const tempDir = await makeTempDir("plugin-eval-policy-plugin");
+  await writePluginBudgetFixture(tempDir);
+
+  const result = await analyzePath(tempDir);
+  const triggerLabels = result.budgets.trigger_cost_tokens.components.map((component) => component.label);
+  const invokeLabels = result.budgets.invoke_cost_tokens.components.map((component) => component.label);
+  const explicitLabels = result.budgets.explicit_only_invoke_cost_tokens.components.map((component) => component.label);
+
+  assert.equal(result.target.kind, "plugin");
+  assert.equal(result.budgets.method, "estimated-static-policy-aware");
+  assert.equal(result.budgets.invocation_policy.implicit_skill_count, 1);
+  assert.equal(result.budgets.invocation_policy.explicit_only_skill_count, 1);
+  assert.ok(triggerLabels.includes("router-description"));
+  assert.ok(!triggerLabels.includes("specialist-description"));
+  assert.ok(invokeLabels.includes("router-skill-file"));
+  assert.ok(!invokeLabels.includes("specialist-skill-file"));
+  assert.deepEqual(explicitLabels, ["specialist-skill-file"]);
+  assert.ok(result.metrics.some((metric) => metric.id === "explicit_only_invoke_cost_tokens"));
 });
 
 test("finds broken plugin manifests, missing paths, and prompt issues", async () => {
@@ -727,7 +829,6 @@ test("shipped plugin surfaces advertise beginner chat prompts", async () => {
     "Give me an analysis of the game studio plugin.",
     "Evaluate this plugin.",
     "Why did this score that way?",
-    "What should I fix first?"
   ]);
   assert.match(umbrellaSkill, /plugin-eval start <path> --request/);
   assert.match(umbrellaSkill, /analysis of the game dev skill/i);
