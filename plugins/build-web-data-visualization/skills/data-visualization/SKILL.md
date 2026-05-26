@@ -7,11 +7,15 @@ description: Route web data visualization work. Use when the user needs chart ch
 
 ## Overview
 
-Use this skill as the umbrella entrypoint for visualization work. Its job is to classify the analytical task, delivery medium, layout hierarchy, interaction needs, and scale constraints before choosing a chart family, grammar, or renderer.
+Use this skill as the orchestrator and umbrella entrypoint for visualization work. Its job is to classify the analytical task, delivery medium, layout hierarchy, interaction needs, and scale constraints before choosing a chart family, grammar, renderer, or narrower specialist skill.
 
 Default assumption: the best visualization is the simplest truthful view that answers the user's question with the least decoding burden. Prefer self-explanatory layouts, labels, and defaults over explanatory UI prose. For explanatory or editorial work, lead with a concrete takeaway, artifact mode, annotation plan, and custom composition before choosing a renderer. Do not default to 3D, animation, generated imagery, or dashboards unless the problem genuinely requires them.
 
 Mobile is a primary surface. Unless the user explicitly scopes the work away from mobile or large screens, accommodate both. For concept-first design, produce paired large-screen and mobile portrait concepts; add mobile landscape when a wide handheld orientation, camera/AR, two-handed interaction, keyboard pressure, or a wide substrate matters.
+
+## Orchestrator Role
+
+This is the only skill in this plugin intended for implicit invocation from broad user requests. Use it to identify the task, choose the smallest useful specialist skill set, and route immediately when the request is primarily about a specific medium, renderer, workflow, or QA concern. Specialist skills are available for explicit invocation or for handoff from this orchestrator.
 
 ## Core Workflow
 
