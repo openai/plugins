@@ -6,7 +6,6 @@
     "name": "OpenAI"
   },
   "homepage": "https://openai.com/",
-  "repository": "https://github.com/thisdot/openai-data-visualization-plugin",
   "license": "MIT",
   "keywords": [
     "build-web-data-visualization",
