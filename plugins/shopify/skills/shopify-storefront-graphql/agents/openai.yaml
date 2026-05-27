@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shopify Storefront GraphQL"
+  short_description: "Write Storefront API GraphQL"

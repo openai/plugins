@@ -1,0 +1,49 @@
+{
+  "name": "shopify",
+  "version": "1.2.2",
+  "description": "Build Shopify apps, themes, storefronts, extensions, and store workflows from Codex. Skill scripts send usage telemetry to Shopify by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
+  "author": {
+    "name": "Shopify",
+    "url": "https://www.shopify.com/"
+  },
+  "homepage": "https://shopify.dev/docs/apps/build/ai-toolkit",
+  "repository": "https://github.com/Shopify/Shopify-AI-Toolkit",
+  "license": "MIT",
+  "keywords": [
+    "shopify",
+    "graphql",
+    "liquid",
+    "storefront",
+    "admin-api",
+    "hydrogen",
+    "polaris",
+    "ui-extensions",
+    "shopify-functions",
+    "ucp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Shopify",
+    "shortDescription": "Build Shopify apps, themes, storefronts, extensions, and store workflows",
+    "longDescription": "Use Shopify in Codex to search Shopify developer documentation, validate Admin and Storefront GraphQL, Liquid, Hydrogen, UI extension, and Functions code, and plan Shopify CLI or UCP workflows. The included Shopify scripts send usage telemetry to Shopify by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
+    "developerName": "Shopify",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://shopify.dev",
+    "privacyPolicyURL": "https://www.shopify.com/legal/privacy",
+    "termsOfServiceURL": "https://www.shopify.com/legal/terms",
+    "defaultPrompt": [
+      "How do I create a product using the Shopify Admin API?",
+      "Generate a Liquid section with a product image gallery",
+      "Create a cart validation Function requiring minimum 5 items"
+    ],
+    "logo": "./assets/shopify_glyph.svg",
+    "composerIcon": "./assets/shopify_glyph.svg",
+    "brandColor": "#008060",
+    "screenshots": []
+  }
+}

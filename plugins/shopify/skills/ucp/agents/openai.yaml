@@ -1,0 +1,3 @@
+interface:
+  display_name: "UCP"
+  short_description: "Use UCP for product discovery and checkout"

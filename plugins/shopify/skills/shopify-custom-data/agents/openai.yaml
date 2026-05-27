@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shopify Custom Data"
+  short_description: "Model metafields and metaobjects"

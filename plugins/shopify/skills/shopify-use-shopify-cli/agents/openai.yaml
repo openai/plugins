@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shopify CLI"
+  short_description: "Run and troubleshoot Shopify CLI flows"

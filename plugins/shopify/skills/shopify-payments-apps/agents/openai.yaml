@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shopify Payments Apps"
+  short_description: "Build Shopify payments app integrations"

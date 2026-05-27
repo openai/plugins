@@ -1,0 +1,3 @@
+interface:
+  display_name: "Shopify Admin"
+  short_description: "Admin GraphQL queries and mutations"
