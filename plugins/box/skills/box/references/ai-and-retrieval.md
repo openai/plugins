@@ -26,6 +26,18 @@ When the task requires understanding what a document contains (classification, e
 
 If the first Box AI call fails with a 403 or feature-not-available error, switch to the next method immediately rather than retrying AI for the remaining files.
 
+## Connected Box app text retrieval
+
+`get_file_content` and Deep Research `fetch` require a markdown or extracted-text representation. Use file signals to avoid sending obviously unsupported files into a text read:
+
+1. Search or list narrowly until you have the exact Box file ID and lightweight file context. When that call is already part of the path, request `extension` and `representations`.
+2. For one file with a text representation, prefer `get_file_content` and let the model reason over the returned text.
+3. If the file is obviously visual, binary, or preview-oriented, prefer preview or metadata paths before a text-content read. `get_file_preview` is limited to files at or under 3 MB, so reuse `size` from search, listing, or details results when it is already available.
+
+If the earlier search or list result did not include enough file signals and a text read is uncertain, use `get_file_details` with the smallest useful `fields` set, such as `["extension", "size", "representations"]`. Check for `markdown` or `extracted_text` before calling `get_file_content` when avoiding a likely text-content miss is worth that extra metadata call. Do not add this preflight for every likely text-backed document.
+
+If `get_file_content` or Deep Research `fetch` returns `Markdown or text representation is not available for this file`, do not retry the same text read. Use a preview path for previewable content, inspect metadata when it can answer the question, or choose a scoped fallback.
+
 ### Box AI via CLI
 
 **Before the first AI call**, run `box ai:ask --help` to confirm the command exists in the installed CLI version.
