@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ramp": {
+      "type": "streamable_http",
+      "url": "https://mcp.ramp.com/mcp"
+    }
+  }
+}

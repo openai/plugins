@@ -1,0 +1,14 @@
+interface:
+  display_name: "Ramp"
+  short_description: "Analyze spend, approvals, transactions, and finance workflows"
+  icon_small: "./assets/app-icon.png"
+  icon_large: "./assets/app-icon.png"
+  default_prompt: "Use Ramp to analyze spend, review approvals, or clean up transactions."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "ramp"
+      description: "Ramp MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.ramp.com/mcp"
