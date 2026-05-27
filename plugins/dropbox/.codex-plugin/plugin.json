@@ -1,0 +1,42 @@
+{
+  "name": "dropbox",
+  "version": "0.1.0",
+  "description": "Work with Dropbox using the configured Dropbox app connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://www.dropbox.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "dropbox",
+    "files",
+    "documents",
+    "storage"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Dropbox",
+    "shortDescription": "Work with Dropbox files",
+    "longDescription": "Use Dropbox to find files, summarize stored content, and write files back through the connected Dropbox app.",
+    "developerName": "OpenAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.dropbox.com/",
+    "privacyPolicyURL": "https://www.dropbox.com/privacy",
+    "termsOfServiceURL": "https://www.dropbox.com/terms",
+    "defaultPrompt": [
+      "Find Dropbox files, summarize the relevant content, or write files back to Dropbox"
+    ],
+    "brandColor": "#0061FF",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}
