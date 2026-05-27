@@ -27,7 +27,7 @@ Non-exhaustive examples of vulnerabilities that often support `critical` when ev
 - etc, other bugs not listed which follow this level of critical severity and impact; with actual proof that these bugs are reachable from in-scope attack-surface.
 
 Non-exhaustive examples of vulnerabilities that often support `high` when evidenced in code and context:
-- Sever Side Request Forgery where there is actual proof of both 1. Attacker can control the url being requested (bypassing protections around that) from in-scope attack-surface and 2. That there are likely other local/lan/cloud services which can be reached to show actual impact. Be careful with reporting webhooks unless there is clear proof that it is dangerous.
+- Sever Side Request Forgery where there is actual proof of both 1. Attacker can control the url being requested (bypassing protections around that) from in-scope attack-surface and 2. That there are likely other local/lan/cloud services which can be reached to show actual impact. Be careful with reporting webhooks unless there is clear proof that it is dangerous, but do not treat a product-intended webhook/download/callback feature or optional operator allow/deny list as suppression evidence when attacker-controlled destinations can still reach internal, metadata, file-backed, redirect, or side-effecting targets.
 - Exploitable memory corruption with clear, major impact or ease of exploitation
 - Arbitrary file read that exposes less-sensitive user data or source code (if you have actual proof it reveals env secrets, then it is critical)
 - Arbitrary file write in executable, startup, config, or firmware paths with a realistic path to persistence or code execution

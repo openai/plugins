@@ -1,6 +1,6 @@
 {
   "name": "codex-security",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Codex Security workflows for security scans, analysis, and investigation.",
   "author": {
     "name": "OpenAI"
@@ -21,7 +21,7 @@
     "shortDescription": "Security scanning for your codebase",
     "longDescription": "Codex Security packages reusable workflows for security scans, analysis, validation, and investigation across code, diffs, and related artifacts.",
     "developerName": "OpenAI",
-    "category": "Engineering",
+    "category": "Security",
     "capabilities": [
       "Interactive",
       "Read",
@@ -31,9 +31,9 @@
     "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
     "defaultPrompt": [
-      "Scan this entire codebase using subagents",
-      "Scan this diff, branch, or folder",
-      "Create a threat model for this codebase"
+      "Run a Codex Security scan on this repository or scoped path using subagents. Cover all in-scope files and complete the required scan phases.",
+      "Run a deep Codex Security scan on this repository. Complete the required scan phases and write the final report.",
+      "Run a Codex Security diff scan on this PR, commit, branch diff, or working-tree patch. Cover all in-scope changed files and complete the required scan phases."
     ],
     "brandColor": "#111111",
     "composerIcon": "./assets/logo.png",
