@@ -204,7 +204,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -216,7 +217,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -310,7 +312,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -322,7 +325,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -334,7 +338,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_USE"
+        "authentication": "ON_USE",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -346,7 +351,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_USE"
+        "authentication": "ON_USE",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -358,7 +364,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -382,7 +389,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Research"
     },
@@ -394,7 +402,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -406,7 +415,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -430,7 +440,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Design"
     },
@@ -442,7 +453,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -1414,7 +1426,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Design"
     },
@@ -1450,7 +1463,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Coding"
     },
@@ -1474,7 +1488,8 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
       },
       "category": "Engineering"
     },
