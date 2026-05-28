@@ -1623,6 +1623,18 @@
       "category": "Productivity"
     },
     {
+      "name": "mixpanel-headless",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mixpanel-headless"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "aiera",
       "source": {
         "source": "local",
