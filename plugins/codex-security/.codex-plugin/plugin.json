@@ -5,7 +5,7 @@
   "author": {
     "name": "OpenAI"
   },
-  "homepage": "https://openai.com/index/codex-security-now-in-research-preview/",
+  "homepage": "https://developers.openai.com/codex/security",
   "repository": "https://github.com/openai/plugins",
   "license": "Proprietary",
   "keywords": [
