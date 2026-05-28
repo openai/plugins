@@ -56,6 +56,18 @@ function addBudgetFindings(result, budgets, baselineEvidence) {
     }
   }
 
+  if (budgets.explicit_only_invoke_cost_tokens) {
+    result.metrics.push(
+      createMetric({
+        id: "explicit_only_invoke_cost_tokens",
+        category: "budget",
+        value: budgets.explicit_only_invoke_cost_tokens.value,
+        unit: "tokens",
+        band: budgets.explicit_only_invoke_cost_tokens.band,
+      }),
+    );
+  }
+
   result.artifacts.push(
     createArtifact({
       id: "budget-breakdown",

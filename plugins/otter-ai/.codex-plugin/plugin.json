@@ -1,7 +1,7 @@
 {
   "name": "otter-ai",
   "version": "1.0.0",
-  "description": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of tra...",
+  "description": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of transcripts, summaries, action items, and meeting metadata directly within your workflow.",
   "author": {
     "name": "Otter.ai",
     "url": "https://otter.ai"
@@ -9,7 +9,14 @@
   "homepage": "https://otter.ai",
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "otter",
+    "meetings",
+    "transcripts",
+    "summaries",
+    "action-items",
+    "productivity"
+  ],
   "apps": "./.app.json",
   "interface": {
     "displayName": "Otter.ai",

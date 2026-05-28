@@ -38,7 +38,9 @@
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Design App Intents/App Shortcuts, build/refactor SwiftUI, profile performance, investigate leaks, adopt iOS APIs, or debug apps",
+    "defaultPrompt": [
+      "Build or debug an iOS app with SwiftUI, App Intents, and Simulator."
+    ],
     "brandColor": "#0A84FF",
     "composerIcon": "./assets/build-ios-apps-small.svg",
     "logo": "./assets/app-icon.png",

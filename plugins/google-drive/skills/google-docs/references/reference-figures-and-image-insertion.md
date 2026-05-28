@@ -4,9 +4,9 @@ When to read: any task that carries figures, diagrams, screenshots, or slide vis
 
 ## Critical Invariant
 
-This blind environment cannot use Browser Use and cannot inspect rendered figure placement. Figures are only in scope when the available Google Docs connector supports the required insertion and readback path.
+This blind environment cannot use Browser Use. Figures are only in scope when the available Google Docs connector supports the required insertion and readback path.
 
-Do not claim that a figure looks clean, sits well on the page, is cropped correctly, or has native rendered spacing unless the connector exposes enough data to prove that property. If rendered placement cannot be verified, state that limitation plainly.
+Do not claim that a figure looks clean, sits well on the page, is cropped correctly, or has native rendered spacing from connector readback alone. When PDF export and page raster inspection are available, use `reference-pdf-export-visual-qa.md` after figure insertion to verify exported-page placement. If rendered placement cannot be verified, state that limitation plainly.
 
 ## Preferred Workflow
 

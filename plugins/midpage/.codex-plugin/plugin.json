@@ -1,0 +1,32 @@
+{
+  "name": "midpage",
+  "version": "1.0.0",
+  "description": "Legal research, cases, statutes, regulations, and cited research memos",
+  "author": {
+    "name": "Midpage",
+    "url": "https://www.midpage.ai"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Midpage",
+    "developerName": "Midpage",
+    "shortDescription": "Legal research, cases, statutes, regulations, and cited research memos",
+    "longDescription": "Legal research, cases, statutes, regulations, and cited research memos",
+    "category": "Research",
+    "capabilities": [],
+    "brandColor": "#000000",
+    "defaultPrompt": [
+      "Search Midpage for cases relevant to this legal issue and summarize the strongest authorities.",
+      "Find statutes and regulations related to this matter and explain how they apply.",
+      "Draft a research memo from Midpage results with citations and open questions."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "websiteURL": "https://www.midpage.ai"
+  },
+  "homepage": "https://www.midpage.ai"
+}

@@ -24,7 +24,13 @@ The canonical `plugin-eval` result is JSON with this top-level shape:
     "topRecommendations": []
   },
   "budgets": {
-    "method": "estimated-static",
+    "method": "estimated-static-policy-aware",
+    "invocation_policy": {
+      "implicit_skill_count": 1,
+      "explicit_only_skill_count": 2,
+      "implicit_skills": ["router"],
+      "explicit_only_skills": ["specialist-a", "specialist-b"]
+    },
     "trigger_cost_tokens": {
       "value": 48,
       "band": "good",
@@ -55,6 +61,16 @@ The canonical `plugin-eval` result is JSON with this top-level shape:
       },
       "components": []
     },
+    "explicit_only_invoke_cost_tokens": {
+      "value": 900,
+      "band": "heavy",
+      "thresholds": {
+        "goodMax": 220,
+        "moderateMax": 480,
+        "heavyMax": 900
+      },
+      "components": []
+    },
     "total_tokens": {
       "value": 448,
       "band": "good"
@@ -72,6 +88,12 @@ The evaluation result may also include:
 
 - `observedUsage`
 - `measurementPlan`
+
+For plugins or skills with `agents/openai.yaml` policies, `budgets.method` may be
+`estimated-static-policy-aware`. In that mode, `policy.allow_implicit_invocation: false`
+excludes the skill from `trigger_cost_tokens` and `invoke_cost_tokens`. The excluded skill
+payloads are reported under `explicit_only_invoke_cost_tokens` for visibility, but they are
+not scored as implicit active context.
 
 Separate benchmark runs use a `benchmark-run` payload with:
 

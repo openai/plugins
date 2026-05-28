@@ -18,7 +18,7 @@ When to read: any task that writes answer content, takeaways, risks, or supporti
 6. If source material contains bullets, decide whether the destination section is truly a list before preserving them. Slide bullets often need to become plain paragraphs in docs.
 7. If a section is not supposed to be a list, remove both real list formatting and any literal bullet glyphs carried over from source material.
 8. When normalizing a label-and-body section out of list form, remove list formatting from the label paragraphs too, not only the inserted answer paragraphs.
-9. Never leave an empty list paragraph behind after deleting or rewriting content. Clean up the dangling bullet explicitly.
+9. Never leave an empty list paragraph behind after deleting or rewriting content unless the template or Meeting notes UI shape intentionally requires that placeholder. Clean up unintended dangling bullets explicitly.
 
 ## Spacing And Native Formatting
 

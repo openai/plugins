@@ -4,22 +4,23 @@ When to read: any task that creates, updates, or formats a real Google Docs tabl
 
 ## Critical Invariant
 
-A new table must match the local document's connector-visible table pattern closely enough that it should read as native template content. In this blind environment, verify table structure, text, style requests, and connector-exposed width or cell metadata. Do not claim rendered page fit, visible alignment, or visual density unless the connector exposes enough data to prove it.
+A new table must match the local document's connector-visible table pattern closely enough that it should read as native template content. In this blind environment, verify table structure, text, style requests, and connector-exposed width or cell metadata. Do not claim rendered page fit, visible alignment, or visual density unless connector readback, HTML export, or PDF-export visual QA proves it.
 
 Unless the user or template clearly calls for a different treatment, the default table presentation should use a light blue header row with fully bold header text and alternating white/light-gray body rows.
 
 ## Native Table Workflow
 
-1. Insert the surrounding section label text and `insertTable` in one `google_docs_batch_update` call when possible.
+1. Insert the surrounding section label text and `insertTable` in one `mcp__codex_apps__google_drive._batch_update_document` call when possible.
 2. Immediately verify the table with the Google Docs `get_tables` connector action instead of inferring cell indexes from paragraph reads.
 3. Use the returned table `startIndex` as the anchor for all table styling requests.
 4. Use the returned per-cell `startIndex` values for content insertion.
-5. Populate cells with absolute-index `insertText` writes in descending index order so earlier writes do not shift later targets.
-6. After the first meaningful cell write, re-run `get_tables` and confirm the text landed in the intended row and column before continuing.
-7. After full cell population, re-run `get_tables` and confirm every row and column landed in the intended cell.
-8. Only after content is verified should you style the table with `updateTableCellStyle`, `updateTableColumnProperties`, or text-style requests.
-9. Never create a new table from inside an existing table cell unless the template already contains that nested table and the task explicitly calls for editing it.
-10. Before styling a new standalone table, inspect the nearest comparable existing table through connector metadata and mirror its connector-visible presentation pattern unless the task explicitly calls for a different one.
+5. In the first table write after `get_tables`, include the normal-style reset for the whole new table and adjacent blank separator before or alongside cell population: set table-cell paragraphs to `NORMAL_TEXT`, clear inherited bold/italic/underline where appropriate, and set the peer table's body font family/size if connector metadata exposes it. For table cloning with known text, combine descending `insertText` requests with text/paragraph style resets over the calculated post-insert cell text ranges in the same batch when the ranges are straightforward. Do not wait for final readback to discover heading-sized or inherited text in the table.
+6. Populate cells with absolute-index `insertText` writes in descending index order so earlier writes do not shift later targets.
+7. After the first meaningful cell write, re-run `get_tables` and confirm the text landed in the intended row and column before continuing.
+8. After full cell population, re-run `get_tables` and confirm every row and column landed in the intended cell.
+9. Only after content is verified should you apply semantic table styling such as header bolding, header/body fills, borders, or column widths.
+10. Never create a new table from inside an existing table cell unless the template already contains that nested table and the task explicitly calls for editing it.
+11. Before styling a new standalone table, inspect the nearest comparable existing table through connector metadata and mirror its connector-visible presentation pattern unless the task explicitly calls for a different one.
 
 ## Table Request-Shape Reminders
 
@@ -27,16 +28,17 @@ Unless the user or template clearly calls for a different treatment, the default
 2. `updateTableCellStyle` should use `tableRange.tableCellLocation.tableStartLocation`, plus `rowIndex` and `columnIndex`; do not guess row offsets from document indexes.
 3. Header and stripe fills are safe as row-wide `updateTableCellStyle` requests once the table anchor is verified.
 4. Before creating, inserting into, or formatting a table, force the intended table text to `NORMAL_TEXT`; do not let heading or inherited styles flow into cells.
-5. Populate and verify the table before any text-style writes. Header text styling is brittle if applied before the final cell indexes are known.
-6. Prefer styling header text cell by cell using the final `get_tables` cell ranges; do not rely on one broad header-row text range if later edits may shift indexes.
-7. Header rows should be fully and consistently styled across every header cell, not partially styled.
-8. Unless the user or template says otherwise, use a light blue header row and alternating white/light-gray body rows as the default scanability treatment.
-9. Choose a conservative schema before insertion. If a portrait-page table would need many medium-width columns, reduce column count by merging related fields.
-10. Explicitly clear inherited text styling in table cells before the final styling pass. Body cells should be `bold: false`; only header cells should be re-bolded afterward.
-11. For supporting lines above or below tables, use exact text-range lookup for hyperlinks rather than manual index math.
-12. For existing two-column label/value tables, verify that new content is going into the value column, not the label column, before bulk-filling the section.
-13. If the intended insertion point is inside a structured table cell, assume a new standalone table usually does not belong there. Place the standalone table at a deliberate document-level location outside the outer table, with its own intro label.
-14. Do not apply a generic table look when the document already has a local connector-visible table pattern. Match the nearest analogous table's exposed fills, borders, typography, and width hints before inventing a new style.
+5. The first table-formatting batch after `get_tables` must include a normal text reset across all new cell ranges and the blank paragraph/table boundary around the table. This is separate from semantic header styling and prevents inherited heading font size from leaking into table content.
+6. Populate and verify the table before header text-style writes. Header text styling is brittle if applied before the final cell indexes are known.
+7. Prefer styling header text cell by cell using the final `get_tables` cell ranges; do not rely on one broad header-row text range if later edits may shift indexes.
+8. Header rows should be fully and consistently styled across every header cell, not partially styled.
+9. Unless the user or template says otherwise, use a light blue header row and alternating white/light-gray body rows as the default scanability treatment.
+10. Choose a conservative schema before insertion. If a portrait-page table would need many medium-width columns, reduce column count by merging related fields.
+11. Explicitly clear inherited text styling in table cells before the final styling pass. Body cells should be `bold: false`; only header cells should be re-bolded afterward.
+12. For supporting lines above or below tables, use exact text-range lookup for hyperlinks rather than manual index math.
+13. For existing two-column label/value tables, verify that new content is going into the value column, not the label column, before bulk-filling the section.
+14. If the intended insertion point is inside a structured table cell, assume a new standalone table usually does not belong there. Place the standalone table at a deliberate document-level location outside the outer table, with its own intro label.
+15. Do not apply a generic table look when the document already has a local connector-visible table pattern. Match the nearest analogous table's exposed fills, borders, typography, and width hints before inventing a new style.
 
 ## Table Shape
 
@@ -57,15 +59,15 @@ Unless the user or template clearly calls for a different treatment, the default
 ## Styling Order
 
 1. Create the table and verify it with `get_tables`.
-2. Populate cells in descending absolute-index order.
-3. Re-run `get_tables` and verify final placement.
-4. Reset text styling across all final cell ranges so body cells are normal-weight and free of inherited emphasis.
+2. Immediately normalize the table boundary and all cell paragraphs/text using the peer table's normal body style. Include this in the first table-formatting batch after `get_tables`, before or alongside cell population.
+3. Populate cells in descending absolute-index order.
+4. Re-run `get_tables` and verify final placement.
 5. Apply header text styling cell by cell.
 6. Apply header-row fill and alternating body-row fills.
 7. Adjust column widths after content exists, not before.
 8. Re-read with `get_tables` and verify connector-visible structure, cell text, fills, text styles, links, and width properties where available.
 9. Export the document as `text/html` when available and verify table markup/CSS: `<table>` placement, row and cell order, header/background colors, font family and size, padding, border styles, page-body max width, and column width declarations.
-10. If the connector and HTML export do not expose rendered fit, do not claim the table visually fits the page; report only the connector/HTML-verified properties.
+10. If connector readback, HTML export, and PDF-export visual QA do not expose rendered fit, do not claim the table visually fits the page; report only the verified properties.
 
 ## Connector-Observable Acceptance Criteria
 

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Grammar of Graphics and Declarative Visualization"
+  short_description: "Build data visualizations with declarative grammars"
+policy:
+  allow_implicit_invocation: false

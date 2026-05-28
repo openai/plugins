@@ -1,0 +1,32 @@
+{
+  "name": "close",
+  "version": "1.0.0",
+  "description": "CRM leads, opportunities, activities, and sales pipeline context",
+  "author": {
+    "name": "Close",
+    "url": "https://www.close.com"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Close",
+    "developerName": "Close",
+    "shortDescription": "CRM leads, opportunities, activities, and sales pipeline context",
+    "longDescription": "CRM leads, opportunities, activities, and sales pipeline context",
+    "category": "Productivity",
+    "capabilities": [],
+    "brandColor": "#50C078",
+    "defaultPrompt": [
+      "Find Close opportunities with no recent activity and summarize recommended next steps.",
+      "Search Close for leads from a company and summarize status, owner, and last touch.",
+      "Create a pipeline review from Close for deals closing this month."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "websiteURL": "https://www.close.com"
+  },
+  "homepage": "https://www.close.com"
+}

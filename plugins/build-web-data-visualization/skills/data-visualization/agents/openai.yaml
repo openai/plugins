@@ -1,0 +1,6 @@
+interface:
+  display_name: "Build Web Data Visualization Router"
+  short_description: "Route web data visualization requests to the right specialist skill"
+  default_prompt: "Classify the visualization task, choose the smallest useful specialist skill set, and route to the narrowest skill before giving implementation, design, testing, or export guidance."
+policy:
+  allow_implicit_invocation: true

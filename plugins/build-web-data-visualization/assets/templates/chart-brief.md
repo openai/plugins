@@ -1,0 +1,39 @@
+# Chart Brief Template
+
+- Question or decision:
+- One-sentence takeaway:
+- Insight title:
+- Evidence the title depends on:
+- Audience:
+- Delivery medium:
+- Static or interactive:
+- Shareable URL state:
+- Persistence plan:
+- Collapsible configuration or drill-down:
+- Editorial artifact mode:
+- Sensitive subject: yes / no
+- If sensitive, source ledger and evidence status plan:
+- Imagery, illustration, or generated asset role:
+- Motion or staged reveal role:
+- Required comparisons:
+- Annotation plan:
+- Direct-label plan:
+- Color roles:
+- Contrast hierarchy:
+- Whitespace and layout plan:
+- Small-multiple or panel plan:
+- Large-screen layout plan:
+- Mobile portrait layout plan:
+- Mobile landscape plan, if needed:
+- Main visualization visibility on mobile:
+- Touch, pinch, keyboard, and hover-replacement plan:
+- Spotty connection, stale/offline, or partial-data plan:
+- AR, camera, motion, vibration, notification, or geolocation capability audit:
+- Required filters or drill-down:
+- Expected data size and update rate:
+- Export targets:
+- Still-frame or reduced-motion fallback:
+- Accessibility requirements:
+- Risks or known pitfalls:
+- Source, caveat, and method notes:
+- What the visual must not imply:

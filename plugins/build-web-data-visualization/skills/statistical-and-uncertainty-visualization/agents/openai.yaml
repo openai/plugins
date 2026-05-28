@@ -1,0 +1,5 @@
+interface:
+  display_name: "Statistical and Uncertainty Visualization"
+  short_description: "Design statistically honest and uncertainty-aware visualizations"
+policy:
+  allow_implicit_invocation: false

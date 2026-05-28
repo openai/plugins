@@ -1,0 +1,46 @@
+{
+  "name": "deepnote",
+  "version": "0.1.2",
+  "description": "Use Deepnote's collaborative data workspace to explore data, automate notebooks and SQL workflows, and turn analysis into shareable results.",
+  "author": {
+    "name": "Deepnote",
+    "url": "https://deepnote.com"
+  },
+  "homepage": "https://deepnote.com",
+  "repository": "https://github.com/openai/plugins/tree/main/plugins/deepnote",
+  "license": "Apache-2.0",
+  "keywords": [
+    "deepnote",
+    "chatgpt-app",
+    "openai",
+    "notebooks",
+    "data",
+    "analytics"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Deepnote",
+    "shortDescription": "Explore data and automate analysis in Deepnote",
+    "longDescription": "Deepnote gives teams a collaborative workspace for notebooks, SQL, apps, and data workflows. This plugin helps OpenAI work with connected Deepnote projects, inspect and run notebooks, and turn workspace context into useful analysis and shareable results.",
+    "developerName": "Deepnote",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://deepnote.com",
+    "privacyPolicyURL": "https://deepnote.com/privacy",
+    "termsOfServiceURL": "https://deepnote.com/terms",
+    "defaultPrompt": [
+      "Summarize my Deepnote workspace and recent notebook activity",
+      "Explore active data connections to my Deepnote workspace",
+      "Create a notebook exploring S&P 500 vs. Nasdaq gains over the last 5 years"
+    ],
+    "brandColor": "#3793EF",
+    "composerIcon": "./assets/deepnote-icon.svg",
+    "logo": "./assets/deepnote-icon.svg",
+    "screenshots": []
+  }
+}

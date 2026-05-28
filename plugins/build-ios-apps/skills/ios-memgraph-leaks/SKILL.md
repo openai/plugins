@@ -1,6 +1,6 @@
 ---
 name: ios-memgraph-leaks
-description: Capture, inspect, compare, and root-cause iOS memory graph leaks using Apple's leaks and memgraph tools. Use when debugging leaked iOS objects, simulator memgraphs, retain-cycle suspicions, memory growth after navigation/logout/account changes, or when asked to prove an iOS leak fix with before/after memgraph evidence.
+description: Capture and inspect iOS leaks and memgraphs. Use when debugging leaked objects, retain cycles, memory growth, or before/after leak evidence.
 ---
 
 # iOS Memgraph Leaks
