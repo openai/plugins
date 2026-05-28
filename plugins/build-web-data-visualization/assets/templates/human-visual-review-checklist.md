@@ -22,6 +22,9 @@ Use this after producing an editorial infographic or interactive visual story. T
 
 - Does imagery, illustration, 3D, or animation carry analytical meaning?
 - Would the story be weaker if the visual substrate were removed?
+- Does the background improve orientation, scale, place, mechanism, motion, texture, or label-safe context rather than just adding mood?
+- Does the design avoid generic AI atmosphere such as broad brush strokes, wispy ribbons, bokeh/orbs, cinematic wallpaper, stock-photo haze, and decorative gradients?
+- If motion, flow, density, intensity, or spread is shown, is it encoded as measured or clearly schematic contours, sampled fields, trajectories, or particles with defined meaning?
 - Are generated assets factually plausible and consistent in perspective, scale, and lighting?
 - Are data marks and labels integrated with the substrate rather than pasted on top?
 - Does the page avoid a generic grid of bordered chart cards?

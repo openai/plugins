@@ -11,6 +11,8 @@ Use this skill as the implicit orchestrator for the plugin. Classify the task, c
 
 Default stance: the best visualization is the simplest truthful view that answers the user's question with the least decoding burden. Preserve evidence quality first: correct task abstraction, trustworthy data treatment, visible caveats, direct labels, accessible encodings, mobile viability, shareable state, and QA. Do not default to dashboards, 3D, animation, generated imagery, particles, or WebGL unless they carry analytical meaning.
 
+Contextual imagery, atmospheric marks, and motion must be evidence-bearing. Do not use broad translucent brush strokes, wispy ribbons, bokeh/orbs, cinematic wallpaper, stock-photo haze, or decorative gradients as substitutes for data layers. When motion, flow, density, intensity, or spread appears, encode it with measured or clearly schematic contours, sampled fields, trajectories, particles with a defined unit or meaning, or annotated layers.
+
 Mobile is a primary surface. Unless the user explicitly excludes it, treat large-screen and mobile portrait as sibling states. Add mobile landscape when a wide substrate, AR/camera/motion, two-handed interaction, or keyboard-heavy workflow needs it.
 
 ## Router Workflow
@@ -58,6 +60,8 @@ When routing is unclear, read `./references/route-by-problem.md` or `./reference
 - For live or remote data, prefer stale-but-visible views with last-updated, live/stale/offline/partial states, reconnect behavior, and low-bandwidth degradation.
 - Prefer declarative grammars before D3, D3/SVG before Canvas when labels/axes dominate, Canvas before WebGL for simple dense flat marks, and WebGL/3D only when scale, picking, shaders, particles, flow, geospatial layers, or depth justify it.
 - Motion, particles, generated imagery, domain substrates, and 3D must have a stated analytical purpose plus static/reduced-motion fallback.
+- Use editorial hero and background substrates only when they improve orientation, scale, place, mechanism, or label-safe context. Quiet basemaps, terrain, thin cartographic linework, real/generated textures, or clear photographic crops are preferable to generic atmosphere.
+- Include an art-direction QA pass for generic AI atmosphere: broad brush strokes, wispy ribbons, bokeh/orbs, one-hue drama, cinematic wallpaper, and background visuals that look polished but do not carry evidence or orientation.
 - For sensitive geopolitical, conflict, disaster, displacement, or humanitarian work, use `../../references/foundations/sensitive-geopolitical-and-humanitarian-stories.md`; distinguish measured, estimated, disputed, dated, and schematic layers.
 - For fictional or illustrative stories, use `../../references/foundations/fictional-data-story-simulation.md`; require enough deterministic simulated data to support the visual density.
 - Treat visual references as principle studies. Transform the idea so the output cannot be mistaken for the reference layout, palette, type system, scene, or pacing.

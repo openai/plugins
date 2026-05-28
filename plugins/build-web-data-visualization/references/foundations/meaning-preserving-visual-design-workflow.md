@@ -83,6 +83,8 @@ Choose the artifact before the renderer:
 
 Write a short layout brief covering reading order, dominant evidence, annotations, direct labels, source/caveat placement, large-screen path, mobile portrait path, optional landscape path, main-visualization visibility around settings, and whether image generation is needed for the overall layout, individual figure, asset, or key animation frame.
 
+For contextual substrates, state the substrate's evidence role before choosing style: orientation, scale, place, mechanism, motion, texture, or label-safe background. Reject substrates whose main contribution is generic mood. When motion, flow, density, intensity, or spread appears, define whether it is shown as measured data, modeled data, or schematic explanation, and prefer contours, sampled fields, trajectories, vector/particle fields with defined meaning, or annotated layers over decorative swaths.
+
 ### 4. Codex Image-Generated Concept Pass
 
 When concepting is useful or required by the trigger list above, use Codex image generation from within Codex to produce the relevant visual design concept set.
@@ -105,6 +107,8 @@ Reject or iterate on concepts that:
 - bake factual labels into raster imagery unnecessarily
 - imply unsupported precision, scale, causality, or geography
 - look like a generic dashboard, wallpaper, or publication clone
+- rely on generic AI atmosphere such as broad translucent brush strokes, wispy ribbons, bokeh/orbs, cinematic wallpaper, stock-photo haze, or decorative gradients that do not carry evidence
+- depict motion, flow, density, intensity, or spread as painterly atmosphere when the story needs measured or clearly schematic contours, trajectories, sampled fields, particles, or annotated layers
 - cannot preserve the claim as a still screenshot or reduced-motion state
 - make the mobile version a squeezed desktop chart, hide the main visualization below controls, or drop essential source/caveat/context
 
@@ -210,7 +214,7 @@ Every concept prompt should include:
 - mobile or output-size constraints
 - touch, pinch, keyboard, visual viewport, spotty-connection, and device-capability constraints
 - existing page or screenshot context, if applicable
-- forbidden elements: copied publication identity, unsupported labels, misleading scale, decorative chart cards, ornamental motion, and baked-in source notes
+- forbidden elements: copied publication identity, unsupported labels, misleading scale, decorative chart cards, ornamental motion, baked-in source notes, generic AI atmosphere, broad brush strokes, wispy ribbons, bokeh/orbs, cinematic wallpaper, and background visuals that do not carry evidence or orientation
 
 ## Output Expectations
 
