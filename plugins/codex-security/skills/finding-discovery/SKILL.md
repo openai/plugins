@@ -19,11 +19,19 @@ If a required input is still missing, stop and ask the user for it before contin
 Use the shared scan artifact path conventions in `../../references/scan-artifacts.md`.
 
 ### Code Diff Workflow
-If the scan target is for a targeted code-diff, follow the procedure in `../security-scan/references/code-diff-scan.md`.
+If the scan target is for a targeted code-diff:
 
-### Repository-Wide Workflow
+- Read `../security-scan/references/scan-artifacts-and-ledger.md`.
+- Generate `rank_input.csv` deterministically from changed source-like files with `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.csv` for PR, commit, and branch diffs, or `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.csv` for a local patch.
+- Copy every diff row into `deep_review_input.csv` with `python3 <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.csv --out <discovery_dir>/deep_review_input.csv`. Diff scans do not rank or drop changed files before deep review.
+- Add directly supporting files required to understand the changed security behavior only when repository evidence shows they are needed. Do not use them to broaden into unrelated repository-wide enumeration.
+- Deep-review every file in `deep_review_input.csv` using the shared scoped file-review rules.
+- Stay anchored to the changed code and directly supporting files. Unchanged siblings are context or negative controls unless the diff newly reaches them, weakens their shared control, or changes a shared sink/helper they depend on.
+- When the diff is too large to review credibly as one parent-agent pass, use approved file-review subagents and follow the shared scoped deep-review rules in `../security-scan/references/scan-artifacts-and-ledger.md#scoped-deep-review`.
 
-If the scan target is repository-wide, follow the procedure in `../security-scan/references/repository-wide-scan.md` and every required reference it lists.
+### Exhaustive Repository Or Scoped-Path Workflow
+
+If the scan target is repository-wide or a scoped path, follow the procedure in `../security-scan/references/repository-wide-scan.md` and every required reference it lists.
 
 ## Discovery Checklist
 
@@ -33,10 +41,11 @@ Use this checklist to keep discovery specific without turning it into validation
 - Treat the commit message and title as potentially incomplete or misleading; trust the actual code path more than the narrative.
 - Follow the entire changed-code chain far enough to understand how the diff affects authorization, trust boundaries, dangerous sinks, or security controls.
 - Prefer multiple distinct finding families only when they come from different root causes; do not split one issue into cosmetic variants, but keep independently reachable instances as separate candidate entries.
-- When the diff changes a shared helper, guard, route pattern, template pattern, or sink wrapper, fan out to sibling call sites that the changed code directly affects, and keep each vulnerable instance addressable.
+- When the diff changes a shared helper, guard, route pattern, template pattern, or sink wrapper, expand to sibling call sites that the changed code directly affects, and keep each vulnerable instance addressable.
 - Look for attacker-controlled input, broken enforcement, or dangerous sinks introduced or made reachable by the change.
 - Stay anchored to the diff and the supporting files it depends on rather than drifting into unrelated repository scanning.
-- For repository-wide scans, stay anchored to the runtime inventory and coverage ledger rather than drifting into arbitrary text search.
+- For repository-wide and scoped-path scans, stay anchored to `rank_input.csv`, `deep_review_input.csv`, the runtime inventory, and the coverage ledger rather than drifting into arbitrary text search.
+- For advisory-seeded repository-wide and scoped-path scans, keep any supplied advisory row id, exact file, line, source, sink, or broken-control hint visible in the candidate ledger. A neighboring same-CWE finding can be an additional candidate, but it does not satisfy the seeded row unless it covers the same vulnerable control and effect.
 - Do not group many vulnerable files under one candidate when the files have separate line-level source/sink/control evidence.
 - When a dangerous sink has multiple call sites, enumerate each call site with its own source and closest control.
 - When repeated templates, query builders, parser operations, auth/object endpoints, or shared-helper callers are independently reachable, keep each vulnerable file and sink/control line as its own candidate instance even if the final report later groups related prose.
@@ -54,7 +63,7 @@ Use this checklist to keep discovery specific without turning it into validation
 - For shared deserialization, class-resolution, template, and auth controls, treat the resolver/filter/allowlist/denylist/guard line as a candidate location when downstream transports or callers prove reachability. Do not anchor only on the more dramatic transport if the broken control is reusable.
 - For deserialization and object-construction families, enumerate concrete codec, deserializer, converter, and container handlers registered by the parser or serialization config, including array, collection, map, bean, enum, throwable, and generic-object handlers. A top-level parser/config finding does not close a concrete codec row when that codec recursively invokes parsing, type resolution, conversion, or object construction on attacker-controlled data.
 - For file-format object models, enumerate primitive/container helper methods that convert or traverse attacker-controlled document structures, including `to*Array`, `get*`, `getObject`, numeric conversion, `parse*`, iterator, `size`, unchecked casts, and allocation loops. Treat these helpers as candidate root controls when malformed documents can trigger type confusion, exceptions, unbounded traversal, or memory/CPU exhaustion.
-- If the runtime inventory names a central object-model package for an untrusted format, include that package's array, dictionary, node, collection, and primitive conversion helpers as discovery rows before closing the parser family. A parser, filter, or codec finding in a neighboring package does not close unchecked conversion helpers in the core object model.
+- If the repository-wide worklist or coverage ledger identifies a central object-model package for an untrusted format, include that package's array, dictionary, node, collection, and primitive conversion helpers as discovery rows before closing the parser family. A parser, filter, or codec finding in a neighboring package does not close unchecked conversion helpers in the core object model.
 - Object-model helper sweeps create mandatory discovery rows first, not automatic reportable findings. Promote them only when malformed or adversarial input plausibly reaches the helper and the missing type, size, shape, recursion, numeric, or conversion guard can cause crash, denial of service, parser confusion, authorization bypass, or another concrete security impact.
 - Do not suppress deterministic parser/helper crashes as mere robustness when untrusted remote, protocol, document, archive, or package input can reach the missing guard and abort a service, request worker, parser pipeline, or security negotiation. Suppression needs exact containment evidence such as caller-side recovery, input prevalidation equivalent to the missing guard, or a non-security-only boundary.
 - For structured patch/edit/apply APIs such as JSON Patch, Graph Patch, document edits, or config mutations, enumerate concrete request-selected operations like add, remove, replace, move, copy, and test. Keep operation-specific path transforms, array append handling, wildcard selection, or object-binding lines candidate-visible when they feed a shared evaluator or binder.
@@ -64,9 +73,15 @@ Use this checklist to keep discovery specific without turning it into validation
 - In framework or library scans, stored client, tenant, application, identity-provider, exception, or imported-configuration values are cross-boundary inputs when later rendered, evaluated, parsed, or used for authorization and the instance has a plausible runtime path from an application, tenant, identity provider, import, or other boundary. Do not suppress solely because the writer is outside the current repository unless repository evidence proves the value is trusted-only for normal deployments.
 - For SQL/NoSQL/LDAP/XPath and similar query APIs, do not suppress a candidate solely because the endpoint already accepts user-controlled data, because the operation is an insert/update, or because a later business check appears to limit the final application effect. If attacker-controlled input reaches query syntax or selector operators through a plausible runtime path, carry the candidate to validation with the later check recorded as possible counterevidence.
 - Do not collapse separate high-impact proof tuples into one candidate only because they share a route or helper. Split command execution, SSRF, path/file impact, XML/parser behavior, XSS/template execution, and authz/state-change impact when the sink, closest control, or impact differs.
+- For outbound request surfaces such as `downloadFrom`, URL importers, webhook/callback clients, preview/render fetchers, and redirect-following HTTP clients, enumerate each attacker-controlled destination source and its closest allow/deny/filter/redirect control. Do not suppress SSRF because the fetch/callback is an intended feature, because filters are optional or empty by default, or because a sibling route found a louder file/path issue; keep the network row when user input can select a destination and the hard boundary is incomplete, operator-configured, or only pre-request.
 - In XML/parser/deserializer surfaces, enumerate default parser factories, converters, validators, transformers, unmarshal/parse calls, and handler entrypoints independently. A safe sibling parser path is negative control for that sibling, not suppression evidence for a different default factory or converter.
+- For command/action runners, enumerate every attacker-controllable argument type and execution mode before closing command-injection coverage. Treat type-safety maps, unsafe-type denylists, template substitution, shell wrapping, direct-exec branches, webhook/API argument ingestion, and frontend-only widget constraints as separate controls. A denylist that covers `raw`, `url`, or `email` does not close `password`, `checkbox`, `confirmation`, choice, or other nil/no-op typecheck branches that can still render into shell commands.
 - For XML parser and converter candidates, include feature-setup and resolver lines when hardening is best-effort, fail-open, or incomplete. `FEATURE_SECURE_PROCESSING` alone, swallowed/logged `setFeature` failures, or a safe default parser does not suppress caller-supplied parser factories/readers or converter paths that create SAX/DOM/StAX/Transformer sources from untrusted data.
-- For resource-serving and static-file paths, include the allowlist, matcher, canonicalization, URL decoding, and resource-selection line that decides whether an attacker-chosen path is allowed. Do not replace a vulnerable legacy or package API handler with a safer sibling handler.
+- For resource-serving and static-file paths, include the allowlist, matcher, canonicalization, URL decoding, and resource-selection line that decides whether an attacker-chosen path is allowed. Do not replace a vulnerable legacy or package API handler with a safer sibling handler. For restore/import/export, backup, admin, or login-named routes, also verify the exact global middleware and decorator semantics before assuming authentication is required; optional or conditional login wrappers keep the route anonymous when the enabling auth configuration is absent.
+- For path-sensitive filesystem families, enumerate concrete exported operations for restore/import/export, backup/restore, archive extraction, file copy/move, download/open, and key/config fetch helpers. Keep decode, join, normalize, canonicalize, strip-prefix, extension-check, and destination-selection lines candidate-visible for each independently reachable operation.
+- For archive extraction and restore/import flows, keep the archive-member name, destination join, containment check, and extract/write call visible as candidate root controls. Do not replace them with a later copy, import, UUID/manifest gate, or top-level file-selection step if extraction or filesystem writes already happened first. Generic claims that a standard-library helper normalizes paths are not enough; keep the row open until the code shows exact per-entry containment before extraction or write, including any symlink, hardlink, metadata, or recursive-copy path that could later promote attacker-controlled content into an imported subtree. Do not require the write to escape the overall app/datastore root; overwriting trusted config, peer-object directories, shared roots, or imported subtrees inside that root still counts as file-impact.
+- When upload/archive-member rows have a precise source to decoded/filtered member name to destination join/write tuple, keep them as candidates even if runtime package reproduction is unavailable or confidence is medium. A cleaner download/open traversal or API/auth issue in the same repository is not a reason to drop the archive-member row; report the archive row at calibrated severity/confidence or keep an explicit deferred ledger row with the missing proof.
+- When the same product area also has auth, secret, or configuration bugs, keep the path/file candidate open until its own proof tuple is closed. Do not replace it with the louder neighboring issue.
 - In framework or library scans, do not suppress a high-impact candidate solely because the affected API is deprecated, opt-in, or documented as dangerous. State that as a precondition; keep the candidate when the shipped runtime code contains a bypassable control in the restricted or normal usage path and the instance has a plausible cross-boundary source and runtime/deployment path.
 - In auth/authz surfaces, enumerate public webhook, status, callback, and API endpoints that read protected objects, trigger builds/jobs, or mutate protected state independently from nearby credential or configuration bugs.
 - For stateful authentication protocols, include the line that installs or reuses principals, credentials, tokens, issuers, or protocol state after a pre-authentication, TLS-upgrade, redirect, assertion, or identity-provider transition. Missing rebind/reauthentication or validated-vs-consumed mismatches are candidate controls when they can authenticate the wrong identity.
@@ -76,15 +91,13 @@ Use this checklist to keep discovery specific without turning it into validation
 - In protocol-heavy repositories, inspect low-level version, capability, feature, and negotiation utility classes even if the most obvious candidates are REST/upload/admin hotspots. Search for helper names such as `Version`, `VersionUtil`, `versionCompare`, `versionMatch`, `Capability`, `Feature`, `Negotiation`, `parseInt`, `split`, `matches`, and comparator methods, then close paired validator/parser rows explicitly.
 - For self-service update routes, include guard or predicate methods that compare requested objects against persisted objects. Treat missing checks on security-sensitive scalar fields and collection aliases as candidate locations when they can change identity, trust state, tenant membership, roles, groups, or account recovery properties.
 - When a template or config pattern appears repeatedly, enumerate each affected file/line and note any nearby safe control that should not be reported.
-- In large repository scans, do not let one hotspot cluster consume the whole discovery pass. After promoting one or two obvious findings in the same route, upload, parser, or auth cluster, inspect a disjoint seeded row or low-salience utility/control shard such as protocol/version helpers, central object-model helpers, shared validators, or class-resolution controls before finalizing discovery.
-- In large repositories, bias early coverage inside high-risk subsystems toward leaf runtime validators, comparators, object-model helpers, and operation branches that parse or select untrusted values. Top-level controllers, uploads, admin endpoints, and XML hotspots are entrypoints, not sufficient coverage of the subsystem.
 - For diff-scoped scans, include `relevant_lines` only when the bug overlaps the diff and those lines are genuinely relevant to the issue.
 - For recursive placeholder or template findings, include the helper/parser setup line that enables recursive expansion or expression evaluation along with the resolver/evaluation/render line.
 - Include CWE IDs when known; use an empty list when the class is unclear.
 
 ## Finding Bar
 
-Prefer findings such as:
+Prefer technically plausible candidates such as:
 
 - authz bypass
 - confused deputy
@@ -95,33 +108,7 @@ Prefer findings such as:
 - sensitive state change without correct enforcement
 - sandbox or trust-boundary escape
 
-- Credible RCE or arbitrary code execution (command injection, LFI exec, trivial memory corruption exploits, etc); Requires actual proof that attacker input cause this from in-scope attack surface
-- Real XSS with meaningful proven impact (for example session/token theft, account compromise, privileged action execution, etc)
-- Account takeover or strong authentication bypass, especially if it is 0-click
-- Missing authorization checks / authorization bypass / tenant-boundary break (trivial IDOR, easy to swap out org or use ids with no authz, etc)
-- Severe sensitive data leak (LFI, path traversal, bad scoping of file downloads, access to data without authorization, trivial side-channels) with realistic attacker access (proof the attacker can read secrets, PII, signing keys, credential stores, private keys, classified or highly confidential information (model weights etc))
-- Trivial memory corruption exploits with known exploit patterns which require little effort to exploit
-- SQL or other Database or query injection with clear proof of path from attacker input from in-scope attack surface and impact of the injection (leaks sensitive data, inserts dangerous records)
-- Sandbox, container, VM, browser, or interpreter escape that breaks an intended isolation boundary
-- Server-side-template-injection when it leads to RCE or leaking of secrets; with actual proof that the templating library can be exploited to do this (RCE escape or secrets/credentials in scope); with actual proof that this can be reached from in-scope attack surface
-- Arbitrary file write in executable, startup, config, or firmware paths with a realistic path to persistence or code execution. Requires proof that an attacker can actually trigger this from in-scope attack surface.
-- Logic flaws that allow irreversible or broad compromise of integrity at scale, such as unauthenticated deletion of other users' data, cross-tenant tampering with sensitive records, or unauthorized modification of security-critical configuration, when the impact is clearly demonstrated and severe enough to be compromise-equivalent; when there is actual proof that this logic can be exercised from in-scope attack-surface.
-- etc, other bugs not listed which follow this level of critical severity and impact; with actual proof that these bugs are reachable from in-scope attack-surface.
-
-- Sever Side Request Forgery where there is actual proof of both 1. Attacker can control the url being requested (bypassing protections around that) from in-scope attack-surface and 2. That there are likely other local/lan/cloud services which can be reached to show actual impact. Be careful with reporting webhooks unless there is clear proof that it is dangerous.
-- Exploitable memory corruption with clear, major impact or ease of exploitation
-- Arbitrary file read that exposes less-sensitive user data or source code (if you have actual proof it reveals env secrets, then it is critical)
-- Arbitrary file write in executable, startup, config, or firmware paths with a realistic path to persistence or code execution
-- CSRF when it enables important state-changing actions such as credential changes, permission changes, payment / billing changes, security-setting changes, or other materially harmful actions, and the victim interaction required is realistic, and is not mitigated by any of these : `same-site strict cookies, auth headers, csrf tokens, PUT/PATCH/DELETE, enforced json request body content type`.
-- Hardcoded or default credentials that are valid and reachable and give meaningful access, but not sufficiently broad or privileged to justify high.
-- Cryptographic failures that allow signature forgery, token forgery, trusted artifact forgery, secure-channel bypass, or decryption of highly sensitive data in a way that directly enables compromise; with actual proof that these are practical attacks and reachable and doable from in-scope attack-surface.
-- Supply-chain or update-channel compromise that allows malicious code or malicious trusted artifacts to be delivered to users, servers, agents, or endpoints, including signing bypass or package source substitution with real impact. This should focus on actual supply-chain risk and risk around CI actions, not just "does npm report outdated packages"
-- Authorization bypass, IDOR, or privilege escalation that exposes or modifies meaningful sensitive data or privileged functionality, but is narrower in scope, limited to a smaller set of objects, limited to same-tenant boundaries, or otherwise less catastrophic than the critical cases above.
-- XXE with clear proof that an attacker can control the XML document through in-scope attack-surface and that the XML engine is vulnerable to XXE
-- etc, other bugs not listed which follow this level of high severity and impact; with actual proof that these bugs are reachable from in-scope attack-surface.
-- Dangerous upload / file handling issues that enable stored active content, trusted-origin script execution, or meaningful content-type confusion with real security impact; with actual proof that both the upload and access are reachable through in-scope attack-surface.
-- Deserialization, SSTI, plugin abuse, macro / template abuse, or interpreter abuse where dangerous primitives are clearly reachable and impactful, but code execution or compromise is not fully proven to the standard needed for critical.
-
+Discovery identifies plausible candidates and preserves their evidence; it does not own final severity calibration. For reportability and severity examples, defer to `../attack-path-analysis/references/severity-policy.md` during attack-path analysis.
 
 Avoid:
 
@@ -135,10 +122,11 @@ If there are no plausible candidates, return a no-findings result.
 
 Otherwise, for each candidate include:
 
+- candidate id
 - title
 - affected locations, with labels when more than one applies: `entrypoint/wrapper`, `root_control`, `sink`, and `concrete_implementation`
-- instance key in the form `<family>:<file>:<line>` for repository-wide scans
-- seed or ledger row id for repository-wide seeded/root-control rows when available
+- instance key in the form `<family>:<file>:<line>` for repository-wide and scoped-path scans
+- seed or ledger row id for repository-wide and scoped-path seeded/root-control rows when available
 - advisory/source reference for advisory-seeded rows when available
 - attacker-controlled source
 - vulnerable sink or broken control
@@ -150,13 +138,16 @@ Otherwise, for each candidate include:
 - taxonomy with CWE IDs when known
 - enough evidence that a later reviewer can understand why the candidate is technically plausible before validation
 
+When candidates are emitted, create the per-finding directory from `../../references/scan-artifacts.md` and append one discovery receipt to that finding's candidate ledger. The ledger row should identify the candidate, scan scope, discovery status, affected locations, and the discovery artifact or evidence that produced it.
+
 
 ## Hard Rules
 
 - Use the tools to examine repository files before making decisions.
 - Focus on the actual changes, not the commit message.
-- Stay anchored to the diff and the files it relies on for diff-scoped scans. For repository-wide scans, treat the checked-out repository as in scope and ignore diff-overlap restrictions for affected locations.
+- Stay anchored to the diff and the files it relies on for diff-scoped scans. For repository-wide and scoped-path scans, treat the resolved audit scope as in scope and ignore diff-overlap restrictions for affected locations.
 - Candidate discovery is about plausibility, not final severity.
+- Do not emit an untracked candidate. Every candidate finding needs a stable candidate id and a discovery receipt in its candidate-ledger path from `../../references/scan-artifacts.md` so later validation and attack-path analysis can prove coverage for that exact finding.
 - Do not add `relevant_lines` when no bug exists. For diff-scoped scans, add `relevant_lines` only when the bug overlaps the diff and those lines are relevant to the bug.
 - Do not turn discovery into full validation or full severity calibration.
 - Continue reviewing until no additional distinct plausible candidates remain.
