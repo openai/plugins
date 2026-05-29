@@ -1527,7 +1527,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Developer Tools"
+      "category": "Coding"
     },
     {
       "name": "zoom",
@@ -1791,7 +1791,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Developer Tools"
+      "category": "Coding"
     }
   ]
 }
