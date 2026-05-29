@@ -4,9 +4,7 @@ description: >
   Compare 2 to 4 ETFs or funds side-by-side using Morningstar data. Pulls performance,
   category ranks, cost, and identifies overlapping holdings
   across funds.
-argument-hint: "<2 to 4 fund identifiers or names, e.g. VFIAX FXAIX SWTSX>"
 disable-model-invocation: false
-allowed-tools: mcp__morningstar__morningstar-id-lookup-tool mcp__morningstar__morningstar-data-tool mcp__morningstar__morningstar-fund-holdings-tool
 ---
 # Fund Comparison Skill
 Side-by-side comparison of 2 to 4 ETFs or funds using Morningstar MCP tools only.

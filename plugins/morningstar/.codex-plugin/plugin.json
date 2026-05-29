@@ -1,7 +1,7 @@
 {
   "name": "morningstar",
   "version": "1.0.0+codex.20260529014236",
-  "description": "Morningstar fund research plugin for screening, summarizing, and comparing funds and ETFs using Morningstar MCP data.",
+  "description": "Morningstar fund research plugin for screening, summarizing, and comparing funds and ETFs using the Morningstar ChatGPT app.",
   "author": {
     "name": "Morningstar",
     "url": "https://www.morningstar.com"
@@ -18,11 +18,10 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Morningstar",
-    "shortDescription": "Screen, summarize, and compare funds with Morningstar MCP data.",
-    "longDescription": "Bundled Morningstar fund workflows for Codex: production screening with normalization, fund returns screening, single-fund deep summaries, and side-by-side comparison for 2 to 4 funds. Outputs are constrained to Morningstar MCP tool results and include explicit data-availability disclosures.",
+    "shortDescription": "Screen, summarize, and compare funds with the Morningstar app.",
+    "longDescription": "Bundled Morningstar fund workflows for Codex: production screening with normalization, fund returns screening, single-fund deep summaries, and side-by-side comparison for 2 to 4 funds. The plugin links to the reviewed Morningstar ChatGPT app for authenticated data access and includes explicit data-availability disclosures.",
     "developerName": "Morningstar",
     "category": "Research",
     "capabilities": [

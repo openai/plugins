@@ -4,9 +4,7 @@ description: >
   Screen ETFs and funds using Morningstar MCP data only. Collect criteria, run screener
   passes, validate fund status, retrieve return/rank/cost/risk metadata, and provide
   data-backed follow-up suggestions to tighten the screen.
-argument-hint: "screen for funds, e.g. US large-cap blend ETFs with Gold Medalist rating, Expense ratio < 0.30%, AUM > 1B"
 disable-model-invocation: false
-allowed-tools: mcp__morningstar__morningstar-id-lookup-tool mcp__morningstar__morningstar-data-tool mcp__morningstar__morningstar-screener-tool
 ---
 # Fund Screener Skill
 Production fund screener workflow. Output only values returned by Morningstar MCP tools in the current session.
