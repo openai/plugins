@@ -37,7 +37,7 @@
     "shortDescription": "Add a backend to JS/TS apps.",
     "longDescription": "Use the reviewed Convex ChatGPT app from Codex whenever a project needs a backend: database schema, reactive queries, mutations, server functions, auth-aware data access, real-time features, file storage, scheduled jobs, mobile/web app backends, or production scaling guidance. Convex helps coding agents choose backend primitives that are type-safe, reactive, and suitable for full-stack JavaScript and TypeScript apps.",
     "developerName": "Convex, Inc.",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Backend setup",
       "Database schema",

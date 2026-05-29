@@ -29,7 +29,7 @@
     "shortDescription": "Build, debug, instrument, and implement macOS apps with SwiftUI and AppKit guidance",
     "longDescription": "macOS development workflows for discovering local projects, building and running desktop apps, implementing native SwiftUI scenes, bridging into AppKit when necessary, adding lightweight Logger telemetry, triaging test failures, inspecting signing and entitlements, and debugging desktop-specific build or runtime errors.",
     "developerName": "OpenAI",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Read",
