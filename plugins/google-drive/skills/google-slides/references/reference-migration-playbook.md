@@ -32,12 +32,15 @@ For each slide, answer these questions in order:
 - Is this a title, section divider, summary, dense content, KPI, chart, image, or appendix slide?
 - How much content should fit without crowding?
 - Which template slide already does that job well?
+- Which existing text, image, chart, table, and placeholder slots on that template slide will carry the content?
 
 Only after that should you duplicate the template slide and populate it.
 
 When populating:
+- replace content in existing template slots first; avoid creating new primary text boxes or image boxes when a suitable slot exists
 - avoid leaving major text boxes or card regions mostly empty unless that whitespace is an intentional part of the template
 - if the slide looks too empty, reconsider the archetype, combine related content, or tighten the outline before doing geometry tweaks
+- if the slide needs content the chosen archetype does not support, choose another archetype or split the slide instead of adding ad hoc boxes
 
 Common failure mode:
 - taking a large blob of content
@@ -98,3 +101,5 @@ At the end, verify:
 - chart slides use the same alignment logic
 - margins and text density feel stable across the deck
 - large text or content regions do not have accidental excessive whitespace
+- placeholders, sample copy, and other template scaffolding have been populated or intentionally removed
+- newly created objects are exceptions that match the selected template pattern, not replacements for available template slots
