@@ -139,6 +139,9 @@ PLACEHOLDERS = {
     ),
     "RETURNS_CHART_SVG": "Inline SVG line chart for returns (auto-generated)",
     "DONUT_CHART_SVG": "Inline SVG donut chart for allocation (auto-generated)",
+    "EXPORT_SCRIPT_PATH": "Absolute path to export_report.py for local PDF/PPTX exports",
+    "REPORT_FILE_PATH": "Absolute path to this rendered HTML report",
+    "REPORT_BASE_NAME": "Rendered report filename without extension",
 }
 
 _NUMERIC_FIELDS = {

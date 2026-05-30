@@ -35,6 +35,9 @@ class RenderReportTests(unittest.TestCase):
             html = result_path.read_text(encoding="utf-8")
             self.assertIn("Test Growth Fund", html)
             self.assertIn("TEST", html)
+            self.assertIn('class="export-toolbar"', html)
+            self.assertIn(str(RENDER_PATH.parent / "export_report.py"), html)
+            self.assertIn(str(result_path), html)
 
     def test_list_placeholders_does_not_require_data_file(self):
         completed = subprocess.run(
@@ -46,6 +49,17 @@ class RenderReportTests(unittest.TestCase):
 
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertIn("Available placeholders", completed.stdout)
+
+    def test_export_helper_has_cli_help(self):
+        completed = subprocess.run(
+            [sys.executable, str(SCRIPT_DIR / "export_report.py"), "--help"],
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertIn("--format", completed.stdout)
 
 
 if __name__ == "__main__":

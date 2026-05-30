@@ -131,6 +131,10 @@ def render_report(data: dict, output_path: str | Path = "report.html") -> Path:
     report_data = dict(data)
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
     output_path = Path(output_path)
+    resolved_output_path = output_path.resolve()
+    report_data.setdefault("EXPORT_SCRIPT_PATH", str(SCRIPT_DIR / "export_report.py"))
+    report_data.setdefault("REPORT_FILE_PATH", str(resolved_output_path))
+    report_data.setdefault("REPORT_BASE_NAME", resolved_output_path.stem)
 
     if LOGO_PATH.exists():
         logo_b64 = base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
@@ -145,7 +149,7 @@ def render_report(data: dict, output_path: str | Path = "report.html") -> Path:
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(result, encoding="utf-8")
-    return output_path.resolve()
+    return resolved_output_path
 
 
 def main():
