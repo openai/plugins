@@ -28,19 +28,19 @@ metadata:
     index_skill: .agents/skills/SKILL.md
     index_skill_name: nurec-index
     sibling_skills:
-      - name: physical-ai-datasets
+      physical-ai-datasets:
         folder: physical-ai-datasets/
         upstream: https://huggingface.co/nvidia
-      - name: ncore
+      ncore:
         folder: ncore/
         upstream: https://github.com/NVIDIA/ncore
-      - name: nre
+      nre:
         folder: nre/
         upstream: nvcr.io/nvidia/nre/nre
-      - name: asset-harvester
+      asset-harvester:
         folder: asset-harvester/
         upstream: https://github.com/NVIDIA/asset-harvester
-      - name: nurec-fixer
+      nurec-fixer:
         folder: nurec-fixer/
         upstream: https://github.com/NVIDIA/harmonizer
         hf_model: https://huggingface.co/nvidia/DiffusionHarmonizer

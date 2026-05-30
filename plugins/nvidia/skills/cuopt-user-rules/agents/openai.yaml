@@ -1,0 +1,3 @@
+interface:
+  display_name: "cuOpt User Rules"
+  short_description: "Base rules for end users calling NVIDIA cuOpt (routing/LP/MILP/QP/install/server). Not for cuOpt internals — use cuopt-developer for those."

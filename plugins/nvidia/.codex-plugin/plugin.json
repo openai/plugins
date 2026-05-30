@@ -42,6 +42,9 @@
       "Research NVIDIA CUDA-X for me and explain which libraries matter for simulation and robotics",
       "How I could turn real-world driving footage into a 3D neural scene for simulation",
       "Help me deploy a secure OpenClaw agent"
-    ]
+    ],
+    "websiteURL": "https://www.nvidia.com/",
+    "privacyPolicyURL": "https://www.nvidia.com/en-us/about-nvidia/privacy-policy/",
+    "termsOfServiceURL": "https://www.nvidia.com/en-us/about-nvidia/terms-of-service/"
   }
 }
