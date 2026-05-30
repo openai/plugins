@@ -17,6 +17,8 @@ Create a concise fund summary or report using the connected Morningstar app as t
 
 ## Workflow
 
+For broad summaries, detailed reports, or any HTML report, read `references/full-workflow.md` before retrieving data. It preserves Morningstar's partner-authored datapoint map, missing-data rules, structured report inputs, and renderer contract.
+
 1. Resolve the fund from ticker, name, or Morningstar identifier. Ask only if the match is ambiguous.
 2. Retrieve core profile data: name, ticker, category, investment type, inception date, benchmark, active/passive status, assets, fees, yield, manager tenure, and fund status.
 3. Retrieve ratings and research context: medalist rating, star rating, pillar ratings when available, portfolio risk score, analyst summary, and relevant disclosures.

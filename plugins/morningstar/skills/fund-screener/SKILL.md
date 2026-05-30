@@ -17,6 +17,8 @@ Screen funds using the connected Morningstar app as the data source.
 
 ## Workflow
 
+Before running a real screen, read `references/full-workflow.md`. It preserves Morningstar's partner-authored rules for criteria confirmation, normalization, datapoints, result validation, output tables, disclosures, and follow-up suggestions.
+
 1. Collect the screening criteria in one pass: universe, category, medalist rating, star rating, expense ratio, assets, and any user-specified filters.
 2. Normalize user terms against Morningstar-supported datapoints and values before screening. If a close match is likely, ask for confirmation before running.
 3. Run the screen, targeting a useful result set of roughly 10 to 20 funds.

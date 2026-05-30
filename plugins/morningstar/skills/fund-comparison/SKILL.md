@@ -17,6 +17,8 @@ Compare 2 to 4 funds side by side using the connected Morningstar app as the dat
 
 ## Workflow
 
+Before running a real comparison, read `references/full-workflow.md`. It preserves Morningstar's partner-authored rules for fund resolution, exclusions, datapoints, broad-asset-class checks, holdings overlap, disclosures, and table formats.
+
 1. Resolve each ticker, name, or identifier to the intended Morningstar fund. Ask only if the result is ambiguous.
 2. Validate that 2 to 4 active supported funds remain after exclusions.
 3. Retrieve the smallest complete data set needed for the comparison: category, broad asset class, rating, medalist rating, expense ratio, assets, inception date, benchmark, return periods, category ranks, risk metrics, and top holdings when available.

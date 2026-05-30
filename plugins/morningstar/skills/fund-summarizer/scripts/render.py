@@ -19,20 +19,26 @@ import sys
 import warnings
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+SKILL_DIR = SCRIPT_DIR.parent
+
 try:
     from .chart_builders import build_donut_chart_svg, build_line_chart_svg
     from .icon_embedder import embed_icons
     from .placeholder_defaults import PLACEHOLDERS, default_for
     from .section_builders import populate_section_placeholders
 except ImportError:  # Supports running this file directly as a script.
+    if str(SCRIPT_DIR) not in sys.path:
+        sys.path.insert(0, str(SCRIPT_DIR))
+
     from chart_builders import build_donut_chart_svg, build_line_chart_svg
     from icon_embedder import embed_icons
     from placeholder_defaults import PLACEHOLDERS, default_for
     from section_builders import populate_section_placeholders
 
-TEMPLATE_PATH = Path(__file__).parent.parent / "assets" / "template.html"
-LOGO_PATH = Path(__file__).parent.parent / "assets" / "logotype-usage-color-negative-white-red50.png"
-ICONS_PATH = Path(__file__).parent.parent / "assets" / "icons"
+TEMPLATE_PATH = SKILL_DIR / "assets" / "template.html"
+LOGO_PATH = SKILL_DIR / "assets" / "logotype-usage-color-negative-white-red50.png"
+ICONS_PATH = SKILL_DIR / "assets" / "icons"
 
 
 def _parsed_json_list(value) -> list:
@@ -147,7 +153,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Render fund summary HTML from JSON data.")
-    parser.add_argument("--data", required=True, help="Path to JSON file with placeholder values")
+    parser.add_argument("--data", help="Path to JSON file with placeholder values")
     parser.add_argument("--output", default="report.html", help="Output HTML path (default: report.html)")
     parser.add_argument("--list-placeholders", action="store_true", help="Print all placeholders and exit")
     args = parser.parse_args()
@@ -157,6 +163,10 @@ def main():
         for key, desc in PLACEHOLDERS.items():
             print(f"  {key:40s} {desc}")
         sys.exit(0)
+
+    if not args.data:
+        print("Error: --data is required unless --list-placeholders is used", file=sys.stderr)
+        sys.exit(2)
 
     data_path = Path(args.data)
     if not data_path.exists():
