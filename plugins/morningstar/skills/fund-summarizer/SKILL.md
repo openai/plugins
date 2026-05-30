@@ -22,7 +22,11 @@ Create a concise fund summary or report using the connected Morningstar app as t
 3. Retrieve ratings and research context: medalist rating, star rating, pillar ratings when available, portfolio risk score, analyst summary, and relevant disclosures.
 4. Retrieve performance and risk context: trailing returns, calendar-year returns, category ranks, standard deviation, Sharpe ratio, upside/downside capture, and flows when available.
 5. Retrieve portfolio context: asset allocation, sector/geography exposure, market-cap style, top holdings, turnover, and sustainability data when available.
-6. Build the smallest useful deliverable for the user request. Use Markdown by default; create simple self-contained HTML only if the user explicitly asks for an HTML report.
+6. Build the smallest useful deliverable for the user request. Use Markdown by default; create self-contained HTML only if the user explicitly asks for an HTML report.
+
+## HTML Report Support
+
+When creating an HTML report, use `scripts/render.py`. It reads `assets/template.html`, `assets/icons/`, and the Morningstar logo asset, with visual guidance in `references/design_guide.md`.
 
 ## Output
 
