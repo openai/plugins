@@ -34,7 +34,7 @@ You'll need a valid login to your Metabase.
 {
   "apps": {
     "metabase": {
-      "id": "template_app_6a044bbd332881919b553bdfc2240952"
+      "id": "templated_apps_6a044bbd332881919b553bdfc2240952"
     }
   }
 }

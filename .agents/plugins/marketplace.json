@@ -1489,6 +1489,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "metabase",
+      "source": {
+        "source": "local",
+        "path": "./plugins/metabase"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Data"
     }
   ]
 }

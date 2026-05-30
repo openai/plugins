@@ -29,7 +29,7 @@ The plugin is app-backed. `../../.app.json` is a static app mapping, not a per-u
    {
      "apps": {
        "metabase": {
-         "id": "template_app_6a044bbd332881919b553bdfc2240952"
+         "id": "templated_apps_6a044bbd332881919b553bdfc2240952"
        }
      }
    }
