@@ -46,50 +46,6 @@
             line-height: 1.5;
         }
 
-        .export-toolbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 5%;
-            background: rgba(246, 245, 244, 0.96);
-            border-bottom: 1px solid var(--c-border);
-            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
-        }
-
-        .export-toolbar label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--c-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .export-toolbar button {
-            height: 30px;
-            border: 1px solid var(--c-border);
-            border-radius: 4px;
-            background: var(--c-card);
-            color: var(--c-text);
-            font: inherit;
-            font-size: 12px;
-        }
-
-        .export-toolbar button {
-            padding: 0 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .export-toolbar button.primary {
-            background: var(--c-primary);
-            border-color: var(--c-primary);
-            color: white;
-        }
-
         /* --- Shared text patterns --- */
         .label {
             font-size: 10px;
@@ -851,10 +807,6 @@
 
         /* --- Print --- */
         @media print {
-            .export-toolbar {
-                display: none;
-            }
-
             body {
                 background: white;
                 font-size: 11px;
@@ -1062,11 +1014,6 @@
 </head>
 
 <body>
-
-    <div class="export-toolbar" aria-label="Export report controls">
-        <span class="label">Export</span>
-        <button type="button" class="primary" id="export-pdf">Save PDF</button>
-    </div>
 
     <div class="header">
         <div class="header-top"><img src="data:image/png;base64,{{LOGO_BASE64}}" alt="Morningstar Logo"
@@ -1541,12 +1488,6 @@
                 return fallback;
             }
         };
-
-        (function () {
-            const pdfButton = document.getElementById('export-pdf');
-            if (!pdfButton) return;
-            pdfButton.addEventListener('click', () => window.print());
-        })();
 
         const RISK_DATA = safeJson('data-risk', {});
         const riskFmt = v => { if (v == null || Math.abs(v) < 0.005) return '\u2014'; return (v > 0 ? '+' : '') + v.toFixed(2); };

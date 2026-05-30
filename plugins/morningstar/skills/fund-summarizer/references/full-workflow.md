@@ -242,15 +242,15 @@ data = {
 render_report(data, output_path=f"{data['TICKER']}-fund-summary.html")
 ```
 
-Call `render_report(data, output_path=f"{data['TICKER']}-fund-summary.html")` from `scripts/render.py`, or run `python <skill-dir>/scripts/render.py --data data.json --output <ticker>-fund-summary.html`. If importing the function from outside the `scripts` directory, add `<skill-dir>/scripts` to `sys.path` first. The renderer reads `assets/template.html`, replaces all `{{PLACEHOLDER}}` tokens, builds derived HTML from structured inputs, serializes any dict/list values to JSON automatically, and writes the output file.
+Call `render_report(data, output_path=f"{data['TICKER']}-fund-summary.html")` from `scripts/render.py`, or run `python <skill-dir>/scripts/render.py --data data.json --output <ticker>-fund-summary.html`. If importing the function from outside the `scripts` directory, add `<skill-dir>/scripts` to `sys.path` first. The renderer reads `assets/template.html`, replaces all `{{PLACEHOLDER}}` tokens, builds derived HTML from structured inputs, serializes any dict/list values to JSON automatically, writes the HTML output file, and attempts a sibling PDF copy when the local environment supports it.
 
-The rendered HTML includes an export toolbar. The PDF option opens the browser print dialog so the user can save a PDF. For direct PDF export from code or Terminal, run:
+For direct PDF export from an already rendered HTML report, run:
 
 ```bash
 python <skill-dir>/scripts/export_report.py <ticker>-fund-summary.html --format pdf
 ```
 
-`export_report.py` uses the companion Node helper plus Playwright when available. It prefers the Codex-bundled Node runtime and falls back to already-cached Playwright browsers, so it can export an existing report HTML without re-retrieving Morningstar data.
+`render.py` and `export_report.py` use the companion Node helper plus Playwright when available. They prefer the Codex-bundled Node runtime and fall back to already-cached Playwright browsers, so they can export report HTML without re-retrieving Morningstar data. If a sandboxed environment blocks Chromium, the renderer still succeeds with the HTML report. Use `--require-pdf` only when PDF output is mandatory.
 
 ### Renderer Data Package Contract
 
@@ -492,7 +492,7 @@ If `BENCHMARK_CURRENCY_MISMATCH` is true, set `"benchmark": {}` to suppress all 
 
 ### 4e. Output
 
-Write the final HTML to the active workspace or the user-requested output path. Present the resulting HTML file path to the user as the main answer. Keep any accompanying text brief and mention important data limitations only when relevant. There are other fund analysis and fund rating skills available if the user wants a deeper dive into specific aspects of the fund.
+Write the final HTML to the active workspace or the user-requested output path. Present the HTML file path, plus the PDF file path if the sibling PDF copy was produced. Keep any accompanying text brief and mention important data limitations only when relevant. There are other fund analysis and fund rating skills available if the user wants a deeper dive into specific aspects of the fund.
 
 ## Step 5. Quality Checks
 
@@ -503,4 +503,5 @@ Before delivering the report file path to the user, verify:
 - [ ] Report date = today's date
 - [ ] Active/Index label derived correctly (OF00C for non-ETFs, OF00D for ETFs)
 - [ ] Broad fund summary/analysis/report requests produced an HTML report, not only a text summary
+- [ ] If the sibling PDF copy was produced, its file path is included with the HTML path
 - [ ] If benchmark and fund currencies differ, `BENCHMARK_CURRENCY_NOTE` is non-empty, all benchmark chart/table series are suppressed, and `BENCHMARK_LEGEND_ENTRY` is `""`

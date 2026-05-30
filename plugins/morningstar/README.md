@@ -35,4 +35,4 @@ plugins/
 
 The top-level skills intentionally stay lightweight and route data access through the Morningstar app instead of bundling a separate MCP server. Detailed partner-authored workflow rules live in each skill's `references/full-workflow.md`; the fund summary HTML report support files live under `fund-summarizer/assets/`, `fund-summarizer/references/`, and `fund-summarizer/scripts/`.
 
-Fund summary HTML reports include an export toolbar. PDF export uses the browser print dialog, and command-line PDF export is supported by `fund-summarizer/scripts/export_report.py`.
+Fund summary report rendering always writes the HTML report and attempts a sibling PDF copy when the local environment supports it. Existing rendered HTML files can also be exported directly with `fund-summarizer/scripts/export_report.py`.

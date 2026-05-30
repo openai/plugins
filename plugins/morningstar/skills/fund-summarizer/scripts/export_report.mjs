@@ -86,7 +86,7 @@ async function loadPage(browser, source) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1200 } });
   await page.goto(inputPath(source).toString(), { waitUntil: "networkidle" });
   await page.addStyleTag({
-    content: ".export-toolbar{display:none!important}body{background:#F6F5F4!important}",
+    content: "body{background:#F6F5F4!important}",
   });
   return page;
 }
