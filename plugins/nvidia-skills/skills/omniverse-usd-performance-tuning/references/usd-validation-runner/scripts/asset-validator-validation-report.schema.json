@@ -1,0 +1,133 @@
+{
+  "$comment": "SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.\nSPDX-License-Identifier: Apache-2.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_path",
+    "validator_skill",
+    "validator_tool",
+    "passed",
+    "status",
+    "command",
+    "categories",
+    "rules",
+    "issue_counts",
+    "issues",
+    "warnings",
+    "errors",
+    "next_step"
+  ],
+  "properties": {
+    "asset_path": {
+      "type": "string"
+    },
+    "validator_skill": {
+      "const": "validate-usd-asset-validator"
+    },
+    "validator_tool": {
+      "const": "omni_asset_validate"
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "BLOCKED", "ERROR", "UNKNOWN"]
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "issue_counts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "required": ["ERROR", "FAILURE", "WARNING", "INFO"],
+      "properties": {
+        "ERROR": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "FAILURE": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "WARNING": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "INFO": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rule",
+          "severity",
+          "message",
+          "location",
+          "requirement",
+          "suggestion"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": ["string", "null"]
+          },
+          "requirement": {
+            "type": ["string", "null"]
+          },
+          "suggestion": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_step": {
+      "type": "string"
+    }
+  }
+}
