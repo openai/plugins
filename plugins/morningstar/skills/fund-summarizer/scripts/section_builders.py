@@ -8,9 +8,11 @@ _TRAILING_PERIODS = ["YTD", "1 Yr", "2 Yr", "3 Yr", "5 Yr", "10 Yr"]
 _ISSUER_INITIATED_DISCLOSURE = (
     "In Australia and New Zealand only, starting from June 2026, Morningstar may receive a fee from product issuers "
     "for preparing Morningstar Medalist Rating on their financial product(s) domiciled in Australia or New Zealand "
-    "(an \"Issuer Initiated Rating\"). An Issuer Initiated Rating will apply to a strategy and its associated share classes. "
+    "(an \"Issuer Initiated Rating\"). An Issuer Initiated Rating will apply to a strategy and its associated share "
+    "classes. "
     "Morningstar will clearly identify each Issuer Initiated Rating on the front page of the report and will provide "
-    "disclosure relating to the party that has paid the associated fee. Fees for an Issuer Initiated Rating are not linked "
+    "disclosure relating to the party that has paid the associated fee. Fees for an Issuer Initiated Rating are not "
+    "linked "
     "to the rating outcome, and the paying entity has no influence over the analytical process or rating outcome."
 )
 
@@ -18,10 +20,14 @@ _TRACKS_MORNINGSTAR_INDEX_DISCLOSURE = (
     "Certain managed investments use indexes created by and licensed from Morningstar, Inc., and its subsidiaries as "
     "their tracking index. We mitigate any actual or potential conflicts of interest arising from these activities by "
     "maintaining and enforcing information barriers, including both technological and non-technological controls, and "
-    "conducting ongoing monitoring through Morningstar's Compliance department. Morningstar will clearly identify manager "
-    "research related to such indexes on the front page of the report. Morningstar does not provide qualitative ratings or "
-    "opinions for investments managed by Morningstar or managed investments that track Morningstar indexes that incorporate "
-    "discretionary inputs assigned by Morningstar employees on an ongoing basis, such as Morningstar Economic Moat Ratings, "
+    "conducting ongoing monitoring through Morningstar's Compliance department. Morningstar will clearly identify "
+    "manager "
+    "research related to such indexes on the front page of the report. Morningstar does not provide qualitative "
+    "ratings or "
+    "opinions for investments managed by Morningstar or managed investments that track Morningstar indexes that "
+    "incorporate "
+    "discretionary inputs assigned by Morningstar employees on an ongoing basis, such as Morningstar Economic Moat "
+    "Ratings, "
     "or ESG Ratings."
 )
 
@@ -227,7 +233,10 @@ def _build_annual_returns_parts(rows: list[dict], include_benchmark: bool = True
             excess_cells.append(f"<td>{_fmt_return(fund_number - benchmark_number, signed=True)}</td>")
         output.append(f'<tr class="row-excess"><td>Excess</td>{"".join(excess_cells)}</tr>')
 
-    rank_cells = "".join(f"<td>{_fmt_rank(row.get('rank') if 'rank' in row else row.get('percentile_rank'))}</td>" for row in sorted_rows)
+    rank_cells = "".join(
+        f"<td>{_fmt_rank(row.get('rank') if 'rank' in row else row.get('percentile_rank'))}</td>"
+        for row in sorted_rows
+    )
     if rank_cells:
         output.append(f"<tr><td>Percentile Rank</td>{rank_cells}</tr>")
     return {"headers": headers, "rows": "".join(output)}
@@ -238,7 +247,11 @@ def _populate_table_placeholders(data: dict) -> None:
     if data.get("TOP_HOLDINGS"):
         data["TOP_HOLDINGS_ROWS"] = _build_top_holdings_rows(data["TOP_HOLDINGS"])
         if not data.get("PCT_TOP_10"):
-            total = sum(row.get("weight", 0) for row in data["TOP_HOLDINGS"][:10] if isinstance(row.get("weight"), (int, float)))
+            total = sum(
+                row.get("weight", 0)
+                for row in data["TOP_HOLDINGS"][:10]
+                if isinstance(row.get("weight"), (int, float))
+            )
             data["PCT_TOP_10"] = f"{total:.1f}%" if total else "--"
 
     include_benchmark = not bool(data.get("BENCHMARK_CURRENCY_MISMATCH"))
@@ -252,12 +265,17 @@ def _populate_table_placeholders(data: dict) -> None:
     if data.get("BENCHMARK_CURRENCY_MISMATCH"):
         data["BENCHMARK_LEGEND_ENTRY"] = ""
         if not data.get("BENCHMARK_CURRENCY_NOTE"):
-            note = data.get("BENCHMARK_CURRENCY_NOTE_TEXT") or "The benchmark is denominated in a different currency than the fund. Benchmark returns have been excluded from this report."
+            note = data.get("BENCHMARK_CURRENCY_NOTE_TEXT") or (
+                "The benchmark is denominated in a different currency than the fund. "
+                "Benchmark returns have been excluded from this report."
+            )
             data["BENCHMARK_CURRENCY_NOTE"] = f'<p class="currency-note">{_escape_html(note)}</p>'
     elif "BENCHMARK_LEGEND_ENTRY" not in data:
         benchmark_name = data.get("BENCHMARK_NAME") or data.get("PROSPECTUS_BENCHMARK")
         if benchmark_name:
-            data["BENCHMARK_LEGEND_ENTRY"] = f'<span><i style="background:var(--c-bench);"></i>{_escape_html(benchmark_name)}</span>'
+            data["BENCHMARK_LEGEND_ENTRY"] = (
+                f'<span><i style="background:var(--c-bench);"></i>{_escape_html(benchmark_name)}</span>'
+            )
 
 
 def _populate_summary_placeholders(data: dict) -> None:
@@ -296,7 +314,9 @@ def _populate_medalist_disclosures(data: dict) -> None:
         data["MEDALIST_DISCLOSURE_FOOTNOTE"] = ""
         return
 
-    data["MEDALIST_DISCLOSURE_TYPE_DISPLAY"] = f'<div class="muted medalist-disclosure-type">{_escape_html(disclosure_type)}</div>'
+    data["MEDALIST_DISCLOSURE_TYPE_DISPLAY"] = (
+        f'<div class="muted medalist-disclosure-type">{_escape_html(disclosure_type)}</div>'
+    )
 
     normalized = disclosure_type.lower()
     if "issuer initiated" in normalized:
@@ -405,9 +425,11 @@ def _comparison_row_with_benchmark(row: dict, row_fmt: str, fund_display: str, u
         benchmark_width = benchmark_val if isinstance(benchmark_val, (int, float)) else 0
         return (
             f'<tr><td>{row["label"]}</td>'
-            f'<td><div class="region-cell"><span class="region-bar"><span style="width:{fund_width:.1f}%"></span></span>'
+            f'<td><div class="region-cell"><span class="region-bar">'
+            f'<span style="width:{fund_width:.1f}%"></span></span>'
             f'<span class="region-value">{fund_display}</span></div></td>'
-            f'<td><div class="region-cell"><span class="region-bar bench"><span style="width:{benchmark_width:.1f}%"></span></span>'
+            f'<td><div class="region-cell"><span class="region-bar bench">'
+            f'<span style="width:{benchmark_width:.1f}%"></span></span>'
             f'<span class="region-value">{benchmark_display}</span></div></td></tr>'
         )
     return f'<tr><td>{row["label"]}</td><td>{fund_display}</td><td>{benchmark_display}</td></tr>'
@@ -418,7 +440,8 @@ def _comparison_row_without_benchmark(row: dict, row_fmt: str, fund_display: str
         fund_width = row.get("fund") if isinstance(row.get("fund"), (int, float)) else 0
         return (
             f'<tr><td>{row["label"]}</td>'
-            f'<td><div class="region-cell"><span class="region-bar"><span style="width:{fund_width:.1f}%"></span></span>'
+            f'<td><div class="region-cell"><span class="region-bar">'
+            f'<span style="width:{fund_width:.1f}%"></span></span>'
             f'<span class="region-value">{fund_display}</span></div></td></tr>'
         )
     return f'<tr><td>{row["label"]}</td><td>{fund_display}</td></tr>'

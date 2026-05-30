@@ -65,7 +65,11 @@ def build_line_chart_svg(data: list[dict]) -> str:
     Returns SVG markup string.
     """
     if not data:
-        return '<div class="chart-wrap" style="display:flex;align-items:center;justify-content:center;color:#7F7D7A;font-size:12px;">No return data available</div>'
+        return (
+            '<div class="chart-wrap" '
+            'style="display:flex;align-items:center;justify-content:center;'
+            'color:#7F7D7A;font-size:12px;">No return data available</div>'
+        )
 
     is_growth = "date" in data[0]
     label_key = "date" if is_growth else "year"

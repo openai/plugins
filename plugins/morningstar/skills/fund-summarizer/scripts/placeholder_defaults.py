@@ -89,8 +89,14 @@ PLACEHOLDERS = {
     "MARKET_CAP_SECTION": "Prebuilt HTML for market-cap section",
     "EQUITY_PORTFOLIO_STATS_SECTION": "Prebuilt HTML for equity portfolio stats",
     "BENCHMARK_NAME": "Benchmark display name (chart legend)",
-    "BENCHMARK_LEGEND_ENTRY": "Full benchmark legend <span> HTML when currencies match; empty string when currencies differ",
-    "BENCHMARK_CURRENCY_NOTE": "HTML note shown when benchmark currency differs from fund currency (empty string when currencies match)",
+    "BENCHMARK_LEGEND_ENTRY": (
+        "Full benchmark legend <span> HTML when currencies match; "
+        "empty string when currencies differ"
+    ),
+    "BENCHMARK_CURRENCY_NOTE": (
+        "HTML note shown when benchmark differs from fund currency "
+        "(empty string when currencies match)"
+    ),
     "TRAILING_RETURNS_ROWS": "HTML <tr> rows for trailing returns table",
     "TRAILING_RETURNS": "Structured trailing returns list: [{period, fund, benchmark}, ...]",
     "ANNUAL_RETURNS_HEADERS": "HTML <th> elements for each calendar year",
@@ -127,7 +133,10 @@ PLACEHOLDERS = {
     "CUMULATIVE_RETURNS_JSON": 'JSON array: [{"date":"2020-01-31","fund":10215,"benchmark":10180}, ...]',
     "CALENDAR_RETURNS_JSON": "Alias for CUMULATIVE_RETURNS_JSON (backward compat)",
     "ASSET_ALLOCATION_JSON": 'JSON array: [{"label":"Equity","value":65.2}, ...]',
-    "RISK_DATA_JSON": "JSON object with fund/benchmark keys for sharpe, upside, downside, stddev, alpha, beta, rsquared",
+    "RISK_DATA_JSON": (
+        "JSON object with fund/benchmark keys for sharpe, upside, downside, "
+        "stddev, alpha, beta, rsquared"
+    ),
     "RETURNS_CHART_SVG": "Inline SVG line chart for returns (auto-generated)",
     "DONUT_CHART_SVG": "Inline SVG donut chart for allocation (auto-generated)",
 }
