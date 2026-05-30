@@ -8,11 +8,6 @@ import { pathToFileURL } from "node:url";
 
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
-const pptxgen = require("pptxgenjs");
-
-const SLIDE_WIDTH = 13.333;
-const SLIDE_HEIGHT = 7.5;
-const SLIDE_MARGIN = 0.35;
 
 function parseArgs(argv) {
   const args = { format: "pdf" };
@@ -24,7 +19,7 @@ function parseArgs(argv) {
     else if (token === "--output-dir") args.outputDir = argv[++index];
   }
   if (!args.input) throw new Error("Missing --input <html>");
-  if (!["pdf", "pptx", "both"].includes(args.format)) {
+  if (args.format !== "pdf") {
     throw new Error(`Unsupported --format ${args.format}`);
   }
   return args;
@@ -108,65 +103,12 @@ async function exportPdf(page, destination) {
   console.log(`Wrote PDF: ${destination}`);
 }
 
-function imageFit(box) {
-  const maxWidth = SLIDE_WIDTH - SLIDE_MARGIN * 2;
-  const maxHeight = SLIDE_HEIGHT - SLIDE_MARGIN * 2;
-  let width = maxWidth;
-  let height = width * (box.height / box.width);
-  if (height > maxHeight) {
-    height = maxHeight;
-    width = height * (box.width / box.height);
-  }
-  return {
-    x: (SLIDE_WIDTH - width) / 2,
-    y: (SLIDE_HEIGHT - height) / 2,
-    w: width,
-    h: height,
-  };
-}
-
-async function exportPptx(page, destination) {
-  await fs.promises.mkdir(path.dirname(destination), { recursive: true });
-  const tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "morningstar-report-"));
-  const pptx = new pptxgen();
-  pptx.layout = "LAYOUT_WIDE";
-  pptx.author = "Morningstar";
-  pptx.subject = "Morningstar fund summary";
-  pptx.company = "Morningstar";
-
-  const elements = await page.$$(".header, .section, .footer");
-  const targets = elements.length ? elements : [await page.$("body")];
-  let slideCount = 0;
-
-  for (const element of targets) {
-    if (!element) continue;
-    const box = await element.boundingBox();
-    if (!box || box.width < 20 || box.height < 20) continue;
-    const imagePath = path.join(tempDir, `slide-${slideCount + 1}.png`);
-    await element.screenshot({ path: imagePath });
-
-    const slide = pptx.addSlide();
-    slide.background = { color: "F6F5F4" };
-    slide.addImage({ path: imagePath, ...imageFit(box) });
-    slideCount += 1;
-  }
-
-  if (slideCount === 0) throw new Error("No report sections were available for PPTX export");
-  await pptx.writeFile({ fileName: destination });
-  console.log(`Wrote PPTX: ${destination}`);
-}
-
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const browser = await launchBrowser();
   try {
     const page = await loadPage(browser, args.input);
-    if (args.format === "pdf" || args.format === "both") {
-      await exportPdf(page, outputPath(args, "pdf"));
-    }
-    if (args.format === "pptx" || args.format === "both") {
-      await exportPptx(page, outputPath(args, "pptx"));
-    }
+    await exportPdf(page, outputPath(args, "pdf"));
   } finally {
     await browser.close();
   }

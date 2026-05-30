@@ -244,15 +244,13 @@ render_report(data, output_path=f"{data['TICKER']}-fund-summary.html")
 
 Call `render_report(data, output_path=f"{data['TICKER']}-fund-summary.html")` from `scripts/render.py`, or run `python <skill-dir>/scripts/render.py --data data.json --output <ticker>-fund-summary.html`. If importing the function from outside the `scripts` directory, add `<skill-dir>/scripts` to `sys.path` first. The renderer reads `assets/template.html`, replaces all `{{PLACEHOLDER}}` tokens, builds derived HTML from structured inputs, serializes any dict/list values to JSON automatically, and writes the output file.
 
-The rendered HTML includes an export toolbar. The PDF option opens the browser print dialog so the user can save a PDF. The PPTX option shows a copyable command using `scripts/export_report.py`. For direct export from code or Terminal, run:
+The rendered HTML includes an export toolbar. The PDF option opens the browser print dialog so the user can save a PDF. For direct PDF export from code or Terminal, run:
 
 ```bash
 python <skill-dir>/scripts/export_report.py <ticker>-fund-summary.html --format pdf
-python <skill-dir>/scripts/export_report.py <ticker>-fund-summary.html --format pptx
-python <skill-dir>/scripts/export_report.py <ticker>-fund-summary.html --format both
 ```
 
-`export_report.py` uses the companion Node helper plus Playwright/pptxgenjs when available. It prefers the Codex-bundled Node runtime and falls back to already-cached Playwright browsers, so it can export an existing report HTML without re-retrieving Morningstar data.
+`export_report.py` uses the companion Node helper plus Playwright when available. It prefers the Codex-bundled Node runtime and falls back to already-cached Playwright browsers, so it can export an existing report HTML without re-retrieving Morningstar data.
 
 ### Renderer Data Package Contract
 

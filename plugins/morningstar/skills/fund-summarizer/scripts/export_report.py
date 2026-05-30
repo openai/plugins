@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Export a rendered Morningstar fund summary HTML report to PDF or PPTX.
+"""Export a rendered Morningstar fund summary HTML report to PDF.
 
 This wrapper keeps the skill entry point Python-friendly while using the
 Codex-bundled Node runtime when it is available. The companion
-export_report.mjs script uses Playwright for faithful HTML rendering and
-pptxgenjs for screenshot-based slide export.
+export_report.mjs script uses Playwright for faithful HTML-to-PDF rendering.
 """
 
 from __future__ import annotations
@@ -40,32 +39,28 @@ def default_node_path() -> str | None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Export a rendered Morningstar HTML fund report to PDF or PPTX.",
+        description="Export a rendered Morningstar HTML fund report to PDF.",
     )
     parser.add_argument("html", help="Path or file:// URL for the rendered HTML report")
     parser.add_argument(
         "--format",
-        choices=["pdf", "pptx", "both"],
+        choices=["pdf"],
         default="pdf",
         help="Export format",
     )
-    parser.add_argument("--output", help="Output path for a single-format export")
+    parser.add_argument("--output", help="Output PDF path")
     parser.add_argument("--output-dir", help="Output directory; defaults to the HTML file directory")
     parser.add_argument("--node", default=default_node(), help="Node.js executable")
     parser.add_argument(
         "--node-path",
         default=default_node_path(),
-        help="NODE_PATH containing playwright and pptxgenjs",
+        help="NODE_PATH containing playwright",
     )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    if args.format == "both" and args.output:
-        print("Error: --output can only be used with --format pdf or --format pptx", file=sys.stderr)
-        return 2
-
     command = [
         args.node,
         str(NODE_SCRIPT),

@@ -68,7 +68,6 @@
             letter-spacing: 0.04em;
         }
 
-        .export-toolbar select,
         .export-toolbar button {
             height: 30px;
             border: 1px solid var(--c-border);
@@ -77,10 +76,6 @@
             color: var(--c-text);
             font: inherit;
             font-size: 12px;
-        }
-
-        .export-toolbar select {
-            padding: 0 26px 0 10px;
         }
 
         .export-toolbar button {
@@ -93,31 +88,6 @@
             background: var(--c-primary);
             border-color: var(--c-primary);
             color: white;
-        }
-
-        .export-help {
-            display: none;
-            width: min(560px, 90vw);
-            font-size: 11px;
-            color: var(--c-muted);
-        }
-
-        .export-help.active {
-            display: block;
-        }
-
-        .export-command {
-            display: block;
-            margin-top: 4px;
-            padding: 7px 8px;
-            overflow-x: auto;
-            border: 1px solid var(--c-border);
-            border-radius: 4px;
-            background: white;
-            color: var(--c-text);
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 11px;
-            white-space: nowrap;
         }
 
         /* --- Shared text patterns --- */
@@ -1094,14 +1064,8 @@
 <body>
 
     <div class="export-toolbar" aria-label="Export report controls">
-        <label for="export-format">Export</label>
-        <select id="export-format">
-            <option value="pdf">PDF</option>
-            <option value="pptx">PPTX</option>
-        </select>
-        <button type="button" class="primary" id="export-run">Export</button>
-        <button type="button" id="export-copy" hidden>Copy command</button>
-        <div class="export-help" id="export-help" aria-live="polite"></div>
+        <span class="label">Export</span>
+        <button type="button" class="primary" id="export-pdf">Save PDF</button>
     </div>
 
     <div class="header">
@@ -1578,64 +1542,10 @@
             }
         };
 
-        const EXPORT_META = {
-            scriptPath: "{{EXPORT_SCRIPT_PATH}}",
-            reportPath: "{{REPORT_FILE_PATH}}",
-            reportBaseName: "{{REPORT_BASE_NAME}}"
-        };
-
-        const quoteShell = value => `"${String(value).replace(/(["\\$`])/g, '\\$1')}"`;
-        const exportCommand = format => [
-            'python3',
-            quoteShell(EXPORT_META.scriptPath),
-            quoteShell(EXPORT_META.reportPath),
-            '--format',
-            format
-        ].join(' ');
-
         (function () {
-            const select = document.getElementById('export-format');
-            const runButton = document.getElementById('export-run');
-            const copyButton = document.getElementById('export-copy');
-            const help = document.getElementById('export-help');
-            if (!select || !runButton || !copyButton || !help) return;
-
-            let command = '';
-            const showCommand = format => {
-                command = exportCommand(format);
-                help.classList.add('active');
-                copyButton.hidden = false;
-                help.innerHTML = [
-                    `Run this command to create ${EXPORT_META.reportBaseName}.${format}:`,
-                    `<code class="export-command">${command}</code>`
-                ].join('');
-            };
-
-            runButton.addEventListener('click', () => {
-                const format = select.value;
-                if (format === 'pdf') {
-                    help.classList.remove('active');
-                    copyButton.hidden = true;
-                    window.print();
-                    return;
-                }
-                showCommand(format);
-            });
-
-            copyButton.addEventListener('click', async () => {
-                if (!command) showCommand(select.value);
-                try {
-                    await navigator.clipboard.writeText(command);
-                    copyButton.textContent = 'Copied';
-                    setTimeout(() => { copyButton.textContent = 'Copy command'; }, 1400);
-                } catch (error) {
-                    help.classList.add('active');
-                    help.innerHTML = [
-                        'Copy this command from here:',
-                        `<code class="export-command">${command}</code>`
-                    ].join('');
-                }
-            });
+            const pdfButton = document.getElementById('export-pdf');
+            if (!pdfButton) return;
+            pdfButton.addEventListener('click', () => window.print());
         })();
 
         const RISK_DATA = safeJson('data-risk', {});

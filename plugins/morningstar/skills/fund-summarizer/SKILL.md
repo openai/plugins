@@ -30,7 +30,7 @@ For broad summaries, detailed reports, or any HTML report, read `references/full
 
 When creating an HTML report, use `scripts/render.py`. It reads `assets/template.html`, `assets/icons/`, and the Morningstar logo asset, with visual guidance in `references/design_guide.md`.
 
-Rendered reports include an export toolbar. PDF uses the browser print dialog; PPTX uses the copied command for `scripts/export_report.py`, which can also be run directly against any rendered report HTML.
+Rendered reports include an export toolbar for browser print/save-as-PDF. For command-line PDF export, run `scripts/export_report.py` against any rendered report HTML.
 
 ## Output
 

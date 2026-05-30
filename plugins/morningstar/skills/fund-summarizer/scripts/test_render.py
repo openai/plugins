@@ -36,8 +36,7 @@ class RenderReportTests(unittest.TestCase):
             self.assertIn("Test Growth Fund", html)
             self.assertIn("TEST", html)
             self.assertIn('class="export-toolbar"', html)
-            self.assertIn(str(RENDER_PATH.parent / "export_report.py"), html)
-            self.assertIn(str(result_path), html)
+            self.assertIn("Save PDF", html)
 
     def test_list_placeholders_does_not_require_data_file(self):
         completed = subprocess.run(
