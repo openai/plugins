@@ -1,0 +1,34 @@
+{
+  "name": "posthog",
+  "version": "1.0.0",
+  "description": "Product analytics, funnels, feature flags, and event data from PostHog",
+  "author": {
+    "name": "PostHog",
+    "url": "https://posthog.com"
+  },
+  "homepage": "https://posthog.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "PostHog",
+    "shortDescription": "Product analytics, funnels, feature flags, and event data from PostHog",
+    "longDescription": "Product analytics, funnels, feature flags, and event data from PostHog",
+    "developerName": "PostHog",
+    "category": "Data Science",
+    "capabilities": [],
+    "websiteURL": "https://posthog.com",
+    "privacyPolicyURL": "https://posthog.com/privacy",
+    "termsOfServiceURL": "https://posthog.com/terms",
+    "defaultPrompt": [
+      "Analyze PostHog activation funnels and identify the biggest drop-offs.",
+      "Find recent feature flag changes in PostHog and summarize impact.",
+      "Compare PostHog retention for this cohort over the last 90 days."
+    ],
+    "brandColor": "#000000",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}
