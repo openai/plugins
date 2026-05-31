@@ -1,9 +1,9 @@
 {
   "name": "omni-analytics",
   "version": "1.0.0",
-  "description": "Ask governed business questions using Omni models, dashboards, and metrics",
+  "description": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
   "author": {
-    "name": "Omni",
+    "name": "Omni Analytics",
     "url": "https://www.omni.co"
   },
   "homepage": "https://www.omni.co",
@@ -12,19 +12,17 @@
   "keywords": [],
   "apps": "./.app.json",
   "interface": {
-    "displayName": "Omni",
-    "shortDescription": "Ask governed business questions using Omni models, dashboards, and metrics",
-    "longDescription": "Ask governed business questions using Omni models, dashboards, and metrics",
-    "developerName": "Omni",
+    "displayName": "Omni Analytics",
+    "shortDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
+    "longDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex. Allow internal teams to ask data questions in their AI workflows without logging into Omni directly, while still enforcing row-level security and business definitions.",
+    "developerName": "Omni Analytics",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://www.omni.co",
     "privacyPolicyURL": "https://omni.co/privacy",
     "termsOfServiceURL": "https://omni.co/terms",
     "defaultPrompt": [
-      "Ask Omni for revenue by month and explain the biggest changes.",
-      "Find the dashboard behind this metric in Omni and summarize definitions.",
-      "Query Omni for product usage by segment and highlight anomalies."
+      "Show me last year's orders by status"
     ],
     "brandColor": "#F686AC",
     "composerIcon": "./assets/logo.png",
