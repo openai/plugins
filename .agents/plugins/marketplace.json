@@ -231,7 +231,8 @@
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
-      }
+      },
+      "category": "Productivity"
     },
     {
       "name": "github",
@@ -266,7 +267,8 @@
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
-      }
+      },
+      "category": "Productivity"
     },
     {
       "name": "deepnote",
@@ -1503,7 +1505,7 @@
         "authentication": "ON_INSTALL",
         "products": ["CODEX"]
       },
-      "category": "Engineering"
+      "category": "Developer Tools"
     },
     {
       "name": "asana",
@@ -1803,7 +1805,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Sales"
+      "category": "Productivity"
     },
     {
       "name": "shutterstock",
@@ -1827,7 +1829,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data Science"
+      "category": "Developer Tools"
     },
     {
       "name": "replit",
@@ -1863,7 +1865,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Corporate Finance"
+      "category": "Productivity"
     },
     {
       "name": "intercom",
@@ -1875,7 +1877,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "User Ops"
+      "category": "Productivity"
     },
     {
       "name": "chronograph",
@@ -1887,7 +1889,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Financial Markets"
+      "category": "Research"
     }
   ]
 }
