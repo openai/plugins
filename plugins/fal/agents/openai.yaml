@@ -1,0 +1,7 @@
+interface:
+  display_name: "Fal"
+  short_description: "AI image and media generation workflows using Fal models"
+  icon_small: "./assets/logo.png"
+  icon_large: "./assets/logo.png"
+  brand_color: "#D60045"
+  default_prompt: "Use Fal to generate an image from this prompt and summarize the selected model settings."

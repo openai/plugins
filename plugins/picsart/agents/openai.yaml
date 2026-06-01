@@ -1,0 +1,7 @@
+interface:
+  display_name: "Picsart"
+  short_description: "Image editing, creative assets, and design workflows from Picsart"
+  icon_small: "./assets/logo.png"
+  icon_large: "./assets/logo.png"
+  brand_color: "#C209C8"
+  default_prompt: "Use Picsart to edit this image for a campaign and summarize the output options."

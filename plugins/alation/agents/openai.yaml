@@ -1,0 +1,7 @@
+interface:
+  display_name: "Alation"
+  short_description: "Data catalog search, lineage, governance, and documentation"
+  icon_small: "./assets/logo.png"
+  icon_large: "./assets/logo.png"
+  brand_color: "#FF7A1A"
+  default_prompt: "Search Alation for data assets related to this metric and summarize owners and definitions."
