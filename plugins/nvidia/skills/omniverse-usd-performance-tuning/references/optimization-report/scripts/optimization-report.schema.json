@@ -1,0 +1,257 @@
+{
+  "$comment": "SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.\nSPDX-License-Identifier: Apache-2.0",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "USD Performance Tuning Report",
+  "description": "End-to-end report from a USD performance tuning session.",
+  "type": "object",
+  "required": [
+    "asset_name",
+    "output_path",
+    "timestamp",
+    "verdict",
+    "optimization_score",
+    "score_scope",
+    "score_label",
+    "reasoning",
+    "measurement_context",
+    "artifacts",
+    "metric_groups",
+    "metrics",
+    "operations",
+    "validators"
+  ],
+  "properties": {
+    "asset_name": {
+      "type": "string",
+      "description": "Name of the asset that was optimized."
+    },
+    "input_path": {
+      "type": "string",
+      "description": "Path to the original input stage."
+    },
+    "output_path": {
+      "type": "string",
+      "description": "Path to the optimized output stage."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when the report was generated."
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["improved", "neutral", "regressed", "mixed"],
+      "description": "Overall optimization verdict."
+    },
+    "runtime_context": {
+      "type": "object",
+      "description": "Snapshot of the Kit / Scene Optimizer / Asset Validator versions in effect for this run. Copied verbatim from setup-preflight.json so later readers can reproduce or audit the report. Mirrors the runtime-context fields defined in skills/omniverse-usd-performance-tuning/references/setup-usd-performance-tuning/references/runtime-context-header.md.",
+      "required": ["kit", "sceneOptimizer", "assetValidator"],
+      "properties": {
+        "kit": {
+          "type": "object",
+          "required": ["application", "version", "path"],
+          "properties": {
+            "application": {
+              "type": "string",
+              "description": "Friendly name of the Kit application, e.g. 'USD Composer', 'Isaac Sim', 'Kit SDK'."
+            },
+            "version": {
+              "type": "string",
+              "description": "Release version, e.g. '110.1.0'."
+            },
+            "path": {
+              "type": "string",
+              "description": "Absolute path to the Kit root."
+            },
+            "build": {
+              "type": ["string", "null"],
+              "description": "Full build identifier when present (e.g. '110.1.0+main.10181....release'); null when the install path does not encode one."
+            }
+          }
+        },
+        "sceneOptimizer": {
+          "type": "object",
+          "required": ["extension", "version"],
+          "properties": {
+            "extension": {
+              "type": "string",
+              "description": "Extension name, typically 'omni.scene.optimizer.core'."
+            },
+            "version": {
+              "type": "string",
+              "description": "Extension version, e.g. '110.0.4'."
+            }
+          }
+        },
+        "assetValidator": {
+          "type": "object",
+          "required": ["package", "version", "source"],
+          "properties": {
+            "package": {
+              "type": "string",
+              "description": "Package or extension name, e.g. 'omniverse-asset-validator' or 'omni.asset_validator.core'."
+            },
+            "version": {
+              "type": "string",
+              "description": "Package version."
+            },
+            "source": {
+              "type": "string",
+              "enum": ["kit-extension", "pip", "standalone"],
+              "description": "Where Asset Validator was loaded from."
+            }
+          }
+        }
+      }
+    },
+    "optimization_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10,
+      "description": "Stage Optimization Score from 0-10, computed deterministically as round(sum(metric_groups[].score * metric_groups[].weight) / sum(metric_groups[].weight), 1) across scored stage/composition groups only. Exclude groups with score=null or weight=0. Runtime metrics such as RAM, VRAM, FPS, and frame time are excluded unless supplied by a separate runtime profiling report and explicitly treated outside this score."
+    },
+    "score_scope": {
+      "type": "string",
+      "enum": ["stage_optimization"],
+      "description": "Scope of optimization_score. This report scores stage/composition optimization effectiveness, not full runtime performance."
+    },
+    "score_label": {
+      "type": "string",
+      "enum": ["excellent", "strong", "moderate", "neutral", "mixed", "regressed"],
+      "description": "Human-readable score band derived from optimization_score: excellent >= 9.0; strong >= 7.5 and < 9.0; moderate >= 5.5 and < 7.5; neutral >= 4.5 and < 5.5; mixed >= 2.5 and < 4.5; regressed < 2.5."
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "One to two concise paragraphs explaining why the agent chose the specific stage optimization approach for this asset, including the evidence that drove the choice and any tradeoffs."
+    },
+    "measurement_context": {
+      "type": "object",
+      "description": "Context for stage/composition measurements such as profiling mode, runtime, cache policy, sample count, and stage-open method.",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      }
+    },
+    "runtime_profiling": {
+      "type": "object",
+      "description": "Optional handoff section for runtime performance profiling. Use Omniperf or an equivalent runtime profiler for RAM, VRAM, FPS, frame time, renderer, shader, and GPU metrics instead of folding them into the Stage Optimization Score.",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["not_run", "external", "attached"]
+        },
+        "recommended_tool": { "type": "string" },
+        "dashboard_url": { "type": ["string", "null"] },
+        "artifact_path": { "type": ["string", "null"] },
+        "summary": { "type": "string" },
+        "caveat": { "type": "string" }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "description": "Report artifact paths generated from this JSON source of truth.",
+      "required": ["json", "markdown", "html"],
+      "additionalProperties": false,
+      "properties": {
+        "json": { "type": "string" },
+        "markdown": { "type": "string" },
+        "html": { "type": "string" }
+      }
+    },
+    "metric_groups": {
+      "type": "array",
+      "description": "Headline stage/composition impact areas for score cards. Runtime metrics should live under runtime_profiling, not as score groups.",
+      "items": {
+        "type": "object",
+        "required": ["id", "display_name", "score", "status", "weight", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["load_time", "composition", "instancing", "storage_proxy", "structure_proxy", "validation", "other"]
+          },
+          "display_name": { "type": "string" },
+          "score": {
+            "type": ["number", "null"],
+            "minimum": 0,
+            "maximum": 10
+          },
+          "status": {
+            "type": "string",
+            "enum": ["measured", "proxy", "not_measured"]
+          },
+          "weight": {
+            "type": "number",
+            "description": "Relative weight for deterministic top-level score computation. Any non-negative scale is allowed as long as all scored groups in the report use the same scale; groups with score=null or weight=0 are excluded."
+          },
+          "summary": { "type": "string" },
+          "caveat": { "type": "string" }
+        }
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "before", "after", "change_pct", "verdict"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "display_name": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": ["load_time", "composition", "instancing", "storage_proxy", "structure_proxy", "validation", "other"]
+          },
+          "unit": { "type": "string" },
+          "direction": {
+            "type": "string",
+            "enum": ["lower_is_better", "higher_is_better"]
+          },
+          "evidence_type": {
+            "type": "string",
+            "enum": ["direct", "proxy"]
+          },
+          "before": { "type": "number" },
+          "after": { "type": "number" },
+          "change_pct": { "type": "number" },
+          "verdict": {
+            "type": "string",
+            "enum": ["improved", "neutral", "regressed"]
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["order", "name", "method", "result"],
+        "additionalProperties": false,
+        "properties": {
+          "order": { "type": "integer" },
+          "name": { "type": "string" },
+          "method": { "type": "string" },
+          "result": { "type": "string" }
+        }
+      }
+    },
+    "validators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "issues"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "issues": {
+            "type": "integer",
+            "description": "Count of reported findings for this validator row; use notes to distinguish failures, warnings, opportunities, or follow-up candidates."
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

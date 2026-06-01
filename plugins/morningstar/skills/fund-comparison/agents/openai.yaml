@@ -1,0 +1,7 @@
+interface:
+  display_name: "Fund Comparison"
+  short_description: "Compare funds side by side"
+  icon_small: "../../assets/app-icon.png"
+  icon_large: "../../assets/app-icon.png"
+  brand_color: "#E4572E"
+  default_prompt: "Use $fund-comparison to compare VFIAX, SWPPX, and FXAIX with Morningstar data."
