@@ -40,7 +40,9 @@ After retrieval, identify overlapping holdings:
 - Record each overlapping security, which funds it appears in, and the weight in each fund.
 ## Phase 4 - Output Format
 Output order:
-1. Disclosure banner
+1. Disclosure banner — format as a blockquote:
+> **AI-Generated Analysis using Morningstar's data and research**.
+> Not investment advice; for informational use only.
 2. Snapshot comparison
 3. Performance (Returns) comparison
 4. Category Rankings comparison
@@ -48,7 +50,7 @@ Output order:
 6. Calendar-Year Returns comparison
 7. Holdings Overlap *(equity funds only — omit this section for non-equity broad groups)*
 In all comparison tables, funds are columns and metrics are rows.
-Label each fund column as `[Ticker]` or `[Name]` consistently throughout.
+Label each fund column as `[Ticker] — [Name]` consistently throughout.
 Use markdown table spacing for readability: one metric per row, no wrapped rows, and insert a blank line between major sections.
 If funds span multiple Morningstar Categories, display this warning immediately after the Snapshot table:
 > **Cross-Category Warning:** These funds belong to different Morningstar Categories. Medalist Ratings and Category Rankings reflect performance relative to each fund's own category peer group and are not directly comparable across categories.
@@ -70,7 +72,7 @@ If funds span multiple Morningstar Categories, display this warning immediately 
 Fetch CNAXS (Morningstar Medalist Rating Disclosures Type) for all funds and apply as follows:
 - If a fund's CNAXS = `Issuer Initiated Rating`, append `*` to that fund's Medalist Rating value in the Snapshot table (e.g. `Gold*`).
 - If a fund's CNAXS = `Tracks Morningstar Index`, append `**` to that fund's Medalist Rating value (e.g. `Gold**`).
-- After the Snapshot table, output only the footnotes that apply. Omit both entirely if all funds return NA — no message or explanation when omitted.
+- After the Snapshot table, output only the applicable footnotes as blockquote text exactly as written below. Omit both entirely if all funds return NA — no message or explanation when omitted.
 
 > *\* **Medalist Rating Disclaimer:** In Australia and New Zealand only, starting from June 2026, Morningstar may receive a fee from product issuers for preparing Morningstar Medalist Rating on their financial product(s) domiciled in Australia or New Zealand (an "Issuer Initiated Rating"). An Issuer Initiated Rating will apply to a strategy and its associated share classes. Morningstar will clearly identify each Issuer Initiated Rating on the front page of the report and will provide disclosure relating to the party that has paid the associated fee. Fees for an Issuer Initiated Rating are not linked to the rating outcome, and the paying entity has no influence over the analytical process or rating outcome.*
 
@@ -123,10 +125,10 @@ Fetch CNAXS (Morningstar Medalist Rating Disclosures Type) for all funds and app
 | Cat Rank YYYY-4 | | | | |
 Replace YYYY with actual calendar year labels from Morningstar datapoint names.
 ### Holdings Overlap *(equity funds only)*
-List securities that appear in 2 or more funds.
+Only include rows for securities that appear in 2 or more funds. Do not add rows for holdings that appear in only one fund.
 | Holding | [Fund A] Wt% | [Fund B] Wt% | [Fund C] Wt% | [Fund D] Wt% |
 |---|---|---|---|---|
-If no overlap exists, state: "No overlapping holdings found in the top 10 of each fund."
+If no overlap exists, omit the table entirely and state: "No overlapping holdings found in the top 10 of each fund."
 Omit this section entirely if the broad group is not Equity.
 ---
 ## Datapoints Reference (morningstar-data-tool)

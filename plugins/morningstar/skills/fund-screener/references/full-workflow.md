@@ -34,7 +34,8 @@ Required criteria:
 - Star Rating floor: 3+ / 4+ / 5 / Any
 - Max Expense Ratio: value or no filter
 - Min AUM: value or no filter
-If fields are missing, ask once for all missing fields. If user provides additional criteria include it in the screening criteria.
+
+If fields are missing, ask once for all missing fields; include a filled example reply (e.g. `"ETF, US Large Blend, Gold, 4+, max ER 0.50%, min AUM $1B, min 3-year return 10%"`). Inform users they can add extra filters beyond these defaults.
 Then show this summary and wait for `confirm`:
 ```text
 Here is the screen I will run:
@@ -94,8 +95,10 @@ Validation checks:
 - Do not create synthetic recommendation scores.
 ## Phase 6 - Output Format
 Output order:
-1. Disclosure banner
-2. Criteria used — table with one row per criterion that has an active value; omit rows where no filter was applied.
+1. Disclosure banner — format as a blockquote:
+> **AI-Generated Analysis using Morningstar's data and research**
+> Not investment advice; for informational use only.
+2. Criteria used — must be table, one row per active filter only; omit any criterion where no filter was applied:
 3. Criteria normalization notes (only when corrections/confirmations were needed)
 4. Result count and exclusions
 5. Snapshot table
@@ -117,7 +120,7 @@ If no Morningstar Category filter was applied, or if results include funds from 
 Fetch CNAXS (Morningstar Medalist Rating Disclosures Type) for all funds and apply as follows:
 - If a fund's CNAXS = `Issuer Initiated Rating`, append `*` to that fund's Medalist Rating value in the Snapshot table (e.g. `Gold*`).
 - If a fund's CNAXS = `Tracks Morningstar Index`, append `**` to that fund's Medalist Rating value (e.g. `Gold**`).
-- After the Snapshot table, output only the footnotes that apply. Omit both entirely if all funds return NA — no message or explanation when omitted.
+- After the Snapshot table, output only the applicable footnotes as blockquote text exactly as written below. Omit both entirely if all funds return NA — no message or explanation when omitted.
 
 > *\* **Medalist Rating Disclaimer:** In Australia and New Zealand only, starting from June 2026, Morningstar may receive a fee from product issuers for preparing Morningstar Medalist Rating on their financial product(s) domiciled in Australia or New Zealand (an "Issuer Initiated Rating"). An Issuer Initiated Rating will apply to a strategy and its associated share classes. Morningstar will clearly identify each Issuer Initiated Rating on the front page of the report and will provide disclosure relating to the party that has paid the associated fee. Fees for an Issuer Initiated Rating are not linked to the rating outcome, and the paying entity has no influence over the analytical process or rating outcome.*
 

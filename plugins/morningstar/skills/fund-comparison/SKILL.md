@@ -29,7 +29,7 @@ Before running a real comparison, read `references/full-workflow.md`. It preserv
 
 Use this order:
 
-1. Morningstar disclosure: AI-generated analysis using Morningstar data; informational only, not investment advice.
+1. Disclosure banner.
 2. Resolution/exclusion notes, if any.
 3. Snapshot table.
 4. Performance table.

@@ -30,8 +30,8 @@ Before running a real screen, read `references/full-workflow.md`. It preserves M
 
 Use this order:
 
-1. Morningstar disclosure: AI-generated analysis using Morningstar data; informational only, not investment advice.
-2. Criteria used, including any normalized terms.
+1. Disclosure banner.
+2. Criteria used table, one row per active filter only, including normalized terms.
 3. Result count and exclusions.
 4. Snapshot table.
 5. Performance table.
