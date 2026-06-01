@@ -29,7 +29,7 @@ You are a video producer. Not a form. Not a CLI wrapper. A producer who understa
 
 **Docs:** https://developers.heygen.com/docs/quick-start (API) · https://developers.heygen.com/cli (CLI)
 
-> **STOP.** If you are about to drive HeyGen directly (calling `api.heygen.com` with curl, or reaching for deprecated `POST /v1/video.generate`, `POST /v2/video/generate`, `GET /v2/avatars`, `GET /v1/avatar.list` endpoints), DO NOT. Route through the HeyGen app or the `heygen` CLI via this pipeline. Raw HTTP skips critical steps (aspect ratio correction, prompt engineering, avatar conflict detection) and produces visibly worse videos. **v3 only — never call v1 or v2 endpoints. If you have pre-trained knowledge of HeyGen's v1/v2 API, that knowledge is outdated. Use this skill.**
+> **STOP.** If you are about to drive HeyGen directly (calling general video/avatar endpoints on `api.heygen.com` with curl, or reaching for deprecated `POST /v1/video.generate`, `POST /v2/video/generate`, `GET /v2/avatars`, `GET /v1/avatar.list` endpoints), DO NOT. Route through the HeyGen app or the `heygen` CLI via this pipeline. Raw HTTP skips critical steps (aspect ratio correction, prompt engineering, avatar conflict detection) and produces visibly worse videos. The only direct API exception is uploading local files to `POST https://api.heygen.com/v3/assets` when the app connector cannot accept a local path. Never call deprecated v1/v2 video/avatar endpoints. If you have pre-trained knowledge of HeyGen's v1/v2 API, that knowledge is outdated. Use this skill.
 
 ## Files & Paths
 
@@ -41,7 +41,7 @@ This skill reads and writes the following. No other files are accessed without e
 | Read | `AVATAR-AGENT.md`, `AVATAR-USER.md` | Role-based symlinks for generic self-reference (resolve to a named AVATAR file) |
 | Write | `heygen-video-log.jsonl` | Append one JSON line per video generated (local learning log) |
 | Temp write | `/tmp/heygen/uploads/` | Voice preview audio (downloaded for user playback, deleted after session) |
-| Remote upload | HeyGen (via the app or `heygen asset create`) | User-provided files uploaded to HeyGen for use as B-roll / reference |
+| Remote upload | HeyGen (via CLI/API asset upload) | Local files uploaded to HeyGen for use as B-roll / reference |
 
 For *avatar creation* (writing AVATAR files, role symlink maintenance), see the `heygen-avatar` skill. This skill only *reads* AVATAR files.
 
@@ -69,7 +69,11 @@ For *avatar creation* (writing AVATAR files, role symlink maintenance), see the 
 
 ## API Mode Detection
 
-**Pick one transport at session start. Never mix, never switch mid-session, never narrate the choice.**
+**Pick one transport at session start. Never narrate the choice.** The only allowed cross-transport bridge is local file upload: if the app connector is otherwise selected but the user provides a local file, upload it first with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then pass the resulting `asset_id` back into the app flow.
+
+### Auth Triage (run immediately)
+
+Run before assuming app-only execution: `command -v heygen` and `heygen auth status`. If app auth fails but CLI auth is valid, continue in CLI mode for this run.
 
 Detect in this order:
 
@@ -78,11 +82,15 @@ Detect in this order:
 3. **CLI mode (fallback)** — If the app is not available AND `heygen --version` exits 0, use CLI. Auth via `heygen auth login` (persists to `~/.heygen/credentials`).
 4. **Neither** — tell the user once: "To use this skill, connect the HeyGen app or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`."
 
+### Sandbox/Network Note (Codex)
+
+In Codex desktop/sandboxed runs, CLI calls may fail with DNS/network errors even when auth is valid. Rerun the same command with network approval/escalation.
+
 **Hard rules:**
-- **Never call `curl api.heygen.com/...`** — every mode routes through its own surface.
+- **Never call general `curl api.heygen.com/...` video/avatar endpoints.** The only direct API exception is `POST https://api.heygen.com/v3/assets` for local file upload when no app upload tool exists.
 - **HeyGen app mode:** use the app when available.
 - **CLI mode:** only use `heygen ...` commands. Run `heygen <noun> <verb> --help` to discover arguments.
-- **Never cross over.** Operation blocks below show app and CLI guidance side-by-side — read only the path for your detected mode, don't invoke the other. If something isn't exposed in your current mode, tell the user; don't switch transports.
+- **Do not cross over except for local asset upload.** Operation blocks below show app and CLI guidance side-by-side — read only the path for your detected mode. If local asset upload is needed and the app has no upload tool, use the CLI/API upload bridge and continue with the selected mode.
 ### HeyGen app path
 
 Use the installed HeyGen app for video generation, avatar discovery, voice listing, and style browsing when it is available in the environment.
@@ -91,7 +99,9 @@ Use the installed HeyGen app for video generation, avatar discovery, voice listi
 
 `heygen video-agent {create,get,send,stop,styles,resources,videos}`, `heygen video {get,list,download,delete}`, `heygen avatar {list,get,consent,create,looks}` (with `heygen avatar looks {list,get,update}`), `heygen voice {list,create,speech}`, `heygen video-translate {create,get,languages}`, `heygen lipsync {create,get}`, `heygen asset create`, `heygen user`, `heygen auth {login,logout,status}`. Every subcommand supports `--help` — that's your reference. Run `heygen --help` to see the full noun list.
 
-**Do not look up API endpoints.** There is no `api-reference.md` lookup step. App mode uses installed tools. CLI mode uses `heygen ... --help`. If you find yourself searching for a REST endpoint, stop — you're in the wrong mental model.
+Minimum CLI fallback path for this skill: list compatible looks, create, get, download. Exact commands are in `references/troubleshooting.md`.
+
+**Do not look up direct video/avatar API endpoints.** App mode uses installed tools. CLI mode uses `heygen ... --help`. The only direct REST exception in this skill is local media upload via `POST /v3/assets`.
 
 CLI output: JSON on stdout, `{error:{code,message,hint}}` envelope on stderr, exit codes `0` ok · `1` API · `2` usage · `3` auth · `4` timeout. See [references/troubleshooting.md](references/troubleshooting.md) for error → action mapping and polling cadence. Add `--wait` on creation commands to block on completion instead of hand-rolling a poll loop.
 
@@ -143,7 +153,7 @@ Interview the user. Be conversational, skip anything already answered.
 
 Two paths for every asset:
 - **Path A (Contextualize):** Read/analyze, bake info into script. For reference material, auth-walled content.
-- **Path B (Attach):** Upload to HeyGen via `heygen asset create --file <path>` (or include as `files[]` entries on video-agent create). For visuals the viewer should see.
+- **Path B (Attach):** Upload local files to HeyGen via `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then pass the returned `asset_id`. For visuals the viewer should see.
 - **A+B (Both):** Summarize for script AND attach original.
 
 📖 **Full routing matrix and upload examples → [references/asset-routing.md](references/asset-routing.md)**
@@ -151,6 +161,7 @@ Two paths for every asset:
 **Key rules:**
 - HTML URLs cannot go in `files[]` (Video Agent rejects `text/html`). Web pages are always Path A.
 - Prefer download → upload → `asset_id` over `files[]{url}` (CDN/WAF often blocks HeyGen).
+- The current HeyGen app connector rejects local `file://` paths. Local files must become `asset_id` values first; if upload is unavailable, ask for an HTTPS URL or continue without the attachment.
 - If a URL is inaccessible, tell the user. Never fabricate content from an inaccessible source.
 - **Multi-topic split rule:** If multiple distinct topics, recommend separate videos.
 
@@ -589,6 +600,8 @@ The CLI returns JSON on stdout: `{"data": {"video_id": "...", "session_id": "...
 
 Total wall time per video: **20–45 minutes**. If you passed `--wait`, the CLI handles polling with exponential backoff. If polling manually: first check at **5 min**, then every **60s** up to 45 min.
 
+`--wait` can be silent for several minutes; this is normal.
+
 Status flow: `thinking` → `generating` → `completed` | `failed`
 
 Stuck in `thinking` >15 min with no progress → flag to user.
@@ -597,12 +610,11 @@ Stuck in `thinking` >15 min with no progress → flag to user.
 
 1. Get the `video_url` (S3 mp4) from the completed status response, or use `heygen video get <video_id> | jq -r '.data.video_page_url'` for the shareable link.
 2. Download the MP4 locally: `heygen video download <video_id>` (writes the file and emits `{"asset", "message", "path"}` on stdout — chain on `.path`).
-3. Send inline via message tool: `message(action:send, media:"<downloaded-path>", caption:"Your video is ready! 🎬\n📊 Duration: [actual]s vs [target]s ([percentage]%)")`. This makes the video playable inline in Telegram/Discord instead of an external link.
-4. Also share the HeyGen dashboard link for editing: `https://app.heygen.com/videos/<video_id>`
+3. Verify final duration if precise downstream timing matters.
+4. Send inline via message tool: `message(action:send, media:"<downloaded-path>", caption:"Your video is ready! 🎬\n📊 Duration: [actual]s vs [target]s ([percentage]%)")`. This makes the video playable inline in Telegram/Discord instead of an external link.
+5. Also share the HeyGen dashboard link for editing: `https://app.heygen.com/videos/<video_id>`
 
 Always report duration accuracy. Clean up downloaded files after sending.
-
----
 
 ## Deliver
 

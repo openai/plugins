@@ -1,0 +1,5 @@
+interface:
+  display_name: "D3 Data Visualization"
+  short_description: "Build custom data visualizations with D3"
+policy:
+  allow_implicit_invocation: false

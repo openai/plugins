@@ -64,6 +64,7 @@ Each look has an `id` — this is the `avatar_id` you pass downstream.
 Avatar types: `studio_avatar`, `video_avatar`, `photo_avatar`. Photo avatars support `motion_prompt` and `expressiveness`.
 
 **ALWAYS show the preview image** when presenting an avatar look. Each look response includes `preview_image_url` — display inline.
+Also include the look `id` and orientation (`image_width` × `image_height`) in the choice list.
 
 ### A2: Check last-used avatar
 
@@ -97,6 +98,22 @@ heygen avatar looks list --group-id <group_id> --limit 10
 ```
 
 **Why group-first:** The flat `heygen avatar looks list --ownership public` call returns 50+ results for only 3 unique people per page. Group-level browsing (2 calls) gives much better discovery UX.
+
+### A3.1: Compatibility gate (required)
+
+Before using a public look for v3 video generation, verify compatibility:
+- `supported_api_engines` must include `avatar_iv` or `avatar_v`.
+- If missing/incompatible, reject that look and continue browsing.
+
+Many public looks share duplicate names. Never identify a look by name alone. Present and confirm using:
+- name
+- look id
+- orientation
+- preview image/video URL
+
+### A3.2: Preview quality gate (required)
+
+Before spending credits, inspect `preview_image_url` or `preview_video_url` for composition/background quality. If the preview is visually off-topic for the request, propose another look even if technically compatible.
 
 ### A4: Voice direction
 

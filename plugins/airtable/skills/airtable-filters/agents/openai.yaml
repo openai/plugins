@@ -1,0 +1,4 @@
+interface:
+  display_name: "Airtable Filters"
+  short_description: "Build Airtable record filters by field type"
+  default_prompt: "Build the right Airtable filters for this query, including field IDs, select choice IDs, dates, and nested logic."

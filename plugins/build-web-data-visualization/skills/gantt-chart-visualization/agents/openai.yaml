@@ -1,0 +1,5 @@
+interface:
+  display_name: "Gantt Chart Visualization"
+  short_description: "Design and implement Gantt charts and schedule visualizations"
+policy:
+  allow_implicit_invocation: false

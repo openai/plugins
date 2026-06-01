@@ -1,0 +1,34 @@
+{
+  "name": "shutterstock",
+  "version": "1.0.0",
+  "description": "Search licensed stock images, videos, music, and creative assets",
+  "author": {
+    "name": "Shutterstock",
+    "url": "https://www.shutterstock.com"
+  },
+  "homepage": "https://www.shutterstock.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Shutterstock",
+    "shortDescription": "Search licensed stock images, videos, music, and creative assets",
+    "longDescription": "Search licensed stock images, videos, music, and creative assets",
+    "developerName": "Shutterstock",
+    "category": "Design",
+    "capabilities": [],
+    "websiteURL": "https://www.shutterstock.com",
+    "privacyPolicyURL": "https://www.shutterstock.com/privacy",
+    "termsOfServiceURL": "https://www.shutterstock.com/terms",
+    "defaultPrompt": [
+      "Search Shutterstock for hero images for this campaign and compare options.",
+      "Find Shutterstock video clips matching this storyboard and summarize choices.",
+      "Build a shortlist of Shutterstock assets for this social launch."
+    ],
+    "brandColor": "#FF6F4A",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

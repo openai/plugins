@@ -1,10 +1,10 @@
 # Connector Runtime And Safety
 
-When to read: for non-meeting structural edits, template-preserving edits, recovery, or any connector edit whose safety rules are not fully covered by a task-specific fast-path reference.
+When to read: for non-meeting structural writes, template-preserving edits, recovery, or any connector creation/edit workflow whose safety rules are not fully covered by a task-specific fast-path reference.
 
 ## Runtime Attachment
 
-1. Confirm the target working doc URL and attach to that exact doc through the available Google Docs connector/app tools; do not leave editing work on a stale or different document.
+1. Confirm the target working doc URL and attach to that exact doc through the available Google Docs connector/app tools; for connector-native creation, use the create response as the new target identity. Do not leave work on a stale or different document.
 2. This plugin runs in a blind Codex local-plugin environment. Use Google Docs connector/app tools directly for document reads and writes.
 3. Do not use code-mode bridge writes, nested Codex connector writes, browser-only edits, or local helper scripts as the normal write path for this skill.
 4. Browser Use, visible-tab checks, cursor placement, screenshots, and live browser-rendered page scans are unavailable and must not be required for success.
@@ -34,7 +34,7 @@ If the connector response is too large to reason over directly, do not invent a 
 
 ## Target-Document Invariant
 
-1. If the agent is using the Google Docs connector to modify a document, the connector-visible document id and `tabId` must match the intended target before the write happens.
+1. If the agent is using the Google Docs connector to create or modify document content, the connector-visible document id and `tabId` must match the intended target before the write happens.
 2. It is not enough that the URL was logged earlier or the title looks right.
 3. Target confirmation goes stale after source gathering, switching between documents or document tabs, connector errors, or runtime reset.
 4. Apply the target-document guard before each write batch. Re-read `reference-foreground-guard.md` only when the rule is unclear or target identity changed.
@@ -67,7 +67,7 @@ Before every connector write batch:
 5. If edits land in the wrong place, stop and re-resolve ranges instead of applying more corrective writes blindly.
 6. When a task mixes text and figures, stabilize the text structure first. Do not interleave speculative image insertion with unfinished body edits in the same area.
 7. If the connector is available, keep the text path connector-first and use only connector-supported figure insertion paths.
-8. If the connector is unavailable, this blind plugin cannot safely edit the live Google Doc. Stop and report the runtime constraint instead of inventing a browser-only fallback.
+8. If the connector is unavailable, this blind plugin cannot safely create or edit the live Google Doc. Stop and report the runtime constraint instead of inventing a browser-only fallback.
 9. Do not accept a shadow draft or external file as a substitute for editing the intended document unless the user explicitly approves that substitution.
 10. Prefer the highest-quality connector-verified stable state over the most feature-complete unverified state.
 11. For template-fill tasks, preserve the template's canonical output shape. If the destination is a table-based or form-like template, a prose rewrite in plain document form is not an acceptable fallback unless the user explicitly asked for it.

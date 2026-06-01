@@ -23,7 +23,7 @@
     "shortDescription": "Inspect models, datasets, Spaces, and research",
     "longDescription": "Connect to the Hugging Face Hub to explore Models and Datasets, access SDK Documentation and more. Manage Machine Learning Jobs and connect to thousands of AI applications via Spaces.",
     "developerName": "Hugging Face",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Read",

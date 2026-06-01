@@ -1,0 +1,5 @@
+interface:
+  display_name: "Geospatial and Cartographic Visualization"
+  short_description: "Design geospatial and cartographic visualizations"
+policy:
+  allow_implicit_invocation: false

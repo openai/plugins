@@ -1,0 +1,5 @@
+interface:
+  display_name: "Accessibility and Inclusive Visualization"
+  short_description: "Make data visualizations accessible and inclusive"
+policy:
+  allow_implicit_invocation: false

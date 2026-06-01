@@ -1,0 +1,5 @@
+interface:
+  display_name: "Scrollytelling and Parallax Data Visualization"
+  short_description: "Design parallax scrolling and scrollytelling visualizations"
+policy:
+  allow_implicit_invocation: false

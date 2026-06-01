@@ -15,10 +15,6 @@ It helps engineers evaluate a local skill or plugin, understand why it scored th
 
 The plugin is designed to feel chat-first in Codex, while still routing to explicit local commands you can run yourself.
 
-## Source
-
-This directory packages the public [`thisdot/plugin-eval`](https://github.com/thisdot/plugin-eval) project for this plugin monorepo.
-
 ## Install As A CLI Tool
 
 ### Requirements
@@ -181,7 +177,7 @@ ln -sfn /absolute/path/to/plugins/plugin-eval ~/plugins/plugin-eval
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Coding"
+      "category": "Developer Tools"
     }
   ]
 }
@@ -221,7 +217,7 @@ ln -sfn /absolute/path/to/plugins/plugin-eval /path/to/workspace/plugins/plugin-
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Coding"
+      "category": "Developer Tools"
     }
   ]
 }

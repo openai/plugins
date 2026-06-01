@@ -35,7 +35,7 @@
     "shortDescription": "Twilio Skills for building, debugging, and shipping on Twilio",
     "longDescription": "Procedural knowledge that guides AI coding agents to the right Twilio APIs for any use case. Covers channel selection, production best practices, compliance requirements, and common pitfalls across Messaging, Voice, Verify, SendGrid, and 30+ products. Skills follow a progressive disclosure architecture — your agent sees lightweight metadata at startup and loads full guidance only when a task matches.",
     "developerName": "Twilio",
-    "category": "APIs",
+    "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://www.twilio.com",
     "defaultPrompt": [

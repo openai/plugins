@@ -1,0 +1,42 @@
+{
+  "name": "rox",
+  "version": "1.0.0",
+  "description": "Access Rox revenue agents, account intelligence, and sales workflow automation from Codex.",
+  "author": {
+    "name": "Rox Data Corp",
+    "url": "https://www.rox.com"
+  },
+  "homepage": "https://www.rox.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "rox",
+    "sales",
+    "revenue",
+    "gtm",
+    "crm",
+    "account-intelligence",
+    "prospecting"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Rox",
+    "shortDescription": "Use Rox revenue agents and account intelligence from Codex.",
+    "longDescription": "Rox connects Codex to revenue agent workflows for account intelligence, prospecting, CRM context, recommended actions, and sales workflow automation.",
+    "developerName": "Rox Data Corp",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://www.rox.com",
+    "privacyPolicyURL": "https://www.rox.com/privacy-policy",
+    "termsOfServiceURL": "https://www.rox.com/terms-and-conditions",
+    "brandColor": "#101010",
+    "defaultPrompt": [
+      "Find Rox account insights for this customer and summarize recommended next actions.",
+      "Use Rox to identify high-priority accounts with recent buying signals.",
+      "Draft a follow-up plan from Rox account activity and meeting context."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  }
+}

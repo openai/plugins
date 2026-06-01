@@ -202,6 +202,11 @@ function parseBlock(lines, startIndex, indent) {
   return { value: container, nextIndex: index };
 }
 
+export function parseYamlDocument(yamlText) {
+  const normalized = yamlText.replace(/\r\n/g, "\n");
+  return parseBlock(normalized.split("\n"), 0, 0).value;
+}
+
 export function extractFrontmatter(markdown) {
   const normalized = markdown.replace(/\r\n/g, "\n");
   const lines = normalized.split("\n");
@@ -240,7 +245,7 @@ export function parseFrontmatter(markdown) {
   }
 
   try {
-    const parsed = parseBlock(extracted.frontmatterText.split("\n"), 0, 0).value;
+    const parsed = parseYamlDocument(extracted.frontmatterText);
     return {
       data: parsed,
       body: extracted.body,

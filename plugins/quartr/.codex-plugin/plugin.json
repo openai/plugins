@@ -18,14 +18,17 @@
     "category": "Research",
     "capabilities": [],
     "defaultPrompt": [
-      "Find the latest relevant Quartr materials"
+      "Find the latest relevant Quartr materials for a company.",
+      "Compare recurring analyst question themes from the last two earnings calls for a company.",
+      "Pull recent earnings transcripts and filings for a company and summarize forward-looking statements."
     ],
     "screenshots": [],
     "websiteURL": "https://quartr.com",
     "privacyPolicyURL": "https://quartr.com/terms-of-service/privacy-policy",
     "termsOfServiceURL": "https://quartr.com/terms-of-service",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "brandColor": "#000000"
   },
   "homepage": "https://quartr.com"
 }

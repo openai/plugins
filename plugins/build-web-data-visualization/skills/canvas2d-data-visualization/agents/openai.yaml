@@ -1,0 +1,5 @@
+interface:
+  display_name: "Canvas2D Data Visualization"
+  short_description: "Render data visualizations with Canvas2D"
+policy:
+  allow_implicit_invocation: false

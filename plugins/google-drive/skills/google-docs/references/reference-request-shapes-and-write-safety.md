@@ -73,9 +73,11 @@ Google Docs accepts at most 10 `insertPerson` requests in one `batchUpdate` call
 
 Use `documents.get` as the source of truth for structure. It exposes connector-visible tabs, body content, paragraph elements, tables, inline objects, lists, text styles, paragraph styles, supported smart chips, headers, footers, footnotes, and revision ids.
 
-Use `documents.batchUpdate` as the write primitive for native Google Docs edits. It validates the request batch before applying it, applies valid batches atomically, and supports `writeControl` for concurrency-sensitive writes.
+Use `mcp__codex_apps__google_drive._create_file` to create blank or basic native Google Docs when `reference-native-create-direct.md` selects the connector-native route.
 
-Use Drive APIs around Docs edits when they fit the task:
+Use `documents.batchUpdate` as the write primitive for native Google Docs content writes. It validates the request batch before applying it, applies valid batches atomically, and supports `writeControl` for concurrency-sensitive writes.
+
+Use Drive APIs around Docs operations when they fit the task:
 
 - `files.copy` for whole-document template duplication when exact global template parity matters
 - `files.export` to `text/html`, `.docx`, or `application/pdf` for verification and handoff when the task is layout-sensitive, table-heavy, figure-heavy, style-ambiguous, or explicitly requests an export.

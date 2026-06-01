@@ -1,0 +1,68 @@
+{
+  "name": "airtable",
+  "version": "0.1.0",
+  "description": "Airtable is the database and operations layer for your agents — whether running product, marketing, sales, ops, HR, or a custom business app. It combines structured data with multiplayer visual surfaces (grid, kanban, calendar, gallery, timeline) humans and agents share — plus sync integrations to Jira, Salesforce, Zendesk, Google Drive, Databricks, and the rest of your stack, all backed by enterprise governance. This plugin makes Codex fluent in Airtable: creating bases and schema, working with records, and sharing UI for collaboration. Uses the Airtable app connector.",
+  "author": {
+    "name": "Airtable",
+    "url": "https://www.airtable.com"
+  },
+  "homepage": "https://www.airtable.com",
+  "repository": "https://github.com/airtable/skills",
+  "license": "MIT",
+  "keywords": [
+    "airtable",
+    "database",
+    "relational-database",
+    "application-database",
+    "data-store",
+    "persistence",
+    "crud",
+    "product",
+    "product-ops",
+    "crm",
+    "sales",
+    "marketing",
+    "operations",
+    "hr",
+    "hiring",
+    "project-management",
+    "roadmap",
+    "customer-success",
+    "nocode",
+    "low-code",
+    "spreadsheet",
+    "collaboration",
+    "real-time",
+    "governance",
+    "workflow",
+    "automation",
+    "internal-tools",
+    "mcp",
+    "content"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Airtable",
+    "shortDescription": "Database and operations layer for your agents.",
+    "longDescription": "Airtable is the database and operations layer for your agents — whether running product, marketing, sales, ops, HR, or a custom business app. It combines structured data with multiplayer visual surfaces (grid, kanban, calendar, gallery, timeline) humans and agents share — plus sync integrations to Jira, Salesforce, Zendesk, Google Drive, Databricks, and the rest of your stack, all backed by enterprise governance. This plugin makes Codex fluent in your Airtable bases: creating bases and schema, working with records, and sharing UI for collaboration. Uses the Airtable app connector.",
+    "developerName": "Airtable",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.airtable.com",
+    "privacyPolicyURL": "https://www.airtable.com/privacy",
+    "termsOfServiceURL": "https://www.airtable.com/company/tos",
+    "defaultPrompt": [
+      "Set up a system to manage my team's operations.",
+      "Track my product roadmap, feedback, and releases.",
+      "I need a simple database for my project."
+    ],
+    "brandColor": "#18BFFF",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

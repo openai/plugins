@@ -34,7 +34,7 @@ Use this table when translating examples from `https://slides.googleapis.com/$di
 | Request typing | Discovery enumerates the `Request` union and field schemas. | MCP metadata exposes `requests: object[]`. | Missing request-specific MCP typing is not evidence of unsupported request types. |
 | Local images | REST image fields require public URLs such as `url` or `imageUrl`. | Connector adds `image_uris` for local/generated image bytes. | Use `image_uris` only at wrapper level when passing local files. |
 | Response | Discovery defines `BatchUpdatePresentationResponse`. | MCP return shape is connector-specific and not documented like discovery. | Verify important writes with connector readback and thumbnails. |
-| File lifecycle | Slides REST focuses on presentation content APIs. | `_create_file` and `_update_file` are Drive file operations exposed in the same connector namespace. | Use Drive operations for create/rename/move; use `_batch_update_presentation` for slide content edits. |
+| File lifecycle | Slides REST focuses on presentation content APIs. | `_create_file`, `_copy_file`, and `_update_file` are Drive file operations exposed in the same connector namespace. | Use Drive operations for create/copy/rename/move; use `_batch_update_presentation` for slide content edits. |
 
 ## Method Catalog
 
@@ -47,6 +47,7 @@ Use this table when translating examples from `https://slides.googleapis.com/$di
 | `_get_presentation_tables` | Read table structures and cell text with coordinates. | Connector convenience over table page elements in `presentations.get`. | Use for table inspection before table edits. |
 | `_batch_update_presentation` | Apply Google Slides batchUpdate requests. | Maps to `presentations.batchUpdate`. | Outer wrapper differs; inner `requests[]` follows official REST shape. |
 | `_create_file` | Create a native Google Workspace file. | Drive file creation, not a Slides REST method. | For Slides, use only `mime_type = application/vnd.google-apps.presentation`. |
+| `_copy_file` | Copy an existing Drive file, including a native Google Slides deck. | Drive `files.copy`, not a Slides REST method. | Use for new decks from a provided native Slides template or reference deck, then read back the copy before batch updates. |
 | `_update_file` | Rename or move a Drive file. | Drive metadata/parents update, not a Slides REST method. | Use for deck rename/move only; not presentation content edits. |
 
 ## Method Schemas
@@ -177,6 +178,22 @@ Use this table when translating examples from `https://slides.googleapis.com/$di
 
 - Model notes: Use for Drive metadata/parent operations only. Do not use for slide content updates.
 
+### `_copy_file`
+
+- Purpose: Copy a Drive file; scoped here to copying a native Google Slides template or reference deck before editing.
+- Official mapping: Drive files.copy, not Slides discovery.
+- Input schema:
+
+```ts
+{
+  "url": string,
+  "new_title"?: string | null,
+  "parent_folder"?: string | null
+}
+```
+
+- Model notes: Use this when the user supplies a native Google Slides deck and asks for a new deck following that deck's format. Read back the copied deck and use the copied deck's presentation id, slide object ids, layout ids, and revision id for all later writes. Never write to the source deck.
+
 ## Connector Differences From Official Slides Discovery
 
 | Area | Official discovery | Google Drive MCP | Model consequence |
@@ -188,7 +205,7 @@ Use this table when translating examples from `https://slides.googleapis.com/$di
 | Image bytes | Image requests use public URL fields such as `url` or `imageUrl`. | Adds connector-only `image_uris` sidecar for local/generated images. | Pair local image placeholders with `image_uris`; raw Slides REST cannot do this. |
 | Auth/scopes | Discovery lists OAuth scopes. | Connector manages auth. | Models should not request bearer tokens. |
 | Response schema | `BatchUpdatePresentationResponse` has `presentationId`, `replies`, `writeControl`. | Tool metadata does not expose a comparable return schema. | Treat return shape as connector-specific; verify by readback. |
-| File lifecycle | Slides discovery covers presentation get/create/batchUpdate. | `_create_file` and `_update_file` are Drive operations included for deck create/rename/move. | Do not confuse Drive metadata updates with slide content updates. |
+| File lifecycle | Slides discovery covers presentation get/create/batchUpdate. | `_create_file`, `_copy_file`, and `_update_file` are Drive operations included for deck create/copy/rename/move. | Do not confuse Drive file creation/copy/metadata updates with slide content updates. |
 
 ## Batch Update Wrapper
 

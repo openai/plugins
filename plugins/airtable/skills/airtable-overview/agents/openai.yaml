@@ -1,0 +1,4 @@
+interface:
+  display_name: "Airtable Overview"
+  short_description: "Explain Airtable bases, tables, fields, records, views, and interfaces"
+  default_prompt: "Explain how Airtable structures data and which Airtable concepts apply to this task."

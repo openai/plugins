@@ -69,6 +69,61 @@ Video Agent rejects `text/html` content type in the `files[]` array. Web pages (
 
 ---
 
+## Local File Paths Rejected by App Connector
+
+**Symptom:** Photo/avatar creation fails with an error saying the connector rejected a local photo path or only accepts HTTPS image URLs / existing HeyGen `asset_id` values.
+
+**Root Cause:** The current HeyGen app connector does not expose asset upload. It cannot consume `file://`, absolute local paths, or Codex attachment paths directly.
+
+**Fix:** Upload the local file with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then call the app/CLI creation flow with `{ "type": "asset_id", "asset_id": "<uploaded_asset_id>" }`. If upload is unavailable, ask for an HTTPS URL or continue with prompt-only creation.
+
+---
+
+## App Auth Broken, CLI Auth Works
+
+**Symptom:** App/MCP calls fail with token invalid/expired errors, while CLI commands work on the same machine.
+
+**Fix:** Run:
+```bash
+command -v heygen
+heygen auth status
+```
+If CLI auth is valid, continue in CLI mode for the current run.
+
+---
+
+## Authenticate Button Loop After Browser Success
+
+**Symptom:** User completes browser auth successfully, returns to Codex, but chat still shows `Authenticate` and repeated clicks do not resolve.
+
+**Root Cause:** Connector/session state in the current chat did not refresh after OAuth callback.
+
+**Fix:** Start a new chat session and reconnect the HeyGen app. Then rerun:
+```bash
+command -v heygen
+heygen auth status
+```
+
+---
+
+## Sandbox DNS/Network Failures in Codex
+
+**Symptom:** CLI commands fail with DNS/network errors despite valid auth.
+
+**Root Cause:** Network-restricted sandbox execution.
+
+**Fix:** Rerun the same command with network approval/escalation.
+
+---
+
+## CLI Telemetry Noise in Sandboxed Runs
+
+**Symptom:** Analytics/telemetry DNS warnings (for example PostHog) clutter command output.
+
+**Fix:** If supported by the installed CLI version, disable analytics for agent runs to reduce noise. If not supported, ignore telemetry warnings unless command exit status indicates failure.
+
+---
+
 ## Avatar Not Ready for Video Generation
 
 **Symptom:** Video generation fails or produces errors immediately after creating a new avatar. The avatar exists in the HeyGen dashboard but videos referencing it fail.

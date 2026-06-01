@@ -1,0 +1,5 @@
+interface:
+  display_name: "Node-Link and Diagram Layout"
+  short_description: "Choose layout strategies for node-link diagrams"
+policy:
+  allow_implicit_invocation: false

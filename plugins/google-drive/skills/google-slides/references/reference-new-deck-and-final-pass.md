@@ -24,9 +24,10 @@ Use every available relevant source before creating or finalizing the deck: web,
 3. Confirm requested content, charts, images, and tables are present.
 4. Confirm editable Google Slides components exist with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`.
 5. Do not accept a deck made of slide-sized PNG screenshots unless the user explicitly requested image-only slides.
-6. Confirm no placeholder text, duplicate scaffolding, skipped slides, or mixed old/new state remains.
+6. Confirm no placeholder text, generic editor prompts, sample copy, duplicate scaffolding, skipped slides, or mixed old/new state remains.
 7. For visible changes, verify fresh thumbnails after the final write.
 8. Distinguish connector-verified facts from visual properties that could not be verified.
+9. For copied template/reference decks, confirm the final deck still uses the template structure: existing placeholders and reusable content objects are populated or intentionally removed, primary content is not carried by unjustified new freeform boxes, and any newly created object IDs are accounted for by the slide plan. This requires full `get_presentation` readback or `get_slide` readback for every delivered slide; `get_presentation_outline` alone is not enough.
 
 ## Output
 

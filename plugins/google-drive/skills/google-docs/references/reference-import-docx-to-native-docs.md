@@ -5,9 +5,10 @@ description: Import a local DOCX as a native Google Docs document.
 
 # Import DOCX To Native Google Docs
 
-When to read: after creating or locating a local `.docx` file that should become a native Google Docs document.
+When to read: after Default Routing selects DOCX-first creation, or after creating or locating a local `.docx` file that should become a native Google Docs document.
 
-For new Google Docs creation, create the local document with the `[@documents](plugin://documents@openai-primary-runtime)` plugin first, explicitly selecting the `google_docs_default` design preset unless the user asked for a special, branded, or highly polished visual treatment, then follow this import path.
+This is the polished or complex creation path. Do not use it for blank Google Docs or basic native docs that can be created directly through `reference-native-create-direct.md`.
+For DOCX-first Google Docs creation, create the local document with the `[@documents](plugin://documents@openai-primary-runtime)` plugin first, explicitly selecting the `google_docs_default` design preset unless the user asked for a special, branded, or highly polished visual treatment, then follow this import path.
 
 ## Native Conversion
 

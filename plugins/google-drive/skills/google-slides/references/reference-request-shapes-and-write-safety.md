@@ -24,6 +24,7 @@ Good:
 2. Use object IDs from the live slide state.
 3. For new objects, use valid Google Slides IDs: 5-50 characters, starting with an alphanumeric character or underscore.
 4. If creating a slide and editing placeholders in one batch, create valid placeholder ID mappings first and reference those IDs later in the same batch.
+5. For template/reference-deck work, build a slot map from the live slide state before creating new page elements. Prefer existing placeholder, text, image, chart, and table object IDs over new object IDs for primary content.
 
 ## Geometry Safety
 
@@ -38,3 +39,10 @@ Good:
 1. Before deleting, replacing, or rewriting multiple slides, state or record exactly which slides and objects will change.
 2. Preserve slide order, titles, notes, charts, source evidence, and unrelated elements unless the user asked to change them.
 3. Do not layer new charts or images over stale placeholders. Delete or replace the obsolete object once the target is grounded.
+
+## New Object Restraint
+
+1. Do not use `createShape` or `createImage` as the default way to add primary content to a copied template/reference slide.
+2. First look for an existing editable slot: a placeholder, text box, image frame, chart frame, table cell, or reusable non-placeholder object from the exemplar slide.
+3. If the chosen slide lacks a suitable slot, choose a different exemplar/layout or split the content before adding freeform primary content.
+4. When a new object is necessary, record its object ID and reason, keep it aligned to the selected slide pattern, and verify that no existing content-bearing placeholder or template scaffold was bypassed.

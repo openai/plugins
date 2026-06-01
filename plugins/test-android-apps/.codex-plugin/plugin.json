@@ -30,7 +30,7 @@
     "shortDescription": "Reproduce issues, inspect UI, and capture performance evidence from Android emulators",
     "longDescription": "Use Test Android Apps to build and install app variants, drive a booted Android emulator with adb input events, inspect UI trees, capture screenshots, collect logcat output, and gather Simpleperf, Perfetto, gfxinfo, or memory/leak evidence while reproducing issues.",
     "developerName": "OpenAI",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Read"

@@ -69,6 +69,77 @@ Video Agent rejects `text/html` content type in the `files[]` array. Web pages (
 
 ---
 
+## Local File Paths Rejected by App Connector
+
+**Symptom:** Video creation fails or a `files[]` attachment is rejected because the connector won't accept a local file path or `file://` URL for B-roll, reference images, or screen captures.
+
+**Root Cause:** The current HeyGen app connector does not expose asset upload. It cannot consume `file://`, absolute local paths, or Codex attachment paths directly. `files[]` only accepts hosted HTTPS URLs or existing HeyGen `asset_id` values.
+
+**Fix:** Upload the local file with `heygen asset create --file <path>` or `POST https://api.heygen.com/v3/assets`, then pass `{ "type": "asset_id", "asset_id": "<uploaded_asset_id>" }` (or the bare `asset_id` string where required) into the video-agent `files[]` array. If upload is unavailable, ask for an HTTPS URL or continue without the visual attachment.
+
+---
+
+## App Auth Broken, CLI Auth Works
+
+**Symptom:** App/MCP calls fail with token invalid/expired errors, while CLI commands work on the same machine.
+
+**Fix:** Run auth triage immediately:
+```bash
+command -v heygen
+heygen auth status
+```
+If CLI auth is valid, continue in CLI mode for the current run.
+
+---
+
+## Authenticate Button Loop After Browser Success
+
+**Symptom:** User completes browser auth successfully, returns to Codex, but chat still shows `Authenticate` and repeated clicks do not resolve.
+
+**Root Cause:** Connector/session state in the current chat did not refresh after OAuth callback.
+
+**Fix:** Start a new chat session and reconnect the HeyGen app. Then rerun auth triage:
+```bash
+command -v heygen
+heygen auth status
+```
+
+---
+
+## Sandbox DNS/Network Failures in Codex
+
+**Symptom:** CLI commands fail with DNS/network errors despite valid auth.
+
+**Root Cause:** Network-restricted sandbox execution.
+
+**Fix:** Rerun the same command with network approval/escalation.
+
+---
+
+## Public Avatar Looks Listed But Video Creation Fails
+
+**Symptom:** A public look appears selectable but `video create` fails with compatibility errors (for example, unsupported Avatar IV generation).
+
+**Fix:** Before use, require `supported_api_engines` to include `avatar_iv` or `avatar_v`.
+
+---
+
+## Duplicate Public Names Cause Wrong Avatar Selection
+
+**Symptom:** Multiple looks share the same display name (`Madison`, `Alyssa`, etc.), leading to accidental selection.
+
+**Fix:** Confirm by name + look id + orientation + preview URL. Never pick by name alone.
+
+---
+
+## Long Silent Period During `--wait`
+
+**Symptom:** `heygen video create --wait` appears stuck with little/no stdout for minutes.
+
+**Fix:** Silence is expected. Keep waiting, or switch to submit+poll mode (`create` then `get`) if progress feedback is required.
+
+---
+
 ## Avatar Not Ready for Video Generation
 
 **Symptom:** Video generation fails or produces errors immediately after creating a new avatar. The avatar exists in the HeyGen dashboard but videos referencing it fail.

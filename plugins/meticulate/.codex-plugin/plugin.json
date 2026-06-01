@@ -1,0 +1,29 @@
+{
+  "name": "meticulate",
+  "version": "1.0.0",
+  "description": "Company matching, firmographic lookup, and go-to-market account intelligence",
+  "author": {
+    "name": "Meticulate"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Meticulate",
+    "developerName": "Meticulate",
+    "shortDescription": "Company matching, firmographic lookup, and go-to-market account intelligence",
+    "longDescription": "Company matching, firmographic lookup, and go-to-market account intelligence",
+    "category": "Productivity",
+    "capabilities": [],
+    "brandColor": "#7000D8",
+    "defaultPrompt": [
+      "Search Meticulate for companies matching this ICP and summarize the strongest fits.",
+      "Look up a company by SFDC account ID and fetch its firmographic summary.",
+      "Find companies similar to this seed company and explain why they are good lookalikes."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}

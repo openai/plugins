@@ -24,8 +24,9 @@
     "defaultPrompt": [
       "Show me last year's orders by status"
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "brandColor": "#F686AC",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
   }
 }

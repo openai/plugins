@@ -5,7 +5,7 @@ description: Verify native Google Docs layout by exporting to PDF, rasterizing e
 
 # PDF Export Visual QA
 
-When to read: before final handoff for layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable Google Docs edits.
+When to read: before final handoff for layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable Google Docs work.
 
 ## Critical Invariant
 
@@ -18,11 +18,11 @@ When Google Drive PDF export and local PDF page rasterization are available, use
 Run this workflow when any of these apply:
 
 1. the user asked for a final Google Docs deliverable rather than a rough draft
-2. the edit changed tables, figures, images, headers, footers, section breaks, page setup, or dense multi-section content
+2. the work changed tables, figures, images, headers, footers, section breaks, page setup, or dense multi-section content
 3. the document is presentation-oriented, polished, executive-facing, or design-sensitive
 4. HTML export or connector metadata suggests possible density, width, clipping, overlap, or page-break risk
 
-For narrow text-only edits in an existing document, connector readback plus targeted range verification can be enough. Do not overstate that as visual QA.
+For narrow text-only edits or basic connector-native docs, connector readback plus targeted range verification can be enough. Do not overstate that as visual QA.
 
 ## Workflow
 

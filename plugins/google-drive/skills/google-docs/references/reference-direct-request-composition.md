@@ -1,11 +1,12 @@
 # Direct Request Composition
 
-When to read: before writing non-meeting Google Docs connector `batchUpdate` requests directly.
+When to read: before writing non-meeting Google Docs connector `batchUpdate` requests directly, including content writes into connector-created basic docs.
 
 ## Contents
 
 - Objective
 - Calendar-Backed Meeting Notes
+- Connector-Created Basic Docs
 - What To Extract From `get_document`
 - Index Rules
 - Connector Call Shape
@@ -28,7 +29,7 @@ API basis:
 
 Use this process:
 
-1. Read the destination with the connector.
+1. Read the destination with the connector. If the destination was just created by `mcp__codex_apps__google_drive._create_file`, this read establishes the body index, `tabId`, and revision state before content writes.
 2. Extract only the relevant structure into short working notes.
 3. Build a small index ledger for the intended insertion or replacement.
 4. Call `mcp__codex_apps__google_drive._batch_update_document` with structured `requests` objects.
@@ -37,6 +38,10 @@ Use this process:
 ## Calendar-Backed Meeting Notes
 
 For calendar-backed Meeting notes blocks, read `reference-meeting-notes-direct.md` instead of this file. That reference owns the event lookup, Meeting notes shape, empty placeholders, attendee chips, declined-attendee styling, and fast verification rules.
+
+## Connector-Created Basic Docs
+
+For blank or basic new Google Docs, read `reference-native-create-direct.md` first. Use this file only when that new document needs content inserted with direct `batchUpdate` requests.
 
 ## What To Extract From `get_document`
 

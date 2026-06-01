@@ -1,0 +1,5 @@
+interface:
+  display_name: "Reports, PDFs, and Slide Automation"
+  short_description: "Lay out and export data-rich reports and documents"
+policy:
+  allow_implicit_invocation: false

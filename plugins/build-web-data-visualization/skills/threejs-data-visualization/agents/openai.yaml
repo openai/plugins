@@ -1,0 +1,5 @@
+interface:
+  display_name: "Three.js and WebGL Data Visualization"
+  short_description: "Render WebGL-accelerated data visualizations"
+policy:
+  allow_implicit_invocation: false

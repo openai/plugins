@@ -15,7 +15,7 @@
     "shortDescription": "Manage your Quicknode infrastructure directly in OpenAI.",
     "longDescription": "Manage your Quicknode infrastructure directly in OpenAI. Create and manage endpoints, monitor logs and usage, configure security and rate limits, and review billing from one conversation.",
     "developerName": "Quicknode",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [],
     "defaultPrompt": [
       "Use QuickNode to inspect the relevant chain data"

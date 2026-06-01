@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { parseFrontmatter } from "../lib/frontmatter.js";
+import { parseFrontmatter, parseYamlDocument } from "../lib/frontmatter.js";
 import { isDirectory, isProbablyTextFile, pathExists, readJson, readText, relativePath, walkFiles } from "../lib/files.js";
 import { estimateTokenCount, sumTokenCounts } from "../lib/tokens.js";
 
@@ -54,14 +54,38 @@ async function computeDeferredComponents(rootPath, excludeFiles = []) {
   return components;
 }
 
+async function readInvocationPolicy(rootPath) {
+  const policyPath = path.join(rootPath, "agents", "openai.yaml");
+  if (!(await pathExists(policyPath))) {
+    return {
+      allowImplicitInvocation: true,
+      path: null,
+    };
+  }
+
+  try {
+    const parsed = parseYamlDocument(await readText(policyPath));
+    return {
+      allowImplicitInvocation: parsed?.policy?.allow_implicit_invocation !== false,
+      path: policyPath,
+    };
+  } catch {
+    return {
+      allowImplicitInvocation: true,
+      path: policyPath,
+    };
+  }
+}
+
 export async function computeSkillBudget(skillRoot) {
   const skillPath = path.join(skillRoot, "SKILL.md");
   const content = await readText(skillPath);
   const parsed = parseFrontmatter(content);
   const name = parsed.data?.name || path.basename(skillRoot);
   const description = parsed.data?.description || "";
+  const invocationPolicy = await readInvocationPolicy(skillRoot);
 
-  const triggerComponents = [
+  const triggerComponents = invocationPolicy.allowImplicitInvocation ? [
     createComponent("skill-name", skillPath, estimateTokenCount(name), "Always-loaded skill identifier"),
     createComponent(
       "skill-description",
@@ -69,7 +93,7 @@ export async function computeSkillBudget(skillRoot) {
       estimateTokenCount(description),
       "Always-loaded trigger description",
     ),
-  ];
+  ] : [];
 
   const invokeComponents = [
     createComponent("skill-file", skillPath, estimateTokenCount(content), "Loaded when the skill is invoked"),
@@ -79,6 +103,11 @@ export async function computeSkillBudget(skillRoot) {
 
   return {
     kind: "skill",
+    method: invocationPolicy.allowImplicitInvocation ? "estimated-static" : "estimated-static-policy-aware",
+    invocation_policy: {
+      allow_implicit_invocation: invocationPolicy.allowImplicitInvocation,
+      ...(invocationPolicy.path ? { path: invocationPolicy.path } : {}),
+    },
     trigger_cost_tokens: {
       value: sumTokenCounts(triggerComponents),
       components: triggerComponents,
@@ -119,6 +148,9 @@ export async function computePluginBudget(pluginRoot, manifest) {
   const invokeComponents = [
     createComponent("plugin-manifest", manifestPath, estimateTokenCount(manifestContent), "Manifest load cost"),
   ];
+  const explicitOnlyComponents = [];
+  const implicitSkills = [];
+  const explicitOnlySkills = [];
 
   for (const skillDir of skillDirs) {
     const skillPath = path.join(skillDir, "SKILL.md");
@@ -127,22 +159,38 @@ export async function computePluginBudget(pluginRoot, manifest) {
     }
     const content = await readText(skillPath);
     const parsed = parseFrontmatter(content);
-    triggerComponents.push(
-      createComponent(
-        `${path.basename(skillDir)}-description`,
-        skillPath,
-        estimateTokenCount(parsed.data?.description || ""),
-        "Skill trigger description exposed through the plugin",
-      ),
-    );
-    invokeComponents.push(
-      createComponent(
-        `${path.basename(skillDir)}-skill-file`,
-        skillPath,
-        estimateTokenCount(content),
-        "Skill invocation cost ceiling",
-      ),
-    );
+    const skillName = path.basename(skillDir);
+    const invocationPolicy = await readInvocationPolicy(skillDir);
+
+    if (invocationPolicy.allowImplicitInvocation) {
+      implicitSkills.push(skillName);
+      triggerComponents.push(
+        createComponent(
+          `${skillName}-description`,
+          skillPath,
+          estimateTokenCount(parsed.data?.description || ""),
+          "Skill trigger description exposed through the plugin",
+        ),
+      );
+      invokeComponents.push(
+        createComponent(
+          `${skillName}-skill-file`,
+          skillPath,
+          estimateTokenCount(content),
+          "Implicit skill invocation cost ceiling",
+        ),
+      );
+    } else {
+      explicitOnlySkills.push(skillName);
+      explicitOnlyComponents.push(
+        createComponent(
+          `${skillName}-skill-file`,
+          skillPath,
+          estimateTokenCount(content),
+          "Explicit-only skill file; excluded from implicit trigger/invoke budget",
+        ),
+      );
+    }
   }
 
   const deferredComponents = await computeDeferredComponents(pluginRoot, [
@@ -152,6 +200,13 @@ export async function computePluginBudget(pluginRoot, manifest) {
 
   return {
     kind: "plugin",
+    method: explicitOnlySkills.length > 0 ? "estimated-static-policy-aware" : "estimated-static",
+    invocation_policy: {
+      implicit_skill_count: implicitSkills.length,
+      explicit_only_skill_count: explicitOnlySkills.length,
+      implicit_skills: implicitSkills,
+      explicit_only_skills: explicitOnlySkills,
+    },
     trigger_cost_tokens: {
       value: sumTokenCounts(triggerComponents),
       components: triggerComponents,
@@ -163,6 +218,10 @@ export async function computePluginBudget(pluginRoot, manifest) {
     deferred_cost_tokens: {
       value: sumTokenCounts(deferredComponents),
       components: deferredComponents,
+    },
+    explicit_only_invoke_cost_tokens: {
+      value: sumTokenCounts(explicitOnlyComponents),
+      components: explicitOnlyComponents,
     },
   };
 }
@@ -226,12 +285,21 @@ export function applyBudgetBands(rawBudget, baseline) {
     profile.deferred_cost_tokens,
     rawBudget.deferred_cost_tokens.components,
   );
+  const explicitOnly = rawBudget.explicit_only_invoke_cost_tokens
+    ? buildBudgetBucket(
+        rawBudget.explicit_only_invoke_cost_tokens.value,
+        profile.invoke_cost_tokens,
+        rawBudget.explicit_only_invoke_cost_tokens.components,
+      )
+    : null;
   const total = trigger.value + invoke.value + deferred.value;
   return {
-    method: "estimated-static",
+    method: rawBudget.method || "estimated-static",
+    ...(rawBudget.invocation_policy ? { invocation_policy: rawBudget.invocation_policy } : {}),
     trigger_cost_tokens: trigger,
     invoke_cost_tokens: invoke,
     deferred_cost_tokens: deferred,
+    ...(explicitOnly ? { explicit_only_invoke_cost_tokens: explicitOnly } : {}),
     total_tokens: {
       value: total,
       band:
