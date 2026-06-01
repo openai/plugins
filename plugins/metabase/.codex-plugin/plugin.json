@@ -26,6 +26,10 @@
     "defaultPrompt": [
       "Use Metabase to find tables related to <topic>.",
       "Use Metabase to query <table> and summarize <metric> by <dimension>."
-    ]
+    ],
+    "brandColor": "#509EE3",
+    "composerIcon": "./assets/app-icon.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
   }
 }
