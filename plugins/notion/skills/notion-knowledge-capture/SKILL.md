@@ -17,7 +17,7 @@ Convert conversations and notes into structured, linkable Notion pages for easy 
 5) Link from hub pages and related records; update status/owners with `Notion:notion-update-page` as the source evolves.
 
 ## Tool-call guardrails
-- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient, or explain the limitation.
+- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient.
 - Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed. If several query variants are useful, issue separate searches instead of writing `or` or `+` inside one query string.
 - Only pass Notion page, database, or data-source URLs/IDs to `Notion:notion-fetch`. Search can also surface external connected-source URLs; use those as context or citations, but do not feed them into `notion-fetch`.
 - Create pages with an explicit `parent` and a `pages` array. For database-backed pages, fetch the database first and use the returned `collection://...` data source ID.

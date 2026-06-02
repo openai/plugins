@@ -17,7 +17,7 @@ Convert a Notion spec into linked implementation plans, tasks, and ongoing statu
 5) Link spec ↔ plan ↔ tasks; keep status current with `Notion:notion-update-page`.
 
 ## Tool-call guardrails
-- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient, or explain the limitation.
+- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient.
 - Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed. Run separate searches for alternate phrasings instead of putting `or` in a single query string.
 - Only send Notion page, database, or data-source URLs/IDs to `Notion:notion-fetch`; external connected-source search results are not fetch targets.
 - Create plans and task pages with explicit `parent` and `pages` fields. For task databases, fetch first and use the returned `collection://...` data source ID.

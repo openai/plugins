@@ -17,7 +17,7 @@ Prep meetings by pulling Notion context, tailoring agendas/pre-reads, and enrich
 5) Enrich with Codex research (industry insights, benchmarks, risks) and update the page with `Notion:notion-update-page` as plans change.
 
 ## Tool-call guardrails
-- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient, or explain the limitation.
+- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient.
 - Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed.
 - Only fetch Notion page, database, or data-source URLs/IDs; external connected-source search results are not valid `Notion:notion-fetch` inputs.
 - Create meeting pages with an explicit `parent` and a `pages` array.
