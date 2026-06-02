@@ -39,8 +39,8 @@
       "Create a notebook exploring S&P 500 vs. Nasdaq gains over the last 5 years"
     ],
     "brandColor": "#3793EF",
-    "composerIcon": "./assets/deepnote-icon.svg",
-    "logo": "./assets/deepnote-icon.svg",
+    "composerIcon": "./assets/composer.svg",
+    "logo": "./assets/logo.svg",
     "screenshots": []
   }
 }
