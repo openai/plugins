@@ -16,6 +16,7 @@ This file is intentionally minimal and only covers:
 
 Detailed editing, formula, chart, upload, and batch-update rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
+If the user has not provided explicit style direction, read `references/style-profiles.md` and apply the appropriate Google Sheets destination default before authoring workbook formatting.
 
 ## Default Routing
 
@@ -81,3 +82,4 @@ Even though you created a local `.xlsx`, do not cite the local path in the final
 | Importing a locally created `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets | `references/reference-import-spreadsheet-to-native-sheets.md` |
 | Formula design, repair, rollout, or syntax refresh | `references/reference-formula-patterns.md` |
 | Chart creation, repair, chart-spec recall, or repositioning | `references/reference-chart-recipes.md` |
+| Unspecified styling for native Google Sheets destinations | `references/style-profiles.md` |
