@@ -15,7 +15,7 @@
     "developerName": "FactSet",
     "shortDescription": "Financial data, estimates, market analytics, and research context",
     "longDescription": "Financial data, estimates, market analytics, and research context",
-    "category": "Research",
+    "category": "Finance",
     "capabilities": [],
     "brandColor": "#182850",
     "defaultPrompt": [
