@@ -23,6 +23,8 @@ Organized into:
 ```
 Notion:notion-search
 query: "deployment documentation"
+query_type: "internal"
+filters: {}
 ```
 Found: Engineering Wiki → Deployment section
 
@@ -30,6 +32,12 @@ Found: Engineering Wiki → Deployment section
 ```
 Notion:notion-create-pages
 parent: { page_id: "deployment-section-id" }
+pages: [{
+  properties: {
+    "title": "How to Deploy to Production"
+  },
+  content: "[Structured how-to guide]"
+}]
 ```
 
 ## Output
@@ -104,9 +112,19 @@ Production deployment using GitHub Actions with zero-downtime rolling updates.
 
 ### 5. Make Discoverable
 ```
+Notion:notion-fetch
+id: "engineering-wiki-homepage"
+```
+
+```
 Notion:notion-update-page
 page_id: "engineering-wiki-homepage"
-command: "insert_content_after"
+command: "update_content"
+properties: {}
+content_updates: [{
+  old_str: "## How-To Guides",
+  new_str: "## How-To Guides\n- <mention-page url=\"...\">How to Deploy to Production</mention-page>"
+}]
 ```
 Added link in Engineering Wiki → How-To Guides section
 

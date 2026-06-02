@@ -1,10 +1,12 @@
 ---
 name: figma-create-new-file
-description: Create a new blank Figma file. Use when the user wants to create a new Figma design or FigJam file, or when you need a new file before calling use_figma. Handles plan resolution via whoami if needed. Usage — /figma-create-new-file [editorType] [fileName] (e.g. /figma-create-new-file figjam My Whiteboard)
-disable-model-invocation: true
+description: "**MANDATORY prerequisite** — you MUST invoke this skill BEFORE every `create_new_file` tool call. NEVER call `create_new_file` directly without loading this skill first. Trigger whenever the user wants a new blank Figma file — a new design, FigJam, or Slides file — or when you need a fresh file before calling `use_figma`. Usage — /figma-create-new-file [editorType] [fileName] (e.g. /figma-create-new-file figjam My Whiteboard, /figma-create-new-file slides Q3 Review)"
+disable-model-invocation: false
 ---
 
 # create_new_file — Create a New Figma File
+
+**MANDATORY: load this skill before every `create_new_file` tool call.** It encodes the plan-resolution decision tree, the editor-type contract, and the post-creation handoff to `use_figma`.
 
 Use the `create_new_file` MCP tool to create a new blank Figma file in the user's drafts folder. This is typically used before `use_figma` when you need a fresh file to work with.
 
@@ -12,13 +14,14 @@ Use the `create_new_file` MCP tool to create a new blank Figma file in the user'
 
 This skill accepts optional arguments: `/figma-create-new-file [editorType] [fileName]`
 
-- **editorType**: `design` (default) or `figjam`
+- **editorType**: `design` (default), `figjam`, or `slides`
 - **fileName**: Name for the new file (defaults to "Untitled")
 
 Examples:
 - `/figma-create-new-file` — creates a design file named "Untitled"
 - `/figma-create-new-file figjam My Whiteboard` — creates a FigJam file named "My Whiteboard"
 - `/figma-create-new-file design My New Design` — creates a design file named "My New Design"
+- `/figma-create-new-file slides Q3 Review` — creates a Slides presentation named "Q3 Review"
 
 Parse the arguments from the skill invocation. If editorType is not provided, default to `"design"`. If fileName is not provided, default to `"Untitled"`.
 
@@ -43,7 +46,7 @@ Call the `create_new_file` tool with:
 |-------------|----------|-------------|
 | `planKey`   | Yes      | The plan key from Step 1 |
 | `fileName`  | Yes      | Name for the new file |
-| `editorType`| Yes      | `"design"` or `"figjam"` |
+| `editorType`| Yes      | `"design"`, `"figjam"`, or `"slides"` |
 
 Example:
 ```json
@@ -65,5 +68,13 @@ Use the `file_key` for subsequent tool calls like `use_figma`.
 ## Important Notes
 
 - The file is created in the user's **drafts folder** for the selected plan.
-- Only `"design"` and `"figjam"` editor types are supported.
+- Supported editor types are `"design"`, `"figjam"`, and `"slides"`.
 - If `use_figma` is your next step, load the `figma-use` skill before calling it.
+
+## Editor-specific notes
+
+### Slides — newly created files have an empty grid
+
+A `slides` file produced by this tool starts with **zero rows and zero slides** — `figma.getSlideGrid()` returns `[]`, not a default first slide. The page's only child is the `SLIDE_GRID` node itself, which is empty until you create content. The first call to `figma.createSlide()` implicitly creates row 0 and inserts the new slide there.
+
+If your follow-up `use_figma` script assumes at least one slide exists (e.g. to read theme tokens off it), guard for the empty case or call `createSlide()` first. See [figma-use-slides → slide-grid](../figma-use-slides/references/slide-grid.md) for full details.

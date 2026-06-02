@@ -1,0 +1,29 @@
+{
+  "$comment": "SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.\nSPDX-License-Identifier: Apache-2.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "USD Performance Tuning Validation Report",
+  "type": "object",
+  "required": ["schemaVersion", "stage", "validators", "summary", "findings"],
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "stage": {
+      "type": "object",
+      "required": ["identifier"],
+      "properties": {
+        "identifier": { "type": "string" },
+        "rootLayer": { "type": "string" }
+      }
+    },
+    "validators": { "type": "array", "items": { "type": "object" } },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" },
+        "errorCount": { "type": "integer" },
+        "warningCount": { "type": "integer" }
+      }
+    },
+    "findings": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}

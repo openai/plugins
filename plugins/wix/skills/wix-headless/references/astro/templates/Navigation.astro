@@ -1,0 +1,38 @@
+---
+// ── Composer skeleton: src/components/Navigation.astro ────────────────────────
+// Substitutions (see COMPOSE.md § "4. Navigation.astro"):
+//   {{shell.navBrandMark}} — brand mark / wordmark text from data.shell.
+//   {{nav.links}} — one <a href={href}>{label}</a> per entry in the inlined
+//        Navigation links array, labels VERBATIM (no editorial rebrands). Render
+//        each inside a <li class="site-nav-item">.
+// Fixed bulk (keep literal): transition:persist, the <!-- nav:links --> marker,
+// the empty <div class="nav-actions"> mount, the mobile hamburger toggle.
+---
+<header class="site-nav" transition:persist="site-nav">
+  <nav class="max-w-6xl mx-auto px-lg flex items-center justify-between gap-lg py-md">
+    <a href="/" class="font-display text-lg tracking-tight">{{shell.navBrandMark}}</a>
+
+    <input type="checkbox" id="nav-toggle" class="peer hidden" aria-hidden="true" />
+    <label
+      for="nav-toggle"
+      class="md:hidden inline-flex flex-col gap-[5px] cursor-pointer"
+      aria-label="Toggle navigation"
+    >
+      <span class="block h-[2px] w-6 bg-ink"></span>
+      <span class="block h-[2px] w-6 bg-ink"></span>
+      <span class="block h-[2px] w-6 bg-ink"></span>
+    </label>
+
+    <div
+      class="hidden peer-checked:flex md:flex absolute md:static top-full left-0 right-0 md:right-auto
+             flex-col md:flex-row gap-md md:gap-lg items-start md:items-center
+             bg-paper md:bg-transparent border-b md:border-0 border-rule px-lg md:px-0 py-md md:py-0"
+    >
+      <ul class="flex flex-col md:flex-row gap-md md:gap-lg items-start md:items-center">
+        {{nav.links}}
+        <!-- nav:links -->
+      </ul>
+      <div class="nav-actions"></div>
+    </div>
+  </nav>
+</header>

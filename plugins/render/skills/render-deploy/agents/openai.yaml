@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deploy to Render"
+  short_description: "Prepare and validate a Render deployment from a repo"
+  default_prompt: "Inspect this project, choose the right Render deployment path, and prepare or validate the required Render configuration."

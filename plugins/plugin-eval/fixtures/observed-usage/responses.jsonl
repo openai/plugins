@@ -1,0 +1,3 @@
+{"id":"resp_1","usage":{"input_tokens":180,"output_tokens":96,"total_tokens":276,"input_token_details":{"cached_tokens":48},"output_tokens_details":{"reasoning_tokens":22}},"metadata":{"scenario":"cold-start refactor task"}}
+{"type":"response.done","response":{"id":"resp_2","usage":{"input_tokens":152,"output_tokens":74,"total_tokens":226,"input_token_details":{"cached_tokens":62},"output_tokens_details":{"reasoning_tokens":18}},"metadata":{"scenario":"warm-cache follow-up"}}}
+{"response":{"id":"resp_3","usage":{"input_tokens":164,"output_tokens":88,"total_tokens":252,"input_token_details":{"cached_tokens":50}}},"metadata":{"scenario":"bugfix verification"}}

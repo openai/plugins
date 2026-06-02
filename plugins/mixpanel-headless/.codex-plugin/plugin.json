@@ -1,0 +1,52 @@
+{
+  "name": "mixpanel-headless",
+  "version": "0.1.0",
+  "description": "Analyze Mixpanel data with the mixpanel_headless Python SDK and Codex skills.",
+  "author": {
+    "name": "Mixpanel",
+    "url": "https://mixpanel.com/home"
+  },
+  "homepage": "https://mixpanel.github.io/mixpanel-headless/",
+  "repository": "https://github.com/mixpanel/mixpanel-headless",
+  "license": "MIT",
+  "keywords": [
+    "mixpanel",
+    "analytics",
+    "product-analytics",
+    "python",
+    "data-science",
+    "funnels",
+    "retention",
+    "flows",
+    "dashboards"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Mixpanel Headless",
+    "shortDescription": "Analyze Mixpanel data with Python",
+    "longDescription": "Use Mixpanel Headless skills to install and authenticate the mixpanel_headless Python SDK, discover Mixpanel schemas, run segmentation, funnel, retention, flow, and user-profile analyses, and build or inspect Mixpanel dashboards from Codex.",
+    "developerName": "Mixpanel",
+    "category": "Business",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://mixpanel.com/home",
+    "privacyPolicyURL": "https://mixpanel.com/legal/privacy-policy/",
+    "termsOfServiceURL": "https://mixpanel.com/legal/terms-of-use/",
+    "defaultPrompt": [
+      "Analyze my Mixpanel signup funnel with Python",
+      "Find product analytics insights in Mixpanel",
+      "Build a Mixpanel dashboard from key events"
+    ],
+    "brandColor": "#7856FF",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": [
+      "./assets/screenshot-1.png",
+      "./assets/screenshot-2.png",
+      "./assets/screenshot-3.png"
+    ]
+  }
+}

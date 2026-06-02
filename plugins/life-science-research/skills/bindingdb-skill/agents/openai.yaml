@@ -1,0 +1,3 @@
+interface:
+  display_name: "BindingDB"
+  short_description: "Fetch BindingDB ligand-target summaries"

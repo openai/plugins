@@ -18,14 +18,13 @@ GWAS_BASE = "https://www.ebi.ac.uk/gwas/rest/api"
 EFO_BASE = "https://www.ebi.ac.uk/ols4/api"
 OT_BASE = "https://api.platform.opentargets.org/api/v4/graphql"
 GNOMAD_BASE = "https://gnomad.broadinstitute.org/api"
-REFSNP_BASE = "https://api.ncbi.nlm.nih.gov/variation/v0/beta/refsnp"
+REFSNP_BASE = "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp"
 
 DEFAULT_LOCUS_PADDING_BP = 1_000_000
+REFSEQ_CHROMOSOMES = {f"NC_{i:06d}": str(i) for i in range(1, 23)}
+REFSEQ_CHROMOSOMES.update({"NC_000023": "X", "NC_000024": "Y", "NC_012920": "MT"})
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-VARIANT_COORDINATE_FINDER_SCRIPT = (
-    REPO_ROOT / "variant-coordinate-finder-skill" / "scripts" / "variant_coordinate_finder.py"
-)
 GTEX_EQTL_SCRIPT = REPO_ROOT / "gtex-eqtl-skill" / "scripts" / "gtex_eqtl.py"
 GENEBASS_GENE_BURDEN_SCRIPT = (
     REPO_ROOT / "genebass-gene-burden-skill" / "scripts" / "genebass_gene_burden.py"
@@ -552,6 +551,125 @@ def fetch_gwas_study_metadata(
     return out
 
 
+def chromosome_from_refseq(seq_id: str) -> str | None:
+    accession = seq_id.split(".", 1)[0]
+    return REFSEQ_CHROMOSOMES.get(accession)
+
+
+def assembly_key_from_traits(traits: list[dict[str, Any]]) -> str | None:
+    for trait in traits:
+        assembly_name = str(trait.get("assembly_name") or "")
+        if assembly_name.startswith("GRCh38"):
+            return "grch38"
+        if assembly_name.startswith("GRCh37"):
+            return "grch37"
+    return None
+
+
+def coordinate_from_placement(placement: dict[str, Any]) -> dict[str, Any] | None:
+    seq_id = str(placement.get("seq_id") or "")
+    chrom = chromosome_from_refseq(seq_id)
+    if not chrom:
+        return None
+
+    placement_annot = coerce_dict(placement.get("placement_annot"))
+    traits = coerce_list_of_dicts(placement_annot.get("seq_id_traits_by_assembly"))
+    if not traits:
+        return None
+
+    # Prefer primary top-level chromosome placements over alt loci or patches.
+    if not any(
+        trait.get("is_top_level")
+        and trait.get("is_chromosome")
+        and not trait.get("is_alt")
+        and not trait.get("is_patch")
+        for trait in traits
+    ):
+        return None
+
+    spdis: list[dict[str, Any]] = []
+    for allele in coerce_list_of_dicts(placement.get("alleles")):
+        spdi = coerce_dict(coerce_dict(allele.get("allele")).get("spdi"))
+        if spdi:
+            spdis.append(spdi)
+    if not spdis:
+        return None
+
+    positions = {spdi.get("position") for spdi in spdis if spdi.get("position") is not None}
+    if not positions:
+        return None
+    try:
+        pos = int(sorted(positions)[0]) + 1
+    except Exception:
+        return None
+
+    deleted_sequences = [
+        str(spdi.get("deleted_sequence") or "")
+        for spdi in spdis
+        if str(spdi.get("deleted_sequence") or "")
+    ]
+    if not deleted_sequences:
+        return None
+    ref = deleted_sequences[0]
+
+    alternate_alleles = sorted(
+        {
+            str(spdi.get("inserted_sequence") or "")
+            for spdi in spdis
+            if str(spdi.get("inserted_sequence") or "")
+            and str(spdi.get("inserted_sequence") or "") != str(spdi.get("deleted_sequence") or "")
+        }
+    )
+    alt = alternate_alleles[-1] if alternate_alleles else ref
+
+    assembly_name = str(traits[0].get("assembly_name") or "")
+    return {
+        "chr": chrom,
+        "pos": pos,
+        "ref": ref,
+        "alt": alt,
+        "alternate_alleles": alternate_alleles,
+        "seq_id": seq_id,
+        "assembly": assembly_name,
+    }
+
+
+def fetch_refsnp_payload(rsid: str, limitations: list[str]) -> dict[str, Any] | None:
+    digits = "".join(ch for ch in rsid if ch.isdigit())
+    if not digits:
+        return None
+    try:
+        return safe_get_json(f"{REFSNP_BASE}/{digits}", timeout=35)
+    except Exception as exc:
+        limitations.append(f"RefSNP lookup failed for {rsid}: {exc}")
+        return None
+
+
+def resolve_refsnp_coordinates(
+    rsid: str, warnings: list[str], limitations: list[str]
+) -> dict[str, dict[str, Any]]:
+    payload = fetch_refsnp_payload(rsid, limitations)
+    if not payload:
+        return {}
+
+    coords: dict[str, dict[str, Any]] = {}
+    snapshot = coerce_dict(payload.get("primary_snapshot_data"))
+    for placement in coerce_list_of_dicts(snapshot.get("placements_with_allele")):
+        traits = coerce_list_of_dicts(
+            coerce_dict(placement.get("placement_annot")).get("seq_id_traits_by_assembly")
+        )
+        assembly_key = assembly_key_from_traits(traits)
+        if not assembly_key or assembly_key in coords:
+            continue
+        coord = coordinate_from_placement(placement)
+        if coord:
+            coords[assembly_key] = coord
+
+    if "grch38" not in coords:
+        warnings.append(f"Coordinate lookup did not find a GRCh38 top-level placement for {rsid}.")
+    return coords
+
+
 def resolve_anchor_coordinates(
     anchors: list[dict[str, Any]], warnings: list[str], limitations: list[str]
 ) -> None:
@@ -559,26 +677,7 @@ def resolve_anchor_coordinates(
         rsid = str(anchor.get("rsid") or "")
         if not rsid:
             continue
-        coord_result = run_json_skill_script(
-            VARIANT_COORDINATE_FINDER_SCRIPT,
-            {"rsid": rsid},
-            limitations,
-            timeout_s=25,
-        )
-        if not coord_result:
-            anchor["grch38"] = None
-            anchor["grch37"] = None
-            anchor["locus_id"] = f"rsid:{rsid}"
-            continue
-
-        if not coord_result.get("ok"):
-            error = coerce_dict(coord_result.get("error")).get("message")
-            warnings.append(f"Coordinate lookup failed for {rsid}: {error}")
-            anchor["grch38"] = None
-            anchor["grch37"] = None
-            anchor["locus_id"] = f"rsid:{rsid}"
-            continue
-
+        coord_result = resolve_refsnp_coordinates(rsid, warnings, limitations)
         g38 = coerce_dict(coord_result.get("grch38"))
         g37 = coerce_dict(coord_result.get("grch37"))
         anchor["grch38"] = g38 if g38 else None
@@ -957,21 +1056,15 @@ def fetch_refsnp_annotations(rsids: list[str], limitations: list[str]) -> dict[s
     out: dict[str, dict[str, Any]] = {}
 
     for rsid in rsids:
-        digits = "".join(ch for ch in rsid if ch.isdigit())
-        if not digits:
-            continue
-        url = f"{REFSNP_BASE}/{digits}"
-        try:
-            payload = safe_get_json(url, timeout=35)
-        except Exception as exc:
-            limitations.append(f"RefSNP lookup failed for {rsid}: {exc}")
+        payload = fetch_refsnp_payload(rsid, limitations)
+        if not payload:
             continue
 
         snapshot = coerce_dict(payload.get("primary_snapshot_data"))
         genes = {
-            str(item.get("name")).strip()
+            str(item.get("locus") or item.get("name")).strip()
             for item in coerce_list_of_dicts(snapshot.get("genes"))
-            if item.get("name")
+            if item.get("locus") or item.get("name")
         }
         coding_genes: set[str] = set()
         consequence_terms: set[str] = set()
@@ -979,9 +1072,19 @@ def fetch_refsnp_annotations(rsids: list[str], limitations: list[str]) -> dict[s
         for allele_ann in coerce_list_of_dicts(snapshot.get("allele_annotations")):
             for asm_ann in coerce_list_of_dicts(allele_ann.get("assembly_annotation")):
                 for gene in coerce_list_of_dicts(asm_ann.get("genes")):
-                    gene_symbol = str(gene.get("name") or "").strip()
+                    gene_symbol = str(gene.get("locus") or gene.get("name") or "").strip()
+                    if gene_symbol:
+                        genes.add(gene_symbol)
                     is_coding = False
+                    for so in coerce_list_of_dicts(gene.get("sequence_ontology")):
+                        term = str(so.get("name") or "").strip()
+                        if term:
+                            consequence_terms.add(term)
                     for rna in coerce_list_of_dicts(gene.get("rnas")):
+                        for so in coerce_list_of_dicts(rna.get("sequence_ontology")):
+                            term = str(so.get("name") or "").strip()
+                            if term:
+                                consequence_terms.add(term)
                         protein = rna.get("protein")
                         protein_items = [protein] if isinstance(protein, dict) else protein
                         if not isinstance(protein_items, list):
@@ -1635,6 +1738,17 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
     if not anchors:
         raise ValueError("No anchors remained after normalization.")
 
+    unresolved_coord_rsids = [
+        str(anchor.get("rsid"))
+        for anchor in anchors
+        if anchor.get("rsid") and not coerce_dict(anchor.get("grch38"))
+    ]
+    if unresolved_coord_rsids:
+        limitations.append(
+            "Unresolved GRCh38 coordinates for anchors: "
+            + ", ".join(dedupe_keep_order(unresolved_coord_rsids))
+        )
+
     anchor_rsids = dedupe_keep_order([str(a.get("rsid")) for a in anchors if a.get("rsid")])
     trait_terms = dedupe_keep_order(
         [
@@ -1672,6 +1786,9 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
         for anchor in coerce_list_of_dicts(locus.get("anchors")):
             locus_symbols.extend(as_string_list(anchor.get("mapped_genes")))
             rsid = str(anchor.get("rsid") or "")
+            annot = coerce_dict(refsnp_annotations.get(rsid))
+            locus_symbols.extend(as_string_list(annot.get("coding_genes")))
+            locus_symbols.extend(as_string_list(annot.get("genes")))
             l2g_rows = coerce_list_of_dicts(
                 coerce_dict(ot_support.get("per_anchor", {})).get(rsid, {}).get("l2g")
             )
@@ -1935,7 +2052,7 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
             "sources_queried": [
                 "efo-ontology-skill",
                 "gwas-catalog-skill",
-                "variant-coordinate-finder-skill",
+                "ncbi-refsnp-coordinate-resolution",
                 "opentargets-skill",
                 "gtex-eqtl-skill",
                 "genebass-gene-burden-skill",
@@ -1987,8 +2104,12 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
     mapping_output_path.write_text(json.dumps(mapping_payload, indent=2), encoding="utf-8")
     summary_output_path.write_text(summary, encoding="utf-8")
 
+    critical_limitations = [
+        item for item in limitations if item.startswith("Unresolved GRCh38 coordinates")
+    ]
+
     return {
-        "status": "ok",
+        "status": "degraded" if critical_limitations else "ok",
         "mapping_output_path": str(mapping_output_path),
         "summary_output_path": str(summary_output_path),
         "figure_paths": [str(fig.get("path")) for fig in figure_entries],
@@ -1998,6 +2119,7 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
             "Do not wrap them in code fences."
         ),
         "warnings": dedupe_keep_order(warnings),
+        "limitations": dedupe_keep_order(limitations),
     }
 
 

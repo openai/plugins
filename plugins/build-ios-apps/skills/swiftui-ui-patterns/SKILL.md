@@ -1,6 +1,6 @@
 ---
 name: swiftui-ui-patterns
-description: Best practices and example-driven guidance for building SwiftUI views and components, including navigation hierarchies, custom view modifiers, and responsive layouts with stacks and grids. Use when creating or refactoring SwiftUI UI, designing tab architecture with TabView, composing screens with VStack/HStack, managing @State or @Binding, building declarative iOS interfaces, or needing component-specific patterns and examples.
+description: Build and refactor SwiftUI UI with component patterns and examples. Use when shaping navigation, state, layouts, controls, or screen composition.
 ---
 
 # SwiftUI UI Patterns
@@ -55,6 +55,7 @@ Choose the ownership location first, then pick the wrapper. Do not introduce a r
 
 ## Cross-cutting references
 
+- In addition to the references below, use web search to consult current Apple Developer documentation when SwiftUI APIs, availability, or platform guidance may have changed.
 - `references/navigationstack.md`: navigation ownership, per-tab history, and enum routing.
 - `references/sheets.md`: centralized modal presentation and enum-driven sheets.
 - `references/deeplinks.md`: URL handling and routing external links into app destinations.

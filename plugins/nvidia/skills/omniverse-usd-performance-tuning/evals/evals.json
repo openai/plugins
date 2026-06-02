@@ -1,0 +1,74 @@
+{
+  "version": "0.1.0",
+  "skill": "omniverse-usd-performance-tuning",
+  "cases": [
+    {
+      "id": "usd-performance-broad-optimization-flow",
+      "question": "The main factory USD stage takes minutes to open in USD Composer and likely has repeated assemblies. Please optimize it so it loads faster and produces a clear report.",
+      "expected_skill": "omniverse-usd-performance-tuning",
+      "expected_script": null,
+      "ground_truth": "The agent should select the USD performance tuning workflow, start with runtime/auth bring-up, then plan baseline profiling, structure assessment, validation routing, restructure decision handling, Scene Optimizer operation planning when available, after-profile comparison, and the required optimization report.",
+      "expected_behavior": [
+        "Reads the omniverse-usd-performance-tuning SKILL.md.",
+        "Classifies the request as a broad USD performance optimization request rather than a direct single-operation command.",
+        "Starts with the mandatory runtime context gate before profiling, validation, or mutation.",
+        "Plans baseline profiling and usd-structure-assessment before any mutating optimization step.",
+        "Includes validation routing before mutation and an optimization-report deliverable after verification."
+      ]
+    },
+    {
+      "id": "usd-performance-runtime-choice-gate",
+      "question": "Optimize /tmp/factory.usd. I have not said whether to use Kit or standalone libraries, and there is no existing runtime probe result.",
+      "expected_skill": "omniverse-usd-performance-tuning",
+      "expected_script": null,
+      "ground_truth": "The agent should not silently pick Kit or standalone. It should route to setup-usd-performance-tuning and ask for the runtime choice before opening, profiling, validating, or optimizing the stage.",
+      "expected_behavior": [
+        "Reads the omniverse-usd-performance-tuning SKILL.md.",
+        "Recognizes that runtime choice is unresolved.",
+        "Routes to setup-usd-performance-tuning for the runtime chooser.",
+        "Asks for an explicit Kit or standalone runtime path before doing work.",
+        "Does not open, profile, validate, or mutate the stage before the runtime gate is resolved."
+      ]
+    },
+    {
+      "id": "usd-performance-destructive-op-approval",
+      "question": "Flatten /tmp/factory.usd into one layer and decimate the high-poly meshes so it runs faster in our Kit-based viewer.",
+      "expected_skill": "omniverse-usd-performance-tuning",
+      "expected_script": null,
+      "ground_truth": "The agent should treat flattening and decimation as explicitly requested destructive operations, ask for approval before mutation, and preserve the decimation guardrails from the operation reference.",
+      "expected_behavior": [
+        "Reads the omniverse-usd-performance-tuning SKILL.md.",
+        "Sets the planning decision to require approval before destructive mutation.",
+        "Names flattening and decimation in the approval prompt.",
+        "Plans structural assessment and validation before mutation if approval is granted.",
+        "Uses one upfront decimation prompt and preserves pinBoundaries plus floating-point stop-condition values."
+      ]
+    },
+    {
+      "id": "usd-performance-expensive-validation-approval",
+      "question": "Optimize /tmp/factory.usd. The structure assessment suggests occlusion checks and cross-component duplicate checks may be useful before optimization.",
+      "expected_skill": "omniverse-usd-performance-tuning",
+      "expected_script": null,
+      "ground_truth": "The agent should plan targeted validation and ask before expensive cross-component validators such as occlusion, coincident-geometry, or duplicate-analysis checks run on a large or unknown-size asset.",
+      "expected_behavior": [
+        "Reads the omniverse-usd-performance-tuning SKILL.md.",
+        "Routes validation through usd-validation-runner and its validation scoping guidance.",
+        "Treats expensive cross-component checks as opt-in.",
+        "Asks the user before running slow Tier 3-style validation work.",
+        "Keeps the final workflow anchored on an optimization-report deliverable."
+      ]
+    },
+    {
+      "id": "usd-performance-viewer-build-distractor-negative",
+      "question": "Build a browser-based RTX USD viewer with camera controls, object picking, a stage tree, and render settings.",
+      "expected_skill": null,
+      "expected_script": null,
+      "ground_truth": "This is an application/viewer construction request, not a USD performance diagnosis or optimization workflow.",
+      "expected_behavior": [
+        "Does not select omniverse-usd-performance-tuning.",
+        "Does not run profiling, validation, Scene Optimizer operations, or optimization-report steps.",
+        "Routes to a viewer or application-building skill if one is available."
+      ]
+    }
+  ]
+}

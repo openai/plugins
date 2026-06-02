@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Expo Run Actions"
+  short_description: "Wire Expo projects into the Codex app Run button and action terminal"
+  default_prompt: "Use $codex-expo-run-actions to create an Expo project-local run script, wire .codex/environments/environment.toml, expose a Codex app Run action, and optionally add direct iOS, Android, web, dev-client, tunnel, or export buttons."

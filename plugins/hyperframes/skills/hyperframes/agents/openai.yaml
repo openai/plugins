@@ -1,0 +1,3 @@
+interface:
+  display_name: "HyperFrames"
+  short_description: "Create video compositions, animations, title cards, overlays, captions, voiceovers, audio-reactive visuals, and scene transitions in HyperFrames HTML."

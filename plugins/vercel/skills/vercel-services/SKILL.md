@@ -1,7 +1,6 @@
 ---
 name: vercel-services
 description: "Vercel Services — deploy multiple services within a single Vercel project. Use for monorepo layouts or when combining a backend (Python, Go) with a frontend (Next.js, Vite) in one deployment."
-summary: "Deploy multiple services in one Vercel project — e.g. a Python backend alongside a JS frontend"
 metadata:
   priority: 7
   docs:
@@ -59,37 +58,6 @@ metadata:
       - "aws lambda"
       - "docker compose"
     minScore: 6
-validate:
-  -
-    pattern: '@app\.(get|post|put|delete|patch)\s*\(\s*[''"]\/api\/'
-    message: 'Do not include routePrefix in backend routes — Vercel strips the prefix before forwarding. Use @app.get("/health") not @app.get("/api/health")'
-    severity: error
-  -
-    pattern: 'http\.HandleFunc\s*\(\s*[''"]\/api\/'
-    message: 'Do not include routePrefix in Go handlers — Vercel strips the prefix. Use "/health" not "/api/health"'
-    severity: error
-retrieval:
-  aliases:
-    - multi-service
-    - backend service
-    - services api
-    - monorepo deploy
-    - monorepo services
-  intents:
-    - deploy backend and frontend together on vercel
-    - set up python backend alongside next.js frontend
-    - configure multi-service vercel project
-    - add go backend to vercel project
-  entities:
-    - experimentalServices
-    - routePrefix
-    - entrypoint
-    - Services API
-    - vercel.json services
-  examples:
-    - deploy a fastapi backend with a react frontend
-    - add a go api service to my vercel project
-    - set up a multi-service monorepo on vercel
 ---
 
 # Deploy multi-service projects with Vercel

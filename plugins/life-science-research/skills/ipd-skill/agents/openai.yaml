@@ -1,0 +1,3 @@
+interface:
+  display_name: "IPD"
+  short_description: "Fetch IPD allele summaries"

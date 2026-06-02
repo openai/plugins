@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug Render Deploy"
+  short_description: "Diagnose failed Render deploys from status and logs"
+  default_prompt: "Inspect the latest failed Render deploy, identify the root cause from logs and state, and tell me the exact fix."

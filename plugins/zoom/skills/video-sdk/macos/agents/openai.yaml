@@ -1,0 +1,7 @@
+interface:
+  display_name: Zoom Video SDK (macOS)
+  short_description: Zoom Video SDK for macOS native desktop apps. Use when building
+    custom macOS video sessions with native UI control, tokenized join, and desktop-oriented
+    media/device workflows.
+policy:
+  allow_implicit_invocation: false

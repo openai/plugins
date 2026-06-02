@@ -1,0 +1,3 @@
+interface:
+  display_name: "Locus-to-Gene Mapper"
+  short_description: "Map GWAS loci to ranked candidate genes"

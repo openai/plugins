@@ -1,0 +1,219 @@
+/* Gift Cards pack — scoped CSS.
+ *
+ * Imported by Layout.astro alongside other components-*.css files. Covers:
+ *   1. Buy form (`.gift-card-form` + fields)
+ *   2. /gift-cards landing page sections
+ *   3. Home teaser block
+ *
+ * Reuses tokens declared by the designer foundation: --color-cream,
+ * --color-cream-deep, --color-ink, --color-ink-soft, --color-muted,
+ * --color-rule, --color-paper, --color-bark/espresso/gold-deep,
+ * --spacing-{sm,md,lg,xl,2xl,3xl,4xl}, --radius-sm, --font-body,
+ * --font-display. If a token isn't in your design system, fall back to a
+ * sibling token; do NOT invent new ones.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Buy form                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.gift-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.gift-card-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gift-card-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.gift-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.gift-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+.gift-card-field-wide {
+  grid-column: 1 / -1;
+}
+
+.gift-card-field input,
+.gift-card-field textarea {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-cream);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.8rem;
+  transition: border-color 0.2s ease;
+}
+
+.gift-card-field input:focus,
+.gift-card-field textarea:focus {
+  outline: none;
+  border-color: var(--color-ink);
+}
+
+.gift-card-field textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.gift-card-counter {
+  position: absolute;
+  right: 0;
+  bottom: -1.2rem;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  color: var(--color-muted);
+}
+
+.gift-card-error {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-gold-deep, #a04a3c);
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* /gift-cards landing page                                                    */
+/* -------------------------------------------------------------------------- */
+
+.gift-card-page {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-4xl);
+}
+
+.gift-card-grid-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .gift-card-grid-wrap {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4xl);
+  }
+}
+
+.gift-card-hero-image {
+  background: var(--color-cream-deep, var(--color-paper, var(--color-cream)));
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gift-card-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gift-card-body {
+  max-width: 36rem;
+}
+
+.gift-card-body h1 {
+  margin: var(--spacing-md) 0 var(--spacing-md);
+}
+
+.gift-card-lede {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+  max-width: 48ch;
+  margin: 0 0 var(--spacing-xl);
+}
+
+.gift-card-fineprint {
+  margin-top: var(--spacing-lg);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 44ch;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Home teaser                                                                 */
+/* -------------------------------------------------------------------------- */
+
+.gift-card-teaser {
+  padding: var(--spacing-4xl) var(--spacing-lg);
+  background: var(--color-cream-deep, var(--color-paper, var(--color-cream)));
+}
+
+.gift-card-teaser-link {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  max-width: 80rem;
+  margin: 0 auto;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+@media (min-width: 768px) {
+  .gift-card-teaser-link {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4xl);
+  }
+}
+
+.gift-card-teaser-image {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-cream);
+}
+
+.gift-card-teaser-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.gift-card-teaser-link:hover .gift-card-teaser-image img {
+  transform: scale(1.02);
+}
+
+.gift-card-teaser-body h2 {
+  margin: var(--spacing-md) 0 var(--spacing-md);
+}
+
+.gift-card-teaser-lede {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+  max-width: 44ch;
+  margin: 0 0 var(--spacing-lg);
+}

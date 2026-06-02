@@ -1,0 +1,32 @@
+{
+  "name": "apollo",
+  "version": "1.0.0",
+  "description": "B2B prospecting, account research, contacts, and outreach lists",
+  "author": {
+    "name": "Apollo",
+    "url": "https://www.apollo.io"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Apollo",
+    "developerName": "Apollo",
+    "shortDescription": "B2B prospecting, account research, contacts, and outreach lists",
+    "longDescription": "B2B prospecting, account research, contacts, and outreach lists",
+    "category": "Productivity",
+    "capabilities": [],
+    "brandColor": "#E8F028",
+    "defaultPrompt": [
+      "Find verified contacts matching this ICP in Apollo and rank the best prospects.",
+      "Research a company in Apollo and identify decision makers for this use case.",
+      "Build an outreach list for this industry with recent growth or hiring signals."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "websiteURL": "https://www.apollo.io"
+  },
+  "homepage": "https://www.apollo.io"
+}

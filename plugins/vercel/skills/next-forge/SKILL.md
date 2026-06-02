@@ -1,7 +1,6 @@
 ---
 name: next-forge
 description: 'next-forge expert guidance — production-grade Turborepo monorepo SaaS starter by Vercel. Use when working in a next-forge project, scaffolding with `npx next-forge init`, or editing @repo/* workspace packages.'
-summary: "next-forge monorepo SaaS starter (Turborepo, Clerk, Prisma/Neon, Stripe, Resend, shadcn/ui, Sentry, PostHog). See => skill:next-forge for full guide."
 metadata:
   priority: 6
   docs:
@@ -93,61 +92,6 @@ metadata:
     noneOf:
       - 'create-t3-app'
     minScore: 6
-validate:
-  -
-    pattern: '"pipeline"\s*:'
-    message: 'turbo.json "pipeline" was renamed to "tasks" in Turborepo v2 — update to "tasks"'
-    severity: error
-  -
-    pattern: 'new Pool\('
-    message: 'PrismaNeon expects a connection config object, not a Pool instance — use PrismaNeon({ connectionString: url })'
-    severity: error
-    skipIfFileContains: 'pg\.Pool'
-  -
-    pattern: 'prisma studio --schema'
-    message: 'Prisma v7 removed --schema flag for studio — use --config instead'
-    severity: error
-  -
-    pattern: 'middleware\.ts'
-    message: 'next-forge uses proxy.ts (Next.js 16+), not middleware.ts — rename to proxy.ts'
-    severity: warn
-    skipIfFileContains: 'proxy\.ts'
-retrieval:
-  aliases:
-    - saas starter
-    - monorepo starter
-    - next forge
-    - turborepo template
-  intents:
-    - scaffold saas
-    - set up next-forge
-    - create monorepo project
-    - use next-forge
-  entities:
-    - next-forge
-    - '@repo/*'
-    - Turborepo
-    - monorepo
-    - SaaS starter
-chainTo:
-  -
-    pattern: 'export\s+(default\s+)?function\s+middleware'
-    targetSkill: routing-middleware
-    message: 'middleware.ts detected in next-forge project — loading Routing Middleware guidance for proxy.ts migration.'
-  -
-    pattern: '@clerk/|clerkMiddleware|ClerkProvider|getAuth\(\)|auth\(\)'
-    targetSkill: auth
-    message: 'Clerk auth patterns in next-forge — loading Auth guidance for middleware auth, sign-in/sign-up flows, and organization handling.'
-    skipIfFileContains: '@auth0/|@descope/'
-  -
-    pattern: from\s+['"](stripe|@stripe/stripe-js)['"]|Stripe\(|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET
-    targetSkill: payments
-    message: 'Stripe integration in next-forge — loading Payments guidance for checkout sessions, webhooks, and subscription billing.'
-  -
-    pattern: from\s+['"](resend|@react-email)['"]|Resend\(|RESEND_API_KEY
-    targetSkill: email
-    message: 'Resend/React Email in next-forge — loading Email guidance for transactional emails, domain verification, and template patterns.'
-
 ---
 
 # next-forge

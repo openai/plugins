@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moody's Company Analysis"
+  short_description: "Analyze Moody's company profiles, ratings, ownership, financials, and filings"
+  default_prompt: "Use Moody's company analysis to resolve the right entity, gather cited Moody's data, and summarize the company credit context."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Android Performance"
+  short_description: "Capture Android CPU, frame, memory, and startup traces"
+  default_prompt: "Use $android-performance to profile a focused Android app flow and summarize CPU, frame, memory, or trace evidence."

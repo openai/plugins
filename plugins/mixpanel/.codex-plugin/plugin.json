@@ -1,0 +1,48 @@
+{
+  "name": "mixpanel",
+  "version": "2.0.0",
+  "description": "Query and analyze Mixpanel",
+  "author": {
+    "name": "Mixpanel",
+    "url": "https://mixpanel.com/home"
+  },
+  "homepage": "https://mixpanel.com/home",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "mixpanel",
+    "analytics",
+    "segmentation",
+    "funnels",
+    "retention",
+    "events"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Mixpanel",
+    "shortDescription": "Query and analyze Mixpanel",
+    "longDescription": "Query and analyze your Mixpanel data directly in ChatGPT. Run segmentation, funnel, and retention analyses, explore your event taxonomy, manage Lexicon metadata, and resolve data quality issues - all without leaving your conversation.\n\nWith the Mixpanel MCP server connected, ChatGPT can reason about your product analytics alongside your code, documents, and decisions. Ask questions in plain language, drill into user behavior, and get answers grounded in your actual data.",
+    "developerName": "Mixpanel",
+    "category": "Business",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://mixpanel.com/home",
+    "privacyPolicyURL": "https://mixpanel.com/legal/privacy-policy/",
+    "termsOfServiceURL": "https://mixpanel.com/legal/terms-of-use/",
+    "defaultPrompt": [
+      "@Mixpanel how many sign ups did we have in Feb?",
+      "@Mixpanel add descriptions to any events that don't have one",
+      "@Mixpanel create a dashboard for purchase metrics"
+    ],
+    "screenshots": [
+      "./assets/screenshot-1.png",
+      "./assets/screenshot-2.png",
+      "./assets/screenshot-3.png"
+    ],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/logo.png"
+  }
+}

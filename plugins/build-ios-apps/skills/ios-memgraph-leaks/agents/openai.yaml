@@ -1,0 +1,4 @@
+interface:
+  display_name: "iOS Memgraph Leaks"
+  short_description: "Capture and prove iOS simulator memory leaks"
+  default_prompt: "Use $ios-memgraph-leaks to capture an iOS simulator memgraph, identify retention paths, and verify leak fixes."

@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-conference-calls"
+  short_description: "Twilio skill guidance for twilio-conference-calls"
+  icon_small: "../../assets/logo.svg"
+  icon_large: "../../assets/logo.svg"
+  brand_color: "#F22F46"

@@ -1,0 +1,5 @@
+interface:
+  display_name: "UML and Software Architecture Visualization"
+  short_description: "Design and implement UML and software architecture diagrams"
+policy:
+  allow_implicit_invocation: false

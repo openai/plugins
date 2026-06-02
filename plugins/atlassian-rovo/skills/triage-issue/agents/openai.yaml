@@ -1,0 +1,3 @@
+interface:
+  display_name: "Triage Issue"
+  short_description: "Find duplicates and prepare Jira bug reports"

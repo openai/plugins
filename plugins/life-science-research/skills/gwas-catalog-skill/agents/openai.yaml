@@ -1,0 +1,3 @@
+interface:
+  display_name: "GWAS Catalog"
+  short_description: "Fetch GWAS Catalog study and association summaries"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "eQTL Catalogue"
+  short_description: "Fetch eQTL Catalogue summaries"

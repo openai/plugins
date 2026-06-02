@@ -1,0 +1,22 @@
+# Visualization Critique Checklist
+
+- Does the title state an insight, claim, contrast, or question rather than only naming the data?
+- Is the key comparison visually dominant?
+- Are scales, units, and aggregation choices trustworthy?
+- Is uncertainty or missingness shown where it matters?
+- Are labels and keys discoverable without hover or a distant legend?
+- If a legend exists, is it inside or immediately adjacent to the chart it explains?
+- Is color meaningful, restrained, and accessible?
+- Do annotations explain why the data matters instead of restating values?
+- If imagery, illustration, 3D, or animation appears, does it explain scale, place, mechanism, motion, or stakes?
+- Does the default view feel composed as a visual argument rather than a grid of chart boxes?
+- Would the first frame and final frame work as still images?
+- Would small multiples or a table improve clarity?
+- Does the chart still work in export, grayscale, and a 360-430 px mobile width?
+- Does the mobile first screen show the main visualization or make it immediately available?
+- Is the mobile version intentionally designed rather than a desktop layout stacked by DOM order?
+- Are touch targets, hover replacement, drag alternatives, pinch/zoom ownership, and keyboard-open behavior accounted for?
+- For streaming or remote data, are stale, offline, partial, and reconnect states visible without blanking the chart?
+- If AR, camera, motion, vibration, notifications, or geolocation are used, do they have analytical purpose, user-initiated permission timing, and fallbacks?
+- Is the work original to this dataset and audience rather than borrowed from a publication's visual identity?
+- For conflict, disaster, displacement, civilian harm, migration, political violence, or humanitarian work, are dates, source hierarchy, evidence status, caveats, and humane framing visible enough to prevent spectacle or false precision?

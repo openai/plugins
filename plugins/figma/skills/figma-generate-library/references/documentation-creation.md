@@ -4,6 +4,10 @@
 
 This reference covers Phase 2 of the design system build: the cover page, foundations documentation page (color swatches, type specimens, spacing bars, shadow cards, radius demo), page layout dimensions, and inline component documentation. Every code block is complete `use_figma`-ready JavaScript (helper-function form — meant to be embedded in a larger script that uses `return` to send results back).
 
+> **Every text mutation in this file follows the [canonical text-edit recipe](../../figma-use/references/gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids):** load font → `await` → mutate → return affected IDs. Examples use `Inter` because it's available everywhere, but `loadFontAsync` is required for every (family, style) pair you mutate — not just Inter.
+
+> **Design files only.** Every snippet here (including `figma.createPage()`) targets Figma Design files (`figma.com/design/...`). `figma.createPage()` throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`).
+
 ---
 
 ## 1. Cover Page
@@ -30,23 +34,24 @@ async function createCoverPage(systemName, tagline, version, primaryColorVar) {
   page.name = 'Cover';
   await figma.setCurrentPageAsync(page);
 
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+  // Batch the font loads — sequential awaits would serialize three IPC
+  // round-trips that can run in parallel.
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ]);
 
-  const frame = figma.createFrame();
+  const frame = figma.createAutoLayout('VERTICAL');
   frame.name = 'Cover';
   frame.resize(1440, 900);
+  frame.layoutSizingHorizontal = 'FIXED';
+  frame.layoutSizingVertical = 'FIXED';
   frame.x = 0;
   frame.y = 0;
-  frame.layoutMode = 'VERTICAL';
   frame.primaryAxisAlignItems = 'CENTER';
   frame.counterAxisAlignItems = 'CENTER';
   frame.itemSpacing = 16;
-  frame.paddingTop = 0;
-  frame.paddingBottom = 0;
-  frame.paddingLeft = 0;
-  frame.paddingRight = 0;
 
   // Background: bind to primary variable if provided, else solid dark
   if (primaryColorVar) {
@@ -110,14 +115,17 @@ async function createFoundationsPage() {
   page.name = 'Foundations';
   await figma.setCurrentPageAsync(page);
 
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  // Batch the font loads — sequential awaits would serialize three IPC
+  // round-trips that can run in parallel.
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
   // Root scroll frame
-  const root = figma.createFrame();
+  const root = figma.createAutoLayout('VERTICAL');
   root.name = 'Foundations';
-  root.layoutMode = 'VERTICAL';
   root.primaryAxisAlignItems = 'MIN';
   root.counterAxisAlignItems = 'MIN';
   root.itemSpacing = 80;
@@ -125,9 +133,8 @@ async function createFoundationsPage() {
   root.paddingBottom = 120;
   root.paddingLeft = 80;
   root.paddingRight = 80;
-  root.layoutSizingHorizontal = 'FIXED';
-  root.layoutSizingVertical = 'HUG';
   root.resize(1440, 1);
+  root.layoutSizingHorizontal = 'FIXED';
   root.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
   page.appendChild(root);
 
@@ -156,15 +163,13 @@ Color swatches must be **bound to actual Figma variables** — never hardcode he
 async function createColorSwatch(parent, varName, variable) {
   await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 
-  const swatchFrame = figma.createFrame();
+  const swatchFrame = figma.createAutoLayout('VERTICAL');
   swatchFrame.name = `Swatch/${varName}`;
-  swatchFrame.layoutMode = 'VERTICAL';
   swatchFrame.primaryAxisAlignItems = 'MIN';
   swatchFrame.counterAxisAlignItems = 'MIN';
   swatchFrame.itemSpacing = 6;
-  swatchFrame.layoutSizingHorizontal = 'FIXED';
-  swatchFrame.layoutSizingVertical = 'HUG';
   swatchFrame.resize(88, 1);
+  swatchFrame.layoutSizingHorizontal = 'FIXED';
   swatchFrame.fills = [];
 
   // Color rectangle — bound to variable
@@ -214,18 +219,18 @@ async function createColorSwatch(parent, varName, variable) {
  * @param {Variable[]} semanticVars - Variables from the semantic Color collection.
  */
 async function createColorSection(root, primitiveVars, semanticVars) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
   // Section container
-  const section = figma.createFrame();
+  const section = figma.createAutoLayout('VERTICAL');
   section.name = 'Section/Colors';
-  section.layoutMode = 'VERTICAL';
   section.itemSpacing = 24;
-  section.layoutSizingHorizontal = 'FILL';
-  section.layoutSizingVertical = 'HUG';
   section.fills = [];
   root.appendChild(section);
+  section.layoutSizingHorizontal = 'FILL';
 
   // Section heading
   const heading = figma.createText();
@@ -252,15 +257,13 @@ async function createColorSection(root, primitiveVars, semanticVars) {
   primLabel.fills = [{ type: 'SOLID', color: { r: 0.55, g: 0.55, b: 0.55 } }];
   section.appendChild(primLabel);
 
-  const primRow = figma.createFrame();
+  const primRow = figma.createAutoLayout();
   primRow.name = 'Primitives/Row';
-  primRow.layoutMode = 'HORIZONTAL';
   primRow.itemSpacing = 12;
-  primRow.layoutSizingHorizontal = 'FILL';
-  primRow.layoutSizingVertical = 'HUG';
   primRow.fills = [];
   primRow.layoutWrap = 'WRAP';
   section.appendChild(primRow);
+  primRow.layoutSizingHorizontal = 'FILL';
 
   for (const v of primitiveVars) {
     await createColorSwatch(primRow, v.name, v);
@@ -275,15 +278,13 @@ async function createColorSection(root, primitiveVars, semanticVars) {
     semLabel.fills = [{ type: 'SOLID', color: { r: 0.55, g: 0.55, b: 0.55 } }];
     section.appendChild(semLabel);
 
-    const semRow = figma.createFrame();
+    const semRow = figma.createAutoLayout();
     semRow.name = 'Semantic/Row';
-    semRow.layoutMode = 'HORIZONTAL';
     semRow.itemSpacing = 12;
-    semRow.layoutSizingHorizontal = 'FILL';
-    semRow.layoutSizingVertical = 'HUG';
     semRow.fills = [];
     semRow.layoutWrap = 'WRAP';
     section.appendChild(semRow);
+    semRow.layoutSizingHorizontal = 'FILL';
 
     for (const v of semanticVars) {
       await createColorSwatch(semRow, v.name, v);
@@ -316,20 +317,20 @@ Typography specimens show each text style rendered at its actual size with a sam
  * @returns {FrameNode} The specimen row frame.
  */
 async function createTypeSpecimen(parent, styleName, fontFamily, fontStyle, fontSize, lineHeight) {
-  await figma.loadFontAsync({ family: fontFamily, style: fontStyle });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  await Promise.all([
+    figma.loadFontAsync({ family: fontFamily, style: fontStyle }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
-  const row = figma.createFrame();
+  const row = figma.createAutoLayout('VERTICAL');
   row.name = `Type/${styleName}`;
-  row.layoutMode = 'VERTICAL';
   row.itemSpacing = 6;
   row.paddingTop = 16;
   row.paddingBottom = 16;
-  row.layoutSizingHorizontal = 'FILL';
-  row.layoutSizingVertical = 'HUG';
   row.fills = [];
   parent.appendChild(row);
+  row.layoutSizingHorizontal = 'FILL';
 
   // Style name label (small, muted)
   const nameText = figma.createText();
@@ -383,14 +384,12 @@ async function createTypeSpecimen(parent, styleName, fontFamily, fontStyle, font
 async function createTypographySection(root, typeStyles) {
   await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
 
-  const section = figma.createFrame();
+  const section = figma.createAutoLayout('VERTICAL');
   section.name = 'Section/Typography';
-  section.layoutMode = 'VERTICAL';
   section.itemSpacing = 0;
-  section.layoutSizingHorizontal = 'FILL';
-  section.layoutSizingVertical = 'HUG';
   section.fills = [];
   root.appendChild(section);
+  section.layoutSizingHorizontal = 'FILL';
 
   const heading = figma.createText();
   heading.fontName = { family: 'Inter', style: 'Bold' };
@@ -429,15 +428,13 @@ Spacing bars show each spacing token as a filled rectangle whose width equals th
 async function createSpacingBar(parent, name, value, variable, codeSyntax) {
   await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
 
-  const row = figma.createFrame();
+  const row = figma.createAutoLayout();
   row.name = `Spacing/${name}`;
-  row.layoutMode = 'HORIZONTAL';
   row.counterAxisAlignItems = 'CENTER';
   row.itemSpacing = 16;
-  row.layoutSizingHorizontal = 'FILL';
-  row.layoutSizingVertical = 'HUG';
   row.fills = [];
   parent.appendChild(row);
+  row.layoutSizingHorizontal = 'FILL';
 
   // The bar rectangle — width bound to spacing variable
   const bar = figma.createRectangle();
@@ -474,14 +471,12 @@ async function createSpacingBar(parent, name, value, variable, codeSyntax) {
 async function createSpacingSection(root, spacingTokens) {
   await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
 
-  const section = figma.createFrame();
+  const section = figma.createAutoLayout('VERTICAL');
   section.name = 'Section/Spacing';
-  section.layoutMode = 'VERTICAL';
   section.itemSpacing = 12;
-  section.layoutSizingHorizontal = 'FILL';
-  section.layoutSizingVertical = 'HUG';
   section.fills = [];
   root.appendChild(section);
+  section.layoutSizingHorizontal = 'FILL';
 
   const heading = figma.createText();
   heading.fontName = { family: 'Inter', style: 'Bold' };
@@ -516,18 +511,21 @@ Elevation documentation shows cards with progressively stronger drop shadows, la
  * @param {DropShadowEffect[]} effects - Array of Figma effect objects.
  */
 async function createShadowCard(parent, name, effects) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ]);
 
-  const card = figma.createFrame();
+  const card = figma.createAutoLayout('VERTICAL');
   card.name = `ShadowCard/${name}`;
-  card.layoutMode = 'VERTICAL';
   card.primaryAxisAlignItems = 'CENTER';
   card.counterAxisAlignItems = 'CENTER';
   card.itemSpacing = 8;
   card.paddingTop = 16;
   card.paddingBottom = 16;
   card.resize(120, 120);
+  card.layoutSizingHorizontal = 'FIXED';
+  card.layoutSizingVertical = 'FIXED';
   card.cornerRadius = 8;
   card.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
   card.effects = effects;
@@ -572,14 +570,12 @@ async function createShadowCard(parent, name, effects) {
 async function createShadowSection(root, shadowTokens) {
   await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
 
-  const section = figma.createFrame();
+  const section = figma.createAutoLayout('VERTICAL');
   section.name = 'Section/Elevation';
-  section.layoutMode = 'VERTICAL';
   section.itemSpacing = 24;
-  section.layoutSizingHorizontal = 'FILL';
-  section.layoutSizingVertical = 'HUG';
   section.fills = [];
   root.appendChild(section);
+  section.layoutSizingHorizontal = 'FILL';
 
   const heading = figma.createText();
   heading.fontName = { family: 'Inter', style: 'Bold' };
@@ -589,19 +585,17 @@ async function createShadowSection(root, shadowTokens) {
   section.appendChild(heading);
 
   // Cards row — extra top padding so shadows are visible
-  const row = figma.createFrame();
+  const row = figma.createAutoLayout();
   row.name = 'Elevation/Row';
-  row.layoutMode = 'HORIZONTAL';
   row.itemSpacing = 32;
   row.paddingTop = 24;
   row.paddingBottom = 40;
-  row.layoutSizingHorizontal = 'FILL';
-  row.layoutSizingVertical = 'HUG';
-  row.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
-  row.cornerRadius = 8;
   row.paddingLeft = 24;
   row.paddingRight = 24;
+  row.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
+  row.cornerRadius = 8;
   section.appendChild(row);
+  row.layoutSizingHorizontal = 'FILL';
 
   for (const tok of shadowTokens) {
     await createShadowCard(row, tok.name, tok.effects);
@@ -630,19 +624,19 @@ Border radius documentation shows rectangles at each corner radius value, labele
  * @param {Variable} [variable] - Optional Figma Variable to bind corner radius.
  */
 async function createRadiusCard(parent, name, value, variable) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ]);
 
-  const wrapper = figma.createFrame();
+  const wrapper = figma.createAutoLayout('VERTICAL');
   wrapper.name = `Radius/${name}`;
-  wrapper.layoutMode = 'VERTICAL';
   wrapper.primaryAxisAlignItems = 'CENTER';
   wrapper.counterAxisAlignItems = 'CENTER';
   wrapper.itemSpacing = 8;
   wrapper.fills = [];
-  wrapper.layoutSizingHorizontal = 'FIXED';
-  wrapper.layoutSizingVertical = 'HUG';
   wrapper.resize(96, 1);
+  wrapper.layoutSizingHorizontal = 'FIXED';
   parent.appendChild(wrapper);
 
   const rect = figma.createRectangle();
@@ -693,14 +687,12 @@ async function createRadiusCard(parent, name, value, variable) {
 async function createRadiusSection(root, radiusTokens) {
   await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
 
-  const section = figma.createFrame();
+  const section = figma.createAutoLayout('VERTICAL');
   section.name = 'Section/Radius';
-  section.layoutMode = 'VERTICAL';
   section.itemSpacing = 24;
-  section.layoutSizingHorizontal = 'FILL';
-  section.layoutSizingVertical = 'HUG';
   section.fills = [];
   root.appendChild(section);
+  section.layoutSizingHorizontal = 'FILL';
 
   const heading = figma.createText();
   heading.fontName = { family: 'Inter', style: 'Bold' };
@@ -709,19 +701,17 @@ async function createRadiusSection(root, radiusTokens) {
   heading.fills = [{ type: 'SOLID', color: { r: 0.07, g: 0.07, b: 0.07 } }];
   section.appendChild(heading);
 
-  const row = figma.createFrame();
+  const row = figma.createAutoLayout();
   row.name = 'Radius/Row';
-  row.layoutMode = 'HORIZONTAL';
   row.itemSpacing = 24;
   row.paddingTop = 24;
   row.paddingBottom = 24;
   row.paddingLeft = 24;
   row.paddingRight = 24;
-  row.layoutSizingHorizontal = 'FILL';
-  row.layoutSizingVertical = 'HUG';
   row.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
   row.cornerRadius = 8;
   section.appendChild(row);
+  row.layoutSizingHorizontal = 'FILL';
 
   for (const tok of radiusTokens) {
     await createRadiusCard(row, tok.name, tok.value, tok.variable);
@@ -751,20 +741,20 @@ Each component page should include a documentation frame directly on the canvas,
  * @returns {FrameNode} The documentation frame.
  */
 async function createComponentDocFrame(page, componentName, description, usageNotes) {
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+  ]);
 
-  const doc = figma.createFrame();
+  const doc = figma.createAutoLayout('VERTICAL');
   doc.name = '_Doc';
-  doc.layoutMode = 'VERTICAL';
   doc.itemSpacing = 16;
   doc.paddingTop = 40;
   doc.paddingBottom = 40;
   doc.paddingLeft = 40;
   doc.paddingRight = 40;
-  doc.layoutSizingHorizontal = 'FIXED';
-  doc.layoutSizingVertical = 'HUG';
   doc.resize(360, 1);
+  doc.layoutSizingHorizontal = 'FIXED';
   doc.fills = [];
   doc.x = 0;
   doc.y = 0;

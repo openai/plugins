@@ -16,6 +16,13 @@ Prep meetings by pulling Notion context, tailoring agendas/pre-reads, and enrich
 4) Draft agenda/pre-read in Notion with `Notion:notion-create-pages`, embedding source links and owner/timeboxes.
 5) Enrich with Codex research (industry insights, benchmarks, risks) and update the page with `Notion:notion-update-page` as plans change.
 
+## Tool-call guardrails
+- Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed.
+- Only fetch Notion page, database, or data-source URLs/IDs; external connected-source search results are not valid `Notion:notion-fetch` inputs.
+- Create meeting pages with an explicit `parent` and a `pages` array.
+- Query databases with `Notion:notion-query-data-sources` under a top-level `data` object, using fetched `collection://...` URLs as table names.
+- When editing a page, fetch its current content first and use `Notion:notion-update-page` with supported commands such as `update_content` or `update_properties`; on the current deployed surface, use `properties: {}` for `update_content` and `content_updates: []` for `update_properties`. Do not invent insertion-only commands.
+
 ## Workflow
 ### 0) If Notion tools are unavailable, pause and ask the user to connect the Notion app:
 1. Enable the bundled Notion app for this plugin or session.

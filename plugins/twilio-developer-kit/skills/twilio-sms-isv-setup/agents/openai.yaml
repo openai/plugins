@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-isv-sms-best-practices"
+  short_description: "Twilio skill guidance for twilio-isv-sms-best-practices"
+  icon_small: "../../assets/logo.svg"
+  icon_large: "../../assets/logo.svg"
+  brand_color: "#F22F46"

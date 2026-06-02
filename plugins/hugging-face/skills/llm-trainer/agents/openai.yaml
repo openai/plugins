@@ -1,0 +1,3 @@
+interface:
+  display_name: "LLM Trainer"
+  short_description: "Train and fine-tune language models on Hugging Face Jobs"

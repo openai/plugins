@@ -1,0 +1,5 @@
+interface:
+  display_name: "React and Next.js Data Visualization"
+  short_description: "Integrate data visualizations into React and Next.js applications"
+policy:
+  allow_implicit_invocation: false

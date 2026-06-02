@@ -1,0 +1,5 @@
+interface:
+  display_name: "/build-zoom-bot"
+  short_description: Use when building bots.
+policy:
+  allow_implicit_invocation: false

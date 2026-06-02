@@ -2,6 +2,8 @@
 
 > Part of the [use_figma skill](../SKILL.md). How to create, apply, and inspect text styles using the Plugin API.
 >
+> Every example here assumes the [canonical text-edit recipe](gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids): load font → `await` → mutate → return affected IDs. Examples use `Inter` because it's available everywhere, but the rule applies identically to any font family/style.
+>
 > For design system context (when to create text styles, how they relate to tokens, `use_figma` limitations), see [wwds-text-styles](working-with-design-systems/wwds-text-styles.md).
 
 ## Contents
@@ -73,7 +75,7 @@ function createTextStyleFull(name, fontName, fontSize, lineHeight, letterSpacing
 
 ## Discovering Available Font Styles
 
-Font style names vary per provider and per file (`"SemiBold"` vs `"Semi Bold"`). Use `figma.listAvailableFontsAsync()` to discover exact style strings — never guess or probe with try/catch:
+Font style names vary per provider and per file.  Use `figma.listAvailableFontsAsync()` to discover exact style strings — never guess or probe with try/catch:
 
 ```javascript
 /**
@@ -88,46 +90,11 @@ async function getAvailableFontStyles(family) {
     .filter(f => f.fontName.family === family)
     .map(f => f.fontName.style);
 }
-
-/**
- * Loads a font, falling back to an alternative style if the requested one is unavailable.
- *
- * @param {string} family - Font family name
- * @param {string} preferredStyle - Desired style, e.g. "Semi Bold"
- * @param {string} [fallbackStyle="Regular"] - Fallback if preferred is unavailable
- * @returns {Promise<FontName>} - The FontName that was actually loaded
- */
-async function loadFontWithFallback(family, preferredStyle, fallbackStyle = "Regular") {
-  const allFonts = await figma.listAvailableFontsAsync();
-  const familyFonts = allFonts.filter(f => f.fontName.family === family);
-
-  const match = familyFonts.find(f => f.fontName.style === preferredStyle);
-  if (match) {
-    await figma.loadFontAsync(match.fontName);
-    return match.fontName;
-  }
-
-  const fallback = familyFonts.find(f => f.fontName.style === fallbackStyle);
-  if (fallback) {
-    await figma.loadFontAsync(fallback.fontName);
-    return fallback.fontName;
-  }
-
-  // Last resort: load the first available style in the family
-  if (familyFonts.length > 0) {
-    await figma.loadFontAsync(familyFonts[0].fontName);
-    return familyFonts[0].fontName;
-  }
-
-  throw new Error(`Font family "${family}" not available in this file`);
-}
 ```
 
 ## Creating a Type Ramp (Multi-Step)
 
 Handles font loading, deduplication, and idempotency. Each entry: `[name, fontFamily, fontStyle, fontSize_px, lineHeight, cssVar]`.
-
-**NOTE:** `setBoundVariable` on `TextStyle` is not supported in `use_figma`. This function sets raw values. To bind variables, do it interactively in Figma after creation.
 
 ```javascript
 /**
@@ -213,14 +180,12 @@ await textNode.setTextStyleIdAsync(headingStyle.id);
  */
 async function applyTextStyleToMatchingNodes(styleId, nodeNamePattern) {
   const textNodes = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] });
-  let applied = 0;
-  for (const node of textNodes) {
-    if (node.name.includes(nodeNamePattern)) {
-      await node.setTextStyleIdAsync(styleId);
-      applied++;
-    }
-  }
-  return applied;
+  const matching = textNodes.filter(n => n.name.includes(nodeNamePattern));
+  // Batch the style applications with Promise.all — each setTextStyleIdAsync
+  // call is independent, so awaiting them serially in a for-loop multiplies
+  // the IPC latency by the number of matches.
+  await Promise.all(matching.map(n => n.setTextStyleIdAsync(styleId)));
+  return matching.length;
 }
 ```
 

@@ -4,6 +4,8 @@
 
 Protocol for handling failures and incomplete runs across a 20–100+ call design system build.
 
+> **Design files only.** Every snippet here (including `figma.createPage()`) targets Figma Design files (`figma.com/design/...`). `figma.createPage()` throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`).
+
 ---
 
 ## 1. Core Protocol: STOP → Inspect → Fix → Retry
@@ -78,9 +80,14 @@ const skipped = [];
 for (const page of pagesToSearch) {
   await figma.setCurrentPageAsync(page);
 
-  const orphans = page.findAll(node => {
-    const runId = node.getSharedPluginData('dsb', 'run_id');
-    if (runId !== TARGET_RUN_ID) return false;
+  // Use the sharedPluginData index instead of findAll + getSharedPluginData
+  // on every node. The engine narrows to nodes that actually carry the
+  // namespace/keys before any JS callback runs.
+  const candidates = page.findAllWithCriteria({
+    sharedPluginData: { namespace: 'dsb', keys: ['run_id'] },
+  });
+  const orphans = candidates.filter(node => {
+    if (node.getSharedPluginData('dsb', 'run_id') !== TARGET_RUN_ID) return false;
     if (TARGET_PHASE && node.getSharedPluginData('dsb', 'phase') !== TARGET_PHASE) return false;
     return true;
   });
@@ -197,9 +204,13 @@ const RUN_ID = 'ds-build-2024-001';
 const page = await figma.getNodeByIdAsync(PAGE_ID);
 await figma.setCurrentPageAsync(page);
 
-const existing = page.findAll(n =>
-  n.type === 'COMPONENT_SET' && n.getSharedPluginData('dsb', 'key') === KEY
-);
+// Indexed lookup: only COMPONENT_SET nodes with the dsb namespace + key.
+const existing = page
+  .findAllWithCriteria({
+    types: ['COMPONENT_SET'],
+    sharedPluginData: { namespace: 'dsb', keys: ['key'] },
+  })
+  .filter(n => n.getSharedPluginData('dsb', 'key') === KEY);
 
 if (existing.length > 0) {
   return {
@@ -305,10 +316,17 @@ const toVerify = {
   'button-componentset': '4567:1',
 };
 
+// Batch the lookups — awaiting getNodeByIdAsync per entry serializes the
+// round-trips. Resolve them all in parallel with Promise.all, then walk the
+// results.
+const entries = Object.entries(toVerify);
+const nodes = await Promise.all(
+  entries.map(([, id]) => figma.getNodeByIdAsync(id).catch(() => null))
+);
 const results = {};
-for (const [label, id] of Object.entries(toVerify)) {
-  const node = await figma.getNodeByIdAsync(id)
-    .catch(() => null);
+for (let i = 0; i < entries.length; i++) {
+  const [label] = entries[i];
+  const node = nodes[i];
   results[label] = node ? { found: true, name: node.name } : { found: false };
 }
 
@@ -324,6 +342,10 @@ If any entity is missing, treat the phase that created it as incomplete and re-r
 ### Step 1: Inspect the file for `run_id` tags
 
 ```javascript
+// Read-only resume inventory — dsb-tagged nodes are top-level user-created
+// frames, never inside instances, so skip invisible instance interiors.
+figma.skipInvisibleInstanceChildren = true;
+
 const TARGET_RUN_ID = 'ds-build-2024-001';
 const inventory = { pages: [], variables: [], componentSets: [], frames: [] };
 
@@ -345,7 +367,11 @@ for (const v of allVars) {
 // Scan all component sets and frames on each page
 for (const page of figma.root.children) {
   await figma.setCurrentPageAsync(page);
-  const nodes = page.findAll(n => n.getSharedPluginData('dsb', 'run_id') === TARGET_RUN_ID);
+  // Indexed sharedPluginData lookup — much faster than findAll + getSharedPluginData per node.
+  const candidates = page.findAllWithCriteria({
+    sharedPluginData: { namespace: 'dsb', keys: ['run_id'] },
+  });
+  const nodes = candidates.filter(n => n.getSharedPluginData('dsb', 'run_id') === TARGET_RUN_ID);
   for (const n of nodes) {
     if (n.type === 'COMPONENT_SET') {
       inventory.componentSets.push({ id: n.id, name: n.name, key: n.getSharedPluginData('dsb', 'key') });

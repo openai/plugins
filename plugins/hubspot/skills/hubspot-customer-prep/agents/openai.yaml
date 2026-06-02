@@ -1,0 +1,5 @@
+interface:
+  display_name: "Customer Prep"
+  short_description: "Prepare account and deal briefs from HubSpot"
+  brand_color: "#FF7A59"
+  default_prompt: "Use $hubspot-customer-prep to prepare an account, deal, or support brief from HubSpot context."

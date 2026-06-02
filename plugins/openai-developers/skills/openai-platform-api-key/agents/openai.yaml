@@ -1,0 +1,3 @@
+interface:
+  display_name: "OpenAI API Key Setup"
+  short_description: "Create and configure OpenAI API keys safely"

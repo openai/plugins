@@ -1,0 +1,3 @@
+interface:
+  display_name: "RNAcentral"
+  short_description: "Fetch RNAcentral summaries"

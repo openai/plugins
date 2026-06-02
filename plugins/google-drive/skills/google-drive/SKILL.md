@@ -16,19 +16,15 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - If the request starts as "find X and then update it," do the Drive discovery step first instead of guessing the target.
 
 2. Stay in the base Google Drive workflow for Drive-native tasks.
-- Use the base workflow for search, fetch, recent files, folders, sharing, copying, deleting, exporting, and other file-lifecycle work that is not primarily about editing Docs, Sheets, or Slides content.
+- Use the base workflow for search, fetch, recent files, folders, sharing, copying, deleting, exporting, revision history, file moves, and other file-lifecycle work that is not primarily about editing Docs, Sheets, or Slides content.
+- For version-history requests, including "previous version," "revision history," "what changed since the last version," or "compare to the prior revision," ground the file, fetch the current content, use `list_file_revisions`, fetch the immediately previous revision or the user-named revision with `fetch_file_revision`, then compare the fetched revision against the current content. Do not say previous versions are unsupported until you have checked whether revision tools are available for the target file.
+- For file move requests, ground the source file and target folder, read the file metadata including its current parents, then use `update_file` with `addParents` for the target folder and `removeParents` for only the verified source parent or parents that should no longer contain it. Preserve unrelated parents, and verify the move by reading metadata or listing the target folder before the final response.
 
 3. Route to the narrowest sibling skill that matches the file type and job.
 - Drive, Docs, Sheets, or Slides comment creation, comment replies, comment resolution, or review-by-comments: use [google-drive-comments](../google-drive-comments/SKILL.md).
-- Google Docs content summary, revision planning, prose rewriting, or section edits: use [google-docs](../google-docs/SKILL.md).
-- Google Sheets range inspection, table cleanup, data restructuring, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
-- Google Sheets formula design or repair: use [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md).
-- Google Sheets chart creation or repair: use [google-sheets-chart-builder](../google-sheets-chart-builder/SKILL.md).
-- Google Slides deck summary, content edits, new deck creation, or import handoff: use [google-slides](../google-slides/SKILL.md).
-- Google Slides visual cleanup: use [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md).
-- Google Slides PPT/PPTX/ODP import: use [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md).
-- Google Slides repeated-layout repair: use [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md).
-- Google Slides template migration: use [google-slides-template-migration](../google-slides-template-migration/SKILL.md).
+- Google Docs net-new creation, content summary, revision planning, prose rewriting, or section edits: use [google-docs](../google-docs/SKILL.md).
+- Google Sheets creation, local spreadsheet import, range inspection, table cleanup, data restructuring, formula design or repair, chart creation or repair, or batch updates: use [google-sheets](../google-sheets/SKILL.md).
+- Google Slides deck summary, content edits, new deck creation, local presentation import, visual cleanup, structural repair, or template migration: use [google-slides](../google-slides/SKILL.md).
 
 ## Routing Rules
 
@@ -38,22 +34,23 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
   - Deck -> Slides skill
 - If the user wants to find a file and then edit it, do both in one flow: Drive for discovery, then the file-type skill for the edit.
 - If the user wants a Google Workspace outcome but has not named a file type yet, start with Drive discovery instead of asking them to choose among separate Google plugins.
+- If the user asks to create a new Google Doc, route to the Docs skill; it owns the mandatory local `.docx` -> native Google Docs import workflow and the explicit-user-override boundary. Do not create a blank Google Doc directly from this router.
+- If the user asks to import a local `.docx` into Google Docs, route to the Docs skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
+- If the user asks to create a new Google Sheet, route to the Sheets skill. The Sheets skill should prefer the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or `$Excel` skill to create a local `.xlsx`, then import it as native Google Sheets.
+- If the user asks to import a local `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets, route to the Sheets skill and use native Google Sheets conversion by default. Preserve the source file type only when the user explicitly asks for that.
+- If the user asks to create a new Google Slides deck, route to the Slides skill; it owns the mandatory local `.pptx` -> native Google Slides import workflow and the explicit-user-override boundary. Do not create a blank Google Slides deck directly from this router.
+- If the user asks to import a local `.ppt`, `.pptx`, or `.odp` into Google Slides, route to the Slides skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
 
 ## Write Safety
 
 - Preserve the user's existing file organization, sharing state, and target artifact unless the request clearly asks to change them.
 - When a task can be satisfied by a file-level Drive operation alone, do not load heavier Docs, Sheets, or Slides skills.
 - For write-heavy Sheets or Slides work, read the specialized skill before the first large update so request shapes stay grounded.
+- For any file import or explicit direct create that returns a user-facing Google Workspace link, wait for the write action to complete and verify the created file with connector readback or Drive metadata readback before returning the URL. Use only a URL or id observed from the completed connector result or readback; never synthesize or predict the URL.
 
 ## Related Skills
 
 - Comments: [google-drive-comments](../google-drive-comments/SKILL.md)
 - Docs: [google-docs](../google-docs/SKILL.md)
 - Sheets: [google-sheets](../google-sheets/SKILL.md)
-- Sheets formulas: [google-sheets-formula-builder](../google-sheets-formula-builder/SKILL.md)
-- Sheets charts: [google-sheets-chart-builder](../google-sheets-chart-builder/SKILL.md)
 - Slides: [google-slides](../google-slides/SKILL.md)
-- Slides visual iteration: [google-slides-visual-iteration](../google-slides-visual-iteration/SKILL.md)
-- Slides import: [google-slides-import-presentation](../google-slides-import-presentation/SKILL.md)
-- Slides template surgery: [google-slides-template-surgery](../google-slides-template-surgery/SKILL.md)
-- Slides template migration: [google-slides-template-migration](../google-slides-template-migration/SKILL.md)

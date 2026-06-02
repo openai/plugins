@@ -1,0 +1,3 @@
+interface:
+  display_name: "GSAP"
+  short_description: "GSAP animation reference for HyperFrames."

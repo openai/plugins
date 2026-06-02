@@ -1,0 +1,5 @@
+interface:
+  display_name: "TypeScript Data Visualization Engineering"
+  short_description: "Build typed data visualizations in TypeScript"
+policy:
+  allow_implicit_invocation: false

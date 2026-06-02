@@ -1,0 +1,7 @@
+interface:
+  display_name: Zoom Video SDK (Android)
+  short_description: Zoom Video SDK for Android native apps. Use when building custom
+    Android video experiences with full UI control, session tokens, raw media options,
+    and event-driven participant state.
+policy:
+  allow_implicit_invocation: false

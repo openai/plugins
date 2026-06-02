@@ -1,0 +1,3 @@
+interface:
+  display_name: "CIViC"
+  short_description: "Fetch CIViC cancer variant summaries"

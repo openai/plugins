@@ -1,0 +1,3 @@
+interface:
+  display_name: "NCBI Entrez"
+  short_description: "Fetch NCBI Entrez search and metadata summaries"

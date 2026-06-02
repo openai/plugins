@@ -1,0 +1,132 @@
+---
+// ── Composer skeleton: src/layouts/Layout.astro ──────────────────────────────
+// Fully replaces the scaffold's bare stub. The <script> below and the View
+// Transitions wiring are LITERAL fixed bulk — do not re-author. Composer's only
+// substitutions (see COMPOSE.md § "3. Layout.astro"):
+//   {{components-css-imports}} — one `import '../styles/components-<pack>.css';`
+//        per pack in "Packs with components" (omit entirely when none).
+//   {{fonts.googleHref}} — the Google Fonts <link> href built from designTokens
+//        .fonts (display + body families). Omit the <link> if fonts are system.
+//   {{brand.name}} — default <title>.
+import '../styles/global.css';
+{{components-css-imports}}
+import { ClientRouter } from 'astro:transitions';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  hasSeoTags?: boolean;
+}
+const { title, description, hasSeoTags = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="{{fonts.googleHref}}" />
+    {!hasSeoTags && (
+      <>
+        <title>{title ? `${title} · {{brand.name}}` : "{{brand.name}}"}</title>
+        {description && <meta name="description" content={description} />}
+      </>
+    )}
+    <slot name="head" />
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="nav-progress" data-nav-progress aria-hidden="true"></div>
+    <Navigation />
+    <main><slot /></main>
+    <Footer />
+    <script>
+      // Persisted rail aria-current sync + top loading bar + rail-anchored
+      // scroll across listing-to-listing navigation. Stores pack relies on
+      // all three; do not split into separate scripts.
+      function syncCategoryRail() {
+        const path = window.location.pathname;
+        const activeSlug = path.startsWith("/category/")
+          ? path.slice("/category/".length).replace(/\/$/, "")
+          : path === "/products" || path === "/products/"
+            ? ""
+            : null;
+        if (activeSlug === null) return;
+        const pills = document.querySelectorAll<HTMLAnchorElement>(
+          "[data-category-rail] .category-pill",
+        );
+        for (const pill of pills) {
+          const slug = pill.dataset.categorySlug ?? "";
+          if (slug === activeSlug) pill.setAttribute("aria-current", "page");
+          else pill.removeAttribute("aria-current");
+        }
+      }
+      // Eager click feedback — flip aria-current before the network call.
+      document.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement | null;
+        const pill = target?.closest<HTMLAnchorElement>(
+          "[data-category-rail] .category-pill",
+        );
+        if (!pill) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const pills = document.querySelectorAll<HTMLAnchorElement>(
+          "[data-category-rail] .category-pill",
+        );
+        for (const p of pills) p.removeAttribute("aria-current");
+        pill.setAttribute("aria-current", "page");
+      }, true);
+      const progress = document.querySelector<HTMLElement>("[data-nav-progress]");
+      function startProgress() {
+        if (!progress) return;
+        progress.dataset.state = "loading";
+        document.body.dataset.navigating = "true";
+      }
+      function endProgress() {
+        if (!progress) return;
+        progress.dataset.state = "done";
+        delete document.body.dataset.navigating;
+        window.setTimeout(() => {
+          if (progress.dataset.state === "done") delete progress.dataset.state;
+        }, 320);
+      }
+      // Anchor the persisted rail across listing-to-listing navigation. The
+      // page-header above the rail differs between /products and /category/[slug]
+      // (breadcrumbs, lede, optional image), so naive scroll preservation reads
+      // as a jump. Capture rail.getBoundingClientRect().top before the swap and
+      // re-equalize after.
+      const isListing = (p: string) =>
+        p === "/products" || p === "/products/" || p.startsWith("/category/");
+      let railAnchorTop: number | null = null;
+      document.addEventListener("astro:before-preparation", (event: any) => {
+        const from = window.location.pathname;
+        const to = event?.to?.pathname ?? from;
+        const rail = document.querySelector<HTMLElement>("[data-category-rail]");
+        railAnchorTop =
+          rail && isListing(from) && isListing(to)
+            ? rail.getBoundingClientRect().top
+            : null;
+        startProgress();
+      });
+      document.addEventListener("astro:after-swap", () => {
+        syncCategoryRail();
+        if (railAnchorTop !== null) {
+          const rail = document.querySelector<HTMLElement>("[data-category-rail]");
+          if (rail) {
+            const delta = rail.getBoundingClientRect().top - railAnchorTop;
+            if (Math.abs(delta) > 0.5) {
+              window.scrollBy({ top: delta, left: 0, behavior: "instant" as ScrollBehavior });
+            }
+          }
+        }
+        railAnchorTop = null;
+        endProgress();
+      });
+      document.addEventListener("astro:page-load", endProgress);
+      syncCategoryRail();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wix App Builder"
+  short_description: "Build and review Wix CLI app extensions"
+  default_prompt: "Use Wix app guidance to choose an extension type, scaffold it with the CLI, and validate the result."

@@ -5,7 +5,7 @@ Purpose:
 
 Rules:
 - Confirm the Figma target is a published component or component set.
-- Use MCP Code Connect suggestions and component property context before writing templates.
+- Use Code Connect suggestions and component property context before writing templates.
 - If multiple code candidates match, explain selection criteria briefly.
 - Ask for confirmation before creating templates when ambiguity exists.
 

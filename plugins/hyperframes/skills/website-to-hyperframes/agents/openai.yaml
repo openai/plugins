@@ -1,0 +1,3 @@
+interface:
+  display_name: "Website to HyperFrames"
+  short_description: "Capture a website and create a HyperFrames video from it."

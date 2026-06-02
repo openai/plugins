@@ -70,8 +70,10 @@ frame.fills = [{ type: "SOLID", color: { r: 0.98, g: 0.98, b: 0.99 } }];
 
 ### Text
 
+Canonical recipe: load font → `await` → mutate → return affected IDs. This pattern is the same for every font — `Inter` happens to be preloaded so the missing-`loadFontAsync` bug usually only surfaces with other families. See [gotchas.md → Canonical text-edit recipe](gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids).
+
 ```javascript
-// MUST load font before any text operations
+// Load font BEFORE any text mutation — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
 const text = figma.createText();
@@ -178,18 +180,31 @@ node.fills = [
 
 ### Setting Up Auto Layout
 
+**Prefer `figma.createAutoLayout()`** — it returns a frame with `layoutMode` already set and both axes hugging content, so children can immediately use `layoutSizingHorizontal/Vertical = "FILL"`.
+
 ```javascript
-const frame = figma.createFrame();
-frame.layoutMode = "VERTICAL";              // or "HORIZONTAL"
-frame.primaryAxisSizingMode = "AUTO";       // Hug main axis
-frame.counterAxisSizingMode = "FIXED";      // Fixed cross axis
-frame.resize(360, 1);                        // Width fixed, height auto
-frame.itemSpacing = 16;                      // Gap between children
+const frame = figma.createAutoLayout(); // HORIZONTAL by default
+const column = figma.createAutoLayout("VERTICAL");
+
+// Customize from there as usual:
+frame.itemSpacing = 16;
 frame.paddingTop = 24;
 frame.paddingBottom = 24;
 frame.paddingLeft = 24;
 frame.paddingRight = 24;
 ```
+
+If you need a non-auto-layout frame, use `figma.createFrame()` and set the properties manually:
+
+```javascript
+const frame = figma.createFrame();
+frame.layoutMode = "VERTICAL";              // or "HORIZONTAL"
+frame.resize(360, 1);                        // Width fixed, height auto
+frame.primaryAxisSizingMode = "AUTO";       // Hug main axis
+frame.counterAxisSizingMode = "FIXED";      // Fixed cross axis
+```
+
+**CRITICAL ORDERING:** Always call `resize()` BEFORE setting sizing modes. The `resize()` method silently resets both sizing modes to FIXED, so calling it after setting `primaryAxisSizingMode = "AUTO"` will override your HUG settings and lock the frame to the exact pixel dimensions you passed (even throwaway values like `1`). This causes the common "1px dimension" bug.
 
 ### Alignment
 
@@ -338,7 +353,7 @@ group.name = "Grouped Elements";
 ```javascript
 const section = figma.createSection();
 section.name = "My Section";
-section.resizeWithoutConstraints(800, 600);
+section.resize(800, 600); // `resize` and `resizeWithoutConstraints` are equivalent on sections
 section.x = 0;
 section.y = 0;
 // IMPORTANT: Sections don't auto-resize — always resize after adding content
@@ -376,12 +391,14 @@ instance.y = 100;
 These methods import components from **team libraries** (not the same file). For components in the current file, use `figma.getNodeByIdAsync()` or `findOne()`/`findAll()`.
 
 ```javascript
-// Import a published component from a team library by its key
-const comp = await figma.importComponentByKeyAsync(componentKey)
-const instance = comp.createInstance()
+// Batch independent imports with Promise.all — sequential awaits multiply
+// IPC latency by the number of imports for no benefit.
+const [comp, set] = await Promise.all([
+  figma.importComponentByKeyAsync(componentKey),
+  figma.importComponentSetByKeyAsync(componentSetKey),
+])
 
-// Import a published component set from a team library by its key
-const set = await figma.importComponentSetByKeyAsync(componentSetKey)
+const instance = comp.createInstance()
 const variant = set.defaultVariant
 const variantInstance = variant.createInstance()
 ```
@@ -431,6 +448,7 @@ iconInstance.componentPropertyReferences = {
 ### Text Style
 
 ```javascript
+// Load font BEFORE setting style.fontName — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
 const style = figma.createTextStyle();
@@ -474,13 +492,17 @@ clone.name = "Copy of " + originalNode.name;
 ## Finding Nodes
 
 ```javascript
-// Find by name on current page
+// If you already have the node's ID, NEVER scan — use the indexed lookup.
+const known = await figma.getNodeByIdAsync("123:456");
+
+// Find by name on current page (no ID available)
 const node = figma.currentPage.findOne(n => n.name === "My Frame");
 
-// Find all by type
-const allTexts = figma.currentPage.findAll(n => n.type === "TEXT");
+// Find all by type — use findAllWithCriteria, hundreds of times faster than
+// findAll(n => n.type === '…') because the engine uses an internal type index.
+const allTexts = figma.currentPage.findAllWithCriteria({ types: ["TEXT"] });
 
-// Find all by name pattern
+// Find all by name pattern (predicate is fine — criteria doesn't index name)
 const allButtons = figma.currentPage.findAll(n => n.name.startsWith("Button/"));
 ```
 

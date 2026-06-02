@@ -1,0 +1,4 @@
+interface:
+  display_name: "Airtable CLI"
+  short_description: "Use airtable-mcp to inspect bases, schema, and records"
+  default_prompt: "Use airtable-mcp to discover available Airtable tools, inspect the schema, and read or update records."

@@ -1,0 +1,5 @@
+interface:
+  display_name: "/plan-zoom-integration"
+  short_description: Use when planning Zoom integrations.
+policy:
+  allow_implicit_invocation: false

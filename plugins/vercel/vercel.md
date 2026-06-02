@@ -228,7 +228,7 @@ AI SDK (v6, TypeScript)                    ⤳ skill: ai-sdk  📖 docs: https:/
 │
 ├── Providers (Global Provider System: "provider/model")
 │   ⊃ @ai-sdk/openai (GPT-5.x, o-series)
-│   ⊃ @ai-sdk/anthropic (Claude 4.x)
+│   ⊃ @ai-sdk/anthropic (4.x models)
 │   ⊃ @ai-sdk/google (Gemini)
 │   ⊃ @ai-sdk/amazon-bedrock
 │   ⊃ @ai-sdk/azure

@@ -1,0 +1,31 @@
+{
+  "name": "circleback",
+  "version": "1.0.0",
+  "description": "Circleback helps teams get the most out of every conversation with AI-powered meeting notes, action items,...",
+  "author": {
+    "name": "Circleback AI, Inc.",
+    "url": "https://circleback.ai"
+  },
+  "homepage": "https://circleback.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Circleback",
+    "shortDescription": "Circleback helps teams get the most out of every conversation with AI-powered meeting notes, action items,...",
+    "longDescription": "Circleback helps teams get the most out of every conversation with AI-powered meeting notes, action items, automations, and search.\n\nSearch and access data from in-person and online meetings you've recorded in Circleback, including meeting notes, action items, transcripts, people, and companies as well as your calendar and email.",
+    "developerName": "Circleback AI, Inc.",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://circleback.ai",
+    "privacyPolicyURL": "https://circleback.ai/privacy",
+    "termsOfServiceURL": "https://circleback.ai/terms",
+    "defaultPrompt": [
+      "Have I met anyone from Initech"
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  }
+}

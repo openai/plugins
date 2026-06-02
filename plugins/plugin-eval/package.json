@@ -1,0 +1,23 @@
+{
+  "name": "plugin-eval",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first Codex plugin and CLI for evaluating Codex skills and plugins with a chat-first start flow for new authors.",
+  "bin": {
+    "plugin-eval": "./scripts/plugin-eval.js"
+  },
+  "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "analyze": "node ./scripts/plugin-eval.js analyze",
+    "guide": "node ./scripts/plugin-eval.js guide",
+    "report": "node ./scripts/plugin-eval.js report",
+    "compare": "node ./scripts/plugin-eval.js compare",
+    "explain-budget": "node ./scripts/plugin-eval.js explain-budget",
+    "init-benchmark": "node ./scripts/plugin-eval.js init-benchmark",
+    "benchmark": "node ./scripts/plugin-eval.js benchmark"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scaffold a plugin directory and optionally update repo-root marketplace.json."""
+"""Scaffold a plugin directory and optionally update marketplace.json."""
 
 from __future__ import annotations
 
@@ -11,8 +11,8 @@ from typing import Any
 
 
 MAX_PLUGIN_NAME_LENGTH = 64
-DEFAULT_PLUGIN_PARENT = Path(__file__).resolve().parents[4] / "plugins"
-DEFAULT_MARKETPLACE_PATH = Path(__file__).resolve().parents[2] / "plugins" / "marketplace.json"
+DEFAULT_PLUGIN_PARENT = Path.home() / "plugins"
+DEFAULT_MARKETPLACE_PATH = Path.home() / ".agents" / "plugins" / "marketplace.json"
 DEFAULT_INSTALL_POLICY = "AVAILABLE"
 DEFAULT_AUTH_POLICY = "ON_INSTALL"
 DEFAULT_CATEGORY = "Productivity"
@@ -191,7 +191,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--path",
         default=str(DEFAULT_PLUGIN_PARENT),
-        help="Parent directory for plugin creation (defaults to <repo>/plugins)",
+        help=(
+            "Parent directory for plugin creation (defaults to <home>/plugins). "
+            "Use <repo>/plugins when creating a repo/team plugin."
+        ),
     )
     parser.add_argument("--with-skills", action="store_true", help="Create skills/ directory")
     parser.add_argument("--with-hooks", action="store_true", help="Create hooks/ directory")
@@ -202,12 +205,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--with-marketplace",
         action="store_true",
-        help="Create or update repo-root .agents/plugins/marketplace.json",
+        help=(
+            "Create or update <home>/.agents/plugins/marketplace.json by default. "
+            "Marketplace entries always point to ./plugins/<plugin-name> relative to the "
+            "marketplace root."
+        ),
     )
     parser.add_argument(
         "--marketplace-path",
         default=str(DEFAULT_MARKETPLACE_PATH),
-        help="Path to marketplace.json (defaults to <repo>/.agents/plugins/marketplace.json)",
+        help=(
+            "Path to marketplace.json (defaults to <home>/.agents/plugins/marketplace.json). "
+            "Use <repo>/.agents/plugins/marketplace.json for a repo/team plugin."
+        ),
     )
     parser.add_argument(
         "--install-policy",

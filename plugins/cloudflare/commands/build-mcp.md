@@ -27,7 +27,7 @@ When this command is invoked:
 - OAuth 2.0 authentication setup
 - Tool definition and implementation
 - Production-ready deployment patterns
-- Integration with Claude and other MCP clients
+- Integration with Codex and other MCP clients
 
 ## Example Usage
 

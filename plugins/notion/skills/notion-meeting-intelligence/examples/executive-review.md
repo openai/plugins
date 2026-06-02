@@ -7,7 +7,9 @@
 ### 1. Search for Context
 ```
 Notion:notion-search
-query: "Q4 objectives" + "KPIs" + "quarterly results"
+query: "Q4 objectives KPIs quarterly results"
+query_type: "internal"
+filters: {}
 ```
 
 Found:
@@ -18,7 +20,9 @@ Found:
 
 ### 2. Fetch & Analyze
 ```
-Notion:notion-fetch (5 pages)
+Repeat for each Notion page result:
+Notion:notion-fetch
+id: "q4-okrs-page-id"
 ```
 
 **Key metrics**:
@@ -37,7 +41,13 @@ Added context on:
 ### 4. Create Pre-Read (Internal)
 ```
 Notion:notion-create-pages
-title: "Q4 Review - Pre-Read (Internal)"
+parent: { page_id: "executive-review-parent-id" }
+pages: [{
+  properties: {
+    "title": "Q4 Review - Pre-Read (Internal)"
+  },
+  content: "[Internal executive pre-read]"
+}]
 ```
 
 **Pre-read sections**:
@@ -50,7 +60,13 @@ title: "Q4 Review - Pre-Read (Internal)"
 ### 5. Create Presentation Agenda
 ```
 Notion:notion-create-pages
-title: "Q4 Executive Review - Agenda"
+parent: { page_id: "executive-review-parent-id" }
+pages: [{
+  properties: {
+    "title": "Q4 Executive Review - Agenda"
+  },
+  content: "[Executive review agenda]"
+}]
 ```
 
 **Agenda** (90 min):

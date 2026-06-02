@@ -1,0 +1,42 @@
+{/*
+  index.astro contribution. Insert the block below immediately AFTER the
+  `<!-- home:gift-cards -->` marker. ALSO add to the file's frontmatter
+  (above the `---` close):
+
+      import { getGiftCardProduct } from "../utils/gift-cards";
+      import { resolveWixImageUrl } from "../utils/wix-image";
+
+      const giftCardProduct = await getGiftCardProduct();
+      const giftCardImage = giftCardProduct
+        ? resolveWixImageUrl(giftCardProduct.image, 800, 600)
+        : null;
+
+  If `resolveWixImageUrl` is already imported by the stores patcher, do not
+  re-import — Astro frontmatter is TypeScript and duplicate imports build-fail.
+
+  The "A gift, considered" eyebrow can be replaced with brand-appropriate copy
+  during adaptation; keep the structure as-is.
+*/}
+{giftCardProduct && (
+  <section class="py-3xl md:py-4xl">
+    <a href="/gift-cards" class="max-w-wide mx-auto px-xl grid grid-cols-1 md:grid-cols-2 gap-xl md:gap-3xl items-center group">
+      <div class="aspect-[4/3] bg-cream rounded-sm overflow-hidden">
+        {giftCardImage && (
+          <img
+            src={giftCardImage}
+            alt={giftCardProduct.image?.altText || giftCardProduct.name}
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover"
+          />
+        )}
+      </div>
+      <div class="flex flex-col gap-md">
+        <p class="eyebrow">A gift, considered</p>
+        <h2 class="font-display text-3xl leading-tight">{giftCardProduct.name}</h2>
+        <p class="text-ink-soft leading-relaxed">{giftCardProduct.description}</p>
+        <span class="text-sm tracking-wide uppercase mt-sm">Send a gift card →</span>
+      </div>
+    </a>
+  </section>
+)}

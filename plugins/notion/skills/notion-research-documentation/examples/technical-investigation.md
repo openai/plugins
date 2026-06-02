@@ -13,6 +13,7 @@ Notion:notion-search
 query: "caching strategy architecture"
 query_type: "internal"
 teamspace_id: "engineering-teamspace-id"
+filters: {}
 ```
 
 **Results Found:**

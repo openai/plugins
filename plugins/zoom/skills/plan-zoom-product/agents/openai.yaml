@@ -1,0 +1,5 @@
+interface:
+  display_name: "/plan-zoom-product"
+  short_description: Use when choosing products.
+policy:
+  allow_implicit_invocation: false

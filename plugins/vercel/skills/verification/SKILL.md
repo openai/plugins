@@ -1,7 +1,6 @@
 ---
 name: verification
 description: "Full-story verification — infers what the user is building, then verifies the complete flow end-to-end: browser → API → data → response. Triggers on dev server start and 'why isn't this working' signals."
-summary: "Verify full user story: browser + server + data flow + env"
 metadata:
   priority: 7
   docs:
@@ -59,39 +58,6 @@ metadata:
       - "playwright test"
       - "cypress test"
     minScore: 6
-retrieval:
-  aliases:
-    - end to end test
-    - full stack verify
-    - flow test
-    - integration check
-  intents:
-    - verify full flow
-    - test end to end
-    - check if app works
-    - validate implementation
-  entities:
-    - browser
-    - API
-    - data flow
-    - end-to-end
-    - verification
-chainTo:
-  -
-    pattern: 'process\.env\.\w+|NEXT_PUBLIC_\w+'
-    targetSkill: env-vars
-    message: 'Environment variable references detected during verification — loading Env Vars guidance for proper configuration, vercel env pull, and branch scoping.'
-    skipIfFileContains: 'vercel\s+env\s+pull|\.env\.local'
-  -
-    pattern: 'middleware\.(ts|js)|proxy\.(ts|js)|clerkMiddleware|NextResponse\.redirect'
-    targetSkill: routing-middleware
-    message: 'Middleware/proxy detected during verification — loading Routing Middleware guidance for request interception, auth checks, and proxy.ts migration.'
-  -
-    pattern: 'streamText\s*\(|generateText\s*\(|useChat\s*\('
-    targetSkill: ai-sdk
-    message: 'AI SDK calls detected during verification — loading AI SDK v6 guidance for streaming, transport, and error handling patterns.'
-    skipIfFileContains: 'toUIMessageStreamResponse|DefaultChatTransport'
-
 ---
 
 # Full-Story Verification

@@ -1,0 +1,4 @@
+interface:
+  display_name: "iOS ETTrace Performance"
+  short_description: "Profile symbolicated iOS simulator flows with ETTrace"
+  default_prompt: "Use $ios-ettrace-performance to capture a focused iOS simulator ETTrace profile and identify time-heavy stacks."

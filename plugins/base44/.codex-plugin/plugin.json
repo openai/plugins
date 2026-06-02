@@ -1,0 +1,32 @@
+{
+  "name": "base44",
+  "version": "1.0.0-beta.1",
+  "description": "Build and deploy Base44 full-stack apps with CLI project management and JavaScript/TypeScript SDK development skills",
+  "author": {
+    "name": "base44",
+    "url": "https://base44.com"
+  },
+  "homepage": "https://docs.base44.com",
+  "repository": "https://github.com/base44/skills",
+  "license": "MIT",
+  "keywords": ["base44", "full-stack", "sdk", "cli", "deployment", "entities", "backend-functions", "javascript", "typescript"],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Base44",
+    "shortDescription": "Build and deploy Base44 full-stack apps from Codex",
+    "longDescription": "Build and deploy Base44 full-stack apps with Codex. Includes CLI project management, JavaScript/TypeScript SDK development, and production troubleshooting skills.",
+    "developerName": "base44",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://base44.com",
+    "defaultPrompt": [
+      "Create a new Base44 app and deploy it.",
+      "Build a feature in my existing Base44 app.",
+      "Debug errors from my Base44 backend functions."
+    ],
+    "composerIcon": "./assets/base44-logo.png",
+    "logo": "./assets/base44-logo.png",
+    "screenshots": []
+  }
+}

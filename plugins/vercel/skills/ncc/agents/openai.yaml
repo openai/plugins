@@ -1,0 +1,3 @@
+interface:
+  display_name: "NCC"
+  short_description: "'Expert guidance for @vercel/ncc — a simple CLI for compiling Node.js modules into a single file with all d..."

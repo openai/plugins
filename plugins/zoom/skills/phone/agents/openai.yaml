@@ -1,0 +1,5 @@
+interface:
+  display_name: Build Zoom Phone Integration
+  short_description: Use when building Phone.
+policy:
+  allow_implicit_invocation: false

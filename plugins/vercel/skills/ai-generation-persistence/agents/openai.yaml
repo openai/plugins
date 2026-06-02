@@ -1,0 +1,3 @@
+interface:
+  display_name: "AI Generation Persistence"
+  short_description: "AI generation persistence patterns — unique IDs, addressable URLs, database storage, and cost tracking for..."

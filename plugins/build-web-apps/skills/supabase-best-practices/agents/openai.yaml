@@ -1,0 +1,3 @@
+interface:
+  display_name: "Supabase Postgres Best Practices"
+  short_description: "Optimize Postgres queries, schema design, and configuration"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Phaser 2D Game"
+  short_description: "Build 2D browser games with Phaser"
+  default_prompt: "Implement this 2D browser game with Phaser, TypeScript, and a clear gameplay architecture."

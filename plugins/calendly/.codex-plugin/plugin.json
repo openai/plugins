@@ -1,0 +1,41 @@
+{
+  "name": "calendly",
+  "version": "1.0.0",
+  "description": "Search Calendly events and availability so Codex can reason about meetings and scheduling.",
+  "author": {
+    "name": "Calendly",
+    "url": "https://calendly.com"
+  },
+  "homepage": "https://calendly.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "calendly",
+    "calendar",
+    "scheduling",
+    "meetings",
+    "availability",
+    "events"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Calendly",
+    "shortDescription": "Search Calendly meetings, events, and availability.",
+    "longDescription": "Calendly connects Codex to your scheduling workflows so you can inspect upcoming meetings, review event details, reason about availability, and summarize attendee follow-ups.",
+    "developerName": "Calendly",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://calendly.com",
+    "privacyPolicyURL": "https://calendly.com/legal/privacy-notice",
+    "termsOfServiceURL": "https://calendly.com/legal/customer-terms-conditions",
+    "brandColor": "#006BFF",
+    "defaultPrompt": [
+      "Find my upcoming Calendly meetings and summarize who I am meeting with.",
+      "Check Calendly availability for this week and suggest open meeting slots.",
+      "Review recent Calendly events and summarize attendee details and follow-ups."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  }
+}

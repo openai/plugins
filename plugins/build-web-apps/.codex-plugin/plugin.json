@@ -1,7 +1,7 @@
 {
   "name": "build-web-apps",
   "version": "0.1.0",
-  "description": "Build web apps with workflows for UI reviews, React improvements, deployment, payments, and database design.",
+  "description": "Build web apps with frontend asset design, browser testing, UI components, payments, and database guidance.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -13,31 +13,29 @@
   "keywords": [
     "build-web-apps",
     "build",
-    "react",
-    "vercel",
+    "product-apps",
+    "frontend",
+    "image-generation",
+    "browser-testing",
+    "frontend-debugging",
     "stripe",
     "supabase",
     "shadcn",
     "full-stack",
-    "ui-review"
+    "frontend-qa"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Build Web Apps",
-    "shortDescription": "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases",
-    "longDescription": "Use Build Web Apps to review and improve a web app's UI, apply React and Next.js guidance, deploy projects to Vercel, wire up Stripe payments, and design or tune Supabase/Postgres schemas and queries, all with plugin-local Vercel, Stripe, and Supabase MCP support.",
+    "shortDescription": "Build frontend-focused web apps with generated assets, browser testing, payments, and databases",
+    "longDescription": "Use Build Web Apps to create frontend application surfaces with Codex-generated visual assets, verify them with the Browser plugin and built-in app browser, compose shadcn/ui, wire Stripe payments, and design or tune Supabase/Postgres data flows.",
     "developerName": "OpenAI",
-    "category": "Coding",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
     "websiteURL": "https://openai.com/",
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
-    "defaultPrompt": "Review this app's UI, improve the React implementation, wire up payments or database changes, and help deploy it",
+    "defaultPrompt": ["Design a new landing page for my new SaaS product."],
     "brandColor": "#111111",
     "composerIcon": "./assets/build-web-apps-small.svg",
     "logo": "./assets/app-icon.png",

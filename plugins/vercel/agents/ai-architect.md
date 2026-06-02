@@ -259,7 +259,7 @@ Run `npx @ai-sdk/codemod upgrade` (or `npx @ai-sdk/codemod v6`) to auto-migrate.
 - New: `isToolUIPart` → `isStaticToolUIPart`; `isToolOrDynamicToolUIPart` → `isToolUIPart`
 - New: `getToolName` → `getStaticToolName`; `getToolOrDynamicToolName` → `getToolName`
 - New: `@ai-sdk/azure` defaults to Responses API; use `azure.chat()` for Chat Completions
-- New: `@ai-sdk/anthropic` `structuredOutputMode` for native structured outputs (Claude Sonnet 4.5+)
+- New: `@ai-sdk/anthropic` `structuredOutputMode` for native structured outputs (Anthropic Sonnet 4.5+)
 - New: `@ai-sdk/langchain` rewritten — `toBaseMessages()`, `toUIMessageStream()`, `LangSmithDeploymentTransport`
 - New: Provider-specific tools — Anthropic (memory, code execution), OpenAI (shell, patch), Google (maps, RAG), xAI (search, code)
 - `unknown` finish reason removed → now returned as `other`

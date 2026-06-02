@@ -1,0 +1,31 @@
+{
+  "name": "taxdown",
+  "version": "1.0.0",
+  "description": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
+  "author": {
+    "name": "TAXDOWN S.L.",
+    "url": "https://taxdown.es/"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Taxdown",
+    "shortDescription": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
+    "longDescription": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones, IRPF, renta y obligaciones fiscales, con respuestas claras y orientadas a tu caso.",
+    "developerName": "TAXDOWN S.L.",
+    "category": "Research",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Summarize the relevant Taxdown status or guidance"
+    ],
+    "screenshots": [],
+    "websiteURL": "https://taxdown.es/",
+    "privacyPolicyURL": "https://taxdown.es/politica-de-privacidad/",
+    "termsOfServiceURL": "https://taxdown.es/terminos-condiciones/",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
+  },
+  "homepage": "https://taxdown.es/"
+}

@@ -1,6 +1,6 @@
 ---
 name: figma-generate-library
-description: "Build or update a professional-grade design system in Figma from a codebase. Use when the user wants to create variables/tokens, build component libraries, set up theming (light/dark modes), document foundations, or reconcile gaps between code and Figma. This skill teaches WHAT to build and in WHAT ORDER — it complements the `figma-use` skill which teaches HOW to call the Plugin API. Both skills should be loaded together."
+description: "Build or update a professional-grade design system in Figma from a codebase. Use when the user wants to create variables/tokens, build component libraries, create individual components with proper variant sets and variable bindings, set up theming (light/dark modes), document foundations, or reconcile gaps between code and Figma. Also use when the user asks to create or generate any component in Figma — even a single one — since components require proper variable foundations, variant states, and design token bindings to be production-quality. This skill teaches WHAT to build and in WHAT ORDER — it complements the `figma-use` skill which teaches HOW to call the Plugin API. Both skills should be loaded together."
 disable-model-invocation: false
 ---
 
@@ -78,7 +78,7 @@ Phase 4: INTEGRATION + QA (final pass)
 **Plugin API basics** (from use_figma skill — enforced here too):
 - Use `return` to send data back (auto-serialized). Do NOT wrap in IIFE or call closePlugin.
 - Return ALL created/mutated node IDs in every return value
-- Page context resets each call — always `await figma.setCurrentPageAsync(page)` at start
+- Page context resets each call — always `await figma.setCurrentPageAsync(page)` at start. **Call it at most once per script**: each component or doc page is its own `use_figma` call. Never loop over `figma.root.children` and switch pages inside a mutating script — split that work into one focused call per target page (see [figma-use → gotchas.md → Set current page once per `use_figma` call](../figma-use/references/gotchas.md#set-current-page-once-per-use_figma-call--split-multi-page-work-across-calls))
 - `figma.notify()` throws — never use it
 - Colors are 0–1 range, not 0–255
 - Font MUST be loaded before any text write: `await figma.loadFontAsync({family, style})`. Use `await figma.listAvailableFontsAsync()` to discover available fonts and verify exact style strings — if a load fails, query available fonts to find the correct name or a fallback.
@@ -152,12 +152,31 @@ Maintain a state ledger tracking:
 
 ---
 
-## 5. search_design_system — Reuse Decision Matrix
+## 5. Library Discovery and search_design_system — Reuse Decision Matrix
 
 Search FIRST in Phase 0, then again immediately before each component creation.
 
+**Start with `get_libraries`** to understand what libraries are available before searching blindly:
+
 ```
+// Discover all libraries accessible to the file
+get_libraries({ fileKey })
+// Returns:
+//   libraries_added_to_file: [{ name, libraryKey, description, source }, ...]
+//   libraries_available_to_add: [{ name, libraryKey, description, source }, ...]
+//   libraries_available_to_add_next_offset: number | null
+```
+
+Use the returned `libraryKey` values to scope searches to specific libraries via `includeLibraryKeys`. This avoids noisy results when many libraries are available.
+
+If `libraries_available_to_add_next_offset` is non-null, more org libraries are available — call `get_libraries` again with `offset` set to that value. Org libraries page in batches of 20; community UI kits only appear on the first page.
+
+```
+// Search across all libraries (default)
 search_design_system({ query, fileKey, includeComponents: true, includeVariables: true, includeStyles: true })
+
+// Search within a specific library only
+search_design_system({ query, fileKey, includeLibraryKeys: ["lk-abc123..."], includeComponents: true })
 ```
 
 **Reuse if** all of these are true:

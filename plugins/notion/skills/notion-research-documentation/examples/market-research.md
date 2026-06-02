@@ -8,18 +8,29 @@
 ```
 Notion:notion-search
 query: "AI coding assistants market"
+query_type: "internal"
+filters: {}
 ```
 Found 3 relevant pages across Engineering, Strategy, and Product teamspaces.
 
 ### 2. Fetch & Analyze
 ```
-Notion:notion-fetch (3x)
+Repeat for each Notion page result:
+Notion:notion-fetch
+id: "market-trends-q3-2025-page-id"
 ```
 Extracted market size, competitive landscape, technology trends from source pages.
 
 ### 3. Create Documentation
 ```
 Notion:notion-create-pages
+parent: { page_id: "research-docs-parent-id" }
+pages: [{
+  properties: {
+    "title": "AI Coding Assistants Market Research - Oct 2025"
+  },
+  content: "[Structured market research summary]"
+}]
 ```
 
 ## Output (Condensed)

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Chunk"
+  short_description: "Use CircleCI Chunk from the UI or CLI"

@@ -1,0 +1,3 @@
+interface:
+  display_name: "ProteomeXchange"
+  short_description: "Fetch ProteomeXchange PROXI summaries"

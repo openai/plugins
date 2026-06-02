@@ -1,0 +1,4 @@
+interface:
+  display_name: "HeyGen Video"
+  short_description: "Generate presenter-led HeyGen videos"
+  default_prompt: "Create a 30-second presenter video for my team about this week's progress. Help me shape the script, choose the avatar and voice, and generate the final HeyGen video."

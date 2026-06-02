@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Drive Comments"
+  short_description: "Write, reply to, and resolve Drive comments"
+  default_prompt: "Use $google-drive-comments to leave, reply to, or resolve comments on Google Docs, Sheets, Slides, or Drive files with precise evidence."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web 3D Asset Pipeline"
+  short_description: "Prepare and optimize browser-game 3D assets"
+  default_prompt: "Prepare these browser-game 3D assets for shipping as predictable runtime-ready GLB or glTF files."

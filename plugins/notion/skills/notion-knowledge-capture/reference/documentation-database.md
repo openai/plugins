@@ -27,7 +27,8 @@ Create pages with properties:
   "Tags": "deployment, production, DevOps",
   "Status": "Final",
   "Owner": [current_user],
-  "Last Reviewed": "2025-10-01"
+  "date:Last Reviewed:start": "2025-10-01",
+  "date:Last Reviewed:is_datetime": 0
 }
 ```
 
@@ -46,39 +47,8 @@ Use `Notion:notion-create-database`:
 ```javascript
 {
   "parent": {"page_id": "wiki-page-id"},
-  "title": [{"text": {"content": "Team Documentation"}}],
-  "properties": {
-    "Type": {
-      "select": {
-        "options": [
-          {"name": "How-To", "color": "blue"},
-          {"name": "Concept", "color": "green"},
-          {"name": "Reference", "color": "gray"},
-          {"name": "FAQ", "color": "yellow"}
-        ]
-      }
-    },
-    "Category": {
-      "select": {
-        "options": [
-          {"name": "Engineering", "color": "red"},
-          {"name": "Product", "color": "purple"},
-          {"name": "Design", "color": "pink"}
-        ]
-      }
-    },
-    "Tags": {"multi_select": {"options": []}},
-    "Owner": {"people": {}},
-    "Status": {
-      "select": {
-        "options": [
-          {"name": "Draft", "color": "gray"},
-          {"name": "Final", "color": "green"},
-          {"name": "Deprecated", "color": "red"}
-        ]
-      }
-    }
-  }
+  "title": "Team Documentation",
+  "schema": "CREATE TABLE (\"Title\" TITLE, \"Type\" SELECT('How-To':blue, 'Concept':green, 'Reference':gray, 'FAQ':yellow), \"Category\" SELECT('Engineering':red, 'Product':purple, 'Design':pink), \"Tags\" MULTI_SELECT(), \"Owner\" PEOPLE, \"Status\" SELECT('Draft':gray, 'Final':green, 'Deprecated':red), \"Created\" CREATED_TIME, \"Last Updated\" LAST_EDITED_TIME, \"Last Reviewed\" DATE)"
 }
 ```
 

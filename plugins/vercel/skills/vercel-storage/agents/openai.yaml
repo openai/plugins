@@ -1,0 +1,3 @@
+interface:
+  display_name: "Vercel Storage"
+  short_description: "Vercel storage expert guidance — Blob, Edge Config, and Marketplace storage (Neon Postgres, Upstash Redis)"

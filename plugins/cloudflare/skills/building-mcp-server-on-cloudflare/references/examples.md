@@ -86,17 +86,10 @@ npx wrangler deploy
 # Accessible at https://[worker-name].[subdomain].workers.dev/mcp
 ```
 
-**Claude Desktop setup** (modify `claude_desktop_config.json`):
+**Codex MCP client setup:**
 
-```json
-{
-  "mcpServers": {
-    "my-server": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://my-mcp-server.my-account.workers.dev/mcp"]
-    }
-  }
-}
+```bash
+codex mcp add my-server -- npx mcp-remote https://my-mcp-server.my-account.workers.dev/mcp
 ```
 
 **Inspector testing:**

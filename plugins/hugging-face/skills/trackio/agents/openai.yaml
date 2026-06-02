@@ -1,0 +1,3 @@
+interface:
+  display_name: "Trackio"
+  short_description: "Track and visualize machine learning experiments"

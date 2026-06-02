@@ -1,0 +1,3 @@
+interface:
+  display_name: "Open Targets"
+  short_description: "Fetch Open Targets evidence summaries"

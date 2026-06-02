@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const orderId = Astro.url.searchParams.get("orderId");
+---
+
+<Layout title="Thank You">
+  <main class="py-4xl">
+    <div class="max-w-prose mx-auto px-xl text-center flex flex-col gap-lg">
+      <h1 class="font-display text-5xl">Thank You!</h1>
+      <p class="text-ink-soft">Your order has been placed successfully.</p>
+      {orderId && <p class="text-mute text-sm tracking-wide">Order ID: {orderId}</p>}
+      <a href="/products" class="btn-primary self-center mt-md">Continue Shopping</a>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { trackEvent } from "../utils/analytics";
+  const orderId = new URLSearchParams(window.location.search).get("orderId");
+  if (orderId) {
+    trackEvent("Purchase", { id: orderId, origin: "Thank You Page" });
+  }
+</script>

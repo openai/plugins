@@ -1,0 +1,32 @@
+{
+  "name": "lseg",
+  "version": "1.0.0",
+  "description": "Financial market data, company intelligence, and news",
+  "author": {
+    "name": "LSEG",
+    "url": "https://www.lseg.com"
+  },
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "LSEG",
+    "developerName": "LSEG",
+    "shortDescription": "Financial market data, company intelligence, and news",
+    "longDescription": "Financial market data, company intelligence, and news",
+    "category": "Research",
+    "capabilities": [],
+    "brandColor": "#0018F8",
+    "defaultPrompt": [
+      "Pull recent LSEG market data and company financials for a ticker and summarize valuation drivers.",
+      "Find the latest news, filings, and events for a company in LSEG and highlight material changes.",
+      "Compare key metrics for a company against its peer set using LSEG data."
+    ],
+    "screenshots": [],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "websiteURL": "https://www.lseg.com"
+  },
+  "homepage": "https://www.lseg.com"
+}

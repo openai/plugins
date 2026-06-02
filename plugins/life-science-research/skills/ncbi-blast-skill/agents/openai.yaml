@@ -1,0 +1,3 @@
+interface:
+  display_name: "NCBI BLAST"
+  short_description: "Run and summarize NCBI BLAST jobs"

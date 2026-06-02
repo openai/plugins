@@ -1,0 +1,5 @@
+interface:
+  display_name: "Visualization Strategy and Critique"
+  short_description: "Choose, lay out, critique, and explain data visualizations"
+policy:
+  allow_implicit_invocation: false

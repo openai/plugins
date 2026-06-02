@@ -1,0 +1,3 @@
+interface:
+  display_name: "SWR"
+  short_description: "SWR data-fetching expert guidance"

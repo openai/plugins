@@ -1,0 +1,3 @@
+interface:
+  display_name: "Spec to Backlog"
+  short_description: "Convert Confluence specs into Jira backlogs"

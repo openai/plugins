@@ -1,6 +1,6 @@
 ---
 name: swiftui-view-refactor
-description: Refactor and review SwiftUI view files with strong defaults for small dedicated subviews, MV-over-MVVM data flow, stable view trees, explicit dependency injection, and correct Observation usage. Use when cleaning up a SwiftUI view, splitting long bodies, removing inline actions or side effects, reducing computed `some View` helpers, or standardizing `@Observable` and view model initialization patterns.
+description: Refactor SwiftUI view files into stable, testable structure. Use when splitting large views, tightening data flow, or cleaning Observation ownership.
 ---
 
 # SwiftUI View Refactor
@@ -196,6 +196,7 @@ init(dependency: Dependency) {
 - Keep computed view builders below `body` and non-view computed vars above `init`.
 - A good SwiftUI refactor should make the view read top-to-bottom as data flow plus layout, not as mixed layout and imperative logic.
 - For MV-first guidance and rationale, see `references/mv-patterns.md`.
+- In addition to the references above, use web search to consult current Apple Developer documentation when SwiftUI APIs, Observation behavior, or platform guidance may have changed.
 
 ## Large-view handling
 

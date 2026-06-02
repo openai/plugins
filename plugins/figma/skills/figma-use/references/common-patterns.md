@@ -57,6 +57,8 @@ return { nodeId: rect.id }
 
 ## Create a Text Node
 
+Canonical text-edit recipe: load font → `await` → mutate → return affected IDs. Inter is preloaded in most environments; for any other family/style you would have hit `Cannot write to node with unloaded font "<family> <style>"` without the load step — the recipe is identical regardless of font.
+
 ```js
 // Find clear space to the right of existing content
 const page = figma.currentPage
@@ -65,6 +67,7 @@ for (const child of page.children) {
   maxX = Math.max(maxX, child.x + child.width)
 }
 
+// Load font BEFORE any text mutation — required for every font, not just Inter
 await figma.loadFontAsync({ family: "Inter", style: "Regular" })
 const text = figma.createText()
 text.characters = "Hello World"
@@ -74,7 +77,7 @@ text.textAutoResize = 'WIDTH_AND_HEIGHT'
 text.x = maxX + 100
 text.y = 0
 figma.currentPage.appendChild(text)
-return { nodeId: text.id }
+return { createdNodeIds: [text.id] }
 ```
 
 ## Create Frame with Auto-Layout
@@ -87,9 +90,8 @@ for (const child of page.children) {
   maxX = Math.max(maxX, child.x + child.width)
 }
 
-const frame = figma.createFrame()
+const frame = figma.createAutoLayout('VERTICAL')
 frame.name = "Card"
-frame.layoutMode = 'VERTICAL'
 frame.primaryAxisAlignItems = 'MIN'
 frame.counterAxisAlignItems = 'MIN'
 frame.paddingLeft = 16
@@ -97,8 +99,6 @@ frame.paddingRight = 16
 frame.paddingTop = 12
 frame.paddingBottom = 12
 frame.itemSpacing = 8
-frame.layoutSizingHorizontal = 'HUG'
-frame.layoutSizingVertical = 'HUG'
 frame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }]
 frame.cornerRadius = 8
 frame.x = maxX + 100
@@ -224,15 +224,19 @@ return {
 `importComponentByKeyAsync` and `importComponentSetByKeyAsync` import components from **team libraries** (not the same file you're working in). For components in the current file, use `figma.getNodeByIdAsync()` or `findOne()`/`findAll()` to locate them directly.
 
 ```js
-// Import a single published component by key
-const comp = await figma.importComponentByKeyAsync("COMPONENT_KEY")
+// Batch independent imports with Promise.all — these are independent IPC
+// calls; awaiting them one after another doubles the round-trip latency.
+const [comp, compSet] = await Promise.all([
+  figma.importComponentByKeyAsync("COMPONENT_KEY"),
+  figma.importComponentSetByKeyAsync("COMPONENT_SET_KEY"),
+])
+
 const instance = comp.createInstance()
 instance.x = 40
 instance.y = 40
 figma.currentPage.appendChild(instance)
 
-// Import a published component set by key and select a variant
-const compSet = await figma.importComponentSetByKeyAsync("COMPONENT_SET_KEY")
+// Select a variant from the imported component set
 const variant =
   compSet.children.find((c) =>
     c.type === "COMPONENT" && c.name.includes("size=md")
@@ -420,7 +424,7 @@ cs.resizeWithoutConstraints(maxX + 40, maxY + 40);
 const section = figma.createSection();
 section.name = "MyComponent Section";
 section.appendChild(cs);
-section.resizeWithoutConstraints(cs.width + 200, cs.height + 200);
+section.resize(cs.width + 200, cs.height + 200);
 
 return { csId: cs.id, count: components.length };
 ```
@@ -429,13 +433,20 @@ return { csId: cs.id, count: components.length };
 
 ```js
 const page = figma.currentPage
-const nodes = page.findAll(n => n.type === 'FRAME')
+// findAllWithCriteria is hundreds of times faster than findAll for a pure
+// type filter — the engine uses an internal type index instead of running
+// a JS predicate on every node.
+const nodes = page.findAllWithCriteria({ types: ['FRAME'] })
 const data = nodes.map(n => ({
   id: n.id,
   name: n.name,
   width: n.width,
   height: n.height,
-  childCount: n.children?.length || 0
+  // `n.children` is safe here because the findAll predicate restricts to FRAME.
+  // Do NOT use `n.children?.length` defensively on an unfiltered node — the
+  // property access itself throws `no such property 'children'` on leaf types
+  // like TEXT/RECTANGLE, and optional chaining does not catch that.
+  childCount: n.children.length
 }))
 return { frames: data }
 ```

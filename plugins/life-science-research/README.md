@@ -1,4 +1,4 @@
-# Life Science: Research Plugin
+# Life Science Research Plugin
 
 This plugin is a general life-sciences research layer for Codex. It packages a broad set of modular skills that can be composed to answer questions across human genetics, functional genomics, expression, pathway biology, protein structure, chemistry, clinical evidence, and public study discovery.
 
@@ -160,7 +160,7 @@ Each subagent should receive a bounded objective and return concise findings, ca
 
 ## Example Prompts
 
-- `Use Life Science: Research to summarize the public genetics and expression evidence linking IL6R to asthma.`
+- `Use Life Science Research to summarize the public genetics and expression evidence linking IL6R to asthma.`
 - `Find preprints, public datasets, and pathway context relevant to TREM2 in microglia.`
 - `Map the most plausible causal genes at this inflammatory bowel disease locus and explain why.`
 - `Summarize known structure, ligand, and pathway information for EGFR.`

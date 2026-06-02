@@ -1,0 +1,44 @@
+{
+  "name": "asana",
+  "version": "0.1.0",
+  "description": "Work with your Asana tasks, subtasks, comments, due dates, and project details to create summaries, understand priorities, and prepare clear status updates.",
+  "author": {
+    "name": "Asana, Inc.",
+    "url": "https://asana.com"
+  },
+  "homepage": "https://asana.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "asana",
+    "tasks",
+    "project-management",
+    "productivity",
+    "collaboration",
+    "work-management"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Asana",
+    "shortDescription": "Read and manage Asana",
+    "longDescription": "Work with your Asana tasks, subtasks, comments, due dates, and project details to create summaries, understand priorities, and prepare clear status updates.",
+    "developerName": "Asana, Inc.",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://asana.com",
+    "privacyPolicyURL": "https://asana.com/terms/privacy-statement",
+    "termsOfServiceURL": "https://asana.com/terms",
+    "defaultPrompt": [
+      "Create a project to track creative requests",
+      "Create a task to track follow up actions",
+      "Show me what's on my plate in Asana today."
+    ],
+    "brandColor": "#FF584A",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}

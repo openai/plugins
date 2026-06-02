@@ -1,0 +1,7 @@
+interface:
+  display_name: Zoom Video SDK (iOS)
+  short_description: Zoom Video SDK for iOS native apps. Use when building custom
+    iOS video sessions with full UI control, token-based session auth, and event-driven
+    media/participant flows.
+policy:
+  allow_implicit_invocation: false

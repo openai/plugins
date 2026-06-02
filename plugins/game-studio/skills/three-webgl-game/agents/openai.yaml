@@ -1,0 +1,4 @@
+interface:
+  display_name: "Three WebGL Game"
+  short_description: "Build browser-game runtimes with Three.js"
+  default_prompt: "Implement this browser-game runtime with plain Three.js and keep the scene architecture easy to debug."

@@ -1,24 +1,6 @@
 interface:
   display_name: "Build Web Apps"
-  short_description: "Build, review, ship, and scale web apps across UI, React, deployment, payments, and databases"
+  short_description: "Build frontend-focused web apps"
   icon_small: "./assets/build-web-apps-small.svg"
   icon_large: "./assets/app-icon.png"
-  default_prompt: "Use Build Web Apps to review a web app's UI, improve the React implementation, wire up payments or database changes, and help deploy it."
-
-dependencies:
-  tools:
-    - type: "mcp"
-      value: "stripe"
-      description: "Stripe MCP server"
-      transport: "streamable_http"
-      url: "https://mcp.stripe.com"
-    - type: "mcp"
-      value: "vercel"
-      description: "Vercel MCP server"
-      transport: "streamable_http"
-      url: "https://mcp.vercel.com"
-    - type: "mcp"
-      value: "supabase"
-      description: "Supabase MCP server"
-      transport: "streamable_http"
-      url: "https://mcp.supabase.com/mcp"
+  default_prompt: "Build a high-quality frontend app with a polished user experience."

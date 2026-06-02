@@ -1,0 +1,6 @@
+interface:
+  display_name: "Build Web Data Visualization"
+  short_description: "Design, build, test, and export web data visualizations"
+  icon_small: "./assets/data-visualization-small.svg"
+  icon_large: "./assets/app-icon.svg"
+  default_prompt: "Use $data-visualization to classify the visualization task, route to the narrowest specialist skill, and provide design, implementation, testing, or export guidance."

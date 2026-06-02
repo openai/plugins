@@ -1,0 +1,3 @@
+interface:
+  display_name: "ClinVar / NCBI Variation"
+  short_description: "Fetch ClinVar and NCBI Variation summaries"

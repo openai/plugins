@@ -1,0 +1,5 @@
+interface:
+  display_name: "HubSpot"
+  short_description: "Operate safely across HubSpot CRM"
+  brand_color: "#FF7A59"
+  default_prompt: "Use $hubspot to inspect HubSpot records, summarize CRM context, or prepare confirmed changes."

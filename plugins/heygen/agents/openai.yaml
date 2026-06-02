@@ -1,0 +1,6 @@
+interface:
+  display_name: "HeyGen"
+  short_description: "Create avatar videos and personalized video messages"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/logo.png"
+  default_prompt: "Help me create a personalized HeyGen video message. Ask who should appear on camera, who the audience is, the key points, and the tone before generating it."

@@ -1,0 +1,286 @@
+/* ── Composer skeleton: src/styles/global.css ──────────────────────────────
+   The fixed bulk below is LITERAL — do not re-author it. Composer's only edit
+   is to replace the {{theme}} block with the @theme palette derived from the
+   inlined designTokens (see COMPOSE.md § "1. global.css"). Everything outside
+   {{theme}} references the stable token vocabulary via var(--token) / built-in
+   utilities and is brand-agnostic; ship it byte-for-byte.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import "tailwindcss";
+
+@theme {
+  /* {{theme}} — Composer substitutes the full palette here from designTokens:
+     every --color-*, --font-*, --spacing-* (2xs..4xl), --container-*, and
+     --radius-* line. The required-token set (COMPOSE.md § "Token contract")
+     MUST all be present, or components render unstyled. Container scale is
+     separate from spacing — never alias --container-3xl to --spacing-3xl. */
+}
+
+/* Reading-width helper so prose pages center without guessing Tailwind sizes. */
+@utility container-reading {
+  max-width: var(--container-prose);
+  margin-inline: auto;
+}
+
+/* Shared button primitive — declared with @utility so the variants below can
+   @apply it (a plain contract class is NOT @apply-able in Tailwind v4). */
+@utility btn {
+  @apply inline-flex items-center justify-center px-lg py-md rounded-md font-medium;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button {
+    font: inherit;
+    cursor: pointer;
+  }
+  input, textarea, select {
+    font: inherit;
+  }
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+/* ── Button family — used on every page in every vertical ─────────────────── */
+.btn-primary {
+  @apply btn;
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  @apply btn;
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-rule);
+}
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-ghost {
+  @apply btn;
+  background: transparent;
+  color: var(--color-ink);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-paper-warm);
+}
+.btn-ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Cross-cutting decorative patterns ────────────────────────────────────── */
+[data-decorative-slot] {
+  position: relative;
+  overflow: hidden;
+}
+[data-decorative-slot] > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.editorial-rule {
+  border: 0;
+  height: 1px;
+  background: var(--color-accent);
+  opacity: 0.6;
+  margin-block: var(--spacing-lg);
+}
+
+/* ── Universal site chrome ────────────────────────────────────────────────── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+  backdrop-filter: saturate(1.1) blur(8px);
+  border-bottom: 1px solid var(--color-rule);
+}
+.site-footer {
+  border-top: 1px solid var(--color-rule);
+  background: var(--color-paper-warm);
+  color: var(--color-mute);
+}
+
+/* ── View Transitions wiring (paired with Layout.astro <script>) ──────────────
+   Disable the default ClientRouter root cross-fade; the progress bar + grid-dim
+   carry navigation feedback instead. Do not split into a separate file. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-accent, currentColor);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+}
+.nav-progress[data-state="loading"] {
+  opacity: 1;
+  transform: scaleX(0.85);
+  transition: transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 120ms ease;
+}
+.nav-progress[data-state="done"] {
+  opacity: 0;
+  transform: scaleX(1);
+  transition: transform 200ms ease, opacity 240ms ease 60ms;
+}
+
+/* Dim the product grid while ClientRouter fetches/swaps for immediate feedback. */
+body[data-navigating="true"] .product-grid {
+  opacity: 0.55;
+  transition: opacity 140ms ease;
+  pointer-events: none;
+}
+.product-grid {
+  transition: opacity 200ms ease;
+}
+
+/* ── Navigation submenu + CategoryRail/pagination (stores pack) ───────────────
+   These reference declared tokens and stay inert when stores is not loaded (no
+   markup uses them), so they ship unconditionally as fixed bulk. */
+.site-nav-item.has-submenu {
+  position: relative;
+}
+.site-nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+}
+.site-nav-item.has-submenu:hover .site-nav-submenu,
+.site-nav-item.has-submenu:focus-within .site-nav-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.site-nav-sublink {
+  font-size: 0.875rem;
+  color: var(--color-ink-soft, var(--color-mute));
+  padding-block: var(--spacing-2xs);
+}
+.site-nav-sublink:hover,
+.site-nav-sublink[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+.category-rail {
+  background: var(--color-paper-warm);
+  border-bottom: 1px solid var(--color-rule);
+}
+.category-rail-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding-block: var(--spacing-md);
+}
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-2xs) var(--spacing-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-soft, var(--color-ink));
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+.category-pill:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.category-pill[aria-current="page"] {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+.pagination {
+  margin-block: var(--spacing-xl);
+}
+.pagination-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+.pagination-link {
+  color: var(--color-ink);
+}
+.pagination-link:hover {
+  color: var(--color-accent);
+}
+.pagination-link.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.breadcrumbs {
+  font-size: 0.8125rem;
+  color: var(--color-mute);
+  margin-bottom: var(--spacing-sm);
+}

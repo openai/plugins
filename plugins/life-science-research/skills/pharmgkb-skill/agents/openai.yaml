@@ -1,0 +1,3 @@
+interface:
+  display_name: "PharmGKB"
+  short_description: "Fetch PharmGKB pharmacogenomics summaries"

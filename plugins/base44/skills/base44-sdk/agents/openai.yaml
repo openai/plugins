@@ -1,0 +1,4 @@
+interface:
+  display_name: "Base44 SDK"
+  short_description: "Build features with the Base44 JavaScript and TypeScript SDK"
+  default_prompt: "Use Base44 SDK guidance to implement this feature against entities, functions, auth, and integrations."

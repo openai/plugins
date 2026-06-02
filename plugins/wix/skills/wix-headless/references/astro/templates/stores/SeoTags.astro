@@ -1,0 +1,21 @@
+---
+interface SeoTag {
+  type?: string;
+  props?: Record<string, any> | null;
+  children?: string;
+  disabled?: boolean;
+}
+interface Props { tags?: SeoTag[]; }
+const { tags = [] } = Astro.props;
+const visibleTags = tags.filter((t) => !t.disabled);
+---
+{
+  visibleTags.map((tag) => {
+    const props = tag.props ?? {};
+    if (tag.type === "title") return <title set:html={tag.children ?? ""} />;
+    if (tag.type === "meta") return <meta {...props} />;
+    if (tag.type === "link") return <link {...props} />;
+    if (tag.type === "script") return <script {...props} is:inline set:html={tag.children ?? ""} />;
+    return null;
+  })
+}

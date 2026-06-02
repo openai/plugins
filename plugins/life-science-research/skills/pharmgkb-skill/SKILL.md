@@ -20,7 +20,7 @@ description: Submit compact PharmGKB API requests for genes, variants, clinical 
 - Required fields: `base_url`, `path`
 - Optional fields: `method`, `params`, `headers`, `json_body`, `form_body`, `record_path`, `response_format`, `max_items`, `max_depth`, `timeout_sec`, `save_raw`, `raw_output_path`
 - Common PharmGKB patterns:
-  - `{"base_url":"https://api.pharmgkb.org/v1/data","path":"gene/PA134865140"}`
+  - `{"base_url":"https://api.pharmgkb.org/v1/data","path":"gene/PA36679"}`
   - `{"base_url":"https://api.pharmgkb.org/v1/data","path":"clinicalAnnotation","params":{"relatedChemicals.accessionId":"PA449726","limit":10},"max_items":10}`
   - `{"base_url":"https://api.pharmgkb.org/v1/data","path":"variant/PA166158545"}`
 
@@ -31,7 +31,7 @@ description: Submit compact PharmGKB API requests for genes, variants, clinical 
 
 ## Execution
 ```bash
-echo '{"base_url":"https://api.pharmgkb.org/v1/data","path":"gene/PA134865140"}' | python scripts/rest_request.py
+echo '{"base_url":"https://api.pharmgkb.org/v1/data","path":"gene/PA36679"}' | python scripts/rest_request.py
 ```
 
 ## References

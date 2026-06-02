@@ -1,7 +1,6 @@
 ---
 name: investigation-mode
 description: "Orchestrated debugging coordinator. Triggers on frustration signals (stuck, hung, broken, waiting) and systematically triages: runtime logs → workflow status → browser verify → deploy/env. Reports findings at every step."
-summary: "Debug stuck/hung apps: check logs → workflow runs → browser → deployment"
 metadata:
   priority: 8
   docs:
@@ -163,37 +162,6 @@ metadata:
       - "create a button"
       - "style the button"
     minScore: 4
-retrieval:
-  aliases:
-    - debug helper
-    - troubleshooter
-    - stuck helper
-    - problem solver
-  intents:
-    - debug issue
-    - fix stuck app
-    - investigate error
-    - triage problem
-  entities:
-    - runtime logs
-    - workflow status
-    - browser verify
-    - triage
-chainTo:
-  -
-    pattern: 'createWorkflow|use workflow|use step|@workflow/'
-    targetSkill: workflow
-    message: 'Workflow code detected during investigation — loading Workflow DevKit guidance for debugging durable execution, step replay, and hook state.'
-  -
-    pattern: 'VERCEL_URL|DEPLOYMENT_ID|vercel\.app|VERCEL_ENV'
-    targetSkill: deployments-cicd
-    message: 'Deployment context detected — loading Deployments guidance for inspecting builds, preview URLs, and production promotion.'
-    skipIfFileContains: 'vercel\s+inspect|vercel\s+logs'
-  -
-    pattern: '@vercel/analytics|@vercel/speed-insights|otel|OpenTelemetry|instrumentation\.(ts|js)'
-    targetSkill: observability
-    message: 'Observability instrumentation detected — loading Observability guidance for log queries, tracing, and monitoring setup.'
-
 ---
 
 # Investigation Mode — Orchestrated Debugging

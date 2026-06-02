@@ -1,0 +1,6 @@
+interface:
+  display_name: "Zotero"
+  short_description: "Search Zotero and add citations"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  default_prompt: "Use $Zotero to search my Zotero library, export BibTeX, and add citations to my draft."

@@ -1,0 +1,3 @@
+interface:
+  display_name: "RCSB PDB"
+  short_description: "Fetch RCSB PDB structure summaries"

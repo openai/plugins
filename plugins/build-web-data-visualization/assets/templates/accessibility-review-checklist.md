@@ -1,0 +1,26 @@
+# Accessibility Review Checklist
+
+- Key insight is available without color alone.
+- Meaningful text meets contrast expectations, and meaningful non-text marks or UI states have sufficient contrast against adjacent colors.
+- Important colors have redundant labels, shapes, line styles, ordering cues, or direct values.
+- Color roles are not overloaded across category, selection, warning, forecast, and focus states.
+- Labels and values do not depend exclusively on hover.
+- Hover-only interactions have tap, focus, selection, visible-label, or step-through equivalents.
+- Touch targets and invisible hit areas are large enough for coarse pointers.
+- Drag, pinch, and swipe interactions have accessible alternatives where they change analytical state.
+- Shared URLs, saved views, refresh, and back/forward navigation restore the same accessible state summary.
+- Collapsed configuration or drill-down areas use accessible disclosure controls and do not hide the only active filter, selection, caveat, or source context.
+- Mobile settings, filters, or keyboard-open states do not hide the main evidence without a clear return path.
+- Streaming or remote views expose live, stale, offline, partial, and reconnecting state accessibly.
+- AR, camera, motion, vibration, notification, or geolocation features have non-permission fallbacks and are not the only path to evidence.
+- Text alternative or long description exists for complex visuals.
+- The insight title, subtitle, annotations, source, and caveats are represented in the accessible summary.
+- For sensitive geopolitical or humanitarian stories, the accessible summary distinguishes measured, estimated, schematic, disputed, or dated evidence.
+- Focus order and keyboard access are clear for interactive controls.
+- Exported PDF or slide path has an accessibility fallback.
+- Contrast is sufficient for text, marks, and annotation.
+- The most important data, selected state, or annotation has stronger contrast than secondary context, basemaps, gridlines, and inactive series.
+- Mobile annotations remain readable, or convert to a numbered key below the chart.
+- Mobile portrait preserves the same claim, caveat, source context, and comparison as the large-screen view.
+- Data download, source link, or table fallback is available when the medium allows it.
+- Static export preserves dates, source context, caveats, and humane framing without hover or autoplay.

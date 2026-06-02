@@ -1,0 +1,4 @@
+interface:
+  display_name: "HeyGen Avatar"
+  short_description: "Create reusable HeyGen avatar identities"
+  default_prompt: "Create a reusable HeyGen avatar for me from a written description, then help me choose a matching voice."

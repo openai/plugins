@@ -1,0 +1,5 @@
+interface:
+  display_name: "CRM Data Hygiene"
+  short_description: "Find missing, stale, or duplicate CRM data"
+  brand_color: "#FF7A59"
+  default_prompt: "Use $hubspot-crm-data-hygiene to find missing CRM fields, stale records, duplicates, and cleanup actions."

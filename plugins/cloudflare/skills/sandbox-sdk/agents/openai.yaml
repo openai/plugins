@@ -1,0 +1,3 @@
+interface:
+  display_name: "Sandbox SDK"
+  short_description: "Build secure sandboxed code execution"

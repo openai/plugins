@@ -1,0 +1,5 @@
+interface:
+  display_name: "Testing Data Visualizations"
+  short_description: "Test data visualizations and dashboards"
+policy:
+  allow_implicit_invocation: false

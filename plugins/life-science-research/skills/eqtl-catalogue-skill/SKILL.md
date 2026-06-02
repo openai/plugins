@@ -15,16 +15,16 @@ description: Submit compact eQTL Catalogue API requests for association retrieva
 ## Execution behavior
 - Return concise markdown summaries from the script JSON by default.
 - Return raw JSON only if the user explicitly asks for machine-readable output.
-- Prefer documented association paths such as `genes/<gene_id>/associations`, `studies/<study>/associations`, or tissue/study-scoped association routes with explicit filters, and surface upstream `400`/`500` errors verbatim when they occur.
+- Prefer documented versioned paths such as `v3/studies`, `v3/associations`, `v3/studies/<study_id>/associations`, or legacy `v1/.../associations` routes with explicit filters, and surface upstream `400`/`500` errors verbatim when they occur.
 
 ## Input
 - Read one JSON object from stdin.
 - Required fields: `base_url`, `path`
 - Optional fields: `method`, `params`, `headers`, `json_body`, `form_body`, `record_path`, `response_format`, `max_items`, `max_depth`, `timeout_sec`, `save_raw`, `raw_output_path`
 - Common eQTL Catalogue patterns:
-  - `{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"genes/ENSG00000141510/associations","params":{"study":"<study>","tissue":"<tissue_ontology_id>","variant_id":"rs7903146","size":10},"max_items":10}`
-  - `{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"studies/<study>/associations","params":{"tissue":"<tissue_ontology_id>","variant_id":"rs7903146","size":10},"max_items":10}`
-  - `{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"associations/rs7903146","params":{"size":10},"max_items":10}`
+  - `{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"v3/studies","max_items":10}`
+  - `{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"v3/associations","params":{"gene_id":"ENSG00000141510","rsid":"rs7903146","size":10},"max_items":10}`
+  - `{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"v1/genes/ENSG00000141510/associations","params":{"variant_id":"rs7903146","size":10},"max_items":10}`
 
 ## Output
 - Success returns `ok`, `source`, `path`, `method`, `status_code`, `warnings`, and either compact `records` or a compact `summary`.
@@ -33,7 +33,7 @@ description: Submit compact eQTL Catalogue API requests for association retrieva
 
 ## Execution
 ```bash
-echo '{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"genes/ENSG00000141510/associations","params":{"study":"<study>","tissue":"<tissue_ontology_id>","variant_id":"rs7903146","size":10},"max_items":10}' | python scripts/rest_request.py
+echo '{"base_url":"https://www.ebi.ac.uk/eqtl/api","path":"v3/studies","max_items":10}' | python scripts/rest_request.py
 ```
 
 ## References

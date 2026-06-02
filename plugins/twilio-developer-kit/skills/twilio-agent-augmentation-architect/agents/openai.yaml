@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-agent-augmentation-architect"
+  short_description: "Twilio skill guidance for twilio-agent-augmentation-architect"
+  icon_small: "../../assets/logo.svg"
+  icon_large: "../../assets/logo.svg"
+  brand_color: "#F22F46"

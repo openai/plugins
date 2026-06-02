@@ -16,32 +16,6 @@ metadata:
     - '.github/workflows/preview*.yaml'
   bashPatterns: 
     - '\bvercel\s+agent\b'
-retrieval:
-  aliases:
-    - ai code review
-    - incident debugger
-    - vercel ai tools
-    - pr analyzer
-  intents:
-    - set up vercel agent
-    - automate code review
-    - investigate incident
-    - configure ai tools
-  entities:
-    - Vercel Agent
-    - code review
-    - incident investigation
-    - SDK
-chainTo:
-  -
-    pattern: 'uses:\s*vercel/|vercel-action|VERCEL_TOKEN.*github'
-    targetSkill: deployments-cicd
-    message: 'GitHub Actions with Vercel detected — loading CI/CD guidance for deployment workflows, preview URLs, and production promotions.'
-  -
-    pattern: '@vercel/sdk|vercel\.deployments|vercel\.projects'
-    targetSkill: vercel-api
-    message: 'Vercel SDK usage detected — loading API guidance for programmatic deployment management, project configuration, and MCP server integration.'
-
 ---
 
 # Vercel Agent

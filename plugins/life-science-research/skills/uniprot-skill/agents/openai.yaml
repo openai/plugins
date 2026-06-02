@@ -1,0 +1,3 @@
+interface:
+  display_name: "UniProt"
+  short_description: "Fetch UniProt summaries"

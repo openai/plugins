@@ -1,0 +1,57 @@
+{
+  "name": "zoom",
+  "version": "1.0.0",
+  "description": "Connect Codex to Zoom meeting context and build Zoom apps, bots, API integrations, SDK workflows, webhooks, and automations.",
+  "author": {
+    "name": "Zoom",
+    "url": "https://github.com/zoom"
+  },
+  "homepage": "https://developers.zoom.us/",
+  "repository": "https://github.com/zoom/zoom-plugin-codex",
+  "license": "MIT",
+  "keywords": [
+    "zoom",
+    "codex-plugin",
+    "connector",
+    "meetings",
+    "transcripts",
+    "recordings",
+    "docs",
+    "developers",
+    "rest-api",
+    "meeting-sdk",
+    "video-sdk",
+    "webhooks",
+    "oauth"
+  ],
+  "apps": "./.app.json",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Zoom",
+    "shortDescription": "Use Zoom meeting context and build Zoom integrations.",
+    "longDescription": "Zoom connects Codex to Zoom meeting context through the Zoom app connector and provides developer workflows for planning, building, debugging, and reviewing Zoom integrations across APIs, SDKs, webhooks, WebSockets, bots, and automation use cases.",
+    "developerName": "Zoom",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://developers.zoom.us/",
+    "privacyPolicyURL": "https://www.zoom.com/en/trust/privacy/",
+    "termsOfServiceURL": "https://www.zoom.com/en/trust/terms/",
+    "defaultPrompt": [
+      "Search my recent Zoom meetings for the discussion about pricing.",
+      "Run /plan-zoom-product for a Zoom integration idea."
+    ],
+    "brandColor": "#0B5CFF",
+    "composerIcon": "./assets/zoom-small.svg",
+    "logo": "./assets/app-icon.svg",
+    "screenshots": [
+      "./assets/screenshot-1.png",
+      "./assets/screenshot-2.png",
+      "./assets/screenshot-3.png",
+      "./assets/screenshot-4.png"
+    ]
+  }
+}

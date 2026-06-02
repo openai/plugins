@@ -1,0 +1,3 @@
+interface:
+  display_name: "EVA"
+  short_description: "Fetch European Variation Archive summaries"

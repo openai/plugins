@@ -1,0 +1,6 @@
+interface:
+  display_name: "twilio-compliance-onboarding"
+  short_description: "Twilio skill guidance for twilio-compliance-onboarding"
+  icon_small: "../../assets/logo.svg"
+  icon_large: "../../assets/logo.svg"
+  brand_color: "#F22F46"

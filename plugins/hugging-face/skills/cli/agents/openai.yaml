@@ -1,0 +1,3 @@
+interface:
+  display_name: "HF CLI"
+  short_description: "Manage Hub repos, models, datasets, and Spaces with the Hugging Face CLI"

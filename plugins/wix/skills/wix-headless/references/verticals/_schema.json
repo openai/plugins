@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Wix Headless Vertical Frontmatter (Phase 1 — discovery only)",
+  "description": "Validates verticals/<name>.md frontmatter. Phase 1 scope only — later phases (setup, seed, design, pages, build) are owned by @skills/wix-manage plus this skill's own templates and INSTRUCTIONS.md files; per-pack fields (packages, cmsCollections, seed, components, componentsCss, pages, creates, contributes, include) are not part of this skill and not validated here.",
+  "type": "object",
+  "required": ["name", "description"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Must match filename stem (e.g., stores.md → 'stores')"
+    },
+    "description": { "type": "string" },
+    "triggers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Prompt patterns that route to this vertical. Empty allowed for transitive-only packs (ecom, gift-cards, cms). The SKILL.md routing table is the actual source of truth for what gets loaded; this is human reference + a fallback signal."
+    },
+    "requires": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Verticals that must be co-loaded in the same read batch when this pack is loaded. Today: stores → [ecom, gift-cards]; gift-cards → [ecom]."
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
+      "description": "Feature blurbs for DISCOVERY.md Step 3 Section B."
+    },
+    "apps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "appDefId": { "type": "string" }
+        }
+      },
+      "description": "Zero or one entry per pack. apps[0].name fills the Source column of the Pages table."
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["route"],
+        "additionalProperties": false,
+        "properties": {
+          "route": {
+            "type": "string",
+            "description": "URL path (e.g. /cart) OR the literal 'Hosted by Wix' for Wix-hosted endpoints like checkout."
+          },
+          "name": {
+            "type": "string",
+            "description": "Optional user-facing page name override for DISCOVERY.md's Section C table. When omitted, the orchestrator derives the name from the path (/ → Home; /thank-you → Thank You). Set this only when path-derivation produces a poor name (e.g. /products/[slug] → 'Product Detail') or when the route has no path (e.g. ecom's Wix-hosted Checkout)."
+          }
+        }
+      }
+    },
+    "disabled": {
+      "type": "boolean",
+      "description": "If true, the pack's surfaces (pages, nav links, home blocks) are inactive by default — they ship as code but do not appear without a separate user action (today: enabling the matching Wix app from the dashboard, which the pack's runtime probe detects). DISCOVERY.md plan composition (Sections B + C) skips features and routes from disabled packs so the plan never promises a surface the user did not ask for. Today only the gift-cards pack uses disabled: true."
+    }
+  }
+}

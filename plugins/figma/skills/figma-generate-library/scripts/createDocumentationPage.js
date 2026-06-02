@@ -45,9 +45,11 @@ async function createDocumentationPage(pageName, config, runId) {
       )
     }
   }
-  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' })
-  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' })
-  await figma.loadFontAsync({ family: 'Inter', style: 'Medium' })
+  await Promise.all([
+    figma.loadFontAsync({ family: 'Inter', style: 'Bold' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Regular' }),
+    figma.loadFontAsync({ family: 'Inter', style: 'Medium' }),
+  ])
 
   // Create and activate the page
   const page = figma.createPage()
@@ -62,9 +64,8 @@ async function createDocumentationPage(pageName, config, runId) {
   const frameIds = []
 
   // Root scroll container — 1440px wide, auto-height
-  const root = figma.createFrame()
+  const root = figma.createAutoLayout('VERTICAL')
   root.name = pageName
-  root.layoutMode = 'VERTICAL'
   root.primaryAxisAlignItems = 'MIN'
   root.counterAxisAlignItems = 'MIN'
   root.itemSpacing = 80
@@ -72,9 +73,8 @@ async function createDocumentationPage(pageName, config, runId) {
   root.paddingBottom = 120
   root.paddingLeft = 80
   root.paddingRight = 80
-  root.layoutSizingHorizontal = 'FIXED'
-  root.layoutSizingVertical = 'HUG'
   root.resize(1440, 1)
+  root.layoutSizingHorizontal = 'FIXED'
   root.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }]
   root.x = 0
   root.y = 0
@@ -88,14 +88,12 @@ async function createDocumentationPage(pageName, config, runId) {
   frameIds.push(root.id)
 
   // Page header: title + optional description
-  const header = figma.createFrame()
+  const header = figma.createAutoLayout('VERTICAL')
   header.name = 'Header'
-  header.layoutMode = 'VERTICAL'
   header.itemSpacing = 12
-  header.layoutSizingHorizontal = 'FILL'
-  header.layoutSizingVertical = 'HUG'
   header.fills = []
   root.appendChild(header)
+  header.layoutSizingHorizontal = 'FILL'
 
   const titleNode = figma.createText()
   titleNode.fontName = { family: 'Inter', style: 'Bold' }
@@ -118,14 +116,12 @@ async function createDocumentationPage(pageName, config, runId) {
 
   // Sections
   for (const section of config.sections) {
-    const sectionFrame = figma.createFrame()
+    const sectionFrame = figma.createAutoLayout('VERTICAL')
     sectionFrame.name = `Section/${section.name}`
-    sectionFrame.layoutMode = 'VERTICAL'
     sectionFrame.itemSpacing = 20
-    sectionFrame.layoutSizingHorizontal = 'FILL'
-    sectionFrame.layoutSizingVertical = 'HUG'
     sectionFrame.fills = []
     root.appendChild(sectionFrame)
+    sectionFrame.layoutSizingHorizontal = 'FILL'
 
     if (runId) {
       sectionFrame.setPluginData('dsb_run_id', runId)

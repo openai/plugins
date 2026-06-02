@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GiftCardPurchase from "../components/GiftCardPurchase.tsx";
+import { getGiftCardProduct } from "../utils/gift-cards";
+import { resolveWixImageUrl } from "../utils/wix-image";
+
+// The probe returns null if the Wix Gift Card app is uninstalled, revoked,
+// or the dashboard's eGift Card template hasn't been configured. Redirect
+// rather than rendering an empty page — keeps stale links from showing a
+// broken UI.
+const product = await getGiftCardProduct();
+if (!product) return Astro.redirect("/", 302);
+
+const heroImage = resolveWixImageUrl(product.image, 800, 800);
+---
+
+<Layout
+  title={product.name}
+  description={product.description}
+>
+  <section class="py-3xl md:py-4xl">
+    <div class="max-w-wide mx-auto px-xl grid grid-cols-1 md:grid-cols-2 gap-2xl md:gap-4xl items-center">
+      <div class="aspect-square bg-cream rounded-sm overflow-hidden">
+        {heroImage && (
+          <img
+            src={heroImage}
+            alt={product.image?.altText || product.name}
+            loading="lazy"
+            decoding="async"
+            width={product.image?.width ?? 800}
+            height={product.image?.height ?? 800}
+            class="w-full h-full object-cover"
+          />
+        )}
+      </div>
+
+      <div class="flex flex-col gap-lg">
+        <p class="eyebrow">A gift, considered</p>
+        <h1 class="font-display text-5xl leading-tight">{product.name}</h1>
+        <p class="text-ink-soft leading-relaxed">{product.description}</p>
+
+        <GiftCardPurchase product={product} client:load />
+
+        <p class="text-mute text-sm leading-relaxed">
+          Sent by email to your recipient with a redeemable code. Redeemed at
+          checkout against any product on the site.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

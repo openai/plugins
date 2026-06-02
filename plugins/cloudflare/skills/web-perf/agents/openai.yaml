@@ -1,0 +1,3 @@
+interface:
+  display_name: "Web Performance"
+  short_description: "Audit page performance with Chrome DevTools MCP"

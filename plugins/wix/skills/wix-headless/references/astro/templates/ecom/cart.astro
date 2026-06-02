@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CartView from "../components/CartView.tsx";
+---
+
+<Layout title="Cart">
+  <main class="py-3xl">
+    <div class="max-w-wide mx-auto px-xl">
+      <h1 class="font-display text-4xl mb-2xl">Your Cart</h1>
+      <CartView client:load />
+    </div>
+  </main>
+</Layout>

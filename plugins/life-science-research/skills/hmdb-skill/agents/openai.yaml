@@ -1,0 +1,3 @@
+interface:
+  display_name: "HMDB"
+  short_description: "Fetch HMDB metabolite summaries"

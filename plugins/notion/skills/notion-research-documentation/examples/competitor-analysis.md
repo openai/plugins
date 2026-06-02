@@ -28,7 +28,9 @@ filters: {
 ### Step 2: Fetch and Analyze
 
 ```
-Notion:notion-fetch for each page
+Repeat for each Notion page result:
+Notion:notion-fetch
+id: "competitor-analysis-stripe-page-id"
 ```
 
 **Extracted Information:**
@@ -58,6 +60,7 @@ Notion:notion-fetch for each page
 ```
 Notion:notion-create-pages
 
+parent: { page_id: "strategy-research-parent-id" }
 pages: [{
   properties: {
     "title": "Competitor Pricing Analysis - Payment Processors"

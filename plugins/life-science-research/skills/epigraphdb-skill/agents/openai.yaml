@@ -1,0 +1,3 @@
+interface:
+  display_name: "EpiGraphDB"
+  short_description: "Fetch EpiGraphDB evidence summaries"

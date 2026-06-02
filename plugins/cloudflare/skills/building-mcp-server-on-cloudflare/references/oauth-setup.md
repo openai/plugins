@@ -28,7 +28,7 @@ export default new OAuthProvider({
 
 ## Proxy Server Pattern
 
-MCP servers often act as OAuth clients too. Your server sits between Claude Desktop and a third-party API like GitHub. To Claude, you're a server. To GitHub, you're a client. This lets users authenticate with their GitHub credentials.
+MCP servers often act as OAuth clients too. Your server sits between Codex and a third-party API like GitHub. To Codex, you're a server. To GitHub, you're a client. This lets users authenticate with their GitHub credentials.
 
 Building a secure proxy server requires careful attention to several security concerns.
 

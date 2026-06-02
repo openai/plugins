@@ -1,0 +1,69 @@
+---
+// Shared category-rail + Prev/Next pagination for /products and
+// /category/[slug]. Persists across <ClientRouter /> swaps so pill clicks
+// feel like an in-place filter, not a navigation. The active pill is
+// recomputed from the URL by an astro:after-swap hook in Layout.astro.
+//
+// Owned by the stores pack. Ecom/blog/etc. do NOT write to this file.
+import type { StoreCategory } from "../utils/categories";
+
+interface Props {
+  categories: StoreCategory[];
+  // null = "All" view; otherwise the slug of the active category.
+  activeSlug: string | null;
+  prevHref: string | null;
+  nextHref: string | null;
+}
+
+const { categories, activeSlug, prevHref, nextHref } = Astro.props;
+---
+
+{categories.length > 0 && (
+  <nav
+    class="category-rail"
+    aria-label="Browse by category"
+    data-category-rail
+    transition:persist="category-rail"
+    transition:name="category-rail"
+  >
+    <div class="container-page category-rail-inner">
+      <a
+        href="/products"
+        class="category-pill"
+        data-category-slug=""
+        data-astro-prefetch="hover"
+        aria-current={activeSlug ? undefined : "page"}
+      >All</a>
+      {categories.map((cat) => (
+        <a
+          href={`/category/${cat.slug}`}
+          class="category-pill"
+          data-category-slug={cat.slug}
+          data-astro-prefetch="hover"
+          aria-current={activeSlug === cat.slug ? "page" : undefined}
+        >{cat.name}</a>
+      ))}
+    </div>
+  </nav>
+)}
+
+{(prevHref || nextHref) && (
+  <nav class="pagination" aria-label="Listing pagination">
+    <div class="container-page pagination-inner">
+      {prevHref ? (
+        <a href={prevHref} class="pagination-link" data-astro-prefetch="hover" rel="prev">
+          &larr; Previous
+        </a>
+      ) : (
+        <span class="pagination-link is-disabled" aria-disabled="true">&larr; Previous</span>
+      )}
+      {nextHref ? (
+        <a href={nextHref} class="pagination-link" data-astro-prefetch="hover" rel="next">
+          Next &rarr;
+        </a>
+      ) : (
+        <span class="pagination-link is-disabled" aria-disabled="true">Next &rarr;</span>
+      )}
+    </div>
+  </nav>
+)}

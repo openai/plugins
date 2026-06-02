@@ -1,0 +1,3 @@
+interface:
+  display_name: "Paper Publisher"
+  short_description: "Publish and manage research papers on Hugging Face Hub"

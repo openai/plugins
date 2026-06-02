@@ -1,0 +1,3 @@
+interface:
+  display_name: "Genebass Gene Burden"
+  short_description: "Fetch Genebass gene burden summaries"

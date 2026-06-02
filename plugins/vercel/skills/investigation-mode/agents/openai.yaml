@@ -1,0 +1,3 @@
+interface:
+  display_name: "Investigation Mode"
+  short_description: "Orchestrated debugging coordinator"
