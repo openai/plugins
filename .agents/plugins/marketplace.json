@@ -1913,7 +1913,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data"
+      "category": "Productivity"
     },
     {
       "name": "actively",
@@ -1973,7 +1973,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data"
+      "category": "Productivity"
     },
     {
       "name": "fal",
