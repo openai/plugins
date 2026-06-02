@@ -17,7 +17,7 @@
     "daloopa"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Daloopa",
     "shortDescription": "Institutional-grade financial analysis workflows.",
@@ -35,6 +35,8 @@
       "Create a tearsheet for AAPL.",
       "Review MSFT earnings and guidance.",
       "Build a DCF valuation for NVDA."
-    ]
+    ],
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png"
   }
 }
