@@ -24,7 +24,7 @@
       "Search Actively for contacts at this target account and pull relevant prospect context.",
       "Build a prioritized Actively prospect list for this ICP and explain why each account fits."
     ],
-    "brandColor": "#2563EB",
+    "brandColor": "#000000",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
     "screenshots": []

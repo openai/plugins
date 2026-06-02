@@ -24,7 +24,7 @@
       "Analyze this document set in Hebbia and extract risks, obligations, and open questions.",
       "Find Hebbia answers with citations for this research question and flag evidence gaps."
     ],
-    "brandColor": "#000000",
+    "brandColor": "#4657F5",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
     "screenshots": []
