@@ -1,6 +1,6 @@
 ---
 name: gmail
-description: Manage Gmail inbox triage, mailbox search, thread summaries, action extraction, reply drafting, and email forwarding through connected Gmail data. Use when the user wants to inspect a mailbox or thread, search email with Gmail query syntax, summarize messages, extract decisions and follow-ups, prepare replies or forwarded messages, or organize messages with explicit confirmation before send, archive, delete, or label actions.
+description: Manage Gmail inbox triage, search, summaries, drafts, forwarding, and self-delivery through connected Gmail data. Use when the user wants to inspect or organize mail, prepare replies, forward messages, or email something to their own Gmail account. Require explicit confirmation before sends to other recipients or message-state changes.
 ---
 
 # Gmail
@@ -43,6 +43,11 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 7. Use `search_email_ids` only when the next tool specifically needs message IDs and the richer `search_emails` response would not help you decide what to do.
 8. Summarize before writing when the request is ambiguous, and keep analysis separate from actions like send, archive, trash, or label changes unless the user explicitly asked for them.
 
+## Self-Delivery
+
+- When the user explicitly asks to email or send something to themselves, including from an automation, call the Gmail `send_email` action directly with `to: "me"` and omit `cc` and `bcc`. Do not create a draft or ask for another confirmation merely because the email body is generated during the turn.
+- Use this path only when the requested recipient is the authenticated Gmail account. If another recipient is requested or the destination is ambiguous, follow the normal send-safety rules instead.
+
 ## Write Safety
 
 - Preserve exact recipients, subject lines, quoted facts, dates, and links from the source thread unless the user asks to change them.
@@ -70,6 +75,7 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 - "Draft a reply that confirms Tuesday works and asks for the final agenda."
 - "Go through my unread inbox and group emails into urgent, waiting, and low priority."
 - "Prepare a polite follow-up to the recruiter thread if I have not replied yet."
+- "Email me this report when the automation finishes."
 
 ## Light Fallback
 
