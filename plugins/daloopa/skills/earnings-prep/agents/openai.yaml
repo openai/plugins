@@ -1,0 +1,7 @@
+interface:
+  display_name: Earnings Prep
+  short_description: Pre-earnings preparation report for the night before a company
+    reports
+  default_prompt: Prepare a pre-earnings report for NVDA.
+policy:
+  allow_implicit_invocation: true

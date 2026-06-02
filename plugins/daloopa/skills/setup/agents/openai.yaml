@@ -1,0 +1,6 @@
+interface:
+  display_name: Setup
+  short_description: Verify Daloopa MCP connection and show available skills
+  default_prompt: Verify my Daloopa MCP connection.
+policy:
+  allow_implicit_invocation: true

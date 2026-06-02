@@ -1,0 +1,7 @@
+interface:
+  display_name: Comps
+  short_description: Trading comparables analysis with peer multiples and implied
+    valuation
+  default_prompt: Run a trading comps analysis for AAPL.
+policy:
+  allow_implicit_invocation: true

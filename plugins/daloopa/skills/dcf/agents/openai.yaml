@@ -1,0 +1,6 @@
+interface:
+  display_name: DCF
+  short_description: Discounted cash flow valuation with sensitivity analysis
+  default_prompt: Create a DCF valuation for AAPL.
+policy:
+  allow_implicit_invocation: true

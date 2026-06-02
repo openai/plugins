@@ -1,0 +1,6 @@
+interface:
+  display_name: Earnings Flash
+  short_description: Rapid first-read earnings flash for a given company
+  default_prompt: Draft a rapid earnings flash for AAPL.
+policy:
+  allow_implicit_invocation: true

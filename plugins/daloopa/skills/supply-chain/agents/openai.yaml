@@ -1,0 +1,7 @@
+interface:
+  display_name: Supply Chain
+  short_description: Interactive supply chain dashboard mapping suppliers, customers,
+    and financial interdependencies
+  default_prompt: Map AAPL suppliers, customers, and dependencies.
+policy:
+  allow_implicit_invocation: true

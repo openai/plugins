@@ -1,0 +1,6 @@
+interface:
+  display_name: Tearsheet
+  short_description: Quick one-page company overview and snapshot
+  default_prompt: Create a quick company tearsheet for MSFT.
+policy:
+  allow_implicit_invocation: true
