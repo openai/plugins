@@ -6,7 +6,7 @@
 
 ### 1. Search for Context
 ```
-Notion:notion-search
+Notion:search
 query: "Q4 objectives KPIs quarterly results"
 query_type: "internal"
 filters: {}
@@ -21,7 +21,7 @@ Found:
 ### 2. Fetch & Analyze
 ```
 Repeat for each Notion page result:
-Notion:notion-fetch
+Notion:fetch
 id: "q4-okrs-page-id"
 ```
 

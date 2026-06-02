@@ -6,7 +6,7 @@
 
 ### 1. Search for Context
 ```
-Notion:notion-search
+Notion:search
 query: "sprint planning product backlog"
 query_type: "internal"
 teamspace_id: "engineering-team"
@@ -22,7 +22,7 @@ Found:
 ### 2. Fetch Details
 ```
 Repeat for each Notion page result:
-Notion:notion-fetch
+Notion:fetch
 id: "sprint-planning-context-page-id"
 ```
 

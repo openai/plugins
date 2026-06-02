@@ -3,9 +3,9 @@
   "skills": ["spec-to-implementation"],
   "query": "Create an implementation plan for the User Authentication spec page",
   "expected_behavior": [
-    "Step 1: Uses Notion:notion-search to find 'User Authentication spec' with keywords like 'User Authentication' or 'auth spec'",
+    "Step 1: Uses Notion:search to find 'User Authentication spec' with keywords like 'User Authentication' or 'auth spec'",
     "Step 2: If not found or ambiguous, asks user for spec page URL/ID",
-    "Step 3: Fetches spec page using Notion:notion-fetch with URL/ID from search results",
+    "Step 3: Fetches spec page using Notion:fetch with URL/ID from search results",
     "Step 4: Parses spec using patterns from reference/spec-parsing.md to extract requirements, acceptance criteria, constraints",
     "Step 5: Identifies functional requirements (user stories, features, workflows) and non-functional requirements (performance, security)",
     "Step 6: Creates implementation plan following structure from reference/templates.md",
@@ -17,8 +17,8 @@
     "Step 12: Places plan appropriately (asks user or suggests under project/spec parent)"
   ],
   "success_criteria": [
-    "Spec is found using Notion:notion-search before attempting to fetch (or user is asked for URL if not found)",
-    "Spec is fetched using Notion:notion-fetch with correct URL/ID from search results",
+    "Spec is found using Notion:search before attempting to fetch (or user is asked for URL if not found)",
+    "Spec is fetched using Notion:fetch with correct URL/ID from search results",
     "Plan includes clear overview and spec link with mention-page tag",
     "Requirements are extracted from actual spec content (not generic) using spec-parsing patterns",
     "Work is broken into multiple phases (typically 3-5) following template structure",
@@ -26,6 +26,6 @@
     "Dependencies and risks sections are included with specific details from spec",
     "Plan follows Implementation Plan structure from reference/templates.md",
     "Success criteria or acceptance criteria from spec are referenced in plan",
-    "Uses correct tool names and sequence: Notion:notion-search → Notion:notion-fetch → Notion:notion-create-pages"
+    "Uses correct tool names and sequence: Notion:search → Notion:fetch → Notion:notion-create-pages"
   ]
 }

@@ -6,7 +6,7 @@
 
 ### 1. Find Spec
 ```
-Notion:notion-search
+Notion:search
 query: "search component design spec"
 query_type: "internal"
 filters: {}
@@ -15,7 +15,7 @@ Found: "Global Search Redesign Spec"
 
 ### 2. Fetch & Parse Spec
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "global-search-redesign-spec-page-id"
 ```
 

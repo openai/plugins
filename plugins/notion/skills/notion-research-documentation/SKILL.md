@@ -10,16 +10,16 @@ metadata:
 Pull relevant Notion pages, synthesize findings, and publish clear briefs or reports (with citations and links to sources).
 
 ## Quick start
-1) Find sources with `Notion:notion-search` using targeted queries; confirm scope with the user.
-2) Fetch pages via `Notion:notion-fetch`; note key sections and capture citations (`reference/citations.md`).
+1) Find sources with `Notion:search` using targeted queries; confirm scope with the user.
+2) Fetch pages via `Notion:fetch`; note key sections and capture citations (`reference/citations.md`).
 3) Choose output format (brief, summary, comparison, comprehensive report) using `reference/format-selection-guide.md`.
 4) Draft in Notion with `Notion:notion-create-pages` using the matching template (quick, summary, comparison, comprehensive).
 5) Link sources and add a references/citations section; update as new info arrives with `Notion:notion-update-page`.
 
 ## Tool-call guardrails
-- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient.
-- Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed.
-- Only fetch Notion page, database, or data-source URLs/IDs. Search results can include external connected-source URLs, which are not valid `Notion:notion-fetch` inputs.
+- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:search` and `Notion:fetch` where sufficient.
+- Use one literal search query per `Notion:search` call and include `filters: {}` when no narrower filter is needed.
+- Only fetch Notion page, database, or data-source URLs/IDs. Search results can include external connected-source URLs, which are not valid `Notion:fetch` inputs.
 - Create output pages with an explicit `parent` and a `pages` array.
 - When updating an existing report, fetch it first and use `Notion:notion-update-page` with `update_content`, `properties: {}`, and search-and-replace pairs. For property-only updates, use `update_properties` with `content_updates: []`. The current deployed schema expects both top-level fields even when one is unused. Do not invent insertion-only commands.
 
@@ -32,8 +32,8 @@ Pull relevant Notion pages, synthesize findings, and publish clear briefs or rep
 After the app is connected, finish your answer and tell the user to retry so they can continue with Step 1.
 
 ### 1) Gather sources
-- Search first (`Notion:notion-search`); refine queries, and ask the user to confirm if multiple results appear.
-- Fetch relevant pages (`Notion:notion-fetch`), skim for facts, metrics, claims, constraints, and dates.
+- Search first (`Notion:search`); refine queries, and ask the user to confirm if multiple results appear.
+- Fetch relevant pages (`Notion:fetch`), skim for facts, metrics, claims, constraints, and dates.
 - Track each source URL/ID for later citation; prefer direct quotes for critical facts.
 
 ### 2) Select the format

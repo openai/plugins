@@ -6,7 +6,7 @@
 
 ### 1. Search Customer Info
 ```
-Notion:notion-search
+Notion:search
 query: "Acme Corp"
 query_type: "internal"
 filters: {}
@@ -21,7 +21,7 @@ Found:
 ### 2. Fetch Details
 ```
 Repeat for each Notion page result:
-Notion:notion-fetch
+Notion:fetch
 id: "acme-crm-notes-page-id"
 ```
 

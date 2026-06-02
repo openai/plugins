@@ -9,7 +9,7 @@
 ### Step 1: Search for Competitor Information
 
 ```
-Notion:notion-search
+Notion:search
 query: "competitor pricing"
 query_type: "internal"
 filters: {
@@ -29,7 +29,7 @@ filters: {
 
 ```
 Repeat for each Notion page result:
-Notion:notion-fetch
+Notion:fetch
 id: "competitor-analysis-stripe-page-id"
 ```
 

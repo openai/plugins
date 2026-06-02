@@ -6,7 +6,7 @@
 
 ### 1. Search Existing Notes
 ```
-Notion:notion-search
+Notion:search
 query: "Japan travel"
 query_type: "internal"
 filters: {}
@@ -16,7 +16,7 @@ Found: Japan Travel Guide (from friend), Tokyo Restaurants, Kyoto Temple Guide
 ### 2. Fetch & Extract Tips
 ```
 Repeat for each Notion page result:
-Notion:notion-fetch
+Notion:fetch
 id: "japan-travel-guide-page-id"
 ```
 **Key info from previous travelers:**

@@ -11,7 +11,7 @@
     "Includes specific commands, configurations, or examples from conversation",
     "Adds context about why/when to use this process in Overview section",
     "Notes common issues and solutions mentioned in discussion in Troubleshooting section",
-    "Uses Notion:notion-search to find team wiki location or asks user",
+    "Uses Notion:search to find team wiki location or asks user",
     "Creates page using Notion:notion-create-pages with structured content and appropriate parent",
     "Uses clear, descriptive title like 'How to Deploy to Production'",
     "Applies Notion markdown formatting (headings, code blocks, bullets)",
