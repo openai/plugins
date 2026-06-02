@@ -17,6 +17,7 @@ Pull relevant Notion pages, synthesize findings, and publish clear briefs or rep
 5) Link sources and add a references/citations section; update as new info arrives with `Notion:notion-update-page`.
 
 ## Tool-call guardrails
+- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:notion-search` and `Notion:notion-fetch` where sufficient, or explain the limitation.
 - Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed.
 - Only fetch Notion page, database, or data-source URLs/IDs. Search results can include external connected-source URLs, which are not valid `Notion:notion-fetch` inputs.
 - Create output pages with an explicit `parent` and a `pages` array.
