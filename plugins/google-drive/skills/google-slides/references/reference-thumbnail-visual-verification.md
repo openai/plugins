@@ -4,6 +4,8 @@ When to read: always, before any Slides write and again after every `mcp__codex_
 
 Do not call visual work done from API success alone. After any batch update, every touched slide is done only after a fresh thumbnail has been fetched, inspected as an image artifact or curled from `contentUrl`, checked against the visual criteria, patched if needed, and rechecked.
 
+Thumbnail verification does not prove placeholder cleanup. Empty inherited layout placeholders can be absent from rendered thumbnails, so pair thumbnail checks with connector JSON checks for unresolved placeholder metadata whenever slides are inserted from layouts.
+
 ## Plan The Scope
 
 Before the first visual write, make a plan of all slides that require visual checking.

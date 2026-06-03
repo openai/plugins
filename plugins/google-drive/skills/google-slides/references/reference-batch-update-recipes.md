@@ -28,6 +28,48 @@ Use these patterns as copy-and-fill request templates for `mcp__codex_apps__goog
 
 Use this when one sibling slide already has the right structure and you want to clone that pattern.
 
+## Duplicate then order slides
+
+Do not combine `duplicateObject` and `updateSlidesPosition` in the same batch. Google Slides can reject the move because duplicated slide order is only grounded after the duplicate batch completes.
+
+First batch: duplicate only.
+
+```json
+[
+  {
+    "duplicateObject": {
+      "objectId": "source-slide-id",
+      "objectIds": {
+        "source-slide-id": "new-slide-a"
+      }
+    }
+  },
+  {
+    "duplicateObject": {
+      "objectId": "source-slide-id",
+      "objectIds": {
+        "source-slide-id": "new-slide-b"
+      }
+    }
+  }
+]
+```
+
+Then re-read the presentation outline. If the observed order is `new-slide-b`, then `new-slide-a`, move them with the current presentation order in `slideObjectIds`:
+
+```json
+[
+  {
+    "updateSlidesPosition": {
+      "slideObjectIds": ["new-slide-b", "new-slide-a"],
+      "insertionIndex": 6
+    }
+  }
+]
+```
+
+Use `insertionIndex` for the target position in the full deck after reading the current outline. If the observed order is already correct, skip the move batch.
+
 ## Delete a stale element
 
 ```json
