@@ -20,9 +20,9 @@
     "capabilities": [],
     "websiteURL": "https://picsart.com",
     "defaultPrompt": [
-      "Use Picsart to edit this image for a campaign and summarize the output options.",
-      "Find Picsart templates or assets matching this brand style and shortlist the best fits.",
-      "Remove the background or enhance this image in Picsart while preserving the subject."
+      "Turn this product photo into a 10-second vertical video ad for Reels and TikTok.",
+      "Generate a cinematic 15-second product teaser from a text prompt.",
+      "Generate 5 on-brand product shots and pick the best aspect ratio for Instagram."
     ],
     "brandColor": "#C209C8",
     "composerIcon": "./assets/logo.png",
