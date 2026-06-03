@@ -1,6 +1,6 @@
 {
   "name": "alation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Data catalog search, lineage, governance, and documentation from Alation",
   "author": {
     "name": "Alation",

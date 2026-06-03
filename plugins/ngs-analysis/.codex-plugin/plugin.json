@@ -1,6 +1,6 @@
 {
   "name": "ngs-analysis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Guided NGS intake, local execution, and public-pipeline routing for BCL, FASTQ, DNA variant, RNA-seq, single-cell, epigenomics, amplicon, and metagenomics analyses, with deeper decision skills for high-risk assay branches.",
   "author": {
     "name": "OpenAI",

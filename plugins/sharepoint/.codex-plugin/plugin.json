@@ -1,6 +1,6 @@
 {
   "name": "sharepoint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Work with SharePoint using the configured Microsoft SharePoint app connector.",
   "author": {
     "name": "OpenAI",

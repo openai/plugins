@@ -1,6 +1,6 @@
 {
   "name": "docusign",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Agreement envelopes, signing status, recipients, and contract dates",
   "author": {
     "name": "Docusign",

@@ -1,6 +1,6 @@
 {
   "name": "quickbooks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "QuickBooks accounting, invoices, expenses, customers, and payment context",
   "author": {
     "name": "QuickBooks",
