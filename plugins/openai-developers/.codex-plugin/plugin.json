@@ -1,6 +1,6 @@
 {
   "name": "openai-developers",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Build with OpenAI APIs, Agents SDK, and ChatGPT Apps, and create and save OpenAI API keys from Codex.",
   "author": {
     "name": "OpenAI",

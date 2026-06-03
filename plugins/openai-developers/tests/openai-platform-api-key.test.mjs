@@ -17,10 +17,16 @@ const SKILL = path.resolve(
   __dirname,
   "../skills/openai-platform-api-key/SKILL.md",
 );
+const SKILL_AGENT_METADATA = path.resolve(
+  __dirname,
+  "../skills/openai-platform-api-key/agents/openai.yaml",
+);
 const EVALS = path.resolve(
   __dirname,
   "../skills/openai-platform-api-key/references/evals.md",
 );
+const MCP_MANIFEST = path.resolve(__dirname, "../.mcp.json");
+const MCP_SERVER = path.resolve(__dirname, "../mcp/server.mjs");
 const OPENAI_DOCS_SKILL = path.resolve(
   __dirname,
   "../../../skills/skills/openai-docs/SKILL.md",
@@ -51,6 +57,22 @@ function runScriptFailure(args) {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
   });
+}
+
+function runMcpServer(requests) {
+  const result = spawnSync(process.execPath, [MCP_SERVER], {
+    encoding: "utf8",
+    input: `${requests.map((request) => JSON.stringify(request)).join("\n")}\n`,
+    stdio: ["pipe", "pipe", "pipe"],
+    timeout: 5_000,
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stderr, "");
+  return result.stdout
+    .split(/\r?\n/u)
+    .filter((line) => line.trim().length > 0)
+    .map((line) => JSON.parse(line));
 }
 
 function base64url(bytes) {
@@ -92,13 +114,189 @@ test("prepare writes private key locally and emits a public connector request", 
   assert.equal(output.recipient_public_key_jwk.d, undefined);
 });
 
-test("skill documents connector install and retry preflight", () => {
+test("skill documents picker lookup and local destination confirmation", () => {
   const skill = fs.readFileSync(SKILL, "utf8");
 
   assert.match(skill, /tool_search/);
-  assert.match(skill, /tool_suggest/);
-  assert.match(skill, /connector_2de447f3f15448ebab48783d7e4f5d81/);
-  assert.match(skill, /retry `tool_search`/);
+  assert.match(skill, /`open_codex_api_key_setup` tool/);
+  assert.match(skill, /call `open_codex_api_key_setup` directly with no arguments \(`\{\}`\)/);
+  assert.match(skill, /local destination confirmation/);
+  assert.match(skill, /OpenAI Developers MCP `confirm_openai_api_key_local_destination` tool/);
+  assert.match(skill, /if the picker tool is unavailable or fails before the widget opens/);
+  assert.match(skill, /`create_encrypted_openai_api_key`/);
+  assert.match(skill, /## Helper/);
+});
+
+test("plugin registers the editable local destination confirmation MCP tool", () => {
+  const manifest = JSON.parse(fs.readFileSync(MCP_MANIFEST, "utf8"));
+  const responses = runMcpServer([
+    {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "2025-11-25",
+        capabilities: {},
+        clientInfo: { name: "openai-developers-test", version: "0.1.0" },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tools/list",
+      params: {},
+    },
+  ]);
+
+  assert.deepEqual(
+    manifest.mcpServers["openai-api-key-local-confirmation"].args,
+    ["./mcp/server.mjs"],
+  );
+  assert.equal(responses[0].result.serverInfo.name, "OpenAI Developers MCP");
+  assert.deepEqual(
+    responses[1].result.tools.map((tool) => tool.name),
+    ["confirm_openai_api_key_local_destination"],
+  );
+});
+
+test("local destination confirmation suggests a path and accepts an override", () => {
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-mcp-test-"));
+  const responses = runMcpServer([
+    {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "2025-11-25",
+        capabilities: {},
+        clientInfo: { name: "openai-developers-test", version: "0.1.0" },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tools/call",
+      params: {
+        name: "confirm_openai_api_key_local_destination",
+        arguments: {
+          workspacePath: workspace,
+          targetPath: ".env.local",
+          envName: "OPENAI_API_KEY",
+        },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: "server-1",
+      result: {
+        action: "accept",
+        content: {
+          targetPath: ".env.test",
+        },
+      },
+    },
+  ]);
+
+  const elicitation = responses.find((response) => response.method === "elicitation/create");
+  const result = responses.find((response) => response.id === 2);
+  const targetField = elicitation.params.requestedSchema.properties.targetPath;
+
+  assert.equal(elicitation.params.mode, "form");
+  assert.equal(targetField.default, path.join(workspace, ".env.local"));
+  assert.equal(Object.hasOwn(targetField, "description"), false);
+  assert.equal(result.result.structuredContent.status, "approved");
+  assert.equal(result.result.structuredContent.targetPath, path.join(workspace, ".env.test"));
+});
+
+test("local destination confirmation rejects an out-of-workspace override", () => {
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-mcp-test-"));
+  const responses = runMcpServer([
+    {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "2025-11-25",
+        capabilities: {},
+        clientInfo: { name: "openai-developers-test", version: "0.1.0" },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tools/call",
+      params: {
+        name: "confirm_openai_api_key_local_destination",
+        arguments: {
+          workspacePath: workspace,
+          targetPath: ".env.local",
+        },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: "server-1",
+      result: {
+        action: "accept",
+        content: {
+          targetPath: "../.env",
+        },
+      },
+    },
+  ]);
+
+  const result = responses.find((response) => response.id === 2);
+
+  assert.equal(result.error.code, -32602);
+  assert.match(result.error.message, /inside the selected workspace/);
+});
+
+test("local destination confirmation stops when the developer cancels", () => {
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-mcp-test-"));
+  const responses = runMcpServer([
+    {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: {
+        protocolVersion: "2025-11-25",
+        capabilities: {},
+        clientInfo: { name: "openai-developers-test", version: "0.1.0" },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: 2,
+      method: "tools/call",
+      params: {
+        name: "confirm_openai_api_key_local_destination",
+        arguments: {
+          workspacePath: workspace,
+          targetPath: ".env.local",
+        },
+      },
+    },
+    {
+      jsonrpc: "2.0",
+      id: "server-1",
+      result: {
+        action: "cancel",
+      },
+    },
+  ]);
+
+  const result = responses.find((response) => response.id === 2);
+
+  assert.equal(result.result.structuredContent.status, "not_approved");
+  assert.equal(result.result.structuredContent.action, "cancel");
+});
+
+test("skill metadata describes safe API key setup", () => {
+  const metadata = fs.readFileSync(SKILL_AGENT_METADATA, "utf8");
+
+  assert.match(metadata, /Create and configure OpenAI API keys safely/);
+  assert.doesNotMatch(metadata, /for any app, script, tool, or UI using AI or OpenAI API/);
+  assert.doesNotMatch(metadata, /allow_implicit_invocation/);
 });
 
 test("plugin and app tiles use the same OpenAI Platform logo", (t) => {
@@ -116,23 +314,19 @@ test("skill asks before building API-backed apps when any usable key exists", ()
 
   assert.match(
     description,
-    /Use for building, running, testing, debugging, or configuring apps, UIs, scripts, CLIs, generators, and tools that use AI/,
+    /Use when Codex is asked to build, run, test, debug, or configure an OpenAI-backed or provider-unspecified AI app, UI, script, CLI, generator, or tool/,
   );
   assert.match(
     description,
-    /including AI-powered apps, apps that generate output with AI, and user-input-driven AI features\./,
+    /especially requests phrased only as "using AI" or generators driven by forms\/user input/,
   );
   assert.match(
     description,
-    /Treat unspecified AI in build requests as OpenAI API usage unless the user names another provider or says not to use OpenAI\./,
+    /also use for OPENAI_API_KEY or sk-proj setup/,
   );
   assert.match(
     description,
-    /First inspect credentials safely, then ask whether to reuse an existing key or create one before API-dependent implementation\./,
-  );
-  assert.doesNotMatch(
-    description,
-    /Do not use|docs-only|static UI|one-off content/,
+    /Treat this as the credential gate: inspect safely, ask reuse-vs-new before API work/,
   );
   assert.match(
     skill,
@@ -172,31 +366,23 @@ test("skill asks before building API-backed apps when any usable key exists", ()
   );
   assert.match(
     skill,
-    /When another implementation skill also applies, this skill runs first only to\s+inspect credentials safely and send the credential decision message\./,
+    /When another implementation skill also applies, run this skill first only to inspect\s+credentials safely and send the credential decision message\./,
   );
   assert.match(
     skill,
-    /Do not use\s+this skill to design the UI, generate visual concepts, choose app architecture,\s+inspect API examples, write code, or run smoke tests before the credential gate\s+is resolved\./,
+    /do not design UI, choose architecture, inspect API examples, write code, or run\s+smoke tests\./,
   );
   assert.match(
     skill,
-    /For API-backed app or UI requests, this credential gate takes precedence over\s+design-first and implementation-first workflows, including\s+`build-web-apps:frontend-app-builder`, until the reuse-existing-key vs\s+create-new-key decision is resolved\./,
+    /Until reuse-existing-key vs create-new-key is resolved, it outranks design-first\s+and implementation-first flows, including\s+`build-web-apps:frontend-app-builder`;/,
   );
   assert.match(
     skill,
-    /After the user answers the credential decision, continue with the appropriate\s+implementation, docs, or frontend skill for the actual build\./,
+    /After the user answers, hand off to the appropriate implementation, docs, or\s+frontend skill\./,
   );
   assert.match(
     skill,
-    /before building, implementing, running, testing, debugging, or\s+configuring an app or script that calls the OpenAI API, ask up front\s+whether to reuse an existing usable key or create a new one/,
-  );
-  assert.match(
-    skill,
-    /if no usable key exists, ask whether to create one before building\s+the rest of the app/,
-  );
-  assert.match(
-    skill,
-    /ask this up-front question even when Codex has not yet made a live request;\s+do not defer it until verification or smoke testing/,
+    /before building, implementing, running, testing, debugging, or configuring an app\s+or script that calls the OpenAI API, ask up front whether to reuse an existing\s+usable key or create a new one/,
   );
   assert.match(
     skill,
@@ -204,15 +390,19 @@ test("skill asks before building API-backed apps when any usable key exists", ()
   );
   assert.match(
     skill,
-    /Before creating a key or writing any secret, ask for explicit confirmation in\s+a standalone user-facing message that states the action, keeps supporting\s+detail in separate bullets, then wait\./,
+    /Before creating a key or writing any secret, obtain explicit confirmation\.\s+Prefer the hosted Platform picker plus local destination confirmation when it is\s+available; if it is unavailable, fall back to a typed local destination question,\s+then wait\./,
   );
   assert.match(
     skill,
-    /Before writing, confirm\s+the destination file\/env var\./,
+    /When creation is the chosen path, confirm the destination file\/env var before writing\./,
   );
   assert.match(
     skill,
-    /If creation is still needed and the user has not already explicitly asked for\s+a new key, ask whether to create one\./,
+    /If the user has not already explicitly asked for a new key, ask whether to create one first\./,
+  );
+  assert.match(
+    skill,
+    /If API access is needed and no usable key is found, offer secure key provisioning\s+instead of leaving only placeholder docs or manual setup steps\./,
   );
 });
 
@@ -231,15 +421,10 @@ test("skill forbids credential inspection that can print secrets", () => {
 
 test("skill makes the key-choice gate impossible to miss", () => {
   const skill = fs.readFileSync(SKILL, "utf8");
-  const workflowChoiceGate = skill.slice(
-    skill.indexOf("2. Based on that inspection:"),
-    skill.indexOf("3. If creation is still needed"),
-  );
   const credentialDecisionMessages = skill.slice(
     skill.indexOf("## Credential Decision Messages"),
     skill.indexOf("## Workflow"),
   );
-  const apiUseCopy = "OpenAI API will power the app, script, or project";
 
   assert.match(skill, /## Mandatory First Step/);
   assert.match(
@@ -262,92 +447,112 @@ test("skill makes the key-choice gate impossible to miss", () => {
     skill,
     /The\s+only allowed pre-gate work is safe repo convention discovery and credential\s+presence checks that do not print secrets\./,
   );
-  assert.match(
-    workflowChoiceGate,
-    /for tasks that will call the OpenAI API, when asking this up-front question,\s+mention that the OpenAI API will power the app, script, or project before\s+mentioning whether an existing key was found in the environment or local\s+env files/,
-  );
-  assert.match(
-    workflowChoiceGate,
-    /after asking the up-front credential question, stop; do not include an\s+app plan, file list, code sketch, manual `OPENAI_API_KEY` instructions, or\s+fallback placeholder setup in the same response/,
-  );
-  assert.ok(
-    workflowChoiceGate.indexOf(apiUseCopy) <
-      workflowChoiceGate.indexOf("existing key was found in the environment"),
-  );
   assert.match(skill, /## Credential Decision Messages/);
   assert.match(
     credentialDecisionMessages,
-    /After inspecting credentials, the next user-facing message must be the\s+credential decision message\./,
+    /Required progress updates before or during credential inspection may be brief\s+and limited to saying that Codex is checking credentials or opening secure key\s+setup\./,
   );
   assert.match(
     credentialDecisionMessages,
-    /Do not send interim user-facing messages about env\s+files, key presence, API docs, file plans, implementation shape, or setup\s+instructions before this decision\./,
+    /They must not describe implementation plans, architecture, file choices,\s+local destination details, or credential conclusions before the credential\s+decision or picker handoff\./,
   );
   assert.match(
     credentialDecisionMessages,
-    /Existing usable key found, and the user did not explicitly ask for a new key:\s+make clear that the OpenAI API will power the app, script, or project, say\s+that an existing usable `OPENAI_API_KEY` was found without revealing it, then\s+ask whether to reuse that key or create a new one\./,
+    /After inspecting credentials, the next substantive user-facing message must be\s+the credential decision message\./,
   );
   assert.match(
     credentialDecisionMessages,
-    /No usable key found: make clear that the OpenAI API will power the app,\s+script, or project, say that no usable `OPENAI_API_KEY` was found, then ask\s+whether to create one securely\./,
+    /Existing usable key found, and the user did not explicitly ask for a new key:\s+make clear that the OpenAI API will power the app, script, or project, say that\s+an existing usable `OPENAI_API_KEY` was found without revealing it, then ask\s+whether to reuse that key or create a new one\./,
   );
   assert.match(
     credentialDecisionMessages,
-    /User explicitly asked for a new key: skip the reuse question and use the\s+key-creation confirmation message below\./,
+    /No usable key found: make clear that the OpenAI API will power the app, script,\s+or project, say that no usable `OPENAI_API_KEY` was found, then ask whether to\s+create one securely\./,
   );
   assert.match(
     credentialDecisionMessages,
-    /After sending the credential decision message, stop until the user answers\./,
+    /User explicitly asked for a new key: skip the reuse question and open the\s+Platform picker directly when available\./,
   );
-  assert.doesNotMatch(skill, /first state exactly:\s+"I will use the OpenAI API to power this app\."/);
-  assert.doesNotMatch(skill, /Use `app` in this sentence even when the user says script or project/);
 });
 
-test("skill documents a prominent confirmation prompt when key creation is needed", () => {
+test("skill documents the connector-owned picker boundary", () => {
+  const skill = fs.readFileSync(SKILL, "utf8");
+  const workflow = skill.slice(skill.indexOf("## Workflow"), skill.indexOf("## Helper"));
+
+  assert.match(skill, /Prefer the hosted Platform picker/);
+  assert.match(skill, /`open_codex_api_key_setup`/);
+  assert.match(skill, /automatically loads organization\/project choices/);
+  assert.match(skill, /sends a later widget-authored follow-up with the confirmed key name plus selected opaque ids/);
+  assert.match(skill, /tool_search/);
+  assert.match(
+    skill,
+    /call `open_codex_api_key_setup` directly with no arguments \(`\{\}`\)\. Do not send a key name, local paths, workspace arguments, or target arrays\./,
+  );
+  assert.match(
+    skill,
+    /after `open_codex_api_key_setup` returns without an error, end the current turn immediately and wait for the widget-generated follow-up prompt\. Do not inspect or interpret the launch payload, search for connector contract details, run local-save steps, make another tool call, or send any non-empty user-facing message, including a picker-open confirmation, in that turn/,
+  );
+  assert.match(skill, /picker-confirmed `organization_id` and `project_id`/);
+  assert.doesNotMatch(workflow, /list_openai_api_key_targets|open_openai_api_key_setup/);
+});
+
+test("skill keeps deterministic mechanics out of the hosted-picker branch", () => {
+  const skill = fs.readFileSync(SKILL, "utf8");
+  const hostedPickerFlow = skill.slice(
+    skill.indexOf("   - Prefer the hosted Platform picker:"),
+    skill.indexOf("   - After the widget follow-up"),
+  );
+
+  assert.doesNotMatch(hostedPickerFlow, /recipient_public_key_jwk/);
+  assert.doesNotMatch(hostedPickerFlow, /encrypted_api_key\.ciphertext/);
+});
+
+test("skill keeps secure setup narration brief", () => {
   const skill = fs.readFileSync(SKILL, "utf8");
 
+  assert.match(skill, /Keep user-facing messages concise\./);
+  assert.match(skill, /Do not narrate deterministic mechanics such as helper discovery/);
   assert.match(
     skill,
-    /\*\*I need to create an OpenAI API key for this project\. Want me to set it up for you\?\*\*/,
+    /say only that Codex will create the key securely and write it to the confirmed env file\./,
   );
-  assert.match(skill, /<repo name> Codex/);
-  assert.match(skill, /<confirmed env file path>/);
-  assert.match(
-    skill,
-    /Reply yes to continue with this setup, or suggest a different one\./,
-  );
-  assert.match(
-    skill,
-    /Use that confirmation sentence exactly as written: no bullet, no backticks\s+around `yes`, and no rewritten second clause\./,
-  );
-  assert.doesNotMatch(
-    skill,
-    /-\s+Reply yes to continue with this setup, or suggest a different one\./,
-  );
-  assert.match(skill, /use one bold confirmation\s+line, short bullets/);
-  assert.doesNotMatch(skill, /When Markdown is available/);
-  assert.match(skill, /single\s+long sentence that buries the decision point/);
 });
 
-test("skill documents the final summary bullet after creating a key", () => {
+test("skill prefers ignored env files and warns before tracked secret writes", () => {
   const skill = fs.readFileSync(SKILL, "utf8");
 
-  assert.match(skill, /## Final Summary/);
+  assert.match(skill, /Prefer ignored or untracked env files\./);
+  assert.match(skill, /The form shows the recommended location and lets the user replace it before continuing\./);
+  assert.match(skill, /If the local destination tool returns `approved`, use its returned `targetPath` exactly and do not ask a second destination question\./);
+  assert.match(skill, /ask exactly one short question and stop: `Save the new key to <path>\? Reply yes to continue, another workspace-relative env-file path to change it, or decline\.`/);
   assert.match(
     skill,
-    /After successfully creating and writing a new key, include this bullet in the final summary, replacing `<key name>` with the created key name:/,
+    /Silently check whether the selected target is tracked\. If it is tracked, stop and obtain explicit confirmation that a secret will be written there\./,
   );
-  assert.match(
-    skill,
-    /- I created an API Key named `<key name>` to call OpenAI APIs\. Manage OpenAI API use on \[platform\.openai\.com\]\(https:\/\/platform\.openai\.com\)\./,
-  );
-  assert.match(skill, /Keep the rest of the summary to safe metadata only\./);
-  assert.match(skill, /Do not reveal the key value\./);
 });
 
-test("eval matrix includes two-field joke app use case", () => {
+test("eval matrix includes local picker boundary and two-field joke app use case", () => {
   const evals = fs.readFileSync(EVALS, "utf8");
+  const k2RunnerRow = evals
+    .split(/\r?\n/u)
+    .find((line) => line.startsWith("| K2 |"));
 
+  assert.match(
+    evals,
+    /should open the Platform connector-owned picker with no arguments/,
+  );
+  assert.match(
+    evals,
+    /after any non-error picker launch, should not inspect or interpret its launch payload, make another tool call, or send a non-empty user-facing message in that turn/,
+  );
+  assert.match(
+    evals,
+    /brief progress updates should be allowed only when limited to credential-gate activity and should not describe implementation plans, architecture, file choices, local destination details, or credential conclusions before the credential decision or picker handoff/,
+  );
+  assert.match(k2RunnerRow, /brief progress updates should be allowed only when limited to credential-gate activity/);
+  assert.match(
+    evals,
+    /Grade the original case assertions as the product result\. Report runner-injected\s+freshness, artifact, and generic result-validity assertions separately/,
+  );
   assert.match(evals, /### K5 - Two-field joke app/);
   assert.match(
     evals,
@@ -379,17 +584,18 @@ test("openai-docs defers to API key skill for implementation tasks", (t) => {
   for (const docsSkillPath of docsSkillPaths) {
     const docsSkill = fs.readFileSync(docsSkillPath, "utf8");
 
+    assert.match(docsSkill, /## API Key Setup/);
     assert.match(
       docsSkill,
-      /For API-backed implementation tasks, defer to openai-platform-api-key first when available\./,
+      /For requests to build, run, configure, debug, or implement an API-backed app, script, CLI, generator, or tool, use `openai-platform-api-key` first when available\./,
     );
     assert.match(
       docsSkill,
-      /use `openai-platform-api-key` first when it is\s+available\. After that credential gate is resolved, return here for current docs\s+as needed\./,
+      /use `openai-platform-api-key` first when available\. After that credential gate is resolved, return here for current docs as needed\./,
     );
     assert.match(
       docsSkill,
-      /Use this skill directly for docs-only questions, citations, model\/API guidance,\s+conceptual explanations, and examples that do not require building or running an\s+API-backed artifact\./,
+      /Use this skill directly for docs-only questions, citations, model\/API guidance, conceptual explanations, and examples that do not require building or running an API-backed artifact\./,
     );
   }
 });
