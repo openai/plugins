@@ -8,6 +8,7 @@ It currently includes these skills:
 - `ios-ettrace-performance`
 - `ios-memgraph-leaks`
 - `ios-app-intents`
+- `ios-simulator-browser-preview`
 - `swiftui-liquid-glass`
 - `swiftui-performance-audit`
 - `swiftui-ui-patterns`
@@ -22,6 +23,7 @@ It currently includes these skills:
 - capturing symbolicated ETTrace simulator profiles for focused app flows
 - capturing and comparing iOS memgraphs to root-cause leaks
 - debugging iOS apps on simulators with XcodeBuildMCP-backed flows
+- previewing a booted iOS Simulator in the Codex in-app browser with `serve-sim`
 - restructuring large SwiftUI views toward smaller, more stable compositions
 
 ## Plugin Structure

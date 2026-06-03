@@ -1,0 +1,4 @@
+interface:
+  display_name: "iOS Simulator Browser Preview"
+  short_description: "Open Simulator in Browser"
+  default_prompt: "Use $ios-simulator-browser-preview to stream the booted iOS Simulator into the Codex in-app browser with serve-sim."
