@@ -1,0 +1,9 @@
+interface:
+  display_name: "D&B Finance Analytics"
+  short_description: "Credit origination and portfolio management with D&B Finance Analytics."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon-large.png"
+  brand_color: "#3B82F6"
+  default_prompt: "Use $fa-jobs-to-be-done to review a company's credit profile with D&B Finance Analytics."
+policy:
+  allow_implicit_invocation: true
