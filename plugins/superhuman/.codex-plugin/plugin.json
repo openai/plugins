@@ -1,5 +1,5 @@
 {
-  "name": "superhuman-mail",
+  "name": "superhuman",
   "version": "0.1.0",
   "description": "Connect Codex to the official Superhuman Mail MCP server for email and calendar workflows.",
   "author": {
@@ -17,7 +17,7 @@
     "mcp"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Superhuman Mail",
     "shortDescription": "Search, draft, send, and schedule through Superhuman Mail MCP",
