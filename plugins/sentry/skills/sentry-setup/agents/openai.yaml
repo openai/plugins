@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sentry Setup"
+  short_description: "Install and update Sentry instrumentation"
+  icon_small: "../../../assets/sentry-small.svg"
+  icon_large: "../../../assets/sentry.png"
+  default_prompt: "Set up or update Sentry instrumentation for this project using the current upstream guidance."
