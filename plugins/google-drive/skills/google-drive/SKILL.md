@@ -19,6 +19,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - Use the base workflow for search, fetch, recent files, folders, sharing, copying, deleting, exporting, revision history, file moves, and other file-lifecycle work that is not primarily about editing Docs, Sheets, or Slides content.
 - For version-history requests, including "previous version," "revision history," "what changed since the last version," or "compare to the prior revision," ground the file, fetch the current content, use `list_file_revisions`, fetch the immediately previous revision or the user-named revision with `fetch_file_revision`, then compare the fetched revision against the current content. Do not say previous versions are unsupported until you have checked whether revision tools are available for the target file.
 - For file move requests, ground the source file and target folder, read the file metadata including its current parents, then use `update_file` with `addParents` for the target folder and `removeParents` for only the verified source parent or parents that should no longer contain it. Preserve unrelated parents, and verify the move by reading metadata or listing the target folder before the final response.
+- Before any export or download, read or reuse Drive metadata so the MIME type is known. Use `export_file` only for native Google Docs, Sheets, and Slides files. For PDFs, images, ZIPs, Office files, recordings, and other non-native Drive files, use `fetch(download_raw_file=True)` when raw bytes are needed or normal `fetch` for best-effort text extraction. Do not retry `export_file` after metadata shows a non-native MIME type.
 
 3. Route to the narrowest sibling skill that matches the file type and job.
 - Drive, Docs, Sheets, or Slides comment creation, comment replies, comment resolution, or review-by-comments: use [google-drive-comments](../google-drive-comments/SKILL.md).
@@ -40,6 +41,7 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
 - If the user asks to import a local `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets, route to the Sheets skill and use native Google Sheets conversion by default. Preserve the source file type only when the user explicitly asks for that.
 - If the user asks to create a new Google Slides deck, route to the Slides skill; it owns the mandatory local `.pptx` -> native Google Slides import workflow and the explicit-user-override boundary. Do not create a blank Google Slides deck directly from this router.
 - If the user asks to import a local `.ppt`, `.pptx`, or `.odp` into Google Slides, route to the Slides skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
+- If the user asks to export or download an existing Drive file, choose the action from metadata: native Google Docs, Sheets, and Slides files use `export_file`; non-native PDFs, images, ZIPs, CSVs, Office files, audio, and video use `fetch`, with `download_raw_file=True` for raw-file workflows.
 
 ## Write Safety
 

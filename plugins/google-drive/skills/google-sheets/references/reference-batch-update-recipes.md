@@ -6,9 +6,13 @@ Use these patterns as copy-and-fill templates. The goal is request-shape recall,
 
 - Each request object must set exactly one request type key.
 - Use exact Google field names and structured objects instead of stringified JSON.
+- Prefer higher-level spreadsheet authoring or adapter-generated connector arguments when available. Hand-author raw `batch_update_spreadsheet` requests only after reading this reference and grounding metadata.
+- Use exact Sheets request keys and fields from the Sheets API. Do not borrow Docs, Slides, or values API fields for `spreadsheets.batchUpdate`.
 - Prefer `sheetId` from `get_spreadsheet_metadata` when building `GridRange`, `GridCoordinate`, or `DimensionRange`.
 - For `GridRange`, row and column indexes are zero-based, start-inclusive, and end-exclusive.
 - For update-style requests, set a precise `fields` mask. Do not include the root object name in the mask.
+- For destructive or index-sensitive requests, re-read target metadata and ranges immediately before building the request. Do not reuse stale row, column, sheet, or table indexes after prior edits.
+- Before sending a hand-authored batch, preflight that every request object has one key, no request is an empty object or JSON string, no request uses A1 notation inside `GridRange`, and no `rows` entry writes beyond the declared range.
 - Keep batches logically clustered. Group edits that should succeed or fail together, but do not mix unrelated table rewrites, formatting passes, and structure changes into one mega-batch.
 
 ## Coordinate Templates
@@ -281,6 +285,9 @@ Use `setDataValidation` for restricted inputs, including status dropdowns.
 - Omitting `fields` on update-style requests
 - Filling validated cells from plain range reads and missing the dropdown's actual allowed values
 - Mixing too many unrelated operations into one batch
+- Reusing stale indexes after an insert, delete, sort, or prior batch changed the sheet
+- Sending Docs or Slides request names, values API payloads, or invented field names to `spreadsheets.batchUpdate`
+- Declaring a small `GridRange` but sending more `rows` or `values` than the range can hold
 
 ## Official References
 

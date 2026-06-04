@@ -18,6 +18,12 @@ Always pass `requests` as structured objects, not stringified JSON.
 Pass `write_control` as an object when using it, not as stringified JSON.
 For concurrency-sensitive writes, prefer the latest connector-visible revision id in `write_control`; set either `requiredRevisionId` or `targetRevisionId`, not both.
 Requests execute in order, so sequence dependent edits deliberately.
+Preflight every hand-authored batch before calling the connector:
+
+- Each `requests` array item must be an object with exactly one Google Docs request key.
+- No request item may be an empty object, a JSON string, or a union of multiple request types.
+- Field names must belong to the selected Docs request shape. Do not reuse Sheets, Slides, or Drive field names inside Docs requests.
+- For destructive or index-sensitive edits, resolve the target range from current connector readback immediately before composing the request. Do not reuse stale start or end indexes after insertions, deletions, table edits, image insertion, or tab changes.
 
 Bad:
 
@@ -94,11 +100,12 @@ Before destructive writes:
 
 1. Resolve target ranges from current connector readback, or from a fresh read if the prior read is stale.
 2. Confirm first and last paragraphs are the intended body region.
-3. Write one chunk.
-4. Verify before the next chunk.
-5. Treat post-insertion style work as a new range-resolution step, not as a continuation of the insertion step. Re-read after content insertion before applying links, bolding, or heading fixes.
-6. Treat figure insertion as another new range-resolution step. Re-read the intended insertion block before placing any connector-supported image after a text edit.
-7. For write-capability questions, prefer a minimal pilot write and readback over a verbal inference about connector limits.
+3. Confirm every request item has exactly one Docs request key and still targets the live range.
+4. Write one chunk.
+5. Verify before the next chunk.
+6. Treat post-insertion style work as a new range-resolution step, not as a continuation of the insertion step. Re-read after content insertion before applying links, bolding, or heading fixes.
+7. Treat figure insertion as another new range-resolution step. Re-read the intended insertion block before placing any connector-supported image after a text edit.
+8. For write-capability questions, prefer a minimal pilot write and readback over a verbal inference about connector limits.
 
 ## Local Style Baseline
 

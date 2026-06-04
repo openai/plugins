@@ -13,8 +13,9 @@ This file is intentionally minimal and only covers:
 
 1. routing to the right spreadsheet workflow
 2. stateful operation and mandatory routing to reference files
+3. live-read/search safety for direct connector calls
 
-Detailed editing, formula, chart, upload, and batch-update rules live in `references/`.
+Detailed editing, formula, chart, upload, live-read/search, and batch-update rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
 If the user has not provided explicit style direction, read `references/style-profiles.md` and apply the appropriate Google Sheets destination default before authoring workbook formatting.
 
@@ -53,9 +54,10 @@ If Default Routing uses `[@spreadsheets](plugin://spreadsheets@openai-primary-ru
 If Default Routing uses connector edit workflow:
 
 1. Read `references/reference-edit-workflow.md`.
-2. Read every task-specific file from the matrix below.
-3. If the task spans multiple categories, read all matching files.
-4. If uncertain, read every file in `references/`.
+2. Before any direct live range read, cell read, or `search_spreadsheet_rows`, read `references/reference-live-read-search-safety.md`.
+3. Read every task-specific file from the matrix below.
+4. If the task spans multiple categories, read all matching files.
+5. If uncertain, read every file in `references/`.
 
 Do not execute content edits until the required references are read in the current turn.
 
@@ -70,14 +72,16 @@ Even though you created a local `.xlsx`, do not cite the local path in the final
 2. If the user only gives a title or title keywords, use the connector/app search path to identify candidate spreadsheets before asking for a URL.
 3. Resolve and record the spreadsheet id, target sheet names, and `sheetId` values.
 4. Read spreadsheet metadata before deeper reads or writes.
-5. Before each edit pass, identify the exact sheet, range, headers, formulas, and validation constraints being edited through connector reads.
-6. Re-read target cells before writing when live values, formulas, formatting, or validation could affect the write.
+5. For direct live range reads, cell reads, or `search_spreadsheet_rows`, use exact visible tab names from metadata, bounded ranges, and the recovery rules in `references/reference-live-read-search-safety.md`. Do not guess `Sheet1`, scan whole grids, or retry oversized row searches.
+6. Before each edit pass, identify the exact sheet, range, headers, formulas, and validation constraints being edited through connector reads.
+7. Re-read target cells before writing when live values, formulas, formatting, or validation could affect the write.
 
 ## Task To Reference Map
 
 | Task area | Required reference file |
 | --- | --- |
 | Existing spreadsheet edit workflow, grounding, validation-backed cells, output conventions, and write planning | `references/reference-edit-workflow.md` |
+| Direct live range reads, cell reads, row searches, tab/range recovery, and oversized search avoidance | `references/reference-live-read-search-safety.md` |
 | Raw Sheets write shapes and example `batch_update` bodies | `references/reference-batch-update-recipes.md` |
 | Importing a locally created `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets | `references/reference-import-spreadsheet-to-native-sheets.md` |
 | Formula design, repair, rollout, or syntax refresh | `references/reference-formula-patterns.md` |
