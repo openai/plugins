@@ -25,6 +25,7 @@ const EVALS = path.resolve(
   __dirname,
   "../skills/openai-platform-api-key/references/evals.md",
 );
+const PLUGIN_MANIFEST = path.resolve(__dirname, "../.codex-plugin/plugin.json");
 const MCP_MANIFEST = path.resolve(__dirname, "../.mcp.json");
 const MCP_SERVER = path.resolve(__dirname, "../mcp/server.mjs");
 const OPENAI_DOCS_SKILL = path.resolve(
@@ -128,6 +129,7 @@ test("skill documents picker lookup and local destination confirmation", () => {
 });
 
 test("plugin registers the editable local destination confirmation MCP tool", () => {
+  const pluginManifest = JSON.parse(fs.readFileSync(PLUGIN_MANIFEST, "utf8"));
   const manifest = JSON.parse(fs.readFileSync(MCP_MANIFEST, "utf8"));
   const responses = runMcpServer([
     {
@@ -148,6 +150,7 @@ test("plugin registers the editable local destination confirmation MCP tool", ()
     },
   ]);
 
+  assert.equal(pluginManifest.mcpServers, "./.mcp.json");
   assert.deepEqual(
     manifest.mcpServers["openai-api-key-local-confirmation"].args,
     ["./mcp/server.mjs"],
