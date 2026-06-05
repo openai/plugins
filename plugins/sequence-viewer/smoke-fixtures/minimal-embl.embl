@@ -1,0 +1,9 @@
+ID   DEMOSEQ; SV 1; linear; genomic DNA; SYN; UNC; 18 BP.
+AC   DEMOSEQ;
+DE   Synthetic EMBL smoke fixture
+OS   synthetic construct
+FT   source          1..18
+FT   gene            1..18
+SQ   Sequence 18 BP; 5 A; 3 C; 5 G; 5 T; 0 other;
+     atgaaaacgt ggacgtacg        18
+//

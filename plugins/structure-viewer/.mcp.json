@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "structure-viewer": {
+      "command": "node",
+      "args": ["./dist/server.mjs"],
+      "cwd": "."
+    }
+  }
+}

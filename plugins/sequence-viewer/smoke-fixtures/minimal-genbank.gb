@@ -1,0 +1,16 @@
+LOCUS       DEMOSEQ        18 bp    DNA     linear   SYN 01-JAN-2026
+DEFINITION  Synthetic GenBank smoke fixture.
+ACCESSION   DEMOSEQ
+VERSION     DEMOSEQ.1
+SOURCE      synthetic construct
+FEATURES             Location/Qualifiers
+     source          1..18
+                     /organism="synthetic construct"
+     gene            1..18
+                     /gene="demo"
+     CDS             1..18
+                     /product="Demo protein"
+                     /translation="MKTW"
+ORIGIN
+        1 atgaaaacgt ggacgtacg
+//

@@ -1,0 +1,54 @@
+{
+  "name": "sequence-viewer",
+  "version": "0.1.7",
+  "description": "Open and inspect biological sequence and alignment files in an interactive viewer.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "sequence",
+    "alignment",
+    "msa",
+    "fasta",
+    "fastq",
+    "genbank",
+    "embl",
+    "a3m",
+    "stockholm",
+    "bioinformatics"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "openaiCapabilities": {
+    "mcpServers": {
+      "sequence-viewer": {}
+    }
+  },
+  "interface": {
+    "displayName": "Biological Sequence & Alignment Viewer",
+    "shortDescription": "Open biological sequence and alignment files in Codex",
+    "longDescription": "Biological Sequence & Alignment Viewer helps you open and inspect FASTA, GenBank, EMBL, FASTQ, and multiple sequence alignment files directly in Codex. Switch between sequence and alignment views, inspect annotations and quality, search motifs, select residues or columns, and ask follow-up questions grounded in the current viewer state.",
+    "developerName": "OpenAI",
+    "category": "Research",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Open this biological sequence or alignment in the interactive viewer",
+      "Inspect this sequence or alignment and help me interpret the current view"
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "brandColor": "#3F8F83",
+    "screenshots": []
+  }
+}

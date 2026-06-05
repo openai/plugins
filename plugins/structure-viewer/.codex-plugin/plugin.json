@@ -1,0 +1,54 @@
+{
+  "name": "structure-viewer",
+  "version": "0.1.7",
+  "description": "Open and inspect molecular structure files in an interactive Mol* viewer.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "structure",
+    "pdb",
+    "cif",
+    "mmcif",
+    "mol",
+    "molstar",
+    "protein",
+    "ligand",
+    "molecule",
+    "bioinformatics"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "openaiCapabilities": {
+    "mcpServers": {
+      "structure-viewer": {}
+    }
+  },
+  "interface": {
+    "displayName": "Molecular Structure Viewer",
+    "shortDescription": "Open molecular structures in Codex",
+    "longDescription": "Molecular Structure Viewer helps you open and inspect PDB, CIF, mmCIF, and MOL files directly in Codex. Explore an interactive Mol* view, focus ligands, change representations and coloring, select residues, and ask follow-up questions grounded in the current viewer state.",
+    "developerName": "OpenAI",
+    "category": "Research",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Open this molecular structure in the interactive viewer",
+      "Inspect this structure and help me interpret the current view"
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

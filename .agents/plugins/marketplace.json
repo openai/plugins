@@ -2118,6 +2118,30 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Finance"
+    },
+    {
+      "name": "structure-viewer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/structure-viewer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    },
+    {
+      "name": "sequence-viewer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sequence-viewer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
     }
   ]
 }
