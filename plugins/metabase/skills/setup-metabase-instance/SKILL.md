@@ -282,7 +282,7 @@ Once healthy, tell the user:
 
 ## Required: Initialize Metabase
 
-**You MUST run the gates below in order. Do NOT invoke `setup-metabase-mcp`, do NOT start the app-backed OAuth flow, and do NOT report "Metabase is ready" until every gate passes.** Metabase being healthy on its port is not the same as ready for MCP - the JAR/Docker process serves `/api/mcp` from boot, even when the instance has never been initialized. Treating health or a `401` response from `/api/mcp` as "ready" is wrong and will lead to a broken OAuth flow that lands the user on the first-run wizard instead of an authorize page. **This has happened before. Do not do it.**
+**You MUST run the gates below in order. Do NOT report "Metabase is ready" until every gate passes.** Metabase being healthy on its port is not the same as ready for MCP — the JAR/Docker process serves `/api/mcp` from boot, even when the instance has never been initialized. Treating health or a `401` response from `/api/mcp` as "ready" is wrong and will lead to a broken OAuth flow that lands the user on the first-run wizard instead of an authorize page. **This has happened before. Do not do it.**
 
 **Never automate Metabase configuration via REST.** Do **not** call any of these endpoints:
 
@@ -385,9 +385,9 @@ This gate completes on the user's confirmation when they reply "done" / "added" 
 
 Continue immediately to Gate 3.
 
-### Gate 3 - Hand back to MCP setup
+### Gate 3 — Confirm and stop
 
-Only after Gates 1 and 2 are both resolved, resume the `setup-metabase-mcp` skill with `http://localhost:$PORT` as the instance URL. Do not ask the user for the URL again, you already know it. That skill validates the URL (version + MCP endpoint) and hands the user to the app-backed connection flow. Do not duplicate those checks here, do not edit `.app.json`, and do not create `.mcp.json`.
+Only after Gates 1 and 2 are both resolved, confirm to the user that Metabase is ready at `http://localhost:$PORT` (substitute the actual port) and stop.
 
 ---
 

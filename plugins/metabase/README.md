@@ -1,18 +1,17 @@
 # Metabase Codex Plugin
 
-The official [Codex](https://developers.openai.com/codex/) plugin for [Metabase](https://www.metabase.com/). Developed and maintained by the Metabase Team.
+The official [Codex](https://developers.openai.com/codex/) MCP Plugin for [Metabase](https://www.metabase.com/). Developed and maintained by the Metabase Team.
 
 ## What's included
 
 - Skill: `setup-metabase-mcp` (`skills/setup-metabase-mcp/SKILL.md`)
-- Skill: `setup-metabase-instance` (`skills/setup-metabase-instance/SKILL.md`)
-- App config: `.app.json`
+- MCP server config: `.mcp.json`
 
-Current scope: **skills + app config only** (no rules, agents, commands, or hooks yet).
+Current scope: **skills + MCP config only** (no rules, agents, commands, or hooks yet).
 
 ## Connecting to your Metabase
 
-After installing the plugin, ask Codex to set up your Metabase MCP connection:
+After installing the plugin, just ask Codex to set up your Metabase MCP server:
 
 Just type: "Set up my Metabase MCP"
 
@@ -20,7 +19,7 @@ The `setup-metabase-mcp` skill will guide you through the rest. Codex will:
 
 - Ask for your Metabase URL.
 - Verify that your Metabase is version 60 or higher.
-- Hand you to the app-backed Codex connection flow.
+- Update your plugin's config with your Metabase's URL.
 
 You'll need a valid login to your Metabase.
 
@@ -28,19 +27,7 @@ You'll need a valid login to your Metabase.
 
 1. Clone this repo.
 
-2. Confirm `.app.json` contains the Metabase template app ID:
-
-```json
-{
-  "apps": {
-    "metabase": {
-      "id": "templated_apps_6a044bbd332881919b553bdfc2240952"
-    }
-  }
-}
-```
-
-3. Set up a local marketplace that points at the cloned plugin.
+2. Set up a local marketplace that points at the cloned plugin.
 
 ```sh
 mkdir -p ~/codex-local/.agents/plugins ~/codex-local/plugins
@@ -66,21 +53,21 @@ Then create `~/codex-local/.agents/plugins/marketplace.json`:
 }
 ```
 
-4. Register the marketplace with Codex.
+3. Register the marketplace with Codex.
 
 ```sh
 codex plugin marketplace add ~/codex-local
 ```
 
-5. Open Codex and install **Metabase** from the **Local Dev** marketplace:
+4. Open Codex and install **Metabase** from the **Local Dev** marketplace:
    - **Codex CLI:** run the `/plugins` slash command.
    - **Codex Desktop:** open the **Plugins** menu and enable it there.
 
    Then ask Codex to "Set up my Metabase MCP".
 
-Codex will automatically pick up the `setup-metabase-mcp` skill from the plugin and run it — no need to invoke it explicitly. The skill validates your Metabase URL and hands you to the app-backed connection flow.
+Codex will automatically pick up the `setup-metabase-mcp` skill from the plugin and run it — no need to invoke it explicitly. The skill configures your `.mcp.json` at `~/.codex/plugins/cache/local-dev/metabase/<version>/.mcp.json`.
 
-6. Once the Metabase app connection is complete, restart Codex, and you should be good to go.
+5. Once your `.mcp.json` is configured, restart Codex, and you should be good to go.
 
 ## Attribution
 
