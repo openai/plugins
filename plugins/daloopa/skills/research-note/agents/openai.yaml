@@ -1,0 +1,6 @@
+interface:
+  display_name: Research Note
+  short_description: Generate a professional Word document research note
+  default_prompt: Generate a professional research note for AAPL.
+policy:
+  allow_implicit_invocation: true

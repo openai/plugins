@@ -1,6 +1,6 @@
 {
   "name": "sendgrid",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connector for interacting with the SendGrid email API.",
   "author": {
     "name": "OpenAI",

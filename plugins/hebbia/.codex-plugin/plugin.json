@@ -1,0 +1,32 @@
+{
+  "name": "hebbia",
+  "version": "1.0.1",
+  "description": "Document research, evidence-backed answers, and project analysis from Hebbia",
+  "author": {
+    "name": "Hebbia",
+    "url": "https://www.hebbia.ai"
+  },
+  "homepage": "https://www.hebbia.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Hebbia",
+    "shortDescription": "Document research, evidence-backed answers, and project analysis",
+    "longDescription": "Document research, evidence-backed answers, and project analysis from Hebbia",
+    "developerName": "Hebbia",
+    "category": "Strategy & Consulting",
+    "capabilities": [],
+    "websiteURL": "https://www.hebbia.ai",
+    "defaultPrompt": [
+      "Search Hebbia projects for documents about this deal and summarize key findings.",
+      "Analyze this document set in Hebbia and extract risks, obligations, and open questions.",
+      "Find Hebbia answers with citations for this research question and flag evidence gaps."
+    ],
+    "brandColor": "#4657F5",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

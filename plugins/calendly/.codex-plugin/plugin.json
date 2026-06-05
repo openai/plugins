@@ -1,6 +1,6 @@
 {
   "name": "calendly",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Search Calendly events and availability so Codex can reason about meetings and scheduling.",
   "author": {
     "name": "Calendly",

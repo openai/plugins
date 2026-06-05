@@ -1,0 +1,32 @@
+{
+  "name": "zoho",
+  "version": "1.0.1",
+  "description": "CRM records, deals, contacts, and account context from Zoho",
+  "author": {
+    "name": "Zoho",
+    "url": "https://www.zoho.com"
+  },
+  "homepage": "https://www.zoho.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Zoho",
+    "shortDescription": "CRM records, deals, contacts, and account context from Zoho",
+    "longDescription": "CRM records, deals, contacts, and account context from Zoho",
+    "developerName": "Zoho",
+    "category": "Sales",
+    "capabilities": [],
+    "websiteURL": "https://www.zoho.com",
+    "defaultPrompt": [
+      "Search Zoho CRM for open deals closing this quarter and summarize the highest-risk opportunities.",
+      "Find Zoho CRM contacts at an account and summarize recent activities.",
+      "Pull Zoho CRM organization settings and users needed to audit access."
+    ],
+    "brandColor": "#0068B8",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

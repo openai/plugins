@@ -1,6 +1,6 @@
 {
   "name": "replit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Work with Replit projects, apps, deployments, and workspace context",
   "author": {
     "name": "Replit",

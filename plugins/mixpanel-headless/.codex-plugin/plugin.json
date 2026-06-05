@@ -1,6 +1,6 @@
 {
   "name": "mixpanel-headless",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Analyze Mixpanel data with the mixpanel_headless Python SDK and Codex skills.",
   "author": {
     "name": "Mixpanel",

@@ -1,6 +1,6 @@
 {
   "name": "dow-jones-factiva",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Factiva Connector, enables authorized users to search Factiva\u2019s global news archive, including premium...",
   "author": {
     "name": "Factiva, Inc.",

@@ -1,0 +1,56 @@
+---
+// ── Composer skeleton: src/pages/index.astro ──────────────────────────────────
+// Home shell. Substitutions (see COMPOSE.md § "6. index.astro"):
+//   {{shell.heroHeadline}}, {{shell.heroSub}} — brand-voice hero copy.
+//   {{shell.footerTagline}} is NOT used here.
+//   {{brand.name}} — used in the brand-story copy.
+//   {{home-markers}} — one `<!-- home:<pack> -->` marker per LOADED pack that
+//        contributes a home section (e.g. stores, gift-cards). Emit a marker
+//        ONLY for such packs; never emit a marker no pack will fill (e.g. no
+//        <!-- home:cms --> — CMS owns brand-story directly). Disabled packs
+//        (gift-cards) still get their marker; do NOT add hero CTAs / teasers
+//        pointing at disabled-pack routes.
+// Fixed bulk (keep literal): the Layout wrapper, hero/brand-story structure,
+// the data-decorative-slot="hero" and "about" placeholders (the orchestrator
+// injects <img> into these after Image Phase 1 — keep them empty).
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
+  <section class="relative">
+    <div class="max-w-6xl mx-auto px-lg py-4xl grid grid-cols-1 md:grid-cols-2 gap-3xl items-center">
+      <div class="flex flex-col gap-lg">
+        <h1 class="font-display text-4xl md:text-5xl leading-tight">{{shell.heroHeadline}}</h1>
+        <p class="text-lg text-mute max-w-prose">{{shell.heroSub}}</p>
+      </div>
+      <div
+        class="hero-image rounded-md"
+        data-decorative-slot="hero"
+        style="aspect-ratio: 4/5; background-color: var(--color-paper-warm);"
+      >
+        <!-- orchestrator injects <img src={decorativeImages.hero} …> here -->
+      </div>
+    </div>
+  </section>
+
+  {{home-markers}}
+
+  <section class="max-w-6xl mx-auto px-lg py-4xl grid grid-cols-1 md:grid-cols-2 gap-3xl items-center">
+    <div
+      class="about-image rounded-md order-last md:order-first"
+      data-decorative-slot="about"
+      style="aspect-ratio: 4/3; background-color: var(--color-paper-warm);"
+    >
+      <!-- orchestrator injects <img src={decorativeImages.about} …> here -->
+    </div>
+    <div class="flex flex-col gap-md max-w-prose">
+      <hr class="editorial-rule w-16 ml-0" />
+      <h2 class="font-display text-3xl leading-tight">The story behind {{brand.name}}</h2>
+      <p class="text-ink leading-relaxed">
+        A short, brand-contextual paragraph about what makes {{brand.name}} distinct.
+      </p>
+      <p class="text-mute leading-relaxed">
+        A second paragraph adding warmth and detail to the brand story.
+      </p>
+    </div>
+  </section>
+</Layout>

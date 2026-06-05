@@ -1,0 +1,53 @@
+{
+  "name": "ngs-analysis",
+  "version": "1.0.2",
+  "description": "Guided NGS intake, local execution, and public-pipeline routing for BCL, FASTQ, DNA variant, RNA-seq, single-cell, epigenomics, amplicon, and metagenomics analyses, with deeper decision skills for high-risk assay branches.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/openai",
+  "license": "MIT",
+  "keywords": [
+    "ngs",
+    "sequencing",
+    "bioinformatics",
+    "fastq",
+    "bcl",
+    "rnaseq",
+    "scrnaseq",
+    "variant-calling",
+    "atacseq",
+    "chipseq",
+    "microbiome",
+    "metagenomics",
+    "pipeline-routing",
+    "nextflow",
+    "nf-core"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Life Sciences NGS Analysis",
+    "shortDescription": "Guided NGS routing and local execution for sequencing analysis",
+    "longDescription": "A guided intake, routing, and execution plugin for next-generation sequencing workflows. It helps Codex inspect local sequencing inputs, ask only the missing assay-specific questions, choose public or freely accessible runtime-installable packages where possible, check existing tool availability before any install, and execute supported local workflows with validation, logs, manifests, QC reports, and artifact indexes. It includes deeper decision skills for BCL demultiplexing, FASTQ QC execution and interpretation, germline, somatic and UMI-panel DNA variants, bulk RNA-seq count generation and differential expression, ATAC-seq, ChIP-seq/CUT&RUN/CUT&Tag, and embedded post-count scRNA-seq QC.",
+    "developerName": "OpenAI",
+    "category": "Research",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Guide me through the minimum required NGS analysis questions, inspect available BCL/FASTQ files or count matrices, choose the right public pipeline or deeper assay-specific skill, check whether required tools already exist, and execute supported local workflows with pre-execution validation and artifact capture."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
+}

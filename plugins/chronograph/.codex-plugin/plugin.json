@@ -1,6 +1,6 @@
 {
   "name": "chronograph",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Private capital portfolio monitoring, fund metrics, and company updates",
   "author": {
     "name": "Chronograph",
@@ -10,6 +10,7 @@
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [],
+  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Chronograph",

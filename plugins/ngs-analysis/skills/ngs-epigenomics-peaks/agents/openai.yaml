@@ -1,0 +1,4 @@
+interface:
+  display_name: "Epigenomics Peaks"
+  short_description: "Plan ATAC/ChIP/CUT&RUN/CUT&Tag analysis"
+  default_prompt: "Classify my epigenomics assay, route ATAC-seq versus ChIP/CUT&RUN/CUT&Tag, check controls and replicates, and prepare a preflight-first peak plan."

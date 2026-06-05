@@ -725,6 +725,18 @@
       "category": "Productivity"
     },
     {
+      "name": "dnb-finance-analytics",
+      "source": {
+        "source": "local",
+        "path": "./plugins/dnb-finance-analytics"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    },
+    {
       "name": "docket",
       "source": {
         "source": "local",
@@ -1902,6 +1914,162 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "metabase",
+      "source": {
+        "source": "local",
+        "path": "./plugins/metabase"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "actively",
+      "source": {
+        "source": "local",
+        "path": "./plugins/actively"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "zoho",
+      "source": {
+        "source": "local",
+        "path": "./plugins/zoho"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fiscal-ai",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fiscal-ai"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    },
+    {
+      "name": "picsart",
+      "source": {
+        "source": "local",
+        "path": "./plugins/picsart"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "alation",
+      "source": {
+        "source": "local",
+        "path": "./plugins/alation"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "fal",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fal"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "hebbia",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hebbia"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    },
+    {
+      "name": "wix",
+      "source": {
+        "source": "local",
+        "path": "./plugins/wix"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "base44",
+      "source": {
+        "source": "local",
+        "path": "./plugins/base44"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "ngs-analysis",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ngs-analysis"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    },
+    {
+      "name": "superhuman",
+      "source": {
+        "source": "local",
+        "path": "./plugins/superhuman"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "shopify",
+      "source": {
+        "source": "local",
+        "path": "./plugins/shopify"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
     },
     {
       "name": "magicpath",

@@ -1,0 +1,7 @@
+interface:
+  display_name: Precedent Transactions
+  short_description: Precedent M&A transactions analysis with deal multiples and acquisition
+    history
+  default_prompt: Analyze precedent transactions for AAPL peers.
+policy:
+  allow_implicit_invocation: true

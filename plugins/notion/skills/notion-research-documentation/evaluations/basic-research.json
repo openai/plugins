@@ -3,10 +3,10 @@
   "skills": ["research-documentation"],
   "query": "Research our API authentication approach and create a summary document in Notion",
   "expected_behavior": [
-    "Searches Notion workspace for authentication-related pages using Notion:notion-search",
+    "Searches Notion workspace for authentication-related pages using Notion:search",
     "Uses appropriate search terms like 'API authentication', 'auth', 'API security'",
     "Applies filters if relevant (e.g., created_date_range, creator filters)",
-    "Fetches at least 2-3 relevant pages using Notion:notion-fetch to get detailed content",
+    "Fetches at least 2-3 relevant pages using Notion:fetch to get detailed content",
     "Analyzes the fetched content to extract key information about authentication approach",
     "Creates a structured research summary document using Research Summary format (see reference/formats.md)",
     "Includes sections: Executive Summary, Key Findings, Detailed Analysis, Recommendations, Sources",

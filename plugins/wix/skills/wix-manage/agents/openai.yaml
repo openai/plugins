@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wix Manage"
+  short_description: "Configure Wix business solutions with REST API recipes"
+  default_prompt: "Use Wix management recipes to configure this Wix business solution safely through REST APIs."

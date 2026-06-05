@@ -1,0 +1,4 @@
+interface:
+  display_name: "ATAC-seq Peaks QC"
+  short_description: "Deep ATAC-seq QC, peak, and accessibility planning"
+  default_prompt: "Plan an ATAC-seq QC and peak-calling workflow, check replicate and TSS/FRiP requirements, and prepare a preflight-first command."

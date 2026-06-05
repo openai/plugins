@@ -52,7 +52,7 @@ Example for documentation database:
 Before creating pages, always fetch database to get schema:
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "database-url-or-id"
 ```
 

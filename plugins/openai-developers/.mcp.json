@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "openai-api-key-local-confirmation": {
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "./mcp/server.mjs"
+      ]
+    }
+  }
+}

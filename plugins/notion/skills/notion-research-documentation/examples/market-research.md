@@ -6,7 +6,7 @@
 
 ### 1. Search
 ```
-Notion:notion-search
+Notion:search
 query: "AI coding assistants market"
 query_type: "internal"
 filters: {}
@@ -16,7 +16,7 @@ Found 3 relevant pages across Engineering, Strategy, and Product teamspaces.
 ### 2. Fetch & Analyze
 ```
 Repeat for each Notion page result:
-Notion:notion-fetch
+Notion:fetch
 id: "market-trends-q3-2025-page-id"
 ```
 Extracted market size, competitive landscape, technology trends from source pages.

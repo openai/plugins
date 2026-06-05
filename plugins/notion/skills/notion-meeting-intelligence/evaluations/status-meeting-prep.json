@@ -3,9 +3,9 @@
   "skills": ["meeting-intelligence", "task-manager"],
   "query": "Prep for Friday's project status meeting on the Mobile App Redesign project. Create both an internal pre-read and an external agenda.",
   "expected_behavior": [
-    "Step 1: Uses Notion:notion-search to find Mobile App Redesign project page",
-    "Step 2: Fetches project page using Notion:notion-fetch to get current status and context",
-    "Step 3: Uses Notion:notion-search to find tasks database",
+    "Step 1: Uses Notion:search to find Mobile App Redesign project page",
+    "Step 2: Fetches project page using Notion:fetch to get current status and context",
+    "Step 3: Uses Notion:search to find tasks database",
     "Step 4: Queries task database using Notion:notion-query-data-sources for project tasks (WHERE Project = 'Mobile App Redesign')",
     "Step 5: Analyzes task data: calculates completion %, identifies completed work, in-progress items, and blockers",
     "Step 6: Enriches with Codex research - adds project management insights (velocity trends, risk patterns, common project pitfalls), suggests discussion frameworks if risks identified, provides context on timeline implications",
@@ -29,6 +29,6 @@
     "Codex enrichment adds value (project management insights, risk patterns, velocity analysis)",
     "Links to project page and task database using mention tags",
     "Documents are cross-linked for easy navigation",
-    "Uses correct tool names (Notion:notion-search, Notion:notion-fetch, Notion:notion-query-data-sources, Notion:notion-create-pages for BOTH documents)"
+    "Uses correct tool names (Notion:search, Notion:fetch, Notion:notion-query-data-sources, Notion:notion-create-pages for BOTH documents)"
   ]
 }

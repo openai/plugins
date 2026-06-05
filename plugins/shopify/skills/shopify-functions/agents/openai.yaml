@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Functions"
+  short_description: "Build Shopify backend customizations"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-functions to build or validate a Shopify Function."

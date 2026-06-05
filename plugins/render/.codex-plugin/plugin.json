@@ -1,6 +1,6 @@
 {
   "name": "render",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Skills for deploying, debugging, monitoring, and migrating apps on Render.",
   "author": {
     "name": "Render",

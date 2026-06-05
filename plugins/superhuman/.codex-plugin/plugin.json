@@ -1,0 +1,45 @@
+{
+  "name": "superhuman",
+  "version": "0.1.1",
+  "description": "Connect Codex to the official Superhuman Mail MCP server for email and calendar workflows.",
+  "author": {
+    "name": "Superhuman",
+    "url": "https://superhuman.com/"
+  },
+  "homepage": "https://help.superhuman.com/hc/en-us/articles/49810745762067-Superhuman-Mail-MCP-Server",
+  "repository": "https://github.com/superhuman/mcp-mail",
+  "license": "MIT",
+  "keywords": [
+    "superhuman",
+    "mail",
+    "email",
+    "calendar",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Superhuman Mail",
+    "shortDescription": "Search, draft, send, and schedule through Superhuman Mail MCP",
+    "longDescription": "Connect Codex to Superhuman Mail through the official remote MCP server. Once authenticated, Codex can use Superhuman Mail tools for inbox search, thread and message lookup, draft creation, sending, read statuses, labels, Split Inboxes, calendar events, availability, and account personalization.",
+    "developerName": "Superhuman",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://superhuman.com/",
+    "privacyPolicyURL": "https://superhuman.com/privacy",
+    "termsOfServiceURL": "https://superhuman.com/legal/terms",
+    "defaultPrompt": [
+      "Use Superhuman Mail to summarize my inbox.",
+      "Draft replies to email that needs me today.",
+      "Find meeting availability and create an event."
+    ],
+    "brandColor": "#CE9EC6",
+    "composerIcon": "./assets/superhuman-mail-small.svg",
+    "logo": "./assets/superhuman-mail.svg",
+    "screenshots": []
+  }
+}

@@ -13,7 +13,7 @@ From conversation, identified:
 
 ### 2. Find Decision Log
 ```
-Notion:notion-search
+Notion:search
 query: "architecture decisions"
 query_type: "internal"
 filters: {}
@@ -23,7 +23,7 @@ Found: "Architecture Decision Records" database
 
 ### 3. Fetch Schema
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "architecture-decision-records-database-id"
 ```
 

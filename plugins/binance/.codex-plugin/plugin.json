@@ -1,6 +1,6 @@
 {
   "name": "binance",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Binance for Codex lets you access and explore Binance public, read-only market data using natural language.",
   "author": {
     "name": "Binance",

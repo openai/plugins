@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bulk RNA-seq Counts"
+  short_description: "Deep FASTQ-to-count processing and QC for bulk RNA-seq"
+  default_prompt: "Plan a bulk RNA-seq count-generation workflow, validate strandedness and references, check public tools, and prepare a preflight-first command."

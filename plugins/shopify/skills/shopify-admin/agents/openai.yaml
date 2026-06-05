@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Admin"
+  short_description: "Generate and validate Admin GraphQL"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-admin to write or explain a Shopify Admin GraphQL operation."

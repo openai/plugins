@@ -21,7 +21,7 @@ Organized into:
 
 ### 3. Find Location
 ```
-Notion:notion-search
+Notion:search
 query: "deployment documentation"
 query_type: "internal"
 filters: {}
@@ -112,7 +112,7 @@ Production deployment using GitHub Actions with zero-downtime rolling updates.
 
 ### 5. Make Discoverable
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "engineering-wiki-homepage"
 ```
 

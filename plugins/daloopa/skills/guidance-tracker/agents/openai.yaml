@@ -1,0 +1,6 @@
+interface:
+  display_name: Guidance Tracker
+  short_description: Track management guidance accuracy over time for a given company
+  default_prompt: Track NVDA guidance accuracy over recent quarters.
+policy:
+  allow_implicit_invocation: true

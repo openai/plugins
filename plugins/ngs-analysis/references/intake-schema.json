@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NGS analysis intake",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["input_type", "assay", "objective"],
+  "properties": {
+    "input_type": {
+      "type": "string",
+      "enum": ["bcl_run_folder", "fastq", "bam_or_cram", "count_matrix", "vcf", "unknown"]
+    },
+    "assay": {
+      "type": "string",
+      "enum": [
+        "wgs",
+        "wes",
+        "targeted_panel",
+        "bulk_rnaseq",
+        "scrnaseq",
+        "snrnaseq",
+        "atacseq",
+        "chipseq",
+        "cutandrun",
+        "cutandtag",
+        "amplicon_microbiome",
+        "shotgun_metagenomics",
+        "fastq_qc_only",
+        "unknown"
+      ]
+    },
+    "objective": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "demultiplex",
+          "qc",
+          "trim",
+          "align",
+          "variant_calling",
+          "germline_variant_calling",
+          "somatic_variant_calling",
+          "umi_panel_variant_calling",
+          "variant_annotation",
+          "expression_counts",
+          "differential_expression",
+          "cell_matrix",
+          "cell_qc",
+          "cell_annotation",
+          "post_count_qc",
+          "peak_calling",
+          "differential_accessibility",
+          "differential_binding",
+          "taxonomic_profile",
+          "functional_profile",
+          "report_only"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "organism": {"type": "string"},
+    "reference": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "genome": {"type": "string"},
+        "fasta": {"type": "string"},
+        "gtf": {"type": "string"},
+        "bed": {"type": "string"},
+        "known_sites": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "library": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "paired_end": {"type": "boolean"},
+        "strandedness": {
+          "type": "string",
+          "enum": ["forward", "reverse", "unstranded", "unknown"]
+        },
+        "umi": {"type": "boolean"},
+        "chemistry": {"type": "string"},
+        "read_length": {"type": "string"},
+        "adapters_or_primers": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "study_design": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "samplesheet": {"type": "string"},
+        "contrasts": {"type": "array", "items": {"type": "string"}},
+        "tumor_normal": {"type": "boolean"},
+        "tumor_only": {"type": "boolean"},
+        "trio": {"type": "boolean"},
+        "sample_model": {
+          "type": "string",
+          "enum": ["singleton", "cohort", "duo", "trio", "family", "tumor_only", "tumor_normal", "umi_panel", "unknown"]
+        },
+        "replicates": {"type": "boolean"},
+        "batches": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "executor": {
+          "type": "string",
+          "enum": ["local", "slurm", "sge", "aws", "gcp", "azure", "unknown"]
+        },
+        "container_engine": {
+          "type": "string",
+          "enum": ["docker", "singularity", "apptainer", "none", "unknown"]
+        },
+        "can_install": {"type": "boolean"},
+        "allow_network": {"type": "boolean"},
+        "allow_cloud_upload": {"type": "boolean"},
+        "gpu_available": {"type": "boolean"}
+      }
+    },
+    "routing_decision": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "pipeline_key": {"type": "string"},
+        "pipeline_name": {"type": "string"},
+        "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+        "missing_essentials": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

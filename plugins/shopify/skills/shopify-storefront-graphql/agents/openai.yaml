@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Storefront GraphQL"
+  short_description: "Build custom storefront queries"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-storefront-graphql to build custom storefront GraphQL operations."

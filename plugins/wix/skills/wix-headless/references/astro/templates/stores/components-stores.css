@@ -1,0 +1,400 @@
+/* src/styles/components-stores.css
+ *
+ * Stores-pack component CSS. Owned by the stores Phase 3 components agent.
+ *
+ * This file is the SINGLE source of truth for stores-component classes.
+ * The designer's global.css does NOT publish .product-card, .product-grid,
+ * .product-card-media, .product-card-ribbon, .product-card-index, or the
+ * .offer-callout family — those all live here. See references/shared/STYLING.md
+ * § "Component-specific CSS is owned by the component, not the designer".
+ *
+ * Class groups in this file:
+ * - .product-card / .product-grid / .product-card-* → product cards (ProductCard.astro), product listings (products/index.astro, category/[slug].astro), home grid (index.astro)
+ * - .offer-callout family → discount callout above ProductPurchase on /products/[slug]
+ * - .option-* / .stock-status / .modifier-text → ProductPurchase.tsx (variant pills, stock label, free-text modifier)
+ * - .quantity-* → ProductPurchase.tsx + CartView.tsx (quantity stepper)
+ * - .back-in-stock-* → BackInStockForm.tsx (out-of-stock subscribe)
+ *
+ * Uses the palette + typography custom properties declared in global.css.
+ */
+
+/* =========================================================================
+   Product card + grid — owned here, NOT in global.css.
+   The .product-card uses overflow: hidden + border-radius, so inner padding
+   is the responsibility of THIS file (whoever sets the radius owns the
+   inset). Don't ship a stub rule and rely on the template to add padding
+   utilities — that's the leak this file was created to prevent.
+   ========================================================================= */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--spacing-xl);
+  transition: opacity 200ms ease;
+}
+body[data-navigating="true"] .product-grid {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  background: var(--color-paper, var(--color-cream));
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 280ms ease, box-shadow 280ms ease;
+  box-shadow: var(--shadow-card, 0 4px 16px -8px rgba(0, 0, 0, 0.15));
+}
+.product-card:hover {
+  transform: translateY(-4px);
+}
+.product-card:hover .product-card-media > img {
+  transform: scale(1.04);
+}
+
+.product-card-media {
+  position: relative;
+  margin: var(--spacing-md);
+  aspect-ratio: 4 / 5;
+  background: var(--color-paper-warm, var(--color-cream));
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.product-card-media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms ease;
+}
+
+.product-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding-inline: var(--spacing-md);
+}
+.product-card-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+.product-card-price {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  color: var(--color-mute);
+}
+
+.product-card-ribbon {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  padding: 0.375rem 0.625rem;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+}
+.product-card-index {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  padding: 0.375rem 0.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-pill, 9999px);
+  z-index: 2;
+}
+
+/* =========================================================================
+   Offer callout — bordered panel above ProductPurchase on /products/[slug].
+   Compound multi-element pattern. The dashboard-authored offer string can
+   contain `\n` line breaks; -detail must preserve them via white-space.
+   ========================================================================= */
+.offer-callout {
+  background: var(--color-paper-warm, var(--color-cream));
+  border: 1px solid var(--color-rule);
+  border-left: 2px solid var(--color-accent);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+.offer-callout-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+.offer-callout-item + .offer-callout-item {
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-rule);
+}
+.offer-callout-badge {
+  align-self: flex-start;
+  padding: 0.25rem 0.5rem;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+}
+.offer-callout-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-ink);
+  margin: 0;
+}
+.offer-callout-detail {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ink-soft, var(--color-mute));
+  white-space: pre-line;
+  margin: 0;
+}
+.offer-callout-foot {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+
+/* =========================================================================
+   Rules below use direct CSS (var(--token)) only — no `@apply`.
+
+   Tailwind v4 `@apply` in a non-entrypoint CSS file only works for utilities
+   whose theme keys the designer's `@theme` block declares. Earlier revisions
+   of this template used `@apply font-heading text-bark/70 bg-parchment …`,
+   which assumed a different token vocabulary than current designer output
+   (`paper`/`ink`/`font-display` …) and built-failed on every run that loaded
+   it. Direct `var(--color-paper)` / `var(--spacing-sm)` calls work against
+   any designer-published token set as long as the core scales exist (they
+   always do). Use fallback chains (`var(--color-paper-warm, var(--color-cream))`)
+   when a token is sometimes-published.
+   ========================================================================= */
+
+/* --- Variant / option pills (ProductPurchase.tsx) --- */
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+.option-label {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft, var(--color-mute));
+}
+.option-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+.option-pill {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-ink);
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.option-pill.selected {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.option-pill:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- Quantity stepper (ProductPurchase.tsx, CartView.tsx qty editing) --- */
+.quantity-selector {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.quantity-btn {
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+.quantity-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.quantity-value {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Modifier free-text input (ProductPurchase.tsx, FREE_TEXT render type) --- */
+.modifier-text {
+  width: 100%;
+  padding: var(--spacing-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-warm, var(--color-paper, var(--color-cream)));
+  color: var(--color-ink);
+  resize: vertical;
+}
+.modifier-text:focus {
+  outline: none;
+  border-color: var(--color-ink);
+  background: var(--color-paper, var(--color-cream));
+}
+
+/* --- Stock status (ProductPurchase.tsx) --- */
+.stock-status {
+  font-size: 0.875rem;
+  color: var(--color-ink-soft, var(--color-mute));
+  font-style: italic;
+}
+
+/* --- Back-in-stock subscribe form (BackInStockForm.tsx) ---
+ * Rendered inside .purchase-area in three OOS branches when
+ * backInStockEnabled=true (probe in [slug].astro). */
+.back-in-stock-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper, var(--color-cream));
+}
+.back-in-stock-headline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+.back-in-stock-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft, var(--color-mute));
+}
+.back-in-stock-lede {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+.back-in-stock-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft, var(--color-mute));
+}
+.back-in-stock-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+.back-in-stock-input {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-warm, var(--color-paper, var(--color-cream)));
+  color: var(--color-ink);
+  min-width: 0;
+  transition: border-color 0.15s ease;
+}
+.back-in-stock-input:focus {
+  outline: none;
+  border-color: var(--color-ink);
+}
+.back-in-stock-submit {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.back-in-stock-submit:hover:not(:disabled) {
+  background: var(--color-ink-soft, var(--color-ink));
+}
+.back-in-stock-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.back-in-stock-error {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-error, var(--color-accent));
+}
+.back-in-stock-success {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper, var(--color-cream));
+}
+.back-in-stock-success-headline {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-ink);
+  margin: 0 0 0.5rem 0;
+}
+.back-in-stock-success-detail {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  line-height: 1.55;
+  margin: 0;
+}
+.stock-status.back-in-stock-alt {
+  margin-top: var(--spacing-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-ink-soft, var(--color-mute));
+}
+
+/* Cart CSS (.cart-item-*, .qty-*) lives in components-ecom.css — not in this file. */

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChIP/CUT&RUN Peaks QC"
+  short_description: "Deep ChIP-seq, CUT&RUN, and CUT&Tag peak workflow planning"
+  default_prompt: "Plan a ChIP-seq or CUT&RUN/CUT&Tag workflow, validate controls and target type, check public tools, and prepare a preflight-first command."

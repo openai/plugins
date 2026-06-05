@@ -1,0 +1,11 @@
+{/*
+  Navigation.astro contribution. Insert the line below immediately AFTER the
+  `<!-- nav:links -->` marker. ALSO add to the file's frontmatter:
+
+      import { getGiftCardProduct } from "../utils/gift-cards";
+      const giftCardsEnabled = (await getGiftCardProduct()) !== null;
+
+  Wrap the await in try/catch only if other awaits in the file are also
+  guarded (the helper itself never throws). The snippet itself is one line.
+*/}
+{giftCardsEnabled && <a href="/gift-cards">Gift Cards</a>}

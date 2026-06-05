@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Polaris Customer Account Extensions"
+  short_description: "Build customer account extensions"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-polaris-customer-account-extensions to build customer account UI extensions."

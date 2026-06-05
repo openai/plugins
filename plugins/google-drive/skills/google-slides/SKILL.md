@@ -46,7 +46,7 @@ For imports and any explicit direct-create override, wait for the write action t
 ## Non-Negotiable Output Invariant
 
 Inserted or edited content must match the target deck's existing structure and connector-observable presentation closely enough that it reads as native deck content.
-Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder or template sample text, empty content-bearing placeholders, primary content placed in newly created freeform boxes when a template slot should have been used, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
+Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder or template sample text, empty or unresolved placeholder objects, primary content placed in newly created freeform boxes while an inherited or template slot remains unused, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
 
 For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
 For net-new Google Slides without a provided native Slides template or reference deck, create a local `.pptx` with `[@presentations](plugin://presentations@openai-primary-runtime)` and import it to Google Drive with `upload_mode: "native_google_slides"`.
@@ -79,14 +79,16 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 4. every changed chart is refreshed or replaced in the intended footprint, with obsolete placeholder text removed unless the user asked to keep it
 5. every new or edited shape, image, table, and text box stays inside the slide bounds unless intentionally full-bleed
 6. no slide in a multi-slide task was skipped, duplicated, or left in a mixed old/new state
-7. no visual property is claimed as verified unless connector data or a fresh thumbnail supports it
-8. final presentation output is an editable Google Slides deck, not one PNG per slide; verify editable components with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`
-9. for imports and direct creates, the final returned URL or presentation id came from a completed connector result or readback, not a predicted Google Slides URL
-10. for template/reference-deck copies, the final returned URL or presentation id came from the completed copy result or readback, not from the source deck or a predicted URL
-11. Even when a local pptx was created for an import workflow, do not cite the local pptx path as a deliverable in your final answer. Your final answer must only reference the verified gsuite link.
-12. for template/reference-deck copies, full `get_presentation` or per-slide `get_slide` readback was used for final structural validation; `get_presentation_outline` alone is insufficient
-13. for template/reference-deck copies, content-bearing placeholders and reusable template objects were used where they exist; newly created primary text/image boxes are justified by the chosen slide plan, not a shortcut around the template
-14. no generic editor prompts, sample copy, lorem ipsum, old-event content, or other template scaffolding remains unless explicitly requested by the user
+7. duplicated slides that needed reordering were moved only after a post-duplicate readback, with `slideObjectIds` listed in current presentation order
+8. no visual property is claimed as verified unless connector data or a fresh thumbnail supports it
+9. final presentation output is an editable Google Slides deck, not one PNG per slide; verify editable components with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`
+10. for imports and direct creates, the final returned URL or presentation id came from a completed connector result or readback, not a predicted Google Slides URL
+11. for template/reference-deck copies, the final returned URL or presentation id came from the completed copy result or readback, not from the source deck or a predicted URL
+12. Even when a local pptx was created for an import workflow, do not cite the local pptx path as a deliverable in your final answer. Your final answer must only reference the verified gsuite link.
+13. for any slide inserted from a layout (`slideLayoutReference`, `predefinedLayout`, or inherited master/layout placeholders), every inherited placeholder object was populated, replaced, or intentionally deleted; do not rely on thumbnails alone because empty placeholders can be invisible
+14. for template/reference-deck copies, full `get_presentation` or per-slide `get_slide` readback was used for final structural validation; `get_presentation_outline` alone is insufficient
+15. for template/reference-deck copies, content-bearing placeholders and reusable template objects were used where they exist; newly created primary text/image boxes are justified by the chosen slide plan, not a shortcut around the template
+16. no generic editor prompts, sample copy, lorem ipsum, old-event content, or other template scaffolding remains unless explicitly requested by the user
 
 **Slides**
 
@@ -147,7 +149,7 @@ Do not execute content edits until the required references are read in the curre
 | Deck summaries, candidate slides, multi-slide edits, translation, or deck-wide changes | `references/reference-read-before-write-and-deck-scope.md` |
 | Any layout, styling, image, chart, or placement change | `references/reference-thumbnail-visual-verification.md` |
 | New deck from a provided native Google Slides template or reference deck | `references/reference-template-reference-deck-copy-workflow.md` |
-| New deck creation or copy-from-template workflows | `references/reference-new-deck-and-final-pass.md` |
+| New deck creation, copy-from-template workflows, or final handoff after any write | `references/reference-new-deck-and-final-pass.md` |
 | Local `.ppt`, `.pptx`, or `.odp` import | `references/reference-import-presentation.md` |
 | Visual cleanup, overflow, spacing, alignment, or deck polish | `references/reference-visual-iteration.md` |
 | Migrating source content onto a template deck | `references/reference-template-migration.md` |

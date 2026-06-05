@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify CLI"
+  short_description: "Run and troubleshoot Shopify CLI workflows"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-use-shopify-cli to run or troubleshoot a Shopify CLI workflow."

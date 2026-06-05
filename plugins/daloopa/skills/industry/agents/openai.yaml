@@ -1,0 +1,6 @@
+interface:
+  display_name: Industry
+  short_description: Cross-company industry comparison across multiple tickers
+  default_prompt: Compare AAPL, MSFT, GOOGL, and AMZN.
+policy:
+  allow_implicit_invocation: true

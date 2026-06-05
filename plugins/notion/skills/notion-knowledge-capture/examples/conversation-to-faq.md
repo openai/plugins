@@ -34,7 +34,7 @@ Extract distinct Q&A pairs from conversation:
 ### Step 3: Determine Destination
 
 ```
-Notion:notion-search
+Notion:search
 query: "FAQ deployment"
 query_type: "internal"
 filters: {}
@@ -43,7 +43,7 @@ filters: {}
 Found: "Deployment FAQ" database in Engineering Docs
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "deployment-faq-database-id"
 ```
 
@@ -115,7 +115,7 @@ pages: [{
 ### Step 5: Update FAQ Index
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "faq-index-page-id"
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "circleci",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build, test, and deploy any application",
   "author": {
     "name": "CircleCI",

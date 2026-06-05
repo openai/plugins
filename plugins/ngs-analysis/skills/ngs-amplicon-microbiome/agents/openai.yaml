@@ -1,0 +1,4 @@
+interface:
+  display_name: "Amplicon Microbiome"
+  short_description: "Plan 16S/ITS/amplicon microbiome analysis"
+  default_prompt: "Inspect my amplicon FASTQs and metadata, resolve primers and taxonomy database choices, and prepare a public pipeline preflight run."

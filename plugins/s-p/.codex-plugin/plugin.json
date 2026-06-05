@@ -1,6 +1,6 @@
 {
   "name": "s-p",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Company financials, ratings context, market research, and industry data",
   "author": {
     "name": "S&P Global",
@@ -11,7 +11,7 @@
   "keywords": [],
   "apps": "./.app.json",
   "interface": {
-    "displayName": "S&P",
+    "displayName": "S&P Global",
     "developerName": "S&P Global",
     "shortDescription": "Company financials, ratings context, market research, and industry data",
     "longDescription": "Company financials, ratings context, market research, and industry data",
@@ -19,9 +19,9 @@
     "capabilities": [],
     "brandColor": "#D80028",
     "defaultPrompt": [
-      "Pull S&P company financials and ratings context for a ticker and summarize the main risks.",
-      "Compare revenue growth, margins, and valuation multiples for a company and its peers in S&P.",
-      "Find recent S&P research or industry outlook items for a sector and summarize the takeaways."
+      "Pull S&P Global company financials and ratings context for a ticker and summarize the main risks.",
+      "Compare revenue growth, margins, and valuation multiples for a company and its peers in S&P Global.",
+      "Find recent S&P Global research or industry outlook items for a sector and summarize the takeaways."
     ],
     "screenshots": [],
     "composerIcon": "./assets/logo.png",

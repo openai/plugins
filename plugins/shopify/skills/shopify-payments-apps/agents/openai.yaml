@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Payments Apps"
+  short_description: "Build payments app integrations"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-payments-apps to build a Shopify Payments Apps API integration."

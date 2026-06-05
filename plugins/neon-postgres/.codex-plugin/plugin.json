@@ -1,6 +1,6 @@
 {
   "name": "neon-postgres",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage Neon Serverless Postgres projects and databases with the neon-postgres agent skill and the Neon MCP Server",
   "author": {
     "name": "Neon",
