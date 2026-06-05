@@ -1,4 +1,0 @@
-interface:
-  display_name: "Set Up Metabase MCP"
-  short_description: "Connect Codex to a ready Metabase instance"
-  default_prompt: "Use $setup-metabase-mcp to connect Codex to my Metabase instance."
