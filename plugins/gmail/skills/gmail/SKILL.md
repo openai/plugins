@@ -27,6 +27,7 @@ Use this skill to turn noisy email threads into clear summaries, action lists, a
 | --- | --- |
 | Search planning, refinement, pagination, and body-fetch strategy | [references/search-workflow.md](./references/search-workflow.md) |
 | Label application, relabeling, and label-based cleanup | [references/label-actions.md](./references/label-actions.md) |
+| New email composition, self-delivery, and send-vs-draft decisions | [references/compose-workflow.md](./references/compose-workflow.md) |
 | Reply drafting, reply-all decisions, and tone matching | [references/reply-workflow.md](./references/reply-workflow.md) |
 | Email forwarding, context notes, and intent framing | [references/forward-workflow.md](./references/forward-workflow.md) |
 
@@ -42,11 +43,6 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 6. Use Gmail-native `batch_read_email` when you need the body of multiple shortlisted emails, and escalate to `read_email_thread` only when the surrounding conversation changes the answer.
 7. Use `search_email_ids` only when the next tool specifically needs message IDs and the richer `search_emails` response would not help you decide what to do.
 8. Summarize before writing when the request is ambiguous, and keep analysis separate from actions like send, archive, trash, or label changes unless the user explicitly asked for them.
-
-## Self-Delivery
-
-- When the user explicitly asks to email or send something to themselves, including from an automation, call the Gmail `send_email` action directly with `to: "me"` and omit `cc` and `bcc`. Do not create a draft or ask for another confirmation merely because the email body is generated during the turn.
-- Use this path only when the requested recipient is the authenticated Gmail account. If another recipient is requested or the destination is ambiguous, follow the normal send-safety rules instead.
 
 ## Write Safety
 
@@ -75,7 +71,6 @@ For mailbox analysis requests such as triage, follow-up detection, topic summari
 - "Draft a reply that confirms Tuesday works and asks for the final agenda."
 - "Go through my unread inbox and group emails into urgent, waiting, and low priority."
 - "Prepare a polite follow-up to the recruiter thread if I have not replied yet."
-- "Email me this report when the automation finishes."
 
 ## Light Fallback
 
