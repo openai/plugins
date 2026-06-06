@@ -22,7 +22,7 @@
     "shortDescription": "Read and manage Gmail",
     "longDescription": "Use Gmail to summarize inbox activity, draft replies, and organize email threads through the connected Gmail app.",
     "developerName": "OpenAI",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Write"

@@ -15,7 +15,7 @@
     "shortDescription": "Connect to sync Pipedrive deals and contacts for use in Codex.",
     "longDescription": "Connect to sync Pipedrive deals and contacts for use in Codex.",
     "developerName": "OpenAI",
-    "category": "Business & Operations",
+    "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
       "Find the latest deal status in Pipedrive"

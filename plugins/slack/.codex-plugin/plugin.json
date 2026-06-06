@@ -22,7 +22,7 @@
     "shortDescription": "Read and manage Slack",
     "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
     "developerName": "OpenAI",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Write"

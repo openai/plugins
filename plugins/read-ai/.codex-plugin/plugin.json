@@ -15,7 +15,7 @@
     "shortDescription": "Read AI brings your meeting intelligence directly into your AI workflows.",
     "longDescription": "Read AI brings your meeting intelligence directly into your AI workflows. Connect your Read AI account to access meeting summaries, transcripts, action items, key questions, and more \u2014 all retrievable through natural conversation.\n\nRead AI can look up recent meetings, pull the full transcript from a specific call, surface action items from last week's syncs, or find what key questions came up in a discussion.\n\nWhat you can do:\n\n- Browse and filter your meetings by date range\n- Retrieve summaries, chapter breakdowns, and topics from any meeting\n- Pull action items and key questions to stay on top of follow-ups\n- Access full transcripts for deep dives or verbatim references\n\nWhether you're prepping for a follow-up, catching up on a meeting you missed, or building workflows around your recorded conversations, Read AI's MCP integration makes your meeting data a first-class part of your AI experience.",
     "developerName": "Read AI, Inc",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
       "Summarize the latest Read AI meeting insights"

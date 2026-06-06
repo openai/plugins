@@ -18,7 +18,7 @@
     "shortDescription": "Query and explore your Metabase data",
     "longDescription": "Search tables and metrics, run queries, explore field values, spin up instances, and embed dashboards",
     "developerName": "Metabase",
-    "category": "Data & Analytics",
+    "category": "Data",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://www.metabase.com",
     "privacyPolicyURL": "https://www.metabase.com/privacy",

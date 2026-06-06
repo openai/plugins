@@ -22,7 +22,7 @@
     "shortDescription": "Triage Outlook inboxes and draft replies",
     "longDescription": "Use Outlook Email to triage inboxes, summarize threads, extract actions, and draft replies or forwards through the connected Microsoft Outlook app.",
     "developerName": "OpenAI",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Write"

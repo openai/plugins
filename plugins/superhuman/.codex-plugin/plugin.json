@@ -23,7 +23,7 @@
     "shortDescription": "Search, draft, send, and schedule through Superhuman Mail MCP",
     "longDescription": "Connect Codex to Superhuman Mail through the official remote MCP server. Once authenticated, Codex can use Superhuman Mail tools for inbox search, thread and message lookup, draft creation, sending, read statuses, labels, Split Inboxes, calendar events, availability, and account personalization.",
     "developerName": "Superhuman",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Read",

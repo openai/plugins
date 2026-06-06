@@ -31,7 +31,7 @@
     "shortDescription": "Use Zoom meeting context and build Zoom integrations.",
     "longDescription": "Zoom connects Codex to Zoom meeting context through the Zoom app connector and provides developer workflows for planning, building, debugging, and reviewing Zoom integrations across APIs, SDKs, webhooks, WebSockets, bots, and automation use cases.",
     "developerName": "Zoom",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Read",

@@ -26,7 +26,7 @@
     "shortDescription": "Build Wix apps, headless websites, and manage your Wix business from Codex",
     "longDescription": "Build and deploy Wix apps and headless websites, and manage your Wix business with Codex. Includes Wix CLI development skills for dashboard extensions, backend APIs, site widgets, service plugins, and data collections. Build headless websites with Wix Headless — from fully-hosted Astro apps to self-hosted in any framework — powered by Wix's backend for eCommerce, bookings, CMS, events, and members. Also includes recipes for Wix business solution management.",
     "developerName": "Wix",
-    "category": "Developer Tools",
+    "category": "Coding",
     "capabilities": [
       "Interactive",
       "Read",

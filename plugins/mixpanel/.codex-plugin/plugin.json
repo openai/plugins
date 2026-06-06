@@ -23,7 +23,7 @@
     "shortDescription": "Query and analyze Mixpanel",
     "longDescription": "Query and analyze your Mixpanel data directly in ChatGPT. Run segmentation, funnel, and retention analyses, explore your event taxonomy, manage Lexicon metadata, and resolve data quality issues - all without leaving your conversation.\n\nWith the Mixpanel MCP server connected, ChatGPT can reason about your product analytics alongside your code, documents, and decisions. Ask questions in plain language, drill into user behavior, and get answers grounded in your actual data.",
     "developerName": "Mixpanel",
-    "category": "Data & Analytics",
+    "category": "Business",
     "capabilities": [
       "Interactive",
       "Read",

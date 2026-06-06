@@ -29,7 +29,7 @@
     "shortDescription": "Develop AI apps, agents, and ChatGPT Apps with OpenAI best practices",
     "longDescription": "Use OpenAI Developers in Codex to build AI applications, agents, and ChatGPT Apps with OpenAI docs, the OpenAI API, Apps SDK, and Agents SDK. Connect to the OpenAI Platform (platform.openai.com) and see your Codex-built apps work right out of the box with real OpenAI API keys. Run and locally deploy Agents SDK projects through the Deployment Manager, scaffold ChatGPT Apps, and prepare ChatGPT Apps submission artifacts.",
     "developerName": "OpenAI",
-    "category": "Developer Tools",
+    "category": "Engineering",
     "capabilities": [
       "Interactive",
       "Read",

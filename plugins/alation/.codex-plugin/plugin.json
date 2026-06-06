@@ -16,7 +16,7 @@
     "shortDescription": "Data catalog search, lineage, governance, and documentation",
     "longDescription": "Data catalog search, lineage, governance, and documentation from Alation",
     "developerName": "Alation",
-    "category": "Data & Analytics",
+    "category": "Data Analytics",
     "capabilities": [],
     "websiteURL": "https://www.alation.com",
     "defaultPrompt": [

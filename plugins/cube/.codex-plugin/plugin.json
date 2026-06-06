@@ -16,7 +16,7 @@
     "shortDescription": "With the Cube MCP Server, you can: - Query live Cube data from actuals, budgets, forecasts, variances, and...",
     "longDescription": "With the Cube MCP Server, you can:\n- Query live Cube data from actuals, budgets, forecasts, variances, and more\n- Ask an AI to generate board decks, run variance analysis, or build financial summaries using your real Cube data\n- Drill into transaction-level detail and dimension breakdowns directly from an AI chat\n- Maintain full security: Cube's role-based access control (RBAC) security model enforces your user permissions on every AI request. If you can't see it in Cube, the AI can't see it either",
     "developerName": "Cube",
-    "category": "Finance",
+    "category": "Research",
     "capabilities": [],
     "websiteURL": "https://www.cubesoftware.com/",
     "privacyPolicyURL": "https://www.cubesoftware.com/privacy-policy",

@@ -28,7 +28,7 @@
     "shortDescription": "Write HTML, render video",
     "longDescription": "Build videos from HTML with HyperFrames. Author compositions with HTML + CSS + GSAP, use the CLI for init/preview/render/transcribe/tts, install reusable registry blocks and components, follow the GSAP animation reference, and turn any website into a video with the 7-step capture-to-video pipeline.",
     "developerName": "HeyGen",
-    "category": "Creativity",
+    "category": "Design",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://hyperframes.heygen.com",
     "defaultPrompt": [

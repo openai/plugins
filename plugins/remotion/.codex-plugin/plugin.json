@@ -27,7 +27,7 @@
 		"shortDescription": "Create motion graphics from prompts",
 		"longDescription": "Build videos programmatically with Remotion and React. Covers animations, timing, audio, captions, 3D, transitions, charts, text effects, and more.",
 		"developerName": "Remotion",
-		"category": "Creativity",
+		"category": "Design",
 		"capabilities": ["Read", "Write"],
 		"websiteURL": "https://remotion.dev",
 		"privacyPolicyURL": "https://remotion.pro/privacy",

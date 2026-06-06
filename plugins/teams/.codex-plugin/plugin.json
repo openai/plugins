@@ -22,7 +22,7 @@
     "shortDescription": "Summarize Teams and draft follow-ups",
     "longDescription": "Use Teams to summarize chats, extract actions, and draft channel or meeting follow-ups through the connected Microsoft Teams app.",
     "developerName": "OpenAI",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Write"

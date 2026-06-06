@@ -16,7 +16,7 @@
     "shortDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
     "longDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex. Allow internal teams to ask data questions in their AI workflows without logging into Omni directly, while still enforcing row-level security and business definitions.",
     "developerName": "Omni Analytics",
-    "category": "Data & Analytics",
+    "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://www.omni.co",
     "privacyPolicyURL": "https://omni.co/privacy",

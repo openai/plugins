@@ -23,7 +23,7 @@
     "shortDescription": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of tra...",
     "longDescription": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of transcripts, summaries, action items, and meeting metadata directly within your workflow. Search meetings by keyword, date range, attendee, folder, or channel, then fetch full transcripts with speaker attribution. Use it to prepare for meetings by reviewing past discussions, extract decisions from historical conversations, or synthesize insights across your meeting archive. Supports both personal and enterprise Otter.ai workspaces.",
     "developerName": "Otter.ai",
-    "category": "Communication",
+    "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://otter.ai",
     "privacyPolicyURL": "https://otter.ai/privacy-policy",

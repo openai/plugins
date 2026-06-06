@@ -29,7 +29,7 @@
     "shortDescription": "Avatar videos and personalized video messages",
     "longDescription": "HeyGen Skills give your agent a face, a voice, and the ability to send video like a message. Use heygen-avatar to build a persistent digital identity from a written description or hosted photo URL and pick a voice, then heygen-video to generate identity-first presenter videos via the HeyGen v3 Video Agent pipeline (avatar resolution, aspect ratio correction, prompt engineering, and voice selection are handled automatically).",
     "developerName": "HeyGen",
-    "category": "Creativity",
+    "category": "Design",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://heygen.com",
     "privacyPolicyURL": "https://www.heygen.com/privacy",

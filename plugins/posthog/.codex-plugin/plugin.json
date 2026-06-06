@@ -29,7 +29,7 @@
     "shortDescription": "Query analytics, flags, experiments, and errors",
     "longDescription": "Bring PostHog into ChatGPT and Codex. Ask product-analytics questions in plain language and run HogQL, create and manage feature flags, launch and read experiments, triage error-tracking issues, explore session replays and surveys, inspect LLM analytics, and build dashboards — all grounded in your real PostHog data. With the PostHog app connected, the assistant reasons about your product alongside your code and decisions, and discovers the right PostHog tools and skills at runtime instead of relying on stale knowledge.",
     "developerName": "PostHog",
-    "category": "Data & Analytics",
+    "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Read",

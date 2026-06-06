@@ -50,7 +50,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "slack",
@@ -62,7 +62,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "teams",
@@ -74,7 +74,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "sharepoint",
@@ -98,7 +98,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "outlook-calendar",
@@ -122,7 +122,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "figma",
@@ -134,7 +134,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "hugging-face",
@@ -182,7 +182,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Productivity"
     },
     {
       "name": "vercel",
@@ -280,7 +280,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "notion",
@@ -393,7 +393,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "zotero",
@@ -406,7 +406,7 @@
         "authentication": "ON_INSTALL",
         "products": ["CODEX"]
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "expo",
@@ -457,7 +457,7 @@
         "authentication": "ON_INSTALL",
         "products": ["CODEX"]
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "plugin-eval",
@@ -482,7 +482,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "amplitude",
@@ -494,7 +494,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "attio",
@@ -506,7 +506,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "binance",
@@ -518,7 +518,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "biorender",
@@ -530,7 +530,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "brand24",
@@ -554,7 +554,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Productivity"
     },
     {
       "name": "carta-crm",
@@ -566,7 +566,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "cb-insights",
@@ -578,7 +578,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "channel99",
@@ -602,7 +602,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "clickup",
@@ -638,7 +638,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Other"
+      "category": "Lifestyle"
     },
     {
       "name": "common-room",
@@ -674,7 +674,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "coveo",
@@ -698,7 +698,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "daloopa",
@@ -710,7 +710,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "demandbase",
@@ -722,7 +722,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "dnb-finance-analytics",
@@ -734,7 +734,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "docket",
@@ -782,7 +782,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "egnyte",
@@ -806,7 +806,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Travel"
+      "category": "Lifestyle"
     },
     {
       "name": "fireflies",
@@ -818,7 +818,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "fyxer",
@@ -830,7 +830,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "govtribe",
@@ -842,7 +842,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "granola",
@@ -854,7 +854,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "happenstance",
@@ -914,7 +914,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "keybid-puls",
@@ -926,7 +926,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Productivity"
     },
     {
       "name": "marcopolo",
@@ -974,7 +974,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "morningstar",
@@ -986,7 +986,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "motherduck",
@@ -998,7 +998,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "mt-newswires",
@@ -1010,7 +1010,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "myregistry-com",
@@ -1022,7 +1022,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Other"
+      "category": "Lifestyle"
     },
     {
       "name": "network-solutions",
@@ -1046,7 +1046,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "otter-ai",
@@ -1058,7 +1058,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "particl-market-research",
@@ -1070,7 +1070,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "pipedrive",
@@ -1082,7 +1082,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "pitchbook",
@@ -1094,7 +1094,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "policynote",
@@ -1106,7 +1106,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "pylon",
@@ -1130,7 +1130,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "quicknode",
@@ -1166,7 +1166,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Productivity"
     },
     {
       "name": "read-ai",
@@ -1178,7 +1178,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "readwise",
@@ -1190,7 +1190,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "responsive",
@@ -1214,7 +1214,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "semrush",
@@ -1250,7 +1250,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Lifestyle"
     },
     {
       "name": "signnow",
@@ -1298,7 +1298,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "taxdown",
@@ -1310,7 +1310,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "teamwork-com",
@@ -1334,7 +1334,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "tinman-ai",
@@ -1346,7 +1346,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "united-rentals",
@@ -1394,7 +1394,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Travel"
+      "category": "Lifestyle"
     },
     {
       "name": "windsor-ai",
@@ -1406,7 +1406,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "yepcode",
@@ -1455,7 +1455,7 @@
         "authentication": "ON_INSTALL",
         "products": ["CODEX"]
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "heygen",
@@ -1467,7 +1467,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "supabase",
@@ -1553,7 +1553,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "similarweb",
@@ -1565,7 +1565,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "lseg",
@@ -1577,7 +1577,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "s-p",
@@ -1589,7 +1589,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "datasite",
@@ -1613,7 +1613,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "zoominfo",
@@ -1625,7 +1625,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "docusign",
@@ -1649,7 +1649,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "mixpanel-headless",
@@ -1661,7 +1661,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "aiera",
@@ -1673,7 +1673,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "close",
@@ -1685,7 +1685,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "apollo",
@@ -1697,7 +1697,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "meticulate",
@@ -1721,7 +1721,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "midpage",
@@ -1733,7 +1733,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "clay",
@@ -1745,7 +1745,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "calendly",
@@ -1817,7 +1817,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "shutterstock",
@@ -1829,7 +1829,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "replit",
@@ -1865,7 +1865,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Productivity"
     },
     {
       "name": "intercom",
@@ -1877,7 +1877,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "chronograph",
@@ -1889,7 +1889,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "nvidia",
@@ -1913,7 +1913,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "metabase",
@@ -1925,7 +1925,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "actively",
@@ -1937,7 +1937,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "zoho",
@@ -1949,7 +1949,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Productivity"
     },
     {
       "name": "fiscal-ai",
@@ -1961,7 +1961,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Finance"
+      "category": "Research"
     },
     {
       "name": "picsart",
@@ -1973,7 +1973,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "alation",
@@ -1985,7 +1985,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Data & Analytics"
+      "category": "Productivity"
     },
     {
       "name": "fal",
@@ -1997,7 +1997,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Creativity"
+      "category": "Design"
     },
     {
       "name": "hebbia",
@@ -2009,7 +2009,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Business & Operations"
+      "category": "Research"
     },
     {
       "name": "wix",
@@ -2045,7 +2045,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Research"
     },
     {
       "name": "superhuman",
@@ -2057,7 +2057,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Communication"
+      "category": "Productivity"
     },
     {
       "name": "shopify",

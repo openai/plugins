@@ -15,7 +15,7 @@
     "shortDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
     "longDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want! Create a universal gift list for weddings, baby showers, birthdays, or any celebration and add gifts from any store.",
     "developerName": "MyRegistry.com",
-    "category": "Other",
+    "category": "Lifestyle",
     "capabilities": [],
     "defaultPrompt": [
       "Find the relevant registry details in MyRegistry.com"
