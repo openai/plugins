@@ -4,7 +4,7 @@ When to read: always, before any Slides write and again after every `mcp__codex_
 
 Do not call visual work done from API success alone. After any batch update, every touched slide is done only after a fresh thumbnail has been fetched, inspected as an image artifact or curled from `contentUrl`, checked against the visual criteria, patched if needed, and rechecked.
 
-Thumbnail verification does not prove placeholder cleanup, content fidelity, or speaker-note fidelity. Empty inherited layout placeholders can be absent from rendered thumbnails, so pair thumbnail checks with connector JSON checks for unresolved placeholder metadata and source-to-destination content checks whenever slides are inserted or migrated.
+Thumbnail verification does not prove placeholder cleanup, required-content fidelity, or speaker-note fidelity. Empty inherited layout placeholders can be absent from rendered thumbnails, so pair thumbnail checks with connector JSON checks for unresolved placeholder metadata. When adapting source material, also perform source-to-destination content checks.
 
 ## Plan The Scope
 
@@ -77,10 +77,10 @@ A slide passes only when all are true:
 8. No element extends beyond the slide boundary unless intentionally full-bleed.
 9. Repeated elements are aligned consistently.
 10. Charts and images occupy the intended footprint and do not leave stale placeholders.
-11. The title/body hierarchy and mixed text emphasis remain intentional; template style runs have not been flattened.
+11. The title/body hierarchy and mixed text emphasis remain intentional; meaningful style runs have not been flattened.
 12. Images and charts use a crop and orientation that preserve the important evidence, labels, legends, and annotations.
-13. No whitespace-only bullet, empty list item, generic editor prompt, bracketed instruction, sample copy, or stale template content remains.
-14. Table, card, KPI, selection, and status emphasis agrees with the destination content rather than merely copying the exemplar's highlight state.
+13. No whitespace-only bullet, empty list item, generic editor prompt, bracketed instruction, sample copy, or stale inherited/reference content remains.
+14. Table, card, KPI, selection, and status emphasis agrees with the current content rather than merely copying a reference pattern's highlight state.
 15. Repeated narrative roles use a consistent layout family unless a deliberate exception is documented.
 
 If any check fails, the task is not complete.
@@ -89,4 +89,4 @@ If any check fails, the task is not complete.
 
 After the last slide passes, fetch fresh thumbnails for the full edited scope. A contact sheet is allowed as a final sanity check, but it does not replace the per-slide loop.
 
-For migrations, compare representative source and destination thumbnails side by side. Check that the destination preserves the source's evidence, information hierarchy, and intended focal point while adopting the template's design language. A visually polished destination still fails if it omits or obscures source content.
+When adapting or migrating source material, compare representative source and destination thumbnails side by side. Check that the destination preserves required evidence, information hierarchy, and intended focal point while adopting the target deck's design language. A visually polished destination still fails if it omits or obscures required source content.

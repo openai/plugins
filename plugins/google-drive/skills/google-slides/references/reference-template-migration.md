@@ -4,7 +4,7 @@ When to read: moving source deck content onto a target template deck.
 
 If the user asks for a new deck that follows a provided native Google Slides template or reference deck, read `reference-template-reference-deck-copy-workflow.md` first. Create the destination by copying the provided deck directly, then use this migration reference for content mapping details as needed.
 
-Read `reference-migration-playbook.md` and `reference-slide-archetype-mapping.md` before migrating beyond the first few slides.
+Read `reference-slide-planning-and-layout-selection.md` and `reference-slide-archetype-mapping.md` before migrating beyond the first few slides.
 
 ## Workflow
 

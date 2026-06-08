@@ -128,7 +128,7 @@ Use this when a specific text box should be preserved structurally but its conte
 
 ## Rewrite mixed-style text without flattening hierarchy
 
-After rewriting a template text object that intentionally contains multiple styles, restore the styles with explicit ranges. Do not use `textRange.type: ALL` for this case.
+After rewriting any text object that intentionally contains multiple styles, restore the styles with explicit ranges. Do not use `textRange.type: ALL` for this case.
 
 ```json
 [
@@ -164,7 +164,7 @@ After rewriting a template text object that intentionally contains multiple styl
 ]
 ```
 
-Derive the ranges and style values from the live exemplar. Re-read the text elements after writing to confirm the intended runs and links survived.
+Derive the ranges and style values from the live object or selected reference pattern. Re-read the text elements after writing to confirm the intended runs and links survived.
 
 ## Copy speaker notes between corresponding slides
 

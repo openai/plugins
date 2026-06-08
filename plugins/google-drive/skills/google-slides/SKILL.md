@@ -1,6 +1,6 @@
 ---
 name: google-slides
-description: Google Slides work for finding, reading, summarizing, creating, importing, visual cleanup, template migration, structural repair, and content edits in native Slides decks.
+description: Google Slides work for finding, reading, summarizing, creating, importing, template following, visual cleanup, source-deck adaptation, structural repair, and content edits in native Slides decks.
 ---
 
 # Google Slides
@@ -41,13 +41,15 @@ For net-new Google Slides without a provided native Slides template or reference
 
 For new decks from a provided native Google Slides template or reference deck, do not create a local `.pptx` first. Copy the provided deck directly, treat the copy as the destination deck, and create/edit slides there with `batchUpdate` using duplicated exemplar slides or layouts from the copied deck. Populate existing template objects first: replace text, images, charts, tables, and placeholder content in the copied slide's existing slots instead of adding new primary content boxes.
 
+The slide-planning, archetype-selection, hierarchy, semantic-emphasis, evidence-legibility, and deck-consistency rules apply across both creation paths and to slides added to existing decks. Only source-parity requirements such as exact text preservation, speaker-note parity, and media-ID parity depend on a source-based adaptation or migration request.
+
 The import reference owns the exact connector action, plugin install/reinstall handling, native-conversion verification, post-import verification, and cleanup expectations. Read it before any net-new Google Slides import attempt.
 
 For imports and any explicit direct-create override, wait for the write action to complete, then perform connector readback or Drive metadata readback before returning a Google Slides URL or presentation id. Use only a URL or id observed from the completed connector result or readback. Do not synthesize or predict Google Slides URLs, and do not present a URL as ready if readback fails.
 
 ## Non-Negotiable Output Invariant
 
-Inserted or edited content must match the target deck's existing structure and connector-observable presentation closely enough that it reads as native deck content.
+Inserted or edited content must match the target deck's existing structure and connector-observable presentation closely enough that it reads as native deck content. Net-new slides must use a coherent archetype, hierarchy, and visual system rather than an arbitrary collection of objects.
 Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder or template sample text, empty or unresolved placeholder objects, primary content placed in newly created freeform boxes while an inherited or template slot remains unused, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
 
 For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
@@ -90,9 +92,9 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 13. for any slide inserted from a layout (`slideLayoutReference`, `predefinedLayout`, or inherited master/layout placeholders), every inherited placeholder object was populated, replaced, or intentionally deleted; do not rely on thumbnails alone because empty placeholders can be invisible
 14. for template/reference-deck copies, full `get_presentation` or per-slide `get_slide` readback was used for final structural validation; `get_presentation_outline` alone is insufficient
 15. for template/reference-deck copies, content-bearing placeholders and reusable template objects were used where they exist; newly created primary text/image boxes are justified by the chosen slide plan, not a shortcut around the template
-16. for migrations, source-to-destination fidelity was checked for substantive text, visuals, charts, tables, links, media type and source identifier when active/accessible, and non-empty speaker notes; no source content disappeared or was silently summarized
-17. text hierarchy and exemplar semantics remain meaningful: mixed heading/body style runs were not flattened, blank bulleted paragraphs do not render stray bullets, and inherited emphasis does not imply unsupported totals, rankings, categories, status, or importance
-18. visual evidence is presentation-readable, not merely unclipped: crops preserve essential regions, source labels and footnotes remain legible, and landscape evidence was not forced into an unsuitable portrait frame
+16. when adapting or migrating provided source material, source-to-destination fidelity was checked for substantive text, visuals, charts, tables, links, media type and source identifier when active/accessible, and non-empty speaker notes; no required source content disappeared or was silently summarized
+17. text hierarchy and layout semantics remain meaningful: mixed heading/body style runs were not flattened, blank bulleted paragraphs do not render stray bullets, and inherited emphasis does not imply unsupported totals, rankings, categories, status, or importance
+18. visual evidence is presentation-readable, not merely unclipped: crops preserve essential regions, important labels and footnotes remain legible, and landscape evidence was not forced into an unsuitable portrait frame
 19. no generic editor prompts, bracketed instructions, sample copy, lorem ipsum, old-event content, or other template scaffolding remains unless explicitly requested by the user
 
 **Slides**
@@ -105,7 +107,7 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 * Connectors in diagrams: In the final implementation, create connectors (arrows/edges) before creating entity nodes, so edges appear behind nodes and never cross through node shapes or labels. If this ordering is awkward during early iteration, you may create nodes first in the initial draft, then switch to connectors-first in the revised code.
 * Overlap: You MUST fix ALL unintended overlap errors before you deliver the slides! It's of paramount importance!
 * Font size: When a template is provided, match its font sizes. Avoid overly small text. When no template or style guidance is given, a good rule of thumb is at least 42pt for deck titles, 32pt for slide titles, and 17pt for body text. If you see overflow/overlap, try cutting content before shrinking text further to improve text layout.
-* Text layout: for net-new authoring, shorten copy when needed. For migration or exact-deck requests, do not silently shorten or summarize source content; choose a denser archetype, restructure within the slide, split only when the request permits it, or flag the tradeoff. Inspect visually for unexpected text wrapping. NEVER put 2 lines of text into a title/banner text box meant for a single line of text.
+* Text layout: for net-new authoring where wording is flexible, shorten copy when needed. When the user supplied required wording or source material whose fidelity matters, do not silently shorten or summarize it; choose a denser archetype, restructure within the slide, split only when the request permits it, or flag the tradeoff. Inspect visually for unexpected text wrapping. NEVER put 2 lines of text into a title/banner text box meant for a single line of text.
 * Diagrams implementation: use native PowerPoint shapes for simple diagrams; use Graphviz for complex relational/topological/network-like diagrams; use imagegen for highly aesthetic, illustrative, or scientific infographic diagrams (e.g. chemical structures, circuit diagrams, etc.).
 * Title slide: Keep the title slide minimal and simple. Avoid cramming in too much information.
 * When to use diagrams: Prefer data-driven charts or plots when applicable; use diagrams only when they improve the storytelling (not to fill empty space).
@@ -161,8 +163,8 @@ Do not execute content edits until the required references are read in the curre
 | New deck creation, copy-from-template workflows, or final handoff after any write | `references/reference-new-deck-and-final-pass.md` |
 | Local `.ppt`, `.pptx`, or `.odp` import | `references/reference-import-presentation.md` |
 | Visual cleanup, overflow, spacing, alignment, or deck polish | `references/reference-visual-iteration.md` |
-| Migrating source content onto a template deck | `references/reference-template-migration.md` |
-| Detailed template migration playbook | `references/reference-migration-playbook.md` |
-| Template migration archetype mapping | `references/reference-slide-archetype-mapping.md` |
+| Migrating source content onto a template deck with fidelity requirements | `references/reference-template-migration.md` |
+| Any multi-slide creation, source adaptation, template following, or layout-selection workflow | `references/reference-slide-planning-and-layout-selection.md` |
+| Choosing slide archetypes, compositions, or repeated layout families for any created or adapted slide | `references/reference-slide-archetype-mapping.md` |
 | Chart refresh, chart replacement, or Sheets-sourced chart work | `references/reference-chart-workflows.md` |
 | Copy-and-fill raw batch update examples | `references/reference-batch-update-recipes.md` |

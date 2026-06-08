@@ -1,7 +1,7 @@
 interface:
   display_name: "Google Slides"
-  short_description: "Inspect decks and handle Slides content edits"
+  short_description: "Create, adapt, inspect, and edit Slides decks"
   icon_small: "./assets/google-slides-small.svg"
   icon_large: "./assets/google-slides.png"
   brand_color: "#F9AB00"
-  default_prompt: "Use $google-slides to inspect a deck, summarize a slide with both text and chart/image understanding, import a PPTX, create a presentation from a native Slides template/reference deck, or make a precise content edit in Google Slides."
+  default_prompt: "Use $google-slides to create, adapt, inspect, summarize, or edit a Google Slides deck, including following a native Slides template/reference deck or importing a PPTX."
