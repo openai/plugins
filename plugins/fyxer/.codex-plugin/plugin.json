@@ -1,6 +1,6 @@
 {
   "name": "fyxer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fyxer for Codex lets you write emails that sound like you, right from the chat.",
   "author": {
     "name": "Fyxer",
@@ -16,7 +16,7 @@
     "shortDescription": "Fyxer for Codex lets you write emails that sound like you, right from the chat.",
     "longDescription": "Fyxer for Codex lets you write emails that sound like you, right from the chat. Fyxer learns your writing style from past emails and uses context from your calendar and meeting notes to create personalized email drafts. Just describe what you want to say and get a polished email ready to review and send.",
     "developerName": "Fyxer",
-    "category": "Productivity",
+    "category": "Communication",
     "capabilities": [],
     "websiteURL": "https://www.fyxer.com",
     "privacyPolicyURL": "https://app.fyxer.com/privacy-policy",

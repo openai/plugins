@@ -1,6 +1,6 @@
 {
   "name": "convex",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Add a reactive, type-safe backend, database, server functions, and scaling guidance to JavaScript and TypeScript apps with Convex.",
   "author": {
     "name": "Convex, Inc.",

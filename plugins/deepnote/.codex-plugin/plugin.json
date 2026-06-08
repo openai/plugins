@@ -1,6 +1,6 @@
 {
   "name": "deepnote",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Use Deepnote's collaborative data workspace to explore data, automate notebooks and SQL workflows, and turn analysis into shareable results.",
   "author": {
     "name": "Deepnote",
@@ -24,7 +24,7 @@
     "shortDescription": "Explore data and automate analysis in Deepnote",
     "longDescription": "Deepnote gives teams a collaborative workspace for notebooks, SQL, apps, and data workflows. This plugin helps OpenAI work with connected Deepnote projects, inspect and run notebooks, and turn workspace context into useful analysis and shareable results.",
     "developerName": "Deepnote",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [
       "Interactive",
       "Read",

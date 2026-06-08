@@ -1,6 +1,6 @@
 {
   "name": "magicpath",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use MagicPath to find, inspect, install, create, and edit UI components from Codex.",
   "author": {
     "name": "MagicPathAI",

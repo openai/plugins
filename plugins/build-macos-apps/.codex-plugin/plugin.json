@@ -1,6 +1,6 @@
 {
   "name": "build-macos-apps",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Build, run, test, debug, instrument, and implement local macOS apps using Xcode, SwiftUI, AppKit interop, unified logging, and shell-first desktop workflows.",
   "author": {
     "name": "OpenAI",

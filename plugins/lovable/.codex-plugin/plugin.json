@@ -1,6 +1,6 @@
 {
   "name": "lovable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build and inspect Lovable app projects from connected workspace context",
   "author": {
     "name": "Lovable",

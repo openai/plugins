@@ -1,6 +1,6 @@
 {
   "name": "lseg",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Financial market data, company intelligence, and news",
   "author": {
     "name": "LSEG",
@@ -15,7 +15,7 @@
     "developerName": "LSEG",
     "shortDescription": "Financial market data, company intelligence, and news",
     "longDescription": "Financial market data, company intelligence, and news",
-    "category": "Research",
+    "category": "Finance",
     "capabilities": [],
     "brandColor": "#0018F8",
     "defaultPrompt": [

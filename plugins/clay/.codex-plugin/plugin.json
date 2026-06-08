@@ -1,6 +1,6 @@
 {
   "name": "clay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Find, enrich, and organize GTM accounts, contacts, and prospecting workflows from Clay.",
   "author": {
     "name": "Clay",
@@ -24,7 +24,7 @@
     "shortDescription": "Find and enrich GTM accounts, contacts, and prospects.",
     "longDescription": "Clay connects Codex to your GTM workflows so you can find prospects, enrich leads, summarize account context, and organize outreach signals from Clay data.",
     "developerName": "Clay",
-    "category": "Productivity",
+    "category": "Business & Operations",
     "capabilities": [],
     "websiteURL": "https://www.clay.com",
     "privacyPolicyURL": "https://privacy.clay.com/",

@@ -1,6 +1,6 @@
 {
   "name": "weatherpromise",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Protect your trip with WeatherPromise and get back the full cost if it rains more than promised during your...",
   "author": {
     "name": "WeatherPromise, Inc.",
@@ -15,7 +15,7 @@
     "shortDescription": "Protect your trip with WeatherPromise and get back the full cost if it rains more than promised during your...",
     "longDescription": "Protect your trip with WeatherPromise and get back the full cost if it rains more than promised during your vacation, automatically.\nTell us your destination, travel dates and trip cost and we'll show you an offer, personalized to your trip. Once you purchase the offer, your trip is protected.\nYou will get a link to your personal dashboard where you can monitor the weather during your trip. Rain is measured using independent, accurate data from official sources like NASA and NOAA.\nIf it rains more than the specified threshold, we'll email you automatically. Just confirm your details and the payment is sent right away, no additional proof required.\nGo on your trip and if it rains more than promised, you get a full refund, automatically.",
     "developerName": "WeatherPromise, Inc.",
-    "category": "Lifestyle",
+    "category": "Travel",
     "capabilities": [],
     "defaultPrompt": [
       "Summarize the weather outlook from WeatherPromise"

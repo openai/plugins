@@ -1,6 +1,6 @@
 {
   "name": "thoughtspot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Business intelligence answers, dashboards, metrics, and revenue analysis",
   "author": {
     "name": "ThoughtSpot",
@@ -15,7 +15,7 @@
     "developerName": "ThoughtSpot",
     "shortDescription": "Business intelligence answers, dashboards, metrics, and revenue analysis",
     "longDescription": "Business intelligence answers, dashboards, metrics, and revenue analysis",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [],
     "brandColor": "#000000",
     "defaultPrompt": [

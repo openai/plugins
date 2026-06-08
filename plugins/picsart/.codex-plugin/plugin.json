@@ -1,6 +1,6 @@
 {
   "name": "picsart",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Image editing, creative assets, and design workflows from Picsart",
   "author": {
     "name": "Picsart",
@@ -16,7 +16,7 @@
     "shortDescription": "Image editing, creative assets, and design workflows from Picsart",
     "longDescription": "Image editing, creative assets, and design workflows from Picsart",
     "developerName": "Picsart",
-    "category": "Creative Production",
+    "category": "Creativity",
     "capabilities": [],
     "websiteURL": "https://picsart.com",
     "defaultPrompt": [

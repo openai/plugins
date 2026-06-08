@@ -1,6 +1,6 @@
 {
   "name": "apollo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "B2B prospecting, account research, contacts, and outreach lists",
   "author": {
     "name": "Apollo",
@@ -15,7 +15,7 @@
     "developerName": "Apollo",
     "shortDescription": "B2B prospecting, account research, contacts, and outreach lists",
     "longDescription": "B2B prospecting, account research, contacts, and outreach lists",
-    "category": "Productivity",
+    "category": "Business & Operations",
     "capabilities": [],
     "brandColor": "#E8F028",
     "defaultPrompt": [

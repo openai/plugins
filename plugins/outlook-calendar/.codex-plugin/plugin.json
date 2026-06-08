@@ -1,6 +1,6 @@
 {
   "name": "outlook-calendar",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Connect Outlook Calendar for scheduling, daily briefs, event prep, and safe meeting changes.",
   "author": {
     "name": "OpenAI",

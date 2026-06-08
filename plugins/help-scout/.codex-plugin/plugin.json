@@ -1,6 +1,6 @@
 {
   "name": "help-scout",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connect to sync Help Scout mailboxes and conversations for use in Codex.",
   "author": {
     "name": "OpenAI",

@@ -1,6 +1,6 @@
 {
   "name": "myregistry-com",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
   "author": {
     "name": "MyRegistry.com",
@@ -15,7 +15,7 @@
     "shortDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
     "longDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want! Create a universal gift list for weddings, baby showers, birthdays, or any celebration and add gifts from any store.",
     "developerName": "MyRegistry.com",
-    "category": "Lifestyle",
+    "category": "Other",
     "capabilities": [],
     "defaultPrompt": [
       "Find the relevant registry details in MyRegistry.com"

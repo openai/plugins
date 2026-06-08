@@ -1,6 +1,6 @@
 {
   "name": "circleback",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Circleback helps teams get the most out of every conversation with AI-powered meeting notes, action items,...",
   "author": {
     "name": "Circleback AI, Inc.",
@@ -16,7 +16,7 @@
     "shortDescription": "Circleback helps teams get the most out of every conversation with AI-powered meeting notes, action items,...",
     "longDescription": "Circleback helps teams get the most out of every conversation with AI-powered meeting notes, action items, automations, and search.\n\nSearch and access data from in-person and online meetings you've recorded in Circleback, including meeting notes, action items, transcripts, people, and companies as well as your calendar and email.",
     "developerName": "Circleback AI, Inc.",
-    "category": "Productivity",
+    "category": "Communication",
     "capabilities": [],
     "websiteURL": "https://circleback.ai",
     "privacyPolicyURL": "https://circleback.ai/privacy",

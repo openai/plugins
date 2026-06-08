@@ -1,6 +1,6 @@
 {
   "name": "close",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CRM leads, opportunities, activities, and sales pipeline context",
   "author": {
     "name": "Close",
@@ -15,7 +15,7 @@
     "developerName": "Close",
     "shortDescription": "CRM leads, opportunities, activities, and sales pipeline context",
     "longDescription": "CRM leads, opportunities, activities, and sales pipeline context",
-    "category": "Productivity",
+    "category": "Business & Operations",
     "capabilities": [],
     "brandColor": "#50C078",
     "defaultPrompt": [

@@ -1,6 +1,6 @@
 {
   "name": "canva",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Search, create, edit designs",
   "author": {
     "name": "Canva",
@@ -17,7 +17,7 @@
     "developerName": "Canva",
     "shortDescription": "Search, create, edit designs",
     "longDescription": "Search, create, edit designs",
-    "category": "Productivity",
+    "category": "Creativity",
     "capabilities": [],
     "websiteURL": "https://www.canva.com",
     "privacyPolicyURL": "https://www.canva.com/policies/privacy-policy/",

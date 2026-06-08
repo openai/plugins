@@ -1,6 +1,6 @@
 {
   "name": "hebbia",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Document research, evidence-backed answers, and project analysis from Hebbia",
   "author": {
     "name": "Hebbia",
@@ -16,7 +16,7 @@
     "shortDescription": "Document research, evidence-backed answers, and project analysis",
     "longDescription": "Document research, evidence-backed answers, and project analysis from Hebbia",
     "developerName": "Hebbia",
-    "category": "Strategy & Consulting",
+    "category": "Business & Operations",
     "capabilities": [],
     "websiteURL": "https://www.hebbia.ai",
     "defaultPrompt": [

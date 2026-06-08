@@ -1,6 +1,6 @@
 {
   "name": "build-ios-apps",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Build iOS apps with workflows for App Intents, SwiftUI UI work, Simulator mirroring in the Codex in-app browser, performance profiling, leak investigation, and simulator debugging.",
   "author": {
     "name": "OpenAI",

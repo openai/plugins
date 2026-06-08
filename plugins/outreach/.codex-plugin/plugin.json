@@ -1,6 +1,6 @@
 {
   "name": "outreach",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sales engagement, prospects, sequences, and deal activity context",
   "author": {
     "name": "Outreach",
@@ -16,7 +16,7 @@
     "shortDescription": "Sales engagement, prospects, sequences, and deal activity context",
     "longDescription": "Sales engagement, prospects, sequences, and deal activity context",
     "developerName": "Outreach",
-    "category": "Sales",
+    "category": "Business & Operations",
     "capabilities": [],
     "websiteURL": "https://www.outreach.io",
     "privacyPolicyURL": "https://www.outreach.io/privacy-policy",

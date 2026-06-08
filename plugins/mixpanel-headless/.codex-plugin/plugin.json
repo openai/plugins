@@ -1,6 +1,6 @@
 {
   "name": "mixpanel-headless",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Analyze Mixpanel data with the mixpanel_headless Python SDK and Codex skills.",
   "author": {
     "name": "Mixpanel",
@@ -26,7 +26,7 @@
     "shortDescription": "Analyze Mixpanel data with Python",
     "longDescription": "Use Mixpanel Headless skills to install and authenticate the mixpanel_headless Python SDK, discover Mixpanel schemas, run segmentation, funnel, retention, flow, and user-profile analyses, and build or inspect Mixpanel dashboards from Codex.",
     "developerName": "Mixpanel",
-    "category": "Business",
+    "category": "Data & Analytics",
     "capabilities": [
       "Interactive",
       "Read",

@@ -1,6 +1,6 @@
 {
   "name": "factset",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Financial data, estimates, market analytics, and research context",
   "author": {
     "name": "FactSet",
@@ -15,7 +15,7 @@
     "developerName": "FactSet",
     "shortDescription": "Financial data, estimates, market analytics, and research context",
     "longDescription": "Financial data, estimates, market analytics, and research context",
-    "category": "Research",
+    "category": "Finance",
     "capabilities": [],
     "brandColor": "#182850",
     "defaultPrompt": [

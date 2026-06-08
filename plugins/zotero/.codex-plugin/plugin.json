@@ -1,6 +1,6 @@
 {
   "name": "zotero",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Work with Zotero from Codex: search your library, export BibTeX, insert citations, and import references through the Zotero desktop app.",
   "author": {
     "name": "OpenAI",
@@ -26,7 +26,7 @@
     "shortDescription": "Find papers and add citations from Zotero",
     "longDescription": "Connect Codex to your Zotero desktop library so it can find saved papers, export BibTeX, add citation keys to drafts, read indexed attachment text when you ask, and import new reference records into Zotero with your approval.",
     "developerName": "OpenAI",
-    "category": "Research",
+    "category": "Education & Research",
     "capabilities": [
       "Interactive",
       "Read",

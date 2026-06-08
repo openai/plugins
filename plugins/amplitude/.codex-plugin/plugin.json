@@ -1,6 +1,6 @@
 {
   "name": "amplitude",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Product analytics and funnels",
   "author": {
     "name": "Amplitude"
@@ -14,7 +14,7 @@
     "shortDescription": "Product analytics and funnels",
     "longDescription": "Product analytics and funnels",
     "developerName": "Amplitude",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [],
     "defaultPrompt": [
       "Show the signup funnel trend in Amplitude"

@@ -1,6 +1,6 @@
 {
   "name": "test-android-apps",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Test Android apps with emulator workflows for reproduction, screenshots, UI inspection, log capture, and performance profiling.",
   "author": {
     "name": "OpenAI",

@@ -1,6 +1,6 @@
 {
   "name": "motherduck",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connect AI assistants to your MotherDuck data warehouse.",
   "author": {
     "name": "MotherDuck Corporation",
@@ -16,7 +16,7 @@
     "shortDescription": "Connect AI assistants to your MotherDuck data warehouse.",
     "longDescription": "Connect AI assistants to your MotherDuck data warehouse. Explore, visualize, and manage data using natural language\u2013no SQL skills required. Create Dives: interactive visualizations that let you save and share answers with your team, staying up-to-date with your latest data. Works with real-world data without requiring semantic models or pre-configuration. Your AI assistant acts like a data analyst, exploring, validating, analyzing, and visualizing data iteratively to answer your questions.",
     "developerName": "MotherDuck Corporation",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [],
     "websiteURL": "https://motherduck.com/",
     "privacyPolicyURL": "https://motherduck.com/privacy-policy/",

@@ -1,6 +1,6 @@
 {
   "name": "slack",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Work with Slack using the configured Slack integration.",
   "author": {
     "name": "OpenAI",
@@ -22,7 +22,7 @@
     "shortDescription": "Read and manage Slack",
     "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
     "developerName": "OpenAI",
-    "category": "Productivity",
+    "category": "Communication",
     "capabilities": [
       "Interactive",
       "Write"

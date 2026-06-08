@@ -1,6 +1,6 @@
 {
   "name": "build-web-data-visualization",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Design, critique, implement, test, and export web data visualizations in Codex, including charts, maps, dashboards, Gantt, UML, scrollytelling, reports, slides, mobile views, shareable state, and advanced WebGL concepts.",
   "author": {
     "name": "OpenAI"

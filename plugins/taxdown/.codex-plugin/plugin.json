@@ -1,6 +1,6 @@
 {
   "name": "taxdown",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
   "author": {
     "name": "TAXDOWN S.L.",
@@ -15,7 +15,7 @@
     "shortDescription": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
     "longDescription": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones, IRPF, renta y obligaciones fiscales, con respuestas claras y orientadas a tu caso.",
     "developerName": "TAXDOWN S.L.",
-    "category": "Research",
+    "category": "Finance",
     "capabilities": [],
     "defaultPrompt": [
       "Summarize the relevant Taxdown status or guidance"

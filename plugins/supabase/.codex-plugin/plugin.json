@@ -1,6 +1,6 @@
 {
   "name": "supabase",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Access your Supabase projects and perform tasks like managing tables, fetching config, and querying data.",
   "author": {
     "name": "Supabase",

@@ -1,6 +1,6 @@
 {
   "name": "s-p",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Company financials, ratings context, market research, and industry data",
   "author": {
     "name": "S&P Global",
@@ -15,7 +15,7 @@
     "developerName": "S&P Global",
     "shortDescription": "Company financials, ratings context, market research, and industry data",
     "longDescription": "Company financials, ratings context, market research, and industry data",
-    "category": "Research",
+    "category": "Finance",
     "capabilities": [],
     "brandColor": "#D80028",
     "defaultPrompt": [

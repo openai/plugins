@@ -1,6 +1,6 @@
 {
   "name": "figma",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Figma workflows for design implementation, Code Connect templates, and design system rule generation.",
   "author": {
     "name": "Figma",
@@ -23,7 +23,7 @@
     "shortDescription": "Design-to-code workflows powered by the Figma integration",
     "longDescription": "Figma workflows for implementing designs in code, creating Code Connect templates for published Figma components, and generating project-specific design system rules for repeatable Figma-to-code work.",
     "developerName": "Figma",
-    "category": "Design",
+    "category": "Creativity",
     "capabilities": [
       "Interactive",
       "Read",

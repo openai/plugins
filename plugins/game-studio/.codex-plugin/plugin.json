@@ -1,6 +1,6 @@
 {
   "name": "game-studio",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Design, prototype, and ship browser games with guided 2D and 3D workflows, asset pipelines, and playtesting support.",
   "author": {
     "name": "OpenAI",

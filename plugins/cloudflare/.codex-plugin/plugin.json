@@ -1,6 +1,6 @@
 {
   "name": "cloudflare",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Cloudflare platform plugin with curated skills for Workers, Wrangler, and Agents SDK plus the official Cloudflare API MCP server.",
   "author": {
     "name": "Cloudflare",

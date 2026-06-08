@@ -1,6 +1,6 @@
 {
   "name": "fal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AI image and media generation workflows using Fal models",
   "author": {
     "name": "Fal",
@@ -16,7 +16,7 @@
     "shortDescription": "AI image and media generation workflows using Fal models",
     "longDescription": "AI image and media generation workflows using Fal models",
     "developerName": "Fal",
-    "category": "Creative Production",
+    "category": "Creativity",
     "capabilities": [],
     "websiteURL": "https://fal.ai",
     "defaultPrompt": [

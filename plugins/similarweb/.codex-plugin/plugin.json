@@ -1,6 +1,6 @@
 {
   "name": "similarweb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Digital market intelligence and web traffic analytics",
   "author": {
     "name": "Similarweb",
@@ -15,7 +15,7 @@
     "developerName": "Similarweb",
     "shortDescription": "Digital market intelligence and web traffic analytics",
     "longDescription": "Digital market intelligence and web traffic analytics",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [],
     "brandColor": "#F07028",
     "defaultPrompt": [
