@@ -1,0 +1,128 @@
+---
+// SSR only — productsV3 SDK needs request-context auth (tenant resolution,
+// site headers). `export const prerender = true` / `getStaticPaths()` builds
+// at compile time with no request, and `.queryProducts().limit()` short-
+// circuits to "is not a function". Keep this page server-rendered; do NOT
+// add prerender=true or getStaticPaths.
+import Layout from "../../layouts/Layout.astro";
+import ProductPurchase from "../../components/ProductPurchase.tsx";
+import SeoTags from "../../components/SeoTags.astro";
+import { productsV3, inventoryItemsV3 } from "@wix/stores";
+import { resolveWixImageUrl } from "../../utils/wix-image";
+import { getBackInStockEnabled } from "../../utils/back-in-stock";
+
+// Tell Wix platform this route is the Stores "product" sub-page.
+// Drives sitemap, dashboard SEO editor, deep links.
+export const wixMetadata = {
+  appDefId: "1380b703-ce81-ff05-f115-39571d94dfcd",
+  pageIdentifier: "wix.stores.sub_pages.product",
+  identifiers: {
+    slug: "STORES.PRODUCT.SLUG",
+  },
+};
+
+const { slug } = Astro.params;
+
+// Wrap the SSR await; a throw here aborts the response stream.
+let product: any = null;
+try {
+  const result = await productsV3.getProductBySlug(slug!, {
+    fields: ["CURRENCY", "PLAIN_DESCRIPTION"],
+  });
+  product = result.product;
+} catch (err) {
+  console.error("[product-detail] getProductBySlug failed:", err);
+}
+
+if (!product) return Astro.redirect("/404");
+
+// Live per-variant stock from inventoryItemsV3 — the authoritative source of
+// truth for OOS gating. productsV3's variantsInfo[].inventoryStatus.inStock is
+// a stale cached flag that does NOT reflect real-time stock changes; don't
+// trust it for the add-to-cart gate. See SHARED_WIRING.md § "Variant OOS gate".
+interface VariantStock { quantity: number; trackQuantity: boolean; preorderEnabled: boolean }
+const inventoryByVariant: Record<string, VariantStock> = {};
+try {
+  const inv: any = await inventoryItemsV3.queryInventoryItems({
+    filter: { productId: product._id },
+  });
+  for (const item of (inv?.items ?? inv?.inventoryItems ?? []) as any[]) {
+    if (!item.variantId) continue;
+    inventoryByVariant[item.variantId] = {
+      quantity: Number(item.quantity ?? 0),
+      trackQuantity: item.trackQuantity === true,
+      preorderEnabled: item.preorderInfo?.enabled === true,
+    };
+  }
+} catch (err) {
+  console.error("[product-detail] inventory query failed:", err);
+}
+
+const imageUrl = resolveWixImageUrl(product.media?.main?.image, 800, 1066);
+const price = product.actualPriceRange?.minValue?.formattedAmount;
+const priceAmount = Number(product.actualPriceRange?.minValue?.amount ?? 0);
+const currency = product.actualPriceRange?.minValue?.currency;
+const description = product.plainDescription?.replace(/<[^>]*>/g, "").trim();
+
+// SSR probe — true only if the dashboard's "Start Collecting Requests" toggle
+// is on for Wix Stores. Returns false on any error so the OOS subscribe form
+// silently hides if the probe / auth fails. See references/BACK_IN_STOCK.md.
+const backInStockEnabled = await getBackInStockEnabled();
+
+// Merchant-edited SEO from dashboard (product settings → SEO).
+// product.seoData.tags returned by default — no fields flag needed.
+const seoTags = product.seoData?.tags ?? [];
+const hasSeoTags = seoTags.some((t: any) => !t.disabled);
+
+const viewContentPayload = {
+  id: product._id,
+  name: product.name,
+  price: priceAmount,
+  currency,
+  origin: "Product Page",
+};
+---
+
+<Layout
+  title={product.name ?? "Product"}
+  description={description?.slice(0, 160)}
+  hasSeoTags={hasSeoTags}
+>
+  {hasSeoTags && <SeoTags slot="head" tags={seoTags} />}
+  <main class="py-3xl">
+    <div class="max-w-wide mx-auto px-xl">
+      <a href="/products" class="text-mute text-sm tracking-wide uppercase">&larr; Back to products</a>
+      <div class="grid grid-cols-1 md:grid-cols-[7fr_5fr] gap-2xl md:gap-4xl mt-xl items-start">
+        <div class="aspect-[4/5] bg-cream rounded-sm overflow-hidden">
+          {imageUrl && <img src={imageUrl} alt={product.name ?? "Product"} class="w-full h-full object-cover" />}
+        </div>
+        <div class="flex flex-col gap-lg md:sticky md:top-2xl">
+          <h1 class="font-display text-4xl leading-tight">{product.name}</h1>
+          {price && <p class="text-xl text-ink-soft">{price}</p>}
+          {description && <p class="text-ink-soft leading-relaxed">{description}</p>}
+          <ProductPurchase
+            client:load
+            product={product}
+            inventoryByVariant={inventoryByVariant}
+            backInStockEnabled={backInStockEnabled}
+            priceAmount={priceAmount}
+          />
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script
+  type="application/json"
+  id="analytics-view-content"
+  is:inline
+  set:html={JSON.stringify(viewContentPayload)}
+/>
+<script>
+  import { trackEvent } from "../../utils/analytics";
+  const el = document.getElementById("analytics-view-content");
+  if (el?.textContent) {
+    trackEvent("ViewContent", JSON.parse(el.textContent));
+  }
+</script>

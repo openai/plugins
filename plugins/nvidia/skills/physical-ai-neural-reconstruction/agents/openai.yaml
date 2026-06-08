@@ -1,0 +1,3 @@
+interface:
+  display_name: "Physical AI Neural Reconstruction"
+  short_description: "Router for NVIDIA NuRec/NRE: USDZ rendering, NCore conversion, 3DGS, gRPC sensor sim, PhysicalAI HF datasets. Do NOT use for SimReady or infra setup."

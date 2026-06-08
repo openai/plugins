@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wix Headless"
+  short_description: "Build or connect Wix Headless sites with Wix backend services"
+  default_prompt: "Use Wix Headless guidance to plan, wire, preview, and release this headless Wix site."

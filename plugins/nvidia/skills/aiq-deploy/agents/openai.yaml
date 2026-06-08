@@ -1,0 +1,3 @@
+interface:
+  display_name: "AIQ Deploy"
+  short_description: "Use when asked to install, deploy, run, validate, troubleshoot, or stop NVIDIA AI-Q Blueprint infrastructure."

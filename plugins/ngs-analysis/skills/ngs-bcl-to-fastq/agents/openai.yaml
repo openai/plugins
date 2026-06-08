@@ -1,0 +1,4 @@
+interface:
+  display_name: "BCL to FASTQ"
+  short_description: "Validate BCL run folders and plan FASTQ conversion"
+  default_prompt: "Inspect this Illumina run folder and sample sheet, validate demultiplexing parameters, check BCL conversion tools, and prepare a metrics-aware demux plan."

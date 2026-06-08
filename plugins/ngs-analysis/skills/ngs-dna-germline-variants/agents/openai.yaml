@@ -1,0 +1,4 @@
+interface:
+  display_name: "Germline DNA Variants"
+  short_description: "Deep germline WGS/WES/panel variant workflow planning"
+  default_prompt: "Plan a germline DNA variant-calling workflow, validate reference/resources and sample model, check public tools, and prepare a preflight-first command."

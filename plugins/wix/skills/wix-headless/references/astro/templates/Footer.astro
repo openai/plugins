@@ -1,0 +1,27 @@
+---
+// ── Composer skeleton: src/components/Footer.astro ────────────────────────────
+// Substitutions (see COMPOSE.md § "5. Footer.astro"):
+//   {{brand.name}} — brand name for the wordmark + copyright.
+//   {{shell.footerTagline}} — short brand-voice tagline from data.shell.
+//   {{nav.links}} — same inlined Navigation links array (mirror/subset);
+//        one <a href={href}>{label}</a> per entry, labels VERBATIM. No cart,
+//        login, or account links.
+// Fixed bulk (keep literal): transition:persist, the year expression.
+const year = new Date().getFullYear();
+---
+<footer class="site-footer" transition:persist="site-footer">
+  <div class="max-w-6xl mx-auto px-lg py-3xl flex flex-col md:flex-row md:items-start md:justify-between gap-xl">
+    <div class="flex flex-col gap-sm max-w-prose">
+      <span class="font-display text-lg text-ink">{{brand.name}}</span>
+      <p class="text-sm">{{shell.footerTagline}}</p>
+    </div>
+    <nav>
+      <ul class="flex flex-col gap-sm text-sm">
+        {{nav.links}}
+      </ul>
+    </nav>
+  </div>
+  <div class="max-w-6xl mx-auto px-lg pb-xl text-xs">
+    <p>© {year} {{brand.name}}. All rights reserved.</p>
+  </div>
+</footer>

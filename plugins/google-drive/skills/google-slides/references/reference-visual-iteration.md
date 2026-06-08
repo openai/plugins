@@ -19,5 +19,9 @@ When to read: visual cleanup, formatting, overflow, spacing, alignment, crowding
 - No elements outside slide bounds unless intentionally full-bleed.
 - Text, cards, charts, and images have readable spacing.
 - Repeated elements align consistently.
-- Placeholder or stale instructional text is gone after replacements.
+- Heading/body hierarchy and intentional mixed text styles remain intact.
+- Charts, screenshots, and evidence images preserve important labels, footnotes, and focal content at a readable crop.
+- Table/card/KPI emphasis matches the content's meaning rather than an inherited or copied reference state.
+- Placeholder or stale instructional text, bracketed directions, sample copy, and whitespace-only bullets are gone after replacements.
+- Repeated narrative roles use a consistent layout family.
 - The final check uses fresh post-write thumbnails.

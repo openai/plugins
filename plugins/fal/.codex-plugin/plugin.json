@@ -1,0 +1,32 @@
+{
+  "name": "fal",
+  "version": "1.0.1",
+  "description": "AI image and media generation workflows using Fal models",
+  "author": {
+    "name": "Fal",
+    "url": "https://fal.ai"
+  },
+  "homepage": "https://fal.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Fal",
+    "shortDescription": "AI image and media generation workflows using Fal models",
+    "longDescription": "AI image and media generation workflows using Fal models",
+    "developerName": "Fal",
+    "category": "Creative Production",
+    "capabilities": [],
+    "websiteURL": "https://fal.ai",
+    "defaultPrompt": [
+      "Use Fal to generate an image from this prompt and summarize the selected model settings.",
+      "Find Fal models for image generation or editing and recommend the best fit for this task.",
+      "Run a Fal image edit or upscaling workflow and summarize the output parameters."
+    ],
+    "brandColor": "#D60045",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

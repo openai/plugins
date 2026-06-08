@@ -1,0 +1,66 @@
+{
+  "name": "convex",
+  "version": "0.1.1",
+  "description": "Add a reactive, type-safe backend, database, server functions, and scaling guidance to JavaScript and TypeScript apps with Convex.",
+  "author": {
+    "name": "Convex, Inc.",
+    "email": "support@convex.dev",
+    "url": "https://www.convex.dev"
+  },
+  "homepage": "https://chatgpt.com/apps/convex/asdk_app_6a0faef988b48191b843bac5cd170a9e",
+  "repository": "https://github.com/get-convex/convex-codex-plugin",
+  "license": "UNLICENSED",
+  "keywords": [
+    "convex",
+    "backend",
+    "database",
+    "realtime",
+    "reactive",
+    "websocket",
+    "auth",
+    "storage",
+    "scheduler",
+    "cron",
+    "server functions",
+    "crud",
+    "full-stack",
+    "typescript",
+    "javascript",
+    "react",
+    "nextjs",
+    "expo",
+    "mobile",
+    "mcp"
+  ],
+  "interface": {
+    "displayName": "Convex",
+    "shortDescription": "Add a backend to JS/TS apps.",
+    "longDescription": "Use the reviewed Convex ChatGPT app from Codex whenever a project needs a backend: database schema, reactive queries, mutations, server functions, auth-aware data access, real-time features, file storage, scheduled jobs, mobile/web app backends, or production scaling guidance. Convex helps coding agents choose backend primitives that are type-safe, reactive, and suitable for full-stack JavaScript and TypeScript apps.",
+    "developerName": "Convex, Inc.",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Backend setup",
+      "Database schema",
+      "Reactive queries",
+      "Server functions",
+      "Auth-aware data access",
+      "Realtime apps",
+      "Scheduled jobs",
+      "File storage",
+      "Mobile backends",
+      "Scaling guidance"
+    ],
+    "websiteURL": "https://chatgpt.com/apps/convex/asdk_app_6a0faef988b48191b843bac5cd170a9e",
+    "privacyPolicyURL": "https://mcp.convex.dev/privacy",
+    "defaultPrompt": [
+      "Add a backend to this app.",
+      "Design the database schema.",
+      "Add real-time data updates."
+    ],
+    "brandColor": "#EE342F",
+    "termsOfServiceURL": "https://www.convex.dev/legal/tos",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  },
+  "apps": "./.app.json"
+}

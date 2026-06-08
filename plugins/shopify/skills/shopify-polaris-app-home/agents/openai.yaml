@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Polaris App Home"
+  short_description: "Build embedded admin app UIs"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-polaris-app-home to build a Shopify embedded app home UI."

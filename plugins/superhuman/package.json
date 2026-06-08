@@ -1,0 +1,15 @@
+{
+  "name": "@superhuman/mcp-mail",
+  "version": "1.0.2",
+  "description": "Connect your AI assistant to Superhuman Mail via MCP",
+  "bin": {
+    "mcp-mail": "bin/cli.js"
+  },
+  "dependencies": {
+    "mcp-remote": "latest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

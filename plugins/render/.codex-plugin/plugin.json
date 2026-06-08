@@ -1,6 +1,6 @@
 {
   "name": "render",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Skills for deploying, debugging, monitoring, and migrating apps on Render.",
   "author": {
     "name": "Render",
@@ -24,7 +24,7 @@
     "shortDescription": "Deploy, debug, monitor, and migrate apps on Render.",
     "longDescription": "Provides skills for deploying apps with Blueprints, debugging failed deploys, monitoring service health and metrics, building Render Workflows, and migrating from Heroku.",
     "developerName": "Render",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

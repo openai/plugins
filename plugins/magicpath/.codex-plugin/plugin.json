@@ -1,0 +1,45 @@
+{
+  "name": "magicpath",
+  "version": "0.1.0",
+  "description": "Use MagicPath to find, inspect, install, create, and edit UI components from Codex.",
+  "author": {
+    "name": "MagicPathAI",
+    "url": "https://github.com/MagicPathAI"
+  },
+  "homepage": "https://github.com/MagicPathAI/agent-skills",
+  "repository": "https://github.com/MagicPathAI/agent-skills",
+  "license": "UNLICENSED",
+  "keywords": [
+    "magicpath",
+    "codex",
+    "ui-components",
+    "design",
+    "react",
+    "tailwind"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "MagicPath",
+    "shortDescription": "Find, install, and author MagicPath UI components from Codex",
+    "longDescription": "Use MagicPath through the magicpath-ai CLI to search UI components, inspect source, install React and TypeScript components into applications, work with team projects and themes, and create or edit canvas components from local code.",
+    "developerName": "MagicPathAI",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.magicpath.ai/",
+    "privacyPolicyURL": "https://www.magicpath.ai/privacy",
+    "termsOfServiceURL": "https://www.magicpath.ai/terms",
+    "defaultPrompt": [
+      "Find a MagicPath button component and help me add it to this app.",
+      "Create a new MagicPath canvas component from this repository UI.",
+      "Use my MagicPath theme to adapt this component."
+    ],
+    "brandColor": "#111827",
+    "composerIcon": "./assets/magicpath.png",
+    "logo": "./assets/magicpath.png",
+    "screenshots": []
+  }
+}

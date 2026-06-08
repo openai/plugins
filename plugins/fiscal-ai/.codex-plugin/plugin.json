@@ -1,0 +1,32 @@
+{
+  "name": "fiscal-ai",
+  "version": "1.0.1",
+  "description": "Financial research, company fundamentals, filings, and market insights from Fiscal AI",
+  "author": {
+    "name": "Fiscal AI",
+    "url": "https://fiscal.ai"
+  },
+  "homepage": "https://fiscal.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Fiscal AI",
+    "shortDescription": "Financial research, fundamentals, filings, and market insights",
+    "longDescription": "Financial research, company fundamentals, filings, and market insights from Fiscal AI",
+    "developerName": "Fiscal AI",
+    "category": "Financial Markets",
+    "capabilities": [],
+    "websiteURL": "https://fiscal.ai",
+    "defaultPrompt": [
+      "Search Fiscal AI for a company and summarize recent financials, filings, and key risks.",
+      "Compare revenue growth, margins, and valuation for this peer set in Fiscal AI.",
+      "Find Fiscal AI insights for this ticker and highlight the most important takeaways."
+    ],
+    "brandColor": "#1A1B26",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

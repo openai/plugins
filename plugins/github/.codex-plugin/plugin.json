@@ -1,6 +1,6 @@
 {
   "name": "github",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Inspect repositories, triage pull requests and issues, debug CI, and publish changes through a hybrid GitHub connector and CLI workflow.",
   "author": {
     "name": "OpenAI",
@@ -25,7 +25,7 @@
     "shortDescription": "Triage PRs, issues, CI, and publish flows",
     "longDescription": "Use GitHub to inspect repositories, review pull requests, address feedback, debug failing Actions checks, and prepare code changes for review through a connector-first workflow with targeted CLI fallbacks.",
     "developerName": "OpenAI",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

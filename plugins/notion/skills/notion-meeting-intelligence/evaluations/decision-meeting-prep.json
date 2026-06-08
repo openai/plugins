@@ -3,8 +3,8 @@
   "skills": ["meeting-intelligence"],
   "query": "Prep for tomorrow's meeting where we need to decide on our database migration approach. Create both an internal pre-read for the team and an agenda for the meeting.",
   "expected_behavior": [
-    "Step 1: Uses Notion:notion-search to find context about database migration (project pages, technical specs, previous discussions, options analysis)",
-    "Step 2: Fetches at least 2-3 relevant pages using Notion:notion-fetch to gather information from Notion",
+    "Step 1: Uses Notion:search to find context about database migration (project pages, technical specs, previous discussions, options analysis)",
+    "Step 2: Fetches at least 2-3 relevant pages using Notion:fetch to gather information from Notion",
     "Step 3: Identifies the decision to be made and available options from fetched Notion content",
     "Step 4: Enriches with Codex research - adds decision-making frameworks (e.g., cost-benefit analysis, risk assessment), technical context for migration approaches, best practices for database migrations",
     "Step 5: Distinguishes Notion facts from Codex insights in synthesis",
@@ -29,6 +29,6 @@
     "External agenda follows structure from SKILL.md Step 6 (Meeting Details → Objective → Agenda Items → Discussion Topics → Decisions Needed → Action Items → Related Resources)",
     "Documents are cross-linked (pre-read mentions agenda, agenda mentions pre-read)",
     "Meeting date is included in both titles",
-    "Uses correct tool names (Notion:notion-search, Notion:notion-fetch, Notion:notion-create-pages for BOTH documents)"
+    "Uses correct tool names (Notion:search, Notion:fetch, Notion:notion-create-pages for BOTH documents)"
   ]
 }

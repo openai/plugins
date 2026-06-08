@@ -1,7 +1,7 @@
 {
   "name": "build-ios-apps",
-  "version": "0.1.0",
-  "description": "Build iOS apps with workflows for App Intents, SwiftUI UI work, refactors, performance profiling, leak investigation, and simulator debugging.",
+  "version": "0.1.1",
+  "description": "Build iOS apps with workflows for App Intents, SwiftUI UI work, Simulator mirroring in the Codex in-app browser, performance profiling, leak investigation, and simulator debugging.",
   "author": {
     "name": "OpenAI",
     "email": "support@openai.com",
@@ -20,16 +20,17 @@
     "spotlight",
     "xcode",
     "performance",
-    "debugging"
+    "debugging",
+    "previews"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Build iOS Apps",
     "shortDescription": "Build, refine, and debug iOS apps with App Intents, SwiftUI, and Xcode workflows",
-    "longDescription": "Use Build iOS Apps to design App Intents and App Shortcuts, build or refactor SwiftUI UI, adopt modern iOS patterns such as Liquid Glass, audit runtime performance, capture ETTrace profiles, investigate memory leaks, and debug apps on simulators with XcodeBuildMCP-backed workflows.",
+    "longDescription": "Use Build iOS Apps to design App Intents and App Shortcuts, build or refactor SwiftUI UI, render SwiftUI previews in the Codex in-app browser, adopt modern iOS patterns such as Liquid Glass, audit runtime performance, capture ETTrace profiles, investigate memory leaks, and debug apps on simulators with XcodeBuildMCP-backed workflows.",
     "developerName": "OpenAI",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Read",

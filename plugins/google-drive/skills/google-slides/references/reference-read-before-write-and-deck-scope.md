@@ -17,7 +17,8 @@ When to read: deck summaries, evidence searches, multi-slide edits, translation,
 4. Work in one slide or a small contiguous span at a time.
 5. Re-read each edited slide or span before advancing.
 6. Confirm the last slide in a span actually changed.
-7. Before handoff, reconcile the final deck against the original checklist.
+7. For inserted slides created from layouts, reconcile inherited placeholders from the post-create slide read before advancing.
+8. Before handoff, reconcile the final deck against the original checklist.
 
 ## Source And Destination
 

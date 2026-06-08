@@ -1,0 +1,6 @@
+interface:
+  display_name: Unit Economics
+  short_description: Bottoms-up unit economics decomposition for any public company
+  default_prompt: Analyze unit economics for NFLX.
+policy:
+  allow_implicit_invocation: true

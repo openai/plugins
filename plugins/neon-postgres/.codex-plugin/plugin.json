@@ -1,6 +1,6 @@
 {
   "name": "neon-postgres",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage Neon Serverless Postgres projects and databases with the neon-postgres agent skill and the Neon MCP Server",
   "author": {
     "name": "Neon",
@@ -25,7 +25,7 @@
     "shortDescription": "Manage Neon Serverless Postgres projects and databases",
     "longDescription": "Use the Neon Postgres plugin to create and manage Neon Serverless Postgres projects and databases. Includes the Neon MCP Server for project and database management, and the neon-postgres skill with guides on connection methods, branching, autoscaling, Neon Auth, and more.",
     "developerName": "Neon",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

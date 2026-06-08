@@ -11,14 +11,15 @@ Prep meetings by pulling Notion context, tailoring agendas/pre-reads, and enrich
 
 ## Quick start
 1) Confirm meeting goal, attendees, date/time, and decisions needed.
-2) Gather context: search with `Notion:notion-search`, then fetch with `Notion:notion-fetch` (prior notes, specs, OKRs, decisions).
+2) Gather context: search with `Notion:search`, then fetch with `Notion:fetch` (prior notes, specs, OKRs, decisions).
 3) Pick the right template via `reference/template-selection-guide.md` (status, decision, planning, retro, 1:1, brainstorming).
 4) Draft agenda/pre-read in Notion with `Notion:notion-create-pages`, embedding source links and owner/timeboxes.
 5) Enrich with Codex research (industry insights, benchmarks, risks) and update the page with `Notion:notion-update-page` as plans change.
 
 ## Tool-call guardrails
-- Use one literal search query per `Notion:notion-search` call and include `filters: {}` when no narrower filter is needed.
-- Only fetch Notion page, database, or data-source URLs/IDs; external connected-source search results are not valid `Notion:notion-fetch` inputs.
+- Notion tool availability can vary by workspace. If a Notion MCP call returns `Tool <name> not found`, treat that tool as unavailable for the rest of the current task. Do not retry it with different arguments or call it again later; use `Notion:search` and `Notion:fetch` where sufficient.
+- Use one literal search query per `Notion:search` call and include `filters: {}` when no narrower filter is needed.
+- Only fetch Notion page, database, or data-source URLs/IDs; external connected-source search results are not valid `Notion:fetch` inputs.
 - Create meeting pages with an explicit `parent` and a `pages` array.
 - Query databases with `Notion:notion-query-data-sources` under a top-level `data` object, using fetched `collection://...` URLs as table names.
 - When editing a page, fetch its current content first and use `Notion:notion-update-page` with supported commands such as `update_content` or `update_properties`; on the current deployed surface, use `properties: {}` for `update_content` and `content_updates: []` for `update_properties`. Do not invent insertion-only commands.
@@ -33,7 +34,7 @@ After the app is connected, finish your answer and tell the user to retry so the
 
 ### 1) Gather inputs
 - Ask for objective, desired outcomes/decisions, attendees, duration, date/time, and prior materials.
-- Search Notion for relevant docs, past notes, specs, and action items (`Notion:notion-search`), then fetch key pages (`Notion:notion-fetch`).
+- Search Notion for relevant docs, past notes, specs, and action items (`Notion:search`), then fetch key pages (`Notion:fetch`).
 - Capture blockers/risks and open questions up front.
 
 ### 2) Choose format

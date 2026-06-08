@@ -1,6 +1,6 @@
 {
   "name": "vercel",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "description": "Build and deploy web apps and agents",
   "author": {
     "name": "Vercel Labs",
@@ -32,7 +32,7 @@
     "shortDescription": "Build and deploy web apps and agents",
     "longDescription": "Bring Vercel ecosystem guidance into Codex with curated skills and the connected Vercel app. Packages the upstream vercel/vercel-plugin skills, agents, and commands under the local `vercel` plugin identity for the Codex plugin marketplace.",
     "developerName": "Vercel Labs",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

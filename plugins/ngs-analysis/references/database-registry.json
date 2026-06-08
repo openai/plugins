@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1.0",
+  "databases": {
+    "silva_138_amplicon": {
+      "display_name": "SILVA 138 marker-gene taxonomy database",
+      "kind": "taxonomy_database",
+      "database_family": "SILVA",
+      "version": "138",
+      "root_env": "NGS_DB_SILVA_138_ROOT",
+      "source": "SILVA release files converted for the selected amplicon backend.",
+      "license_note": "Respect SILVA distribution and citation requirements.",
+      "estimated_size": "medium; depends on release and classifier representation",
+      "suggested_setup": [
+        "mkdir -p \"$NGS_DB_SILVA_138_ROOT\"",
+        "Place release-matched taxonomy.tsv and sequences.fasta under \"$NGS_DB_SILVA_138_ROOT\".",
+        "For QIIME2 classify-sklearn, also track the trained .qza classifier path used for the run."
+      ],
+      "required_files": [
+        "taxonomy.tsv",
+        "sequences.fasta"
+      ]
+    },
+    "gtdb_release": {
+      "display_name": "GTDB taxonomy database bundle",
+      "kind": "taxonomy_database",
+      "database_family": "GTDB",
+      "version": "user_selected",
+      "root_env": "NGS_DB_GTDB_ROOT",
+      "source": "GTDB release bundle prepared for the selected classifier.",
+      "license_note": "Track GTDB release and classifier-specific conversion details.",
+      "estimated_size": "medium to large; depends on GTDB release and classifier representation",
+      "suggested_setup": [
+        "mkdir -p \"$NGS_DB_GTDB_ROOT\"",
+        "Place release-matched taxonomy.tsv and sequences.fasta under \"$NGS_DB_GTDB_ROOT\".",
+        "Record the GTDB release, classifier backend, and conversion command in the run resource manifest."
+      ],
+      "required_files": [
+        "taxonomy.tsv",
+        "sequences.fasta"
+      ]
+    },
+    "kraken2_standard": {
+      "display_name": "Kraken2 standard database",
+      "kind": "metagenomics_database",
+      "database_family": "Kraken2",
+      "version": "user_selected",
+      "root_env": "NGS_DB_KRAKEN2_ROOT",
+      "source": "Kraken2 standard database or lab-curated equivalent.",
+      "license_note": "Large database downloads should be deliberate and checksum-tracked.",
+      "estimated_size": "large; Kraken2 standard databases can require substantial disk space",
+      "suggested_setup": [
+        "mkdir -p \"$NGS_DB_KRAKEN2_ROOT\"",
+        "kraken2-build --standard --db \"$NGS_DB_KRAKEN2_ROOT\" --threads <threads>",
+        "kraken2-inspect --db \"$NGS_DB_KRAKEN2_ROOT\" > \"$NGS_DB_KRAKEN2_ROOT\"/inspect.txt"
+      ],
+      "required_files": [
+        "hash.k2d",
+        "opts.k2d",
+        "taxo.k2d"
+      ]
+    },
+    "bracken_standard": {
+      "display_name": "Bracken database paired to Kraken2",
+      "kind": "metagenomics_database",
+      "database_family": "Bracken",
+      "version": "user_selected",
+      "root_env": "NGS_DB_BRACKEN_ROOT",
+      "source": "Bracken files generated from the exact Kraken2 database used for classification.",
+      "license_note": "Bracken abundance estimates are only valid when read length and Kraken database match the generated kmer distribution.",
+      "estimated_size": "small to medium relative to the paired Kraken2 database",
+      "suggested_setup": [
+        "Use the exact Kraken2 database root used for classification.",
+        "bracken-build -d \"$NGS_DB_BRACKEN_ROOT\" -t <threads> -k 35 -l <read_length>",
+        "Keep one kmer distribution per read length when workflows mix read lengths."
+      ],
+      "required_files": [
+        "database100mers.kmer_distrib"
+      ]
+    },
+    "humann_uniref90": {
+      "display_name": "HUMAnN UniRef90 and ChocoPhlAn database bundle",
+      "kind": "functional_profile_database",
+      "database_family": "HUMAnN",
+      "version": "user_selected",
+      "root_env": "NGS_DB_HUMANN_ROOT",
+      "source": "HUMAnN utility downloads or local mirrored database bundle.",
+      "license_note": "HUMAnN databases are large and should be versioned with the HUMAnN software release.",
+      "estimated_size": "large; ChocoPhlAn plus UniRef databases can require substantial disk space",
+      "suggested_setup": [
+        "mkdir -p \"$NGS_DB_HUMANN_ROOT\"",
+        "humann_databases --download chocophlan full \"$NGS_DB_HUMANN_ROOT\"",
+        "humann_databases --download uniref uniref90_diamond \"$NGS_DB_HUMANN_ROOT\""
+      ],
+      "required_files": [
+        "chocophlan",
+        "uniref"
+      ]
+    }
+  }
+}

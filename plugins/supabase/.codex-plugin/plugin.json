@@ -1,6 +1,6 @@
 {
   "name": "supabase",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Access your Supabase projects and perform tasks like managing tables, fetching config, and querying data.",
   "author": {
     "name": "Supabase",
@@ -24,7 +24,7 @@
     "shortDescription": "Supabase skills and MCP tools for Codex",
     "longDescription": "Official Supabase plugin for Codex. Includes agent skills for Supabase development and Postgres best practices, plus MCP server integration for managing your Supabase projects directly from Codex.",
     "developerName": "Supabase",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Read",
       "Write"

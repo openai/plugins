@@ -1,6 +1,6 @@
 {
   "name": "gmail",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Work with Gmail using the configured Gmail app connector.",
   "author": {
     "name": "OpenAI",

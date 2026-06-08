@@ -6,7 +6,7 @@
 
 ### 1. Find & Fetch Spec
 ```
-Notion:notion-search
+Notion:search
 query: "User Preferences Schema Migration Spec"
 query_type: "internal"
 filters: {}
@@ -15,7 +15,7 @@ filters: {}
 Found: "User Preferences Schema Migration Spec"
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "user-preferences-schema-migration-spec-page-id"
 ```
 
@@ -48,7 +48,7 @@ pages: [{
 
 ### 4. Find Task Database & Create Tasks
 ```
-Notion:notion-search
+Notion:search
 query: "Engineering Tasks"
 query_type: "internal"
 filters: {}
@@ -57,7 +57,7 @@ filters: {}
 Found: "Engineering Tasks" database
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "engineering-tasks-database-id"
 ```
 

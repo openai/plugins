@@ -1,0 +1,4 @@
+interface:
+  display_name: "NGS Runtime"
+  short_description: "Check sequencing packages before installing"
+  default_prompt: "Check which NGS tools already exist locally, then emit an install plan for the missing public packages without installing by default."

@@ -1,0 +1,11 @@
+{
+  "name": "shopify-pos-ui",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "typescript": "5.9.3",
+    "@shopify/ui-extensions": "2026.1.1",
+    "preact": "10.28.4",
+    "@types/react": "19.2.14"
+  }
+}

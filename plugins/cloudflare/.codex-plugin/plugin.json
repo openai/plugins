@@ -1,6 +1,6 @@
 {
   "name": "cloudflare",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cloudflare platform plugin with curated skills for Workers, Wrangler, and Agents SDK plus the official Cloudflare API MCP server.",
   "author": {
     "name": "Cloudflare",
@@ -28,7 +28,7 @@
     "shortDescription": "Cloudflare platform guidance with official MCP",
     "longDescription": "Bring Cloudflare platform guidance into Codex with curated skills for the broader platform, Wrangler CLI, and the Agents SDK, plus the official Cloudflare API MCP server for authenticated access to live account data and workflows across Workers, Pages, storage, AI, networking, security, and analytics services.",
     "developerName": "Cloudflare",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

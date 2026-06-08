@@ -177,7 +177,7 @@ ln -sfn /absolute/path/to/plugins/plugin-eval ~/plugins/plugin-eval
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Coding"
+      "category": "Developer Tools"
     }
   ]
 }
@@ -217,7 +217,7 @@ ln -sfn /absolute/path/to/plugins/plugin-eval /path/to/workspace/plugins/plugin-
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Coding"
+      "category": "Developer Tools"
     }
   ]
 }

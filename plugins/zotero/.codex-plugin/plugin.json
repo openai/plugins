@@ -1,6 +1,6 @@
 {
   "name": "zotero",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Work with Zotero from Codex: search your library, export BibTeX, insert citations, and import references through the Zotero desktop app.",
   "author": {
     "name": "OpenAI",

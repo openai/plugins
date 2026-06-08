@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wix Design System"
+  short_description: "Find Wix Design System components, props, examples, and testkits"
+  default_prompt: "Use Wix Design System guidance to choose components, confirm props, and write matching UI."

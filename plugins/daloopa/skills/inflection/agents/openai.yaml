@@ -1,0 +1,7 @@
+interface:
+  display_name: Inflection
+  short_description: Auto-detect biggest acceleration/deceleration inflections across
+    all metrics
+  default_prompt: Find the biggest metric inflections for AAPL.
+policy:
+  allow_implicit_invocation: true

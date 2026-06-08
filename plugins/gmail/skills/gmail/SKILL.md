@@ -27,6 +27,7 @@ Use this skill to turn noisy email threads into clear summaries, action lists, a
 | --- | --- |
 | Search planning, refinement, pagination, and body-fetch strategy | [references/search-workflow.md](./references/search-workflow.md) |
 | Label application, relabeling, and label-based cleanup | [references/label-actions.md](./references/label-actions.md) |
+| Self-delivery requests such as "email me," "send this to me," or automation delivery | [references/self-delivery.md](./references/self-delivery.md) |
 | Reply drafting, reply-all decisions, and tone matching | [references/reply-workflow.md](./references/reply-workflow.md) |
 | Email forwarding, context notes, and intent framing | [references/forward-workflow.md](./references/forward-workflow.md) |
 

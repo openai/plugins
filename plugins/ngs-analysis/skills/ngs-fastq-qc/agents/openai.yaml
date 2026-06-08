@@ -1,0 +1,4 @@
+interface:
+  display_name: "FASTQ QC"
+  short_description: "Run public FASTQ QC and trimming workflows"
+  default_prompt: "Inspect my FASTQs, infer pairings, check QC tools, interpret FastQC/MultiQC signals, and recommend trimming only when warranted."

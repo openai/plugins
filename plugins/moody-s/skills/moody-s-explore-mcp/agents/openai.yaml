@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moody's MCP Explorer"
+  short_description: "Discover Moody's MCP tools and run safe read-only entity probes"
+  default_prompt: "Use Moody's MCP Explorer to verify available tools, resolve an entity, and run a lightweight cited Moody's data probe."

@@ -1,6 +1,6 @@
 {
   "name": "circleci",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build, test, and deploy any application",
   "author": {
     "name": "CircleCI",
@@ -20,7 +20,7 @@
     "shortDescription": "Build, test, and deploy any application",
     "longDescription": "Bring testing, deployment, and CI best practices into Codex",
     "developerName": "CircleCI",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

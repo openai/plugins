@@ -1,6 +1,6 @@
 {
   "name": "teams",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Work with Teams using the configured Microsoft Teams app connector.",
   "author": {
     "name": "OpenAI",

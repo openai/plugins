@@ -9,7 +9,7 @@
 ### Step 1: Search for Context
 
 ```
-Notion:notion-search
+Notion:search
 query: "database migration"
 query_type: "internal"
 teamspace_id: "engineering-teamspace-id"
@@ -29,21 +29,21 @@ filters: {
 ### Step 2: Fetch Relevant Pages
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "database-migration-proposal-page-id"
 ```
 
 **Extracted**: Proposes migrating from MongoDB to PostgreSQL, outlines timeline and risks
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "database-performance-issues-page-id"
 ```
 
 **Extracted**: Current pain points - slow queries, schema flexibility issues, transaction limitations
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "migration-options-analysis-page-id"
 ```
 
@@ -53,7 +53,7 @@ id: "migration-options-analysis-page-id"
 3. Hybrid approach (MongoDB + PostgreSQL)
 
 ```
-Notion:notion-fetch
+Notion:fetch
 id: "previous-migration-postmortem-page-id"
 ```
 

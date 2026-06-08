@@ -1,0 +1,79 @@
+---
+import { resolveWixImageUrl } from "../utils/wix-image";
+import { fetchLiveOffers, offersForProduct } from "../utils/discounts";
+
+interface Props {
+  product: {
+    _id?: string;
+    name?: string;
+    slug?: string;
+    media?: { main?: { image?: string }; items?: any[] };
+    actualPriceRange?: {
+      minValue?: { formattedAmount?: string; amount?: string; currency?: string };
+    };
+  };
+  // Optional editorial ordinal (01 / 02 / 03). Listings that want it should
+  // pass their own index; home grids typically omit it.
+  index?: number;
+}
+
+const { product, index } = Astro.props;
+
+// fetchLiveOffers is memoized per request via auth.elevate's caching, so
+// rendering N ProductCards in one page does NOT fan out N discount-rule
+// queries. Pages that mount ProductCard never fetch offers themselves —
+// the component owns that concern.
+let primaryOffer: { name: string; offer?: string } | undefined;
+try {
+  const offers = await fetchLiveOffers();
+  primaryOffer = offersForProduct(offers, product._id)[0];
+} catch (err) {
+  console.error("[ProductCard] fetchLiveOffers failed:", err);
+}
+
+const imageUrl = resolveWixImageUrl(product.media?.main?.image, 600, 800);
+const price = product.actualPriceRange?.minValue?.formattedAmount;
+const amount = product.actualPriceRange?.minValue?.amount;
+const currency = product.actualPriceRange?.minValue?.currency;
+const indexLabel =
+  typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
+---
+
+<a
+  href={`/products/${product.slug}`}
+  class="product-card"
+  data-analytics-product
+  data-id={product._id}
+  data-name={product.name}
+  data-price={amount}
+  data-currency={currency}
+>
+  <div class="product-card-media">
+    {imageUrl && <img src={imageUrl} alt={product.name ?? "Product"} loading="lazy" />}
+    {indexLabel && <span class="product-card-index">N°&nbsp;{indexLabel}</span>}
+    {primaryOffer && (
+      <span class="product-card-ribbon" title={primaryOffer.offer}>
+        {primaryOffer.name}
+      </span>
+    )}
+  </div>
+  <div class="product-card-body">
+    <h3 class="product-card-name">{product.name}</h3>
+    {price && <p class="product-card-price">{price}</p>}
+  </div>
+</a>
+
+<script>
+  import { trackEvent } from "../utils/analytics";
+  document.addEventListener("click", (event) => {
+    const anchor = (event.target as HTMLElement)?.closest("a[data-analytics-product]") as HTMLAnchorElement | null;
+    if (!anchor) return;
+    trackEvent("ClickProduct", {
+      id: anchor.dataset.id,
+      name: anchor.dataset.name,
+      price: anchor.dataset.price ? Number(anchor.dataset.price) : undefined,
+      currency: anchor.dataset.currency,
+      origin: "Product Listing",
+    });
+  });
+</script>

@@ -83,7 +83,7 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
 
 - In the Codex app, click on Plugins in the sidebar.
-- You should see `Superpowers` in the Coding section.
+- You should see `Superpowers` in the Developer Tools section.
 - Click the `+` next to Superpowers and follow the prompts.
 
 ### Factory Droid

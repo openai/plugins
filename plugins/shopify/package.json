@@ -1,0 +1,17 @@
+{
+  "name": "shopify-plugin",
+  "version": "1.3.0",
+  "private": true,
+  "description": "AI agent plugin manifests for the Shopify Dev MCP server",
+  "author": "Shopify",
+  "license": "MIT",
+  "keywords": [
+    "shopify",
+    "mcp",
+    "graphql",
+    "liquid",
+    "storefront",
+    "admin-api",
+    "plugin"
+  ]
+}

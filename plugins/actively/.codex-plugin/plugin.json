@@ -1,0 +1,32 @@
+{
+  "name": "actively",
+  "version": "1.0.1",
+  "description": "Account intelligence and prospecting signals from Actively",
+  "author": {
+    "name": "Actively",
+    "url": "https://www.actively.ai"
+  },
+  "homepage": "https://www.actively.ai",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Actively",
+    "shortDescription": "Account intelligence and prospecting signals from Actively",
+    "longDescription": "Account intelligence and prospecting signals from Actively",
+    "developerName": "Actively",
+    "category": "Sales",
+    "capabilities": [],
+    "websiteURL": "https://www.actively.ai",
+    "defaultPrompt": [
+      "Find high-fit Actively accounts showing recent buying signals and summarize next steps.",
+      "Search Actively for contacts at this target account and pull relevant prospect context.",
+      "Build a prioritized Actively prospect list for this ICP and explain why each account fits."
+    ],
+    "brandColor": "#000000",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

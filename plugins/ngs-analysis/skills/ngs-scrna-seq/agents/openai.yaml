@@ -1,0 +1,4 @@
+interface:
+  display_name: "Single-cell RNA-seq"
+  short_description: "Plan scRNA-seq counting, QC, and annotation"
+  default_prompt: "Inspect my single-cell inputs, resolve chemistry/reference needs, choose a public FASTQ-to-count path, or route post-count analysis to scrna-seq-qc."

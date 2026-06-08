@@ -1,0 +1,130 @@
+---
+// /category/[slug] — server-side filtered, cursor-paginated category
+// landing. Renders the same product grid as /products, but constrained to
+// one category, with breadcrumbs and a category-specific page header.
+//
+// The CategoryRail is shared with /products via transition:persist, so
+// switching categories swaps only the grid and header.
+import Layout from "../../layouts/Layout.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import CategoryRail from "../../components/CategoryRail.astro";
+import {
+  getCategoryBySlug,
+  listProductsInCategory,
+  listStoreCategories,
+} from "../../utils/categories";
+
+const PAGE_SIZE = 24;
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/products");
+}
+
+const category = await getCategoryBySlug(slug);
+if (!category) {
+  return new Response("Category not found", { status: 404 });
+}
+
+const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
+const page = await listProductsInCategory(category.id, {
+  limit: PAGE_SIZE,
+  cursor,
+});
+
+// Drop the Wix Gift Card app's auto-mirror products (DIGITAL stand-ins
+// tagged "Gift Card") — real purchases happen via /gift-cards.
+const productList = page.items.filter((p: any) => p.ribbon?.name !== "Gift Card");
+
+const allCategories = await listStoreCategories();
+
+const impressionContents = productList.map((p, index) => ({
+  id: p._id,
+  name: p.name,
+  price: Number(p.actualPriceRange?.minValue?.amount ?? 0),
+  currency: p.actualPriceRange?.minValue?.currency ?? undefined,
+  position: index + 1,
+}));
+
+function pageHref(c: string | null): string | null {
+  if (!c) return null;
+  const params = new URLSearchParams();
+  params.set("cursor", c);
+  return `/category/${category!.slug}?${params.toString()}`;
+}
+---
+
+<Layout
+  title={`${category.name}`}
+  description={category.description ?? `Browse our ${category.name.toLowerCase()} collection.`}
+>
+  <section class="page-header">
+    <div class="container-page">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/" data-astro-prefetch="hover">Home</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="/products" data-astro-prefetch="hover">Shop</a>
+        <span aria-hidden="true">&middot;</span>
+        <span aria-current="page">{category.name}</span>
+      </nav>
+      <h1 class="page-header-title">{category.name}</h1>
+      {category.description && (
+        <p class="page-header-lede">{category.description}</p>
+      )}
+    </div>
+    {category.imageUrl && (
+      <div class="page-header-image" aria-hidden="true">
+        <img
+          src={category.imageUrl}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )}
+  </section>
+
+  <CategoryRail
+    categories={allCategories}
+    activeSlug={category.slug}
+    prevHref={pageHref(page.prevCursor)}
+    nextHref={pageHref(page.nextCursor)}
+  />
+
+  <section class="section-pad">
+    <div class="container-page">
+      {productList.length === 0 ? (
+        <p class="products-empty">
+          Nothing in {category.name} just now &mdash; please check back shortly.
+        </p>
+      ) : (
+        <div class="product-grid">
+          {productList.map((product, idx) => (
+            <ProductCard product={product} index={idx} />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<script
+  type="application/json"
+  id="analytics-impressions"
+  is:inline
+  set:html={JSON.stringify(impressionContents)}
+/>
+<script>
+  import { trackEvent } from "../../utils/analytics";
+  function fireImpressions() {
+    const el = document.getElementById("analytics-impressions");
+    if (!el?.textContent) return;
+    trackEvent("AddProductImpression", {
+      contents: JSON.parse(el.textContent),
+      origin: "Category Page",
+    });
+  }
+  // astro:page-load fires on initial load AND after every <ClientRouter />
+  // navigation, so a single listener covers both fresh hits and swaps.
+  document.addEventListener("astro:page-load", fireImpressions);
+</script>

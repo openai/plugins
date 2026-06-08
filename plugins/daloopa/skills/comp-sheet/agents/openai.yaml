@@ -1,0 +1,7 @@
+interface:
+  display_name: Comp Sheet
+  short_description: Build an industry comp sheet Excel model with deep operational
+    KPIs
+  default_prompt: Build an industry comp sheet for AAPL and peers.
+policy:
+  allow_implicit_invocation: true

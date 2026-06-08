@@ -1,6 +1,6 @@
 {
   "name": "vantage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vantage is a cloud observability and optimization platform that aggregates cloud infrastructure costs acros...",
   "author": {
     "name": "Vantage",
@@ -15,7 +15,7 @@
     "shortDescription": "Vantage is a cloud observability and optimization platform that aggregates cloud infrastructure costs acros...",
     "longDescription": "Vantage is a cloud observability and optimization platform that aggregates cloud infrastructure costs across providers to deliver a centralized view into total cloud spend. Vantage has multiple tools for optimizing cloud spend and provides organizations with advanced FinOps workflows and cost governance.",
     "developerName": "Vantage",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [],
     "defaultPrompt": [
       "Summarize the current cloud cost picture in Vantage"

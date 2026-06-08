@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Polaris Checkout Extensions"
+  short_description: "Build checkout UI extensions"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-polaris-checkout-extensions to build checkout UI extensions."

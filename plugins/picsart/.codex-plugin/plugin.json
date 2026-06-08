@@ -1,0 +1,32 @@
+{
+  "name": "picsart",
+  "version": "1.0.1",
+  "description": "Image editing, creative assets, and design workflows from Picsart",
+  "author": {
+    "name": "Picsart",
+    "url": "https://picsart.com"
+  },
+  "homepage": "https://picsart.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Picsart",
+    "shortDescription": "Image editing, creative assets, and design workflows from Picsart",
+    "longDescription": "Image editing, creative assets, and design workflows from Picsart",
+    "developerName": "Picsart",
+    "category": "Creative Production",
+    "capabilities": [],
+    "websiteURL": "https://picsart.com",
+    "defaultPrompt": [
+      "Turn this product photo into a 10-second vertical video ad for Reels and TikTok.",
+      "Generate a cinematic 15-second product teaser from a text prompt.",
+      "Generate 5 on-brand product shots and pick the best aspect ratio for Instagram."
+    ],
+    "brandColor": "#C209C8",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

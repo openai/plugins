@@ -28,6 +28,48 @@ Use these patterns as copy-and-fill request templates for `mcp__codex_apps__goog
 
 Use this when one sibling slide already has the right structure and you want to clone that pattern.
 
+## Duplicate then order slides
+
+Do not combine `duplicateObject` and `updateSlidesPosition` in the same batch. Google Slides can reject the move because duplicated slide order is only grounded after the duplicate batch completes.
+
+First batch: duplicate only.
+
+```json
+[
+  {
+    "duplicateObject": {
+      "objectId": "source-slide-id",
+      "objectIds": {
+        "source-slide-id": "new-slide-a"
+      }
+    }
+  },
+  {
+    "duplicateObject": {
+      "objectId": "source-slide-id",
+      "objectIds": {
+        "source-slide-id": "new-slide-b"
+      }
+    }
+  }
+]
+```
+
+Then re-read the presentation outline. If the observed order is `new-slide-b`, then `new-slide-a`, move them with the current presentation order in `slideObjectIds`:
+
+```json
+[
+  {
+    "updateSlidesPosition": {
+      "slideObjectIds": ["new-slide-b", "new-slide-a"],
+      "insertionIndex": 6
+    }
+  }
+]
+```
+
+Use `insertionIndex` for the target position in the full deck after reading the current outline. If the observed order is already correct, skip the move batch.
+
 ## Delete a stale element
 
 ```json
@@ -83,6 +125,72 @@ Use this for deterministic placeholder replacement. Do not use it when only one 
 ```
 
 Use this when a specific text box should be preserved structurally but its content must reset.
+
+## Rewrite mixed-style text without flattening hierarchy
+
+After rewriting any text object that intentionally contains multiple styles, restore the styles with explicit ranges. Do not use `textRange.type: ALL` for this case.
+
+```json
+[
+  {
+    "deleteText": {
+      "objectId": "shape-mixed-1",
+      "textRange": {"type": "ALL"}
+    }
+  },
+  {
+    "insertText": {
+      "objectId": "shape-mixed-1",
+      "insertionIndex": 0,
+      "text": "Headline\nSupporting detail"
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "shape-mixed-1",
+      "textRange": {"type": "FIXED_RANGE", "startIndex": 0, "endIndex": 8},
+      "style": {"bold": true, "fontSize": {"magnitude": 24, "unit": "PT"}},
+      "fields": "bold,fontSize"
+    }
+  },
+  {
+    "updateTextStyle": {
+      "objectId": "shape-mixed-1",
+      "textRange": {"type": "FIXED_RANGE", "startIndex": 9, "endIndex": 26},
+      "style": {"bold": false, "fontSize": {"magnitude": 12, "unit": "PT"}},
+      "fields": "bold,fontSize"
+    }
+  }
+]
+```
+
+Derive the ranges and style values from the live object or selected reference pattern. Re-read the text elements after writing to confirm the intended runs and links survived.
+
+## Copy speaker notes between corresponding slides
+
+Read the source and destination slides first. Use each slide's live `notesPage.notesProperties.speakerNotesObjectId`; the object IDs differ by slide.
+
+If the destination notes object is already empty, omit the `deleteText` request and insert directly.
+
+```json
+[
+  {
+    "deleteText": {
+      "objectId": "destination-speaker-notes-object-id",
+      "textRange": {"type": "ALL"}
+    }
+  },
+  {
+    "insertText": {
+      "objectId": "destination-speaker-notes-object-id",
+      "insertionIndex": 0,
+      "text": "Speaker notes copied from the corresponding source slide."
+    }
+  }
+]
+```
+
+Copy the source note text exactly for a fidelity migration. Verify note-count parity and spot-check exact text before handoff.
 
 ## Move or scale an existing element
 

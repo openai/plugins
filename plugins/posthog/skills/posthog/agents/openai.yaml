@@ -1,0 +1,4 @@
+interface:
+  display_name: "PostHog"
+  short_description: "Query analytics, flags, experiments, and errors"
+  default_prompt: "Use PostHog to answer a product analytics question, inspect flags or experiments, or investigate errors."

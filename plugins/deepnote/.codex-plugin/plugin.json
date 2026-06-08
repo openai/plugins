@@ -1,6 +1,6 @@
 {
   "name": "deepnote",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Use Deepnote's collaborative data workspace to explore data, automate notebooks and SQL workflows, and turn analysis into shareable results.",
   "author": {
     "name": "Deepnote",
@@ -39,8 +39,8 @@
       "Create a notebook exploring S&P 500 vs. Nasdaq gains over the last 5 years"
     ],
     "brandColor": "#3793EF",
-    "composerIcon": "./assets/deepnote-icon.svg",
-    "logo": "./assets/deepnote-icon.svg",
+    "composerIcon": "./assets/composer.svg",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

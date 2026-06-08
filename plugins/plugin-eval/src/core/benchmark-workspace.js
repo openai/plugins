@@ -100,7 +100,7 @@ async function provisionPluginInstall(target, workspacePath) {
           installation: "AVAILABLE",
           authentication: "ON_INSTALL",
         },
-        category: "Coding",
+        category: "Developer Tools",
       },
     ],
   };

@@ -1,6 +1,6 @@
 {
   "name": "plugin-eval",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Evaluate Codex skills and plugins from chat with a beginner-friendly start command, local-first reports, token budget explanations, and guided benchmarking.",
   "author": {
     "name": "OpenAI Codex",
@@ -24,7 +24,7 @@
     "shortDescription": "Start from chat, then evaluate or benchmark locally",
     "longDescription": "Ask Codex to evaluate a plugin or skill, give you a full analysis of a named plugin such as game-studio, explain why it scored that way, show what to fix first, explain its token budget, measure real token usage, benchmark a plugin, or tell you what to run next. Plugin Eval keeps the path engineer-friendly: start with a natural chat request, then use the local `plugin-eval start` entrypoint or the routed workflow command it recommends.",
     "developerName": "OpenAI",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Write"

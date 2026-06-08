@@ -1,0 +1,5 @@
+interface:
+  display_name: "Meeting Scheduler"
+  short_description: "Find times and coordinate meetings"
+  brand_color: "#CE9EC6"
+  default_prompt: "Use $meeting-scheduler to find availability and coordinate a meeting."

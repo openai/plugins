@@ -1,0 +1,101 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import CategoryRail from "../../components/CategoryRail.astro";
+import { productsV3 } from "@wix/stores";
+import { listStoreCategories } from "../../utils/categories";
+
+const PAGE_SIZE = 24;
+const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
+
+let productList: any[] = [];
+let nextCursor: string | null = null;
+let prevCursor: string | null = null;
+try {
+  let builder = productsV3
+    .queryProducts({ fields: ["CURRENCY"] })
+    .limit(PAGE_SIZE);
+  if (cursor) builder = builder.skipTo(cursor);
+  const result = await builder.find();
+  productList = result.items ?? [];
+  nextCursor = result.cursors?.next ?? null;
+  prevCursor = result.cursors?.prev ?? null;
+} catch (err) {
+  console.error("[products] listing query failed:", err);
+}
+
+// Drop the Wix Gift Card app's auto-mirror products. When the app is enabled,
+// it provisions 5 DIGITAL Stores products (one per denomination) tagged with
+// the "Gift Card" ribbon. Buying them yields a dud line item that does not
+// trigger gift-card issuance — the customer-facing surface for gift cards
+// is /gift-cards (gift-cards pack), not /products.
+productList = productList.filter((p) => p.ribbon?.name !== "Gift Card");
+
+const allCategories = await listStoreCategories();
+
+// Payload for the client-side AddProductImpression event.
+const impressionContents = productList.map((p, index) => ({
+  id: p._id,
+  name: p.name,
+  price: Number(p.actualPriceRange?.minValue?.amount ?? 0),
+  currency: p.actualPriceRange?.minValue?.currency ?? undefined,
+  position: index + 1,
+}));
+
+function pageHref(c: string | null): string | null {
+  if (!c) return null;
+  const params = new URLSearchParams();
+  params.set("cursor", c);
+  return `/products?${params.toString()}`;
+}
+---
+
+<Layout title="Products">
+  <section class="page-header">
+    <div class="container-page">
+      <h1 class="page-header-title">Our Products</h1>
+    </div>
+  </section>
+
+  <CategoryRail
+    categories={allCategories}
+    activeSlug={null}
+    prevHref={pageHref(prevCursor)}
+    nextHref={pageHref(nextCursor)}
+  />
+
+  <section class="section-pad">
+    <div class="container-page">
+      {productList.length === 0 ? (
+        <p class="products-empty">
+          No products yet &mdash; please check back shortly.
+        </p>
+      ) : (
+        <div class="product-grid">
+          {productList.map((product, idx) => (
+            <ProductCard product={product} index={idx} />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<script
+  type="application/json"
+  id="analytics-impressions"
+  is:inline
+  set:html={JSON.stringify(impressionContents)}
+/>
+<script>
+  import { trackEvent } from "../../utils/analytics";
+  function fireImpressions() {
+    const el = document.getElementById("analytics-impressions");
+    if (!el?.textContent) return;
+    trackEvent("AddProductImpression", {
+      contents: JSON.parse(el.textContent),
+      origin: "Product Listing",
+    });
+  }
+  document.addEventListener("astro:page-load", fireImpressions);
+</script>

@@ -1,0 +1,7 @@
+interface:
+  display_name: Initiate
+  short_description: Initiate coverage — generate both research note (HTML) and Excel
+    model (.xlsx)
+  default_prompt: Initiate coverage on AAPL with a report and model.
+policy:
+  allow_implicit_invocation: true

@@ -19,7 +19,7 @@ When to read: local `.ppt`, `.pptx`, or `.odp` input.
 6. Confirm the Google Slides URL or presentation id you will return was observed in the completed import response, connector readback, or Drive metadata readback. Do not synthesize or predict a Google Slides URL, and do not return any URL before readback verification succeeds.
 7. Compare imported slide count to the source count when available.
 8. Run thumbnail verification for the imported deck before follow-on edits.
-9. Continue in this skill with the relevant references for summaries, content edits, visual cleanup, template migration, or structural repair.
+9. Continue in this skill with the relevant references for summaries, slide planning, content edits, visual cleanup, template following, source adaptation, or structural repair.
 
 ## Rules
 

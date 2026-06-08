@@ -1,0 +1,4 @@
+interface:
+  display_name: "Base44 Troubleshooter"
+  short_description: "Debug Base44 production issues with function logs"
+  default_prompt: "Use Base44 troubleshooting guidance to inspect logs and diagnose this production issue."

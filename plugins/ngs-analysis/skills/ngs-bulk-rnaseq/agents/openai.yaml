@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bulk RNA-seq"
+  short_description: "Plan bulk RNA-seq counts and DE analysis"
+  default_prompt: "Inspect my bulk RNA-seq inputs, route count generation versus differential expression, resolve required metadata, check public tools, and prepare a preflight-first plan."

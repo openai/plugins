@@ -1,0 +1,4 @@
+interface:
+  display_name: "DNA Variants"
+  short_description: "Plan WGS/WES/panel variant calling"
+  default_prompt: "Classify my DNA sequencing run, choose germline, somatic, or UMI-panel routing, collect required parameters, check public tools, and prepare a preflight-first plan."

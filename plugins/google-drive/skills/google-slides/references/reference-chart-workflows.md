@@ -15,6 +15,9 @@ When to read: chart refresh, chart replacement, or Sheets-sourced chart work.
 3. If the slide has static chart content or a screenshot, replace the old graphic in the same approximate footprint.
 4. Reuse existing source charts before creating new ones.
 5. If no suitable source chart exists, say that creating or identifying one is required.
+6. When adapting provided source material, preserve required chart or evidence visuals. Do not replace chart-heavy evidence with a prose summary unless the user asked for synthesis rather than fidelity.
+7. When native chart reconstruction is impractical, a source-faithful raster chart or evidence panel is acceptable if it remains legible and its reduced editability is disclosed.
+8. When adapting a source deck, do not use a screenshot of the entire source slide as a substitute for rebuilding an ordinary slide from the selected composition and source assets.
 
 ## Sheets-Sourced Replacement
 
@@ -26,4 +29,4 @@ When to read: chart refresh, chart replacement, or Sheets-sourced chart work.
 
 ## Verification
 
-A chart task is complete only when the edited slide is re-read and a fresh thumbnail confirms the chart appears in the intended area with stale placeholder content removed.
+A chart task is complete only when the edited slide is re-read and a fresh large thumbnail confirms the chart appears in the intended area with stale placeholder content removed. Verify that titles, labels, legends, annotations, and footnotes remain readable and that the crop preserves the important evidence.

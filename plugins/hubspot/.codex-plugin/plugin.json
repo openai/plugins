@@ -1,6 +1,6 @@
 {
   "name": "hubspot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations.",
   "author": {
     "name": "HubSpot",

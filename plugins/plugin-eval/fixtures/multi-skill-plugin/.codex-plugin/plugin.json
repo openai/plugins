@@ -17,7 +17,7 @@
     "shortDescription": "Plugin fixture with two skills",
     "longDescription": "A plugin fixture that exposes two skills so nested skill findings can be aggregated.",
     "developerName": "Plugin Eval",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://example.com/",
     "privacyPolicyURL": "https://example.com/privacy",

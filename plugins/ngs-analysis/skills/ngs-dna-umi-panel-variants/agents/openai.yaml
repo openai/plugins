@@ -1,0 +1,4 @@
+interface:
+  display_name: "UMI Panel Variants"
+  short_description: "Deep targeted panel and UMI-aware variant workflow planning"
+  default_prompt: "Plan a UMI-aware targeted DNA panel workflow, preserve barcode handling, check public tools, and prepare an auditable preflight-first plan."

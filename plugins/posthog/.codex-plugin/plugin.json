@@ -1,0 +1,54 @@
+{
+  "name": "posthog",
+  "version": "0.1.1",
+  "description": "Query product analytics and manage feature flags, experiments, and errors in PostHog.",
+  "author": {
+    "name": "PostHog",
+    "url": "https://posthog.com"
+  },
+  "homepage": "https://posthog.com/docs",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "posthog",
+    "analytics",
+    "product-analytics",
+    "feature-flags",
+    "experiments",
+    "error-tracking",
+    "session-replay",
+    "surveys",
+    "llm-analytics",
+    "hogql",
+    "developer-tools"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "PostHog",
+    "shortDescription": "Query analytics, flags, experiments, and errors",
+    "longDescription": "Bring PostHog into ChatGPT and Codex. Ask product-analytics questions in plain language and run HogQL, create and manage feature flags, launch and read experiments, triage error-tracking issues, explore session replays and surveys, inspect LLM analytics, and build dashboards — all grounded in your real PostHog data. With the PostHog app connected, the assistant reasons about your product alongside your code and decisions, and discovers the right PostHog tools and skills at runtime instead of relying on stale knowledge.",
+    "developerName": "PostHog",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://posthog.com",
+    "privacyPolicyURL": "https://posthog.com/privacy",
+    "termsOfServiceURL": "https://posthog.com/terms",
+    "defaultPrompt": [
+      "Show me signups this month",
+      "Create a feature flag for the new checkout",
+      "Why are users dropping off in onboarding?"
+    ],
+    "brandColor": "#1D4AFF",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": [
+      "./assets/screenshot-1.png",
+      "./assets/screenshot-2.png"
+    ]
+  }
+}

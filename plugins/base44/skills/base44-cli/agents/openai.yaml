@@ -1,0 +1,4 @@
+interface:
+  display_name: "Base44 CLI"
+  short_description: "Initialize, configure, deploy, and manage Base44 projects"
+  default_prompt: "Use Base44 CLI guidance to initialize, configure, authenticate, and deploy this Base44 app."

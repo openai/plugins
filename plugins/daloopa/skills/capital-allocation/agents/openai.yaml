@@ -1,0 +1,7 @@
+interface:
+  display_name: Capital Allocation
+  short_description: Deep dive into capital deployment, buybacks, dividends, and shareholder
+    yield
+  default_prompt: Analyze MSFT capital allocation and shareholder returns.
+policy:
+  allow_implicit_invocation: true

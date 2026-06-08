@@ -1,0 +1,7 @@
+interface:
+  display_name: IB Deck
+  short_description: Generate an institutional-grade investment banking pitch deck
+    (HTML)
+  default_prompt: Create an investment banking pitch deck for AAPL.
+policy:
+  allow_implicit_invocation: true

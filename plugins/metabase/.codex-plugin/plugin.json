@@ -1,0 +1,35 @@
+{
+  "name": "metabase",
+  "version": "0.1.1",
+  "description": "Query and explore your Metabase data",
+  "author": {
+    "name": "Metabase",
+    "email": "support@metabase.com",
+    "url": "https://www.metabase.com"
+  },
+  "homepage": "https://www.metabase.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": ["metabase", "bi", "analytics", "sql", "mcp"],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Metabase",
+    "shortDescription": "Query and explore your Metabase data",
+    "longDescription": "Search tables and metrics, run queries, explore field values, spin up instances, and embed dashboards",
+    "developerName": "Metabase",
+    "category": "Data",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://www.metabase.com",
+    "privacyPolicyURL": "https://www.metabase.com/privacy",
+    "termsOfServiceURL": "https://www.metabase.com/terms",
+    "defaultPrompt": [
+      "Use Metabase to find tables related to <topic>.",
+      "Use Metabase to query <table> and summarize <metric> by <dimension>."
+    ],
+    "brandColor": "#509EE3",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

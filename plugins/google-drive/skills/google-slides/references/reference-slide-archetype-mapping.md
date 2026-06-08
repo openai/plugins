@@ -1,8 +1,8 @@
 # Slide Archetype Mapping
 
-Use this file when mapping source slides onto the template deck.
+Use this file whenever choosing the narrative role, composition, or repeated layout family for a new or adapted slide. A template or source deck is optional; for net-new decks, treat each layout target as the composition to build within the chosen design system.
 
-## Common Source Archetypes
+## Common Slide Archetypes
 
 ### Title
 
@@ -11,7 +11,7 @@ Typical content:
 - subtitle
 - presenter/date/company
 
-Template target:
+Layout target:
 - title slide
 
 ### Section Divider
@@ -20,7 +20,7 @@ Typical content:
 - section name
 - short transition phrase
 
-Template target:
+Layout target:
 - section divider or chapter opener
 
 ### Agenda
@@ -28,7 +28,7 @@ Template target:
 Typical content:
 - short list of sections or goals
 
-Template target:
+Layout target:
 - agenda or overview slide
 - if none exists, use a clean bulleted content slide
 
@@ -38,7 +38,7 @@ Typical content:
 - title plus 3-7 bullets
 - supporting sub-bullets or short annotations
 
-Template target:
+Layout target:
 - standard body-content slide
 - 2-column text slide if the density is too high for one column
 
@@ -49,9 +49,9 @@ Typical content:
 - charts
 - KPI callouts
 
-Template target:
+Layout target:
 - metrics or dashboard slide
-- if the template has no such slide, use the most structured data-forward archetype
+- if no such layout exists, use or build the most structured data-forward archetype that fits the deck
 
 ### Image-Heavy
 
@@ -60,8 +60,29 @@ Typical content:
 - caption
 - one or two supporting text blocks
 
-Template target:
+Layout target:
 - image-forward or split-layout slide
+
+### Product Or UI Evidence
+
+Typical content:
+- product screenshot or workflow image
+- callouts, labels, or annotations tied to visible regions
+- supporting explanation
+
+Layout target:
+- screenshot-forward or annotated-evidence slide with the same visual orientation
+- a layout whose image frame leaves labels and important UI details readable
+
+### Multi-Item Evidence
+
+Typical content:
+- several charts, images, examples, or evidence panels
+- repeated captions or labels
+
+Layout target:
+- grid, comparison, or multi-panel slide
+- a layout whose repeated regions match the evidence count and hierarchy
 
 ### Quote Or Testimonial
 
@@ -69,7 +90,7 @@ Typical content:
 - large quote
 - attribution
 
-Template target:
+Layout target:
 - quote slide
 - otherwise a minimal text-forward slide
 
@@ -80,12 +101,17 @@ Typical content:
 - dense charts
 - supporting notes
 
-Template target:
+Layout target:
 - appendix or detailed-content slide
 
 ## Mapping Rules
 
 - Match by narrative job first, not by superficial similarity.
-- A source slide with three cramped charts should not be forced into a clean hero-image template.
-- If two template slides both fit, choose the one that preserves legibility with the least structural churn.
-- If no template archetype fits cleanly, split the source slide or flag it as a human-review case.
+- Treat sample labels, artwork, title hierarchy, highlighted regions, and visual orientation as semantic signals about a reference layout's intended job, not disposable decoration.
+- Content with three charts should not be forced into a clean hero-image composition.
+- Preserve the required evidence type. A chart, product screenshot, table, or media concept should not become prose-only merely because a text layout has enough slots.
+- Match portrait evidence to portrait-friendly frames and landscape evidence to landscape-friendly frames unless a deliberate crop preserves all important information.
+- Use the same layout family for repeated narrative roles so section openers, dashboards, evidence slides, and summaries remain consistent.
+- When an existing or reference layout uses emphasis for a specific meaning, such as a total column, winning option, current state, or alert, retain it only if that meaning transfers to the new content.
+- If two layouts both fit, choose the one that preserves legibility with the least structural churn.
+- If no available archetype fits cleanly, build a composition consistent with the deck's system, split the content when allowed, or flag it as a human-review case.
