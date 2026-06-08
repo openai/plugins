@@ -63,6 +63,27 @@ Typical content:
 Template target:
 - image-forward or split-layout slide
 
+### Product Or UI Evidence
+
+Typical content:
+- product screenshot or workflow image
+- callouts, labels, or annotations tied to visible regions
+- supporting explanation
+
+Template target:
+- screenshot-forward or annotated-evidence slide with the same visual orientation
+- a layout whose image frame leaves labels and important UI details readable
+
+### Multi-Item Evidence
+
+Typical content:
+- several charts, images, examples, or evidence panels
+- repeated captions or labels
+
+Template target:
+- grid, comparison, or multi-panel slide
+- a layout whose repeated regions match the evidence count and hierarchy
+
 ### Quote Or Testimonial
 
 Typical content:
@@ -86,6 +107,11 @@ Template target:
 ## Mapping Rules
 
 - Match by narrative job first, not by superficial similarity.
+- Treat sample labels, artwork, title hierarchy, highlighted regions, and visual orientation as semantic signals about the layout's intended job, not disposable decoration.
 - A source slide with three cramped charts should not be forced into a clean hero-image template.
+- Preserve the source evidence type. A chart, product screenshot, table, or media slide should not become prose-only merely because a text layout has enough slots.
+- Match portrait evidence to portrait-friendly frames and landscape evidence to landscape-friendly frames unless a deliberate crop preserves all important information.
+- Use the same template layout family for repeated narrative roles so section openers, dashboards, evidence slides, and summaries remain consistent.
+- When a template uses emphasis for a specific meaning, such as a total column, winning option, current state, or alert, retain it only if that meaning transfers to the new content.
 - If two template slides both fit, choose the one that preserves legibility with the least structural churn.
 - If no template archetype fits cleanly, split the source slide or flag it as a human-review case.

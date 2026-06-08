@@ -18,6 +18,8 @@ This file is intentionally minimal and only covers:
 Detailed write, chart, thumbnail, creation, and final-pass rules live in `references/`.
 Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
 
+The active/main agent must personally read this file and every relevant reference file in the current turn. Do not delegate reference-file reading or summarization to a subagent and then rely on that summary for the workflow. This is not a general prohibition on subagents: they may still be used for other well-scoped execution, extraction, or QA work after the main agent has loaded the applicable skill guidance itself.
+
 ## Runtime Model
 
 1. Use Google Slides connector or app tools directly from Codex when they are available.
@@ -88,7 +90,10 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 13. for any slide inserted from a layout (`slideLayoutReference`, `predefinedLayout`, or inherited master/layout placeholders), every inherited placeholder object was populated, replaced, or intentionally deleted; do not rely on thumbnails alone because empty placeholders can be invisible
 14. for template/reference-deck copies, full `get_presentation` or per-slide `get_slide` readback was used for final structural validation; `get_presentation_outline` alone is insufficient
 15. for template/reference-deck copies, content-bearing placeholders and reusable template objects were used where they exist; newly created primary text/image boxes are justified by the chosen slide plan, not a shortcut around the template
-16. no generic editor prompts, sample copy, lorem ipsum, old-event content, or other template scaffolding remains unless explicitly requested by the user
+16. for migrations, source-to-destination fidelity was checked for substantive text, visuals, charts, tables, links, media type and source identifier when active/accessible, and non-empty speaker notes; no source content disappeared or was silently summarized
+17. text hierarchy and exemplar semantics remain meaningful: mixed heading/body style runs were not flattened, blank bulleted paragraphs do not render stray bullets, and inherited emphasis does not imply unsupported totals, rankings, categories, status, or importance
+18. visual evidence is presentation-readable, not merely unclipped: crops preserve essential regions, source labels and footnotes remain legible, and landscape evidence was not forced into an unsuitable portrait frame
+19. no generic editor prompts, bracketed instructions, sample copy, lorem ipsum, old-event content, or other template scaffolding remains unless explicitly requested by the user
 
 **Slides**
 
@@ -100,7 +105,7 @@ Before final handoff, explicitly verify these with connector readback and thumbn
 * Connectors in diagrams: In the final implementation, create connectors (arrows/edges) before creating entity nodes, so edges appear behind nodes and never cross through node shapes or labels. If this ordering is awkward during early iteration, you may create nodes first in the initial draft, then switch to connectors-first in the revised code.
 * Overlap: You MUST fix ALL unintended overlap errors before you deliver the slides! It's of paramount importance!
 * Font size: When a template is provided, match its font sizes. Avoid overly small text. When no template or style guidance is given, a good rule of thumb is at least 42pt for deck titles, 32pt for slide titles, and 17pt for body text. If you see overflow/overlap, try cutting content before shrinking text further to improve text layout.
-* Text layout: when there is too much text, shorten it. Inspect visually for unexpected text wrapping. NEVER put 2 lines of text into a title/banner text box meant for a single line of text.
+* Text layout: for net-new authoring, shorten copy when needed. For migration or exact-deck requests, do not silently shorten or summarize source content; choose a denser archetype, restructure within the slide, split only when the request permits it, or flag the tradeoff. Inspect visually for unexpected text wrapping. NEVER put 2 lines of text into a title/banner text box meant for a single line of text.
 * Diagrams implementation: use native PowerPoint shapes for simple diagrams; use Graphviz for complex relational/topological/network-like diagrams; use imagegen for highly aesthetic, illustrative, or scientific infographic diagrams (e.g. chemical structures, circuit diagrams, etc.).
 * Title slide: Keep the title slide minimal and simple. Avoid cramming in too much information.
 * When to use diagrams: Prefer data-driven charts or plots when applicable; use diagrams only when they improve the storytelling (not to fill empty space).
@@ -110,6 +115,10 @@ If any check fails, the task is not complete.
 ## Required Read Order (No Skips)
 
 Before any content write or edit operation:
+
+The active/main agent must perform this reading itself. Do not assign these files to subagents for summarization. Subagents remain available for other independent tasks after the main agent has read the applicable guidance.
+
+"Relevant" means the baseline safety references below plus every matching task-specific row in the task map. It does not require unrelated reference files unless the task is ambiguous.
 
 1. Read `references/reference-connector-runtime-and-safety.md`.
 2. Read `references/reference-target-presentation-guard.md`.
