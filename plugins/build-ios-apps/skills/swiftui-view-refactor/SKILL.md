@@ -130,6 +130,7 @@ private func reload(for searchText: String) async {
 - Avoid `body` or computed views that return completely different root branches via `if/else`.
 - Prefer a single stable base view with conditions inside sections/modifiers (`overlay`, `opacity`, `disabled`, `toolbar`, etc.).
 - Root-level branch swapping causes identity churn, broader invalidation, and extra recomputation.
+- When the refactor is motivated by redraws, scroll hitches, or typing lag, also use the `swiftui-performance-audit` skill so the change is checked against the fuller performance rules around observation scope, `ForEach` identity, stored closures, and manual bindings.
 
 Prefer:
 
@@ -189,6 +190,7 @@ init(dependency: Dependency) {
 5. If a view model exists or is explicitly required, replace optional view models with a non-optional `@State` view model initialized in `init`.
 6. Confirm Observation usage: `@State` for root `@Observable` models on iOS 17+, legacy wrappers only when the deployment target requires them.
 7. Keep behavior intact: do not change layout or business logic unless requested.
+8. If the refactor is performance-motivated, verify the result against the `swiftui-performance-audit` guidance rather than assuming a smaller file automatically became a faster view.
 
 ## Notes
 
