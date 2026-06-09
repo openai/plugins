@@ -1,4 +1,0 @@
-interface:
-  display_name: "Set Up Metabase Instance"
-  short_description: "Run and initialize a local Metabase instance"
-  default_prompt: "Use $setup-metabase-instance to start a local Metabase instance."
