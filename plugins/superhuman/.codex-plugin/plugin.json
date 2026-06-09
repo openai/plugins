@@ -20,8 +20,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Superhuman Mail",
-    "shortDescription": "Search, draft, send, and schedule through Superhuman Mail MCP",
-    "longDescription": "Connect Codex to Superhuman Mail through the official remote MCP server. Once authenticated, Codex can use Superhuman Mail tools for inbox search, thread and message lookup, draft creation, sending, read statuses, labels, Split Inboxes, calendar events, availability, and account personalization.",
+    "shortDescription": "The most productive email app ever, for Gmail & Outlook",
+    "longDescription": "Build powerful workflows and automations for email and calendar. Find anything in your inbox, draft replies that sound like you for every recipient, check read statuses, schedule meetings, and send — all without leaving Codex.",
     "developerName": "Superhuman",
     "category": "Communication",
     "capabilities": [
@@ -33,9 +33,9 @@
     "privacyPolicyURL": "https://superhuman.com/privacy",
     "termsOfServiceURL": "https://superhuman.com/legal/terms",
     "defaultPrompt": [
-      "Use Superhuman Mail to summarize my inbox.",
-      "Draft replies to email that needs me today.",
-      "Find meeting availability and create an event."
+      "@Superhuman Mail flag what needs attention from the last 24 hours",
+      "@Superhuman Mail forward today's invoices to finance@acme.co",
+      "@Superhuman Mail summarize responses to the Founders Dinner and who hasn't opened it"
     ],
     "brandColor": "#CE9EC6",
     "composerIcon": "./assets/superhuman-mail-small.svg",
