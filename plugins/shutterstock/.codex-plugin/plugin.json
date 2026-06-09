@@ -27,7 +27,7 @@
       "Build a shortlist of Shutterstock assets for this social launch."
     ],
     "brandColor": "#FF6F4A",
-    "composerIcon": "./assets/logo.png",
+    "composerIcon": "./assets/logo-padded.png",
     "logo": "./assets/logo-padded.png",
     "screenshots": []
   }

@@ -25,7 +25,7 @@
       "Generate 5 on-brand product shots and pick the best aspect ratio for Instagram."
     ],
     "brandColor": "#C209C8",
-    "composerIcon": "./assets/logo.png",
+    "composerIcon": "./assets/logo-padded.png",
     "logo": "./assets/logo-padded.png",
     "screenshots": []
   }

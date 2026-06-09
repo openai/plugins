@@ -38,7 +38,7 @@
       "Use Shopify CLI to run or troubleshoot a store workflow."
     ],
     "brandColor": "#008060",
-    "composerIcon": "./assets/shopify_glyph.svg",
+    "composerIcon": "./assets/logo-padded.svg",
     "logo": "./assets/logo-padded.svg",
     "screenshots": []
   }

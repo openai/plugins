@@ -45,7 +45,7 @@
       "Which Vercel tools fit this app best",
       "Help wire the Vercel app into this workflow"
     ],
-    "composerIcon": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo-padded.png",
     "logo": "./assets/logo-padded.png",
     "screenshots": [],
     "brandColor": "#000000"

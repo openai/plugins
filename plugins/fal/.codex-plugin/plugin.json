@@ -25,7 +25,7 @@
       "Run a Fal image edit or upscaling workflow and summarize the output parameters."
     ],
     "brandColor": "#D60045",
-    "composerIcon": "./assets/logo.png",
+    "composerIcon": "./assets/logo-padded.png",
     "logo": "./assets/logo-padded.png",
     "screenshots": []
   }
