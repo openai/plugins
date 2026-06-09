@@ -1,0 +1,10 @@
+interface:
+  display_name: "Catalyst by Zoho"
+  short_description: "Build, deploy, and operate Catalyst serverless apps"
+  icon_small: "../../assets/catalyst_logo.svg"
+  icon_large: "../../assets/catalyst_logo.svg"
+  brand_color: "#226DB4"
+  default_prompt: "Use $catalyst-by-zoho to design, build, deploy, or troubleshoot Catalyst apps and services."
+
+policy:
+  allow_implicit_invocation: true
