@@ -1,0 +1,45 @@
+{
+  "name": "brighthire",
+  "version": "0.1.0",
+  "description": "Connect Codex to BrightHire interview intelligence data through the BrightHire MCP server.",
+  "author": {
+    "name": "BrightHire",
+    "email": "support@brighthire.com",
+    "url": "https://www.brighthire.com"
+  },
+  "homepage": "https://www.brighthire.com",
+  "repository": "https://github.com/brighthire/brighthire-codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "brighthire",
+    "interviews",
+    "hiring",
+    "mcp",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "BrightHire",
+    "shortDescription": "Search and analyze BrightHire interviews, candidates, calls, and hiring data.",
+    "longDescription": "Use BrightHire's MCP server from Codex to retrieve interview intelligence context, inspect calls and candidates, and support hiring workflows with governed access to BrightHire data.",
+    "developerName": "BrightHire",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://www.brighthire.com",
+    "privacyPolicyURL": "https://brighthire.com/privacy-policy/",
+    "termsOfServiceURL": "https://brighthire.com/terms-of-service/",
+    "defaultPrompt": [
+      "Use BrightHire to find recent interviews for this candidate.",
+      "Search BrightHire for calls related to this role.",
+      "Summarize the BrightHire interview context for this hiring decision."
+    ],
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
+  }
+}
