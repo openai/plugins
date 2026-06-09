@@ -38,6 +38,6 @@
       "Optimize my Postgres queries and indexes using Supabase best practices."
     ],
     "brandColor": "#3ECF8E",
-    "logo": "./assets/logo.svg"
+    "logo": "./assets/logo-padded.svg"
   }
 }

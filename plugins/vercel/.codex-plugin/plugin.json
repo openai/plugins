@@ -46,7 +46,7 @@
       "Help wire the Vercel app into this workflow"
     ],
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "logo": "./assets/logo-padded.png",
     "screenshots": [],
     "brandColor": "#000000"
   }

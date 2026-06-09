@@ -26,7 +26,7 @@
       "Debug errors from my Base44 backend functions."
     ],
     "composerIcon": "./assets/base44-logo.png",
-    "logo": "./assets/base44-logo.png",
+    "logo": "./assets/logo-padded.png",
     "screenshots": []
   }
 }

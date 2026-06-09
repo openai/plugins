@@ -39,7 +39,7 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
     "composerIcon": "./assets/openai-platform.png",
-    "logo": "./assets/openai-platform.png",
+    "logo": "./assets/logo-padded.png",
     "defaultPrompt": [
       "Create an OpenAI API key to use in this project",
       "Build an agent with the Agents SDK",
