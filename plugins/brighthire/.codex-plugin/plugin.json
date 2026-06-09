@@ -1,7 +1,7 @@
 {
   "name": "brighthire",
   "version": "0.1.0",
-  "description": "Connect Codex to BrightHire interview intelligence data through the BrightHire MCP server.",
+  "description": "Connect Codex to BrightHire interview intelligence data through the BrightHire app connector.",
   "author": {
     "name": "BrightHire",
     "email": "support@brighthire.com",
@@ -14,15 +14,15 @@
     "brighthire",
     "interviews",
     "hiring",
-    "mcp",
+    "recruiting",
     "codex"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "BrightHire",
     "shortDescription": "Search and analyze BrightHire interviews, candidates, calls, and hiring data.",
-    "longDescription": "Use BrightHire's MCP server from Codex to retrieve interview intelligence context, inspect calls and candidates, and support hiring workflows with governed access to BrightHire data.",
+    "longDescription": "Use BrightHire from Codex to retrieve interview intelligence context, inspect calls and candidates, and support hiring workflows with governed access to BrightHire data.",
     "developerName": "BrightHire",
     "category": "Productivity",
     "capabilities": [

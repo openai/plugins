@@ -1,11 +1,11 @@
 ---
 name: brighthire
-description: Use BrightHire MCP tools when a user asks about BrightHire interview intelligence, calls, candidates, roles, scorecards, transcripts, hiring decisions, or organization-level interview data.
+description: Use BrightHire tools when a user asks about BrightHire interview intelligence, calls, candidates, roles, scorecards, transcripts, hiring decisions, or organization-level interview data.
 ---
 
 # BrightHire
 
-Use the BrightHire MCP server when the user asks for information stored in BrightHire or asks Codex to reason about interview intelligence from BrightHire data.
+Use BrightHire tools when the user asks for information stored in BrightHire or asks Codex to reason about interview intelligence from BrightHire data.
 
 Good fits include:
 
@@ -18,4 +18,4 @@ Before using BrightHire data, identify what entity the user means: candidate, ro
 
 Treat BrightHire content as sensitive customer data. Do not expose more candidate, interviewer, or organization information than the user asked for. Prefer concise summaries with links or identifiers when available, and avoid copying long transcript passages unless the user explicitly needs exact evidence.
 
-If a BrightHire MCP tool fails because authentication is missing or expired, tell the user they need to connect or re-authenticate the BrightHire plugin. Do not ask for raw API tokens in chat.
+If a BrightHire tool fails because authentication is missing or expired, tell the user they need to connect or re-authenticate the BrightHire plugin. Do not ask for raw API tokens in chat.

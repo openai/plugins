@@ -1,0 +1,10 @@
+interface:
+  display_name: "BrightHire"
+  short_description: "Search and analyze BrightHire interview intelligence"
+  icon_small: "../../assets/icon.svg"
+  icon_large: "../../assets/logo.svg"
+  brand_color: "#2563EB"
+  default_prompt: "Use $brighthire to find interviews, candidates, calls, scorecards, and transcripts from BrightHire."
+
+policy:
+  allow_implicit_invocation: true
