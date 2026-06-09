@@ -34,7 +34,7 @@
       "Setup the Chunk cli for this project"
     ],
     "brandColor": "#049B4A",
-    "composerIcon": "./assets/logo.svg",
+    "composerIcon": "./assets/composer-icon.svg",
     "logo": "./assets/logo.svg",
     "screenshots": []
   }
