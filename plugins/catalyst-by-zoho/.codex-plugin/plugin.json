@@ -24,7 +24,7 @@
     "shortDescription": "Use Catalyst by Zoho capabilities in Codex.",
     "longDescription": "Catalyst by Zoho plugin extends Codex with MCP-backed workflows and skills for building, managing, and operating Catalyst projects.",
     "developerName": "Catalyst by Zoho",
-    "category": "Development Tools",
+    "category": "Developer Tools",
     "capabilities": [
       "MCP",
       "Read",
