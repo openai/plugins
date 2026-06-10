@@ -33,17 +33,19 @@ The active/main agent must personally read this file and every relevant referenc
 Unless the user asks otherwise:
 
 1. New deck from a provided native Google Slides template or reference deck: copy the provided deck directly in Google Drive, then use Slides `batchUpdate` on the copy. Read `references/reference-template-reference-deck-copy-workflow.md`.
-2. Net-new Google Slides deck without a provided native Slides template or reference deck: use `[@presentations](plugin://presentations@openai-primary-runtime)` to create a local `.pptx` first. Then read `references/reference-import-presentation.md` and import with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
-3. If the Presentations plugin is unavailable for a net-new deck that does not use the native Slides copy workflow, do not create the deck directly. Report that the required local Presentations authoring path is unavailable.
+2. Net-new generated Google Slides deck without a provided native Slides template or reference deck: read `references/reference-new-deck-and-final-pass.md`, create a native presentation with `_create_file`, then populate it with `_batch_update_presentation`.
+3. Use `[@presentations](plugin://presentations@openai-primary-runtime)` plus `references/reference-import-presentation.md` only when the user provided a local `.ppt`, `.pptx`, or `.odp`, explicitly requested PowerPoint-first authoring/import, or the direct native creation actions are unavailable while `import_presentation` is available.
 4. Existing Google Slides reads, summaries, edits, comments, and template-preserving modifications: use Google Slides connector or app tools directly.
 
-For net-new Google Slides without a provided native Slides template or reference deck, the PPTX-import path is the only currently supported high-quality workflow. Do not create a blank Google Slides deck and fill it with Google Slides write APIs, use Computer Use, use Browser Use, or build the deck directly in Google Drive unless the user explicitly asks for that alternate workflow. If they do, mention first that output quality is expected to be best when a local `.pptx` is imported through the Google Drive plugin.
+For generated net-new Google Slides decks, do not force local `.pptx` import when native create and batch update actions are available. The direct native path avoids conversion fragility and keeps the work in connector-visible Google Slides objects. Do not use Computer Use or Browser Use as the Slides editing path.
 
 For new decks from a provided native Google Slides template or reference deck, do not create a local `.pptx` first. Copy the provided deck directly, treat the copy as the destination deck, and create/edit slides there with `batchUpdate` using duplicated exemplar slides or layouts from the copied deck. Populate existing template objects first: replace text, images, charts, tables, and placeholder content in the copied slide's existing slots instead of adding new primary content boxes.
 
 The slide-planning, archetype-selection, hierarchy, semantic-emphasis, evidence-legibility, and deck-consistency rules apply across both creation paths and to slides added to existing decks. Only source-parity requirements such as exact text preservation, speaker-note parity, and media-ID parity depend on a source-based adaptation or migration request.
 
-The import reference owns the exact connector action, plugin install/reinstall handling, native-conversion verification, post-import verification, and cleanup expectations. Read it before any net-new Google Slides import attempt.
+The import reference owns the exact connector action, plugin install/reinstall handling, native-conversion verification, post-import verification, and cleanup expectations for local presentation-file conversion. Read it before any Google Slides import attempt, but do not use it as the default for generated decks.
+
+If an import attempt returns no usable presentation id or URL, reports that the action is blocked, or is unavailable after discovery, do not repeatedly rediscover or retry the same import action. For generated deck tasks, switch to direct native creation when `_create_file` and `_batch_update_presentation` are available. For user-provided local-file conversion tasks, stop and report that native conversion is unavailable in the current connector runtime.
 
 For imports and any explicit direct-create override, wait for the write action to complete, then perform connector readback or Drive metadata readback before returning a Google Slides URL or presentation id. Use only a URL or id observed from the completed connector result or readback. Do not synthesize or predict Google Slides URLs, and do not present a URL as ready if readback fails.
 
@@ -53,7 +55,7 @@ Inserted or edited content must match the target deck's existing structure and c
 Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder or template sample text, empty or unresolved placeholder objects, primary content placed in newly created freeform boxes while an inherited or template slot remains unused, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
 
 For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
-For net-new Google Slides without a provided native Slides template or reference deck, create a local `.pptx` with `[@presentations](plugin://presentations@openai-primary-runtime)` and import it to Google Drive with `upload_mode: "native_google_slides"`.
+For net-new Google Slides without a provided native Slides template or reference deck, create the deck directly in Google Slides when native create and batch update actions are available. Stage a local `.pptx` only for the import workflow described above.
 
 ## Canonical Workflow Bias
 
@@ -131,7 +133,7 @@ The active/main agent must perform this reading itself. Do not assign these file
 7. If the task spans multiple categories, read all matching files.
 8. If uncertain, read every file in `references/`.
 
-For net-new local `.pptx` creation, read the `[@presentations](plugin://presentations@openai-primary-runtime)` authoring skill before creating the deck.
+For net-new local `.pptx` creation in an import workflow, read the `[@presentations](plugin://presentations@openai-primary-runtime)` authoring skill before creating the deck.
 
 Do not execute content edits until the required references are read in the current turn.
 
