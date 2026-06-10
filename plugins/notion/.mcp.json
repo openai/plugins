@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp",
+      "oauth_resource": "https://mcp.notion.com"
+    }
+  }
+}
