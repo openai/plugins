@@ -1,7 +1,8 @@
 {
   "apps": {
     "github": {
-      "id": "connector_76869538009648d5b282a4bb21c3d157"
+      "id": "connector_76869538009648d5b282a4bb21c3d157",
+      "canonical": true
     }
   }
 }

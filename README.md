@@ -7,6 +7,13 @@ Each plugin lives under `plugins/<name>/` with a required
 `skills/`, `.app.json`, `.mcp.json`, plugin-level `agents/`, `commands/`,
 `hooks.json`, `assets/`, and other supporting files.
 
+For app-backed plugins, `.app.json` is also the source of truth for connector
+identity. When a plugin is the canonical 1:1 curated plugin for a connector,
+set `apps.<app-name>.canonical` to `true`. This allows downstream consumers to
+derive a definitive `connector id -> plugin` mapping without assuming every
+plugin that references a connector is the official base plugin for that
+connector.
+
 Highlighted richer examples in this repo include:
 
 - `plugins/figma` for `use_figma`, Code to Canvas, Code Connect, and design system rules
