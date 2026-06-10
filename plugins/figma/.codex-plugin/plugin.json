@@ -18,6 +18,7 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Figma",
     "shortDescription": "Design-to-code workflows powered by the Figma integration",
