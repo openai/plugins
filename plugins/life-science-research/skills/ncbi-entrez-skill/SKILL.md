@@ -14,6 +14,7 @@ description: Submit compact NCBI Entrez E-Utilities requests for PubMed, Gene, P
 
 ## Execution behavior
 - Return concise markdown summaries from the script output by default.
+- In final user-facing summaries, never display a bare PMID or DOI. Render every PMID as a Markdown link in the form `[PMID <PMID>](https://pubmed.ncbi.nlm.nih.gov/<PMID>/)` and every DOI as `[<DOI>](https://doi.org/<DOI>)`, including in tables, bullets, parentheticals, and source lists.
 - Return raw JSON or XML only if the user explicitly asks for machine-readable output.
 - Prefer targeted endpoint calls instead of broad unfiltered dumps.
 - If the user needs the full raw response, set `save_raw=true` and report the saved file path.

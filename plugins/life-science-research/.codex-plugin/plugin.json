@@ -1,6 +1,6 @@
 {
   "name": "life-science-research",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "General life-sciences research workflows with query routing, evidence synthesis, and optional parallel subagent analysis across genetics, omics, biology, chemistry, structure, clinical evidence, and public dataset discovery.",
   "author": {
     "name": "OpenAI"
