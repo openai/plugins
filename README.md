@@ -7,6 +7,12 @@ Each plugin lives under `plugins/<name>/` with a required
 `skills/`, `.app.json`, `.mcp.json`, plugin-level `agents/`, `commands/`,
 `hooks.json`, `assets/`, and other supporting files.
 
+The default marketplace lives at `.agents/plugins/marketplace.json` and points
+at the standard `plugins/` directory. API key login users have a separate
+marketplace at `.agents/plugins/api_users_marketplace.json`; its plugins live
+under `api_users_plugins/` and should avoid `.app.json` declarations, using MCP
+configuration where an external connection is needed.
+
 Highlighted richer examples in this repo include:
 
 - `plugins/figma` for `use_figma`, Code to Canvas, Code Connect, and design system rules

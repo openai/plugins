@@ -1,0 +1,9 @@
+{
+  "name": "openai-api-curated",
+  "interface": {
+    "displayName": "Codex official"
+  },
+  "plugins": [
+    {}
+  ]
+}
