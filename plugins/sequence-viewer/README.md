@@ -18,7 +18,7 @@ Biological Sequence & Alignment Viewer opens sequence and multiple-sequence-alig
 - FASTQ: `.fastq`, `.fq`
 - Common alignment formats: CLUSTAL, Stockholm, A2M, A3M, MSF, PHYLIP, NEXUS, and PIR
 
-The read-only viewer supports sequence and alignment modes, annotations, FASTQ quality, motif search, selections, consensus and conservation metrics, and model context for follow-up questions about the current view.
+The read-only viewer supports sequence and alignment modes, exact compound annotations, source and six-frame translation, aggregate FASTQ QC, motif search, selections, consensus and conservation metrics, an exploratory UPGMA guide tree, and model context for follow-up questions about the current view. You can also ask Codex to switch records; focus coordinates, annotated features, alignment cells, or reference positions; search and navigate motif hits; filter, hide, or restore alignment rows; change modes, references, molecule-aware palettes, tracks, and analysis scopes; clear or reset the view; compute the guide tree; or move the mounted viewer to the side pane.
 
 ## Data Handling
 

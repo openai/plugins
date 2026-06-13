@@ -31294,7 +31294,8 @@ var STRUCTURE_FILE_ENTRYPOINT_EXTENSIONS = [
   "pdb",
   "cif",
   "mmcif",
-  "mol"
+  "mol",
+  "sdf"
 ];
 
 // src/structure/file-kind.ts
@@ -31313,12 +31314,288 @@ function getFileExtension(fileName) {
   return lastDot >= 0 ? normalizedFileName.slice(lastDot + 1) : "";
 }
 
+// src/server-command-store.ts
+import { randomUUID as randomUUID2 } from "node:crypto";
+var SESSION_TTL_MS = 30 * 60 * 1e3;
+var StructureViewerCommandStore = class {
+  sessions = /* @__PURE__ */ new Map();
+  registerSession() {
+    this.prune();
+    const sessionId = randomUUID2();
+    this.sessions.set(sessionId, {
+      expiresAt: Date.now() + SESSION_TTL_MS,
+      pending: [],
+      revision: 0,
+      waiters: []
+    });
+    return { revision: 0, sessionId };
+  }
+  async enqueue(sessionId, command) {
+    const session = this.getSession(sessionId);
+    session.revision += 1;
+    const queuedCommand = {
+      ...command,
+      commandId: randomUUID2(),
+      revision: session.revision
+    };
+    return await new Promise((resolve, reject) => {
+      const pending = {
+        command: queuedCommand,
+        reject,
+        resolve,
+        timeout: setTimeout(() => {
+          session.pending = session.pending.filter((item) => item !== pending);
+          reject(new Error("The viewer did not acknowledge the requested action before the timeout."));
+        }, 3e4)
+      };
+      session.pending.push(pending);
+      this.notify(session);
+    });
+  }
+  async waitForCommand(sessionId, afterRevision, timeoutMs) {
+    const session = this.getSession(sessionId);
+    const ready = session.pending.find(
+      ({ command }) => command.revision > afterRevision
+    );
+    if (ready != null) {
+      return ready.command;
+    }
+    return await new Promise((resolve) => {
+      const waiter = {
+        afterRevision,
+        resolve,
+        timeout: setTimeout(() => {
+          session.waiters = session.waiters.filter((item) => item !== waiter);
+          resolve(null);
+        }, timeoutMs)
+      };
+      session.waiters.push(waiter);
+    });
+  }
+  complete(sessionId, commandId, result) {
+    const session = this.getSession(sessionId);
+    const pending = session.pending.find(
+      ({ command }) => command.commandId === commandId
+    );
+    if (pending == null) {
+      throw new Error("The viewer command is no longer pending.");
+    }
+    clearTimeout(pending.timeout);
+    session.pending = session.pending.filter((item) => item !== pending);
+    pending.resolve(result);
+  }
+  getSession(sessionId) {
+    this.prune();
+    const session = this.sessions.get(sessionId);
+    if (session == null) {
+      throw new Error("The viewer session is no longer active. Reopen the viewer and try again.");
+    }
+    session.expiresAt = Date.now() + SESSION_TTL_MS;
+    return session;
+  }
+  notify(session) {
+    const remaining = [];
+    for (const waiter of session.waiters) {
+      const ready = session.pending.find(
+        ({ command }) => command.revision > waiter.afterRevision
+      );
+      if (ready == null) {
+        remaining.push(waiter);
+      } else {
+        clearTimeout(waiter.timeout);
+        waiter.resolve(ready.command);
+      }
+    }
+    session.waiters = remaining;
+  }
+  prune() {
+    const now = Date.now();
+    for (const [sessionId, session] of this.sessions) {
+      if (session.expiresAt > now) {
+        continue;
+      }
+      for (const pending of session.pending) {
+        clearTimeout(pending.timeout);
+        pending.reject(new Error("The viewer session expired."));
+      }
+      for (const waiter of session.waiters) {
+        clearTimeout(waiter.timeout);
+        waiter.resolve(null);
+      }
+      this.sessions.delete(sessionId);
+    }
+  }
+};
+
+// src/viewer-commands.ts
+var STRUCTURE_VIEWER_CONTROL_TOOL_NAME = "structure.control_viewer";
+var STRUCTURE_VIEWER_REGISTER_SESSION_TOOL_NAME = "structure.register_viewer_session";
+var STRUCTURE_VIEWER_WAIT_FOR_COMMAND_TOOL_NAME = "structure.wait_for_viewer_command";
+var STRUCTURE_VIEWER_COMPLETE_COMMAND_TOOL_NAME = "structure.complete_viewer_command";
+var chainSchema = external_exports3.string().trim().min(1).max(50);
+var componentIdSchema = external_exports3.string().trim().min(1).max(20);
+var insertionCodeSchema = external_exports3.string().trim().max(10).optional();
+var residueIdentifierSchema = external_exports3.object({
+  chain: chainSchema,
+  insertionCode: insertionCodeSchema,
+  residue: external_exports3.number().int()
+});
+var structureViewerActionSchema = external_exports3.enum([
+  "clear_selection",
+  "focus_ligand",
+  "focus_residue",
+  "measure_residue_distance",
+  "reset_view",
+  "select_chain",
+  "select_residue_range",
+  "select_residues",
+  "set_color",
+  "set_display_mode",
+  "set_representation",
+  "set_view_options",
+  "show_ligand_contacts"
+]);
+var structureViewerCommandSchema = external_exports3.discriminatedUnion("action", [
+  external_exports3.object({
+    action: external_exports3.literal("clear_selection")
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("focus_ligand"),
+    chain: chainSchema.optional(),
+    compId: componentIdSchema
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("focus_residue"),
+    chain: chainSchema,
+    insertionCode: insertionCodeSchema,
+    residue: external_exports3.number().int()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("measure_residue_distance"),
+    chain: chainSchema,
+    chainB: chainSchema,
+    insertionCode: insertionCodeSchema,
+    insertionCodeB: insertionCodeSchema,
+    residue: external_exports3.number().int(),
+    residueB: external_exports3.number().int()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("reset_view")
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("select_chain"),
+    chain: chainSchema,
+    focus: external_exports3.boolean().optional()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("select_residue_range"),
+    chain: chainSchema,
+    end: external_exports3.number().int(),
+    start: external_exports3.number().int()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("select_residues"),
+    focus: external_exports3.boolean().optional(),
+    residues: external_exports3.array(residueIdentifierSchema).min(1).max(200)
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_color"),
+    color: external_exports3.enum(["bfactor", "chain", "element"])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_display_mode"),
+    displayMode: external_exports3.enum(["fullscreen", "inline"])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_representation"),
+    representation: external_exports3.enum([
+      "ballStick",
+      "cartoon",
+      "sphere",
+      "stick",
+      "surface"
+    ])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_view_options"),
+    background: external_exports3.enum(["dark", "light"]).optional(),
+    showHydrogens: external_exports3.boolean().optional(),
+    showMoleculeInspector: external_exports3.boolean().optional(),
+    showSideChains: external_exports3.boolean().optional(),
+    spinning: external_exports3.boolean().optional()
+  }).refine(
+    ({
+      background,
+      showHydrogens,
+      showMoleculeInspector,
+      showSideChains,
+      spinning
+    }) => [
+      background,
+      showHydrogens,
+      showMoleculeInspector,
+      showSideChains,
+      spinning
+    ].some((value) => value != null),
+    "set_view_options requires at least one option."
+  ),
+  external_exports3.object({
+    action: external_exports3.literal("show_ligand_contacts"),
+    chain: chainSchema.optional(),
+    compId: componentIdSchema,
+    thresholdAngstrom: external_exports3.number().min(2).max(8).optional()
+  })
+]);
+var structureViewerControlInputSchema = external_exports3.intersection(
+  external_exports3.object({
+    sessionId: external_exports3.string().uuid().describe("Active viewer session ID from the viewer's model context.")
+  }),
+  structureViewerCommandSchema
+);
+var structureViewerControlToolInputSchema = external_exports3.object({
+  action: structureViewerActionSchema.describe(
+    "Exact viewer action. Use reset_view to fit the structure camera."
+  ),
+  background: external_exports3.enum(["dark", "light"]).optional(),
+  chain: chainSchema.optional(),
+  chainB: chainSchema.optional(),
+  color: external_exports3.enum(["bfactor", "chain", "element"]).optional(),
+  compId: componentIdSchema.optional(),
+  displayMode: external_exports3.enum(["fullscreen", "inline"]).optional(),
+  end: external_exports3.number().int().optional(),
+  focus: external_exports3.boolean().optional(),
+  insertionCode: insertionCodeSchema,
+  insertionCodeB: insertionCodeSchema,
+  representation: external_exports3.enum(["ballStick", "cartoon", "sphere", "stick", "surface"]).optional(),
+  residue: external_exports3.number().int().optional(),
+  residueB: external_exports3.number().int().optional(),
+  residues: external_exports3.array(residueIdentifierSchema).min(1).max(200).optional(),
+  sessionId: external_exports3.string().uuid().describe("Active viewer session ID returned by structure.open_from_chat."),
+  showHydrogens: external_exports3.boolean().optional(),
+  showMoleculeInspector: external_exports3.boolean().optional(),
+  showSideChains: external_exports3.boolean().optional(),
+  spinning: external_exports3.boolean().optional(),
+  start: external_exports3.number().int().optional(),
+  thresholdAngstrom: external_exports3.number().min(2).max(8).optional()
+});
+var queuedStructureViewerCommandSchema = external_exports3.intersection(
+  structureViewerCommandSchema,
+  external_exports3.object({
+    commandId: external_exports3.string().uuid(),
+    revision: external_exports3.number().int().positive()
+  })
+);
+
 // src/server.ts
 var STRUCTURE_VIEWER_RESOURCE_URI = "ui://structure-viewer/viewer";
 var STRUCTURE_VIEWER_TOOL_NAME = "structure.open";
 var STRUCTURE_VIEWER_CHAT_TOOL_NAME = "structure.open_from_chat";
 var STRUCTURE_VIEWER_CHAT_FILE_META_KEY = "openai/viewerFile";
 var STRUCTURE_VIEWER_CHAT_FILE_RESOURCE_URI = "viewer-file://structure-viewer/opened";
+var STRUCTURE_VIEWER_BUNDLE_INFO_TOOL_NAME = "structure.get_viewer_bundle_info";
+var STRUCTURE_VIEWER_BUNDLE_CHUNK_TOOL_NAME = "structure.get_viewer_bundle_chunk";
+var STRUCTURE_VIEWER_BUNDLE_CHUNK_SIZE = 32766;
+var structureViewerBundlePromise = null;
 var fileSchema = external_exports3.object({
   name: external_exports3.string().trim().min(1).refine(isSafeFileName, "file.name must be a basename."),
   resourceUri: external_exports3.string().trim().min(1)
@@ -31334,39 +31611,110 @@ var structureOpenFromChatToolInputSchema = external_exports3.object({
     "Exact absolute path to the structure file. A workspace-relative path works only when the MCP host exposes active roots."
   )
 });
+var waitForStructureCommandInputSchema = external_exports3.object({
+  afterRevision: external_exports3.number().int().nonnegative(),
+  sessionId: external_exports3.string().uuid(),
+  timeoutMs: external_exports3.number().int().min(1e3).max(25e3).default(25e3)
+});
+var completeStructureCommandInputSchema = external_exports3.object({
+  applied: external_exports3.boolean(),
+  commandId: external_exports3.string().uuid(),
+  message: external_exports3.string().min(1).max(2e3),
+  sessionId: external_exports3.string().uuid(),
+  state: external_exports3.record(external_exports3.string(), external_exports3.unknown()).optional()
+});
+var structureViewerBundleChunkInputSchema = external_exports3.object({
+  index: external_exports3.number().int().nonnegative()
+});
 function createStructureViewerServer() {
   const server = new McpServer({
     name: "structure-viewer",
-    version: "0.1.0"
+    version: "0.1.8"
   });
   createOpenAICapabilities(server);
+  const commandStore = new StructureViewerCommandStore();
   const chatFileResourceStore = createChatFileResourceStore({
     isSupportedFileName: isSupportedStructureFileName,
     resourceUriPrefix: STRUCTURE_VIEWER_CHAT_FILE_RESOURCE_URI,
     viewerName: "molecular structure viewer"
   });
   chatFileResourceStore.register(server);
+  K3(
+    server,
+    STRUCTURE_VIEWER_BUNDLE_INFO_TOOL_NAME,
+    {
+      title: "Get Molecular Structure Viewer Bundle Metadata",
+      description: "App-only. Read metadata for the compressed viewer bundle.",
+      inputSchema: {},
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: true
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async () => {
+      const bundle = await loadStructureViewerBundle();
+      return {
+        content: [],
+        structuredContent: createStructureViewerBundleInfo(bundle)
+      };
+    }
+  );
+  K3(
+    server,
+    STRUCTURE_VIEWER_BUNDLE_CHUNK_TOOL_NAME,
+    {
+      title: "Get Molecular Structure Viewer Bundle Chunk",
+      description: "App-only. Read one bounded chunk of the viewer bundle.",
+      inputSchema: structureViewerBundleChunkInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: true
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async (input) => {
+      const { index } = structureViewerBundleChunkInputSchema.parse(input);
+      const bundle = await loadStructureViewerBundle();
+      return {
+        content: [],
+        structuredContent: createStructureViewerBundleChunk(bundle, index)
+      };
+    }
+  );
   N3(
     server,
     "viewer",
     STRUCTURE_VIEWER_RESOURCE_URI,
-    {},
-    async () => ({
-      contents: [
-        {
-          mimeType: p,
-          text: await loadStructureViewerHtml(),
-          uri: STRUCTURE_VIEWER_RESOURCE_URI
-        }
-      ]
-    })
+    { mimeType: p },
+    async () => {
+      const resource = await loadStructureViewerResource();
+      return {
+        contents: [
+          {
+            mimeType: p,
+            text: resource.html,
+            uri: STRUCTURE_VIEWER_RESOURCE_URI,
+            _meta: {
+              ui: {
+                csp: createStructureViewerCsp()
+              }
+            }
+          }
+        ]
+      };
+    }
   );
   K3(
     server,
     STRUCTURE_VIEWER_TOOL_NAME,
     {
       title: "Molecular Structure Viewer",
-      description: "Open PDB, CIF, mmCIF, and MOL molecular structure files in a rich read-only Mol* viewer.",
+      description: "Open PDB, CIF, mmCIF, MOL, and SDF molecular structure files in a rich Mol* viewer with residue selection, ligand contacts, measurements, model controls, and screenshots.",
       inputSchema: structureOpenToolInputSchema.shape,
       annotations: {
         destructiveHint: false,
@@ -31390,10 +31738,111 @@ function createStructureViewerServer() {
   );
   K3(
     server,
+    STRUCTURE_VIEWER_CONTROL_TOOL_NAME,
+    {
+      title: "Control Molecular Structure Viewer",
+      description: "Control or query the active Molecular Structure Viewer. Always pass sessionId and action, never viewerSessionId or command. Exact actions: clear_selection, focus_ligand, focus_residue, measure_residue_distance, reset_view, select_chain, select_residue_range, select_residues, set_color, set_display_mode, set_representation, set_view_options, and show_ligand_contacts. Use reset_view to fit the camera. Call this tool directly from the conversation that contains the mounted viewer; do not delegate live-viewer control to a subagent and do not use browser or DevTools automation. Residue numbers use author numbering; supply insertion codes when present.",
+      inputSchema: structureViewerControlToolInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: true
+      },
+      _meta: { ui: { visibility: ["model"] } }
+    },
+    async (input) => {
+      const parsedInput = structureViewerControlInputSchema.parse(input);
+      const result = await commandStore.enqueue(
+        parsedInput.sessionId,
+        createStructureViewerCommand(parsedInput)
+      );
+      return {
+        content: [{ type: "text", text: result.message }],
+        structuredContent: result
+      };
+    }
+  );
+  K3(
+    server,
+    STRUCTURE_VIEWER_REGISTER_SESSION_TOOL_NAME,
+    {
+      title: "Register Molecular Structure Viewer Session",
+      description: "App-only. Register a mounted molecular structure viewer.",
+      inputSchema: {},
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: false,
+        readOnlyHint: false
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async () => ({
+      content: [],
+      structuredContent: commandStore.registerSession()
+    })
+  );
+  K3(
+    server,
+    STRUCTURE_VIEWER_WAIT_FOR_COMMAND_TOOL_NAME,
+    {
+      title: "Wait For Molecular Structure Viewer Command",
+      description: "App-only. Long-poll for the next command addressed to this viewer.",
+      inputSchema: waitForStructureCommandInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: true
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async (input) => {
+      const parsedInput = waitForStructureCommandInputSchema.parse(input);
+      return {
+        content: [],
+        structuredContent: {
+          command: await commandStore.waitForCommand(
+            parsedInput.sessionId,
+            parsedInput.afterRevision,
+            parsedInput.timeoutMs
+          )
+        }
+      };
+    }
+  );
+  K3(
+    server,
+    STRUCTURE_VIEWER_COMPLETE_COMMAND_TOOL_NAME,
+    {
+      title: "Complete Molecular Structure Viewer Command",
+      description: "App-only. Acknowledge that the mounted viewer applied a command.",
+      inputSchema: completeStructureCommandInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: false
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async (input) => {
+      const parsedInput = completeStructureCommandInputSchema.parse(input);
+      commandStore.complete(parsedInput.sessionId, parsedInput.commandId, {
+        applied: parsedInput.applied,
+        message: parsedInput.message,
+        state: parsedInput.state
+      });
+      return { content: [], structuredContent: { completed: true } };
+    }
+  );
+  K3(
+    server,
     STRUCTURE_VIEWER_CHAT_TOOL_NAME,
     {
       title: "Open Molecular Structure Viewer from chat",
-      description: "Open a supported local molecular structure file in an inline Mol* viewer. Use the exact absolute file path whenever available. After success, tell the user to click or expand the embedded Structure open from chat tool card and that Open in side pane moves the same live viewer to the right pane. Do not repeat or format the file name or path in the user-facing response; it is not the opening action.",
+      description: "Open a supported local molecular structure file in an inline Mol* viewer. Use the exact absolute file path whenever available. The result structuredContent includes viewerSessionId; for same-turn follow-up actions, pass that ID directly to structure.control_viewer without waiting for later model context. After success, tell the user to click or expand the embedded Structure open from chat tool card and that they can use Open in side pane or ask you to move or control the same live viewer. Do not repeat or format the file name or path in the user-facing response; it is not the opening action.",
       inputSchema: structureOpenFromChatToolInputSchema.shape,
       annotations: {
         destructiveHint: false,
@@ -31418,7 +31867,11 @@ function createStructureViewerServer() {
         parsedInput.path,
         extra
       );
-      return createStructureOpenFromChatToolResult(parsedInput, viewerFile);
+      return createStructureOpenFromChatToolResult(
+        parsedInput,
+        viewerFile,
+        commandStore.registerSession()
+      );
     }
   );
   return server;
@@ -31431,15 +31884,19 @@ function createStructureOpenToolResult(input) {
 }
 function createStructureOpenFromChatToolResult({
   path: _path
-}, viewerFile) {
+}, viewerFile, session) {
   return {
     content: [
       {
         type: "text",
-        text: "The embedded Molecular Structure Viewer is ready. Click or expand the Structure open from chat tool card above to view it. Use Open in side pane inside the viewer to move the same live viewer to the right pane."
+        text: "The embedded Molecular Structure Viewer is ready. Click or expand the Structure open from chat tool card above to view it. Use Open in side pane, or ask me to move or control the same live viewer."
       }
     ],
-    structuredContent: { viewerReady: true },
+    structuredContent: {
+      viewerCommandRevision: session.revision,
+      viewerReady: true,
+      viewerSessionId: session.sessionId
+    },
     _meta: {
       [STRUCTURE_VIEWER_CHAT_FILE_META_KEY]: viewerFile,
       "openai/outputTemplate": STRUCTURE_VIEWER_RESOURCE_URI
@@ -31447,29 +31904,67 @@ function createStructureOpenFromChatToolResult({
   };
 }
 function createStructureViewerHtml({
-  appJavaScript,
-  styles
+  bootstrapJavaScript
 }) {
   return `<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>${escapeInlineHtmlTag(styles, "style")}</style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module">${escapeInlineHtmlTag(appJavaScript, "script")}</script>
+    <script type="module">
+      ${escapeInlineHtmlTag(bootstrapJavaScript, "script")}
+    </script>
   </body>
 </html>`;
 }
-async function loadStructureViewerHtml() {
+function createStructureViewerCsp() {
+  return {
+    connectDomains: [],
+    resourceDomains: []
+  };
+}
+function createStructureViewerBundleInfo(bundle) {
+  return {
+    byteLength: bundle.length,
+    chunkCount: Math.ceil(bundle.length / STRUCTURE_VIEWER_BUNDLE_CHUNK_SIZE),
+    encoding: "viewer-bundle-v1+base64"
+  };
+}
+function createStructureViewerBundleChunk(bundle, index) {
+  const { chunkCount } = createStructureViewerBundleInfo(bundle);
+  if (index < 0 || !Number.isInteger(index) || index >= chunkCount) {
+    throw new Error(`Structure viewer bundle chunk ${index} is out of range.`);
+  }
+  const start = index * STRUCTURE_VIEWER_BUNDLE_CHUNK_SIZE;
+  return {
+    data: bundle.subarray(start, start + STRUCTURE_VIEWER_BUNDLE_CHUNK_SIZE).toString("base64"),
+    index
+  };
+}
+async function loadStructureViewerResource() {
   const distDirectory = path2.dirname(fileURLToPath2(import.meta.url));
-  const [appJavaScript, styles] = await Promise.all([
-    readFile2(path2.join(distDirectory, "views", "app.js"), "utf8"),
-    readFile2(path2.join(distDirectory, "views", "styles.css"), "utf8")
-  ]);
-  return createStructureViewerHtml({ appJavaScript, styles });
+  const bootstrapJavaScript = await readFile2(
+    path2.join(distDirectory, "views", "bootstrap.js"),
+    "utf8"
+  );
+  return {
+    html: createStructureViewerHtml({
+      bootstrapJavaScript
+    })
+  };
+}
+function loadStructureViewerBundle() {
+  const distDirectory = path2.dirname(fileURLToPath2(import.meta.url));
+  structureViewerBundlePromise ??= readFile2(
+    path2.join(distDirectory, "views", "viewer.bundle")
+  ).catch((error48) => {
+    structureViewerBundlePromise = null;
+    throw error48;
+  });
+  return structureViewerBundlePromise;
 }
 function escapeInlineHtmlTag(contents, tagName) {
   return contents.replaceAll(`</${tagName}`, `<\\/${tagName}`);
@@ -31480,10 +31975,17 @@ function isSafeFileName(fileName) {
 function isSafeWorkspacePath(filePath) {
   return !/[\0\n\r]/u.test(filePath) && !/^[a-z][a-z0-9+.-]*:\/\//iu.test(filePath);
 }
+function createStructureViewerCommand(input) {
+  const { sessionId: _sessionId, ...command } = input;
+  return "compId" in command ? { ...command, compId: command.compId.toUpperCase() } : command;
+}
 if (process.argv[1] != null && import.meta.url === pathToFileURL(process.argv[1]).href) {
   await createStructureViewerServer().connect(new StdioServerTransport());
 }
 export {
+  STRUCTURE_VIEWER_BUNDLE_CHUNK_SIZE,
+  STRUCTURE_VIEWER_BUNDLE_CHUNK_TOOL_NAME,
+  STRUCTURE_VIEWER_BUNDLE_INFO_TOOL_NAME,
   STRUCTURE_VIEWER_CHAT_FILE_META_KEY,
   STRUCTURE_VIEWER_CHAT_FILE_RESOURCE_URI,
   STRUCTURE_VIEWER_CHAT_TOOL_NAME,
@@ -31491,6 +31993,9 @@ export {
   STRUCTURE_VIEWER_TOOL_NAME,
   createStructureOpenFromChatToolResult,
   createStructureOpenToolResult,
+  createStructureViewerBundleChunk,
+  createStructureViewerBundleInfo,
+  createStructureViewerCsp,
   createStructureViewerHtml,
   createStructureViewerServer,
   structureOpenFromChatToolInputSchema,

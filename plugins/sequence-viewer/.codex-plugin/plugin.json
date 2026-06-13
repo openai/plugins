@@ -1,6 +1,6 @@
 {
   "name": "sequence-viewer",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Open and inspect biological sequence and alignment files in an interactive viewer.",
   "author": {
     "name": "OpenAI",
@@ -24,15 +24,10 @@
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
-  "openaiCapabilities": {
-    "mcpServers": {
-      "sequence-viewer": {}
-    }
-  },
   "interface": {
     "displayName": "Biological Sequence & Alignment Viewer",
     "shortDescription": "Open biological sequence and alignment files in Codex",
-    "longDescription": "Biological Sequence & Alignment Viewer helps you open and inspect FASTA, GenBank, EMBL, FASTQ, and multiple sequence alignment files directly in Codex. Switch between sequence and alignment views, inspect annotations and quality, search motifs, select residues or columns, and ask follow-up questions grounded in the current viewer state.",
+    "longDescription": "Biological Sequence & Alignment Viewer helps you open and inspect FASTA, GenBank, EMBL, FASTQ, and multiple sequence alignment files directly in Codex. Inspect exact feature segments and FASTQ QC, translate selections, search and navigate motifs, focus annotated features or reference coordinates, filter alignment rows, change molecule-aware display and analysis options through chat, compute an exploratory guide tree, and ask follow-up questions grounded in the current viewer state.",
     "developerName": "OpenAI",
     "category": "Research",
     "capabilities": [
@@ -43,8 +38,9 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Open this biological sequence or alignment in the interactive viewer",
-      "Inspect this sequence or alignment and help me interpret the current view"
+      "Open this FASTQ and summarize read length, GC, and Q30 in the viewer",
+      "Open this alignment, focus the conserved motif, and compute an exploratory guide tree",
+      "Open this GenBank file and inspect the selected feature and six-frame translation"
     ],
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/logo.png",

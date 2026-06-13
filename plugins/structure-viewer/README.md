@@ -14,8 +14,9 @@ Molecular Structure Viewer opens molecular coordinate and ligand files in an int
 - PDB text coordinates: `.pdb`
 - CIF and mmCIF coordinates: `.cif`, `.mmcif`
 - MDL MOL small-molecule records: `.mol`
+- MDL SD files: `.sdf`
 
-The read-only viewer supports Mol* representations and coloring, ligand focus, residue hover and selection, and model context for follow-up questions about the current view.
+The read-only viewer supports Mol* representations and coloring, author-numbered residue selection with insertion codes, source experiment and resolution metadata, selectable ligands, coordinate-derived ligand contacts, closest-heavy-atom residue measurements, model and trajectory controls, screenshots, and model context for follow-up questions. Select **Measure** in the viewer to choose any two polymer residues, including residues on different chains, and see the exact closest atom pair and Euclidean distance. You can also ask Codex to focus residues or ligands; select whole chains, ranges, or noncontiguous residue sets; clear a selection; calculate contacts or distances; change the representation, colors, background, or view options; or move the mounted viewer to the side pane.
 
 ## Data Handling
 

@@ -31387,6 +31387,420 @@ function isSupportedBiologicalSequenceFileName(fileName) {
   );
 }
 
+// src/server-command-store.ts
+import { randomUUID as randomUUID2 } from "node:crypto";
+var DEFAULT_SESSION_TTL_MS = 30 * 60 * 1e3;
+var DEFAULT_COMMAND_TIMEOUT_MS = 3e4;
+var SequenceViewerCommandStore = class {
+  sessions = /* @__PURE__ */ new Map();
+  registerSession() {
+    this.pruneExpiredSessions();
+    const sessionId = randomUUID2();
+    this.sessions.set(sessionId, {
+      expiresAt: Date.now() + DEFAULT_SESSION_TTL_MS,
+      pending: [],
+      revision: 0,
+      waiters: []
+    });
+    return { revision: 0, sessionId };
+  }
+  async enqueue(sessionId, command, timeoutMs = DEFAULT_COMMAND_TIMEOUT_MS) {
+    const session = this.getSession(sessionId);
+    session.revision += 1;
+    const queuedCommand = {
+      ...command,
+      commandId: randomUUID2(),
+      revision: session.revision
+    };
+    return await new Promise((resolve, reject) => {
+      const pending = {
+        command: queuedCommand,
+        reject,
+        resolve,
+        timeout: setTimeout(() => {
+          session.pending = session.pending.filter((item) => item !== pending);
+          reject(
+            new Error(
+              "The viewer did not acknowledge the requested action before the timeout."
+            )
+          );
+        }, timeoutMs)
+      };
+      session.pending.push(pending);
+      this.notifyWaiters(session);
+    });
+  }
+  async waitForCommand(sessionId, afterRevision, timeoutMs) {
+    const session = this.getSession(sessionId);
+    const ready = session.pending.find(
+      ({ command }) => command.revision > afterRevision
+    );
+    if (ready != null) {
+      return ready.command;
+    }
+    return await new Promise((resolve) => {
+      const waiter = {
+        afterRevision,
+        resolve,
+        timeout: setTimeout(() => {
+          session.waiters = session.waiters.filter((item) => item !== waiter);
+          resolve(null);
+        }, timeoutMs)
+      };
+      session.waiters.push(waiter);
+    });
+  }
+  complete(sessionId, commandId, result) {
+    const session = this.getSession(sessionId);
+    const pending = session.pending.find(
+      ({ command }) => command.commandId === commandId
+    );
+    if (pending == null) {
+      throw new Error("The viewer command is no longer pending.");
+    }
+    clearTimeout(pending.timeout);
+    session.pending = session.pending.filter((item) => item !== pending);
+    pending.resolve(result);
+  }
+  getSession(sessionId) {
+    this.pruneExpiredSessions();
+    const session = this.sessions.get(sessionId);
+    if (session == null) {
+      throw new Error(
+        "The viewer session is no longer active. Reopen the viewer and try again."
+      );
+    }
+    session.expiresAt = Date.now() + DEFAULT_SESSION_TTL_MS;
+    return session;
+  }
+  notifyWaiters(session) {
+    const remaining = [];
+    for (const waiter of session.waiters) {
+      const ready = session.pending.find(
+        ({ command }) => command.revision > waiter.afterRevision
+      );
+      if (ready == null) {
+        remaining.push(waiter);
+        continue;
+      }
+      clearTimeout(waiter.timeout);
+      waiter.resolve(ready.command);
+    }
+    session.waiters = remaining;
+  }
+  pruneExpiredSessions() {
+    const now = Date.now();
+    for (const [sessionId, session] of this.sessions) {
+      if (session.expiresAt > now) {
+        continue;
+      }
+      for (const pending of session.pending) {
+        clearTimeout(pending.timeout);
+        pending.reject(new Error("The viewer session expired."));
+      }
+      for (const waiter of session.waiters) {
+        clearTimeout(waiter.timeout);
+        waiter.resolve(null);
+      }
+      this.sessions.delete(sessionId);
+    }
+  }
+};
+
+// src/viewer-commands.ts
+var SEQUENCE_VIEWER_CONTROL_TOOL_NAME = "sequence.control_viewer";
+var SEQUENCE_VIEWER_REGISTER_SESSION_TOOL_NAME = "sequence.register_viewer_session";
+var SEQUENCE_VIEWER_WAIT_FOR_COMMAND_TOOL_NAME = "sequence.wait_for_viewer_command";
+var SEQUENCE_VIEWER_COMPLETE_COMMAND_TOOL_NAME = "sequence.complete_viewer_command";
+var sequenceViewerActionSchema = external_exports3.enum([
+  "clear_alignment_selection",
+  "clear_sequence_selection",
+  "compute_alignment_guide_tree",
+  "filter_alignment_rows",
+  "focus_alignment_cell",
+  "focus_alignment_reference_coordinate",
+  "focus_sequence_coordinate",
+  "navigate_alignment_search_hit",
+  "navigate_sequence_search_hit",
+  "reset_alignment_view",
+  "search_alignment",
+  "search_sequence",
+  "select_alignment_columns",
+  "select_sequence_feature",
+  "select_sequence_range",
+  "set_alignment_reference",
+  "set_alignment_row_visibility",
+  "set_alignment_view_options",
+  "set_display_mode",
+  "set_mode",
+  "set_sequence_record",
+  "set_sequence_view_options",
+  "show_all_alignment_rows"
+]);
+var sequenceViewerCommandSchema = external_exports3.discriminatedUnion("action", [
+  external_exports3.object({
+    action: external_exports3.literal("clear_alignment_selection")
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("clear_sequence_selection")
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("compute_alignment_guide_tree")
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("filter_alignment_rows"),
+    query: external_exports3.string().max(500)
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("focus_alignment_cell"),
+    column: external_exports3.number().int().positive(),
+    row: external_exports3.string().trim().min(1).max(500)
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("focus_alignment_reference_coordinate"),
+    coordinate: external_exports3.number().int().positive()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("focus_sequence_coordinate"),
+    coordinate: external_exports3.number().int().positive(),
+    record: external_exports3.string().trim().min(1).max(500).optional()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("navigate_alignment_search_hit"),
+    direction: external_exports3.enum(["next", "previous"])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("navigate_sequence_search_hit"),
+    direction: external_exports3.enum(["next", "previous"])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("reset_alignment_view")
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("search_alignment"),
+    query: external_exports3.string().max(500)
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("search_sequence"),
+    query: external_exports3.string().max(500),
+    record: external_exports3.string().trim().min(1).max(500).optional()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("select_alignment_columns"),
+    end: external_exports3.number().int().positive(),
+    start: external_exports3.number().int().positive()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("select_sequence_range"),
+    end: external_exports3.number().int().positive(),
+    record: external_exports3.string().trim().min(1).max(500).optional(),
+    start: external_exports3.number().int().positive()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("select_sequence_feature"),
+    featureId: external_exports3.string().trim().min(1).max(500).describe(
+      "Exact generated feature ID or a unique case-insensitive biological type, label, or qualifier value such as CDS or kinase domain."
+    ),
+    record: external_exports3.string().trim().min(1).max(500).optional()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_alignment_row_visibility"),
+    rows: external_exports3.array(external_exports3.string().trim().min(1).max(500)).min(1).max(200),
+    visible: external_exports3.boolean()
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_alignment_reference"),
+    reference: external_exports3.string().trim().min(1).max(500)
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_alignment_view_options"),
+    analysisScope: external_exports3.enum(["all-unhidden-rows", "currently-displayed-rows"]).optional(),
+    cellWidth: external_exports3.number().int().min(16).max(42).optional(),
+    colorMode: external_exports3.enum([
+      "coding-impact",
+      "difference",
+      "identity",
+      "nucleotide-substitution",
+      "protein-conservation",
+      "protein-similarity",
+      "residue"
+    ]).optional(),
+    moleculeType: external_exports3.enum([
+      "dna",
+      "mixed",
+      "nucleic-acid-ambiguous",
+      "protein",
+      "rna",
+      "unknown"
+    ]).optional(),
+    residuePalette: external_exports3.enum([
+      "clustal-x",
+      "hydrophobicity",
+      "jalview-nucleotide",
+      "ncbi-nucleic-acid",
+      "nucleotide-ambiguity",
+      "purine-pyrimidine",
+      "rasmol",
+      "zappo"
+    ]).optional(),
+    searchScope: external_exports3.enum(["all-unhidden-rows", "currently-displayed-rows"]).optional(),
+    showAnnotationTracks: external_exports3.boolean().optional(),
+    showIdenticalAsDots: external_exports3.boolean().optional(),
+    showRnaStructureOverlays: external_exports3.boolean().optional()
+  }).refine(
+    ({
+      analysisScope,
+      cellWidth,
+      colorMode,
+      moleculeType,
+      residuePalette,
+      searchScope,
+      showAnnotationTracks,
+      showIdenticalAsDots,
+      showRnaStructureOverlays
+    }) => [
+      analysisScope,
+      cellWidth,
+      colorMode,
+      moleculeType,
+      residuePalette,
+      searchScope,
+      showAnnotationTracks,
+      showIdenticalAsDots,
+      showRnaStructureOverlays
+    ].some((value) => value != null),
+    "set_alignment_view_options requires at least one option."
+  ),
+  external_exports3.object({
+    action: external_exports3.literal("set_display_mode"),
+    displayMode: external_exports3.enum(["fullscreen", "inline"])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_mode"),
+    mode: external_exports3.enum(["alignment", "sequence"])
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_sequence_record"),
+    record: external_exports3.string().trim().min(1).max(500)
+  }),
+  external_exports3.object({
+    action: external_exports3.literal("set_sequence_view_options"),
+    palette: external_exports3.enum([
+      "clustal-x",
+      "hydrophobicity",
+      "jalview-nucleotide",
+      "ncbi-nucleic-acid",
+      "neutral",
+      "nucleotide-ambiguity",
+      "purine-pyrimidine",
+      "rasmol",
+      "zappo"
+    ]).optional(),
+    showFeatures: external_exports3.boolean().optional(),
+    showQuality: external_exports3.boolean().optional(),
+    showTranslation: external_exports3.boolean().optional(),
+    wrapWidth: external_exports3.union([
+      external_exports3.literal(40),
+      external_exports3.literal(50),
+      external_exports3.literal(60),
+      external_exports3.literal(80)
+    ]).optional()
+  }).refine(
+    ({ palette, showFeatures, showQuality, showTranslation, wrapWidth }) => [palette, showFeatures, showQuality, showTranslation, wrapWidth].some(
+      (value) => value != null
+    ),
+    "set_sequence_view_options requires at least one option."
+  ),
+  external_exports3.object({
+    action: external_exports3.literal("show_all_alignment_rows")
+  })
+]);
+var sequenceViewerControlInputSchema = external_exports3.intersection(
+  external_exports3.object({
+    sessionId: external_exports3.string().uuid().describe("Active viewer session ID from the viewer's model context.")
+  }),
+  sequenceViewerCommandSchema
+);
+var sequenceViewerControlToolInputSchema = external_exports3.object({
+  action: sequenceViewerActionSchema,
+  analysisScope: external_exports3.enum(["all-unhidden-rows", "currently-displayed-rows"]).optional(),
+  cellWidth: external_exports3.number().int().min(16).max(42).optional(),
+  colorMode: external_exports3.enum([
+    "coding-impact",
+    "difference",
+    "identity",
+    "nucleotide-substitution",
+    "protein-conservation",
+    "protein-similarity",
+    "residue"
+  ]).optional(),
+  column: external_exports3.number().int().positive().optional(),
+  coordinate: external_exports3.number().int().positive().optional(),
+  direction: external_exports3.enum(["next", "previous"]).optional(),
+  displayMode: external_exports3.enum(["fullscreen", "inline"]).optional(),
+  end: external_exports3.number().int().positive().optional(),
+  featureId: external_exports3.string().trim().min(1).max(500).describe(
+    "Exact generated feature ID or a unique case-insensitive biological type, label, or qualifier value such as CDS or kinase domain."
+  ).optional(),
+  mode: external_exports3.enum(["alignment", "sequence"]).optional(),
+  moleculeType: external_exports3.enum([
+    "dna",
+    "mixed",
+    "nucleic-acid-ambiguous",
+    "protein",
+    "rna",
+    "unknown"
+  ]).optional(),
+  palette: external_exports3.enum([
+    "clustal-x",
+    "hydrophobicity",
+    "jalview-nucleotide",
+    "ncbi-nucleic-acid",
+    "neutral",
+    "nucleotide-ambiguity",
+    "purine-pyrimidine",
+    "rasmol",
+    "zappo"
+  ]).optional(),
+  query: external_exports3.string().max(500).optional(),
+  record: external_exports3.string().trim().min(1).max(500).optional(),
+  reference: external_exports3.string().trim().min(1).max(500).optional(),
+  residuePalette: external_exports3.enum([
+    "clustal-x",
+    "hydrophobicity",
+    "jalview-nucleotide",
+    "ncbi-nucleic-acid",
+    "nucleotide-ambiguity",
+    "purine-pyrimidine",
+    "rasmol",
+    "zappo"
+  ]).optional(),
+  row: external_exports3.string().trim().min(1).max(500).describe(
+    "Single alignment row ID or label; use only with focus_alignment_cell."
+  ).optional(),
+  rows: external_exports3.array(external_exports3.string().trim().min(1).max(500)).min(1).max(200).describe(
+    "Array of alignment row IDs or labels; required with set_alignment_row_visibility, even for one row."
+  ).optional(),
+  searchScope: external_exports3.enum(["all-unhidden-rows", "currently-displayed-rows"]).optional(),
+  sessionId: external_exports3.string().uuid().describe("Active viewer session ID returned by sequence.open_from_chat."),
+  showAnnotationTracks: external_exports3.boolean().optional(),
+  showFeatures: external_exports3.boolean().optional(),
+  showIdenticalAsDots: external_exports3.boolean().optional(),
+  showQuality: external_exports3.boolean().optional(),
+  showRnaStructureOverlays: external_exports3.boolean().optional(),
+  showTranslation: external_exports3.boolean().optional(),
+  start: external_exports3.number().int().positive().optional(),
+  visible: external_exports3.boolean().optional(),
+  wrapWidth: external_exports3.union([external_exports3.literal(40), external_exports3.literal(50), external_exports3.literal(60), external_exports3.literal(80)]).optional()
+});
+var queuedSequenceViewerCommandSchema = external_exports3.intersection(
+  sequenceViewerCommandSchema,
+  external_exports3.object({
+    commandId: external_exports3.string().uuid(),
+    revision: external_exports3.number().int().positive()
+  })
+);
+
 // src/server.ts
 var SEQUENCE_VIEWER_RESOURCE_URI = "ui://sequence-viewer/viewer";
 var SEQUENCE_VIEWER_TOOL_NAME = "sequence.open";
@@ -31408,12 +31822,25 @@ var sequenceOpenFromChatToolInputSchema = external_exports3.object({
     "Exact absolute path to the sequence or alignment file. A workspace-relative path works only when the MCP host exposes active roots."
   )
 });
+var sequenceViewerWaitForCommandInputSchema = external_exports3.object({
+  afterRevision: external_exports3.number().int().nonnegative(),
+  sessionId: external_exports3.string().uuid(),
+  timeoutMs: external_exports3.number().int().min(1e3).max(25e3).default(25e3)
+});
+var sequenceViewerCompleteCommandInputSchema = external_exports3.object({
+  applied: external_exports3.boolean(),
+  commandId: external_exports3.string().uuid(),
+  message: external_exports3.string().min(1).max(2e3),
+  sessionId: external_exports3.string().uuid(),
+  state: external_exports3.record(external_exports3.string(), external_exports3.unknown()).optional()
+});
 function createSequenceViewerServer() {
   const server = new McpServer({
     name: "biological-sequence-viewer",
-    version: "0.1.0"
+    version: "0.1.8"
   });
   createOpenAICapabilities(server);
+  const commandStore = new SequenceViewerCommandStore();
   const chatFileResourceStore = createChatFileResourceStore({
     isSupportedFileName: isSupportedBiologicalSequenceFileName,
     resourceUriPrefix: SEQUENCE_VIEWER_CHAT_FILE_RESOURCE_URI,
@@ -31424,16 +31851,24 @@ function createSequenceViewerServer() {
     server,
     "viewer",
     SEQUENCE_VIEWER_RESOURCE_URI,
-    {},
-    async () => ({
-      contents: [
-        {
-          mimeType: p,
-          text: await loadSequenceViewerHtml(),
-          uri: SEQUENCE_VIEWER_RESOURCE_URI
-        }
-      ]
-    })
+    { mimeType: p },
+    async () => {
+      const resource = await loadSequenceViewerResource();
+      return {
+        contents: [
+          {
+            mimeType: p,
+            text: resource.html,
+            uri: SEQUENCE_VIEWER_RESOURCE_URI,
+            _meta: {
+              ui: {
+                csp: createSequenceViewerCsp()
+              }
+            }
+          }
+        ]
+      };
+    }
   );
   K3(
     server,
@@ -31465,10 +31900,111 @@ function createSequenceViewerServer() {
   );
   K3(
     server,
+    SEQUENCE_VIEWER_CONTROL_TOOL_NAME,
+    {
+      title: "Control Biological Sequence & Alignment Viewer",
+      description: "Control the active Biological Sequence & Alignment Viewer. Always pass sessionId and action, never viewerSessionId or command. Sequence actions: clear_sequence_selection, focus_sequence_coordinate, navigate_sequence_search_hit, search_sequence, select_sequence_feature, select_sequence_range, set_sequence_record, and set_sequence_view_options. select_sequence_feature accepts an exact feature ID or a unique case-insensitive biological type, label, or qualifier value; ambiguous matches return exact candidate IDs. Alignment actions: clear_alignment_selection, compute_alignment_guide_tree, filter_alignment_rows, focus_alignment_cell, focus_alignment_reference_coordinate, navigate_alignment_search_hit, reset_alignment_view, search_alignment, select_alignment_columns, set_alignment_reference, set_alignment_row_visibility, set_alignment_view_options, and show_all_alignment_rows. focus_alignment_cell uses singular row; set_alignment_row_visibility always requires the rows array, even for one row. Shared actions: set_display_mode and set_mode. Call this tool directly from the conversation that contains the mounted viewer; do not delegate live-viewer control to a subagent and do not use browser or DevTools automation. Coordinates are 1-based.",
+      inputSchema: sequenceViewerControlToolInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: true
+      },
+      _meta: { ui: { visibility: ["model"] } }
+    },
+    async (input) => {
+      const parsedInput = sequenceViewerControlInputSchema.parse(input);
+      const command = createSequenceViewerCommand(parsedInput);
+      const result = await commandStore.enqueue(parsedInput.sessionId, command);
+      return {
+        content: [{ type: "text", text: result.message }],
+        structuredContent: result
+      };
+    }
+  );
+  K3(
+    server,
+    SEQUENCE_VIEWER_REGISTER_SESSION_TOOL_NAME,
+    {
+      title: "Register Biological Sequence Viewer Session",
+      description: "App-only. Register a mounted biological sequence viewer.",
+      inputSchema: {},
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: false,
+        readOnlyHint: false
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async () => ({
+      content: [],
+      structuredContent: commandStore.registerSession()
+    })
+  );
+  K3(
+    server,
+    SEQUENCE_VIEWER_WAIT_FOR_COMMAND_TOOL_NAME,
+    {
+      title: "Wait For Biological Sequence Viewer Command",
+      description: "App-only. Long-poll for the next command addressed to this mounted viewer.",
+      inputSchema: sequenceViewerWaitForCommandInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: true
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async (input) => {
+      const parsedInput = sequenceViewerWaitForCommandInputSchema.parse(input);
+      const command = await commandStore.waitForCommand(
+        parsedInput.sessionId,
+        parsedInput.afterRevision,
+        parsedInput.timeoutMs
+      );
+      return {
+        content: [],
+        structuredContent: { command }
+      };
+    }
+  );
+  K3(
+    server,
+    SEQUENCE_VIEWER_COMPLETE_COMMAND_TOOL_NAME,
+    {
+      title: "Complete Biological Sequence Viewer Command",
+      description: "App-only. Acknowledge that the mounted viewer applied a command.",
+      inputSchema: sequenceViewerCompleteCommandInputSchema.shape,
+      annotations: {
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+        readOnlyHint: false
+      },
+      _meta: { ui: { visibility: ["app"] } }
+    },
+    async (input) => {
+      const parsedInput = sequenceViewerCompleteCommandInputSchema.parse(input);
+      commandStore.complete(parsedInput.sessionId, parsedInput.commandId, {
+        applied: parsedInput.applied,
+        message: parsedInput.message,
+        state: parsedInput.state
+      });
+      return {
+        content: [],
+        structuredContent: { completed: true }
+      };
+    }
+  );
+  K3(
+    server,
     SEQUENCE_VIEWER_CHAT_TOOL_NAME,
     {
       title: "Open Biological Sequence & Alignment Viewer from chat",
-      description: "Open a supported local biological sequence or alignment file in an inline viewer. Use the exact absolute file path whenever available. After success, tell the user to click or expand the embedded Sequence open from chat tool card and that Open in side pane moves the same live viewer to the right pane. Do not repeat or format the file name or path in the user-facing response; it is not the opening action.",
+      description: "Open a supported local biological sequence or alignment file in an inline viewer. Use the exact absolute file path whenever available. The result structuredContent includes viewerSessionId; for same-turn follow-up actions, pass that ID directly to sequence.control_viewer without waiting for later model context. After success, tell the user to click or expand the embedded Sequence open from chat tool card and that they can use Open in side pane or ask you to move or control the same live viewer. Do not repeat or format the file name or path in the user-facing response; it is not the opening action.",
       inputSchema: sequenceOpenFromChatToolInputSchema.shape,
       annotations: {
         destructiveHint: false,
@@ -31493,7 +32029,11 @@ function createSequenceViewerServer() {
         parsedInput.path,
         extra
       );
-      return createSequenceOpenFromChatToolResult(parsedInput, viewerFile);
+      return createSequenceOpenFromChatToolResult(
+        parsedInput,
+        viewerFile,
+        commandStore.registerSession()
+      );
     }
   );
   return server;
@@ -31506,15 +32046,19 @@ function createSequenceOpenToolResult(input) {
 }
 function createSequenceOpenFromChatToolResult({
   path: _path
-}, viewerFile) {
+}, viewerFile, session) {
   return {
     content: [
       {
         type: "text",
-        text: "The embedded Biological Sequence & Alignment Viewer is ready. Click or expand the Sequence open from chat tool card above to view it. Use Open in side pane inside the viewer to move the same live viewer to the right pane."
+        text: "The embedded Biological Sequence & Alignment Viewer is ready. Click or expand the Sequence open from chat tool card above to view it. Use Open in side pane, or ask me to move or control the same live viewer."
       }
     ],
-    structuredContent: { viewerReady: true },
+    structuredContent: {
+      viewerCommandRevision: session.revision,
+      viewerReady: true,
+      viewerSessionId: session.sessionId
+    },
     _meta: {
       [SEQUENCE_VIEWER_CHAT_FILE_META_KEY]: viewerFile,
       "openai/outputTemplate": SEQUENCE_VIEWER_RESOURCE_URI
@@ -31522,9 +32066,13 @@ function createSequenceOpenFromChatToolResult({
   };
 }
 function createSequenceViewerHtml({
-  appJavaScript,
+  appJavaScriptGzipBase64,
   styles
 }) {
+  const serializedAppJavaScriptChunks = chunkString(
+    appJavaScriptGzipBase64,
+    32768
+  ).map((chunk) => JSON.stringify(chunk));
   return `<!doctype html>
 <html>
   <head>
@@ -31534,17 +32082,60 @@ function createSequenceViewerHtml({
   </head>
   <body>
     <div id="root"></div>
-    <script type="module">${escapeInlineHtmlTag(appJavaScript, "script")}</script>
+    <script type="module">
+      try {
+        const compressedBase64 = [${serializedAppJavaScriptChunks.join(",")}].join("");
+        const compressedBinary = atob(compressedBase64);
+        const compressedBytes = new Uint8Array(compressedBinary.length);
+        for (let index = 0; index < compressedBinary.length; index += 1) {
+          compressedBytes[index] = compressedBinary.charCodeAt(index);
+        }
+        const decompressedStream = new Blob([compressedBytes])
+          .stream()
+          .pipeThrough(new DecompressionStream("gzip"));
+        const appJavaScript = await new Response(decompressedStream).arrayBuffer();
+        const appJavaScriptUrl = URL.createObjectURL(
+          new Blob([appJavaScript], { type: "text/javascript" }),
+        );
+        try {
+          await import(appJavaScriptUrl);
+        } finally {
+          URL.revokeObjectURL(appJavaScriptUrl);
+        }
+      } catch (error) {
+        console.error("Failed to load the Biological Sequence & Alignment Viewer bundle", error);
+        document.getElementById("root").textContent =
+          "Biological Sequence & Alignment Viewer failed to load its local application bundle.";
+      }
+    </script>
   </body>
 </html>`;
 }
-async function loadSequenceViewerHtml() {
+function createSequenceViewerCsp() {
+  return {
+    connectDomains: [],
+    resourceDomains: ["blob:"]
+  };
+}
+async function loadSequenceViewerResource() {
   const distDirectory = path2.dirname(fileURLToPath2(import.meta.url));
-  const [appJavaScript, styles] = await Promise.all([
-    readFile2(path2.join(distDirectory, "views", "app.js"), "utf8"),
+  const [appJavaScriptGzip, styles] = await Promise.all([
+    readFile2(path2.join(distDirectory, "views", "app.js.gz")),
     readFile2(path2.join(distDirectory, "views", "styles.css"), "utf8")
   ]);
-  return createSequenceViewerHtml({ appJavaScript, styles });
+  return {
+    html: createSequenceViewerHtml({
+      appJavaScriptGzipBase64: appJavaScriptGzip.toString("base64"),
+      styles
+    })
+  };
+}
+function chunkString(value, chunkSize) {
+  const chunks = [];
+  for (let index = 0; index < value.length; index += chunkSize) {
+    chunks.push(value.slice(index, index + chunkSize));
+  }
+  return chunks;
 }
 function escapeInlineHtmlTag(contents, tagName) {
   return contents.replaceAll(`</${tagName}`, `<\\/${tagName}`);
@@ -31554,6 +32145,10 @@ function isSafeFileName(fileName) {
 }
 function isSafeWorkspacePath(filePath) {
   return !/[\0\n\r]/u.test(filePath) && !/^[a-z][a-z0-9+.-]*:\/\//iu.test(filePath);
+}
+function createSequenceViewerCommand(input) {
+  const { sessionId: _sessionId, ...command } = input;
+  return command;
 }
 if (process.argv[1] != null && import.meta.url === pathToFileURL(process.argv[1]).href) {
   await createSequenceViewerServer().connect(new StdioServerTransport());
@@ -31566,6 +32161,7 @@ export {
   SEQUENCE_VIEWER_TOOL_NAME,
   createSequenceOpenFromChatToolResult,
   createSequenceOpenToolResult,
+  createSequenceViewerCsp,
   createSequenceViewerHtml,
   createSequenceViewerServer,
   sequenceOpenFromChatToolInputSchema,

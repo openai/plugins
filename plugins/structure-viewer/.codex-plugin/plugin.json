@@ -1,6 +1,6 @@
 {
   "name": "structure-viewer",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Open and inspect molecular structure files in an interactive Mol* viewer.",
   "author": {
     "name": "OpenAI",
@@ -16,6 +16,7 @@
     "cif",
     "mmcif",
     "mol",
+    "sdf",
     "molstar",
     "protein",
     "ligand",
@@ -24,15 +25,10 @@
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
-  "openaiCapabilities": {
-    "mcpServers": {
-      "structure-viewer": {}
-    }
-  },
   "interface": {
     "displayName": "Molecular Structure Viewer",
     "shortDescription": "Open molecular structures in Codex",
-    "longDescription": "Molecular Structure Viewer helps you open and inspect PDB, CIF, mmCIF, and MOL files directly in Codex. Explore an interactive Mol* view, focus ligands, change representations and coloring, select residues, and ask follow-up questions grounded in the current viewer state.",
+    "longDescription": "Molecular Structure Viewer helps you open and inspect PDB, CIF, mmCIF, MOL, and SDF files directly in Codex. Explore an interactive Mol* view, inspect experiment metadata, focus ligands, select author-numbered chains or residue sets, calculate coordinate-derived contacts and distances, change representations and display options through chat, and ask follow-up questions grounded in the current viewer state.",
     "developerName": "OpenAI",
     "category": "Research",
     "capabilities": [
@@ -43,8 +39,9 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Open this molecular structure in the interactive viewer",
-      "Inspect this structure and help me interpret the current view"
+      "Open this structure, identify the likely ligand, and show residues within 4 angstroms",
+      "Open this structure and measure the closest-heavy-atom distance between two residues",
+      "Open this structure in the side pane and color it by B-factor or confidence"
     ],
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/logo.png",
