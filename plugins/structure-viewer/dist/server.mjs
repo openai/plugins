@@ -31588,6 +31588,7 @@ var queuedStructureViewerCommandSchema = external_exports3.intersection(
 
 // src/server.ts
 var STRUCTURE_VIEWER_RESOURCE_URI = "ui://structure-viewer/viewer";
+var STRUCTURE_VIEWER_INLINE_HEIGHT = 720;
 var STRUCTURE_VIEWER_TOOL_NAME = "structure.open";
 var STRUCTURE_VIEWER_CHAT_TOOL_NAME = "structure.open_from_chat";
 var STRUCTURE_VIEWER_CHAT_FILE_META_KEY = "openai/viewerFile";
@@ -31699,11 +31700,7 @@ function createStructureViewerServer() {
             mimeType: p,
             text: resource.html,
             uri: STRUCTURE_VIEWER_RESOURCE_URI,
-            _meta: {
-              ui: {
-                csp: createStructureViewerCsp()
-              }
-            }
+            _meta: createStructureViewerResourceMeta()
           }
         ]
       };
@@ -31926,6 +31923,12 @@ function createStructureViewerCsp() {
     resourceDomains: []
   };
 }
+function createStructureViewerResourceMeta() {
+  return {
+    ui: { csp: createStructureViewerCsp() },
+    "openai/widgetHeightHint": STRUCTURE_VIEWER_INLINE_HEIGHT
+  };
+}
 function createStructureViewerBundleInfo(bundle) {
   return {
     byteLength: bundle.length,
@@ -31989,6 +31992,7 @@ export {
   STRUCTURE_VIEWER_CHAT_FILE_META_KEY,
   STRUCTURE_VIEWER_CHAT_FILE_RESOURCE_URI,
   STRUCTURE_VIEWER_CHAT_TOOL_NAME,
+  STRUCTURE_VIEWER_INLINE_HEIGHT,
   STRUCTURE_VIEWER_RESOURCE_URI,
   STRUCTURE_VIEWER_TOOL_NAME,
   createStructureOpenFromChatToolResult,
@@ -31997,6 +32001,7 @@ export {
   createStructureViewerBundleInfo,
   createStructureViewerCsp,
   createStructureViewerHtml,
+  createStructureViewerResourceMeta,
   createStructureViewerServer,
   structureOpenFromChatToolInputSchema,
   structureOpenToolInputSchema
