@@ -9,9 +9,8 @@ Each plugin lives under `plugins/<name>/` with a required
 
 The default marketplace lives at `.agents/plugins/marketplace.json` and points
 at the standard `plugins/` directory. API key login users have a separate
-marketplace at `.agents/plugins/api_users_marketplace.json`; its plugins live
-under `api_users_plugins/` and should avoid `.app.json` declarations, using MCP
-configuration where an external connection is needed.
+marketplace at `.agents/plugins/api_marketplace.json`; it reuses the same plugin
+declarations under `plugins/` and includes plugins that only declare skills.
 
 Highlighted richer examples in this repo include:
 
