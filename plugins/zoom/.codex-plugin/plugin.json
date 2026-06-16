@@ -1,7 +1,7 @@
 {
   "name": "zoom",
   "version": "1.0.2",
-  "description": "Connect Codex to Zoom meeting context and build Zoom apps, bots, API integrations, SDK workflows, webhooks, and automations.",
+  "description": "Access post-meeting assets",
   "author": {
     "name": "Zoom",
     "url": "https://github.com/zoom"
@@ -28,8 +28,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Zoom",
-    "shortDescription": "Use Zoom meeting context and build Zoom integrations.",
-    "longDescription": "Zoom connects Codex to Zoom meeting context through the Zoom app connector and provides developer workflows for planning, building, debugging, and reviewing Zoom integrations across APIs, SDKs, webhooks, WebSockets, bots, and automation use cases.",
+    "shortDescription": "Access post-meeting assets",
+    "longDescription": "Enables searching for and selecting Zoom meetings, then retrieving associated assets such as recordings, AI summaries, and related documents. Use to list and analyze meeting recordings (including transcripts, summaries, next steps, and playback navigation) and to save new Markdown-based documents into the user\u2019s Zoom Docs workspace.",
     "developerName": "Zoom",
     "category": "Communication",
     "capabilities": [

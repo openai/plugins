@@ -1,7 +1,7 @@
 {
   "name": "replit",
   "version": "1.0.2",
-  "description": "Work with Replit projects, apps, deployments, and workspace context",
+  "description": "Turn your ideas into real apps",
   "author": {
     "name": "Replit",
     "url": "https://replit.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Replit",
-    "shortDescription": "Work with Replit projects, apps, deployments, and workspace context",
-    "longDescription": "Work with Replit projects, apps, deployments, and workspace context",
+    "shortDescription": "Turn your ideas into real apps",
+    "longDescription": "Turn your ideas into real apps",
     "developerName": "Replit",
     "category": "Developer Tools",
     "capabilities": [],
