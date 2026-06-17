@@ -34,8 +34,8 @@
       "Summarize a SharePoint site or file, identify owners and status, or plan a safe update across documents, spreadsheets, or decks"
     ],
     "brandColor": "#038387",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

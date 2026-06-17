@@ -43,6 +43,7 @@
       "./assets/screenshot-3.png"
     ],
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png"
   }
 }

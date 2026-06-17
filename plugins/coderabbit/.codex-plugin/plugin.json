@@ -32,7 +32,8 @@
     "termsOfServiceURL": "https://www.coderabbit.ai/terms-of-service",
     "brandColor": "#FF570A",
     "composerIcon": "./assets/coderabbit-small.png",
-    "logo": "./assets/coderabbit.png",
+    "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png",
     "defaultPrompt": [
       "Review my current changes and provide feedback"
     ],

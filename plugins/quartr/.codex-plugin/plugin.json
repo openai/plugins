@@ -28,6 +28,7 @@
     "termsOfServiceURL": "https://quartr.com/terms-of-service",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png",
     "brandColor": "#000000"
   },
   "homepage": "https://quartr.com"

@@ -24,8 +24,8 @@
     "websiteURL": "https://www.waldo.fyi",
     "privacyPolicyURL": "https://www.waldo.fyi/privacy",
     "termsOfServiceURL": "https://www.waldo.fyi/tos",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.waldo.fyi"
 }

@@ -38,7 +38,8 @@
     ],
     "brandColor": "#37C38F",
     "composerIcon": "./assets/neon-small.svg",
-    "logo": "./assets/neon.jpg",
+    "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png",
     "screenshots": []
   }
 }

@@ -26,6 +26,7 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png",
     "websiteURL": "https://www.close.com"
   },
   "homepage": "https://www.close.com"

@@ -24,8 +24,8 @@
       "What IT contracts do we have"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "developerName": "Egnyte Inc"
   }
 }

@@ -37,7 +37,8 @@
       "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review"
     ],
     "composerIcon": "./assets/github-small.svg",
-    "logo": "./assets/github.png",
+    "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png",
     "screenshots": [],
     "brandColor": "#24292F"
   }

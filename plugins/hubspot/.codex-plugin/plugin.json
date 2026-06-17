@@ -38,7 +38,7 @@
       "Find CRM records with stale or missing data"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

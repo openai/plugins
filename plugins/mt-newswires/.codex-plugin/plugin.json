@@ -24,8 +24,9 @@
     "websiteURL": "https://www.mtnewswires.com",
     "privacyPolicyURL": "https://www.mtnewswires.com/privacy-policy",
     "termsOfServiceURL": "https://www.mtnewswires.com/subscriber-terms-of-service",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "darkLogo": "./assets/logo-dark.png"
   },
   "homepage": "https://www.mtnewswires.com"
 }

@@ -29,8 +29,8 @@
       "Interactive",
       "Write"
     ],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://workspace.google.com/products/drive/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",
