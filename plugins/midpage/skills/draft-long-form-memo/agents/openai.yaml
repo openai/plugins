@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draft Long Form Memo"
+  short_description: "Draft objective legal research memos with verified citations."
+  default_prompt: "Use $draft-long-form-memo to draft an objective legal research memo."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cite Check"
+  short_description: "Verify citations in briefs, motions, and memos against primary law."
+  default_prompt: "Use $cite-check to verify citations in this brief or memo."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Litigation Update Post"
+  short_description: "Draft public litigation updates grounded in primary sources."
+  default_prompt: "Use $litigation-update-post to draft a public litigation update."
