@@ -881,6 +881,18 @@
       "category": "Productivity"
     },
     {
+      "name": "hex",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Data & Analytics"
+    },
+    {
       "name": "highlevel",
       "source": {
         "source": "local",
