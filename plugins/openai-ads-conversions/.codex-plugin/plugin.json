@@ -1,0 +1,40 @@
+{
+  "name": "openai-ads-conversions",
+  "version": "0.1.0",
+  "description": "Set up OpenAI Ads Measurement Pixel and optional Conversions API instrumentation.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://developers.openai.com/ads/",
+  "repository": "https://github.com/openai/plugins/tree/main/plugins/openai-ads-conversions",
+  "license": "Proprietary",
+  "keywords": [
+    "openai-ads",
+    "ads",
+    "conversions",
+    "measurement-pixel",
+    "capi"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OpenAI Ads Conversions",
+    "shortDescription": "Set up OpenAI Ads Pixel and CAPI tracking",
+    "longDescription": "Use OpenAI Ads Conversions to guide Codex through adding or extending Measurement Pixel and optional Conversions API instrumentation in a repository, with local verification helpers and guidance for safe secret handling, deduplication, attribution context, and setup reporting.",
+    "developerName": "OpenAI",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://developers.openai.com/ads/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": [
+      "Set up OpenAI Ads conversions tracking in this repository."
+    ],
+    "screenshots": []
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenAI Ads Conversions Setup"
+  short_description: "Instrument Ads Pixel and CAPI safely"
+  default_prompt: "Use $openai-ads-conversions-setup to instrument or extend this repository with OpenAI Ads Measurement Pixel and optional Conversions API, then produce a setup report."
