@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bulk Q&A Answers"
+  short_description: "Draft buyer Q&A answers grounded in Datasite room content."
+  default_prompt: "Use $bulk-qa-answers to draft buyer Q&A answers from Datasite documents."

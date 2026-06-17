@@ -1,0 +1,4 @@
+interface:
+  display_name: "Render Blueprints"
+  short_description: "Author and validate Render Blueprint YAML."
+  default_prompt: "Use $render-blueprints to create or validate a render.yaml Blueprint for this app."

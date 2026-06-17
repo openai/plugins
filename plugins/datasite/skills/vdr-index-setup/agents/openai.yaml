@@ -1,0 +1,4 @@
+interface:
+  display_name: "VDR Index Setup"
+  short_description: "Design a Datasite VDR folder structure for a new deal."
+  default_prompt: "Use $vdr-index-setup to create a Datasite VDR index for this deal."

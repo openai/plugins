@@ -1,0 +1,4 @@
+interface:
+  display_name: "Smart File Renaming"
+  short_description: "Standardize Datasite document names before buyer release."
+  default_prompt: "Use $smart-file-renaming to propose professional names for Datasite files."
