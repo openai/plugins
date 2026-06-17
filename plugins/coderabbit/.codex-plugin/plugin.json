@@ -33,7 +33,7 @@
     "brandColor": "#FF570A",
     "composerIcon": "./assets/coderabbit-small.png",
     "logo": "./assets/logo.png",
-    "darkLogo": "./assets/logo-dark.png",
+    "logoDark": "./assets/logo-dark.png",
     "defaultPrompt": [
       "Review my current changes and provide feedback"
     ],

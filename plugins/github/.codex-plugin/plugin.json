@@ -38,7 +38,7 @@
     ],
     "composerIcon": "./assets/github-small.svg",
     "logo": "./assets/logo.png",
-    "darkLogo": "./assets/logo-dark.png",
+    "logoDark": "./assets/logo-dark.png",
     "screenshots": [],
     "brandColor": "#24292F"
   }

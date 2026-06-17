@@ -26,7 +26,7 @@
     "termsOfServiceURL": "https://www.mtnewswires.com/subscriber-terms-of-service",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "darkLogo": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.mtnewswires.com"
 }

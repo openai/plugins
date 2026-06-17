@@ -26,7 +26,7 @@
     "termsOfServiceURL": "https://www.particl.com/legal/terms",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "darkLogo": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.particl.com"
 }
