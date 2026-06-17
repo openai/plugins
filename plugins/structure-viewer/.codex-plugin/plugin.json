@@ -1,0 +1,51 @@
+{
+  "name": "structure-viewer",
+  "version": "0.1.9",
+  "description": "Open and inspect molecular structure files in an interactive Mol* viewer.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "structure",
+    "pdb",
+    "cif",
+    "mmcif",
+    "mol",
+    "sdf",
+    "molstar",
+    "protein",
+    "ligand",
+    "molecule",
+    "bioinformatics"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Molecular Structure Viewer",
+    "shortDescription": "Open molecular structures in Codex",
+    "longDescription": "Molecular Structure Viewer helps you open and inspect PDB, CIF, mmCIF, MOL, and SDF files directly in Codex. Explore an interactive Mol* view, inspect experiment metadata, focus ligands, select author-numbered chains or residue sets, calculate coordinate-derived contacts and distances, change representations and display options through chat, and ask follow-up questions grounded in the current viewer state.",
+    "developerName": "OpenAI",
+    "category": "Research",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Open this structure, identify the likely ligand, and show residues within 4 angstroms",
+      "Open this structure and measure the closest-heavy-atom distance between two residues",
+      "Open this structure in the side pane and color it by B-factor or confidence"
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

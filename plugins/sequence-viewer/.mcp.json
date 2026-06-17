@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "sequence-viewer": {
+      "command": "node",
+      "args": ["./dist/server.mjs"],
+      "cwd": "."
+    }
+  }
+}

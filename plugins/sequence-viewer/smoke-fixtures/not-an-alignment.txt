@@ -1,0 +1,2 @@
+This is intentionally not an alignment.
+It should trigger the MSA parse error/fallback path rather than a misleading grid.

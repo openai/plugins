@@ -1,0 +1,31 @@
+data_mini_protein
+#
+loop_
+_atom_site.group_PDB
+_atom_site.id
+_atom_site.type_symbol
+_atom_site.label_atom_id
+_atom_site.label_alt_id
+_atom_site.label_comp_id
+_atom_site.label_asym_id
+_atom_site.label_entity_id
+_atom_site.label_seq_id
+_atom_site.pdbx_PDB_ins_code
+_atom_site.Cartn_x
+_atom_site.Cartn_y
+_atom_site.Cartn_z
+_atom_site.occupancy
+_atom_site.B_iso_or_equiv
+_atom_site.pdbx_formal_charge
+_atom_site.auth_seq_id
+_atom_site.auth_comp_id
+_atom_site.auth_asym_id
+_atom_site.auth_atom_id
+_atom_site.pdbx_PDB_model_num
+ATOM 1 N N . MET A 1 1 ? -15.039 -5.945 21.719 1.00 70.38 ? 1 MET A N 1
+ATOM 2 C CA . MET A 1 1 ? -13.930 -5.535 20.875 1.00 70.38 ? 1 MET A CA 1
+ATOM 3 C C . MET A 1 1 ? -14.242 -4.215 20.172 1.00 70.38 ? 1 MET A C 1
+ATOM 4 N N . GLU A 1 2 ? -14.039 -2.980 20.812 1.00 60.56 ? 2 GLU A N 1
+ATOM 5 C CA . GLU A 1 2 ? -14.180 -1.636 20.250 1.00 60.56 ? 2 GLU A CA 1
+ATOM 6 C C . GLU A 1 2 ? -13.680 -1.573 18.812 1.00 60.56 ? 2 GLU A C 1
+#
