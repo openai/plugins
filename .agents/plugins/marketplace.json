@@ -1892,10 +1892,10 @@
       "category": "Business & Operations"
     },
     {
-      "name": "chronograph",
+      "name": "chronograph-lp",
       "source": {
         "source": "local",
-        "path": "./plugins/chronograph"
+        "path": "./plugins/chronograph-lp"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -2106,6 +2106,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "chronograph-gp",
+      "source": {
+        "source": "local",
+        "path": "./plugins/chronograph-gp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Finance"
     }
   ]
 }

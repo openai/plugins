@@ -1,0 +1,35 @@
+{
+  "name": "chronograph-lp",
+  "version": "1.0.3",
+  "description": "Portfolio monitoring and analytics for private capital LP teams",
+  "author": {
+    "name": "Chronograph",
+    "url": "https://www.chronograph.pe/"
+  },
+  "homepage": "https://www.chronograph.pe/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Chronograph LP",
+    "shortDescription": "Trusted portfolio data for private capital LP teams",
+    "longDescription": "Chronograph LP provides portfolio monitoring and analytics for private capital Limited Partner users. Access trusted private markets portfolio data, from underlying portfolio companies and assets to funds, vehicles, commitments, and more.",
+    "developerName": "Chronograph",
+    "category": "Finance",
+    "capabilities": [],
+    "websiteURL": "https://www.chronograph.pe/",
+    "privacyPolicyURL": "https://www.chronograph.pe/legal/privacy-policy/",
+    "termsOfServiceURL": "https://www.chronograph.pe/legal/website-terms-of-use/",
+    "defaultPrompt": [
+      "Find Chronograph LP portfolio updates and summarize key performance changes.",
+      "Pull Chronograph LP fund metrics for this quarter and highlight risks.",
+      "Compare Chronograph LP portfolio KPIs and flag outliers."
+    ],
+    "brandColor": "#414B4B",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

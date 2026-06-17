@@ -6,5 +6,5 @@ interface:
 dependencies:
   tools:
     - type: "mcp"
-      value: "chronograph"
+      value: "chronograph-lp"
       description: "Chronograph MCP server for fund, commitment, and investment data."
