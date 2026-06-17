@@ -1,6 +1,6 @@
 {
   "name": "razorpay",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Connect your Razorpay account to access your payment data through conversation.",
   "author": {
     "name": "Razorpay Software Private Limited",

@@ -1,6 +1,6 @@
 {
   "name": "hugging-face",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Inspect models, datasets, Spaces, and research",
   "author": {
     "name": "Hugging Face",

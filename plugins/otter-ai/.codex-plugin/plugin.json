@@ -1,6 +1,6 @@
 {
   "name": "otter-ai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of transcripts, summaries, action items, and meeting metadata directly within your workflow.",
   "author": {
     "name": "Otter.ai",

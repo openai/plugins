@@ -1,6 +1,6 @@
 {
   "name": "pylon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Access Pylon's customer support platform directly from Codex to search, manage, and resolve customer issues.",
   "author": {
     "name": "Pylon Labs Inc.",

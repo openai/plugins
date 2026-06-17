@@ -1,6 +1,6 @@
 {
   "name": "mixpanel",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Query and analyze Mixpanel",
   "author": {
     "name": "Mixpanel",

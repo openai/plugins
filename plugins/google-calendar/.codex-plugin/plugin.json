@@ -1,6 +1,6 @@
 {
   "name": "google-calendar",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Connect Google Calendar for scheduling, availability, daily briefs, and event management.",
   "author": {
     "name": "OpenAI",
