@@ -6,5 +6,5 @@ interface:
 dependencies:
   tools:
     - type: "mcp"
-      value: "chronograph"
+      value: "chronograph-gp"
       description: "Optional Chronograph MCP server for live company metadata, investments, and metric retrieval. Not required when working from an uploaded Excel model."
