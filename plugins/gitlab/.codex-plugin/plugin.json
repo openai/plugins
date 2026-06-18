@@ -1,0 +1,43 @@
+{
+  "name": "gitlab",
+  "version": "0.1.0",
+  "description": "Inspect GitLab projects, issues, merge requests, diffs, and comments through the GitLab connector.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://about.gitlab.com/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "gitlab",
+    "merge-requests",
+    "issues",
+    "code-review",
+    "repositories"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "GitLab",
+    "shortDescription": "Inspect GitLab projects, issues, and merge requests",
+    "longDescription": "Use GitLab to inspect projects, issues, merge requests, diffs, commits, comments, and related code context through the GitLab connector.",
+    "developerName": "OpenAI",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://about.gitlab.com/",
+    "privacyPolicyURL": "https://about.gitlab.com/privacy/",
+    "termsOfServiceURL": "https://about.gitlab.com/terms/",
+    "defaultPrompt": [
+      "Inspect GitLab issues and merge requests relevant to this task."
+    ],
+    "brandColor": "#FC6D26",
+    "composerIcon": "./assets/gitlab.svg",
+    "logo": "./assets/gitlab.svg",
+    "screenshots": []
+  }
+}
