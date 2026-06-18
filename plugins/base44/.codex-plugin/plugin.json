@@ -1,6 +1,6 @@
 {
   "name": "base44",
-  "version": "1.0.2-beta.1",
+  "version": "1.0.3-beta.1",
   "description": "Build and deploy Base44 full-stack apps with CLI project management and JavaScript/TypeScript SDK development skills",
   "author": {
     "name": "base44",

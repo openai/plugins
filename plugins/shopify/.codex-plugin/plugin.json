@@ -1,6 +1,6 @@
 {
   "name": "shopify",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code.",
   "author": {
     "name": "Shopify",
