@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gap Analysis"
+  short_description: "Find missing diligence materials in a Datasite room."
+  default_prompt: "Use $gap-analysis to identify gaps in this Datasite diligence room."

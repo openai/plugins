@@ -1,0 +1,4 @@
+interface:
+  display_name: "Risk Analysis Audit"
+  short_description: "Surface deal risks from Datasite room documents."
+  default_prompt: "Use $risk-analysis-audit to audit this Datasite room for deal risks."

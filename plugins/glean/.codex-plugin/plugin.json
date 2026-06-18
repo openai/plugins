@@ -1,0 +1,41 @@
+{
+  "name": "glean",
+  "version": "1.0.0",
+  "description": "Access enterprise knowledge with Glean's remote MCP server.",
+  "author": {
+    "name": "Glean Technologies, Inc.",
+    "url": "https://glean.com"
+  },
+  "homepage": "https://glean.com",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [
+    "glean",
+    "enterprise-search",
+    "knowledge-management",
+    "mcp"
+  ],
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Glean",
+    "shortDescription": "Access enterprise knowledge with Glean",
+    "longDescription": "Bring enterprise context to ChatGPT and your AI tools with Glean's Remote MCP server. Search across all your organization's connected data sources—documents, wikis, code repositories, and more. Find employees by name, role, or expertise. Read specific documents, access Gmail and Outlook emails, and lookup meeting details. Custom agent workflows enable powerful automation tailored to your organization. Make Glean your AI assistant's enterprise memory—ensuring ChatGPT and other MCP-enabled applications have deep knowledge of your company's context wherever you work.",
+    "developerName": "Glean Technologies, Inc.",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://glean.com",
+    "privacyPolicyURL": "https://www.glean.com/privacy",
+    "termsOfServiceURL": "https://www.glean.com/terms",
+    "defaultPrompt": [
+      "Search company knowledge with Glean.",
+      "Find an employee or team in Glean.",
+      "Fetch a Glean document by URL."
+    ],
+    "brandColor": "#1F6FEB",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "IRL Tracker"
+  short_description: "Map information request lists to available Datasite documents."
+  default_prompt: "Use $irl-tracker to compare this IRL against Datasite room contents."

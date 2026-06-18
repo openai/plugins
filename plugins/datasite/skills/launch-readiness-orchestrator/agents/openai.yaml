@@ -1,0 +1,4 @@
+interface:
+  display_name: "Launch Readiness Orchestrator"
+  short_description: "Coordinate Datasite room checks before buyer launch."
+  default_prompt: "Use $launch-readiness-orchestrator to prepare this Datasite room for launch."

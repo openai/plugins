@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draft Brief"
+  short_description: "Draft court-ready litigation briefs with verified citations."
+  default_prompt: "Use $draft-brief to draft a litigation brief with verified citations."

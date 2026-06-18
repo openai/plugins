@@ -1,0 +1,4 @@
+interface:
+  display_name: "Render CLI"
+  short_description: "Install and use the Render CLI for deploys, logs, and SSH."
+  default_prompt: "Use $render-cli to install or use the Render CLI for this workflow."

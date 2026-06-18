@@ -1,6 +1,6 @@
 {
   "name": "supabase",
-  "version": "0.1.7",
+  "version": "0.1.10",
   "description": "Access your Supabase projects and perform tasks like managing tables, fetching config, and querying data.",
   "author": {
     "name": "Supabase",
@@ -8,7 +8,7 @@
     "url": "https://supabase.com"
   },
   "homepage": "https://supabase.com",
-  "repository": "https://github.com/supabase-community/codex-plugin",
+  "repository": "https://github.com/supabase-community/supabase-plugin",
   "license": "MIT",
   "keywords": [
     "supabase",

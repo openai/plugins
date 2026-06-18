@@ -35,67 +35,16 @@ Activate this skill when users want to:
 
 > **Note:** MCP tools require the Render MCP server. If unavailable, use the CLI for status and logs; metrics and database queries require MCP.
 
-## MCP Setup (Per Tool)
+## MCP Setup
 
-If `list_services()` fails because MCP isn't configured, guide the user to set up the hosted Render MCP server. Ask which AI tool they're using, then provide the matching instructions below. Always use their API key.
+If `list_services()` fails, set up the Render MCP server. For detailed per-tool walkthroughs, see **render-mcp**.
 
-### Cursor
+**Quick setup:** Add the Render MCP server to your AI tool's MCP config:
+- **URL:** `https://mcp.render.com/mcp`
+- **Auth header:** `Authorization: Bearer <YOUR_API_KEY>`
+- **API key:** `https://dashboard.render.com/u/*/settings#api-keys`
 
-Walk the user through these steps:
-
-1) Get a Render API key:
-```
-https://dashboard.render.com/u/*/settings#api-keys
-```
-
-2) Add this to `~/.cursor/mcp.json` (replace `<YOUR_API_KEY>`):
-```json
-{
-  "mcpServers": {
-    "render": {
-      "url": "https://mcp.render.com/mcp",
-      "headers": {
-        "Authorization": "Bearer <YOUR_API_KEY>"
-      }
-    }
-  }
-}
-```
-
-3) Restart Cursor, then retry `list_services()`.
-
-### Codex
-
-Walk the user through these steps:
-
-1) Get a Render API key:
-```
-https://dashboard.render.com/u/*/settings#api-keys
-```
-
-2) Set it in their shell:
-```bash
-export RENDER_API_KEY="<YOUR_API_KEY>"
-```
-
-3) Add the MCP server with the Codex CLI:
-```bash
-codex mcp add render --url https://mcp.render.com/mcp --bearer-token-env-var RENDER_API_KEY
-```
-
-4) Restart Codex, then retry `list_services()`.
-
-### Other Tools
-
-If the user is on another AI app, direct them to the Render MCP docs for that tool's setup steps and install method.
-
-### Workspace Selection
-
-After MCP is configured, have the user set the active Render workspace with a prompt like:
-
-```
-Set my Render workspace to [WORKSPACE_NAME]
-```
+After configuring, restart your tool and retry `list_services()`. Then set your workspace with `list_workspaces()` / `get_selected_workspace()`.
 
 ---
 
@@ -367,5 +316,6 @@ render ssh <service-id>
 
 ## Related Skills
 
-- **deploy:** Deploy new applications to Render
-- **debug:** Diagnose and fix deployment failures
+- **render-deploy** — Deploy new applications to Render
+- **render-debug** — Diagnose and fix deployment failures
+- **render-mcp** — MCP server setup and tool catalog

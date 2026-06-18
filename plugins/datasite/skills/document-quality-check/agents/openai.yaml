@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document Quality Check"
+  short_description: "Audit Datasite room documents for quality and readiness issues."
+  default_prompt: "Use $document-quality-check to audit this Datasite room for document quality issues."

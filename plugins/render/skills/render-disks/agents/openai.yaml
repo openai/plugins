@@ -1,0 +1,4 @@
+interface:
+  display_name: "Render Disks"
+  short_description: "Attach and manage persistent disks on Render services."
+  default_prompt: "Use $render-disks to configure persistent disk storage for this Render service."

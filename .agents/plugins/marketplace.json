@@ -2108,6 +2108,18 @@
       "category": "Developer Tools"
     },
     {
+      "name": "glean",
+      "source": {
+        "source": "local",
+        "path": "./plugins/glean"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "chronograph-gp",
       "source": {
         "source": "local",

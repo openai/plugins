@@ -1,6 +1,6 @@
 {
   "name": "datasite",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Deal room documents, diligence materials, and Q&A workflows",
   "author": {
     "name": "Datasite",
@@ -9,6 +9,7 @@
   "repository": "https://github.com/openai/plugins",
   "license": "MIT",
   "keywords": [],
+  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Datasite",
