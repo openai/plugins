@@ -5,7 +5,7 @@ Use this reference whenever the scan needs auditable candidate coverage or a sco
 ## Artifact Requirements
 
 - Load the per-scan threat model path from `../../../references/scan-artifacts.md` as the repo-specific threat-model source of truth.
-- Use the artifact paths from `../../../references/scan-artifacts.md` for `seed_research.md`, `deep_review_input.csv` when a scoped file-review worklist is needed, `work_ledger.jsonl` when a scoped file-review worklist is needed, `raw_candidates.jsonl` when multiple file-review results are aggregated, `dedupe_report.md` and `deduped_candidates.jsonl` when cross-file dedupe is needed, and per-finding `05_findings/<candidate_id>/candidate_ledger.jsonl`.
+- Use the artifact paths from `../../../references/scan-artifacts.md` for `seed_research.md`, `deep_review_input.jsonl` when a scoped file-review worklist is needed, `work_ledger.jsonl` when a scoped file-review worklist is needed, `raw_candidates.jsonl` when multiple file-review results are aggregated, `dedupe_report.md` and `deduped_candidates.jsonl` when cross-file dedupe is needed, and per-finding `05_findings/<candidate_id>/candidate_ledger.jsonl`.
 
 ## Seed Research
 
@@ -21,19 +21,20 @@ Use this reference whenever the scan needs auditable candidate coverage or a sco
 ## Subagent Requirements
 
 - When a scan uses subagent-dispatch phases and subagents are available in the current tool set, use subagents for those phases.
-- If subagents are available and the user has not explicitly allowed subagents, stop before starting subagent dispatch and ask for that approval.
-- File-review-subagent ownership: one file-review subagent owns one `deep_review_input.csv` row or one very small tightly coupled shard, max 5 files, and returns full-file receipts plus pre-dedupe finding objects for that assignment.
+- For exhaustive repository-wide, scoped-path, and diff scans, explicit invocation of the applicable top-level exhaustive scan workflow is the required user authorization for these subagent-dispatch phases. For other scan modes, use subagents only when the applicable top-level workflow or the user has authorized them.
+- Dispatch JSONL worklist assignments through the ordinary delegated-worker lifecycle: spawn no more workers than the runtime's usable slots, wait for the specific worker ids, validate each owned result, and then refill the available slots. On native v2, spawn self-contained shard workers with `fork_turns=none`; completed workers are idle and do not need interruption, and `interrupt_agent` is only for stopping a still-running worker before a retry. Do not route a JSONL worklist through a host batch-import tool.
+- File-review-subagent ownership: one file-review subagent owns one `deep_review_input.jsonl` row or one very small tightly coupled shard, max 5 files, and returns full-file receipts plus pre-dedupe finding objects for that assignment.
 - File-review subagents are read-only with respect to the target code under review, but they are allowed and expected to write scan artifacts under the resolved numbered artifact directories, including `<discovery_dir>/work_ledger.jsonl`, raw candidate snippets in `<discovery_dir>/raw_candidates.jsonl`, and per-candidate ledger receipts under `<findings_dir>/<candidate_id>/` when those artifact paths are provided in the prompt.
 - Validation-subagent ownership: one validation subagent owns one candidate finding, one deduped candidate, or one repository coverage-ledger row that needs validation closure. It writes or returns validation artifacts, the visible validation report update, and the validation candidate-ledger receipt for that assignment.
 - Attack-path-subagent ownership: one attack-path subagent owns one validated candidate finding or one reportable/deferred validation closure row. It writes or returns attack-path facts, severity/policy analysis, the visible attack-path report update, and the attack-path candidate-ledger receipt for that assignment.
-- Parent-agent ownership: the parent agent owns `deep_review_input.csv` generation, subagent dispatch, work-ledger and candidate-ledger reconciliation, aggregation of subagent outputs, cross-file dedupe when needed, and final scan closure.
+- Parent-agent ownership: the parent agent owns `deep_review_input.jsonl` generation, bounded subagent dispatch, work-ledger and candidate-ledger reconciliation, aggregation of subagent outputs, cross-file dedupe when needed, and final scan closure.
 - Subagent prompts must carry the exact current scan instructions they are expected to follow. Do not rely on the subagent implicitly inheriting this skill, another phase skill, previous parent context, or a summarized reference name.
 
 ### File-Review Subagent Handoff
 
 The parent agent should give each file-review subagent enough concrete context to execute its assigned row without relying on implicit parent context. Keep the prompt concise, but include:
 
-- the assigned `deep_review_input.csv` row or tiny shard
+- the assigned `deep_review_input.jsonl` row or tiny shard
 - the scan target, scan mode, `repo_name`, `scan_id`, `artifacts_dir`, the relevant numbered artifact directories, and per-scan threat model path or summary
 - the writable artifact paths for `<discovery_dir>/work_ledger.jsonl`, `<discovery_dir>/raw_candidates.jsonl`, and per-candidate ledger receipts under `<findings_dir>/<candidate_id>/`
 - any user-provided comparison or seed artifact that should affect coverage, such as an HTML/markdown report, prior security-review output, advisory text, CVE/GHSA, release note, issue, or separate audit directory
@@ -43,7 +44,7 @@ The parent agent must reject or re-prompt any file-review subagent result that l
 
 ### Validation And Attack-Path Subagent Handoff
 
-After discovery and dedupe, divide validation and attack-path work across subagents when multiple candidates or coverage-ledger rows need closure and subagents are available and approved.
+After discovery and dedupe, divide validation and attack-path work across subagents when multiple candidates or coverage-ledger rows need closure and subagents are available under the resolved scan authorization.
 
 For validation subagents, include the candidate or ledger row, discovery evidence, relevant raw/deduped candidate ids, affected files, threat-model context, validation artifact/report paths, and the candidate-ledger path that needs the validation receipt. The validation subagent should preserve or suppress the assigned instance only; it does not own final report assembly or unrelated candidates.
 
@@ -53,22 +54,22 @@ The parent agent must reconcile validation and attack-path subagent outputs befo
 
 ## Scoped Deep Review
 
-- Use `deep_review_input.csv` as the canonical scoped deep-review worklist for every diff-scoped, repository-wide, and scoped-path scan.
-- For diff-scoped scans, generate `rank_input.csv` deterministically from changed source-like files with `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.csv` for PR, commit, and branch diffs, or `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.csv` for a local patch, then copy every row into `deep_review_input.csv` with `python3 <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.csv --out <discovery_dir>/deep_review_input.csv`.
-- Diff-scoped scans do not rank or drop changed files before deep review. Every row in diff `rank_input.csv` must be copied into `deep_review_input.csv` and receive a full-file review receipt.
+- Use `deep_review_input.jsonl` as the canonical scoped deep-review worklist for every diff-scoped, repository-wide, and scoped-path scan.
+- For diff-scoped scans, generate `rank_input.jsonl` deterministically from changed source-like files with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.jsonl` for PR, commit, and branch diffs, or `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.jsonl` for a local patch, then copy every row into `deep_review_input.jsonl` with `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.jsonl --out <discovery_dir>/deep_review_input.jsonl`.
+- Diff-scoped scans do not rank or drop changed files before deep review. Every row in diff `rank_input.jsonl` must be copied into `deep_review_input.jsonl` and receive a full-file review receipt.
 - Add directly supporting files required to understand the changed security behavior only when repository evidence shows they are needed; record the add-back reason in the work ledger or per-file result.
-- For repository-wide and scoped-path scans, `deep_review_input.csv` is selected from the ranked in-scope inventory.
-- Deep-review every file selected into `deep_review_input.csv`.
-  - Use `<discovery_dir>/work_ledger.jsonl` as the append-only record of claims and completions, and reconcile it against `deep_review_input.csv` so rows are not skipped or double-counted.
-  - Use subagents when available and approved.
+- For repository-wide and scoped-path scans, `deep_review_input.jsonl` is selected from the ranked in-scope inventory.
+- Deep-review every file selected into `deep_review_input.jsonl`.
+  - Use `<discovery_dir>/work_ledger.jsonl` as the append-only record of claims and completions, and reconcile it against `deep_review_input.jsonl` so rows are not skipped or double-counted.
+  - Use subagents when available under the resolved scan authorization.
     - A file-review subagent must read every assigned file in full, update the ledger receipt for those files, and return the raw finding results for that assignment.
     - When a file-review subagent finds a plausible finding in its assigned file or shard, that same subagent should carry that finding through candidate-local validation and candidate-local attack-path analysis before handing it back. The raw result should include the source or privileged boundary, closest relevant control, sink or broken control, impact, validation method/evidence or exact proof gap, attack-path facts, and disposition.
     - A file-review subagent may read the minimum supporting files needed to validate or explain a finding it discovered, but it does not own unrelated rows or final scan closure.
-  - If subagents are not available, iterate through `deep_review_input.csv` yourself with the same full-file standard.
+  - If subagents are not available, iterate through `deep_review_input.jsonl` yourself with the same full-file standard.
   - A file is not covered because it appeared in searches. It is covered only when the responsible subagent or parent agent returns a receipt showing the file was read in full.
   - Record file-level completion, disposition, and a concise evidence note in `<discovery_dir>/work_ledger.jsonl`; do not create a separate per-file findings directory.
   - Append normalized, pre-dedupe candidate objects to `<discovery_dir>/raw_candidates.jsonl` when multiple file-review results are being aggregated or cross-file dedupe is needed.
-  - Do not stop until every `deep_review_input.csv` row has a completion receipt.
+  - Do not stop until every `deep_review_input.jsonl` row has a completion receipt.
 
 ## Candidate Finding Coverage
 

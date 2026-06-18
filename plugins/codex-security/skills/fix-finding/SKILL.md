@@ -40,6 +40,8 @@ Use this guidance whenever reproducing the finding, running tests, or validating
 
 1. Scope the fix.
    - Inspect the affected files and the smallest set of supporting files needed to understand the vulnerable path.
+   - Before editing, establish that the reported weakness is concretely reachable in the checked-out code. Generic weakness labels, file anchors, and suspicious-looking code are not proof.
+   - If the same broken security boundary cannot be shown after a bounded investigation, do not patch an adjacent weakness or add speculative defense in depth. Return `no_change` when evidence shows the path is already safe; otherwise return `blocked` with the missing proof.
    - Identify the narrowest code boundary where the security invariant should be enforced.
    - Check for existing helpers, validators, permission checks, sanitizers, policy objects, and test patterns before adding new ones.
 2. Reproduce or encode the issue before fixing when feasible.
@@ -67,6 +69,16 @@ Use this guidance whenever reproducing the finding, running tests, or validating
    - Confirm the regression test would fail if the fix were removed, when practical.
    - Run any relevant unit tests, integration tests, formatter, linter, type checker, package-specific dependency check, and other repository checks normally required for the touched files.
 6. Report the outcome with exact commands, results, changed files, and remaining risk.
+
+## Workbench Remediation Stages
+
+When a Codex Security workbench request includes a scan ID, occurrence ID, remediation request ID, action token, and expected version, follow only the requested remediation stage. The stage boundary changes when code may be written, but it does not weaken the validation requirements above.
+
+- **Generate**: Keep the selected target checkout unchanged. Use an isolated worktree or temporary copy when edits are needed to develop or test the fix. Write one canonical unified diff containing the complete source and regression-test change, then record `generated` or `failed` using the supplied workbench identity.
+- **Apply**: Verify the recorded base revision and patch digest, then apply exactly that patch to the selected working tree without unrelated edits. Record `applied` or `failed`. Do not verify or close the finding in this stage.
+- **Verify**: Do not modify source. Re-run the original reproducer or strongest available exploit check, focused regression coverage, legitimate-behavior checks, nearby bypass checks, and relevant repository checks. Record `verified` only when the original issue no longer reproduces; preserve exact commands and results in the verification summary. Otherwise record `failed` and state the proof gap. Do not close the finding.
+
+When a parent thread delegates a remediation stage, the worker owns that stage through its terminal workbench update. The parent remains an orchestrator and must not duplicate the worker's edits or treat a chat response as completion.
 
 ## Completion Checklist
 

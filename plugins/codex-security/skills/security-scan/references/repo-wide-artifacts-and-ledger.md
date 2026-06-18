@@ -4,35 +4,41 @@ Use this reference with `repository-wide-scan.md` for exhaustive repository or s
 
 ## Exhaustive Scan Artifact Requirements
 
-- Use the artifact paths from `../../../references/scan-artifacts.md` for `rank_input.csv`, `rank_output.csv` when ranking applies, `deep_review_input.csv`, `work_ledger.jsonl`, `raw_candidates.jsonl`, `dedupe_report.md`, `deduped_candidates.jsonl`, and `repository_coverage_ledger.md`.
+- Use the artifact paths from `../../../references/scan-artifacts.md` for `rank_input.jsonl`, `rank_shards/` and `rank_output.jsonl` when ranking applies, `deep_review_input.jsonl`, `work_ledger.jsonl`, `raw_candidates.jsonl`, `dedupe_report.md`, `deduped_candidates.jsonl`, and `repository_coverage_ledger.md`.
 
 ## Exhaustive Scan Subagent Ownership
 
-- Ranking-subagent ownership: one ranking subagent owns exactly one `rank_input.csv` row and returns only ranking JSON.
-- Parent-agent ownership: the parent agent owns `rank_input.csv` generation when an upstream orchestrator did not already provide it, ranking-subagent dispatch when ranking is needed, `deep_review_input.csv` selection when an upstream orchestrator did not already provide it, global frontier/coverage work, and final exhaustive-scan closure.
+- Ranking-subagent ownership: one ranking subagent owns one generated `rank_shards/rank-shard-NNNN.input.jsonl` shard containing at most five rows. It writes only the matching `rank-shard-NNNN.output.jsonl` file.
+- Parent-agent ownership: the parent agent owns `rank_input.jsonl` generation when an upstream orchestrator did not already provide it, deterministic shard generation, bounded ranking-subagent dispatch, output validation and merge, `deep_review_input.jsonl` selection when an upstream orchestrator did not already provide it, global frontier/coverage work, and final exhaustive-scan closure.
 
 ## Files In Scope
 
-- A parent orchestrator may provide authoritative in-scope worklists at the standard `<discovery_dir>/rank_input.csv` and `<discovery_dir>/deep_review_input.csv` paths before this workflow begins.
+- A parent orchestrator may provide authoritative in-scope worklists at the standard `<discovery_dir>/rank_input.jsonl` and `<discovery_dir>/deep_review_input.jsonl` paths before this workflow begins.
   - Treat the parent-provided worklists as authoritative only when the current scan instructions explicitly say they are authoritative and both files are present. A stale or partial artifact pair is not a valid scope contract.
-  - When authoritative parent-provided worklists are present, use them exactly as supplied. Do not regenerate `rank_input.csv`, rerun ranking, overwrite `deep_review_input.csv`, or reinterpret `top-percent` inside this scan.
-  - The parent orchestrator owns explaining whether its `deep_review_input.csv` is exhaustive or selected. This exhaustive workflow still owns full review receipts, candidate ledgers, coverage-ledger closure, and final closure for the supplied worklist.
-- Otherwise, create a deterministic in-scope file worklist before subagent dispatch. Use `<plugin_dir>/scripts/generate_rank_input.py` to create `rank_input.csv`; do not ask the model to invent the file inventory.
-  - Command shape: `python3 <plugin_dir>/scripts/generate_rank_input.py make-repo-rank-input --repo <repo_root> --scope <scope> --out <discovery_dir>/rank_input.csv`.
-  - The generated CSV is the canonical candidate list for ranking subagents. It contains `path`, `area`, and `preview`.
+  - When authoritative parent-provided worklists are present, use them exactly as supplied. Do not regenerate `rank_input.jsonl`, rerun ranking, overwrite `deep_review_input.jsonl`, or reinterpret `top-percent` inside this scan.
+  - The parent orchestrator owns explaining whether its `deep_review_input.jsonl` is exhaustive or selected. This exhaustive workflow still owns full review receipts, candidate ledgers, coverage-ledger closure, and final closure for the supplied worklist.
+  - Legacy CSV worklists from an in-progress scan are not valid inputs for this workflow. Regenerate the JSONL worklists against the validated target snapshot or restart the scan.
+- Otherwise, create a deterministic in-scope file worklist before subagent dispatch. Use `<plugin_dir>/scripts/generate_rank_input.py` to create `rank_input.jsonl`; do not ask the model to invent the file inventory.
+  - Command shape: `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-repo-rank-input --repo <repo_root> --scope <scope> --out <discovery_dir>/rank_input.jsonl`.
+  - The generated JSONL is the canonical candidate list for ranking subagents. Each row contains `path`, `area`, and `preview`.
   - The script only includes source-like text files and default-excludes tests, docs, examples, personal/dev-only trees, vendored trees, generated caches, and build artifacts unless the threat model explicitly makes one of those areas runtime-reachable or privilege-bearing.
   - If excluded content is added back manually, record the reason in the coverage ledger.
-  - The Python script does not make the security ranking decision. Ranking is performed by ranking subagents over `rank_input.csv`.
+  - The Python script does not make the security ranking decision. Ranking is performed by ranking subagents over deterministic shards of `rank_input.jsonl`.
 - When authoritative parent-provided worklists are not present, convert the candidate list into the deep-review worklist:
   - Interpret `top-percent` as the percentage of ranked, included files that receive deep full-file audit.
-  - If `top-percent` is below 100, dispatch ranking subagents with `spawn_agents_on_csv` on `<discovery_dir>/rank_input.csv`.
-    - Ranking-subagent ownership: one ranking subagent owns exactly one `rank_input.csv` row. It decides only whether that file should enter deep review, and returns JSON with `path`, `include` true/false, `score` 1-10, and `reason`.
+  - If `top-percent` is below 100, create shards with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-rank-shards --rank-input <discovery_dir>/rank_input.jsonl --out-dir <discovery_dir>/rank_shards --max-rows 5`.
+    - Use the ordinary delegated-worker spawn and wait lifecycle. Keep no more ranking workers active than the current runtime's usable worker slots. On native v2, spawn each self-contained ranking worker with `fork_turns=none`.
+    - Give each ranking subagent one exact `.input.jsonl` path and its matching `.output.jsonl` path. The worker must emit one output row for every input row with exactly `path`, `area`, integer `score` from 1 through 10, boolean `include`, and non-empty `reason`.
+    - Do not route the JSONL worklist through a host batch-import tool. Do not let multiple workers write the same output file.
     - Ranking subagents do not perform deep review, validation, attack-path analysis, dedupe, or ledger closure.
-  - Save ranking output to `<discovery_dir>/rank_output.csv`, then create `<discovery_dir>/deep_review_input.csv` with `select-deep-review-input`.
-  - If `top-percent` is 100 or higher, skip ranking and copy every `rank_input.csv` row directly into `<discovery_dir>/deep_review_input.csv`.
+    - When one worker finishes, run `<python_command> <plugin_dir>/scripts/generate_rank_input.py validate-rank-shard --input <input-shard-path> --output <output-shard-path>`. After validation succeeds, leave the completed worker idle and assign the next pending shard through the runtime's supported follow-up or spawn lifecycle.
+    - If a shard output is missing or fails validation, rerun that shard. Re-prompt an idle worker directly; use `interrupt_agent` only when a still-running worker must be stopped before the retry. Do not silently coerce or omit invalid worker output.
+    - After every shard succeeds, merge them with `<python_command> <plugin_dir>/scripts/generate_rank_input.py merge-rank-outputs --rank-input <discovery_dir>/rank_input.jsonl --shard-dir <discovery_dir>/rank_shards --out <discovery_dir>/rank_output.jsonl`.
+    - Select the review set with `<python_command> <plugin_dir>/scripts/generate_rank_input.py select-deep-review-input --rank-output <discovery_dir>/rank_output.jsonl --top-percent <top-percent> --out <discovery_dir>/deep_review_input.jsonl`.
+  - If `top-percent` is 100 or higher, skip ranking and run `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.jsonl --out <discovery_dir>/deep_review_input.jsonl`.
   - Do not treat deterministic path order or broad grep hits as ranking evidence; the ranking-subagent output is the ranking source of truth.
-- Deep-review every file selected into `deep_review_input.csv` using the shared scoped file-review rules in `scan-artifacts-and-ledger.md`.
-- When `top-percent` is 100 or higher, or when an authoritative parent-provided worklist declares `deep_review_input.csv` exhaustive over `rank_input.csv`, do not stop until every `rank_input.csv` row has a completion receipt in the shared work ledger.
+- Deep-review every file selected into `deep_review_input.jsonl` using the shared scoped file-review rules in `scan-artifacts-and-ledger.md`.
+- When `top-percent` is 100 or higher, or when an authoritative parent-provided worklist declares `deep_review_input.jsonl` exhaustive over `rank_input.jsonl`, do not stop until every `rank_input.jsonl` row has a completion receipt in the shared work ledger.
 
 ## Ranking Requirements
 

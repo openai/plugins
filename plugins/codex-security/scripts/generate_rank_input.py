@@ -3,23 +3,26 @@
 
 This script stays deliberately model-free:
 
-- `make-repo-rank-input` creates the deterministic repository-wide candidate CSV
-  that ranking subagents consume.
-- `make-diff-rank-input` creates the deterministic diff-scoped candidate CSV
-  from Git changed paths that ranking subagents consume. It supports committed
-  revision diffs and local working-tree patches.
-- `copy-deep-review-input` copies every candidate row into the deep-review input for
-  exhaustive mode.
-- `select-deep-review-input` parses worker-produced ranking output and selects
-  the rows for deep review.
+- `make-repo-rank-input` creates the deterministic repository or scoped-path
+  JSONL candidate worklist that ranking subagents consume.
+- `make-diff-rank-input` creates the deterministic diff-scoped JSONL candidate
+  worklist from Git changed paths. It supports committed revision diffs and
+  local working-tree patches.
+- `make-rank-shards` partitions the ranking input into deterministic shards.
+- `validate-rank-shard` validates one completed worker output before the
+  coordinator closes that worker and schedules the next shard.
+- `merge-rank-outputs` validates and combines worker-local shard outputs.
+- `copy-deep-review-input` copies every candidate into the deep-review worklist
+  for exhaustive mode.
+- `select-deep-review-input` selects the ranked rows for deep review.
 """
 
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
 
 EXCLUDED_DIRS = {
@@ -144,6 +147,12 @@ TEXT_CODE_EXTENSIONS = {
     ".yml",
 }
 
+SHARD_INPUT_GLOB = "rank-shard-*.input.jsonl"
+SHARD_OUTPUT_GLOB = "rank-shard-*.output.jsonl"
+
+JsonRow = dict[str, object]
+RowValidator = Callable[[JsonRow, Path, int], None]
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Codex Security scan worklist helper.")
@@ -151,22 +160,26 @@ def parse_args() -> argparse.Namespace:
 
     make = subparsers.add_parser(
         "make-repo-rank-input",
-        help="Create rank_input.csv for subagent-based file ranking.",
+        help="Create rank_input.jsonl for subagent-based file ranking.",
     )
     make.add_argument("--repo", required=True, help="Repository root.")
-    make.add_argument("--scope", default=".", help="Subdirectory to scan.")
-    make.add_argument("--out", required=True, help="Output rank_input.csv path.")
+    make.add_argument(
+        "--scope",
+        default=".",
+        help="Path within the repository to scan. Defaults to the repository root.",
+    )
+    make.add_argument("--out", required=True, help="Output rank_input.jsonl path.")
     make.add_argument("--area", default="", help="Area label. Defaults to scope.")
     make.add_argument(
         "--preview-bytes",
         type=int,
         default=200,
-        help="Number of bytes to include in preview column.",
+        help="Number of bytes to include in the preview field.",
     )
 
     diff = subparsers.add_parser(
         "make-diff-rank-input",
-        help="Create rank_input.csv from Git changed source-like files.",
+        help="Create rank_input.jsonl from Git changed source-like files.",
     )
     diff.add_argument("--repo", required=True, help="Repository root.")
     diff.add_argument("--base", required=True, help="Git diff base revision.")
@@ -177,28 +190,56 @@ def parse_args() -> argparse.Namespace:
         help="Git diff mode: committed revisions or staged plus unstaged local patch.",
     )
     diff.add_argument("--head", default="HEAD", help="Git diff head revision.")
-    diff.add_argument("--out", required=True, help="Output rank_input.csv path.")
-    diff.add_argument("--area", default="diff", help="Area label for assess rows.")
+    diff.add_argument("--out", required=True, help="Output rank_input.jsonl path.")
+    diff.add_argument("--area", default="diff", help="Area label for ranking rows.")
     diff.add_argument(
         "--preview-bytes",
         type=int,
         default=200,
-        help="Number of bytes to include in preview column.",
+        help="Number of bytes to include in the preview field.",
     )
 
-    select = subparsers.add_parser(
-        "copy-deep-review-input",
-        help="Create deep_review_input.csv directly from rank_input.csv for exhaustive mode.",
+    shards = subparsers.add_parser(
+        "make-rank-shards",
+        help="Partition rank_input.jsonl into deterministic worker input shards.",
     )
-    select.add_argument("--rank-input", required=True, help="Deterministic rank input CSV.")
-    select.add_argument("--out", required=True, help="Output deep_review_input.csv path.")
+    shards.add_argument("--rank-input", required=True, help="Deterministic rank input JSONL.")
+    shards.add_argument("--out-dir", required=True, help="Directory for worker input shards.")
+    shards.add_argument(
+        "--max-rows",
+        type=int,
+        default=5,
+        help="Maximum rows per shard. Defaults to 5.",
+    )
+
+    validate_shard = subparsers.add_parser(
+        "validate-rank-shard",
+        help="Validate one worker output against its rank input shard.",
+    )
+    validate_shard.add_argument("--input", required=True, help="Worker rank input shard.")
+    validate_shard.add_argument("--output", required=True, help="Worker rank output shard.")
+
+    merge = subparsers.add_parser(
+        "merge-rank-outputs",
+        help="Validate worker shard outputs and create rank_output.jsonl.",
+    )
+    merge.add_argument("--rank-input", required=True, help="Authoritative rank input JSONL.")
+    merge.add_argument("--shard-dir", required=True, help="Directory of input and output shards.")
+    merge.add_argument("--out", required=True, help="Output rank_output.jsonl path.")
+
+    copy = subparsers.add_parser(
+        "copy-deep-review-input",
+        help="Create deep_review_input.jsonl directly from rank_input.jsonl.",
+    )
+    copy.add_argument("--rank-input", required=True, help="Deterministic rank input JSONL.")
+    copy.add_argument("--out", required=True, help="Output deep_review_input.jsonl path.")
 
     select = subparsers.add_parser(
         "select-deep-review-input",
-        help="Create deep_review_input.csv from worker-produced rank_output.csv.",
+        help="Create deep_review_input.jsonl from worker-produced rank_output.jsonl.",
     )
-    select.add_argument("--rank-output", required=True, help="Worker ranking CSV.")
-    select.add_argument("--out", required=True, help="Output deep_review_input.csv path.")
+    select.add_argument("--rank-output", required=True, help="Worker ranking output JSONL.")
+    select.add_argument("--out", required=True, help="Output deep_review_input.jsonl path.")
     select.add_argument(
         "--top-percent",
         type=int,
@@ -231,9 +272,7 @@ def path_is_excluded(path: Path) -> bool:
         return True
     if path.name in EXCLUDED_FILENAMES:
         return True
-    if path.name.endswith((".min.js", ".map")):
-        return True
-    return False
+    return path.name.endswith((".min.js", ".map"))
 
 
 def resolve_scope(repo: Path, scope: str) -> Path:
@@ -251,12 +290,88 @@ def resolve_scope(repo: Path, scope: str) -> Path:
     return scope_path
 
 
-def write_rows(output: Path, rows: list[tuple[str, str, str]], headers: list[str]) -> None:
+def write_jsonl(output: Path, rows: list[JsonRow]) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open("w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(headers)
-        writer.writerows(rows)
+    with output.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")))
+            handle.write("\n")
+
+
+def load_jsonl(path: Path, label: str, validator: RowValidator) -> list[JsonRow]:
+    if not path.exists():
+        raise SystemExit(f"{label} missing: {path}")
+
+    rows: list[JsonRow] = []
+    with path.open(encoding="utf-8") as handle:
+        for line_number, raw_line in enumerate(handle, start=1):
+            if not raw_line.strip():
+                raise SystemExit(f"{path}:{line_number}: blank JSONL rows are not allowed")
+            try:
+                parsed: object = json.loads(raw_line)
+            except json.JSONDecodeError as exc:
+                raise SystemExit(f"{path}:{line_number}: invalid JSON: {exc.msg}") from exc
+            if not isinstance(parsed, dict):
+                raise SystemExit(f"{path}:{line_number}: expected a JSON object")
+            row = {str(key): value for key, value in parsed.items()}
+            validator(row, path, line_number)
+            rows.append(row)
+    return rows
+
+
+def require_exact_fields(row: JsonRow, expected: set[str], path: Path, line_number: int) -> None:
+    actual = set(row)
+    if actual != expected:
+        missing = sorted(expected - actual)
+        unexpected = sorted(actual - expected)
+        details: list[str] = []
+        if missing:
+            details.append(f"missing fields {missing}")
+        if unexpected:
+            details.append(f"unexpected fields {unexpected}")
+        raise SystemExit(f"{path}:{line_number}: {'; '.join(details)}")
+
+
+def require_string(
+    row: JsonRow, field: str, path: Path, line_number: int, *, allow_empty: bool
+) -> None:
+    value = row[field]
+    if not isinstance(value, str) or (not allow_empty and not value.strip()):
+        requirement = "a string" if allow_empty else "a non-empty string"
+        raise SystemExit(f"{path}:{line_number}: {field} must be {requirement}")
+
+
+def validate_rank_input_row(row: JsonRow, path: Path, line_number: int) -> None:
+    require_exact_fields(row, {"path", "area", "preview"}, path, line_number)
+    require_string(row, "path", path, line_number, allow_empty=False)
+    require_string(row, "area", path, line_number, allow_empty=True)
+    require_string(row, "preview", path, line_number, allow_empty=True)
+
+
+def validate_rank_output_row(row: JsonRow, path: Path, line_number: int) -> None:
+    require_exact_fields(row, {"path", "area", "score", "include", "reason"}, path, line_number)
+    require_string(row, "path", path, line_number, allow_empty=False)
+    require_string(row, "area", path, line_number, allow_empty=True)
+    score = row["score"]
+    if isinstance(score, bool) or not isinstance(score, int):
+        raise SystemExit(f"{path}:{line_number}: score must be an integer from 1 through 10")
+    if not 1 <= score <= 10:
+        raise SystemExit(f"{path}:{line_number}: score must be from 1 through 10")
+    if not isinstance(row["include"], bool):
+        raise SystemExit(f"{path}:{line_number}: include must be a boolean")
+    require_string(row, "reason", path, line_number, allow_empty=False)
+
+
+def require_unique_paths(rows: list[JsonRow], label: str) -> None:
+    seen: set[str] = set()
+    duplicates: set[str] = set()
+    for row in rows:
+        path = str(row["path"])
+        if path in seen:
+            duplicates.add(path)
+        seen.add(path)
+    if duplicates:
+        raise SystemExit(f"{label} contains duplicate paths: {sorted(duplicates)}")
 
 
 def make_repo_rank_input(args: argparse.Namespace) -> None:
@@ -267,7 +382,7 @@ def make_repo_rank_input(args: argparse.Namespace) -> None:
     scope_rel = scope_abs.relative_to(repo).as_posix()
     area = args.area or scope_rel
 
-    rows: list[tuple[str, str, str]] = []
+    rows: list[JsonRow] = []
     for path in scope_abs.rglob("*"):
         try:
             if not path.is_file():
@@ -275,20 +390,17 @@ def make_repo_rank_input(args: argparse.Namespace) -> None:
         except OSError:
             continue
         rel = path.relative_to(repo)
-        if path_is_excluded(rel):
-            continue
-        if path.suffix.lower() not in TEXT_CODE_EXTENSIONS:
+        if path_is_excluded(rel) or path.suffix.lower() not in TEXT_CODE_EXTENSIONS:
             continue
 
         preview, is_binary = preview_for(path, args.preview_bytes)
         if is_binary:
             continue
-        rows.append((rel.as_posix(), area, preview))
+        rows.append({"path": rel.as_posix(), "area": area, "preview": preview})
 
-    rows.sort(key=lambda row: row[0])
+    rows.sort(key=lambda row: str(row["path"]))
     output = Path(args.out).expanduser()
-    write_rows(output, rows, ["path", "area", "preview"])
-
+    write_jsonl(output, rows)
     print(f"Wrote {len(rows)} rows to {output}")
 
 
@@ -312,9 +424,8 @@ def run_git_changed_paths(repo: Path, diff_args: list[str]) -> list[Path]:
         if not line:
             continue
         path = repo / line
-        if not path.exists() or not path.is_file():
-            continue
-        paths.append(path)
+        if path.exists() and path.is_file():
+            paths.append(path)
     return paths
 
 
@@ -333,103 +444,151 @@ def make_diff_rank_input(args: argparse.Namespace) -> None:
     if not repo.is_dir():
         raise SystemExit(f"Repo path not found: {repo}")
 
-    rows: list[tuple[str, str, str]] = []
+    rows: list[JsonRow] = []
     for path in git_changed_paths(repo, args.base, args.head, args.mode):
         rel = path.relative_to(repo)
-        if path_is_excluded(rel):
-            continue
-        if path.suffix.lower() not in TEXT_CODE_EXTENSIONS:
+        if path_is_excluded(rel) or path.suffix.lower() not in TEXT_CODE_EXTENSIONS:
             continue
 
         preview, is_binary = preview_for(path, args.preview_bytes)
         if is_binary:
             continue
-        rows.append((rel.as_posix(), args.area, preview))
+        rows.append({"path": rel.as_posix(), "area": args.area, "preview": preview})
 
-    rows.sort(key=lambda row: row[0])
+    rows.sort(key=lambda row: str(row["path"]))
     output = Path(args.out).expanduser()
-    write_rows(output, rows, ["path", "area", "preview"])
+    write_jsonl(output, rows)
     print(f"Wrote {len(rows)} rows to {output}")
 
 
-def parse_bool(value: object) -> bool | None:
-    if isinstance(value, bool):
-        return value
-    if value is None:
-        return None
-    normalized = str(value).strip().lower()
-    if normalized in {"true", "1", "yes", "y"}:
-        return True
-    if normalized in {"false", "0", "no", "n"}:
-        return False
-    return None
+def make_rank_shards(args: argparse.Namespace) -> None:
+    if args.max_rows < 1:
+        raise SystemExit("--max-rows must be at least 1")
+
+    rank_input = Path(args.rank_input).expanduser()
+    rows = load_jsonl(rank_input, "Rank input", validate_rank_input_row)
+    require_unique_paths(rows, "Rank input")
+
+    output_dir = Path(args.out_dir).expanduser()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    existing = sorted((*output_dir.glob(SHARD_INPUT_GLOB), *output_dir.glob(SHARD_OUTPUT_GLOB)))
+    if existing:
+        raise SystemExit(f"Rank shard directory already contains shard files: {output_dir}")
+
+    shard_count = 0
+    for start in range(0, len(rows), args.max_rows):
+        shard_count += 1
+        shard_path = output_dir / f"rank-shard-{shard_count:04d}.input.jsonl"
+        write_jsonl(shard_path, rows[start : start + args.max_rows])
+
+    print(f"Wrote {shard_count} rank shards to {output_dir}")
 
 
-def select_deep_review_input(args: argparse.Namespace) -> None:
-    rank_output = Path(args.rank_output).expanduser()
-    if not rank_output.exists():
-        raise SystemExit(f"Rank output missing: {rank_output}")
+def validate_rank_shard(
+    input_shard: Path, output_shard: Path
+) -> tuple[list[JsonRow], list[JsonRow]]:
+    shard_inputs = load_jsonl(input_shard, "Rank input shard", validate_rank_input_row)
+    require_unique_paths(shard_inputs, f"Rank input shard {input_shard.name}")
+    shard_outputs = load_jsonl(output_shard, "Rank output shard", validate_rank_output_row)
+    require_unique_paths(shard_outputs, f"Rank output shard {output_shard.name}")
 
-    rows: list[dict[str, object]] = []
-    with rank_output.open(newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            payload: dict[str, object] = {}
-            raw_payload = row.get("result_json") or ""
-            if raw_payload:
-                try:
-                    parsed = json.loads(raw_payload)
-                    if isinstance(parsed, dict):
-                        payload = parsed
-                except json.JSONDecodeError:
-                    payload = {}
+    expected_paths = {str(row["path"]) for row in shard_inputs}
+    actual_paths = {str(row["path"]) for row in shard_outputs}
+    if expected_paths != actual_paths:
+        missing = sorted(expected_paths - actual_paths)
+        unknown = sorted(actual_paths - expected_paths)
+        raise SystemExit(
+            f"{output_shard}: paths do not match its input shard; "
+            f"missing={missing}; unknown={unknown}"
+        )
 
-            score_raw: object = row.get("score") or payload.get("score") or 0
-            try:
-                row["score"] = int(score_raw)
-            except (TypeError, ValueError):
-                row["score"] = 0
+    area_by_path = {str(row["path"]): row["area"] for row in shard_inputs}
+    for row in shard_outputs:
+        row_path = str(row["path"])
+        if row["area"] != area_by_path[row_path]:
+            raise SystemExit(f"{output_shard}: area does not match rank input for {row_path}")
+    return shard_inputs, shard_outputs
 
-            include = parse_bool(row.get("include"))
-            if include is None:
-                include = parse_bool(payload.get("include"))
-            row["include"] = True if include is None else include
-            rows.append(row)
 
-    included = [row for row in rows if row.get("include")]
-    base_rows = included if included else rows
-    base_rows.sort(key=lambda row: int(row["score"]), reverse=True)
-    keep = max(1, int(len(base_rows) * (args.top_percent / 100.0))) if base_rows else 0
-    selected = base_rows[:keep]
+def validate_rank_shard_command(args: argparse.Namespace) -> None:
+    input_shard = Path(args.input).expanduser()
+    output_shard = Path(args.output).expanduser()
+    _, output_rows = validate_rank_shard(input_shard, output_shard)
+    print(f"Validated {len(output_rows)} ranking rows in {output_shard}")
 
+
+def merge_rank_outputs(args: argparse.Namespace) -> None:
+    rank_input = Path(args.rank_input).expanduser()
+    authoritative_rows = load_jsonl(rank_input, "Rank input", validate_rank_input_row)
+    require_unique_paths(authoritative_rows, "Rank input")
+
+    shard_dir = Path(args.shard_dir).expanduser()
+    if not shard_dir.is_dir():
+        raise SystemExit(f"Rank shard directory missing: {shard_dir}")
+    input_shards = sorted(shard_dir.glob(SHARD_INPUT_GLOB))
+    output_shards = sorted(shard_dir.glob(SHARD_OUTPUT_GLOB))
+    expected_output_names = {
+        path.name.replace(".input.jsonl", ".output.jsonl") for path in input_shards
+    }
+    actual_output_names = {path.name for path in output_shards}
+    if expected_output_names != actual_output_names:
+        missing = sorted(expected_output_names - actual_output_names)
+        unexpected = sorted(actual_output_names - expected_output_names)
+        details: list[str] = []
+        if missing:
+            details.append(f"missing output shards {missing}")
+        if unexpected:
+            details.append(f"unexpected output shards {unexpected}")
+        raise SystemExit(f"Rank shard outputs are incomplete: {'; '.join(details)}")
+
+    sharded_inputs: list[JsonRow] = []
+    output_by_path: dict[str, JsonRow] = {}
+    for input_shard in input_shards:
+        output_shard = input_shard.with_name(
+            input_shard.name.replace(".input.jsonl", ".output.jsonl")
+        )
+        shard_inputs, shard_outputs = validate_rank_shard(input_shard, output_shard)
+        sharded_inputs.extend(shard_inputs)
+        for row in shard_outputs:
+            row_path = str(row["path"])
+            if row_path in output_by_path:
+                raise SystemExit(f"Rank outputs contain duplicate path: {row_path}")
+            output_by_path[row_path] = row
+
+    if sharded_inputs != authoritative_rows:
+        raise SystemExit("Rank input shards do not exactly partition the authoritative rank input")
+
+    merged = [output_by_path[str(row["path"])] for row in authoritative_rows]
     output = Path(args.out).expanduser()
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open("w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["path", "area"])
-        for row in selected:
-            writer.writerow([row.get("path", ""), row.get("area", "")])
-
-    print(f"Selected {len(selected)} of {len(base_rows)} rows into {output}")
+    write_jsonl(output, merged)
+    print(f"Merged {len(merged)} ranking rows into {output}")
 
 
 def copy_deep_review_input(args: argparse.Namespace) -> None:
     rank_input = Path(args.rank_input).expanduser()
-    if not rank_input.exists():
-        raise SystemExit(f"Rank input missing: {rank_input}")
+    rows = load_jsonl(rank_input, "Rank input", validate_rank_input_row)
+    require_unique_paths(rows, "Rank input")
+    selected = [{"path": row["path"], "area": row["area"]} for row in rows]
 
-    count = 0
     output = Path(args.out).expanduser()
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with rank_input.open(newline="") as f, output.open("w", newline="") as out:
-        reader = csv.DictReader(f)
-        writer = csv.writer(out)
-        writer.writerow(["path", "area"])
-        for row in reader:
-            writer.writerow([row.get("path", ""), row.get("area", "")])
-            count += 1
+    write_jsonl(output, selected)
+    print(f"Copied {len(selected)} rows into {output}")
 
-    print(f"Copied {count} rows into {output}")
+
+def select_deep_review_input(args: argparse.Namespace) -> None:
+    rank_output = Path(args.rank_output).expanduser()
+    rows = load_jsonl(rank_output, "Rank output", validate_rank_output_row)
+    require_unique_paths(rows, "Rank output")
+
+    included = [row for row in rows if row["include"]]
+    base_rows = included if included else rows
+    base_rows.sort(key=lambda row: (-int(row["score"]), str(row["path"])))
+    keep = max(1, int(len(base_rows) * (args.top_percent / 100.0))) if base_rows else 0
+    selected = [{"path": row["path"], "area": row["area"]} for row in base_rows[:keep]]
+
+    output = Path(args.out).expanduser()
+    write_jsonl(output, selected)
+    print(f"Selected {len(selected)} of {len(base_rows)} rows into {output}")
 
 
 def main() -> None:
@@ -438,6 +597,12 @@ def main() -> None:
         make_repo_rank_input(args)
     elif args.command == "make-diff-rank-input":
         make_diff_rank_input(args)
+    elif args.command == "make-rank-shards":
+        make_rank_shards(args)
+    elif args.command == "validate-rank-shard":
+        validate_rank_shard_command(args)
+    elif args.command == "merge-rank-outputs":
+        merge_rank_outputs(args)
     elif args.command == "copy-deep-review-input":
         copy_deep_review_input(args)
     elif args.command == "select-deep-review-input":

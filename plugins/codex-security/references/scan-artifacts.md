@@ -6,7 +6,8 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 
 - `plugin_dir=<codex-security plugin root>`
 - `repo_name=<basename of repo_root>`
-- `security_scans_dir=/tmp/codex-security-scans/<repo_name>`
+- `system_temp_dir=<platform temporary directory>`
+- `security_scans_dir=<system_temp_dir>/codex-security-scans/<repo_name>`
 - `scan_id=<commit>_<scan timestamp>`
 - `scan_dir=<security_scans_dir>/<scan_id>`
 - `artifacts_dir=<scan_dir>/artifacts`
@@ -15,6 +16,10 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 - `coverage_dir=<artifacts_dir>/03_coverage`
 - `reconciliation_dir=<artifacts_dir>/04_reconciliation`
 - `findings_dir=<artifacts_dir>/05_findings`
+
+The MCP app resolves the platform temporary directory automatically. For a manual workflow, use the active process temporary directory (for example, `%TEMP%` on Windows or `$TMPDIR` when configured on Unix-like hosts) instead of hardcoding `/tmp`.
+
+Resolve `<python_command>` to the configured Python interpreter (`$PYTHON` when one is provided), otherwise use `python` on Windows and `python3` on Unix-like hosts.
 
 ## Threat Model (Phase 1) Paths
 
@@ -28,9 +33,10 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 ### Coverage Planning
 
 - Advisory seed research: `<context_dir>/seed_research.md`
-- Scoped ranking input: `<discovery_dir>/rank_input.csv` if applicable
-- Scoped ranking output: `<discovery_dir>/rank_output.csv` if applicable
-- Scoped deep-review input: `<discovery_dir>/deep_review_input.csv` if applicable
+- Scoped ranking input: `<discovery_dir>/rank_input.jsonl` if applicable
+- Scoped ranking shards: `<discovery_dir>/rank_shards/rank-shard-NNNN.input.jsonl` and matching worker-local `.output.jsonl` files if ranking applies
+- Scoped ranking output: `<discovery_dir>/rank_output.jsonl` if applicable
+- Scoped deep-review input: `<discovery_dir>/deep_review_input.jsonl` if applicable
 - Finding discovery report: `<discovery_dir>/finding_discovery_report.md`
 
 ### Deep Review
@@ -66,8 +72,7 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 ## Final Report Paths
 
 - Final scan report: `<scan_dir>/report.md`
-- Final HTML scan report: `<scan_dir>/report.html`
-- Final report validation notes, when validation or rendering fails: `<scan_dir>/report_validation.md`
+- Final report validation notes, when validation fails: `<scan_dir>/report_validation.md`
 
 ## Fix Finding Paths
 
@@ -77,5 +82,5 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 
 - Put scan phase outputs and supporting evidence under the numbered artifact subdirectories above.
 - Keep fix-finding outputs outside the numbered scan phases because fix-finding can run standalone or against an existing scan.
-- Put the final `report.md` directly under `scan_dir`.
+- Do not author the final report directly. Put complete report semantics in the canonical JSON files; finalization deterministically writes the unsealed `report.md` projection directly under `scan_dir` after validating and sealing the canonical JSON and evidence artifacts.
 - Keep the full scan bundle together under `scan_dir`.

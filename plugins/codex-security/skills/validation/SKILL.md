@@ -28,8 +28,8 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
    - debugger: if runtime execution is available but the chain is unclear, attempt a non-interactive debugger trace with gdb/lldb that shows the source-to-sink path.
    - unit or integration test: if the vulnerable path is covered by an existing test harness, add or adapt the smallest focused test that exercises the vulnerable code and asserts the vulnerable behavior.
    - realistic interface reproduction: if the code exposes a real user-reachable interface such as HTTP, CLI, file parser, RPC, message queue, plugin hook, or package API, attempt a minimal end-to-end reproduction through that interface using crafted input that reaches the suspected sink.
-   - code understanding: if dynamic reproduction is not feasible or proportionate after bounded attempts, perform focused code tracing from attacker-controlled input to the sink, identify preconditions and guards, and state whether the vulnerability is supported or defeated by the code path.
-   - large internal repository mode: for repository-wide or scoped-path scans where runtime reproduction requires unavailable internal services, secrets, cloud accounts, service meshes, or local production data, use static trace plus existing tests and deploy/config evidence once the candidate has a complete source/control/sink/impact tuple. Missing internal runtime setup is not suppression evidence.
+   - code understanding: if dynamic reproduction is not feasible or proportionate after bounded attempts, follow the static finding assessment reference in `../../references/static-finding-assessment.md` to trace source, control, sink, reachability, boundary evidence, counterevidence, and proof gaps.
+   - large internal repository mode: for repository-wide or scoped-path scans where runtime reproduction requires unavailable internal services, secrets, cloud accounts, service meshes, or local production data, use the static finding assessment reference plus existing tests and deploy/config evidence once the candidate has a complete source/control/sink/impact tuple. Missing internal runtime setup is not suppression evidence.
 4. For non-compiled stacks, attempt to generate PoCs or targeted commands that exercise the vulnerable path and trigger the vulnerability.
 5. For compiled stacks, prefer dynamic validation when it is feasible with bounded setup: build a debug variant or targeted test harness when available, reproduce the vulnerable behavior with a small PoC, then use valgrind, ASan, or a non-interactive debugger trace when those tools materially improve confidence.
 6. Save any PoC files, inputs, or logs under that finding's validation artifacts path from `../../references/scan-artifacts.md`.
@@ -48,6 +48,7 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
 ## Validation Guidance
 
 Follow the instance-preserving validation rules, validation checklist, and confidence guidance in `references/validation-guidance.md`.
+When validation falls back to static code understanding, or when static evidence is proportionate for large internal repositories, use the shared source/control/sink, boundary, counterevidence, and proof-gap guidance in `../../references/static-finding-assessment.md`.
 
 ## Output Contract
 

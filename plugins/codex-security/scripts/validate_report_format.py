@@ -28,7 +28,7 @@ REQUIRED_FINDING_SUBSECTIONS = (
 
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 FINDING_RE = re.compile(r"^### \[(\d+)\]\s+(.+?)\s*$", re.MULTILINE)
-FIELD_ROW_RE = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([^|]*?)\s*\|\s*$", re.MULTILINE)
+FIELD_ROW_RE = re.compile(r"^\|\s*((?:\\.|[^|])+?)\s*\|\s*((?:\\.|[^|])*?)\s*\|\s*$", re.MULTILINE)
 
 
 def line_number(text: str, offset: int) -> int:

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "codex-security": {
+      "command": "node",
+      "args": ["./mcp/server.mjs", "--stdio"],
+      "cwd": ".",
+      "tool_timeout_sec": 900
+    }
+  }
+}

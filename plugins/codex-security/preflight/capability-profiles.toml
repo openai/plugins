@@ -1,0 +1,193 @@
+version = 1
+
+[capabilities.deep_scan_phase_skills]
+kind = "plugin_skills"
+plugin = "codex-security"
+required = [
+  "attack-path-analysis",
+  "finding-discovery",
+  "security-scan",
+  "threat-model",
+  "validation",
+]
+
+[capabilities.delegated_workers]
+kind = "runtime"
+check = "delegation_available"
+
+[capabilities.goal_tools]
+kind = "runtime"
+check = "goal_tools_available"
+
+[capabilities.usable_worker_slots_6]
+kind = "multi_agent_capacity"
+op = ">="
+value = 6
+v1_default = 6
+
+[capabilities.usable_worker_slots_8]
+kind = "multi_agent_capacity"
+op = ">="
+value = 8
+v1_default = 6
+
+[capabilities.agent_depth_2]
+kind = "config"
+path = "agents.max_depth"
+op = ">="
+value = 2
+default = 1
+
+[capabilities.goals_enabled]
+kind = "config"
+path = "features.goals"
+op = "=="
+value = true
+default = true
+
+[profiles.security_diff_scan]
+description = "Capabilities for Git-backed Codex Security diff scans."
+
+[[profiles.security_diff_scan.requirements]]
+capability = "delegated_workers"
+severity = "warn"
+reason = "Large exhaustive diff scans use delegated workers when available; without them, the scan may need a narrower or parent-agent-only path."
+
+[[profiles.security_diff_scan.requirements]]
+capability = "goal_tools"
+severity = "suggest"
+reason = "Goal tools help long diff scans preserve completion criteria across many steps."
+
+[[profiles.security_diff_scan.requirements]]
+capability = "goals_enabled"
+severity = "suggest"
+reason = "Enabling goals makes long diff scans easier to resume and audit."
+
+[profiles.security_scan]
+description = "Capabilities for repository-wide or scoped-path Codex Security scans."
+
+[[profiles.security_scan.requirements]]
+capability = "delegated_workers"
+severity = "warn"
+reason = "Exhaustive repository-wide and scoped-path scans use delegated workers for ranking, file review, validation, and attack-path work when available."
+
+[[profiles.security_scan.requirements]]
+capability = "usable_worker_slots_6"
+severity = "warn"
+reason = "The default six-thread cap is the minimum practical concurrency for exhaustive scans that dispatch multiple owned work items."
+
+[[profiles.security_scan.requirements]]
+capability = "goal_tools"
+severity = "suggest"
+reason = "Goal tools help long scans preserve completion criteria across interruptions and compaction."
+
+[[profiles.security_scan.requirements]]
+capability = "goals_enabled"
+severity = "suggest"
+reason = "Enabling goals makes long scans easier to resume and audit."
+
+[profiles.deep_security_scan]
+description = "Capabilities for deep repository-wide Codex Security scans."
+
+[[profiles.deep_security_scan.requirements]]
+capability = "deep_scan_phase_skills"
+severity = "block"
+reason = "Deep scan depends on Codex Security phase skills loaded in the current runtime."
+
+[[profiles.deep_security_scan.requirements]]
+capability = "delegated_workers"
+severity = "block"
+reason = "Deep scan requires repeated parallel delegated discovery workers."
+
+[[profiles.deep_security_scan.requirements]]
+capability = "usable_worker_slots_6"
+severity = "block"
+reason = "Each completed discovery round requires exactly six usable workers."
+
+[[profiles.deep_security_scan.requirements]]
+capability = "agent_depth_2"
+severity = "block"
+reason = "Deep scan workers may need nested delegation for downstream exhaustive review work."
+modes = ["v1"]
+
+[[profiles.deep_security_scan.requirements]]
+capability = "usable_worker_slots_8"
+severity = "warn"
+reason = "Eight threads leaves headroom beyond the six required discovery workers for coordinator and nested work."
+
+[[profiles.deep_security_scan.requirements]]
+capability = "goal_tools"
+severity = "suggest"
+reason = "Goal tools help long deep scans preserve completion criteria across many rounds."
+
+[[profiles.deep_security_scan.requirements]]
+capability = "goals_enabled"
+severity = "suggest"
+reason = "Enabling goals makes long deep scans easier to resume and audit."
+
+[profiles.security_diff_scan.remediation]
+summary = "Recommended Codex config for longer diff scans."
+
+[[profiles.security_diff_scan.remediation.patches]]
+path = "features.goals"
+value = true
+
+[profiles.security_scan.remediation]
+summary = "Recommended Codex config for repository-wide or scoped-path scans."
+
+[[profiles.security_scan.remediation.patches]]
+path = "features.goals"
+value = true
+
+[profiles.deep_security_scan.remediation]
+summary = "Recommended Codex setup for deep repository-wide scans."
+
+[[profiles.deep_security_scan.remediation.patches]]
+path = "features.goals"
+value = true
+
+[[profiles.deep_security_scan.remediation.variants]]
+mode = "v1"
+
+[[profiles.deep_security_scan.remediation.variants.patches]]
+path = "agents.max_threads"
+value = 8
+
+[[profiles.deep_security_scan.remediation.variants.patches]]
+path = "agents.max_depth"
+value = 2
+
+[[profiles.deep_security_scan.remediation.variants]]
+mode = "v2"
+
+[[profiles.deep_security_scan.remediation.variants.patches]]
+kind = "remove"
+path = "agents.max_threads"
+
+[[profiles.deep_security_scan.remediation.variants.patches]]
+path = "features.multi_agent_v2.enabled"
+value = true
+
+[[profiles.deep_security_scan.remediation.variants.patches]]
+path = "features.multi_agent_v2.max_concurrent_threads_per_session"
+value = 9
+
+[[profiles.deep_security_scan.remediation.variants]]
+mode = "bridge-v2"
+
+[[profiles.deep_security_scan.remediation.variants.patches]]
+kind = "host_setting"
+path = "backend_config.max_multiagent_concurrency"
+value = 9
+
+[[routes]]
+skill = "security-diff-scan"
+profile = "security_diff_scan"
+
+[[routes]]
+skill = "security-scan"
+profile = "security_scan"
+
+[[routes]]
+skill = "deep-security-scan"
+profile = "deep_security_scan"

@@ -22,12 +22,12 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
 If the scan target is for a targeted code-diff:
 
 - Read `../security-scan/references/scan-artifacts-and-ledger.md`.
-- Generate `rank_input.csv` deterministically from changed source-like files with `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.csv` for PR, commit, and branch diffs, or `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.csv` for a local patch.
-- Copy every diff row into `deep_review_input.csv` with `python3 <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.csv --out <discovery_dir>/deep_review_input.csv`. Diff scans do not rank or drop changed files before deep review.
+- Generate `rank_input.jsonl` deterministically from changed source-like files with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.jsonl` for PR, commit, and branch diffs, or `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.jsonl` for a local patch.
+- Copy every diff row into `deep_review_input.jsonl` with `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.jsonl --out <discovery_dir>/deep_review_input.jsonl`. Diff scans do not rank or drop changed files before deep review.
 - Add directly supporting files required to understand the changed security behavior only when repository evidence shows they are needed. Do not use them to broaden into unrelated repository-wide enumeration.
-- Deep-review every file in `deep_review_input.csv` using the shared scoped file-review rules.
+- Deep-review every file in `deep_review_input.jsonl` using the shared scoped file-review rules.
 - Stay anchored to the changed code and directly supporting files. Unchanged siblings are context or negative controls unless the diff newly reaches them, weakens their shared control, or changes a shared sink/helper they depend on.
-- When the diff is too large to review credibly as one parent-agent pass, use approved file-review subagents and follow the shared scoped deep-review rules in `../security-scan/references/scan-artifacts-and-ledger.md#scoped-deep-review`.
+- When the diff is too large to review credibly as one parent-agent pass, use file-review subagents when they are available under the resolved scan authorization and follow the shared scoped deep-review rules in `../security-scan/references/scan-artifacts-and-ledger.md#scoped-deep-review`.
 
 ### Exhaustive Repository Or Scoped-Path Workflow
 
@@ -44,7 +44,7 @@ Use this checklist to keep discovery specific without turning it into validation
 - When the diff changes a shared helper, guard, route pattern, template pattern, or sink wrapper, expand to sibling call sites that the changed code directly affects, and keep each vulnerable instance addressable.
 - Look for attacker-controlled input, broken enforcement, or dangerous sinks introduced or made reachable by the change.
 - Stay anchored to the diff and the supporting files it depends on rather than drifting into unrelated repository scanning.
-- For repository-wide and scoped-path scans, stay anchored to `rank_input.csv`, `deep_review_input.csv`, the runtime inventory, and the coverage ledger rather than drifting into arbitrary text search.
+- For repository-wide and scoped-path scans, stay anchored to `rank_input.jsonl`, `deep_review_input.jsonl`, the runtime inventory, and the coverage ledger rather than drifting into arbitrary text search.
 - For advisory-seeded repository-wide and scoped-path scans, keep any supplied advisory row id, exact file, line, source, sink, or broken-control hint visible in the candidate ledger. A neighboring same-CWE finding can be an additional candidate, but it does not satisfy the seeded row unless it covers the same vulnerable control and effect.
 - Do not group many vulnerable files under one candidate when the files have separate line-level source/sink/control evidence.
 - When a dangerous sink has multiple call sites, enumerate each call site with its own source and closest control.

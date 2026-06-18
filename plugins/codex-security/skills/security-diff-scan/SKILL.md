@@ -3,11 +3,37 @@ name: security-diff-scan
 description: "Use when the user asks for a security review of a pull request, commit, branch diff, working-tree patch, or other Git-backed change set."
 metadata:
   short-description: Run security diff scan
+  capability-profile: security_diff_scan
 ---
 
 # Security Diff Scan
 
 Used when a user wants to review a Git-backed change set for security regressions. Keep the scan phases separate and produce final HTML and markdown reports.
+
+## Setup Workspace Routing
+
+When this skill is the active top-level workflow, use the setup workspace only when the host context explicitly says it is running inside the Codex desktop app and both required setup continuation tools are available. Tool availability alone does not identify the app host. Otherwise, including Codex CLI interactive and headless runs, use the prompt-only terminal/chat workflow: do not call Codex Security app setup tools, ask the user to press Start scan, or wait for an app-generated `scanId`.
+
+Treat goal creation as scan execution, not setup. In the app setup path, do not create or adopt scan goals before the user presses Start scan, the authoritative scan context has been loaded from a `status: "started"` wait result or a direct continuation with a `scanId`, and the capability preflight has returned `ready`.
+
+For an app continuation that already includes a `scanId` and optional `handoffClaimToken`, do not open another workspace: call `get_codex_security_scan_context` with the `scanId`, pass its `handoffClaimToken` when present, route elsewhere only if its validated mode differs, and use its target, `diffTarget`, optional `userContext`, and `scanDir`.
+
+Otherwise, in a host that renders MCP Apps and exposes the Codex Security setup continuation tools:
+
+1. Resolve setup arguments directly from the user's initial prompt and known thread context: checked-out Git repository `targetPath`, `mode: "diff"`, `scope: "."`, user-supplied security focus as `userContext`, and `diffTarget` only when the prompt unambiguously identifies uncommitted changes against current `HEAD`, one commit, or a locally resolved PR, branch comparison, or revision range.
+2. Perform only the minimal path or revision resolution needed to construct those arguments. Do not run capability preflight, inspect the repository beyond that minimal resolution, threat model, discover findings, or create workers before setup opens.
+3. Immediately call `open_codex_security_workspace` with the resolved arguments. Do not search for or substitute a separate scan command.
+4. Immediately call `await_codex_security_scan_start` with the `sessionId` from the workspace returned by `open_codex_security_workspace`. A returned workspace with `setup.submitted=false` is the expected wait state. Keep the tool call pending while waiting for the user to review setup and press Start scan; do not create or adopt a scan goal, run preflight, or pivot to terminal/chat fallback while waiting.
+5. If the wait returns `status: "started"`, require its `scanId`, call `get_codex_security_scan_context` with that `scanId`, and pass its `handoffClaimToken` when present. Then run the preflight in `../../references/config-preflight.md` for the selected target and `security_diff_scan` profile before goal setup, threat modeling, or other substantive scan work.
+6. If the wait returns `status: "already_delivered"`, end the current turn without loading scan context or starting scan work. Another continuation already owns the scan.
+7. If the wait returns `status: "timed_out"`, end the current turn and tell the user to finish setup and use **Continue in Codex** after pressing Start scan. Do not run preflight, create or adopt a scan goal, open another workspace, or pivot to terminal/chat fallback.
+8. Continue after a `ready` result, explaining material warn or suggest limitations. If preflight is `blocked` or `incomplete` with actionable remediation, present the exact reasons and config delta, ask whether to apply the remediation, and stop for the user's answer before creating or adopting a scan goal or calling `fail_codex_security_scan`. Do not fail automatically for declined or unavailable remediation, helper errors, or a non-ready rerun. Preserve the running scan and retry or hand off while recovery may still be possible. If the user declines required remediation, ask whether to cancel or leave the scan running for a later retry. Call `fail_codex_security_scan` with the exact reason only after documented recovery is exhausted and the blocker is confirmed unrecoverable, or when the user explicitly cancels.
+
+Before opening setup, use the existing terminal/chat preflight and scan workflow for local changes against another requested base because the setup app cannot represent that working-tree diff target. Codex CLI, including interactive and headless runs, and hosts without the required app capabilities use the same prompt-only fallback. Do not call `open_codex_security_workspace` or `await_codex_security_scan_start` on this path. Once `open_codex_security_workspace` succeeds in an MCP Apps-capable host, remain on the app path: immediately call `await_codex_security_scan_start`; a `status: "timed_out"` result means end the turn and point the user to **Continue in Codex**, while `status: "already_delivered"` means stop because another continuation owns the scan. Do not start a terminal/chat fallback for either result.
+
+## Capability Preflight
+
+Read `../../references/config-preflight.md` and dispatch and await the preflight execution described there with the `security_diff_scan` capability profile before substantive scan work, including after an app wait or direct continuation has produced a `scanId` and loaded its authoritative scan context. Follow the returned block/warn/suggest results. For an app-generated scan, ask before applying actionable remediation and wait without creating a scan goal or calling `fail_codex_security_scan`. Do not fail automatically for declined or unavailable remediation, helper errors, or a non-ready rerun; preserve the running scan and retry or hand off while recovery may still be possible. Call `fail_codex_security_scan` only after documented recovery is exhausted and the blocker is confirmed unrecoverable, or when the user explicitly cancels. Do not treat a config value that differs from a suggested patch as a warning unless the capability requirement itself is unmet.
 
 ## Phase Sequence
 
@@ -29,10 +55,11 @@ For each phase:
 
 Do not read ahead into later-phase skills until the current phase has completed.
 Do not amortize effort across phases: complete each phase to the full depth expected by that phase before moving on.
+Treat explicit invocation of this exhaustive diff-scan workflow as the user's authorization to use the subagents required by the workflow. If subagents are unavailable in the current environment, explain the limitation instead of claiming exhaustive diff coverage.
 
 ## Goal Setup
 
-Before substantive scan work, create a Codex goal for the scan if the runtime exposes goal tools and no active goal already covers this scan. The objective should state that the scan must not stop until the resolved diff-scoped files have been covered and the required coverage artifacts prove that closure.
+After the app wait or direct continuation has provided a `scanId`, the authoritative scan context has been loaded, and the `security_diff_scan` capability preflight has returned `ready`, or after the same preflight is `ready` in Codex CLI or terminal/chat hosts without the setup app, create a Codex goal for the scan if the runtime exposes goal tools and no active goal already covers this scan. The objective should state that the scan must not stop until the resolved diff-scoped files have been covered and the required coverage artifacts prove that closure.
 
 Use objective wording shaped like:
 
@@ -42,9 +69,9 @@ If a compatible active goal already exists, continue under it instead of creatin
 
 Do not mark the goal complete until:
 
-- every `deep_review_input.csv` row has a completion receipt in `work_ledger.jsonl`, or an explicit `deferred`, `not_applicable`, or `suppressed` closure with exact reason
+- every `deep_review_input.jsonl` row has a completion receipt in `work_ledger.jsonl`, or an explicit `deferred`, `not_applicable`, or `suppressed` closure with exact reason
 - every candidate that reached discovery has the required discovery, validation, and attack-path ledger receipts, or an explicit deferred reason for the missing proof
-- the final markdown and HTML reports have been written to the resolved scan paths
+- the final markdown report has been written to the resolved scan path
 
 ## Artifact Resolution
 
@@ -55,21 +82,24 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
 
 ## Execution Plan
 
+Start this plan only after `Setup Workspace Routing` has either loaded the app-generated scan context with a `scanId`, or determined that the host is using the non-app terminal/chat workflow, and the `security_diff_scan` capability preflight has returned `ready`.
+
 Follow this plan in order. Do not skip ahead to a later phase until the current phase has produced its intended output.
 
 1. Resolve the Git-backed scan target, `repo_name`, `security_scans_dir`, `scan_id`, `scan_dir`, and `artifacts_dir` using `../../references/scan-artifacts.md`.
-2. Create or adopt the scan goal described in `Goal Setup`.
+2. Create or adopt the scan goal described in `Goal Setup` for that active scan context.
 3. Run `$threat-model` first.
   - Copy the repository-scoped threat model to the per-scan threat model path without alteration for auditability.
   - Treat the per-scan threat model path as the source of truth threat model for later phases.
 4. Run `$finding-discovery` as the second step, against the resolved diff and using the per-scan threat model as context.
-  - If discovery produces no technically plausible candidates, stop there, skip validation and attack-path analysis, and assemble the final markdown report immediately.
+  - If discovery produces no technically plausible candidates, stop there, skip validation and attack-path analysis, complete the canonical JSON contract, and finalize the scan.
 5. Run `$validation` as the third step, for each candidate that came out of discovery.
   - Pass the resolved diff scope, discovery notes, and candidate inventory to validation. Validation should preserve or suppress the provided instances; it should not independently broaden the review into a repository-wide scan.
   - Each candidate finding's `findings/<candidate_id>/candidate_ledger.jsonl` is part of the validation input. Every candidate finding that came out of discovery must have a discovery receipt before validation starts and a validation receipt before the scan can proceed to final reporting.
 6. Run `$attack-path-analysis` as the fourth step, for findings that still need reportability, attack-path, and severity analysis after validation.
   - Each candidate finding's `findings/<candidate_id>/candidate_ledger.jsonl` is part of the attack-path input. Every candidate finding that reaches attack-path analysis must have an attack-path receipt before final reporting, even when the final decision is `ignore`, suppressed, or deferred.
-7. Assemble the final output last using `../../references/final-report.md` and the outputs of the earlier phases: finding discovery plus each candidate finding's validation and attack-path reports.
+7. Author the complete canonical JSON contract last using `../../references/final-report.md`; do not author reports. Complete the scan so finalization projects the validated JSON into the final markdown report. In the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly.
+  - Populate the optional structured details in `../../references/finding-detail-fields.md` from the same validated evidence used in the generated report.
 
 ## Phase Scope
 
@@ -97,9 +127,9 @@ Use `../security-scan/references/scan-artifacts-and-ledger.md` for the shared sc
 
 Diff scans should:
 
-- generate `rank_input.csv` deterministically from changed source-like files with `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <artifacts_dir>/rank_input.csv` for PR, commit, and branch diffs, or `python3 <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <artifacts_dir>/rank_input.csv` for a local patch
-- copy every diff row into `deep_review_input.csv` with `python3 <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <artifacts_dir>/rank_input.csv --out <artifacts_dir>/deep_review_input.csv`
-- deep-review every file in `deep_review_input.csv`
+- generate `rank_input.jsonl` deterministically from changed source-like files with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <artifacts_dir>/rank_input.jsonl` for PR, commit, and branch diffs, or `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <artifacts_dir>/rank_input.jsonl` for a local patch
+- copy every diff row into `deep_review_input.jsonl` with `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <artifacts_dir>/rank_input.jsonl --out <artifacts_dir>/deep_review_input.jsonl`
+- deep-review every file in `deep_review_input.jsonl`
 - add directly supporting files only when repository evidence shows they are needed to understand the changed security behavior
 - stay anchored to the changed code and directly supporting files rather than broadening into unrelated repository-wide enumeration
 
@@ -121,11 +151,11 @@ This keeps diff scans precise while avoiding the common failure mode where one r
 
 ## Final Output
 
-Assemble the final markdown report, final HTML report, and Codex app review directives using `../../references/final-report.md`. Commit scans use this same final-output contract because they are a diff-scan target type.
+Populate all final report semantics in the canonical manifest, findings, and coverage JSON using `../../references/final-report.md`. Then complete the scan; finalization owns markdown report generation. Emit Codex app review directives from the completed canonical findings. Commit scans use this same final-output contract because they are a diff-scan target type.
 
 ## Hard Rules
 
 Read `../../references/shared-hard-rules.md` before applying scan-mode-specific hard rules.
 
-- Create or adopt the scan goal before substantive scan work, and do not complete it until the resolved diff-scoped files/worklist rows, candidate ledgers, and final report meet the `Goal Setup` closure criteria.
-- Do not claim diff coverage until every `deep_review_input.csv` row has a completion receipt in `work_ledger.jsonl`.
+- After any app setup handoff has provided a `scanId`, or in the non-app terminal/chat workflow, create or adopt the scan goal only after the capability preflight has returned `ready`, and before substantive scan work. Do not complete it until the resolved diff-scoped files/worklist rows, candidate ledgers, and final report meet the `Goal Setup` closure criteria.
+- Do not claim diff coverage until every `deep_review_input.jsonl` row has a completion receipt in `work_ledger.jsonl`.
