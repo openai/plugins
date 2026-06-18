@@ -1,6 +1,6 @@
 {
   "name": "happenstance",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Happenstance searches your professional network using natural language to find the right people.",
   "author": {
     "name": "Happenstance, Inc.",
@@ -24,8 +24,9 @@
     "websiteURL": "https://happenstance.ai",
     "privacyPolicyURL": "https://happenstance.ai/privacy",
     "termsOfServiceURL": "https://happenstance.ai/terms",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://happenstance.ai"
 }

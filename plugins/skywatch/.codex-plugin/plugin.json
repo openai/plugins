@@ -1,6 +1,6 @@
 {
   "name": "skywatch",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in...",
   "author": {
     "name": "SkyWatch Space Applications Inc.",
@@ -25,7 +25,8 @@
       "Find recent satellite images of the Golden Gate Bridge"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }

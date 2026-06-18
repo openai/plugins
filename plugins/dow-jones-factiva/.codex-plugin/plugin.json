@@ -1,6 +1,6 @@
 {
   "name": "dow-jones-factiva",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Factiva Connector, enables authorized users to search Factiva\u2019s global news archive, including premium...",
   "author": {
     "name": "Factiva, Inc.",
@@ -25,7 +25,7 @@
       "What's the latest on Nvidia's earnings and market outlook"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "carta-crm",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in...",
   "author": {
     "name": "Carta Inc.",
@@ -24,8 +24,9 @@
     "websiteURL": "https://carta.com",
     "privacyPolicyURL": "https://carta.com/legal/privacy/privacy-policy/",
     "termsOfServiceURL": "https://carta.com/legal/terms-agreements/terms-service/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://carta.com"
 }

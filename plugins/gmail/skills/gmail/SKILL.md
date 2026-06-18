@@ -26,10 +26,13 @@ Use this skill to turn noisy email threads into clear summaries, action lists, a
 | Task | Reference |
 | --- | --- |
 | Search planning, refinement, pagination, and body-fetch strategy | [references/search-workflow.md](./references/search-workflow.md) |
+| Pasted Gmail URL recognition, exact-ID attempts, and fast-fail recovery | [references/pasted-link-workflow.md](./references/pasted-link-workflow.md) |
 | Label application, relabeling, and label-based cleanup | [references/label-actions.md](./references/label-actions.md) |
 | Self-delivery requests such as "email me," "send this to me," or automation delivery | [references/self-delivery.md](./references/self-delivery.md) |
 | Reply drafting, reply-all decisions, and tone matching | [references/reply-workflow.md](./references/reply-workflow.md) |
 | Email forwarding, context notes, and intent framing | [references/forward-workflow.md](./references/forward-workflow.md) |
+
+When the user supplies a Gmail web URL, do not pass the URL directly to Gmail tools or turn it into a broad mailbox search. Follow the pasted-link workflow for a bounded exact-ID attempt and immediate recovery guidance when the link cannot be resolved.
 
 ## Mailbox Analysis Pattern
 

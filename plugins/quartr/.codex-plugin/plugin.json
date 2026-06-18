@@ -1,6 +1,6 @@
 {
   "name": "quartr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers...",
   "author": {
     "name": "Quartr",
@@ -28,6 +28,7 @@
     "termsOfServiceURL": "https://quartr.com/terms-of-service",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "brandColor": "#000000"
   },
   "homepage": "https://quartr.com"

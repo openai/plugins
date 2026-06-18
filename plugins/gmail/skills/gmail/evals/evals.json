@@ -1,0 +1,53 @@
+{
+  "skill_name": "gmail",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Summarize this email thread: https://mail.google.com/mail/u/0/#all/18f7abc123",
+      "expected_output": "Extract the exact token, try it as a Gmail message ID, retry once as a thread ID only if not found, and summarize the returned thread.",
+      "files": [],
+      "expectations": [
+        "Extracts 18f7abc123 without passing the full URL to a Gmail tool",
+        "Calls read_email_thread with the token as a message ID first",
+        "Retries once with id_type=thread only if the message-ID lookup is invalid or not found",
+        "Does not use broad Gmail search or guessed metadata"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "What is this Gmail conversation about? https://mail.google.com/mail/#inbox/18f7def456?attachment_id=att-9",
+      "expected_output": "Resolve the supported inbox URL using only the opaque Gmail token and ignore the attachment query suffix.",
+      "files": [],
+      "expectations": [
+        "Extracts 18f7def456 and excludes ?attachment_id=att-9 from the ID",
+        "Uses the connected Gmail account rather than interpreting the URL as account selection",
+        "Uses at most the message-ID attempt and one thread-ID fallback",
+        "Does not claim arbitrary Gmail URLs are reliably supported"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Open this Gmail link and tell me what it says: https://mail.google.com/mail/u/0/#search/from%3Aalice/project-update",
+      "expected_output": "Fail immediately because Gmail search routes are not supported for deterministic token extraction, and request fetchable identifying information.",
+      "files": [],
+      "expectations": [
+        "Does not call Gmail tools for the unsupported search route",
+        "States concisely that the pasted link could not be resolved",
+        "Asks for sender, subject, and approximate date, an RFC 822 Message-ID, or pasted email text",
+        "Does not spin through searches, pagination, or repeated retries"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I pasted https://mail.google.com/mail/u/1/#sent/18f7missing, but neither the message-ID nor thread-ID lookup finds it. Keep trying until you locate it.",
+      "expected_output": "Stop after the two exact-ID attempts and explain the likely mailbox mismatch or unsupported link token with concrete recovery guidance.",
+      "files": [],
+      "expectations": [
+        "Stops after the message-ID and thread-ID lookups fail",
+        "Does not search the mailbox or retry repeatedly despite the user's request",
+        "Explains that /u/1 is a browser account slot and does not select a connector account",
+        "Asks the user to connect the mailbox containing the message or provide fetchable identifying information"
+      ]
+    }
+  ]
+}

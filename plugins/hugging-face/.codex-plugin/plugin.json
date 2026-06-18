@@ -1,6 +1,6 @@
 {
   "name": "hugging-face",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Inspect models, datasets, Spaces, and research",
   "author": {
     "name": "Hugging Face",
@@ -37,7 +37,7 @@
     ],
     "brandColor": "#FFD21E",
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

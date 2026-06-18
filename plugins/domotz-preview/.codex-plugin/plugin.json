@@ -1,6 +1,6 @@
 {
   "name": "domotz-preview",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Monitor and manage your network infrastructure through natural language.",
   "author": {
     "name": "Domotz",
@@ -24,8 +24,8 @@
     "websiteURL": "https://www.domotz.com",
     "privacyPolicyURL": "https://www.domotz.com/product-privacy-policy.php",
     "termsOfServiceURL": "https://www.domotz.com/terms-and-conditions.php",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.domotz.com"
 }

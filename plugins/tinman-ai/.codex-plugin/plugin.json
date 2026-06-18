@@ -1,6 +1,6 @@
 {
   "name": "tinman-ai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tinman AI helps loan officers and underwriters quickly underwrite home financing scenarios and answer compl...",
   "author": {
     "name": "Better",
@@ -25,7 +25,7 @@
       "I have borrower at 52% DTI who wants HELOC w/ $450/month"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

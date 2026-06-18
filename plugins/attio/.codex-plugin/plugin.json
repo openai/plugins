@@ -1,6 +1,6 @@
 {
   "name": "attio",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through na...",
   "author": {
     "name": "Attio Ltd",
@@ -24,8 +24,8 @@
     "websiteURL": "https://attio.com",
     "privacyPolicyURL": "https://attio.com/legal/privacy",
     "termsOfServiceURL": "https://attio.com/legal/terms-and-conditions",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://attio.com"
 }

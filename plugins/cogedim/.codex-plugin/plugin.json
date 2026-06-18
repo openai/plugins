@@ -1,6 +1,6 @@
 {
   "name": "cogedim",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cogedim is one of France's leading real estate developers.",
   "author": {
     "name": "ALTAREA PROMOTION MANAGEMENT",
@@ -24,8 +24,9 @@
     "websiteURL": "https://www.cogedim.com",
     "privacyPolicyURL": "https://www.cogedim.com/donnees-personnelles.html",
     "termsOfServiceURL": "https://www.cogedim.com/mentions-legales.html",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.cogedim.com"
 }

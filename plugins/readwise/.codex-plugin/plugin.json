@@ -1,6 +1,6 @@
 {
   "name": "readwise",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The official app for Readwise and Reader.",
   "author": {
     "name": "Readwise Inc.",
@@ -24,8 +24,8 @@
     "websiteURL": "https://readwise.io",
     "privacyPolicyURL": "https://readwise.io/privacy",
     "termsOfServiceURL": "https://readwise.io/tos",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://readwise.io"
 }

@@ -1,6 +1,6 @@
 {
   "name": "quicknode",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Manage your Quicknode infrastructure directly in OpenAI.",
   "author": {
     "name": "Quicknode",
@@ -24,8 +24,8 @@
     "websiteURL": "https://www.quicknode.com/",
     "privacyPolicyURL": "https://www.quicknode.com/privacy",
     "termsOfServiceURL": "https://www.quicknode.com/terms",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.quicknode.com/"
 }

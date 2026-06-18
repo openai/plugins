@@ -1,6 +1,6 @@
 {
   "name": "windsor-ai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
   "author": {
     "name": "Windsor.ai",
@@ -24,8 +24,9 @@
     "websiteURL": "https://windsor.ai",
     "privacyPolicyURL": "https://windsor.ai/privacy-statement/",
     "termsOfServiceURL": "https://windsor.ai/terms-of-service/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://windsor.ai"
 }

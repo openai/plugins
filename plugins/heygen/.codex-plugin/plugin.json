@@ -1,6 +1,6 @@
 {
   "name": "heygen",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "Create HeyGen avatar videos and personalized video messages. Build a persistent digital identity from a description or hosted photo URL, then generate presenter-led videos with your digital twin.",
   "author": {
     "name": "HeyGen",
@@ -41,6 +41,7 @@
     ],
     "brandColor": "#0a0a0a",
     "composerIcon": "./assets/icon.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }

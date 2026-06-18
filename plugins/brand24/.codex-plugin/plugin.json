@@ -1,6 +1,6 @@
 {
   "name": "brand24",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Brand24 app in Codex lets marketing and PR teams instantly explore brand mentions, sentiment, and med...",
   "author": {
     "name": "Brand24 Global Inc.",
@@ -25,7 +25,8 @@
       "Online popularity of biggest sports shoe"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }

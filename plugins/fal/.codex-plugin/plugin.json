@@ -1,6 +1,6 @@
 {
   "name": "fal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "AI image and media generation workflows using Fal models",
   "author": {
     "name": "Fal",
@@ -25,8 +25,8 @@
       "Run a Fal image edit or upscaling workflow and summarize the output parameters."
     ],
     "brandColor": "#D60045",
-    "composerIcon": "./assets/logo-padded.png",
-    "logo": "./assets/logo-padded.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

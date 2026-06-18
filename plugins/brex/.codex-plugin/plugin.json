@@ -1,6 +1,6 @@
 {
   "name": "brex",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
   "author": {
     "name": "Brex Inc.",
@@ -25,7 +25,8 @@
       "How much did I spend on Delta last year"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "deepnote",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Use Deepnote's collaborative data workspace to explore data, automate notebooks and SQL workflows, and turn analysis into shareable results.",
   "author": {
     "name": "Deepnote",
@@ -41,6 +41,7 @@
     "brandColor": "#3793EF",
     "composerIcon": "./assets/composer.svg",
     "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "screenshots": []
   }
 }

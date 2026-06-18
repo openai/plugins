@@ -1,6 +1,6 @@
 {
   "name": "taxdown",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
   "author": {
     "name": "TAXDOWN S.L.",
@@ -24,8 +24,8 @@
     "websiteURL": "https://taxdown.es/",
     "privacyPolicyURL": "https://taxdown.es/politica-de-privacidad/",
     "termsOfServiceURL": "https://taxdown.es/terminos-condiciones/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://taxdown.es/"
 }

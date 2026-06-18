@@ -1,6 +1,6 @@
 {
 	"name": "remotion",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Remotion video creation skills — best practices, animations, audio, captions, 3D, and more for building programmatic videos with React.",
 	"author": {
 		"name": "Remotion",
@@ -40,6 +40,7 @@
 		"screenshots": [],
 		"brandColor": "#0B84F3",
 		"composerIcon": "./assets/icon.png",
-		"logo": "./assets/logo.png"
+		"logo": "./assets/logo.png",
+		"logoDark": "./assets/logo-dark.png"
 	}
 }

@@ -1,6 +1,6 @@
 {
   "name": "close",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CRM leads, opportunities, activities, and sales pipeline context",
   "author": {
     "name": "Close",
@@ -26,6 +26,7 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "websiteURL": "https://www.close.com"
   },
   "homepage": "https://www.close.com"

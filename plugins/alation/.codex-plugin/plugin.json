@@ -1,6 +1,6 @@
 {
   "name": "alation",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Data catalog search, lineage, governance, and documentation from Alation",
   "author": {
     "name": "Alation",
@@ -25,8 +25,8 @@
       "Review Alation documentation for this dataset and draft a query-ready data brief."
     ],
     "brandColor": "#FF7A1A",
-    "composerIcon": "./assets/logo.webp",
-    "logo": "./assets/logo.webp",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "circleci",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Build, test, and deploy any application",
   "author": {
     "name": "CircleCI",
@@ -35,7 +35,8 @@
     ],
     "brandColor": "#049B4A",
     "composerIcon": "./assets/composer-icon.svg",
-    "logo": "./assets/logo.svg",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "screenshots": []
   }
 }

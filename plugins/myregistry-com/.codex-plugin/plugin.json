@@ -1,6 +1,6 @@
 {
   "name": "myregistry-com",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
   "author": {
     "name": "MyRegistry.com",
@@ -24,8 +24,9 @@
     "websiteURL": "https://www.myregistry.com/",
     "privacyPolicyURL": "https://www.myregistry.com/Info/Privacy.aspx",
     "termsOfServiceURL": "https://www.myregistry.com/Info/terms.aspx",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.myregistry.com/"
 }

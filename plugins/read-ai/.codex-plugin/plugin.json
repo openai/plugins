@@ -1,6 +1,6 @@
 {
   "name": "read-ai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Read AI brings your meeting intelligence directly into your AI workflows.",
   "author": {
     "name": "Read AI, Inc",
@@ -24,8 +24,9 @@
     "websiteURL": "https://read.ai",
     "privacyPolicyURL": "https://www.read.ai/privacy-policy",
     "termsOfServiceURL": "https://www.read.ai/termsofservice",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://read.ai"
 }

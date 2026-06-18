@@ -1,6 +1,6 @@
 {
   "name": "pylon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Access Pylon's customer support platform directly from Codex to search, manage, and resolve customer issues.",
   "author": {
     "name": "Pylon Labs Inc.",
@@ -25,7 +25,7 @@
       "Can you summarize my most recent issues"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "help-scout",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Connect to sync Help Scout mailboxes and conversations for use in Codex.",
   "author": {
     "name": "OpenAI",
@@ -23,8 +23,9 @@
     "screenshots": [],
     "websiteURL": "https://www.helpscout.com/",
     "privacyPolicyURL": "https://www.helpscout.com/privacy/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.helpscout.com/"
 }

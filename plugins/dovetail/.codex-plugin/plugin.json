@@ -1,6 +1,6 @@
 {
   "name": "dovetail",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
   "author": {
     "name": "Dovetail",
@@ -24,8 +24,9 @@
     "websiteURL": "https://dovetail.com",
     "privacyPolicyURL": "https://dovetail.com/privacy/privacy-policy/",
     "termsOfServiceURL": "https://dovetail.com/legal/user-terms-of-service/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://dovetail.com"
 }

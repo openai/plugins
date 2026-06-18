@@ -1,6 +1,6 @@
 {
   "name": "teamwork-com",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Connect to sync Teamwork projects and tasks for use in Codex.",
   "author": {
     "name": "OpenAI",
@@ -23,8 +23,8 @@
     "screenshots": [],
     "websiteURL": "https://www.teamwork.com/",
     "privacyPolicyURL": "https://www.teamwork.com/privacy/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.teamwork.com/"
 }

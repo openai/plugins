@@ -1,6 +1,6 @@
 {
   "name": "egnyte",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Work with documents and files stored in Egnyte directly from Codex.",
   "author": {
     "url": "https://www.egnyte.com",
@@ -24,8 +24,8 @@
       "What IT contracts do we have"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "developerName": "Egnyte Inc"
   }
 }

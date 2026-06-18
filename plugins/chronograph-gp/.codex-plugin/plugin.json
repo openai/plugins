@@ -1,0 +1,35 @@
+{
+  "name": "chronograph-gp",
+  "version": "1.0.0",
+  "description": "Portfolio monitoring, valuations, and analytics for private capital GP teams",
+  "author": {
+    "name": "Chronograph",
+    "url": "https://www.chronograph.pe/"
+  },
+  "homepage": "https://www.chronograph.pe/",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Chronograph GP",
+    "shortDescription": "Trusted portfolio data for private capital GP teams",
+    "longDescription": "Chronograph GP provides portfolio monitoring, valuations, and analytics for private capital General Partner users. Query trusted portfolio data, analyze investments, surface company-level metrics, and access private markets portfolio data using natural language.",
+    "developerName": "Chronograph",
+    "category": "Finance",
+    "capabilities": [],
+    "websiteURL": "https://www.chronograph.pe/",
+    "privacyPolicyURL": "https://www.chronograph.pe/legal/privacy-policy/",
+    "termsOfServiceURL": "https://www.chronograph.pe/legal/website-terms-of-use/",
+    "brandColor": "#414B4B",
+    "defaultPrompt": [
+      "Summarize fund returns from Chronograph GP.",
+      "Find top and bottom portfolio investments.",
+      "Show overdue reporting tasks in Chronograph GP."
+    ],
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

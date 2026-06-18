@@ -1,6 +1,6 @@
 {
   "name": "outlook-email",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Work with Outlook Email using the configured Microsoft Outlook app connector.",
   "author": {
     "name": "OpenAI",
@@ -34,8 +34,8 @@
       "Triage inbox, summarize thread, or draft reply or forward"
     ],
     "brandColor": "#0078D4",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

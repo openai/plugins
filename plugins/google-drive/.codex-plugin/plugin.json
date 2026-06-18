@@ -1,6 +1,6 @@
 {
   "name": "google-drive",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Use Google Drive as the single entrypoint for Drive, Docs, Sheets, and Slides work.",
   "author": {
     "name": "OpenAI",
@@ -29,8 +29,8 @@
       "Interactive",
       "Write"
     ],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "websiteURL": "https://workspace.google.com/products/drive/",
     "privacyPolicyURL": "https://policies.google.com/privacy",
     "termsOfServiceURL": "https://policies.google.com/terms",

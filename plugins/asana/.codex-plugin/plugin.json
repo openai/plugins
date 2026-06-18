@@ -1,6 +1,6 @@
 {
   "name": "asana",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Work with your Asana tasks, subtasks, comments, due dates, and project details to create summaries, understand priorities, and prepare clear status updates.",
   "author": {
     "name": "Asana, Inc.",
@@ -37,8 +37,8 @@
       "Show me what's on my plate in Asana today."
     ],
     "brandColor": "#FF584A",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

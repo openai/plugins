@@ -1,6 +1,6 @@
 {
   "name": "signnow",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Get documents signed faster without switching between tools.",
   "author": {
     "name": "airSlate Inc",
@@ -24,8 +24,8 @@
     "websiteURL": "https://www.signnow.com",
     "privacyPolicyURL": "https://legal.signnow.com/privacy-notice",
     "termsOfServiceURL": "https://legal.signnow.com/terms",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.signnow.com"
 }

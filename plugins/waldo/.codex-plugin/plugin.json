@@ -1,6 +1,6 @@
 {
   "name": "waldo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Waldo is an AI-powered strategy platform for agencies and brands.",
   "author": {
     "name": "Curiosities, Inc.",
@@ -24,8 +24,8 @@
     "websiteURL": "https://www.waldo.fyi",
     "privacyPolicyURL": "https://www.waldo.fyi/privacy",
     "termsOfServiceURL": "https://www.waldo.fyi/tos",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.waldo.fyi"
 }

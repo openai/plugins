@@ -1,6 +1,6 @@
 {
   "name": "gmail",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Work with Gmail using the configured Gmail app connector.",
   "author": {
     "name": "OpenAI",
@@ -35,7 +35,7 @@
     ],
     "brandColor": "#EA4335",
     "composerIcon": "./assets/gmail-small.svg",
-    "logo": "./assets/gmail.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

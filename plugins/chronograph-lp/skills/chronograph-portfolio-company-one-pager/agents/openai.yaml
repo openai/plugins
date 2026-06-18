@@ -1,0 +1,10 @@
+interface:
+  display_name: "Chronograph Portfolio Company One-Pager"
+  short_description: "Generate styled HTML GP one-pagers and LP quarterly updates for portfolio companies"
+  default_prompt: "Use $chronograph-portfolio-company-one-pager to generate a portfolio company tearsheet, GP one-pager, or LP quarterly update."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "chronograph-lp"
+      description: "Optional Chronograph MCP server for live company metadata, investments, and metric retrieval. Not required when working from an uploaded Excel model."

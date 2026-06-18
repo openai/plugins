@@ -1,6 +1,6 @@
 {
   "name": "hubspot",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations.",
   "author": {
     "name": "HubSpot",
@@ -38,7 +38,7 @@
       "Find CRM records with stale or missing data"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   }
 }

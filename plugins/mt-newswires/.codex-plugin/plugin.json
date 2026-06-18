@@ -1,6 +1,6 @@
 {
   "name": "mt-newswires",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MT Newswires brings real-time global financial news directly into Codex \u2014 providing original, unbiased an...",
   "author": {
     "name": "MT Newswires",
@@ -24,8 +24,9 @@
     "websiteURL": "https://www.mtnewswires.com",
     "privacyPolicyURL": "https://www.mtnewswires.com/privacy-policy",
     "termsOfServiceURL": "https://www.mtnewswires.com/subscriber-terms-of-service",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.mtnewswires.com"
 }

@@ -1,6 +1,6 @@
 {
   "name": "yepcode",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "YepCode lets you build custom AI tools using your own code with JSON Schema-defined inputs, executed in an...",
   "author": {
     "name": "YepCode S.L.",
@@ -24,8 +24,8 @@
     "websiteURL": "https://yepcode.io/",
     "privacyPolicyURL": "https://yepcode.io/privacy/",
     "termsOfServiceURL": "https://yepcode.io/terms-of-use/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://yepcode.io/"
 }

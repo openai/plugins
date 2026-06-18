@@ -1,6 +1,6 @@
 {
   "name": "hostinger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Hostinger Horizons lets you build real websites and apps just by describing what you want.",
   "author": {
     "name": "Hostinger",
@@ -24,8 +24,9 @@
     "websiteURL": "https://hostinger.com",
     "privacyPolicyURL": "https://www.hostinger.com/legal/privacy-policy",
     "termsOfServiceURL": "https://www.hostinger.com/legal/universal-terms-of-service-agreement",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://hostinger.com"
 }

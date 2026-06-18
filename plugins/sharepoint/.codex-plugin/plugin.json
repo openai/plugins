@@ -1,6 +1,6 @@
 {
   "name": "sharepoint",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Work with SharePoint using the configured Microsoft SharePoint app connector.",
   "author": {
     "name": "OpenAI",
@@ -34,8 +34,8 @@
       "Summarize a SharePoint site or file, identify owners and status, or plan a safe update across documents, spreadsheets, or decks"
     ],
     "brandColor": "#038387",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

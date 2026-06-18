@@ -1,6 +1,6 @@
 {
   "name": "razorpay",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Connect your Razorpay account to access your payment data through conversation.",
   "author": {
     "name": "Razorpay Software Private Limited",
@@ -24,8 +24,8 @@
     "websiteURL": "https://razorpay.com/",
     "privacyPolicyURL": "https://razorpay.com/privacy/",
     "termsOfServiceURL": "https://razorpay.com/terms/",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://razorpay.com/"
 }

@@ -1,6 +1,6 @@
 {
   "name": "omni-analytics",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
   "author": {
     "name": "Omni Analytics",
@@ -25,8 +25,9 @@
       "Show me last year's orders by status"
     ],
     "brandColor": "#F686AC",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "screenshots": []
   }
 }

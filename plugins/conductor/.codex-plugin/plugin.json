@@ -1,6 +1,6 @@
 {
   "name": "conductor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Conductor MCP server retrieves proprietary performance metrics regarding a brand's visibility, sentimen...",
   "author": {
     "url": "https://www.conductor.com/",
@@ -24,8 +24,8 @@
       "Who are top competitors for \u201cwireless earbuds\u201d"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "developerName": "Conductor Inc."
   }
 }

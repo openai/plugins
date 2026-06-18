@@ -1,6 +1,6 @@
 {
   "name": "docusign",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Agreement envelopes, signing status, recipients, and contract dates",
   "author": {
     "name": "Docusign",
@@ -26,6 +26,7 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "websiteURL": "https://www.docusign.com"
   },
   "homepage": "https://www.docusign.com"

@@ -1,6 +1,6 @@
 {
   "name": "policynote",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Use the PolicyNote app to access structured policy and regulatory intelligence from around the world.",
   "author": {
     "name": "FiscalNote",
@@ -24,8 +24,9 @@
     "websiteURL": "https://fiscalnote.com/products/policynote-api",
     "privacyPolicyURL": "https://fiscalnote.com/privacy",
     "termsOfServiceURL": "https://data.policynote.com/terms",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://fiscalnote.com/products/policynote-api"
 }

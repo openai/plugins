@@ -1,6 +1,6 @@
 {
   "name": "cb-insights",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Unleash Codex as your private markets research agent.",
   "author": {
     "name": "CB Insights",
@@ -24,8 +24,8 @@
     "websiteURL": "https://cbinsights.com",
     "privacyPolicyURL": "https://www.cbinsights.com/privacy-policy",
     "termsOfServiceURL": "https://legal.cbinsights.com",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://cbinsights.com"
 }

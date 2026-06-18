@@ -1,6 +1,6 @@
 {
   "name": "responsive",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
   "author": {
     "name": "RFPIO Inc. (d/b/a Responsive)",
@@ -24,8 +24,8 @@
     "websiteURL": "https://www.responsive.io",
     "privacyPolicyURL": "https://www.responsive.io/legal/privacy-policy",
     "termsOfServiceURL": "https://www.responsive.io/legal",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.responsive.io"
 }

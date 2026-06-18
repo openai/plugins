@@ -1,6 +1,6 @@
 {
   "name": "particl-market-research",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Particl Market Research helps teams answer ecommerce research questions directly in Codex.",
   "author": {
     "name": "Particl",
@@ -24,8 +24,9 @@
     "websiteURL": "https://www.particl.com",
     "privacyPolicyURL": "https://www.particl.com/legal/privacy",
     "termsOfServiceURL": "https://www.particl.com/legal/terms",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.particl.com"
 }

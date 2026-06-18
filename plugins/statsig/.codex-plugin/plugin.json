@@ -1,6 +1,6 @@
 {
   "name": "statsig",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Bring your Statsig workspace into Codex.",
   "author": {
     "name": "Statsig, LLC",
@@ -25,7 +25,8 @@
       "Analyze results of Statsig experiment shorter_blog_titles"
     ],
     "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "outlook-calendar",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Connect Outlook Calendar for scheduling, daily briefs, event prep, and safe meeting changes.",
   "author": {
     "name": "OpenAI",
@@ -36,8 +36,8 @@
     "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
     "defaultPrompt": "Summarize my day, compare availability, explain Outlook status, and draft the right event update",
     "brandColor": "#0078D4",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "picsart",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Image editing, creative assets, and design workflows from Picsart",
   "author": {
     "name": "Picsart",
@@ -25,8 +25,8 @@
       "Generate 5 on-brand product shots and pick the best aspect ratio for Instagram."
     ],
     "brandColor": "#C209C8",
-    "composerIcon": "./assets/logo-padded.png",
-    "logo": "./assets/logo-padded.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

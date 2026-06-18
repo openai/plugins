@@ -1,6 +1,6 @@
 {
   "name": "united-rentals",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Get the right equipment for the job without guesswork.",
   "author": {
     "name": "United Rentals",
@@ -24,8 +24,8 @@
     "websiteURL": "https://www.unitedrentals.com",
     "privacyPolicyURL": "https://www.unitedrentals.com/legal/privacy-policy",
     "termsOfServiceURL": "https://www.unitedrentals.com/legal/website-terms-of-use-us-eng",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
   },
   "homepage": "https://www.unitedrentals.com"
 }

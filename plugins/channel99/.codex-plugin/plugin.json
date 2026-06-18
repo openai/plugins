@@ -1,6 +1,6 @@
 {
   "name": "channel99",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Channel99 real time go to market intelligence connects Codex directly to Channel99\u2019s performance marketin...",
   "author": {
     "name": "Channel99 Inc. ",
@@ -24,8 +24,9 @@
     "websiteURL": "https://www.channel99.com/",
     "privacyPolicyURL": "https://www.channel99.com/company/privacy",
     "termsOfServiceURL": "https://www.channel99.com/terms-of-service",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   },
   "homepage": "https://www.channel99.com/"
 }

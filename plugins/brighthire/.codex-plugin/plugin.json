@@ -1,6 +1,6 @@
 {
   "name": "brighthire",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connect Codex to BrightHire interview intelligence data through the BrightHire app connector.",
   "author": {
     "name": "BrightHire",
@@ -39,7 +39,7 @@
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/logo.svg",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

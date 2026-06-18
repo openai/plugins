@@ -1,6 +1,6 @@
 {
   "name": "shutterstock",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Search licensed stock images, videos, music, and creative assets",
   "author": {
     "name": "Shutterstock",
@@ -27,8 +27,9 @@
       "Build a shortlist of Shutterstock assets for this social launch."
     ],
     "brandColor": "#FF6F4A",
-    "composerIcon": "./assets/logo-padded.png",
-    "logo": "./assets/logo-padded.png",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
     "screenshots": []
   }
 }
