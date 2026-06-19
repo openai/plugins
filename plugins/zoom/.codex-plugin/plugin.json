@@ -1,7 +1,7 @@
 {
   "name": "zoom",
   "version": "1.0.2",
-  "description": "Access post-meeting assets",
+  "description": "Search meetings and retrieve Zoom assets",
   "author": {
     "name": "Zoom",
     "url": "https://github.com/zoom"
@@ -28,8 +28,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Zoom",
-    "shortDescription": "Access post-meeting assets",
-    "longDescription": "Enables searching for and selecting Zoom meetings, then retrieving associated assets such as recordings, AI summaries, and related documents. Use to list and analyze meeting recordings (including transcripts, summaries, next steps, and playback navigation) and to save new Markdown-based documents into the user\u2019s Zoom Docs workspace.",
+    "shortDescription": "Search meetings and retrieve Zoom assets",
+    "longDescription": "Enables searching a user’s meetings, accessing past meeting assets (summaries, docs, whiteboards, recordings), and retrieving detailed recording resources such as transcripts, summaries, next steps, and playback URLs. Also supports listing a user’s cloud recordings and creating new meeting-related documents from Markdown content.",
     "developerName": "Zoom",
     "category": "Communication",
     "capabilities": [

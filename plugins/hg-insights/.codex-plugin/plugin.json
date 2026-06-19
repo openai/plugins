@@ -1,7 +1,7 @@
 {
   "name": "hg-insights",
   "version": "1.0.3",
-  "description": "Access HG Insights revenue growth intelligence, account data, buyer intent, technographics, and GTM signals from Codex.",
+  "description": "Prospect data and revenue intelligence",
   "author": {
     "name": "HG Insights",
     "url": "https://hginsights.com"
@@ -20,8 +20,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "HG Insights",
-    "shortDescription": "Use HG Insights revenue intelligence and GTM signals from Codex.",
-    "longDescription": "HG Insights connects Codex to revenue growth intelligence for market sizing, account prioritization, technographics, spend data, buyer intent, and GTM planning.",
+    "shortDescription": "Prospect data and revenue intelligence",
+    "longDescription": "HG Insights - Revenue Growth Intelligence gives sales teams instant access to comprehensive prospect data. \nGet technology stacks, company firmographics, decision-maker contacts, IT spending insights, and contract intelligence for any company. \nSimply ask about a company by name or domain to uncover actionable sales intelligence powered by HG Insights data. \nRequires a RGI Developers or RGI Agents account from HG Insights.",
     "developerName": "HG Insights",
     "category": "Productivity",
     "capabilities": [],

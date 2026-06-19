@@ -1,7 +1,7 @@
 {
   "name": "datadog",
   "version": "0.1.2",
-  "description": "Search and act on your data",
+  "description": "Analyze and remediate Datadog telemetry",
   "author": {
     "name": "Datadog",
     "url": "https://www.datadoghq.com/"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Datadog (Preview)",
-    "shortDescription": "Search and act on your data",
-    "longDescription": "Available for US1 customers only. Analyze, investigate, and act on your Datadog telemetry directly from ChatGPT using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture. \n",
+    "shortDescription": "Analyze and remediate Datadog telemetry",
+    "longDescription": "Available for US1 customers only. Analyze, investigate, and act on your Datadog telemetry directly from ChatGPT using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture.",
     "developerName": "Datadog",
     "category": "Developer Tools",
     "capabilities": [

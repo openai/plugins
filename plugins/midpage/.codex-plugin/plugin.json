@@ -1,7 +1,7 @@
 {
   "name": "midpage",
   "version": "1.0.3",
-  "description": "Legal research, cases, statutes, regulations, and cited research memos",
+  "description": "Legal research with cited case law",
   "author": {
     "name": "Midpage",
     "url": "https://www.midpage.ai"
@@ -14,8 +14,8 @@
   "interface": {
     "displayName": "Midpage",
     "developerName": "Midpage",
-    "shortDescription": "Legal research, cases, statutes, regulations, and cited research memos",
-    "longDescription": "Legal research, cases, statutes, regulations, and cited research memos",
+    "shortDescription": "Legal research with cited case law",
+    "longDescription": "Connect ChatGPT to a database of case law. With the Midpage App, ChatGPT can conduct complex legal research, review opinions, and craft high quality work product. Everything is hyperlinked to real sources for easy verification.",
     "category": "Education & Research",
     "capabilities": [],
     "brandColor": "#000000",

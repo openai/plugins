@@ -1,7 +1,7 @@
 {
   "name": "dnb-finance-analytics",
   "version": "1.0.2",
-  "description": "Credit Origination & Workflow",
+  "description": "Commercial credit origination and risk workflows",
   "author": {
     "name": "Dun & Bradstreet",
     "url": "https://www.dnb.com/"
@@ -25,7 +25,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "D&B Finance Analytics",
-    "shortDescription": "Credit Origination & Workflow",
+    "shortDescription": "Commercial credit origination and risk workflows",
     "longDescription": "Power commercial credit origination and portfolio management workflows with D&B Finance Analytics embedded AI decisioning layer.\n\nDun & Bradstreet connects the D&B Commercial Graph with proprietary customer data and credit policies to help evaluate applications, set credit limits, and uncover portfolio risk and opportunity.",
     "developerName": "Dun & Bradstreet",
     "category": "Finance",

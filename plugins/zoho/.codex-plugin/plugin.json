@@ -1,7 +1,7 @@
 {
   "name": "zoho",
   "version": "1.0.3",
-  "description": "CRM records, deals, contacts, and account context from Zoho",
+  "description": "Manage Zoho CRM sales workflows",
   "author": {
     "name": "Zoho",
     "url": "https://www.zoho.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Zoho",
-    "shortDescription": "CRM records, deals, contacts, and account context from Zoho",
-    "longDescription": "CRM records, deals, contacts, and account context from Zoho",
+    "shortDescription": "Manage Zoho CRM sales workflows",
+    "longDescription": "Zoho CRM is an AI-powered sales software that helps businesses of all sizes manage their sales better. With SFA features, advanced automation, easy-to-use UI, advanced analytics, and deep customization capabilities, Zoho CRM truly understands your business. \n\nWith Codex, you can extend the functionalities of Zoho CRM by simply prompting. Your business, your Zoho CRM—powered by Codex.",
     "developerName": "Zoho",
     "category": "Business & Operations",
     "capabilities": [],

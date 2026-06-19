@@ -1,7 +1,7 @@
 {
   "name": "clay",
   "version": "1.0.2",
-  "description": "GTM Data and Functions",
+  "description": "Find and engage prospects",
   "author": {
     "name": "Clay",
     "url": "https://www.clay.com"
@@ -21,7 +21,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Clay",
-    "shortDescription": "GTM Data and Functions",
+    "shortDescription": "Find and engage prospects",
     "longDescription": "Find and engage prospects",
     "developerName": "Clay",
     "category": "Business & Operations",

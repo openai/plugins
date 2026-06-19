@@ -1,7 +1,7 @@
 {
   "name": "close",
   "version": "1.0.3",
-  "description": "CRM leads, opportunities, activities, and sales pipeline context",
+  "description": "Reference and update Close CRM",
   "author": {
     "name": "Close",
     "url": "https://www.close.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "Close",
     "developerName": "Close",
-    "shortDescription": "CRM leads, opportunities, activities, and sales pipeline context",
-    "longDescription": "CRM leads, opportunities, activities, and sales pipeline context",
+    "shortDescription": "Reference and update Close CRM",
+    "longDescription": "With Close's ChatGPT app, ChatGPT will be able to reference and update Close for any task you can dream up. Whether you need to generate a custom report, research and create a new lead list, get a summary of recent interactions with a customer, or create new Workflows - all you have to do is ask ChatGPT to take care of it for you.",
     "category": "Business & Operations",
     "capabilities": [],
     "brandColor": "#50C078",

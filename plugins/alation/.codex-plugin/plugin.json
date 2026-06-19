@@ -1,7 +1,7 @@
 {
   "name": "alation",
   "version": "1.0.3",
-  "description": "Data catalog search, lineage, governance, and documentation from Alation",
+  "description": "Trusted enterprise data context and governance",
   "author": {
     "name": "Alation",
     "url": "https://www.alation.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Alation",
-    "shortDescription": "Data catalog search, lineage, governance, and documentation",
-    "longDescription": "Data catalog search, lineage, governance, and documentation from Alation",
+    "shortDescription": "Trusted enterprise data context and governance",
+    "longDescription": "Alation brings trusted enterprise data context into ChatGPT.\n\nConnect ChatGPT to Alation’s enterprise data catalog, governance, and trusted business context so users can discover, understand, and use data with confidence.\n\nThe Alation Intelligence Operating System (AIOS) helps AI ground responses in trusted enterprise context, including catalog metadata, governance policies, semantic definitions, lineage, data quality, and documentation. The app is designed for enterprise teams that need AI-led data discovery without losing trust, context, or governance.",
     "developerName": "Alation",
     "category": "Data & Analytics",
     "capabilities": [],

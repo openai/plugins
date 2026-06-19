@@ -1,7 +1,7 @@
 {
   "name": "picsart",
   "version": "1.0.3",
-  "description": "Image editing, creative assets, and design workflows from Picsart",
+  "description": "Generate videos, images, and audio",
   "author": {
     "name": "Picsart",
     "url": "https://picsart.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Picsart",
-    "shortDescription": "Image editing, creative assets, and design workflows from Picsart",
-    "longDescription": "Image editing, creative assets, and design workflows from Picsart",
+    "shortDescription": "Generate videos, images, and audio",
+    "longDescription": "Generate high-quality video, images, and audio from 140+ AI models - all with one Picsart account.\nTry prompts like this:\n\n@Picsart , create a cinematic 10-second video ad for our product launch\nTurn this product photo into a 6-second vertical video, @Picsart \n@Picsart  generate three photoreal hero images for a new launch\n@Picsart , create a 15-second instrumental music bed for a product demo",
     "developerName": "Picsart",
     "category": "Creativity",
     "capabilities": [],

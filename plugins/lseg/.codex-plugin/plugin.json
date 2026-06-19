@@ -1,7 +1,7 @@
 {
   "name": "lseg",
   "version": "1.0.2",
-  "description": "Data and analytics",
+  "description": "Financial market data and analytics",
   "author": {
     "name": "LSEG",
     "url": "https://www.lseg.com"
@@ -13,7 +13,7 @@
   "interface": {
     "displayName": "LSEG",
     "developerName": "LSEG",
-    "shortDescription": "Data and analytics",
+    "shortDescription": "Financial market data and analytics",
     "longDescription": "The LSEG connector provides real-time access to LSEG's comprehensive financial market data ecosystem, spanning across asset classes and domains. It enables seamless integration of institutional-grade market data, analytics and valuation tools directly into conversational AI workflows, allowing users to access deep market insights, perform complex calculations and analyse financial instruments through natural language interactions.",
     "category": "Finance",
     "capabilities": [],

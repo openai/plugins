@@ -1,7 +1,7 @@
 {
   "name": "shutterstock",
   "version": "1.0.3",
-  "description": "Search licensed stock images, videos, music, and creative assets",
+  "description": "Search stock media libraries",
   "author": {
     "name": "Shutterstock",
     "url": "https://www.shutterstock.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Shutterstock",
-    "shortDescription": "Search licensed stock images, videos, music, and creative assets",
-    "longDescription": "Search licensed stock images, videos, music, and creative assets",
+    "shortDescription": "Search stock media libraries",
+    "longDescription": "Searches stock libraries to find candidate images, videos, music, and sound effects that match user-specified subjects, styles, moods, or settings, returning watermarked preview URLs with basic metadata for selection. Use when users want to browse or choose existing stock media (including multiple grouped image searches), not to generate, edit, license, or download files.",
     "developerName": "Shutterstock",
     "category": "Creativity",
     "capabilities": [],

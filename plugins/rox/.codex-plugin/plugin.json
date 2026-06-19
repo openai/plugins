@@ -1,7 +1,7 @@
 {
   "name": "rox",
   "version": "1.0.3",
-  "description": "Query sales data",
+  "description": "Analyze sales data from Rox workspaces",
   "author": {
     "name": "Rox Data Corp",
     "url": "https://www.rox.com"
@@ -21,7 +21,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Rox",
-    "shortDescription": "Query sales data",
+    "shortDescription": "Analyze sales data from Rox workspaces",
     "longDescription": "Rox helps users find and analyze authenticated sales data from their Rox workspace, including accounts, deals, contacts, notes, emails, meetings, documents, org charts, and Slack activity. The app exposes a guided data interface: users can discover available data functions, inspect each function's schema and workflow guidance, then invoke read-only functions to answer sales and account intelligence questions.",
     "developerName": "Rox Data Corp",
     "category": "Productivity",

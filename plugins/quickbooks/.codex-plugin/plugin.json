@@ -1,7 +1,7 @@
 {
   "name": "quickbooks",
   "version": "1.0.3",
-  "description": "QuickBooks accounting, invoices, expenses, customers, and payment context",
+  "description": "Analyze finances and manage QuickBooks records",
   "author": {
     "name": "QuickBooks",
     "url": "https://quickbooks.intuit.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "QuickBooks",
-    "shortDescription": "QuickBooks accounting, invoices, expenses, customers, and payment context",
-    "longDescription": "QuickBooks accounting, invoices, expenses, customers, and payment context",
+    "shortDescription": "Analyze finances and manage QuickBooks records",
+    "longDescription": "Turn your business's raw financial data into clear financial insights. Analyze profitability, cash flow, accounts receivable and payable, and compare your performance against similar businesses in your industry and region. Generate accounting-compliant profit & loss, cash flow statements, balance sheets, and AR/AP aging reports in minutes. Manage invoices, estimates, payments, customers, products, and payroll directly from chat. Upload or paste transactions into the QuickBooks ChatGPT App to analyze personalized results, and view peer loan benchmarks as your business evolves.",
     "developerName": "QuickBooks",
     "category": "Finance",
     "capabilities": [],

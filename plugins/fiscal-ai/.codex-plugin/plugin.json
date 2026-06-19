@@ -1,7 +1,7 @@
 {
   "name": "fiscal-ai",
   "version": "1.0.3",
-  "description": "Financial research, company fundamentals, filings, and market insights from Fiscal AI",
+  "description": "Audit-ready financial data and equity research",
   "author": {
     "name": "Fiscal AI",
     "url": "https://fiscal.ai"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Fiscal AI",
-    "shortDescription": "Financial research, fundamentals, filings, and market insights",
-    "longDescription": "Financial research, company fundamentals, filings, and market insights from Fiscal AI",
+    "shortDescription": "Audit-ready financial data and equity research",
+    "longDescription": "Access institutional-grade financial data directly within ChatGPT. Fiscal.ai delivers fundamental metrics and ratios minutes after earnings are reported, with every figure verifiable via direct links to the source filing. Beyond core financials, Fiscal.ai provides company-specific KPIs, revenue segments, and adjusted metrics. Combined with historical and current market quotes, it enables grounded, audit-ready equity research with unmatched speed.",
     "developerName": "Fiscal AI",
     "category": "Finance",
     "capabilities": [],

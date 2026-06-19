@@ -1,7 +1,7 @@
 {
   "name": "aiera",
   "version": "1.0.2",
-  "description": "Finance data for professionals",
+  "description": "Institutional financial data and events",
   "author": {
     "name": "Aiera",
     "url": "https://www.aiera.com"
@@ -13,7 +13,7 @@
   "interface": {
     "displayName": "Aiera",
     "developerName": "Aiera",
-    "shortDescription": "Finance data for professionals",
+    "shortDescription": "Institutional financial data and events",
     "longDescription": "Access institutional-grade financial data from Aiera, including live corporate events, filings, company publications, broker research, and much more.",
     "category": "Finance",
     "capabilities": [],

@@ -1,7 +1,7 @@
 {
   "name": "calendly",
   "version": "1.0.2",
-  "description": "Manage bookings & availability",
+  "description": "Scheduling links, availability, and bookings",
   "author": {
     "name": "Calendly",
     "url": "https://calendly.com"
@@ -20,8 +20,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Calendly",
-    "shortDescription": "Manage bookings & availability",
-    "longDescription": "Bring Calendly into ChatGPT to take scheduling actions through simple prompts. Create and update event types, generate scheduling links, adjust availability, book or cancel meetings, and more \u2014 right in ChatGPT.",
+    "shortDescription": "Scheduling links, availability, and bookings",
+    "longDescription": "Bring Calendly into ChatGPT to take scheduling actions through simple prompts. Create and update event types, generate scheduling links, adjust availability, book or cancel meetings, and more — right in ChatGPT.",
     "developerName": "Calendly",
     "category": "Productivity",
     "capabilities": [],

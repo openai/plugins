@@ -1,7 +1,7 @@
 {
   "name": "heygen",
   "version": "2.2.4",
-  "description": "Create HeyGen avatar videos and personalized video messages. Build a persistent digital identity from a description or hosted photo URL, then generate presenter-led videos with your digital twin.",
+  "description": "Create and manage AI videos and avatars",
   "author": {
     "name": "HeyGen",
     "email": "developers@heygen.com",
@@ -26,11 +26,14 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "HeyGen",
-    "shortDescription": "Avatar videos and personalized video messages",
-    "longDescription": "HeyGen Skills give your agent a face, a voice, and the ability to send video like a message. Use heygen-avatar to build a persistent digital identity from a written description or hosted photo URL and pick a voice, then heygen-video to generate identity-first presenter videos via the HeyGen v3 Video Agent pipeline (avatar resolution, aspect ratio correction, prompt engineering, and voice selection are handled automatically).",
+    "shortDescription": "Create and manage AI videos and avatars",
+    "longDescription": "HeyGen lets users create, inspect, update, and manage AI videos, avatars, voices, video translations, lipsync jobs, and Video Agent sessions from ChatGPT using their authenticated HeyGen account.",
     "developerName": "HeyGen",
     "category": "Creativity",
-    "capabilities": ["Read", "Write"],
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
     "websiteURL": "https://heygen.com",
     "privacyPolicyURL": "https://www.heygen.com/privacy",
     "termsOfServiceURL": "https://www.heygen.com/terms",

@@ -1,7 +1,7 @@
 {
   "name": "datasite",
   "version": "1.0.3",
-  "description": "Deal room documents, diligence materials, and Q&A workflows",
+  "description": "Manage secure M&A data rooms",
   "author": {
     "name": "Datasite",
     "url": "https://www.datasite.com"
@@ -14,8 +14,8 @@
   "interface": {
     "displayName": "Datasite",
     "developerName": "Datasite",
-    "shortDescription": "Deal room documents, diligence materials, and Q&A workflows",
-    "longDescription": "Deal room documents, diligence materials, and Q&A workflows",
+    "shortDescription": "Manage secure M&A data rooms",
+    "longDescription": "Connect ChatGPT to your Datasite virtual data room - the secure workspace where thousands of M&A deals are facilitated annually. Set up folder structures, invite users, search documents, track buyer Q&A, and audit data room readiness, all through natural language. No workflow interruptions. No security trade-offs. Built for advisors, bankers, and corporate development teams - backed by the enterprise security and permissioning every transaction demands.\n\n1. Set up a deal room - \"Create a new Datasite Prepare data room for Project Alpha, set up a standard M&A folder index, and invite sarah@advisorfirm.com as an admin.\"\n\n2. Search documents semantically - \"Search the data room for any documents related to pending litigation or regulatory risk.\"\n\n3. Track buyer Q&A - \"Show me all open Q&A questions in the data room and draft responses where we have supporting documents.\"\n\n4. Audit deal room readiness - \"Check the data room for empty folders, missing documents, and any files flagged as password-protected or blank before we go live.\"\n\n5. Manage user access - \"Create a buyer role with view-only permissions and create draft invitations for the following five contacts from Acme Capital.\"",
     "category": "Productivity",
     "capabilities": [],
     "brandColor": "#F89820",
