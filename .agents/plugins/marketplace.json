@@ -2142,6 +2142,19 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "imagegen",
+      "source": {
+        "source": "local",
+        "path": "./plugins/imagegen"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE",
+        "products": ["CODEX"]
+      },
+      "category": "Design"
     }
   ]
 }
