@@ -1,7 +1,7 @@
 {
   "name": "datadog",
   "version": "0.1.2",
-  "description": "Analyze and remediate Datadog telemetry",
+  "description": "Investigate Datadog telemetry and workflows from Codex",
   "author": {
     "name": "Datadog",
     "url": "https://www.datadoghq.com/"
@@ -13,14 +13,11 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Datadog (Preview)",
-    "shortDescription": "Analyze and remediate Datadog telemetry",
-    "longDescription": "Available for US1 customers only. Analyze, investigate, and act on your Datadog telemetry directly from ChatGPT using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture.",
+    "shortDescription": "Investigate logs, metrics, traces, and incidents",
+    "longDescription": "Analyze, investigate, and act on your Datadog telemetry directly from Codex using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture.",
     "developerName": "Datadog",
     "category": "Developer Tools",
-    "capabilities": [
-      "Interactive",
-      "Writes"
-    ],
+    "capabilities": ["Interactive", "Writes"],
     "websiteURL": "https://www.datadoghq.com/",
     "privacyPolicyURL": "https://www.datadoghq.com/legal/privacy/",
     "termsOfServiceURL": "https://www.datadoghq.com/legal/terms/",
