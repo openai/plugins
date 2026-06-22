@@ -1,0 +1,51 @@
+{
+  "name": "boltz-api-cli",
+  "version": "0.1.1",
+  "description": "Predict structures, screen molecules and proteins, and design binders.",
+  "author": {
+    "name": "Boltz",
+    "email": "support@boltz.bio",
+    "url": "https://boltz.bio"
+  },
+  "homepage": "https://boltz.bio",
+  "repository": "https://github.com/boltz-bio/boltz-api-skills",
+  "license": "MIT",
+  "keywords": [
+    "boltz",
+    "boltz-api",
+    "go-cli",
+    "computational-biology",
+    "protein-design",
+    "protein-screening",
+    "small-molecule-design",
+    "virtual-screening",
+    "structure-prediction",
+    "molecular-modeling",
+    "drug-discovery",
+    "biotech"
+  ],
+  "skills": "./skills",
+  "interface": {
+    "displayName": "Boltz",
+    "shortDescription": "Predict structures, screen molecules and proteins, and design binders",
+    "longDescription": "Use Boltz from Codex for biomolecular modeling workflows: predict structure and binding for protein, RNA, DNA, and ligand complexes; rank small-molecule or protein libraries against targets; and design novel small molecules, peptides, antibodies, nanobodies, or custom protein binders with structures and confidence metrics.",
+    "developerName": "Boltz",
+    "category": "Education & Research",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://boltz.bio",
+    "privacyPolicyURL": "https://boltz.bio/privacy",
+    "termsOfServiceURL": "https://boltz.bio/terms",
+    "brandColor": "#4e6d53",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": [],
+    "defaultPrompt": [
+      "Predict EGFR L858R binding to osimertinib",
+      "Design nanobodies for a SARS-CoV-2 RBD epitope",
+      "Design selective JAK2 binders from Enamine REAL"
+    ]
+  }
+}

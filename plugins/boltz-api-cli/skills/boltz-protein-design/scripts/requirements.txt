@@ -1,0 +1,4 @@
+# Dependencies for the target-exploration scripts.
+# Probe first (python3 -c "import gemmi, numpy") and only install these if it fails.
+gemmi==0.7.5
+numpy==2.4.6

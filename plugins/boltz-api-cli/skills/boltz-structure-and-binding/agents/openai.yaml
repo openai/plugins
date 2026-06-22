@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boltz Structure and Binding"
+  short_description: "Predict complexes and score Boltz binding jobs"
+  default_prompt: "Use $boltz-structure-and-binding to predict this complex and download the resulting structures."

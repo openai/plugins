@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boltz Protein Design"
+  short_description: "Design peptide or antibody binders"
+  default_prompt: "Use $boltz-protein-design to estimate cost, confirm spend, and design binders for this target."

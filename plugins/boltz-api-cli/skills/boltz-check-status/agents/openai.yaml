@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boltz Check Status"
+  short_description: "Inspect Boltz jobs and recover outputs"
+  default_prompt: "Use $boltz-check-status to find this Boltz job, inspect its state, and recover downloaded outputs."
