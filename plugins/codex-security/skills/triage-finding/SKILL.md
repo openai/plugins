@@ -52,26 +52,9 @@ Do not run duplicate-bug triage instead of security-impact triage. Generic Jira 
 
 ## Jira and Linear Intake
 
-When the user supplies Jira or Linear issue URLs, Jira issue keys, Linear issue identifiers, JQL, project/search phrases, or asks to import tickets from Jira or Linear, retrieve the issue content before normalizing findings.
+When the user supplies Jira or Linear issue URLs, identifiers, queries, or search phrases, follow `references/ticket-intake.md` before normalizing findings. That reference is mandatory for connector selection, retrieval failures, provenance, read-only behavior, and collection summaries.
 
-For Jira, use the Atlassian Rovo connector when it is available:
-
-- Prefer structured JQL for repeatable imported collections, ordered by a stable field such as key or created date. Use natural-language search only for discovery, such as finding the cloud/site, project, issue family, or first matching key from a vague user phrase; after discovery, switch to JQL or exact issue fetches.
-- Jira text search tokenizes punctuation. If a hyphenated marker such as `KAN-PROMPTFOO-SYNTH` returns no rows, broaden to a stable token such as `PROMPTFOO`, then filter returned summaries for the exact family before triage.
-- For exact issue URLs or keys, fetch those issues directly when the connector supports it. For a project family or saved query, use JQL and preserve the JQL string as source provenance.
-
-For Linear, fetch exact issue URLs or identifiers directly when provided. When the user supplies a team/project/search phrase instead, use the Linear connector's search results only to identify the intended issue set, then fetch the selected issues before normalizing.
-
-Normalize Jira and Linear vulnerability tickets as `source_type: "scanner_ticket"`
-unless the ticket body clearly represents a more specific input type such as `bug_bounty`, `advisory`, `cve`, or `codex_security_finding`. Preserve source-system provenance including issue key or identifier, URL, project, status, labels, components, priority, assignee,
-reporter, timestamps, issue type, and the import query in `input_id`,
-`normalized_input.references`, and evidence/proof-gap text.
-
-Default to read-only import and triage. Do not add comments, transition issues,
-close issues, assign owners, or change labels unless the user explicitly asks for writeback. If the user does ask for writeback, finish the static verdicts first, summarize the planned issue mutations, and keep the mutation step separate from evidence analysis.
-
-For imported Jira or Linear collections, the concise final summary should say how many issues were imported, what query or issue set was used, where the full result was rendered or saved, and whether any Jira or Linear changes were made.
-The default source-system status is: no Jira or Linear changes made.
+Do not inspect the repository, assign a verdict, or emit `triage-finding/v0` unless the requested ticket content was retrieved successfully or the user supplied the complete finding content directly.
 
 ## GitHub Repository Intake
 
@@ -251,11 +234,9 @@ policy-dependent, environment-dependent, or blocked by missing repository contex
 
 After verdicting, assign discrete exploitability stack ranks separately for `confirmed` and `needs_review` findings.
 
-- `confirmed` findings use the `confirmed` rank queue and rank labels `P0`,
-  `P1`, `P2`, etc. `P0` is the most exploitable confirmed finding in this result set.
-- `needs_review` findings use the `needs_review` rank queue and the same `P0`, `P1`, `P2`, etc. labels. `P0` is the highest-exploitability unresolved finding to review first.
-- Rank labels intentionally do not encode the verdict queue. Use `rank_queue`
-  to distinguish confirmed priorities from needs-review priorities.
+- `confirmed` findings use the `confirmed` rank queue and positive integer ranks `1`, `2`, `3`, etc. Rank `1` is the most exploitable confirmed finding in this result set.
+- `needs_review` findings use the `needs_review` rank queue and independently assign positive integer ranks starting at `1`. Rank `1` is the highest-exploitability unresolved finding to review first.
+- Ranks must be unique and contiguous from `1` inside each queue. The same rank may appear once in each queue because `rank_queue` distinguishes confirmed priorities from needs-review priorities.
 - `not_actionable` findings are not stack-ranked; set their rank queue and rank to `null`.
 
 Rank by exploitability, not by scanner severity alone. Prioritize findings with clearer attacker reachability, lower required privileges, fewer preconditions,

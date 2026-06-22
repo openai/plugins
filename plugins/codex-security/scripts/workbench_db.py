@@ -844,6 +844,14 @@ def require_diff_target(
                 parent_line.removeprefix("parent ").strip(),
                 "Commit parent",
             )
+        if base_revision and base_revision != parent:
+            supplied_base = (
+                base_revision
+                if base_revision == EMPTY_GIT_TREE
+                else resolve_git_commit(target, base_revision, "Commit base")
+            )
+            if supplied_base != parent:
+                raise SystemExit("Commit base revision must match the selected commit's parent.")
         return {"kind": kind, "baseRevision": parent, "headRevision": head}
     base = resolve_git_commit(target, base_revision or "", "Base revision")
     head = resolve_git_commit(target, head_revision or "", "Head revision")

@@ -63,7 +63,7 @@ Each entry in `findings` must use this shape:
   },
   "exploitability_stack_rank": {
     "rank_queue": "confirmed",
-    "rank": "P0",
+    "rank": 1,
     "rationale": "why this finding is more or less exploitable than other findings with the same verdict",
     "drivers": ["attacker reachability", "privilege required", "preconditions", "source-to-sink control", "guard strength"]
   },
@@ -102,8 +102,7 @@ Allowed confidence values:
 strings and `null` for `boundary_crossed` when the surface or policy is unclear;
 prefer `needs_review` for unclear boundary cases.
 
-`exploitability_stack_rank` records priority within the result set. Use separate queues for `confirmed` and `needs_review`, but assign `P0`, `P1`, `P2`, etc.
-independently inside each queue. `P0` is the most exploitable finding in its queue; use `rank_queue` rather than the rank label to identify the queue. For `not_actionable`, set `rank_queue` and `rank` to `null`, use an empty `drivers`
+`exploitability_stack_rank` records priority within the result set. Use separate queues for `confirmed` and `needs_review`. Assign unique positive integer ranks contiguously from `1` inside each queue. Rank `1` is the most exploitable finding in its queue; use `rank_queue` rather than the number alone to identify the queue. For `not_actionable`, set `rank_queue` and `rank` to `null`, use an empty `drivers`
 array, and set `rationale` to a short explanation such as `not actionable`.
 
 Use empty arrays for unavailable optional evidence lists. Use `null` for `fix_finding_handoff` unless the verdict is `confirmed`.
