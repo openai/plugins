@@ -5,8 +5,8 @@
 ## Contents
 
 - Execution Basics
-- Creating Nodes
-- Fills and Strokes
+- Creating Nodes (Frames, Text, Rectangles, Ellipses, Lines, Vectors, SVG Import)
+- Fills and Strokes (Solid, Linear Gradient, Radial Gradient, Multiple Fills)
 - Auto Layout
 - Effects
 - Opacity and Blend Modes
@@ -114,6 +114,25 @@ line.strokes = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0.08 }];
 line.strokeWeight = 1;
 ```
 
+### Vectors (Custom Paths)
+
+Use `figma.createVector()` for any shape that can't be built from primitives — organic curves, flowing contours, custom silhouettes. The `vectorPaths` property accepts SVG path data.
+
+```javascript
+const vector = figma.createVector();
+vector.vectorPaths = [{
+  windingRule: "NONZERO",
+  data: "M 0 60 C 30 10 70 10 100 50 C 130 90 170 20 200 40 L 200 100 L 0 100 Z"
+}];
+vector.fills = [{ type: 'SOLID', color: { r: 0.15, g: 0.3, b: 0.55 } }];
+vector.strokes = [{ type: 'SOLID', color: { r: 0.1, g: 0.2, b: 0.4 } }];
+vector.strokeWeight = 2;
+```
+
+SVG path commands: `M` (move to), `L` (line to), `C x1 y1 x2 y2 x y` (cubic bezier), `Q x1 y1 x y` (quadratic bezier), `A rx ry rot large sweep x y` (arc), `Z` (close). Uppercase = absolute, lowercase = relative.
+
+Vectors support all the same properties as other shapes — fills, strokes, effects, brushes, dynamic strokes, variable-width strokes, and texture effects.
+
 ### SVG Import
 
 ```javascript
@@ -155,7 +174,26 @@ node.fills = [{
     { color: { r: 0.2, g: 0.36, b: 0.96, a: 1 }, position: 0 },
     { color: { r: 0.56, g: 0.24, b: 0.88, a: 1 }, position: 1 }
   ],
-  gradientTransform: [[1, 0, 0], [0, 1, 0]]
+  gradientTransform: [[1, 0, 0], [0, 1, 0]]  // left-to-right (default)
+}];
+
+// Top-to-bottom:
+// gradientTransform: [[0, 1, 0], [-1, 0, 1]]
+```
+
+### Radial Gradient
+
+```javascript
+node.fills = [{
+  type: "GRADIENT_RADIAL",
+  gradientStops: [
+    { color: { r: 0.95, g: 0.7, b: 0.3, a: 1 }, position: 0 },   // bright center
+    { color: { r: 0.82, g: 0.38, b: 0.14, a: 1 }, position: 1 }   // deeper edge
+  ],
+  // 2x3 affine matrix [[scaleX, shearX, tx], [shearY, scaleY, ty]]
+  // Scale <1 = gradient LARGER than shape (freeform color — use for illustration)
+  // Scale >1 = gradient SMALLER than shape (obvious oval — avoid for illustration)
+  gradientTransform: [[0.71, 0, 0.19], [0, 0.57, 0.21]]  // large, offset
 }];
 ```
 

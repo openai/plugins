@@ -10,7 +10,7 @@ Use this skill to create or update **screens, views, and multi-section UI contai
 
 **MANDATORY**: You MUST also load [figma-use](../figma-use/SKILL.md) before any `use_figma` call. That skill contains critical rules (color ranges, font loading, etc.) that apply to every script you write.
 
-**Always pass `skillNames: "figma-generate-design"` when calling `use_figma` as part of this skill.** This is a logging parameter — it does not affect execution.
+**Always include `figma-generate-design` in the comma-separated `skillNames` parameter when calling `use_figma` as part of this skill. If this skill was loaded via an MCP resource, you MUST prefix the name with `resource:` (e.g. `resource:figma-generate-design`).** This is a logging parameter — it does not affect execution.
 
 ## Skill Boundaries
 
@@ -22,9 +22,7 @@ Use this skill to create or update **screens, views, and multi-section UI contai
 
 - Figma MCP server must be connected
 - The target Figma file must have a published design system with components (or access to a team library)
-- User should provide either:
-  - A Figma file URL / file key to work in
-  - Or context about which file to target (the agent can discover pages)
+- User must provide a target Figma file (URL or `fileKey`). If they don't have one yet, invoke `/figma-create-new-file` (or call `create_new_file`) first and reuse the returned file_key. Both `use_figma` and `generate_figma_design` require an existing `fileKey`.
 - Source code or description of the screen/view to build/update
 
 ## Parallel Workflow with generate_figma_design (Web Apps Only)
@@ -32,8 +30,8 @@ Use this skill to create or update **screens, views, and multi-section UI contai
 When building a screen from a **web app** that can be rendered in a browser, the best results come from running both approaches in parallel:
 
 1. **In parallel:**
-   - Start building the screen using this skill's workflow (use_figma + design system components)
-   - Run `generate_figma_design` to capture a pixel-perfect screenshot of the running web app
+   - Start building the screen using this skill's workflow (use_figma + design system components) against the target Figma file (`fileKey`).
+   - Run `generate_figma_design` against the **same `fileKey`** to capture a pixel-perfect screenshot of the running web app into that file. `generate_figma_design` always requires `fileKey` — if the user does not yet have a Figma file, first invoke `/figma-create-new-file` (or call the `create_new_file` MCP tool) to get one, and reuse that file_key for both this skill and the capture.
 2. **Once both complete:** Update the use_figma output to match the pixel-perfect layout from the `generate_figma_design` capture. The capture provides the exact spacing, sizing, and visual treatment to aim for, while your use_figma output has proper component instances linked to the design system. If the capture contains images, transfer them to your use_figma output by copying `imageHash` values from the capture's image fills (see Step 5 for details).
 3. **Once confirmed looking good:** Delete the `generate_figma_design` output — it was only used as a visual reference.
 
@@ -59,7 +57,8 @@ Before touching Figma, understand what you're building:
 1. If building from code, read the relevant source files to understand the structure, sections, and which components are used.
 2. Identify the major sections of the view (e.g., for a page: Header, Hero, Content Panels, Footer; for a modal: Title Bar, Form Sections, Action Bar; for a sidebar: Navigation, Content Area, Footer Actions).
 3. For each section, list the UI components involved (buttons, inputs, cards, navigation pills, accordions, etc.).
-4. **Check whether the view contains any images** (e.g., `<img>`, `<Image>`, background images, product photos, avatars, icons loaded from URLs). If it does and this is a web app, you **must** run the parallel `generate_figma_design` capture workflow — start it immediately alongside Step 2 so the capture runs while you discover components. See "Parallel Workflow with generate_figma_design" above.
+4. **Identify the product's font family from the source. Do not default to Inter.** Find *which* typeface the product uses before writing any script. See [references/discover-product-font.md](references/discover-product-font.md) for where to look (CSS variables, component files) and how to resolve messy Figma font names.
+5. **Check whether the view contains any images** (e.g., `<img>`, `<Image>`, background images, product photos, avatars, icons loaded from URLs). If it does and this is a web app, you **must** run the parallel `generate_figma_design` capture workflow — start it immediately alongside Step 2 so the capture runs while you discover components. See "Parallel Workflow with generate_figma_design" above.
 
 ### Step 2: Collect Component Keys, Variables, and Styles
 
@@ -351,6 +350,37 @@ When translating code components to Figma instances, check the component's defau
 
 **Never hardcode hex colors or pixel spacing** when a design system variable exists. Use `setBoundVariable` for spacing/radii and `setBoundVariableForPaint` for colors. Apply text styles with `node.textStyleId` and effect styles with `node.effectStyleId`.
 
+#### Componentize repeated and reusable elements (required)
+
+Componentization is part of the **default** workflow, not an optional follow-up. Produce a componentized structure on the first pass; do not emit a flat tree of one-off frames and wait for a second "now make it componentized" prompt.
+
+- **Design-system instances are already componentized** (Step 2). Prefer them.
+- **For anything the design system does not cover that repeats or maps to a reusable source component, create a local component once with `figma.createComponent()` and place instances**, instead of hand-building N near-identical frames. One source component maps to one Figma main component.
+
+See [references/componentization.md](references/componentization.md) for the build-once-place-instances pattern and code.
+
+#### Icons: import the SVG, never reconstruct from rotated primitives
+
+Icons are the **main exception to the build-manually-vs-import split above.** If the design system exposes an icon as a component, instance it (a single INSTANCE_SWAP property, not a variant per icon). Otherwise — most commonly when **grabbing an icon from the codebase to place or replace it in Figma** — import the icon's **SVG source directly** as a vector node. This is the primary, default path for icons; do not redraw them.
+
+1. **Get the SVG from the codebase.** Read the icon's source — inline `<svg>`, the imported `.svg` asset, or the icon-library entry — and pass that exact SVG string. Prefer the codebase's own SVG over hand-authoring one.
+2. **Import with `figma.createNodeFromSvg(svgString)`**, which returns a `FrameNode` of editable vector paths. The SVG string **must** include a `viewBox` plus explicit `width`/`height` (e.g. `<svg width="24" height="24" viewBox="0 0 24 24" ...>`). Without `width`/`height` it falls back to the `viewBox` size, which is often smaller than the slot — the usual cause of "the icon didn't size properly."
+3. **Size it to the slot.** `createNodeFromSvg` frames scale their contents on resize, so `icon.resize(size, size)` fits the whole icon (stroke weight included) to the target box. Equivalently author `width`/`height` equal to the target. Match the source's icon size — commonly 16/20/24px.
+4. **Never reconstruct an icon from rotated line/rect/ellipse primitives.** Figma's line rotation is unreliable in the `use_figma` context and produces broken, mis-rotated icons (a chevron collapses into a blob, an arrowhead detaches from its shaft). Importing the SVG is both more reliable and more editable.
+
+```js
+// Place / replace an icon from a codebase SVG into a 24px slot
+const icon = figma.createNodeFromSvg(
+  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+  '<path d="m9 18 6-6-6-6" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+);
+icon.name = "icon/chevron-right";
+icon.resize(24, 24);          // scales the whole icon to the slot
+slotFrame.appendChild(icon);
+```
+
+**Codebase SVGs usually use `currentColor`** (e.g. `stroke="currentColor"` / `fill="currentColor"`), which `createNodeFromSvg` imports as **black** — it does not inherit the parent's color. Set the intended color after import: substitute the literal color into the SVG string before importing, or bind the imported vector fills/strokes to a design-system color variable with `setBoundVariableForPaint` (same as any paint). To turn an imported SVG into a reusable icon component (for INSTANCE_SWAP), see [figma-generate-library → Creating Icon Components](../figma-generate-library/references/component-creation.md) and the [INSTANCE_SWAP pattern](../figma-use/references/component-patterns.md#instance_swap-avoiding-variant-explosion).
+
 ### Step 5: Validate the Full View and Transfer Images
 
 After composing all sections, call `get_screenshot` on the wrapper frame and compare against the source. Fix any issues with targeted `use_figma` calls — don't rebuild the entire view.
@@ -361,7 +391,14 @@ After composing all sections, call `get_screenshot` on the wrapper frame and com
 - Placeholder text still showing ("Title", "Heading", "Button")
 - Truncated content from layout sizing bugs
 - Wrong component variants (e.g., Neutral vs Primary button)
+- **Wrong font family** — text rendered in a different typeface than the product uses (e.g. Inter where the product is SF Pro). The script ran without error, so this is invisible at a glance; assert it explicitly (see "Assert the font family is correct" below)
 - **Blank image placeholders** — if images are missing, you need to transfer them from the `generate_figma_design` capture (see below)
+
+#### Assert the font family is correct
+
+**You MUST explicitly assert that rendered text uses the product font(s) identified in Step 1**, and treat any mismatch as a failed validation. Do not assume a successfully loaded font is the correct font: loading Inter when the product uses SF Pro is a failure even if no errors occur. **If you have a source reference (the running web app, a design mock, or the `generate_figma_design` capture), you MUST also compare rendered screenshots** — a near-miss style within the right family can pass a family check but still look wrong.
+
+See [references/discover-product-font.md](references/discover-product-font.md#verify-the-font-after-building) for the read-back script (which separates free-standing text you fix from design-system-governed text you flag) and the screenshot-comparison steps.
 
 #### Transfer images from the generate_figma_design capture
 
@@ -446,7 +483,9 @@ Because this skill works incrementally (one section per call), errors are natura
 - **Search broadly.** Try synonyms and partial terms. A "NavigationPill" might be found under "pill", "nav", "tab", or "chip". For variables, search "color", "spacing", "radius", etc.
 - **Prefer design system tokens over hardcoded values.** Use variable bindings for colors, spacing, and radii. Use text styles for typography. Use effect styles for shadows. This keeps the screen linked to the design system.
 - **Prefer component instances over manual builds.** Instances stay linked to the source component and update automatically when the design system evolves.
+- **Componentize by default.** Build repeated or reusable elements as a component once, then place instances. Do not ship a flat tree of one-off frames that needs a second "make it componentized" pass.
 - **Work section by section.** Never build more than one major section per `use_figma` call.
 - **Return node IDs from every call.** You'll need them to compose sections and for error recovery.
 - **Validate visually after each section.** Use `get_screenshot` to catch issues early.
+- **Assert the font family, not just a successful load.** A script can load the wrong font without error. After building, verify rendered text uses the product font identified in Step 1 (see Step 5).
 - **Match existing conventions.** If the file already has screens, match their naming, sizing, and layout patterns.

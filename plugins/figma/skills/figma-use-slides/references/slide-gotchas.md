@@ -12,7 +12,8 @@
 - Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal
 - SLIDE_GRID and SLIDE_ROW are opaque nodes
 - Validation without get_metadata
-- Building multi-element slides incrementally
+- Building multi-element slides
+- Code preamble for deck-building scripts
 
 
 ## Canonical text-edit recipe (font load → await → mutate → return IDs)
@@ -90,39 +91,104 @@ for (const slide of slides) {
 
 ## Position after appendChild (critical)
 
-Setting `x`/`y` on a node **before** appending it to a slide causes unpredictable coordinate offsets. The slide's internal coordinate system is only applied once the node is a child.
+Setting `x`/`y` on a node **before** appending it to its real parent causes a `(−240, −240)` coordinate shift. This applies at **every level of nesting**, not just the slide root — a card you build at "page level" before attaching to a slide hits the bug, and a text you create then position before appending to that card hits it too.
+
+**Why this happens:** Newly created nodes (`figma.createFrame()`, `figma.createRectangle()`, `figma.createText()`) in a Slides file are silently auto-parented to a slide context whose origin sits at absolute `(240, 240)` — the slide grid's `GRID_PADDING`. When you write `node.x = 200` on that "orphan", the underlying engine interprets `200` as the desired absolute x, then stores `relative.x = 200 − 240 = −40`. When you later `appendChild` to the real slide (or real card), the relative coordinate is preserved, so the node lands at `−40` instead of `200`. The bug is **intermittent** — different frames in the same script can escape it depending on engine state — so a passing visual check on one frame doesn't mean the next one is safe.
 
 ```js
-// WRONG — position set before parenting, coordinates shift by an unpredictable offset
-const rect = figma.createRectangle();
-rect.resize(400, 200);
-rect.x = 100;
-rect.y = 300;
-slide.appendChild(rect);  // rect may end up at (-140, 60) instead of (100, 300)!
+// WRONG — building a subtree at "page level", attaching last.
+// Both the outer card AND the inner text hit the (-240, -240) trap.
+const card = figma.createFrame();
+card.resize(400, 200);
+card.x = 120; card.y = 260;          // card stores local = (-120, 20)
+const text = figma.createText();
+text.x = 32; text.y = 32;            // text on orphan card — same trap
+card.appendChild(text);
+slide.appendChild(card);
+// Visual result: card bleeds off the left edge of the slide;
+// text inside it is off-position relative to the card.
 
-// CORRECT — append to the slide first, then set all properties
-const rect = figma.createRectangle();
-slide.appendChild(rect);
-rect.resize(400, 200);
-rect.fills = [{ type: "SOLID", color: { r: 0.2, g: 0.3, b: 0.8 } }];
-rect.cornerRadius = 8;
-rect.x = 100;
-rect.y = 300;
+// CORRECT — appendChild walks down from the slide.
+// Configure size/fills/x/y AFTER each appendChild, at every level.
+const card = figma.createFrame();
+slide.appendChild(card);             // 1. parent first
+card.resize(400, 200);               // 2. then everything else
+card.fills = [{ type: "SOLID", color: { r: 1, g: 1, b: 1 } }];
+card.cornerRadius = 16;
+card.x = 120; card.y = 260;
+
+const text = figma.createText();
+card.appendChild(text);              // same rule one level down
+await figma.loadFontAsync({ family: "Inter", style: "Bold" });
+text.fontName = { family: "Inter", style: "Bold" };
+text.characters = "26.6%";
+text.x = 32; text.y = 32;
 ```
 
-**Why this happens:** Newly created nodes default to page-level coordinates. When reparented into a slide, those coordinates are reinterpreted relative to the slide's internal origin, which may not be (0, 0). By appending first, you ensure all subsequent property assignments operate in the slide's local coordinate space.
-
-**Safest pattern:** Always `appendChild` to the slide first, then configure everything — position, size, fills, text, corner radius. While non-positional properties (fills, fontSize, etc.) are technically safe before appending, doing everything after is simpler and avoids needing to remember which properties are coordinate-dependent.
+**Required helper pattern.** Wrap the append-first order so the agent can't write it wrong. Use these (or local equivalents) for every node added to a slide or a frame on a slide:
 
 ```js
-// Recommended helper pattern for building slide content
-const addToSlide = (node, slide, props) => {
-  slide.appendChild(node);
-  if (props.resize) node.resize(props.resize[0], props.resize[1]);
-  if (props.x !== undefined) node.x = props.x;
-  if (props.y !== undefined) node.y = props.y;
-  return node;
-};
+function addFrame(parent, x, y, w, h, fill, radius) {
+  const f = figma.createFrame();
+  parent.appendChild(f);                                    // 1. parent first
+  f.resize(w, h);
+  f.fills = [{ type: "SOLID", color: fill }];
+  if (radius !== undefined) f.cornerRadius = radius;
+  f.x = x; f.y = y;                                         // 2. position last
+  return f;
+}
+
+function addText(parent, family, style, size, color, chars, x, y, w, h) {
+  const t = figma.createText();
+  parent.appendChild(t);
+  t.fontName = { family, style };
+  t.fontSize = size;
+  t.characters = chars;
+  t.fills = [{ type: "SOLID", color }];
+  if (w !== undefined) t.resize(w, h);
+  t.x = x; t.y = y;
+  return t;
+}
+
+function addRect(parent, x, y, w, h, fill) {
+  const r = figma.createRectangle();
+  parent.appendChild(r);
+  r.resize(w, h);
+  r.fills = [{ type: "SOLID", color: fill }];
+  r.x = x; r.y = y;
+  return r;
+}
+```
+
+With these helpers, building a card-with-text on a slide is one walk-down:
+
+```js
+const card = addFrame(slide, 120, 260, 400, 200, { r: 1, g: 1, b: 1 }, 16);
+addText(card, "Inter", "Bold", 96, { r: 0.42, g: 0.42, b: 0.45 }, "26.6%", 32, 56, 336, 104);
+```
+
+
+## Diagnosing offset bugs
+
+If you observe nodes off by exactly `(−240, −240)` from where you set them, this is the auto-parent bug above. **Do not** try to compensate by adding `240` back to `x`/`y` — the session referenced in the original incident did this and the next iteration was worse, not better, because the compensation hides the structural issue and re-triggers it under slightly different state.
+
+Fix the order instead:
+
+1. Read back the node positions after your script runs. For any node whose `node.x` differs from the value you assigned by `−240`, that node had `x`/`y` set before its final `appendChild`.
+2. Rewrite the offending block to use the helper pattern above (append-then-configure, at every nesting level).
+3. Verify by re-reading `node.x` — it must match the value you wrote.
+
+Quick sanity script you can drop in at the end of any slide-build:
+
+```js
+const expectations = [
+  { node: card,  intended: { x: 120, y: 260 } },
+  { node: text,  intended: { x: 32,  y: 56  } },
+];
+const drift = expectations
+  .map(e => ({ name: e.node.name, dx: e.node.x - e.intended.x, dy: e.node.y - e.intended.y }))
+  .filter(r => r.dx !== 0 || r.dy !== 0);
+return { drift }; // any non-empty result means the append-first rule was broken somewhere
 ```
 
 
@@ -186,13 +252,129 @@ return { children, overlaps, hasOverlaps: overlaps.length > 0 };
 Run this after creating slide content to catch layout issues before they compound.
 
 
-## Building multi-element slides incrementally
+### Batch validation script
 
-When building slides with many elements (charts, cards, grids), work in small batches and validate between each:
+When building a deck, run this validation after every batch of slides. It checks the three most common layout failures — overlapping siblings, text clipping past containers, and elements beyond slide bounds — in ~3 seconds via a read-only `use_figma` call. Only take a screenshot if issues are found.
 
-1. **Create the slide and background** — verify fills applied correctly
-2. **Add text elements** (titles, labels) — verify positions and font loading
-3. **Add shapes/data visualization** — verify no overlaps with text
-4. **Add decorative elements** — verify they don't obscure content
+```js
+// Pass the slide IDs built in the current batch
+const slideIds = ["SLIDE_ID_1", "SLIDE_ID_2", "SLIDE_ID_3"];
+const OVERLAP_PX = 4;
+const OVERFLOW_PX = 1;
+const SLIDE_W = 1920, SLIDE_H = 1080;
 
-Return all created node IDs from each step so subsequent calls can reference or clean up nodes if needed.
+const issues = [];
+const slides = await Promise.all(slideIds.map(id => figma.getNodeByIdAsync(id)));
+
+for (const slide of slides) {
+  const children = slide.children.map(c => ({
+    id: c.id, name: c.name, type: c.type,
+    x: c.x, y: c.y, w: c.width, h: c.height,
+  }));
+
+  // 1. Sibling overlaps (≥ OVERLAP_PX axis-aligned intersection)
+  for (let i = 0; i < children.length; i++) {
+    for (let j = i + 1; j < children.length; j++) {
+      const a = children[i], b = children[j];
+      const ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+      const oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+      if (ox >= OVERLAP_PX && oy >= OVERLAP_PX)
+        issues.push({ slide: slide.id, type: "overlap", nodes: [a.name, b.name] });
+    }
+  }
+
+  // 2. Text clipping (text bbox extends past parent frame)
+  for (const c of children) {
+    if (c.type !== "FRAME") continue;
+    const texts = c.findAllWithCriteria({ types: ["TEXT"] });
+    for (const t of texts) {
+      const abs = t.absoluteBoundingBox;
+      const pAbs = c.absoluteBoundingBox;
+      if (!abs || !pAbs) continue;
+      if (abs.x + abs.width > pAbs.x + pAbs.width + OVERFLOW_PX ||
+          abs.y + abs.height > pAbs.y + pAbs.height + OVERFLOW_PX)
+        issues.push({ slide: slide.id, type: "textClip", node: t.name, parent: c.name });
+    }
+  }
+
+  // 3. Beyond slide bounds
+  for (const c of children) {
+    if (c.x + c.w < -OVERLAP_PX || c.y + c.h < -OVERLAP_PX ||
+        c.x > SLIDE_W + OVERLAP_PX || c.y > SLIDE_H + OVERLAP_PX)
+      issues.push({ slide: slide.id, type: "outOfBounds", node: c.name });
+  }
+}
+
+return { clean: issues.length === 0, issues };
+```
+
+**Verification cadence for deck building:**
+- After every batch: run the validation script above. If `clean` is `true`, proceed to the next batch without re-deliberation or a screenshot.
+- If `clean` is `false`: take a screenshot of the affected slide(s) and fix the issues before continuing.
+- Screenshot at **checkpoints** regardless: after the first batch (validates the visual system — colors, typography, design direction) and after the final batch (overall quality check).
+- Do NOT re-plan after successful verification. Proceed to the next batch.
+
+
+## Building multi-element slides
+
+When building a **single complex slide** (data-heavy chart, intricate one-off layout), work incrementally within that slide — create the background and structure first, then add content, then decorative elements, validating between steps.
+
+When building a **deck** (multiple slides), build complete slides in each `use_figma` call. The helpers (`addFrame`, `addText`, `addRect`) enforce the appendChild-before-position rule, so building a complete slide in one pass is safe. Validate using the [batch validation script](#batch-validation-script) above, not per-element screenshots. See [Deck-Building Workflow](../SKILL.md#deck-building-workflow) for the full process.
+
+
+## Code preamble for deck-building scripts
+
+When building a deck, start every `use_figma` script with the same preamble — colors, fonts, and helpers. Define these once in your Phase 1 plan, then copy verbatim into every build script rather than re-deriving them.
+
+```js
+// --- Preamble (copy from Phase 1 plan) ---
+// Color palette — fill in your own values
+const C = {
+  bg:      { r: 0.10, g: 0.10, b: 0.12 },
+  surface: { r: 0.15, g: 0.15, b: 0.19 },
+  text:    { r: 1,    g: 1,    b: 1    },
+  muted:   { r: 0.60, g: 0.62, b: 0.68 },
+  accent:  { r: 0.38, g: 0.71, b: 0.77 },
+};
+
+// Font loading — batch all styles in one await
+await Promise.all([
+  figma.loadFontAsync({ family: "Inter", style: "Bold" }),
+  figma.loadFontAsync({ family: "Inter", style: "Semi Bold" }),
+  figma.loadFontAsync({ family: "Inter", style: "Regular" }),
+  figma.loadFontAsync({ family: "Inter", style: "Light" }),
+]);
+
+// Helpers — enforce appendChild-before-position
+function addFrame(parent, x, y, w, h, fill, radius) {
+  const f = figma.createFrame();
+  parent.appendChild(f);
+  f.resize(w, h);
+  f.fills = [{ type: "SOLID", color: fill }];
+  if (radius !== undefined) f.cornerRadius = radius;
+  f.x = x; f.y = y;
+  return f;
+}
+function addText(parent, family, style, size, color, chars, x, y, w, h) {
+  const t = figma.createText();
+  parent.appendChild(t);
+  t.fontName = { family, style };
+  t.fontSize = size;
+  t.characters = chars;
+  t.fills = [{ type: "SOLID", color }];
+  if (w !== undefined) t.resize(w, h);
+  t.x = x; t.y = y;
+  return t;
+}
+function addRect(parent, x, y, w, h, fill) {
+  const r = figma.createRectangle();
+  parent.appendChild(r);
+  r.resize(w, h);
+  r.fills = [{ type: "SOLID", color: fill }];
+  r.x = x; r.y = y;
+  return r;
+}
+// --- End preamble ---
+```
+
+The palette values and font families above are placeholders — replace them with the actual design constants from your Phase 1 plan. The helpers are identical to the ones in the [Position after appendChild](#position-after-appendchild-critical) section and should be included in every deck-building script.
