@@ -60,8 +60,8 @@ spending on a large run.
 ## Bundled scripts and dependency probe
 
 The geometry/analysis scripts live in `scripts/` next to this skill and need
-`python3` with `gemmi` and `numpy`. **Probe the active interpreter first; only
-install if it fails** — many users already have a suitable env.
+Python 3.9 or newer with `gemmi` and `numpy`. **Probe the active interpreter
+first; only install if it fails** — many users already have a suitable env.
 
 ```bash
 # Probe (run from the skill directory; adjust the path to scripts/ as needed)
