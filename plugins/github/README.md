@@ -3,6 +3,13 @@
 Use the GitHub plugin to inspect repositories, triage pull requests and issues,
 debug CI, and prepare code changes for review.
 
+## App Connector for ChatGPT-login Codex sessions
+
+For Codex sessions signed in with ChatGPT, this plugin uses the GitHub App
+Connector declared in [`.app.json`](.app.json). Codex prompts you to connect
+GitHub, manages the connector authentication, and makes the authorized GitHub
+tools available to the plugin; no PAT environment variable is required.
+
 ## MCP setup for API-key Codex sessions
 
 This plugin includes GitHub's hosted MCP server declaration. For PAT creation,
