@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replay QA API"
+  short_description: "Analyze Replay recordings with Replay QA"
+  default_prompt: "Use $replay-qa-api to analyze this Replay recording and report the bugs."

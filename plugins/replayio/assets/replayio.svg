@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Replay.io">
+  <rect width="128" height="128" rx="28" fill="#2E2E32"/>
+  <path d="M39 32c-6 0-10 6-7 11l21 37c3 5 10 5 13 0l21-37c3-5-1-11-7-11H39Z" fill="#F02D5E"/>
+  <path d="M68 43c-4-2-9 1-9 6v30c0 5 5 8 9 6l27-15c4-3 4-9 0-12L68 43Z" fill="#FF3366"/>
+  <path d="M36 54c-5-3-11 1-11 7v30c0 6 6 10 11 7l26-15c5-3 5-10 0-13L36 54Z" fill="#F02D5E"/>
+</svg>

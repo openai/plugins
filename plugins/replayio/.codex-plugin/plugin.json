@@ -1,0 +1,47 @@
+{
+  "name": "replayio",
+  "version": "0.1.0",
+  "description": "Record browser sessions with the Replay Browser through the host agent browser, analyze recordings through Replay MCP tools or Replay QA, and upload pending recordings when the turn ends.",
+  "author": {
+    "name": "Replay",
+    "url": "https://replay.io"
+  },
+  "homepage": "https://replay.io",
+  "repository": "https://github.com/replayio/plugins",
+  "license": "MIT",
+  "keywords": [
+    "replay",
+    "agent-browser",
+    "playwright",
+    "browser-automation",
+    "time-travel-debugging",
+    "recording",
+    "replay-qa",
+    "chatgpt-app"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Replay.io",
+    "shortDescription": "Record browser sessions and inspect Replay recordings or Replay QA results",
+    "longDescription": "Drive the host agent browser with Replay Chromium selected by AGENT_BROWSER_EXECUTABLE_PATH to capture time-travel debuggable recordings, upload pending recordings after the run, analyze uploaded recordings through Replay MCP tools, and create Replay QA projects for recording analysis or live-app exploration. In MCP Apps-aware hosts, Replay tool results can render rich debugging widgets for logpoints, console output, React trees, Redux state, network requests, screenshots, source code, profiles, and exception stacks.",
+    "developerName": "Replay",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://replay.io",
+    "privacyPolicyURL": "https://replay.io/privacy",
+    "termsOfServiceURL": "https://replay.io/terms",
+    "defaultPrompt": [
+      "Record an agent browser session against this local app and analyze the resulting recording",
+      "Create a Replay QA project for this Replay recording and report the bugs"
+    ],
+    "brandColor": "#F02D5E",
+    "composerIcon": "./assets/replayio.svg",
+    "logo": "./assets/replayio.svg",
+    "screenshots": []
+  }
+}
