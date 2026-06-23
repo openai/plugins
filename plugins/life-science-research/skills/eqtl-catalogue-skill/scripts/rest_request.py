@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 try:
     import requests
@@ -29,6 +31,22 @@ EQTLCAT_ASSOCIATION_STR_DEFAULTS = {
     "gene_id": "",
     "molecular_trait_id": "",
     "qtl_group": "",
+}
+SENSITIVE_QUERY_KEYS = {
+    "api_key",
+    "apikey",
+    "access_token",
+    "auth",
+    "authorization",
+    "bearer",
+    "client_secret",
+    "key",
+    "password",
+    "refresh_token",
+    "secret",
+    "session",
+    "signature",
+    "token",
 }
 
 
@@ -73,6 +91,31 @@ def _require_str(name: str, value: Any, required: bool = False) -> str | None:
 def _service_name(base_url: str) -> str:
     host = base_url.split("://", 1)[-1].split("/", 1)[0]
     return host.replace(".", "-")
+
+
+def _sanitize_request_url(url: str) -> str:
+    """Return a shareable request URL without secret-like query values."""
+    parts = urlsplit(url)
+    query = []
+    for key, value in parse_qsl(parts.query, keep_blank_values=True):
+        normalized_key = key.casefold().replace("-", "_")
+        is_sensitive = normalized_key in SENSITIVE_QUERY_KEYS or normalized_key.endswith(
+            ("_key", "_password", "_secret", "_token")
+        )
+        query.append((key, "REDACTED" if is_sensitive else value))
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
+
+
+def _sources(source_name: str, request_url: str) -> list[dict[str, str]]:
+    sanitized_url = _sanitize_request_url(request_url)
+    return [
+        {
+            "name": source_name,
+            "url": sanitized_url,
+            "request_url": sanitized_url,
+            "retrieved_at": datetime.now(timezone.utc).isoformat(),
+        }
+    ]
 
 
 def _drop_none_values(value: dict[str, Any]) -> dict[str, Any]:
@@ -297,6 +340,9 @@ def execute(payload: Any) -> dict[str, Any]:
                 "status_code": response.status_code,
                 "record_path": path_used,
                 "raw_output_path": raw_output_path,
+                "sources": _sources(
+                    _service_name(config["base_url"]), str(response.url)
+                ),
                 "warnings": [],
             }
             if isinstance(target, list):
@@ -333,6 +379,7 @@ def execute(payload: Any) -> dict[str, Any]:
             if raw_output_path
             else len(text_head) < len(response.text),
             "raw_output_path": raw_output_path,
+            "sources": _sources(_service_name(config["base_url"]), str(response.url)),
             "warnings": [],
         }
     except ValueError as exc:

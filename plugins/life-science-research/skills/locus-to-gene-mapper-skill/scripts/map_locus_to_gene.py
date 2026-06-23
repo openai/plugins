@@ -20,6 +20,15 @@ OT_BASE = "https://api.platform.opentargets.org/api/v4/graphql"
 GNOMAD_BASE = "https://gnomad.broadinstitute.org/api"
 REFSNP_BASE = "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp"
 
+CORE_PROVENANCE_SOURCES = [
+    ("Experimental Factor Ontology via OLS", "https://www.ebi.ac.uk/ols4/ontologies/efo"),
+    ("NHGRI-EBI GWAS Catalog", "https://www.ebi.ac.uk/gwas/"),
+    ("NCBI RefSNP", "https://www.ncbi.nlm.nih.gov/snp/"),
+    ("Open Targets Platform", "https://platform.opentargets.org/"),
+    ("GTEx Portal", "https://gtexportal.org/"),
+    ("Genebass", "https://app.genebass.org/"),
+]
+
 DEFAULT_LOCUS_PADDING_BP = 1_000_000
 REFSEQ_CHROMOSOMES = {f"NC_{i:06d}": str(i) for i in range(1, 23)}
 REFSEQ_CHROMOSOMES.update({"NC_000023": "X", "NC_000024": "Y", "NC_012920": "MT"})
@@ -2044,6 +2053,36 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
                     f"overall_score outside [0,1] for gene {gene.get('symbol')} in locus {locus.get('locus_id')}"
                 )
 
+    retrieved_at = now_iso()
+    provenance_sources = [
+        {"name": name, "url": url, "retrieved_at": retrieved_at}
+        for name, url in CORE_PROVENANCE_SOURCES
+    ]
+    if include_clinvar:
+        provenance_sources.append(
+            {
+                "name": "ClinVar and NCBI Variation",
+                "url": "https://www.ncbi.nlm.nih.gov/clinvar/",
+                "retrieved_at": retrieved_at,
+            }
+        )
+    if include_gnomad_context:
+        provenance_sources.append(
+            {
+                "name": "gnomAD",
+                "url": "https://gnomad.broadinstitute.org/",
+                "retrieved_at": retrieved_at,
+            }
+        )
+    if include_hpa_tissue_context:
+        provenance_sources.append(
+            {
+                "name": "Human Protein Atlas",
+                "url": "https://www.proteinatlas.org/",
+                "retrieved_at": retrieved_at,
+            }
+        )
+
     mapping_payload: dict[str, Any] = {
         "meta": {
             "trait_query": trait_query,
@@ -2070,6 +2109,7 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
         "anchors": anchors,
         "loci": loci_output,
         "cross_locus_ranked_genes": cross_locus_ranked_genes,
+        "sources": provenance_sources,
         "warnings": dedupe_keep_order(warnings),
         "limitations": dedupe_keep_order(limitations),
     }
@@ -2118,6 +2158,7 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
             "Paste `inline_image_markdown` lines directly in the chat as plain markdown. "
             "Do not wrap them in code fences."
         ),
+        "sources": provenance_sources,
         "warnings": dedupe_keep_order(warnings),
         "limitations": dedupe_keep_order(limitations),
     }

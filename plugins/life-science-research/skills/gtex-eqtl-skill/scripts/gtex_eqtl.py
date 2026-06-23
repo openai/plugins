@@ -12,6 +12,7 @@ Output JSON on stdout.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 import sys
 from typing import Any
@@ -78,6 +79,21 @@ def extract_rows(data: Any) -> list[Any]:
     return []
 
 
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
+
+
 def main() -> int:
     warnings: list[str] = []
 
@@ -138,7 +154,7 @@ def main() -> int:
         "paging_info": paging_info,
         "warnings": warnings,
     }
-    sys.stdout.write(json.dumps(output))
+    sys.stdout.write(json.dumps(_attach_sources(output, "GTEx Portal", "https://gtexportal.org/api/v2")))
     return 0
 
 

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 import sys
 from pathlib import Path
@@ -209,6 +210,21 @@ def execute(payload: Any) -> dict[str, Any]:
         session.close()
 
 
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
+
+
 def main() -> int:
     try:
         payload = json.load(sys.stdin)
@@ -222,7 +238,7 @@ def main() -> int:
         code = 2
     else:
         code = 0 if output.get("ok") else 1
-    sys.stdout.write(json.dumps(output))
+    sys.stdout.write(json.dumps(_attach_sources(output, "ClinicalTrials.gov", "https://clinicaltrials.gov/api/v2")))
     return code
 
 
