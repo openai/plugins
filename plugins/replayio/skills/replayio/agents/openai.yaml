@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replay.io"
+  short_description: "Record and debug browser sessions with Replay"
+  default_prompt: "Use $replayio to record this browser session and debug it with Replay."
