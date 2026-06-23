@@ -1,6 +1,6 @@
 {
   "name": "notion",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Notion workflows for implementation planning, research synthesis, meeting preparation, and knowledge capture.",
   "author": {
     "name": "OpenAI",
@@ -39,6 +39,7 @@
     "brandColor": "#111111",
     "composerIcon": "./assets/notion-small.svg",
     "logo": "./assets/notion.png",
+    "logoDark": "./assets/notion-dark.png",
     "screenshots": []
   }
 }

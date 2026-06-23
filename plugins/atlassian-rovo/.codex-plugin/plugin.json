@@ -1,6 +1,6 @@
 {
   "name": "atlassian-rovo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Manage Jira and Confluence fast",
   "author": {
     "name": "Atlassian",
@@ -33,6 +33,7 @@
     "screenshots": [],
     "brandColor": "#0052CC",
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png"
   }
 }
