@@ -32,6 +32,9 @@ EQTLCAT_ASSOCIATION_STR_DEFAULTS = {
     "molecular_trait_id": "",
     "qtl_group": "",
 }
+SOURCE_NAME = "eQTL Catalogue"
+
+
 SENSITIVE_QUERY_KEYS = {
     "api_key",
     "apikey",
@@ -348,7 +351,7 @@ def execute(payload: Any) -> dict[str, Any]:
                 "record_path": path_used,
                 "raw_output_path": raw_output_path,
                 "sources": _sources(
-                    _service_name(config["base_url"]), str(response.url)
+                    SOURCE_NAME, str(response.url)
                 ),
                 "warnings": [],
             }
@@ -386,7 +389,7 @@ def execute(payload: Any) -> dict[str, Any]:
             if raw_output_path
             else len(text_head) < len(response.text),
             "raw_output_path": raw_output_path,
-            "sources": _sources(_service_name(config["base_url"]), str(response.url)),
+            "sources": _sources(SOURCE_NAME, str(response.url)),
             "warnings": [],
         }
     except ValueError as exc:

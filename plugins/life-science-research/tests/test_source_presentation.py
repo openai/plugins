@@ -145,6 +145,19 @@ class SourcePresentationTests(unittest.TestCase):
         self.assertNotIn("#", sanitized)
         self.assertEqual(4, sanitized.count("REDACTED"))
 
+    def test_generic_clients_use_registry_display_names(self) -> None:
+        registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))["skills"]
+        client_paths = sorted(SKILLS_DIR.glob("*/scripts/rest_request.py"))
+        self.assertEqual(31, len(client_paths))
+
+        for index, client_path in enumerate(client_paths):
+            skill_name = client_path.parents[1].name
+            client = _load_module(f"generic_source_client_{index}", client_path)
+            self.assertEqual(
+                registry[skill_name]["source_name"],
+                client.SOURCE_NAME,
+            )
+
     def test_gtex_source_url_reproduces_the_variant_query(self) -> None:
         script_dir = PLUGIN_ROOT / "skills" / "gtex-eqtl-skill" / "scripts"
         sys.path.insert(0, str(script_dir))

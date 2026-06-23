@@ -141,6 +141,8 @@ def validate() -> list[str]:
                     'urlencode(query), ""',
                     '"credential"',
                     '"sig"',
+                    "SOURCE_NAME = ",
+                    "_sources(SOURCE_NAME, str(response.url))",
                 ):
                     if required_phrase not in combined_runtime_text:
                         errors.append(
