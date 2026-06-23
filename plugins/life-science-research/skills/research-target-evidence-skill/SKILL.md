@@ -6,7 +6,7 @@ description: Produce a bounded, source-backed evidence brief for a biological ta
 ## Research Target Evidence
 
 Use the bundled script exactly once for the requested target. Let it plan,
-deduplicate, pace, cache, and batch requests across PubMed and
+deduplicate, pace, and batch requests across PubMed and
 ClinicalTrials.gov.
 
 Do not decompose the request into additional source calls unless the script
@@ -22,9 +22,6 @@ python scripts/research_target_evidence.py \
   --questions biology programs safety \
   --separate-human-preclinical
 ```
-
-The script uses a six-hour response cache by default. Use `--cache-mode off`
-when the user explicitly needs a fresh retrieval.
 
 ## Synthesis
 

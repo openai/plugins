@@ -2,8 +2,7 @@
 from __future__ import annotations
 
 import importlib.util
-import json
-import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -113,19 +112,36 @@ class TrialFilteringTests(unittest.TestCase):
         )
 
 
-class CacheTests(unittest.TestCase):
-    def test_cache_metadata_does_not_persist_request_url(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            retriever = research_target_evidence.Retriever(
-                Path(directory), "read-write", 60
-            )
-            url = "https://example.test/data?api_key=secret"
+class TelemetryTests(unittest.TestCase):
+    def test_telemetry_reports_request_metrics(self) -> None:
+        retriever = research_target_evidence.Retriever()
+        retriever.requests = [
+            {
+                "label": "example",
+                "host": "example.test",
+                "elapsed_ms": 10,
+                "bytes": 100,
+                "status": 200,
+                "attempt": 1,
+            }
+        ]
 
-            retriever._write_cache(url, b"payload")
+        telemetry = research_target_evidence._telemetry(retriever, time.monotonic())
 
-            _, metadata_path = retriever._cache_paths(url)
-            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-            self.assertEqual(set(metadata), {"saved_at"})
+        self.assertEqual(telemetry["network_requests"], 1)
+        self.assertEqual(telemetry["bytes_received"], 100)
+        self.assertEqual(
+            set(telemetry),
+            {
+                "elapsed_seconds",
+                "request_attempts",
+                "network_requests",
+                "retries",
+                "rate_limit_events",
+                "bytes_received",
+                "requests",
+            },
+        )
 
 
 if __name__ == "__main__":

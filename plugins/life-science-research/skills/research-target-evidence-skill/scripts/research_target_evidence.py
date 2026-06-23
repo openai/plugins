@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import re
@@ -15,7 +14,6 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections import defaultdict
-from pathlib import Path
 from typing import Any
 
 EUTILS_BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
@@ -24,42 +22,9 @@ USER_AGENT = "research-target-evidence/0.1"
 
 
 class Retriever:
-    def __init__(self, cache_dir: Path, cache_mode: str, ttl_seconds: int) -> None:
-        self.cache_dir = cache_dir
-        self.cache_mode = cache_mode
-        self.ttl_seconds = ttl_seconds
+    def __init__(self) -> None:
         self.requests: list[dict[str, Any]] = []
         self.last_request_by_host: dict[str, float] = {}
-        if cache_mode != "off":
-            cache_dir.mkdir(parents=True, exist_ok=True)
-
-    def _cache_paths(self, url: str) -> tuple[Path, Path]:
-        digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
-        return self.cache_dir / f"{digest}.body", self.cache_dir / f"{digest}.json"
-
-    def _read_cache(self, url: str) -> bytes | None:
-        if self.cache_mode not in {"read-only", "read-write"}:
-            return None
-        body_path, meta_path = self._cache_paths(url)
-        if not body_path.exists() or not meta_path.exists():
-            return None
-        try:
-            meta = json.loads(meta_path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
-            return None
-        if time.time() - float(meta.get("saved_at", 0)) > self.ttl_seconds:
-            return None
-        return body_path.read_bytes()
-
-    def _write_cache(self, url: str, body: bytes) -> None:
-        if self.cache_mode != "read-write":
-            return
-        body_path, meta_path = self._cache_paths(url)
-        body_path.write_bytes(body)
-        meta_path.write_text(
-            json.dumps({"saved_at": time.time()}, sort_keys=True),
-            encoding="utf-8",
-        )
 
     def _pace(self, host: str) -> None:
         minimum_interval = 0.38 if host.endswith("ncbi.nlm.nih.gov") else 0.05
@@ -70,21 +35,6 @@ class Retriever:
     def get(self, base_url: str, params: dict[str, Any], label: str) -> bytes:
         query = urllib.parse.urlencode(params, doseq=True)
         url = f"{base_url}?{query}" if query else base_url
-        cached = self._read_cache(url)
-        if cached is not None:
-            self.requests.append(
-                {
-                    "label": label,
-                    "host": urllib.parse.urlparse(url).netloc,
-                    "elapsed_ms": 0,
-                    "bytes": len(cached),
-                    "status": 200,
-                    "cache_hit": True,
-                    "attempt": 0,
-                }
-            )
-            return cached
-
         host = urllib.parse.urlparse(url).netloc
         last_error: Exception | None = None
         for attempt in range(1, 4):
@@ -108,11 +58,9 @@ class Retriever:
                         "elapsed_ms": elapsed_ms,
                         "bytes": len(body),
                         "status": status,
-                        "cache_hit": False,
                         "attempt": attempt,
                     }
                 )
-                self._write_cache(url, body)
                 return body
             except urllib.error.HTTPError as exc:
                 status = exc.code
@@ -128,7 +76,6 @@ class Retriever:
                     "elapsed_ms": elapsed_ms,
                     "bytes": len(body),
                     "status": status,
-                    "cache_hit": False,
                     "attempt": attempt,
                     "error": str(last_error),
                 }
@@ -564,17 +511,15 @@ def _query_trials(
 
 
 def _telemetry(retriever: Retriever, started: float) -> dict[str, Any]:
-    network = [request for request in retriever.requests if not request["cache_hit"]]
     return {
         "elapsed_seconds": round(time.monotonic() - started, 3),
         "request_attempts": len(retriever.requests),
-        "network_requests": len(network),
-        "cache_hits": sum(request["cache_hit"] for request in retriever.requests),
+        "network_requests": len(retriever.requests),
         "retries": sum(request["attempt"] > 1 for request in retriever.requests),
         "rate_limit_events": sum(
             request["status"] == 429 for request in retriever.requests
         ),
-        "bytes_received": sum(request["bytes"] for request in network),
+        "bytes_received": sum(request["bytes"] for request in retriever.requests),
         "requests": retriever.requests,
     }
 
@@ -588,18 +533,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--separate-human-preclinical", action="store_true")
     parser.add_argument("--max-papers", type=int, default=14)
     parser.add_argument("--max-trials", type=int, default=20)
-    parser.add_argument(
-        "--cache-mode", choices=["off", "read-only", "read-write"], default="read-write"
-    )
-    parser.add_argument("--cache-ttl-seconds", type=int, default=21600)
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     started = time.monotonic()
-    cache_dir = Path.home() / ".cache" / "codex" / "research-target-evidence"
-    retriever = Retriever(cache_dir, args.cache_mode, args.cache_ttl_seconds)
+    retriever = Retriever()
     try:
         query_plan, papers = _query_pubmed(retriever, args.target, args.max_papers)
         total_trials, trials = _query_trials(retriever, args.target, args.max_trials)
