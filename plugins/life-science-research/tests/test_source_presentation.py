@@ -130,12 +130,64 @@ class SourcePresentationTests(unittest.TestCase):
         )
         client = _load_module("uniprot_rest_request", client_path)
         sanitized = client._sanitize_request_url(  # noqa: SLF001
-            "https://example.org/record?id=P01116&api_key=secret&token=hidden"
+            "https://alice:password@example.org/record?"
+            "id=P01116&api_key=secret&token=hidden&sig=signed&code=oauth"
+            "#access_token=fragment-secret"
         )
+        self.assertTrue(sanitized.startswith("https://example.org/record?"))
         self.assertIn("id=P01116", sanitized)
+        self.assertNotIn("alice", sanitized)
+        self.assertNotIn("password", sanitized)
         self.assertNotIn("secret", sanitized)
         self.assertNotIn("hidden", sanitized)
-        self.assertEqual(2, sanitized.count("REDACTED"))
+        self.assertNotIn("signed", sanitized)
+        self.assertNotIn("oauth", sanitized)
+        self.assertNotIn("#", sanitized)
+        self.assertEqual(4, sanitized.count("REDACTED"))
+
+    def test_gtex_source_url_reproduces_the_variant_query(self) -> None:
+        script_dir = PLUGIN_ROOT / "skills" / "gtex-eqtl-skill" / "scripts"
+        sys.path.insert(0, str(script_dir))
+        try:
+            client = _load_module(
+                "gtex_eqtl_source_client", script_dir / "gtex_eqtl.py"
+            )
+        finally:
+            sys.path.remove(str(script_dir))
+
+        self.assertEqual(
+            client.build_request_url("chr10_112998590_C_T_b38"),
+            "https://gtexportal.org/api/v2/association/singleTissueEqtl?"
+            "variantId=chr10_112998590_C_T_b38",
+        )
+
+    def test_clinicaltrials_summary_keeps_record_link_fields(self) -> None:
+        client_path = (
+            PLUGIN_ROOT
+            / "skills"
+            / "clinicaltrials-skill"
+            / "scripts"
+            / "clinicaltrials_client.py"
+        )
+        client = _load_module("clinicaltrials_source_client", client_path)
+        summary = client._compact_study(  # noqa: SLF001
+            {
+                "protocolSection": {
+                    "identificationModule": {
+                        "nctId": "NCT01234567",
+                        "briefTitle": "Representative study",
+                        "officialTitle": "Representative official study title",
+                    },
+                    "statusModule": {"overallStatus": "RECRUITING"},
+                    "designModule": {"studyType": "INTERVENTIONAL"},
+                },
+                "hasResults": False,
+            }
+        )
+
+        self.assertEqual(summary["nctId"], "NCT01234567")
+        self.assertEqual(summary["briefTitle"], "Representative study")
+        self.assertEqual(summary["overallStatus"], "RECRUITING")
 
     def test_provenance_helper_leaves_errors_unchanged(self) -> None:
         client_path = (

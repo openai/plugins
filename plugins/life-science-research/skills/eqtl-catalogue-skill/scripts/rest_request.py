@@ -40,11 +40,17 @@ SENSITIVE_QUERY_KEYS = {
     "authorization",
     "bearer",
     "client_secret",
+    "code",
+    "credential",
+    "credentials",
+    "jwt",
     "key",
+    "private_key",
     "password",
     "refresh_token",
     "secret",
     "session",
+    "sig",
     "signature",
     "token",
 }
@@ -100,10 +106,11 @@ def _sanitize_request_url(url: str) -> str:
     for key, value in parse_qsl(parts.query, keep_blank_values=True):
         normalized_key = key.casefold().replace("-", "_")
         is_sensitive = normalized_key in SENSITIVE_QUERY_KEYS or normalized_key.endswith(
-            ("_key", "_password", "_secret", "_token")
+            ("_credential", "_jwt", "_key", "_password", "_secret", "_signature", "_token")
         )
         query.append((key, "REDACTED" if is_sensitive else value))
-    return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))
+    netloc = parts.netloc.rsplit("@", 1)[-1]
+    return urlunsplit((parts.scheme, netloc, parts.path, urlencode(query), ""))
 
 
 def _sources(source_name: str, request_url: str) -> list[dict[str, str]]:

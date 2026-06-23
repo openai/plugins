@@ -135,6 +135,17 @@ def validate() -> list[str]:
                 and "_attach_sources" not in combined_runtime_text
             ):
                 errors.append(f"{skill_name}: script outputs lack provenance support")
+            if "def _sanitize_request_url" in combined_runtime_text:
+                for required_phrase in (
+                    'parts.netloc.rsplit("@", 1)[-1]',
+                    'urlencode(query), ""',
+                    '"credential"',
+                    '"sig"',
+                ):
+                    if required_phrase not in combined_runtime_text:
+                        errors.append(
+                            f"{skill_name}: URL sanitizer missing: {required_phrase}"
+                        )
             for script_path in script_files:
                 try:
                     ast.parse(
