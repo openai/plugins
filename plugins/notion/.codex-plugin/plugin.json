@@ -1,6 +1,6 @@
 {
   "name": "notion",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Notion workflows for implementation planning, research synthesis, meeting preparation, and knowledge capture.",
   "author": {
     "name": "OpenAI",
@@ -20,6 +20,7 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Notion",
     "shortDescription": "Notion workflows for specs, research, meetings, and knowledge capture",
@@ -38,6 +39,7 @@
     "brandColor": "#111111",
     "composerIcon": "./assets/notion-small.svg",
     "logo": "./assets/notion.png",
+    "logoDark": "./assets/notion-dark.png",
     "screenshots": []
   }
 }

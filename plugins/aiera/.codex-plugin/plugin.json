@@ -1,7 +1,7 @@
 {
   "name": "aiera",
   "version": "1.0.2",
-  "description": "Earnings calls, transcripts, financial events, and market commentary",
+  "description": "Institutional financial data and events",
   "author": {
     "name": "Aiera",
     "url": "https://www.aiera.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "Aiera",
     "developerName": "Aiera",
-    "shortDescription": "Earnings calls, transcripts, financial events, and market commentary",
-    "longDescription": "Earnings calls, transcripts, financial events, and market commentary",
+    "shortDescription": "Institutional financial data and events",
+    "longDescription": "Access institutional-grade financial data from Aiera, including live corporate events, filings, company publications, broker research, and much more.",
     "category": "Finance",
     "capabilities": [],
     "brandColor": "#180830",

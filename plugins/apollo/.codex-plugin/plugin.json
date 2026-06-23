@@ -1,7 +1,7 @@
 {
   "name": "apollo",
   "version": "1.0.2",
-  "description": "B2B prospecting, account research, contacts, and outreach lists",
+  "description": "Prospecting and outbound execution in Apollo",
   "author": {
     "name": "Apollo",
     "url": "https://www.apollo.io"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "Apollo",
     "developerName": "Apollo",
-    "shortDescription": "B2B prospecting, account research, contacts, and outreach lists",
-    "longDescription": "B2B prospecting, account research, contacts, and outreach lists",
+    "shortDescription": "Prospecting and outbound execution in Apollo",
+    "longDescription": "Apollo’s MCP connector lets ChatGPT safely work inside your Apollo workspace to accelerate prospecting and outbound execution. Search and qualify accounts and contacts using Apollo’s data, enrich records, summarize key context, and take action (e.g., create lists, log notes, generate tasks, and draft or assemble outbound using sequences) using your team’s rules and permissions. Designed for speed and control: ChatGPT can pull only what you ask for, respect workspace access, and produce outputs that are ready to review, personalize, and ship.",
     "category": "Business & Operations",
     "capabilities": [],
     "brandColor": "#E8F028",

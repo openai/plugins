@@ -1,7 +1,7 @@
 {
   "name": "posthog",
   "version": "0.1.2",
-  "description": "Query product analytics and manage feature flags, experiments, and errors in PostHog.",
+  "description": "Analyze product data and manage experiments",
   "author": {
     "name": "PostHog",
     "url": "https://posthog.com"
@@ -26,8 +26,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "PostHog",
-    "shortDescription": "Query analytics, flags, experiments, and errors",
-    "longDescription": "Bring PostHog into ChatGPT and Codex. Ask product-analytics questions in plain language and run HogQL, create and manage feature flags, launch and read experiments, triage error-tracking issues, explore session replays and surveys, inspect LLM analytics, and build dashboards — all grounded in your real PostHog data. With the PostHog app connected, the assistant reasons about your product alongside your code and decisions, and discovers the right PostHog tools and skills at runtime instead of relying on stale knowledge.",
+    "shortDescription": "Analyze product data and manage experiments",
+    "longDescription": "PostHog gives your AI agent direct access to your product analytics, feature flags, experiments, error tracking, surveys, logs, and LLM analytics. Ask questions about your data, create insights, toggle feature flags, analyze errors, search docs, and more — all from chat.",
     "developerName": "PostHog",
     "category": "Data & Analytics",
     "capabilities": [

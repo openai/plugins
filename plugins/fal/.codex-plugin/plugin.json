@@ -1,7 +1,7 @@
 {
   "name": "fal",
   "version": "1.0.3",
-  "description": "AI image and media generation workflows using Fal models",
+  "description": "Generate and manage media with Fal models",
   "author": {
     "name": "Fal",
     "url": "https://fal.ai"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Fal",
-    "shortDescription": "AI image and media generation workflows using Fal models",
-    "longDescription": "AI image and media generation workflows using Fal models",
+    "shortDescription": "Generate and manage media with Fal models",
+    "longDescription": "Fal brings image, video, audio, 3D, training, and editing workflows into Codex through an OpenAI app connector plus focused production skills for model recommendation, schema inspection, pricing, async jobs, file uploads, and media generation.",
     "developerName": "Fal",
     "category": "Creativity",
     "capabilities": [],

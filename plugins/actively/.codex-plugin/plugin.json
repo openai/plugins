@@ -1,7 +1,7 @@
 {
   "name": "actively",
   "version": "1.0.3",
-  "description": "Account intelligence and prospecting signals from Actively",
+  "description": "Account agents for GTM intelligence",
   "author": {
     "name": "Actively",
     "url": "https://www.actively.ai"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Actively",
-    "shortDescription": "Account intelligence and prospecting signals from Actively",
-    "longDescription": "Account intelligence and prospecting signals from Actively",
+    "shortDescription": "Account agents for GTM intelligence",
+    "longDescription": "Win more deals with Actively by directly accessing your always-on per account agents that help you drive the next best action. Actively’s per-account agents are synthesizing across all of your internal context (ex. CRM data, call transcripts, emails) and external signals to drive actionable intelligence. Designed for SDRs, AEs, AMs, and revenue leaders who need deep, contextual account knowledge, from meeting prep and deal strategy to territory prioritization.",
     "developerName": "Actively",
     "category": "Business & Operations",
     "capabilities": [],

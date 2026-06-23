@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp",
+      "oauth_resource": "https://mcp.figma.com/mcp"
+    }
+  }
+}

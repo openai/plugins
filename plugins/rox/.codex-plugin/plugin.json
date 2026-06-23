@@ -1,7 +1,7 @@
 {
   "name": "rox",
   "version": "1.0.3",
-  "description": "Access Rox revenue agents, account intelligence, and sales workflow automation from Codex.",
+  "description": "Analyze sales data from Rox workspaces",
   "author": {
     "name": "Rox Data Corp",
     "url": "https://www.rox.com"
@@ -21,8 +21,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Rox",
-    "shortDescription": "Use Rox revenue agents and account intelligence from Codex.",
-    "longDescription": "Rox connects Codex to revenue agent workflows for account intelligence, prospecting, CRM context, recommended actions, and sales workflow automation.",
+    "shortDescription": "Analyze sales data from Rox workspaces",
+    "longDescription": "Rox helps users find and analyze authenticated sales data from their Rox workspace, including accounts, deals, contacts, notes, emails, meetings, documents, org charts, and Slack activity. The app exposes a guided data interface: users can discover available data functions, inspect each function's schema and workflow guidance, then invoke read-only functions to answer sales and account intelligence questions.",
     "developerName": "Rox Data Corp",
     "category": "Productivity",
     "capabilities": [],

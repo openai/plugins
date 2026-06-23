@@ -1,7 +1,7 @@
 {
   "name": "similarweb",
   "version": "1.0.2",
-  "description": "Digital market intelligence and web traffic analytics",
+  "description": "Research web and app market intelligence",
   "author": {
     "name": "Similarweb",
     "url": "https://www.similarweb.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "Similarweb",
     "developerName": "Similarweb",
-    "shortDescription": "Digital market intelligence and web traffic analytics",
-    "longDescription": "Digital market intelligence and web traffic analytics",
+    "shortDescription": "Research web and app market intelligence",
+    "longDescription": "Research any website or app inside ChatGPT using Similarweb's market intelligence data. Analyze competitor traffic, uncover top keywords, explore audience demographics, and benchmark performance across industries—all through simple prompts. Ask things like \"Show me Nike's traffic sources breakdown\" or \"What keywords is Adidas ranking for?\" and get real-time insights without switching tools. Whether you're a marketer, analyst, investor, or strategist, Similarweb helps you turn competitive questions into answers instantly.",
     "category": "Data & Analytics",
     "capabilities": [],
     "brandColor": "#F07028",

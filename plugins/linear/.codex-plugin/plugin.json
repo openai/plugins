@@ -1,6 +1,6 @@
 {
   "name": "linear",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Find and reference issues and projects.",
   "author": {
     "name": "OpenAI",
@@ -12,6 +12,7 @@
   "keywords": [],
   "skills": "./skills/",
   "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Linear",
     "shortDescription": "Find and reference issues and projects.",

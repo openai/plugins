@@ -1,7 +1,7 @@
 {
   "name": "meticulate",
   "version": "1.0.2",
-  "description": "Company matching, firmographic lookup, and go-to-market account intelligence",
+  "description": "Research companies and similar targets",
   "author": {
     "name": "Meticulate"
   },
@@ -12,8 +12,8 @@
   "interface": {
     "displayName": "Meticulate",
     "developerName": "Meticulate",
-    "shortDescription": "Company matching, firmographic lookup, and go-to-market account intelligence",
-    "longDescription": "Company matching, firmographic lookup, and go-to-market account intelligence",
+    "shortDescription": "Research companies and similar targets",
+    "longDescription": "Meticulate helps sales and go-to-market teams research companies directly in ChatGPT. Upload a company list or describe the accounts you care about, then identify companies, find similar targets, pull key business details, and answer structured research questions across accounts.",
     "category": "Productivity",
     "capabilities": [],
     "brandColor": "#7000D8",

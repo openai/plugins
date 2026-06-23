@@ -1,7 +1,7 @@
 {
   "name": "lovable",
   "version": "1.0.2",
-  "description": "Build and inspect Lovable app projects from connected workspace context",
+  "description": "Create full-stack web apps from prompts",
   "author": {
     "name": "Lovable",
     "url": "https://lovable.dev"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Lovable",
-    "shortDescription": "Build and inspect Lovable app projects from connected workspace context",
-    "longDescription": "Build and inspect Lovable app projects from connected workspace context",
+    "shortDescription": "Create full-stack web apps from prompts",
+    "longDescription": "Creates full-stack web applications and websites from natural language prompts, handling build, backend, database, and authentication setup, and returning build status, URLs, and screenshots. Use to initiate or check website builds and to provide users with links to further modify or extend their sites in an external web interface.",
     "developerName": "Lovable",
     "category": "Developer Tools",
     "capabilities": [],

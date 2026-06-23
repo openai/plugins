@@ -1,7 +1,7 @@
 {
   "name": "zoominfo",
   "version": "1.0.2",
-  "description": "B2B company intelligence, contacts, and go-to-market signals",
+  "description": "Prospecting and account research with ZoomInfo",
   "author": {
     "name": "ZoomInfo",
     "url": "https://www.zoominfo.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "ZoomInfo",
     "developerName": "ZoomInfo",
-    "shortDescription": "B2B company intelligence, contacts, and go-to-market signals",
-    "longDescription": "B2B company intelligence, contacts, and go-to-market signals",
+    "shortDescription": "Prospecting and account research with ZoomInfo",
+    "longDescription": "Access ZoomInfo’s data and AI context within ChatGPT. Prospecting, Account Research, Verified Contacts, buying signals, and more are now available directly in your conversations.",
     "category": "Business & Operations",
     "capabilities": [],
     "brandColor": "#E81818",

@@ -1,7 +1,7 @@
 {
   "name": "hebbia",
   "version": "1.0.3",
-  "description": "Document research, evidence-backed answers, and project analysis from Hebbia",
+  "description": "Institutional research and financial workflows",
   "author": {
     "name": "Hebbia",
     "url": "https://www.hebbia.ai"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Hebbia",
-    "shortDescription": "Document research, evidence-backed answers, and project analysis",
-    "longDescription": "Document research, evidence-backed answers, and project analysis from Hebbia",
+    "shortDescription": "Institutional research and financial workflows",
+    "longDescription": "Bring Hebbia's institutional intelligence into ChatGPT and Codex. The Hebbia MCP server lets you tap into your firm's knowledge and premium public to make better decisions on deals and investments and run financial workflows from research to reports, slides, and financial models.",
     "developerName": "Hebbia",
     "category": "Business & Operations",
     "capabilities": [],

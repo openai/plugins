@@ -1,7 +1,7 @@
 {
   "name": "docusign",
   "version": "1.0.3",
-  "description": "Agreement envelopes, signing status, recipients, and contract dates",
+  "description": "Automate contract creation and insights",
   "author": {
     "name": "Docusign",
     "url": "https://www.docusign.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "Docusign",
     "developerName": "Docusign",
-    "shortDescription": "Agreement envelopes, signing status, recipients, and contract dates",
-    "longDescription": "Agreement envelopes, signing status, recipients, and contract dates",
+    "shortDescription": "Automate contract creation and insights",
+    "longDescription": "Simplify contract management with intelligent automation powered by Docusign. Go beyond simple execution to make complex agreement workflows effortless. Use natural language to create and send a contract, instantly surface insights like renewal dates and key obligations, and automate workflows that keep your business moving faster and with less friction.",
     "category": "Productivity",
     "capabilities": [],
     "brandColor": "#FFCC00",

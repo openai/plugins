@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boltz Protein Screen"
+  short_description: "Screen protein binders against a target"
+  default_prompt: "Use $boltz-protein-screen to estimate cost, confirm spend, and rank these candidate binders."

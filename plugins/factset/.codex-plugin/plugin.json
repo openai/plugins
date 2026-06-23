@@ -1,7 +1,7 @@
 {
   "name": "factset",
   "version": "1.0.2",
-  "description": "Financial data, estimates, market analytics, and research context",
+  "description": "Connect financial data, analytics, and workflows",
   "author": {
     "name": "FactSet",
     "url": "https://www.factset.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "FactSet",
     "developerName": "FactSet",
-    "shortDescription": "Financial data, estimates, market analytics, and research context",
-    "longDescription": "Financial data, estimates, market analytics, and research context",
+    "shortDescription": "Connect financial data, analytics, and workflows",
+    "longDescription": "FactSet Model Context Protocol (MCP) is an open, API-based standard designed to seamlessly connect financial data, analytics models, and applications across different platforms. By enabling smooth interoperability, MCP empowers investment teams to easily share insights, streamline workflows, and enhance collaboration regardless of their tools or technology stacks. With MCP, firms can integrate new solutions efficiently, drive innovation, and maximize the value of their financial operations—ensuring consistent, context-rich decision-making throughout the investment process.",
     "category": "Finance",
     "capabilities": [],
     "brandColor": "#182850",

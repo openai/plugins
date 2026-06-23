@@ -2142,6 +2142,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "boltz-api-cli",
+      "source": {
+        "source": "local",
+        "path": "./plugins/boltz-api-cli"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education & Research"
     }
   ]
 }

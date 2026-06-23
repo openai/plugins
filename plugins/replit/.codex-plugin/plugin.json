@@ -1,7 +1,7 @@
 {
   "name": "replit",
   "version": "1.0.2",
-  "description": "Work with Replit projects, apps, deployments, and workspace context",
+  "description": "Create and iterate Replit web apps",
   "author": {
     "name": "Replit",
     "url": "https://replit.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Replit",
-    "shortDescription": "Work with Replit projects, apps, deployments, and workspace context",
-    "longDescription": "Work with Replit projects, apps, deployments, and workspace context",
+    "shortDescription": "Create and iterate Replit web apps",
+    "longDescription": "Enables creating a brand-new web application in the user’s Replit account from a natural-language description, without exposing code directly in the chat. Also supports inspecting and explaining the current app’s behavior and applying natural-language change requests to that same app over iterative development.",
     "developerName": "Replit",
     "category": "Developer Tools",
     "capabilities": [],

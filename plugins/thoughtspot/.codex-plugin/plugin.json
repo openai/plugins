@@ -1,7 +1,7 @@
 {
   "name": "thoughtspot",
   "version": "1.0.3",
-  "description": "Business intelligence answers, dashboards, metrics, and revenue analysis",
+  "description": "Trusted business data answers",
   "author": {
     "name": "ThoughtSpot",
     "url": "https://www.thoughtspot.com"
@@ -13,8 +13,8 @@
   "interface": {
     "displayName": "ThoughtSpot",
     "developerName": "ThoughtSpot",
-    "shortDescription": "Business intelligence answers, dashboards, metrics, and revenue analysis",
-    "longDescription": "Business intelligence answers, dashboards, metrics, and revenue analysis",
+    "shortDescription": "Trusted business data answers",
+    "longDescription": "From everyday data questions to high-level strategic analyses, Spotter by ThoughtSpot helps business and data teams get answers and insights they can trust, validate, and act on, enabling everyone to use data to drive the business forward.",
     "category": "Data & Analytics",
     "capabilities": [],
     "brandColor": "#000000",

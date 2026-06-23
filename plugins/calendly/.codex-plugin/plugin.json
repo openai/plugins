@@ -1,7 +1,7 @@
 {
   "name": "calendly",
   "version": "1.0.2",
-  "description": "Search Calendly events and availability so Codex can reason about meetings and scheduling.",
+  "description": "Scheduling links, availability, and bookings",
   "author": {
     "name": "Calendly",
     "url": "https://calendly.com"
@@ -20,8 +20,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Calendly",
-    "shortDescription": "Search Calendly meetings, events, and availability.",
-    "longDescription": "Calendly connects Codex to your scheduling workflows so you can inspect upcoming meetings, review event details, reason about availability, and summarize attendee follow-ups.",
+    "shortDescription": "Scheduling links, availability, and bookings",
+    "longDescription": "Bring Calendly into ChatGPT to take scheduling actions through simple prompts. Create and update event types, generate scheduling links, adjust availability, book or cancel meetings, and more — right in ChatGPT.",
     "developerName": "Calendly",
     "category": "Productivity",
     "capabilities": [],
