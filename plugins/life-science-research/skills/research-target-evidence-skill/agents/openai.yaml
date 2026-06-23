@@ -1,4 +1,4 @@
 interface:
   display_name: "Research Target Evidence"
-  short_description: "Bounded target biology and safety evidence"
-  default_prompt: "Use $research-target-evidence-skill to summarize target biology, therapeutic programs, and safety evidence."
+  short_description: "Bounded target evidence and comparison"
+  default_prompt: "Use $research-target-evidence-skill to assess or compare target biology, therapeutic programs, and safety evidence."
