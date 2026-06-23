@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moody's Sector Brief"
+  short_description: "Produce a sector brief report analyzing a Moody's-covered industry sector with overview, macro context, financials, industry structure, risks, and outlook"
+  default_prompt: "Use Moody's Sector Brief skill to gather internal Moody's research and web data, then generate a complete Sector Brief HTML report."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moody's Earnings Brief"
+  short_description: "Produce a comprehensive Earnings Brief HTML report combining company overview, financials, peer comparison, credit profile, risks, and ESG"
+  default_prompt: "Use Moody's Earnings Brief skill to resolve the target entity, gather Moody's data across all sections, and generate a complete Earnings Brief HTML report."

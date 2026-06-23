@@ -33,6 +33,7 @@
   ],
   "apps": "./.app.json",
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Moody's",
     "shortDescription": "Credit ratings, research, entity intelligence, ownership, financials, and filings.",

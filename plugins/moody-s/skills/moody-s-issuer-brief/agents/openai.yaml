@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moody's Issuer Brief"
+  short_description: "Produce a comprehensive Issuer Brief HTML report combining company overview, financials, peer comparison, credit profile, risks, and ESG"
+  default_prompt: "Use Moody's Issuer Brief skill to resolve the target entity, gather Moody's data across all sections, and generate a complete Issuer Brief HTML report."

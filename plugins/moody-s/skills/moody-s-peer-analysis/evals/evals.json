@@ -1,0 +1,65 @@
+{
+  "skill_name": "peer-analysis",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Run a peer analysis for Mattel, Inc.",
+      "expected_output": "Single fenced ```html code block containing a complete standalone HTML document built from the peer-analysis template. Target = Mattel, Inc., 3 credit peers from getEntityPeers, all pa-* placeholders populated, 4-row tables across peers/rating/ESG, credit drivers 5x4 grid, conclusion with 3 paragraphs, SVG ratings chart, and populated sources list.",
+      "files": [],
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "Report uses the skill's template scaffold (core pa-* IDs present)",
+        "All 15 core pa-* placeholders populated with non-empty content",
+        "Company chips count = 4 (target + 3 peers)",
+        "Target company chip appears first and has the 'target' modifier class",
+        "peers description table has 4 <tr> rows (target + 3 peers)",
+        "peers rating table has 4 <tr> rows (target + 3 peers)",
+        "ESG table has 4 <tr> rows (target + 3 peers)",
+        "Credit drivers table has all 20 cells (5 rows x 4 companies) populated",
+        "Conclusion contains exactly 3 <p> paragraphs",
+        "Ratings chart placeholder contains an <svg> element",
+        "Citations block contains >= 3 source-item entries (canonical markup per skills/shared/citations/SKILL.md)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need a credit peer comparison for The Clorox Company \u2014 compare them against their closest peers",
+      "expected_output": "Single fenced ```html code block with the full peer-analysis HTML for Clorox + 3 peers. Same structural requirements as eval-1 (4-row tables, 5x4 credit drivers, 3-paragraph conclusion, SVG chart, populated sources), tested via a natural-language phrasing.",
+      "files": [],
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "Report uses the skill's template scaffold (core pa-* IDs present)",
+        "All 15 core pa-* placeholders populated with non-empty content",
+        "Company chips count = 4 (target + 3 peers)",
+        "Target company chip appears first and has the 'target' modifier class",
+        "peers description table has 4 <tr> rows (target + 3 peers)",
+        "peers rating table has 4 <tr> rows (target + 3 peers)",
+        "ESG table has 4 <tr> rows (target + 3 peers)",
+        "Credit drivers table has all 20 cells (5 rows x 4 companies) populated",
+        "Conclusion contains exactly 3 <p> paragraphs",
+        "Ratings chart placeholder contains an <svg> element",
+        "Citations block contains >= 3 source-item entries (canonical markup per skills/shared/citations/SKILL.md)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Can you do a peer group analysis for Hasbro? I want to see how they stack up against similar companies on credit metrics and ratings",
+      "expected_output": "Single fenced ```html code block with the full peer-analysis HTML for Hasbro + 3 peers. Tests conversational triggering and structural compliance (4-row tables, 5x4 credit drivers, 3-paragraph conclusion, SVG chart, populated sources).",
+      "files": [],
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "Report uses the skill's template scaffold (core pa-* IDs present)",
+        "All 15 core pa-* placeholders populated with non-empty content",
+        "Company chips count = 4 (target + 3 peers)",
+        "Target company chip appears first and has the 'target' modifier class",
+        "peers description table has 4 <tr> rows (target + 3 peers)",
+        "peers rating table has 4 <tr> rows (target + 3 peers)",
+        "ESG table has 4 <tr> rows (target + 3 peers)",
+        "Credit drivers table has all 20 cells (5 rows x 4 companies) populated",
+        "Conclusion contains exactly 3 <p> paragraphs",
+        "Ratings chart placeholder contains an <svg> element",
+        "Citations block contains >= 3 source-item entries (canonical markup per skills/shared/citations/SKILL.md)"
+      ]
+    }
+  ]
+}

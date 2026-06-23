@@ -1,0 +1,74 @@
+{
+  "skill_name": "sector-brief",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Run a sector brief for the Retail & Apparel sector",
+      "expected_output": "Single fenced ```html code block containing a complete standalone HTML document built from the skill's assets/template.html scaffold. All 12 core sa-* IDs populated (cover title, date, footer date, overview title, exec, overview, macro, financial, structure, risks, outlook, sources). Section 1 has >= 4 subsection-title headers, Section 2 >= 3, Section 3 >= 3 (with concrete $/€/£/% numeric metrics), Section 4 >= 4 (with Porter's Five Forces rated High/Moderate/Low for each force), Section 5 >= 5. Section 6 states Positive/Stable/Negative in paragraph-only form. Executive Summary is paragraph-only. >= 8 inline cite-ref citations, >= 6 source-item entries.",
+      "files": [],
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "HTML uses the skill's template scaffold (cite-ref / subsection-title / source-item CSS classes)",
+        "All 12 core sa-* IDs present",
+        "All 7 section containers populated (exec + 6 sections)",
+        "Section 1 (Overview) has >= 4 subsection-title headers",
+        "Section 2 (Macro) has >= 3 subsection-title headers",
+        "Section 3 (Financial) has >= 3 subsection-title headers",
+        "Section 4 (Structure) has >= 4 subsection-title headers",
+        "Section 5 (Risks) has >= 5 subsection-title headers",
+        "Section 3 contains >= 5 concrete numeric metrics ($/€/£/% values)",
+        "Section 4 includes Porter's Five Forces with High/Moderate/Low ratings (>= 5 rating tokens)",
+        "Section 6 (Outlook) is paragraph-only and states Positive/Stable/Negative",
+        "Executive Summary is paragraph-only (no <li> bullets)",
+        "Inline citations use cite-ref class on <a> or <span> tags (>= 8 occurrences), preferring clickable <a class=\"cite-ref\" href=\"...\"> when the source has a URL",
+        "Sources list contains >= 6 entries (source-item divs or <li>)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need a deep-dive on the Aerospace & Defense sector \u2014 give me the full sector overview, financials, risks, and outlook",
+      "expected_output": "Same structural requirements as eval-1, applied to Aerospace & Defense. Tests natural-language phrasing and a non-consumer sector where procurement budgets, backlog, and DoD appropriations substitute for retail spending metrics.",
+      "files": [],
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "HTML uses the skill's template scaffold (cite-ref / subsection-title / source-item CSS classes)",
+        "All 12 core sa-* IDs present",
+        "All 7 section containers populated (exec + 6 sections)",
+        "Section 1 (Overview) has >= 4 subsection-title headers",
+        "Section 2 (Macro) has >= 3 subsection-title headers",
+        "Section 3 (Financial) has >= 3 subsection-title headers",
+        "Section 4 (Structure) has >= 4 subsection-title headers",
+        "Section 5 (Risks) has >= 5 subsection-title headers",
+        "Section 3 contains >= 5 concrete numeric metrics ($/€/£/% values)",
+        "Section 4 includes Porter's Five Forces with High/Moderate/Low ratings (>= 5 rating tokens)",
+        "Section 6 (Outlook) is paragraph-only and states Positive/Stable/Negative",
+        "Executive Summary is paragraph-only (no <li> bullets)",
+        "Inline citations use cite-ref class on <a> or <span> tags (>= 8 occurrences), preferring clickable <a class=\"cite-ref\" href=\"...\"> when the source has a URL",
+        "Sources list contains >= 6 entries (source-item divs or <li>)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Generate a sector brief report for Banking",
+      "expected_output": "Same structural requirements as eval-1, applied to a financial-services sector where bank-specific metrics (NIM, ROAA, CET1, deposits) substitute for generic corporate margin/leverage metrics. Tests sector flex (Banking vs Retail/A&D).",
+      "files": [],
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "HTML uses the skill's template scaffold (cite-ref / subsection-title / source-item CSS classes)",
+        "All 12 core sa-* IDs present",
+        "All 7 section containers populated (exec + 6 sections)",
+        "Section 1 (Overview) has >= 4 subsection-title headers",
+        "Section 2 (Macro) has >= 3 subsection-title headers",
+        "Section 3 (Financial) has >= 3 subsection-title headers",
+        "Section 4 (Structure) has >= 4 subsection-title headers",
+        "Section 5 (Risks) has >= 5 subsection-title headers",
+        "Section 3 contains >= 5 concrete numeric metrics ($/€/£/% values)",
+        "Section 4 includes Porter's Five Forces with High/Moderate/Low ratings (>= 5 rating tokens)",
+        "Section 6 (Outlook) is paragraph-only and states Positive/Stable/Negative",
+        "Executive Summary is paragraph-only (no <li> bullets)",
+        "Inline citations use cite-ref class on <a> or <span> tags (>= 8 occurrences), preferring clickable <a class=\"cite-ref\" href=\"...\"> when the source has a URL",
+        "Sources list contains >= 6 entries (source-item divs or <li>)"
+      ]
+    }
+  ]
+}

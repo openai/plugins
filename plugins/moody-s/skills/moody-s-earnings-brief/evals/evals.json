@@ -1,0 +1,62 @@
+{
+  "skill_name": "earnings-brief",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Generate an earnings call summary for Apple, Microsoft, and Alphabet",
+      "expected_output": "eval-1",
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "Report uses the skill's template scaffold (ecs-* element IDs present)",
+        "All 20 core template placeholders populated with non-empty content",
+        "Company chips count matches expected (3)",
+        "ecs-tbody-ratings has 3 <tr> rows (one per company)",
+        "ecs-tbody-revenue has 3 <tr> rows (one per company)",
+        "ecs-tbody-volumes has 3 <tr> rows (one per company)",
+        "ecs-tbody-prices has 3 <tr> rows (one per company)",
+        "Credit sentiment badge has a positive/negative/neutral modifier class",
+        "Report uses <strong class=\"subsection-title\"> subheaders (>=12 across sections)",
+        "Citations block contains >= 3 source-item entries (canonical markup per skills/shared/citations/SKILL.md)"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Summarize the latest earnings calls for Ford and General Motors",
+      "expected_output": "eval-2",
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "Report uses the skill's template scaffold (ecs-* element IDs present)",
+        "All 20 core template placeholders populated with non-empty content",
+        "Company chips count matches expected (2)",
+        "ecs-tbody-ratings has 2 <tr> rows (one per company)",
+        "ecs-tbody-revenue has 2 <tr> rows (one per company)",
+        "ecs-tbody-volumes has 2 <tr> rows (one per company)",
+        "ecs-tbody-prices has 2 <tr> rows (one per company)",
+        "Credit sentiment badge has a positive/negative/neutral modifier class",
+        "Report uses <strong class=\"subsection-title\"> subheaders (>=12 across sections)",
+        "Citations block contains >= 3 source-item entries (canonical markup per skills/shared/citations/SKILL.md)"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Create an earnings call report covering JPMorgan Chase, Bank of America, and Wells Fargo",
+      "expected_output": "eval-3",
+      "assertions": [
+        "Output is a complete standalone HTML document (doctype + </html>)",
+        "Report uses the skill's template scaffold (ecs-* element IDs present)",
+        "All 20 core template placeholders populated with non-empty content",
+        "Company chips count matches expected (3)",
+        "ecs-tbody-ratings has 3 <tr> rows (one per company)",
+        "ecs-tbody-revenue has 3 <tr> rows (one per company)",
+        "ecs-tbody-volumes has 3 <tr> rows (one per company)",
+        "ecs-tbody-prices has 3 <tr> rows (one per company)",
+        "Credit sentiment badge has a positive/negative/neutral modifier class",
+        "Report uses <strong class=\"subsection-title\"> subheaders (>=12 across sections)",
+        "Citations block contains >= 3 source-item entries (canonical markup per skills/shared/citations/SKILL.md)"
+      ],
+      "files": []
+    }
+  ]
+}

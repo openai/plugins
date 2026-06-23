@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moody's Peer Analysis"
+  short_description: "Compare a company against its credit peers with ratings, financials, scorecards, and ESG data"
+  default_prompt: "Use Moody's Peer Analysis skill to resolve the target company and its peers, gather credit and financial data, and generate a complete Peer Analysis HTML report."

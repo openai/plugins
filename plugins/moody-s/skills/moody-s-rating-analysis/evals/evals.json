@@ -1,0 +1,66 @@
+{
+  "skill_name": "rating-analysis",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a rating pitch deck for Boeing Company in the Aerospace/Defense sector",
+      "expected_output": "An editable rating_pitch.pptx (>=500KB, ~20+ slides) built from the Moody's 2026 Corp template via scripts/build_pptx.py, plus the resolved payload.json saved alongside it under ~/Desktop/rating-pitch/<company>-<YYYYMMDD-HHMMSS>/. The deck covers cover, 3-part structure (Sector / Company / Peers), macro GDP table, rating actions, SWOT (4 quadrants), key metrics charts, peer summary/financials/debt/profitability/scatter tables, scorecard, ESG, and sources.",
+      "files": [],
+      "assertions": [
+        "Both artifacts exist (rating_pitch.pptx, payload.json)",
+        "PowerPoint file built from Moody's corporate template (>= 500 KB)",
+        "PowerPoint has >= 20 slides",
+        "payload.json matches the skill schema (report_date, target_company, sector, currency, companies, sources, sections)",
+        "payload.sections.swot has >= 2 items in each of strengths/weaknesses/opportunities/threats",
+        "payload.sections.peer_summary.table has >= 3 rows",
+        "payload.sections.peer_financials.rows has >= 3 rows",
+        "payload.sections.macro_outlook.gdp_table.rows has >= 3 rows",
+        "payload.sections.financial_analysis.rating_history has >= 2 rows",
+        "payload.sections.scorecard.factors has >= 3 entries",
+        "payload.sections.esg_analysis.table has >= 1 row",
+        "payload.sources contains >= 5 references"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need a rating pitch for Tesla Inc. \u2014 sector is Automotive. Use USD and compare against 6 peers",
+      "expected_output": "Same structural requirements as eval-1, with 6 peers (not 5) resolved via getEntityPeers, USD honored in payload.currency, and peer tables / scatters reflecting 6 comparators. Tests natural-language phrasing + parameter handling (currency, peer count).",
+      "files": [],
+      "assertions": [
+        "Both artifacts exist (rating_pitch.pptx, payload.json)",
+        "PowerPoint file built from Moody's corporate template (>= 500 KB)",
+        "PowerPoint has >= 20 slides",
+        "payload.currency == 'USD'",
+        "payload.companies has >= 6 entries (target + 6 peers, target first)",
+        "payload.sections.peer_summary.table has >= 6 rows",
+        "payload.sections.peer_financials.rows has >= 6 rows",
+        "payload.sections.swot has >= 2 items in each of strengths/weaknesses/opportunities/threats",
+        "payload.sections.macro_outlook.gdp_table.rows has >= 3 rows",
+        "payload.sections.financial_analysis.rating_history has >= 2 rows",
+        "payload.sections.scorecard.factors has >= 3 entries",
+        "payload.sections.esg_analysis.table has >= 1 row",
+        "payload.sources contains >= 5 references"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Generate a credit pitch deck for JPMorgan Chase, Banking sector",
+      "expected_output": "Same structural requirements as eval-1, applied to a financial-institution target where bank-specific credit metrics (deposits, capital ratios) substitute for generic Debt/EBITDA. Tests sector flex (Banking vs A&D/Auto).",
+      "files": [],
+      "assertions": [
+        "Both artifacts exist (rating_pitch.pptx, payload.json)",
+        "PowerPoint file built from Moody's corporate template (>= 500 KB)",
+        "PowerPoint has >= 20 slides",
+        "payload.sector matches 'Banking' (case-insensitive)",
+        "payload.sections.swot has >= 2 items in each of strengths/weaknesses/opportunities/threats",
+        "payload.sections.peer_summary.table has >= 3 rows",
+        "payload.sections.peer_financials.rows has >= 3 rows",
+        "payload.sections.macro_outlook.gdp_table.rows has >= 3 rows",
+        "payload.sections.financial_analysis.rating_history has >= 2 rows",
+        "payload.sections.scorecard.factors has >= 3 entries",
+        "payload.sections.esg_analysis.table has >= 1 row",
+        "payload.sources contains >= 5 references"
+      ]
+    }
+  ]
+}
