@@ -7,7 +7,7 @@
 - Component properties and variant creation pitfalls
 - Paint, color, and variable binding pitfalls
 - Page context and plugin lifecycle pitfalls (set current page once per `use_figma` call; split multi-page work across calls)
-- Auto Layout and sizing order pitfalls (including HUG/FILL interactions)
+- Auto Layout and sizing order pitfalls (including HUG/FILL interactions, and TEXT nodes that ignore FILL and collapse to a zero-width thread)
 - Variant layout and geometry pitfalls
 - Canonical text-edit recipe + font loading and text/typography pitfalls
 - Sequential awaits — batch independent async calls with `Promise.all` (including `import*ByKeyAsync` families)
@@ -20,6 +20,7 @@
 - Non-existent property writes and "object is not extensible"
 - width/height are read-only — use resize()
 - detachInstance() and node ID invalidation
+- Icons — import the SVG, never reconstruct from rotated line primitives
 
 
 ## New nodes default to (0,0) and overlap existing content
@@ -607,6 +608,13 @@ The property exists on every `SceneNode`, but the **value** you can assign depen
 | `'FILL'` | the node is a child of an auto-layout frame, AND not absolute-positioned, AND not inside an immutable frame, AND not a canvas-grid child | `"FILL can only be set on children of auto-layout frames"`, `"FILL cannot be set on absolute positioned auto-layout children"`, `"FILL cannot be set on this node"`, `"FILL cannot be set on canvas grid children"` |
 | any non-`FIXED` value on a node that is neither auto-layout nor inside auto-layout | (none — always rejected) | `"node must be an auto-layout frame or a child of an auto-layout frame"` |
 
+**Common errors thrown** (the runtime prefixes the message with the property setter that rejected the value):
+
+- `Error: in set_layoutSizingHorizontal: node must be an auto-layout frame or a child of an auto-layout frame`
+- `Error: in set_layoutSizingHorizontal: FILL can only be set on children of auto-layout frames`
+
+The same messages surface under `set_layoutSizingVertical` when the vertical axis is the one being set.
+
 Practical consequences:
 
 1. **Append first, then set.** A freshly-created node has no parent, so `child.layoutSizingHorizontal = 'FILL'` immediately after `figma.createFrame()` always throws. `appendChild` to an auto-layout parent first.
@@ -647,6 +655,37 @@ t.layoutSizingHorizontal = 'HUG'     // ok — TEXT child of auto-layout
 
 The next gotcha (`## HUG parents collapse FILL children`) layers on top of the rules above: even when assignment succeeds, a `HUG` parent gives `FILL` children no room to expand. The validation rule above is about whether the assignment is _allowed_; the next gotcha is about whether it produces useful layout.
 
+## layoutSizing vs AxisSizingMode: two different sizing enums
+
+`layoutSizingHorizontal`/`layoutSizingVertical` and `primaryAxisSizingMode`/`counterAxisSizingMode` look interchangeable but accept **different enums** and are set on **different nodes**. Crossing them throws a value-rejection error.
+
+| Property family | Valid values | Set on |
+| --- | --- | --- |
+| `layoutSizingHorizontal` / `layoutSizingVertical` | `'FIXED'` \| `'HUG'` \| `'FILL'` | a **child** node (or the auto-layout frame itself) |
+| `primaryAxisSizingMode` / `counterAxisSizingMode` | `'FIXED'` \| `'AUTO'` | the **frame** itself |
+
+`'AUTO'` is not a valid `layoutSizing*` value — the equivalent is `'HUG'`:
+
+```js
+// WRONG
+node.layoutSizingVertical = 'AUTO'   // 'AUTO' is not a layoutSizing value
+
+// CORRECT
+node.layoutSizingVertical = 'HUG'
+```
+
+`'FILL'` is not a valid `*AxisSizingMode` value — use `'FIXED'` or `'AUTO'`:
+
+```js
+// WRONG
+frame.counterAxisSizingMode = 'FILL'  // throws: Expected 'FIXED' | 'AUTO', received 'FILL'
+
+// CORRECT
+frame.counterAxisSizingMode = 'FIXED'
+```
+
+`layoutSizingHorizontal/Vertical` is a shorthand that also drives `primaryAxisSizingMode`/`counterAxisSizingMode` under the hood — but the two surfaces accept different value sets, so keep their enums straight. For the structural rules on _when_ `HUG`/`FILL` are legal at all, see the section above.
+
 ## HUG parents collapse FILL children
 
 A `HUG` parent cannot give `FILL` children meaningful size. If children have `layoutSizingHorizontal = "FILL"` but the parent is `"HUG"`, the children collapse to minimum size. The parent must be `"FILL"` or `"FIXED"` for FILL children to expand. This is a common cause of truncated text in select fields, inputs, and action rows.
@@ -667,6 +706,32 @@ const child = figma.createFrame()
 parent.appendChild(child)
 child.layoutSizingHorizontal = 'FILL'  // expands to fill remaining 400px
 ```
+
+## TEXT nodes default to `WIDTH_AND_HEIGHT` and ignore `FILL` — collapsing to a near-zero-width thread
+
+A new `TEXT` node defaults to `textAutoResize = 'WIDTH_AND_HEIGHT'`, which makes it hug its content on **both** axes. In that mode it behaves like `HUG` and ignores `layoutSizingHorizontal = 'FILL'`: instead of filling the parent it shrinks toward minimum width, wrapping every word — or even every character — onto its own line. The result is a frame that is a few pixels wide and thousands of pixels tall (a "text thread"). Long multi-line blocks (specs, docs, descriptions) are where this bites, because the runaway height is easy to miss until you screenshot.
+
+For a wrapping text block, set `textAutoResize = 'HEIGHT'` **and** give it an explicit width — don't rely on `FILL`. The reliable recipe is `'FIXED'` + `resize()`; then verify `node.width > 0` before moving on.
+
+```js
+// WRONG — FILL is ignored while textAutoResize is the default WIDTH_AND_HEIGHT,
+// so the text hugs to ~0 width and grows to thousands of px tall
+const t = figma.createText()
+frame.appendChild(t)
+t.layoutSizingHorizontal = 'FILL'
+t.characters = longString          // wraps to one char per line → width ≈ 0, height ≈ 348114
+
+// CORRECT — switch to HEIGHT autoresize and set an explicit width, then verify
+const t = figma.createText()
+frame.appendChild(t)
+t.textAutoResize = 'HEIGHT'                 // grow vertically, wrap at a fixed width
+t.layoutSizingHorizontal = 'FIXED'
+t.resize(852, t.height)                     // e.g. parent 900 − 24*2 padding
+t.characters = longString
+if (t.width === 0) throw new Error('text collapsed — width not applied')
+```
+
+Set `textAutoResize = 'HEIGHT'` (or `'NONE'`) **before** sizing or assigning `characters`. `FILL` on a TEXT child only works once the node is in `HEIGHT`/`NONE` mode and the auto-layout parent has a committed fixed counter-axis width — when in doubt, prefer explicit `'FIXED'` + `resize()`.
 
 ## `layoutGrow` with a hugging parent causes content compression
 
@@ -966,3 +1031,23 @@ const parent = stableFrame.findOne(n => n.name === "ParentName");
 ```
 
 If detaching multiple nested instances across siblings, do it in a **single** `use_figma` call — discover all targets by traversal before any detachment mutates the tree.
+
+## Icons: import the SVG — never reconstruct from rotated line primitives
+
+Rebuilding an icon out of individual `createLine()` / rectangle / ellipse primitives and rotating them is **unreliable in the `use_figma` context** — `node.rotation` pivots around the node's origin (not its center), so rotated segments drift out of place and the rendered icon comes out broken (a chevron collapses into a blob, an arrowhead detaches from its shaft). Always import the icon's SVG instead — it is both reliable and editable.
+
+```js
+// WRONG — reconstruct from rotated lines; rotation is unreliable, icon renders broken
+const shaft = figma.createLine(); shaft.resize(30, 0); shaft.rotation = 90;
+const barbL = figma.createLine(); barbL.resize(14, 0); barbL.rotation = 45;
+const barbR = figma.createLine(); barbR.resize(14, 0); barbR.rotation = 135;
+
+// CORRECT — import the SVG; createNodeFromSvg returns an editable FrameNode at the SVG's size
+const icon = figma.createNodeFromSvg(
+  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+  '<path d="M12 5v14M19 12l-7 7-7-7" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+);
+icon.resize(24, 24); // scales the whole icon — createNodeFromSvg children carry SCALE constraints
+```
+
+**Sizing:** the SVG string must include a `viewBox` plus explicit `width`/`height`. Without `width`/`height` the node falls back to the `viewBox` size, which is often smaller than the slot and reads as "the icon didn't size properly." To fit an icon to a target box, set the SVG's `width`/`height` to the target or call `icon.resize(size, size)` after import. See [figma-generate-design](../../figma-generate-design/SKILL.md) for the screen-building icon workflow.
