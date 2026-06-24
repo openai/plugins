@@ -1,0 +1,8 @@
+{
+  "name": "Issue attention queue",
+  "prompt": "Review the Linear issues relevant to me and build a concise attention queue, prioritizing urgent, blocked, overdue, stale, or awaiting-update work. Do not make changes.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

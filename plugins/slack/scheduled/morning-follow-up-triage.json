@@ -1,0 +1,8 @@
+{
+  "name": "Morning follow-up triage",
+  "prompt": "Review my Slack activity since the previous workday and surface the messages, requests, and commitments that need my attention, with a concise prioritized follow-up list.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "08:45"
+  }
+}
