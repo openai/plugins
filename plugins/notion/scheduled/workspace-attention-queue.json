@@ -1,0 +1,8 @@
+{
+  "name": "Workspace attention queue",
+  "prompt": "Review the Notion pages relevant to me and surface recent changes, open decisions, and follow-ups that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

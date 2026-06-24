@@ -1,0 +1,8 @@
+{
+  "name": "Meeting follow-up queue",
+  "prompt": "Review my recent Granola meeting notes and surface decisions, commitments, and follow-ups that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "16:30"
+  }
+}

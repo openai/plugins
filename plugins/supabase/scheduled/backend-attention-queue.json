@@ -1,0 +1,8 @@
+{
+  "name": "Backend attention queue",
+  "prompt": "Review my Supabase projects and surface schema changes, errors, auth anomalies, or follow-ups that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}
