@@ -1,6 +1,6 @@
 ---
 name: teams
-description: Read Microsoft Teams conversations and other context, triage unread or recent activity, draft follow-ups, and manage Planner tasks through connected Teams data. Use when the user wants to review chats or channels, identify owners and next steps, prepare a safe reply or post, or turn Teams follow-ups into Microsoft Planner tasks.
+description: Search through Microsoft Teams chats or channels, triage unread or recent activity, draft follow-ups, and manage Planner tasks through connected Teams data.
 ---
 
 # Teams
