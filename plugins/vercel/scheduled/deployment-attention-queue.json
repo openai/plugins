@@ -1,0 +1,8 @@
+{
+  "name": "Deployment attention queue",
+  "prompt": "Review my Vercel projects and surface deployments, previews, or production changes that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

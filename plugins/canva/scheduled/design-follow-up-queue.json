@@ -1,0 +1,8 @@
+{
+  "name": "Design follow-up queue",
+  "prompt": "Review the Canva designs relevant to me and surface recent changes, feedback, or follow-ups that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Work attention queue",
+  "prompt": "Review my Atlassian work and surface urgent issues, stale work, and recent pages or comments that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

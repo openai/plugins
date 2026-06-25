@@ -1,0 +1,8 @@
+{
+  "name": "Morning service pulse",
+  "prompt": "Review recent Datadog activity for the services relevant to me and surface notable incidents, regressions, or follow-ups that need attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "08:30"
+  }
+}

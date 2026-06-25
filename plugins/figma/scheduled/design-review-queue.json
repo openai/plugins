@@ -1,0 +1,8 @@
+{
+  "name": "Design review queue",
+  "prompt": "Review the Figma files relevant to me and surface recent comments, handoffs, or changes that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

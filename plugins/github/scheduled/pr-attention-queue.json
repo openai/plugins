@@ -1,0 +1,8 @@
+{
+  "name": "PR attention queue",
+  "prompt": "Review the open pull requests relevant to me and build a concise attention queue, prioritizing requested changes, failing CI, pending reviews, merge-ready work, and stale follow-ups. Do not make changes.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Morning inbox triage",
+  "prompt": "Triage my Outlook inbox since the previous workday. Surface what is urgent, needs a reply, is waiting on someone else, or is useful context, with a suggested next action for anything actionable.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "08:30"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Daily agenda and prep",
+  "prompt": "Review today's primary Outlook calendar and prepare a concise agenda and meeting-prep brief, highlighting conflicts, useful open time, and anything I should read or do before meetings.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "08:00"
+  }
+}
