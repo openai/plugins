@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 import sys
 from pathlib import Path
@@ -131,6 +132,21 @@ def execute(payload: Any) -> dict[str, Any]:
         return error("network_error", f"Request failed: {exc}")
 
 
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
+
+
 def main() -> int:
     try:
         payload = json.load(sys.stdin)
@@ -138,7 +154,7 @@ def main() -> int:
         sys.stdout.write(json.dumps(error("invalid_json", f"Could not parse JSON input: {exc}")))
         return 2
     output = execute(payload)
-    sys.stdout.write(json.dumps(output))
+    sys.stdout.write(json.dumps(_attach_sources(output, "NCBI Gene via Clinical Tables", "https://clinicaltables.nlm.nih.gov/api/ncbi_genes/v3/search")))
     return 0 if output.get("ok") else 1
 
 

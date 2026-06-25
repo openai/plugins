@@ -3,6 +3,15 @@ name: bgee-skill
 description: Submit compact Bgee SPARQL requests for healthy wild-type expression metadata and ontology-aware lookup patterns. Use when a user wants concise Bgee summaries; save raw results only on request.
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `bgee-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/sparql_request.py` for all Bgee SPARQL work.
 - Start with small `SELECT` or `ASK` queries and add `LIMIT` early.
@@ -33,4 +42,4 @@ echo '{"query":"ASK {}"}' | python scripts/sparql_request.py
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/sparql_request.py`.
+- Keep runtime imports limited to this file, `scripts/sparql_request.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

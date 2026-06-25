@@ -8,6 +8,7 @@ Reads one JSON object from stdin and prints one JSON object to stdout.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import io
 import json
 import os
@@ -737,6 +738,21 @@ def execute(
             local_session.close()
 
 
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
+
+
 def main() -> int:
     try:
         payload = json.load(sys.stdin)
@@ -757,7 +773,7 @@ def main() -> int:
         else:
             exit_code = 1
 
-    sys.stdout.write(json.dumps(output))
+    sys.stdout.write(json.dumps(_attach_sources(output, "NCBI BLAST", "https://blast.ncbi.nlm.nih.gov/Blast.cgi")))
     return exit_code
 
 
