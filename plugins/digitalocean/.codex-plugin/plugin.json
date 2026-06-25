@@ -1,0 +1,41 @@
+{
+  "name": "digitalocean",
+  "version": "0.2.2",
+  "description": "Provision a DigitalOcean droplet as a remote Codex workspace.",
+  "author": {
+    "name": "DigitalOcean",
+    "url": "https://github.com/digitalocean"
+  },
+  "homepage": "https://www.digitalocean.com/",
+  "repository": "https://github.com/digitalocean/CodexPlugin",
+  "keywords": [
+    "digitalocean",
+    "droplet",
+    "virtual-machine",
+    "remote-session"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "DigitalOcean",
+    "shortDescription": "Provision a droplet as a Codex workspace",
+    "longDescription": "Provision and configure a DigitalOcean droplet as a remote Codex SSH workspace using the connected DigitalOcean app.",
+    "developerName": "DigitalOcean",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://www.digitalocean.com/",
+    "privacyPolicyURL": "https://www.digitalocean.com/legal/privacy-policy",
+    "termsOfServiceURL": "https://www.digitalocean.com/legal/terms-of-service-agreement",
+    "defaultPrompt": [
+      "Provision a DigitalOcean droplet for Codex"
+    ],
+    "brandColor": "#1AAFBF",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "screenshots": []
+  }
+}
