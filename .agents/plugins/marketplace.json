@@ -247,6 +247,18 @@
       "category": "Developer Tools"
     },
     {
+      "name": "gitlab",
+      "source": {
+        "source": "local",
+        "path": "./plugins/gitlab"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
       "name": "circleci",
       "source": {
         "source": "local",
