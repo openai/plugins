@@ -6,6 +6,17 @@ When to read: any presentation creation workflow and final handoff after a write
 
 Use every available relevant source before creating or finalizing the deck: web, MCP/connectors, local files, metadata, thumbnails, previews, and the referenced materials themselves. There is no time constraint; be thorough.
 
+## Creation Route
+
+Use the source material to choose the creation path before designing slide content:
+
+1. Provided native Google Slides template or reference deck: copy the deck in Google Drive and edit the copy.
+2. Provided local `.ppt`, `.pptx`, or `.odp`: use `reference-import-presentation.md` to convert it into native Google Slides.
+3. Generated net-new deck with no native template or local presentation file: create a native Google Slides file with `_create_file` using `mime_type: "application/vnd.google-apps.presentation"`, then populate it with `_batch_update_presentation`.
+4. Use a local `.pptx` plus import for a generated deck only when the user explicitly requested PowerPoint-first authoring/import, or native create/batch update actions are unavailable while import is available.
+
+Do not repeatedly retry `import_presentation` for generated decks after a blocked, missing, or redacted import result. Switch to the direct native path when `_create_file` and `_batch_update_presentation` are available.
+
 ## New Deck Defaults
 
 1. Do not ask for styling unless the request depends on a brand, template, or aesthetic.

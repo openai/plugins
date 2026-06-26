@@ -35,11 +35,11 @@ Start with Google Drive for file discovery and file lifecycle tasks, then route 
   - Deck -> Slides skill
 - If the user wants to find a file and then edit it, do both in one flow: Drive for discovery, then the file-type skill for the edit.
 - If the user wants a Google Workspace outcome but has not named a file type yet, start with Drive discovery instead of asking them to choose among separate Google plugins.
-- If the user asks to create a new Google Doc, route to the Docs skill; it owns the mandatory local `.docx` -> native Google Docs import workflow and the explicit-user-override boundary. Do not create a blank Google Doc directly from this router.
+- If the user asks to create a new Google Doc, route to the Docs skill. The Docs skill chooses connector-native creation for blank/basic docs and local `.docx` import only for polished or layout-sensitive deliverables.
 - If the user asks to import a local `.docx` into Google Docs, route to the Docs skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
 - If the user asks to create a new Google Sheet, route to the Sheets skill. The Sheets skill should prefer the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or `$Excel` skill to create a local `.xlsx`, then import it as native Google Sheets.
 - If the user asks to import a local `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets, route to the Sheets skill and use native Google Sheets conversion by default. Preserve the source file type only when the user explicitly asks for that.
-- If the user asks to create a new Google Slides deck, route to the Slides skill; it owns the mandatory local `.pptx` -> native Google Slides import workflow and the explicit-user-override boundary. Do not create a blank Google Slides deck directly from this router.
+- If the user asks to create a new Google Slides deck, route to the Slides skill. The Slides skill chooses native template copy, direct native creation with `_create_file` plus `_batch_update_presentation`, or local `.pptx` import based on the source material and available connector actions.
 - If the user asks to import a local `.ppt`, `.pptx`, or `.odp` into Google Slides, route to the Slides skill and use its native conversion workflow. Preserve the source file type only when the user explicitly asks for that.
 - If the user asks to export or download an existing Drive file, choose the action from metadata: native Google Docs, Sheets, and Slides files use `export_file`; non-native PDFs, images, ZIPs, CSVs, Office files, audio, and video use `fetch`, with `download_raw_file=True` for raw-file workflows.
 
