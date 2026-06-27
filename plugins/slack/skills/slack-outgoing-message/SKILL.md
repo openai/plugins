@@ -29,7 +29,8 @@ Read this reference **before finalizing any outgoing Slack text**:
 
 - Write concise Slack-ready text that follows the live tool contract plus `../slack/references/markdown.md`.
 - Prefer a short opener, a few tight bullets, and a clear ask or next step.
-- Use explicit Slack mention syntax only when you resolved the target successfully.
+- For drafts, use human-readable Slack profile names for people instead of raw user IDs or Slack mention syntax.
+- For direct sends, scheduled messages, and canvases, use explicit Slack mention syntax only when you resolved the target successfully.
 - Preserve source links, code, owners, dates, and commitments unless the user asked for edits.
 - Do not invent approvals, decisions, or follow-through.
 
@@ -60,7 +61,8 @@ Read this reference **before finalizing any outgoing Slack text**:
 
 ## Mention Rules
 
-- Resolve **user mentions** before writing when the message should tag a person, and use Slack mention syntax: `<@U123456>`.
+- For `slack_send_message_draft`, resolve each referenced person's Slack profile and write their human-readable profile name in the draft text, preferring `display_name` and falling back to `real_name` or the clearest available profile name. Do not put raw Slack user IDs or `<@U123456>` syntax in draft bodies unless the user explicitly asks for raw Slack mention markup.
+- For direct sends, scheduled messages, and canvases, resolve **user mentions** before writing when the message should tag a person, and use Slack mention syntax: `<@U123456>`.
 - Resolve **Slack user groups** before writing only when the runtime exposes a way to do so, and use Slack mention syntax: `<!subteam^S123456>`.
-- Do not rely on bare `@name` text in outgoing Slack messages.
+- Do not rely on bare `@name` text for actual sends, scheduled messages, or canvases.
 - If you cannot resolve the correct user or group, **tell the user** and compose the draft or message without implying the mention will work.
