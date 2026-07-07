@@ -23,21 +23,11 @@ client-side render logic. The fenced code block is the deliverable.
 
 > ## ⚠️ CRITICAL — NON-NEGOTIABLE OUTPUT CONTRACT
 >
-> **The LLM MUST stream the final report back as a single HTML artifact inside the assistant
-> response.** This is the only acceptable form of delivery for this skill. Specifically:
+> **The LLM MUST deliver the report as a single HTML artifact in the assistant response.** Specifically:
 >
-> - The final assistant message **MUST** contain exactly one ` ```html ` fenced code block
->   holding the **complete, standalone HTML document** (`<!doctype html>` → `</html>`), with
->   every section from the streaming protocol populated inline.
-> - The LLM **MUST NOT** write the report to a file on disk (no `Write`, no `cp` of the
->   template, no `StrReplace` into a working artifact, no `open` command).
-> - The LLM **MUST NOT** split the report across multiple code blocks, multiple messages,
->   partial snippets, or summaries.
-> - The LLM **MUST NOT** substitute prose, Markdown, JSON, attachments, or links for the
->   fenced HTML artifact. The artifact itself is the answer.
-> - If data gathering fails partially, still emit the single ` ```html ` artifact with
->   the best-available content and brief `"Data unavailable"` placeholders for missing
->   sections — never skip the artifact.
+> - The final message **MUST** contain exactly one ` ```html ` fenced code block holding the **complete, standalone HTML document** (`<!doctype html>` → `</html>`), every section populated inline.
+> - The LLM **MUST NOT** write to disk, split across messages/blocks, or substitute prose, Markdown, JSON, or links for the artifact.
+> - If data partially fails, emit the artifact with `"Data unavailable"` placeholders — never skip it.
 >
 > Treat any other output shape as a hard failure of the skill.
 
@@ -68,27 +58,9 @@ Before emitting the HTML report, **read both**:
    (inside `<template>` tags) for the document head, cover, TOC, section block, sources-section
    wrapper, footer, and outlook-badge.
 
-**Lookup order — always check the shared template before inventing.** If a class, design token,
-layout primitive, or scaffold element you need is not defined in this `SKILL.md` or already
-present in this skill's `assets/template.html`, the shared template skill is authoritative. Do
-not invent CSS, HTML scaffolds, or design tokens that the shared skill already provides; do not
-silently restyle anything the shared skill owns (cover, TOC, section, sources-section wrapper,
-footer, outlook-badge, design tokens, reset, body / page base).
+**Always check the shared template before inventing** any class, token, scaffold, or design element. Do not restyle anything the shared skill owns. At emit time, copy the **contents** of `<style id="shared-template-css">` into the marker region `/* BEGIN shared-template-css ... */` … `/* END shared-template-css */`. Use literal markup from the matching `<template>` snippets for all HTML chrome.
 
-At emit time, copy the **contents** (not the `<style>` wrapper) of `<style id="shared-template-css">`
-from the shared asset into the parent template's reserved marker region between the CSS-comment
-markers `/* BEGIN shared-template-css ... */` and `/* END shared-template-css */`. For HTML
-scaffolds (head boilerplate, cover, TOC, sources-section wrapper, footer), use the literal markup
-from the matching `<template>` snippet in the shared asset. The parent template no longer
-carries duplicated chrome CSS — those rules ship only in the shared asset.
-
-This skill uses the **`cover-simple`** variant. Skill-specific overrides retained above the
-marker region: **none** for SA (it inherits the canonical `body { font-size: 13px }` and
-`.page { max-width: 900px }` defaults). SA is the lightest of the four parent skills — almost
-all its visual chrome now lives in the shared layer. Any outlook-badge usage in this skill
-(e.g. for sector outlook indicators) must use the canonical pastel variants
-(`stable` / `positive` / `negative` / `review` / `na`) defined by the shared skill — no
-solid-fill or inline-color overrides.
+This skill uses the **`cover-simple`** variant with no skill-specific CSS overrides (inherits `body { font-size: 13px }` and `.page { max-width: 900px }`). Outlook-badge usage must use canonical pastel variants (`stable` / `positive` / `negative` / `review` / `na`) — no solid-fill or inline-color overrides.
 
 ## Citations (shared)
 
@@ -99,12 +71,7 @@ Before emitting any `[n]` reference inline or the end-of-document Citations bloc
    canonical CSS (inside `<style id="shared-citations-css">`) and literal HTML markup snippets
    (inside `<template>` tags) for inline references and the end-of-document Citations block.
 
-At emit time, copy the **contents** (not the wrapper) of `<style id="shared-citations-css">`
-from the shared asset into the parent template's reserved marker region, located inside
-`assets/template.html` between the CSS-comment markers
-`/* BEGIN shared-citations-css … */` and `/* END shared-citations-css */`. The parent
-template no longer carries duplicated citation CSS — those rules ship only in the shared
-asset.
+At emit time, copy the **contents** of `<style id="shared-citations-css">` into the marker region `/* BEGIN shared-citations-css … */` … `/* END shared-citations-css */`.
 
 The prefix used for the end-of-document container in this skill is `sa`, so the container id
 is `#sa-sources`. This skill does not use the optional per-section `.section-citations` recap
@@ -321,9 +288,9 @@ Insert **Chart D** immediately after the outlook paragraphs:
 
 ### Pre-computation requirement — mandatory, no exceptions
 
-Before writing any SVG `x`, `y`, `width`, `height`, or `points` attribute that depends on a calculated value (bar lengths, axis tick positions, scale factors, percentage-to-pixel conversions, label offsets, marker positions), compute every value programmatically. **If you do not have a calculator tool, use bash or Python to compute all of the above values before emitting any SVG — do not attempt to calculate them mentally.** Record the computed values, verify them, then substitute the confirmed numbers into the SVG markup.
+Before writing any SVG `x`, `y`, `width`, `height`, or `points` attribute, compute every value via bash or Python — do not calculate mentally. Record and verify computed values, then substitute into the SVG markup.
 
-If source data for any chart is unavailable, emit a `<p>Chart data unavailable</p>` placeholder in its place — never omit it silently.
+If source data for any chart is unavailable, emit a `<p>Chart data unavailable</p>` placeholder — never omit silently.
 
 ---
 
@@ -393,13 +360,8 @@ Each of the following divs takes fully-authored HTML (`<p>`, `<ul><li>`, and
 ## Tips
 
 - Run ALL research searches in a single parallel batch.
-- Moody's data is the foundation — web data supplements. Make this hierarchy clear in the
-  writing by attributing external sources explicitly.
+- Moody's data is the foundation — web data supplements. Attribute external sources explicitly.
 - The executive summary should be written last, after all other sections are synthesized.
-- Financial Performance must include actual numbers, not just directional statements.
-- Porter's Five Forces in Industry Structure should use ratings (High, Moderate, Low) for
-  each force.
-- Sector Outlook must be in paragraph form only — no bullet points.
 - Citations follow the shared citations skill — read
   [skills/shared/citations/SKILL.md](../shared/citations/SKILL.md) before authoring any `[n]`
   reference or the Citations block.
@@ -408,11 +370,7 @@ Each of the following divs takes fully-authored HTML (`<p>`, `<ul><li>`, and
 
 ## Negative number formatting
 
-Unify ALL negative numbers across narrative, tables, and any JSON/HTML string values to use
-the parenthesis-minus convention `(-X)`. Examples: `(-9%)`, `(-1.2pp)`, `(-$3.4B)`,
-`(-250 bps)`. Do NOT use a bare leading minus (`-9%`), en-dash (`–9%`), or accounting
-parentheses without the minus sign (`(9%)`). Apply this consistently to growth rates, margin
-changes, YoY deltas, and any negative monetary values.
+Use `(-X)` for ALL negatives: `(-9%)`, `(-1.2pp)`, `(-$3.4B)`, `(-250 bps)`. Never use bare minus (`-9%`), en-dash (`–9%`), or parentheses without minus (`(9%)`). Apply to growth rates, margin changes, YoY deltas, and negative monetary values.
 
 ---
 

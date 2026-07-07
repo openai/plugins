@@ -14,39 +14,42 @@ Generates a professional HTML report (styled like a Moody's peer analysis PDF) f
 company and up to 3 credit peers. Data is pulled from multiple `Moodys MCP server` MCP tools and
 consolidated into a single HTML artifact covering peers comparison, ratings chart, and ESG.
 
-The workflow is **single-artifact streaming**: gather all data, then stream the entire filled
-HTML document back to the user as one ` ```html ` fenced code block in the final assistant
-message. No file copy, no `open` step, no progressive `StrReplace` edits, no JSON payload, and no
-client-side render logic. The fenced code block is the deliverable.
+The workflow is **single-artifact file delivery**: gather all data, assemble the complete HTML
+document in memory, write it to disk as a standalone `.html` file, and present it to the user for
+download. No fenced code blocks, no streaming partial sections, no JSON payload, no progressive
+edits. The downloaded file is the sole deliverable.
 
 > ## ⚠️ CRITICAL — NON-NEGOTIABLE OUTPUT CONTRACT
 >
-> **The LLM MUST stream the final report back as a single HTML artifact inside the assistant
-> response.** This is the only acceptable form of delivery for this skill. Specifically:
+> **The LLM MUST write the final report to disk and present it as a downloadable file.**
+> This is the only acceptable form of delivery for this skill. Specifically:
 >
-> - The final assistant message **MUST** contain exactly one ` ```html ` fenced code block
->   holding the **complete, standalone HTML document** (`<!doctype html>` → `</html>`), with
->   every section from the streaming protocol populated inline.
-> - The LLM **MUST NOT** write the report to a file on disk (no `Write`, no `cp` of the
->   template, no `StrReplace` into a working artifact, no `open` command).
-> - The LLM **MUST NOT** split the report across multiple code blocks, multiple messages,
->   partial snippets, or summaries.
-> - The LLM **MUST NOT** substitute prose, Markdown, JSON, attachments, or links for the
->   fenced HTML artifact. The artifact itself is the answer.
-> - If data gathering fails partially, still emit the single ` ```html ` artifact with
->   the best-available content and `"--"` placeholders for missing cells — never skip the
->   artifact.
+> - The LLM **MUST** write the complete, standalone HTML document (`<!doctype html>` → `</html>`)
+>   to `/mnt/user-data/outputs/{target_company_slug}_peer_analysis.html` and then call
+>   `present_files` to surface it to the user.
+> - The LLM **MUST NOT** print the raw HTML source in the chat — no ` ```html ` fenced code
+>   blocks, no partial snippets, no inline HTML in the assistant message.
+> - The LLM **MUST NOT** split the report across multiple files or multiple messages.
+> - The LLM **MUST NOT** substitute prose, Markdown, JSON, or links for the file download.
+> - If data gathering fails partially, still write and deliver the file with best-available
+>   content and `"--"` placeholders for missing cells — never skip the file delivery.
 >
 > Treat any other output shape as a hard failure of the skill.
 
-## Required MCP server
+## Required MCP servers
 
 `Moodys MCP server` — tools used: `findEntity`, `getEntityPeers`, `getEntityRatings`,
 `getEntityCreditOpinion`, `getEntityFinancials` (sections: Profile, Summary, RatingOutlook, FactorsLeadingToUpgrade,
 FactorsLeadingToDowngrade, CreditStrengths, CreditChallenges, ESGConsiderations,
 KeyIndicatorsTable, ScorecardTable), `getEntityEsg`, `getEntitySectorOutlook`
 
-If any of the tools required for a section do not exist, inform the user: One or more tools required for this section are not available under your current subscription. Unlock more of the expert insights, data, and analytics you trust. Get Link:https://www.moodys.com/web/en/us/capabilities/gen-ai/ai-ready-data.html with us to learn more. 
+`ProbabilityOfDefault - Prod - Moodys MCP - NEW URL` — PD tools:
+- `getEntityProbabilityOfDefault` — retrieve Current PD, 1-year PD, 5-year cumulative PD,
+  and implied rating for the target company AND each peer. Used to build the PD comparison
+  panel in Section 2. Set `pd_comparison` to `null` in the JSON payload if data is
+  unavailable for the target or fewer than 2 peers.
+
+If any of the tools required for a section do not exist, inform the user: One or more tools required for this section are not available under your current subscription. Unlock more of the expert insights, data, and analytics you trust. Get Link:https://www.moodys.com/web/en/us/capabilities/gen-ai/ai-ready-data.html with us to learn more.
 
 ## Bundled files
 
@@ -153,6 +156,14 @@ parallel batch** (one message, many tool calls):
 
 Call `getEntityCreditOpinion`,`getEntityFinancials` requesting these sections, about the key Indicators table this should be populated with most recent fiscal year available (e.g. 2025 FY) on `getEntityFinancials`. Not LTM allowed:
 
+> **CRITICAL — `getEntityFinancials` is the authoritative source for all quantitative data.**
+> Always call `getEntityFinancials` (with `excludeInterimData: true`) for every entity in the
+> peer set to obtain the most recent **fiscal year-end** figures. Do NOT rely solely on the
+> Key Indicators or Scorecard exhibits embedded in `getEntityCreditOpinion` — those may
+> reference an older period. After fetching financials, identify each entity's latest year
+> with a non-null Revenue value and use that year exclusively for Key Indicators charts,
+> Scorecard "Current" column, and the Revenue bar chart. LTM figures are **not permitted**.
+
 | Section parameter | Purpose |
 |---|---|
 | `Profile` | Company description for the Peers Table |
@@ -177,23 +188,37 @@ Call `getEntityEsg` — overall CIS classification plus E, S, G sub-scores.
 Call `getEntitySectorOutlook` for the target company's sector. Reuse for peers in the same
 sector.
 
+### Probability of Default (target + all peers)
+
+Call `getEntityProbabilityOfDefault` for the target company AND every resolved peer in a
+single parallel batch. Retrieve:
+- 1-year PD (%)
+- 5-year cumulative PD (%)
+- PD-implied rating
+
+Compute the **peer average** for 1-year PD and 5-year cumulative PD (exclude the target).
+Determine `pd_signal`:
+- `"red"` — target 1-year PD is >2× peer average
+- `"amber"` — target 1-year PD is 1.25–2× peer average
+- `"green"` — target 1-year PD is ≤1.25× peer average
+
+Build `pd_gap_1yr` label (e.g. `"+0.079pp above peer avg (3.5×)"`).
+
+Set `pd_comparison` to `null` if the PD tool is unavailable or data is missing for the target
+or fewer than 2 peers — the panel is suppressed automatically.
+
 Hold all results in context for Step 5 synthesis.
 
 ---
 
 ## Step 5 — Synthesize + emit the complete artifact
 
-After data is gathered, produce **one** final assistant message. The message contains:
+After data is gathered, assemble the complete filled HTML document and write it to disk, then
+present it to the user for download (see Step 7 for the file-naming and delivery contract).
 
-1. A one-line summary sentence (e.g. `Peer Analysis for {Target Company}:`).
-2. A single fenced ` ```html ` code block containing the **entire filled `template.html`
-   document** — with every element from the streaming protocol populated in place. No partial
-   documents, no separate code blocks per section.
+The assembled document **must**:
 
-The code block **must**:
-
-- Start at column 0 with ` ```html ` and end with a closing ` ``` ` on its own line.
-- Contain a complete, standalone HTML document (doctype → `</html>`) that renders without
+- Be a complete, standalone HTML document (doctype → `</html>`) that renders without
   external dependencies.
 - Preserve the template's `<head>` (CSS, fonts), section order, table skeletons, row labels, and
   element IDs exactly. Only the empty targets defined below are populated.
@@ -243,37 +268,111 @@ Write the 4 company header cells first:
 - `#pa-cd-col-2`, `#pa-cd-col-3`, `#pa-cd-col-4` — peer names in order (leave empty if fewer
   than 3 peers were resolved)
 
-Then write the 20 body cells (`#pa-cd-r{1..5}-c{1..4}`). Each cell is a substantive paragraph
+Then write the 16 body cells (`#pa-cd-r{1..4}-c{1..4}`). Each cell is a substantive paragraph
 with specific quantitative thresholds where available. Cells may carry inline citations:
 
 - Row 1 (`Upgrade factors`) — from `FactorsLeadingToUpgrade`
 - Row 2 (`Downgrade factors`) — from `FactorsLeadingToDowngrade`
 - Row 3 (`Credit strengths (qualitative)`) — from `CreditStrengths`
 - Row 4 (`Credit challenges (qualitative)`) — from `CreditChallenges`
-- Row 5 (`Quantitative support (most recent financials in context)`) — from
-  `KeyIndicatorsTable`; cite the most recent period's key metrics (debt/EBITDA, EBITA margin,
-  EBITA/interest, RCF/net debt, revenue)
+
+> **Row 5 ("Quantitative support") has been removed.** Do NOT emit a 5th row in the Credit
+> Drivers table. The pre-shaped table in `assets/template.html` has 5 row slots — leave
+> `#pa-cd-r5-c{1..4}` blank and suppress the row label for Row 5 by setting its `<th>` to
+> an empty string or by omitting it entirely if the template allows. Quantitative metrics
+> are covered by the Key Indicators bar charts immediately below.
 
 If a Credit Opinion section is missing for a company, write `Not available` in the corresponding
 cell rather than leaving it blank.
 
-**4) Key Indicators** — 4 rows × 11 columns, pre-shaped `<table>`
+**4) Key Indicators — Peer Bar Charts** → `#pa-ki-charts`
 
-For each company row `r ∈ {1..4}` (target = row 1), write the 11 cells:
-- `#pa-ki-r{r}-company` — company name
-- `#pa-ki-r{r}-v1` — Period (e.g. `2025 FY`)
-- `#pa-ki-r{r}-v2` — Revenue (USD)
-- `#pa-ki-r{r}-v3` — Total Debt (USD)
-- `#pa-ki-r{r}-v4` — EBITA (USD)
-- `#pa-ki-r{r}-v5` — EBITA Margin
-- `#pa-ki-r{r}-v6` — EBITDA (USD)
-- `#pa-ki-r{r}-v7` — Debt/EBITDA
-- `#pa-ki-r{r}-v8` — EBITA/Interest
-- `#pa-ki-r{r}-v9` — Net LT Debt (USD)
-- `#pa-ki-r{r}-v10` — RCF/Net Debt
+Replace the static Key Indicators table with a set of **horizontal peer bar charts** matching
+the visual style from the sector-drift report. Emit a `<div id="pa-ki-charts">` block
+containing **five** `peer-bar-chart-outer` panels, one per metric:
 
-Source all values from `getEntityFinancials`. If fewer than 3 peers are
-resolved, leave the unused row's cells empty.
+| Chart | Metric | Unit | Source | Note on "lower is better" |
+|-------|--------|------|--------|--------------------------|
+| 1 | FCF Margin % | `%` | (OCF − \|Capex\|) / Revenue | Higher = better |
+| 2 | Debt / EBITDA | `x` | Moody's pre-computed Key Indicators | Lower = better |
+| 3 | EBITDA Margin % | `%` | EBITDA / Revenue | Higher = better |
+| 4 | EBITA / Interest | `x` | Moody's pre-computed Key Indicators | Higher = better |
+| 5 | RCF / Net Debt | `%` | Moody's pre-computed Key Indicators | Higher = better |
+
+For each chart:
+- Show one bar per company (target first, then peers sorted by descending value, then AVERAGE last)
+- The target bar uses `background:#0066cc` (blue); AVERAGE bar uses `background:#2e7d32` (green)
+- Peers use `background:#7ca8d8` (steel blue) for positive values, `background:#e0a0a0` for negative
+- Draw an orange median line (`background: #e87722`) at the peer median position
+- **Show the fiscal year for each company's bar** by appending the FY label in parentheses to
+  the `pbc-name` element (e.g. `Target Co (FY2025)`, `Peer A (FY2024)`). This is required
+  because different entities may have different most-recent fiscal years. Use the same FY
+  year identified via `getEntityFinancials` for each entity.
+- Display the fiscal year reference at the top of the block (e.g. `FY2025, % of revenue | Orange line = peer median | Green bar = peer average`); if entities have mixed FYs, write `Most recent FY` instead of a single year
+- Include a note line at the bottom with: peer median, peer avg (n=X), company value, gap
+
+**Compute peer average and peer median** across all resolved peers (exclude the target).
+
+**FY period header**: show the most recent common FY year at the top of `#pa-ki-charts` in
+a `<div class="ki-fy-header">` (e.g. `KEY INDICATORS — FY2025 | Company vs. Peers`).
+
+**Reference snippet** for one chart panel (emit five of these inside `#pa-ki-charts`):
+
+```html
+<div id="pa-ki-charts">
+  <div class="ki-fy-header">KEY INDICATORS — FY2025 | Company vs. Peers</div>
+
+  <div class="peer-bar-chart-outer">
+    <div class="pbc-title">FCF MARGIN — COMPANY VS. PEERS</div>
+    <div class="pbc-subtitle">FY2025, % of revenue | Orange line = peer median | Green bar = peer average</div>
+    <div class="pbc-rows">
+      <!-- Target (subject) row -->
+      <div class="pbc-row">
+        <div class="pbc-name subject" title="Target Co">Target Co</div>
+        <div class="pbc-track">
+          <div class="pbc-median-line" style="left:52.3%"><div class="pbc-median-tip">Median 8.4%</div></div>
+          <div class="pbc-fill subj-neg" style="left:0;width:12.1%"></div>
+        </div>
+        <div class="pbc-val neg">-2.1%</div>
+      </div>
+      <!-- Peer rows (sorted descending by value) -->
+      <div class="pbc-row">
+        <div class="pbc-name" title="Peer A">Peer A</div>
+        <div class="pbc-track">
+          <div class="pbc-median-line" style="left:52.3%"></div>
+          <div class="pbc-fill peer-pos" style="left:0;width:100%"></div>
+        </div>
+        <div class="pbc-val pos">12.3%</div>
+      </div>
+      <!-- AVERAGE bar (last, separated by dashed border) -->
+      <div class="pbc-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed #d0d7e3">
+        <div class="pbc-name average">AVERAGE</div>
+        <div class="pbc-track">
+          <div class="pbc-fill avg-bar" style="left:0;width:70.7%"></div>
+        </div>
+        <div class="pbc-val avg-val">8.7%</div>
+      </div>
+    </div>
+    <div class="pbc-note">Peer median 8.42% | Peer avg 8.70% (n=6, Moody's). Company: -2.10%. Gap vs. median: -10.52pp.</div>
+  </div>
+
+  <!-- Repeat for Debt/EBITDA, EBITDA Margin %, EBITA/Interest, RCF/Net Debt -->
+</div>
+```
+
+**Bar width calculation** — for charts with only positive values:
+- Find `maxAbs` = max of all absolute values across company + peers
+- `fillW` = `(value / maxAbs * 88).toFixed(1) + '%'`
+
+For charts that could include negative values (FCF Margin):
+- Use a zero-anchored track: `zeroPct = 44`, positive bars grow right, negative bars grow left
+- `fillW = (|value| / maxAbs * 44).toFixed(1) + '%'`
+- `fillL` for negative: `(zeroPct - |value|/maxAbs*44).toFixed(1) + '%'`
+
+**Median line position**: `medPct = (medV / maxAbs * 88).toFixed(1) + '%'` (positive-only charts)
+
+Source all values from `getEntityFinancials` (most recent FY — same period used in scorecards).
+If a value is missing, omit the bar row for that company.
 
 **5) Scorecards** — 7 rows × 8 sub-columns (4 companies × Current/Forward), pre-shaped `<table>`
 
@@ -282,8 +381,40 @@ Write the 4 top-level company headers first:
 - `#pa-sc-col-2`, `#pa-sc-col-3`, `#pa-sc-col-4` — peer names
 
 Write the 8 sub-header labels:
-- `#pa-sc-col-{1..4}-curr` — current-period label (e.g. `Current 2025 FY`)
+- `#pa-sc-col-{1..4}-curr` — current-period label that **must exactly match the most-recent
+  FY period used for that entity in the Key Indicators bar charts** (e.g. if Apple's KI data
+  is from FY2025, write `FY2025`; if Microsoft's is from FY2024, write `FY2024`). Each
+  entity's label is set independently — do not force a single common year across all columns.
 - `#pa-sc-col-{1..4}-fwd` — forward-period label (e.g. `Forward`)
+
+> **FY LABEL SYNCHRONY — STRICTLY ENFORCED (Sections 4 and 5):**
+> The fiscal year label shown in Section 4 (Key Indicators bar charts) for each entity
+> **MUST be identical** to the label shown in the `#pa-sc-col-{n}-curr` sub-header for that
+> same entity in Section 5 (Scorecards). This is a hard consistency requirement:
+>
+> - Determine the most-recent non-null full fiscal year-end for each entity from
+>   `getEntityFinancials` (with `excludeInterimData: true`). Label it as `FY{YYYY}`
+>   (e.g. `FY2025`, `FY2024`). **Never use "LTM", "TTM", "Current", or any period
+>   label other than the specific `FY{YYYY}` form.**
+> - Write that exact `FY{YYYY}` string in:
+>   1. The `pbc-name` element of each company's row inside every Section 4 bar chart
+>      (appended in parentheses, e.g. `Apple Inc. (FY2025)`), AND in the
+>      `<div class="ki-fy-header">` block label.
+>   2. The `#pa-sc-col-{n}-curr` sub-header cell for that entity in Section 5.
+>   3. The data values themselves — all numbers in Section 4 and Section 5 Current cells
+>      must be sourced from the same `FY{YYYY}` period.
+> - If two entities have different most-recent FYs, each gets its own correct label
+>   independently. The header `<div class="ki-fy-header">` should then read
+>   `KEY INDICATORS — Most Recent FY | Company vs. Peers`.
+> - This synchrony check is mandatory before emitting the final HTML. Mismatched labels
+>   between Section 4 and Section 5 are a hard failure of the skill.
+
+> **`~` (tilde) prefix rule — STRICT:** The `~` prefix (e.g. `~2.5x`, `~15%`) means
+> *approximately estimated / forecast* and must **only** appear in **Forward** (`-fwd`) cells.
+> It must **never** appear in **Current** (`-curr`) cells. Current-period cells contain actual
+> reported or Moody's-adjusted figures sourced from `getEntityFinancials`; use the precise
+> value as-is (e.g. `2.3x`, `14.8%`). If the exact current figure is unavailable, write `N/A`
+> — do not substitute a tilde-prefixed estimate.
 
 Then write the 56 body cells (`#pa-sc-r{1..7}-c{1..4}-curr` and `-fwd`) for the 7 rows:
 - Row 1 — Scale: Revenue/Sales (USD bn)
@@ -308,7 +439,21 @@ may carry inline citations:
 - Paragraph 3: Practical positioning — frame the target's "path to stand out" by linking back
   to the upgrade/downgrade framework and key risk factors.
 
-### Section 2 — Ratings Chart
+### Section 2 — Ratings Chart (± Probability of Default)
+
+> **SECTION 2 TITLE RULE — STRICTLY ENFORCED:**
+> The heading for Section 2 (in both the TOC `<li>` and the `<div class="section-heading">`)
+> must be set **conditionally** at emit time:
+>
+> - If PD data is available (i.e. `pd_comparison` is NOT `null`) →
+>   use **"Section 2. Ratings Chart & Probability of Default"**
+> - If PD data is unavailable (i.e. `pd_comparison` is `null`, the MCP server is unreachable,
+>   or data is missing for the target or fewer than 2 peers) →
+>   use **"Section 2. Ratings Chart"**
+>
+> The template ships with the longer title as a placeholder; overwrite it in both locations
+> (`#sec2 .section-heading` and the matching `<li>` in `<ul class="toc-list">`) whenever
+> PD data is absent. Never show "& Probability of Default" in the title if there is no PD panel.
 
 **Chart** → `#pa-ratings-chart`
 
@@ -316,6 +461,64 @@ Emit a single inline `<svg>` block authored by the agent (see SVG template below
 plots the last 5 rating actions for each company as a line chart. X-axis uses sequential labels
 (`Rating 1` … `Rating 5`, most recent first); Y-axis maps Moody's rating symbols to a numeric
 scale.
+
+**PD Panel** → `#pa-pd-panel`
+
+Immediately after the ratings chart, emit the Probability of Default panel as a **horizontal
+bar chart** using the same `.peer-bar-chart-outer` style as the Key Indicators charts in
+Section 1. If PD data is unavailable, leave `#pa-pd-panel` empty (the element collapses).
+
+Emit one `peer-bar-chart-outer` block showing the **1-year PD (%)** for each company. Use the
+same CSS classes and bar-width formula as the KI charts (`pbc-fill`, `pbc-track`, `pbc-rows`,
+etc.). Include a note row at the bottom with peer median, peer average, and the gap signal.
+
+Signal colouring for the target bar:
+- `pbc-fill subj-neg` (red) — target 1-year PD > 2× peer average (`pd_signal: "red"`)
+- `pbc-fill subj-pos` (blue) — all other cases
+
+**Reference snippet** (emit this block directly into `#pa-pd-panel`):
+
+```html
+<div class="peer-bar-chart-outer">
+  <div class="pbc-title">PROBABILITY OF DEFAULT — 1-YEAR PD (%)</div>
+  <div class="pbc-subtitle">Moody's PD model | Orange line = peer median | Green bar = peer average</div>
+  <div class="pbc-rows">
+    <!-- Target (subject) row — blue or red depending on pd_signal -->
+    <div class="pbc-row">
+      <div class="pbc-name subject" title="Target Co">Target Co</div>
+      <div class="pbc-track">
+        <div class="pbc-median-line" style="left:38.5%"><div class="pbc-median-tip">Median 0.032%</div></div>
+        <div class="pbc-fill subj-neg" style="left:0;width:100%"></div>
+      </div>
+      <div class="pbc-val neg">0.111%</div>
+    </div>
+    <!-- Peer rows (sorted descending by pd_1yr) -->
+    <div class="pbc-row">
+      <div class="pbc-name" title="Peer A">Peer A</div>
+      <div class="pbc-track">
+        <div class="pbc-median-line" style="left:38.5%"></div>
+        <div class="pbc-fill peer-pos" style="left:0;width:54.1%"></div>
+      </div>
+      <div class="pbc-val pos">0.060%</div>
+    </div>
+    <!-- AVERAGE bar (last, separated by dashed border) -->
+    <div class="pbc-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed #d0d7e3">
+      <div class="pbc-name average">AVERAGE</div>
+      <div class="pbc-track">
+        <div class="pbc-fill avg-bar" style="left:0;width:28.8%"></div>
+      </div>
+      <div class="pbc-val avg-val">0.032%</div>
+    </div>
+  </div>
+  <div class="pbc-note">Peer median 0.032% | Peer avg 0.032% (n=3). Target: 0.111%. Gap: +0.079pp above peer avg (3.5×). PD-implied rating: A1.</div>
+  <div class="pbc-note" style="margin-top:4px;font-style:italic">One-sentence PD narrative goes here.</div>
+</div>
+```
+
+**Bar width calculation:** `fillW = (pd_1yr / maxPD * 88).toFixed(1) + '%'` where `maxPD` is
+the maximum 1-year PD across all companies including the target.
+
+**Median line position:** `medPct = (medianPD / maxPD * 88).toFixed(1) + '%'`
 
 **Analysis** → `#pa-ratings-analysis`
 
@@ -364,14 +567,14 @@ Two `<p>` paragraphs. Paragraphs may carry inline citations:
 | `<tbody id="pa-peers-table">`                        | `<tr>` rows (company name + description) with inline citations         |
 | `<tbody id="pa-peers-rating">`                       | `<tr>` rows with `<span class="outlook-badge …">`                      |
 | `#pa-cd-col-1` … `#pa-cd-col-4`                      | Plain text (company names)                                             |
-| `#pa-cd-r{1..5}-c{1..4}`                             | Prose cell content (short `<p>` or plain text) with inline citations   |
-| `#pa-ki-r{1..4}-company`                             | Plain text (company name)                                              |
-| `#pa-ki-r{1..4}-v{1..10}`                            | Plain text (period / metric value)                                     |
+| `#pa-cd-r{1..4}-c{1..4}`                             | Prose cell content (short `<p>` or plain text) with inline citations   |
+| `#pa-ki-charts`                                      | Five `.peer-bar-chart-outer` panels (FCF Margin, Debt/EBITDA, EBITDA Margin, EBITA/Interest, RCF/Net Debt) |
 | `#pa-sc-col-1` … `#pa-sc-col-4`                      | Plain text (company names, span 2 sub-columns)                         |
 | `#pa-sc-col-{1..4}-curr`, `#pa-sc-col-{1..4}-fwd`    | Plain text sub-header labels (Current / Forward period)                |
 | `#pa-sc-r{1..7}-c{1..4}-curr`, `…-fwd`               | Plain text scorecard cell values                                       |
 | `#pa-conclusion`                                     | Three `<p>` paragraphs with inline citations                           |
 | `#pa-ratings-chart`                                  | Single `<div class="chart-container">…<svg>…</svg>…</div>` block       |
+| `#pa-pd-panel`                                       | PD comparison panel — horizontal bar chart using `peer-bar-chart-outer` style |
 | `#pa-ratings-analysis`                               | One `<p>` paragraph with inline citations                              |
 | `<tbody id="pa-esg-table">`                          | `<tr>` rows (company + overall + E + S + G)                            |
 | `#pa-esg-analysis`                                   | Two `<p>` paragraphs with inline citations                             |
@@ -589,20 +792,19 @@ Per point `(i, v)` where `i` is the x-index (0-based) and `v` is the rating valu
 
 ---
 
-## Step 6 — Tell the user
 
-After the ` ```html ` code block, add a single short sentence confirming the artifact is
-complete (e.g. `Artifact rendered above — the report is fully self-contained HTML.`). Do not
-write the artifact to disk and do not suggest shell commands. The code block itself is the
-deliverable.
+
+
+
+
+
 
 ---
 
 ## Tips
 
 - Run ALL data-gathering tool calls in a single parallel batch (one message, many tool calls).
-- Emit the final HTML as one `html` fenced code block — do not stream partial sections, do not
-  split across multiple messages, do not write to disk.
+- Write the final HTML to disk as a single `.html` file and deliver it via `present_files` — do not print the HTML source in the chat, do not split across multiple files.
 - The target company always appears as the first column / first row in every table and
   comparison.
 - The conclusion must orient around the target company — how it differentiates from its peers.
@@ -620,6 +822,16 @@ deliverable.
 - Inline citations follow the shared citations skill — read
   [skills/shared/citations/SKILL.md](../shared/citations/SKILL.md) before authoring any `[n]`
   reference or the Citations block.
+- **PD panel**: write the fully rendered HTML directly into `#pa-pd-panel` using the CSS classes
+  already in the template (`.pd-panel`, `.pd-stats`, `.pbc-rows`, etc.). The template's `<script>`
+  block handles the `data-pd` attribute approach as a fallback, but writing innerHTML directly is
+  preferred in the static-artifact delivery mode. If PD data is unavailable, leave `#pa-pd-panel`
+  empty (the section collapses automatically).
+- **Key Indicators bar charts**: write the complete `#pa-ki-charts` block directly — five
+  `.peer-bar-chart-outer` panels. Use the CSS classes `.pbc-rows`, `.pbc-row`, `.pbc-name`,
+  `.pbc-track`, `.pbc-fill`, `.pbc-val`, `.pbc-median-line`, `.pbc-median-tip` already defined
+  in the template. The FY period header goes in `<div class="ki-fy-header">` as the first child
+  of `#pa-ki-charts`.
 
 ---
 
@@ -666,7 +878,11 @@ differs from another's.
    Scorecard, regardless of what year the credit opinion's exhibit uses.
 3. If different entities have different most-recent years (e.g. one entity has 2025 data
    while another only has 2024), use each entity's own most recent year independently and
-   label the `#pa-ki-r{n}-v1` cell accordingly (e.g. `2025 FY` vs `2024 FY`).
+   label the `#pa-ki-r{n}-v1` cell accordingly (e.g. `2025 FY` vs `2024 FY`). The
+   `#pa-sc-col-{n}-curr` sub-header for that entity's Scorecard column **must show the same
+   FY label** used in the Key Indicators for that entity — this is the consistency requirement.
+   Never use a generic label like `Current` alone; always include the specific year
+   (e.g. `FY2025`, `FY2024`).
 
 ### Handling distorted EBITDA years
 
@@ -716,57 +932,71 @@ The target card carries the extra class `target-card`.
 
 ---
 
-### Visual 2 — Financial Comparison Bar Charts (`#pa-fi-charts`)
+### Visual 2 — Revenue Comparison Bar Chart (`#pa-fi-charts`)
 
-Placed **immediately after** the Key Indicators table (sub-heading 4), before sub-heading 5
-(Scorecards). Emit a two-column grid (`div.fi-chart-grid`) containing exactly **two**
-`div.fi-chart-box` blocks:
+Placed **immediately after** `#pa-ki-charts`, with **no separate sub-heading** between them.
+Both `#pa-ki-charts` and `#pa-fi-charts` appear under the same section 4 heading (`4) Key Indicators — Peer Bar Charts`). Do **not** emit a `<div class="sub-heading">` before `#pa-fi-charts`. Emit a **single** `peer-bar-chart-outer` panel for **Revenue** only, using
+exactly the same CSS classes and bar-width formula as the Key Indicators charts.
 
-1. **Revenue** — horizontal bar chart comparing Revenue (USD) for all companies
-2. **Debt/EBITDA** — horizontal bar chart comparing Debt/EBITDA ratio for all companies
+> **Note:** Debt/EBITDA is already covered in the Key Indicators charts — do NOT add a
+> second Debt/EBITDA chart here. Revenue is the only metric shown in `#pa-fi-charts`.
 
-For each chart, the widths are proportional: the company with the largest value gets a
-`fi-bar-fill` width of `100%`; all others are scaled relative to that maximum.
+**Source:** `getEntityFinancials` (same most-recent FY used in Key Indicators).
+**Format:** `$XB` (e.g. `$180.2B`); if missing write `N/A` and omit the bar.
 
-**Colour palette** (same as the ratings chart): target = `#0066cc`, peer 1 = `#e6550d`,
-peer 2 = `#1a7a4a`, peer 3 = `#8b5cf6`. Assign colours in the same company order as all
-other tables (target first).
+**Bar width calculation:** `fillW = (revenue / maxRevenue * 88).toFixed(1) + '%'` where
+`maxRevenue` is the maximum revenue across all companies **including** the target and the peer
+average bar.
 
-**Values:** source from `getEntityFinancials` (same figures used in Key Indicators).
-Format Revenue as `$XB` or `$XM`; Debt/EBITDA as `X.Xx`.
+**AVERAGE bar — REQUIRED:** Compute the **peer average revenue** (arithmetic mean of all
+resolved peers, excluding the target). Add an AVERAGE bar as the last row, separated by a
+dashed top border, using class `pbc-fill avg-bar` (green) and `pbc-name average`. The AVERAGE
+bar width uses the same formula: `(peerAvgRevenue / maxRevenue * 88).toFixed(1) + '%'`. If
+`peerAvgRevenue` exceeds `maxRevenue`, recalculate `maxRevenue` to include it.
 
-If a value is missing or `N/A`, set `fi-bar-fill` width to `0%` and display `N/A` in
-`.fi-bar-value`.
+No median line needed for Revenue.
+Target bar uses `pbc-fill subj-pos` (blue). Peer bars use `pbc-fill peer-pos`. Average bar
+uses `pbc-fill avg-bar` (green), label class `pbc-name average`, value class `pbc-val avg-val`.
 
-**Reference snippet** for one chart box (repeat once for Revenue, once for Debt/EBITDA):
+**Reference snippet:**
 
 ```html
-<div class="fi-chart-box">
-  <div class="fi-chart-title">Revenue (USD)</div>
-  <div class="fi-bar-row">
-    <span class="fi-bar-label">Target Co</span>
-    <div class="fi-bar-track"><div class="fi-bar-fill" style="width:100%;background:#0066cc;"></div></div>
-    <span class="fi-bar-value">$180B</span>
-  </div>
-  <div class="fi-bar-row">
-    <span class="fi-bar-label">Peer One</span>
-    <div class="fi-bar-track"><div class="fi-bar-fill" style="width:34%;background:#e6550d;"></div></div>
-    <span class="fi-bar-value">$61B</span>
-  </div>
-  <div class="fi-bar-row">
-    <span class="fi-bar-label">Peer Two</span>
-    <div class="fi-bar-track"><div class="fi-bar-fill" style="width:13%;background:#1a7a4a;"></div></div>
-    <span class="fi-bar-value">$23B</span>
-  </div>
-  <div class="fi-bar-row">
-    <span class="fi-bar-label">Peer Three</span>
-    <div class="fi-bar-track"><div class="fi-bar-fill" style="width:20%;background:#8b5cf6;"></div></div>
-    <span class="fi-bar-value">$36B</span>
+<div id="pa-fi-charts">
+  <div class="peer-bar-chart-outer">
+    <div class="pbc-title">REVENUE — COMPANY VS. PEERS</div>
+    <div class="pbc-subtitle">FY2025, USD billions</div>
+    <div class="pbc-rows">
+      <div class="pbc-row">
+        <div class="pbc-name subject" title="Target Co">Target Co</div>
+        <div class="pbc-track">
+          <div class="pbc-fill subj-pos" style="left:0;width:88%"></div>
+        </div>
+        <div class="pbc-val pos">$180.2B</div>
+      </div>
+      <div class="pbc-row">
+        <div class="pbc-name" title="Peer One">Peer One</div>
+        <div class="pbc-track">
+          <div class="pbc-fill peer-pos" style="left:0;width:29.7%"></div>
+        </div>
+        <div class="pbc-val pos">$61.0B</div>
+      </div>
+      <!-- Repeat for all resolved peers -->
+      <!-- AVERAGE bar — always last, separated by dashed border -->
+      <div class="pbc-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed #d0d7e3">
+        <div class="pbc-name average">AVERAGE</div>
+        <div class="pbc-track">
+          <div class="pbc-fill avg-bar" style="left:0;width:XX.X%"></div>
+        </div>
+        <div class="pbc-val avg-val">$XX.XB</div>
+      </div>
+    </div>
+    <div class="pbc-note">Revenue sourced from Moody's financials (most recent FY). Peer avg (n=3): $XX.XB.</div>
   </div>
 </div>
 ```
 
-Omit bar rows for companies that were not resolved (fewer than 3 peers).
+Omit bar rows for companies that were not resolved (fewer than 3 peers). Always include the
+AVERAGE bar as long as at least one peer is resolved.
 
 ---
 
@@ -822,8 +1052,10 @@ If the score is `N/A` or missing, omit the colour class (plain white cell).
 | Element ID / selector          | Content                                                                 |
 |-------------------------------|-------------------------------------------------------------------------|
 | `#pa-rating-cards`            | `.rating-card` divs — one per company (target first)                   |
-| `#pa-fi-charts`               | Two `.fi-chart-box` divs inside `.fi-chart-grid` (Revenue, Debt/EBITDA)|
+| `#pa-ki-charts`               | Five `.peer-bar-chart-outer` bar chart panels (Key Indicators as bar charts) |
+| `#pa-fi-charts`               | Single `.peer-bar-chart-outer` panel (Revenue only)                    |
 | `#pa-esg-heatmap`             | `.esg-heatmap` table with colour-coded CIS / E / S / G scores          |
+| `#pa-pd-panel`                | PD comparison panel — rendered client-side from `pd_comparison` JSON   |
 
 ---
 
@@ -838,13 +1070,22 @@ Emit sub-sections in this exact order:
    Visual 1. **Do NOT emit the `<tbody id="pa-peers-rating">` table at all.** The cards are the
    sole representation of peer ratings in Section 1.
 3. **Credit Drivers table** — unchanged, as defined above.
-4. **Key Indicators table** + **Financial Comparison Bar Charts** (`#pa-fi-charts`) — unchanged,
-   both emitted as defined above (table first, then the two bar-chart boxes).
+4. **Key Indicators Bar Charts** (`#pa-ki-charts`) — five horizontal bar chart panels (FCF
+   Margin, Debt/EBITDA, EBITDA Margin, EBITA/Interest, RCF/Net Debt). **Do NOT emit the
+   `<table id="pa-key-indicators">` at all.** The bar charts are the sole representation of
+   key indicator data. Immediately after `#pa-ki-charts` (with **no separate sub-heading**),
+   emit the **Revenue Bar Chart** (`#pa-fi-charts`) — a single `peer-bar-chart-outer` panel
+   showing Revenue only. `#pa-fi-charts` is visually part of section 4; it must **not** be
+   preceded by its own `<div class="sub-heading">` element. **Do NOT add a Debt/EBITDA chart
+   here** — it is already present in the KI charts above.
 5. **Scorecard table** — unchanged, as defined above.
 6. **Conclusion** (`#pa-conclusion`) — unchanged.
 
 The `<table>` element whose `<tbody>` carries `id="pa-peers-rating"` must be **omitted entirely**
 from the emitted HTML. Do not render it, do not hide it with CSS, do not leave an empty wrapper.
+
+The `<table id="pa-key-indicators">` must also be **omitted entirely**. The bar charts in
+`#pa-ki-charts` replace it completely.
 
 ---
 
@@ -967,4 +1208,5 @@ readable, colour-coded format; the plain table is redundant and must be omitted.
 | Element | Reason |
 |---|---|
 | `<table>` wrapping `<tbody id="pa-peers-rating">` | Replaced by rating cards |
+| `<table id="pa-key-indicators">` | Replaced by peer bar charts (`#pa-ki-charts`) |
 | `<table>` wrapping `<tbody id="pa-esg-table">` | Replaced by ESG heatmap |

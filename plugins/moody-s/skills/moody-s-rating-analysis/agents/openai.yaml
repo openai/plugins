@@ -1,4 +1,4 @@
 interface:
-  display_name: "Moody's Rating Pitch Deck"
-  short_description: "Generate an editable PowerPoint rating pitch deck covering sector analysis, company financials, SWOT, peer comparison, and ESG"
-  default_prompt: "Use Moody's Rating Pitch skill to resolve the target company, gather all credit and sector data, and build an editable Rating Pitch Deck (.pptx)."
+  display_name: "Moody's Rating Pitch"
+  short_description: "Generate a self-contained HTML rating pitch report covering sector analysis, company financials, SWOT, peer comparison, and ESG"
+  default_prompt: "Use Moody's Rating Pitch skill to resolve the target company, gather all credit and sector data, and build a Rating Pitch HTML report."

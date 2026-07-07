@@ -4,7 +4,7 @@ description: >
   Canonical rules and HTML/CSS contract for inline `[n]` citation references, end-of-document
   Citations blocks, and optional per-section citation recaps used across Moody's Agentic
   Solutions HTML report skills (earnings-brief, peer-analysis, issuer-brief,
-  sector-brief). Parent skills must read BOTH this `SKILL.md` (rules, numbering, hyperlink
+  sector-brief, etc.). Parent skills must read BOTH this `SKILL.md` (rules, numbering, hyperlink
   behavior, source data shape) AND `assets/template.html` (canonical CSS block + literal HTML
   markup snippets) before emitting citations. The asset file is the single source of truth for
   the visual/markup implementation; this `SKILL.md` is the single source of truth for the
@@ -17,7 +17,7 @@ description: >
 
 This is the **single source of truth** for how citations are authored and rendered across the
 HTML report skills. Parent skills (`earnings-brief`, `peer-analysis`,
-`issuer-brief`, `sector-brief`) defer to this document for inline reference
+`issuer-brief`, `sector-brief`, etc.) defer to this document for inline reference
 markup, the Citations block, numbering, hyperlinking, source data shape, and CSS. Each parent
 skill keeps only its own carve-outs (e.g. "no citations in `.yoy-change` cells", "no citations
 in financial table cells").
@@ -89,7 +89,7 @@ If only one of `source` or `date` is present, render only that field inside the 
 
 ## 3. Optional per-section recap (opt-in)
 
-Some skills (currently `earnings-brief`, `peer-analysis`, `issuer-brief`)
+Some skills (currently `earnings-brief`, `peer-analysis`, `issuer-brief`, etc.)
 render a short recap of the citations referenced inside a given section, immediately below
 that section's content. This component is **opt-in**. Parent skills decide whether to use it;
 the canonical CSS in `assets/template.html` ships the styling unconditionally so the option

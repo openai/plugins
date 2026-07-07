@@ -1,24 +1,23 @@
 ---
 name: template
 description: >
-  Canonical rules and HTML/CSS contract for page chrome (head boilerplate, cover, table of
-  contents, section block, sources-section wrapper, footer, outlook-badge, and design tokens)
-  used across Moody's Agentic Solutions HTML report skills (earnings-call-summary, peer-analysis,
-  public-information-book, sector-analysis). Sibling of `skills/shared/citations/` using the
-  same inlining pattern. Parent skills must read BOTH this `SKILL.md` (owned classes/snippets,
-  per-skill overrides, outlook-badge usage) AND `assets/template.html` (canonical CSS + HTML
-  markup snippets) before emitting any HTML report. Asset file is the single source of truth
-  for visual/markup; this `SKILL.md` is the single source of truth for authoring rules. Triggers
-  when the user asks about the template, page chrome, cover, table of contents, footer, layout,
-  design tokens, color palette, fonts, outlook badges, or anything affecting the visual
-  scaffolding of an HTML report skill.
+  Canonical rules and HTML/CSS contract for the page chrome (head boilerplate, cover, table of
+  contents, section block, sources-section wrapper, footer, outlook-badge, design tokens) shared
+  across Moody's Agentic Solutions HTML report skills (earnings-call-summary, peer-analysis,
+  public-information-book, sector-analysis, etc.). Sibling of `skills/shared/citations/` using the same
+  inlining pattern. Parent skills must read BOTH this `SKILL.md` (authoring rules: shared-layer
+  classes, allowed per-skill overrides, outlook-badge usage) AND `assets/template.html` (canonical
+  CSS + literal HTML snippets) before emitting any report. The asset is the source of truth for
+  markup; this file is the source of truth for rules. Triggers on questions about the template,
+  page chrome, cover, table of contents, footer, layout, design tokens, color palette, fonts,
+  outlook badges, or any visual scaffolding of an HTML report skill.
 ---
 
 # Template Skill (shared)
 
 This is the **single source of truth** for the visual chrome of every HTML report produced by
-the parent skills `earnings-brief`, `peer-analysis`, `issuer-brief`, and
-`sector-brief`. It owns:
+the parent skills `earnings-call-summary`, `peer-analysis`, `public-information-book`, and
+`sector-analysis` and others. It owns:
 
 - Design tokens (`--navy`, `--accent`, `--gray-*` / `--g*`, `--text`, `--positive`, `--negative`,
   `--neutral`).
@@ -89,8 +88,8 @@ Two variants. Each parent skill uses exactly one:
 
 | variant       | used by                                  | shape                                            |
 |---------------|------------------------------------------|--------------------------------------------------|
-| `cover-simple`| `issuer-brief`, `sector-brief` | 1-column navy cover, top "logo + title" / bottom `.cover-meta`. |
-| `cover-multi` | `earnings-brief`, `peer-analysis` | 2-region grid: `.cover-top` with navy `.cover-left` + optional `.cover-strip` image + `.cover-bar-top`; `.cover-bottom` is an optional landscape band. |
+| `cover-simple`| `public-information-book`, `sector-analysis` | 1-column navy cover, top "logo + title" / bottom `.cover-meta`. |
+| `cover-multi` | `earnings-call-summary`, `peer-analysis` | 2-region grid: `.cover-top` with navy `.cover-left` + optional `.cover-strip` image + `.cover-bar-top`; `.cover-bottom` is an optional landscape band. |
 
 Cover-multi rules:
 
@@ -162,10 +161,12 @@ the marker region (and only those — anything else inside the canonical block i
 
 | skill                       | allowed local overrides                                                |
 |-----------------------------|------------------------------------------------------------------------|
-| `earnings-brief`            | none. Cover variant: `cover-multi`.                                    |
+| `earnings-call-summary`     | none. Cover variant: `cover-multi`.                                    |
 | `peer-analysis`             | `.page { max-width: 1050px }`. Cover variant: `cover-multi`.           |
-| `issuer-brief`              | `body { font-size: 12.5px }`, `.page { max-width: 920px }`. Cover variant: `cover-simple`. |
-| `sector-brief`              | none. Cover variant: `cover-simple`.                                   |
+| `public-information-book`   | `body { font-size: 12.5px }`, `.page { max-width: 920px }`. Cover variant: `cover-simple`. |
+| `sector-analysis`           | none. Cover variant: `cover-simple`.                                   |
+| `rating-analysis`           | Skill-managed template (Python builder `scripts/build_html.py`). Does not inline shared-template-css or shared-citations-css. Chart.js loaded from CDN. Cover variant: n/a.|
+
 
 Skill-specific CSS that the shared layer does not own (and which therefore stays in each
 parent template indefinitely):

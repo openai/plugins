@@ -1,37 +1,36 @@
 ---
 name: moody-s-rating-analysis
 description: >
-  Produce a Rating Pitch Deck for a company using Moody's GenAI MCP tools, delivered as an
-  editable PowerPoint (.pptx) saved to disk. Use this skill whenever the user asks to create
-  a rating pitch, rating pitch deck, credit pitch, rating presentation, or rating pitch
-  report. Also trigger when they ask for a comprehensive credit overview combining sector
-  analysis, company financials, SWOT, peer comparison, and ESG into a single deck or
-  presentation. Trigger even if they just name a company and say "pitch deck", "rating deck",
-  or "credit deck".
+  Produce a Rating Pitch Report for a company using Moody's GenAI MCP tools, delivered as a
+  self-contained HTML file saved to disk. Use this skill whenever the user asks to create
+  a rating pitch, rating pitch deck, credit pitch, rating presentation, rating pitch
+  report, or rating HTML report. Also trigger when they ask for a comprehensive credit
+  overview combining sector analysis, company financials, SWOT, peer comparison, and ESG
+  into a single report or presentation. Trigger even if they just name a company and say
+  "pitch deck", "rating deck", "credit deck", or "rating report".
 ---
 
 # Rating Pitch Skill
 
-Generates a Moody's Rating Pitch Deck as an editable PowerPoint (.pptx) from a single MCP
-data pass. The Python builder (`scripts/build_pptx.py`) opens the official Moody's Corp 2026
-PowerPoint template, removes its demo slides, and populates the template's built-in layouts
-(Cover, Agenda, Dividers, 1/2/3-column content, Back Cover, Disclaimer) with the resolved
-payload data. The builder produces native, editable PowerPoint charts and tables end-to-end —
-no HTML preview, no in-chat artifact.
+Generates a Moody's Rating Pitch Report as a self-contained HTML file from a single MCP
+data pass. The Python builder (`scripts/build_html.py`) takes the resolved payload JSON and
+produces a single `.html` file containing all sections with inline Chart.js charts, styled
+tables, and bullet lists using the Moody's brand palette — no external dependencies beyond
+a browser to open it.
 
 > ## ⚠️ CRITICAL — NON-NEGOTIABLE OUTPUT CONTRACT
 >
-> Every run of this skill MUST produce an editable `.pptx`. Specifically:
+> Every run of this skill MUST produce a self-contained `.html` report. Specifically:
 >
 > - The skill **MUST** save the resolved `payload.json` to
->   `~/Desktop/rating-pitch/<company>-<YYYYMMDD-HHMMSS>/` and run `scripts/build_pptx.py`
->   against it to produce the editable `rating_pitch.pptx` alongside it.
-> - The LLM **MUST NOT** stream the deck content as inline HTML, Markdown, JSON dumps, or
->   any other in-chat artifact in lieu of building the `.pptx`. The `.pptx` itself is the
->   deliverable.
+>   `~/Desktop/rating-pitch/<company>-<YYYYMMDD-HHMMSS>/` and run `scripts/build_html.py`
+>   against it to produce the `rating_pitch.html` alongside it.
+> - The LLM **MUST NOT** stream the report content as inline Markdown, JSON dumps, or
+>   any other in-chat artifact in lieu of building the `.html` file. The `.html` file itself
+>   is the deliverable.
 > - The final assistant message **MUST** point the user at the full path to the generated
->   `rating_pitch.pptx` so they can open it.
-> - If data gathering fails partially, still build the `.pptx` from the partial payload
+>   `rating_pitch.html` so they can open it in their browser.
+> - If data gathering fails partially, still build the `.html` from the partial payload
 >   using `"--"` placeholders for missing values — never skip the build.
 >
 > Treat any other output shape as a hard failure of the skill.
@@ -52,11 +51,9 @@ If any of the tools required for a section do not exist, inform the user: One or
 
 ## Bundled files
 
-- `scripts/build_pptx.py` — the deck builder. Takes a JSON payload and emits a `.pptx`.
-- `scripts/requirements.txt` — Python dependencies (`python-pptx`). Unchanged.
-- `assets/Moody_Corp_Template.pptx` — official Moody's 2026 Corp PowerPoint template.
-  The builder opens this file, clears its demo slides, and populates its layouts.
-  **Do not modify.**
+- `scripts/build_html.py` — the report builder. Takes a JSON payload and emits a `.html`.
+  Uses only the Python standard library; no pip installs required.
+- `scripts/requirements.txt` — no additional Python dependencies needed.
 - `assets/sample_payload.json` — reference payload showing every field populated. Read this
   if you're ever unsure what a field should look like.
 
@@ -117,13 +114,13 @@ from the data and carry it through to `peer_financials.rows[].period` and
 
 Build a single in-memory **resolved payload** that matches the JSON shape in the **Payload
 schema** section below (a reference copy lives at `assets/sample_payload.json`). This
-payload drives the `.pptx` build (Step 4) — fill it completely before moving on.
+payload drives the .html build (Step 4) — fill it completely before moving on.
 
 Content rules for each section:
 
 > **`commentary` type rule — applies to every section without exception:**
 > All `commentary` fields in the payload MUST be a **JSON array of strings** — never a
-> bare string. A bare string passed to the `.pptx` builder is iterated character-by-character,
+> bare string. A bare string passed to the .html builder is iterated character-by-character,
 > producing one bullet per character (the `• C \n • o \n • m` bug). Always write:
 > `"commentary": ["Sentence one.", "Sentence two."]` — even for a single sentence.
 
@@ -177,34 +174,58 @@ Content rules for each section:
   the per-bar label makes the comparison transparent.
 - **peer_scatter** — two scatter series (`margin_vs_leverage`, `fcf_vs_rcf`), each a list
   of `{company, x, y}` points. Drop extreme outliers that would distort the axes.
+  > **Scatter chart rendering notes:**
+  > - Each company is rendered as a **separate series** so it gets its own distinct brand colour
+  >   (Blue → company 0, Pink → 1, Teal → 2, Gold → 3, Mid Blue → 4, Purple → 5).
+  > - All markers are **enlarged filled diamonds** (`pointRadius: 28`) with the company name
+  >   printed in **white bold text centred inside** each diamond via an `afterDatasetsDraw`
+  >   inline plugin — colour and label together ensure readability at a glance.
+  > - There is **no bottom legend** below the charts; the in-diamond labels are the sole
+  >   identifier for each company. Do not add a separate legend.
 - **scorecard** — `factors` (row labels, including group headers), `is_header` boolean
   flags per row, `companies` (column headers), and `values` as a 3D array: outer = rows,
   middle = columns, inner = `[measure, score]` or `[]` for header rows.
+  > **SCORECARD CONTRACT — READ CAREFULLY:**
+  > - `companies` must list **the target company first, followed by peer entities** (e.g.
+  >   `["Boeing", "Airbus", "RTX", "Lockheed Martin"]`). Never put two time-horizons of the
+  >   same company here — that produces a scorecard with no peers. The first entry is the
+  >   target; its LTM scorecard data goes at `values[row][1]`.
+  > - `values[row]` is **1-indexed against `companies`**: index `0` in every row is always `[]`
+  >   (a silent placeholder the builder skips). `companies[0]` maps to `values[row][1]`,
+  >   `companies[1]` maps to `values[row][2]`, and so on. Omitting the `[]` at index 0 will
+  >   shift every peer column one position and silently misalign the data.
+  > - Header rows (`is_header=true`) use `values[row] = [[], [], [], ...]` — one `[]` per company
+  >   plus one for the placeholder. Length must equal `len(companies) + 1`.
+  > - **Quick checklist before writing the scorecard payload:**
+  >   1. `len(companies)` = number of peer entities (not counting the target).
+  >   2. Every non-header `values[row]` has length `len(companies) + 1`.
+  >   3. `values[row][0]` is always `[]`.
+  >   4. `values[row][i+1]` contains `["metric_value", "ScoreLabel"]` for `companies[i]`.
 - **esg_analysis** — table of CIS/E/S/G scores plus 3-5 commentary bullets.
 
 Target first in every peer table.
 
 ---
 
-## Step 4 — Build the editable .pptx
+## Step 4 — Build the HTML report
 
 **Default output location: always save runs to the user's Desktop** so they're easy to
 find. Use `~/Desktop/rating-pitch/<company>-<YYYYMMDD-HHMMSS>/` as the `<output-dir>`.
 Only use a different path if the user explicitly asks for one.
 
 1. Save your resolved payload to `<output-dir>/payload.json`.
-2. Ensure `python-pptx` is available. If the user doesn't have it:
+2. No additional Python packages are required — `build_html.py` uses only the standard
+   library. Verify Python 3 is available:
    ```bash
-   python3 -m venv .venv && .venv/bin/pip install -r <skill-dir>/scripts/requirements.txt
+   python3 --version
    ```
-   or simply `pip install python-pptx` if their environment allows it.
 3. Run the builder:
    ```bash
-   python3 <skill-dir>/scripts/build_pptx.py <output-dir>/payload.json <output-dir>/rating_pitch.pptx
+   python3 <skill-dir>/scripts/build_html.py <output-dir>/payload.json <output-dir>/rating_pitch.html
    ```
-4. Open the deck: `open <output-dir>/rating_pitch.pptx`
-5. The final assistant message gives the full `<output-dir>/rating_pitch.pptx` path so the
-   user can open the editable deck.
+4. Open the report: `open <output-dir>/rating_pitch.html`
+5. The final assistant message gives the full `<output-dir>/rating_pitch.html` path so the
+   user can open the report in their browser.
 
 If any section data is missing, still include the section in the payload (empty arrays
 are fine) — the builder handles empties gracefully and the deck will stay well-formed.
@@ -225,7 +246,7 @@ are fine) — the builder handles empties gracefully and the deck will stay well
   "currency": "USD",
   "companies": ["Boeing", "RTX", "Northrop Grumman", "..."],
   "sources": [
-    {"title": "", "source": "", "date": "", "url": "", "tool": ""}
+    {"id": 1, "title": "", "source": "", "date": "", "url": ""}  // id optional; rendered as [n] citation
   ],
   "sections": {
     "sector_overview": {
@@ -345,10 +366,10 @@ are fine) — the builder handles empties gracefully and the deck will stay well
         "..."
       ],
       "is_header": [true, false, true, false],
-      "companies": ["Boeing", "Airbus", "Lockheed"],
+      "companies": ["<TARGET>", "<PEER_1>", "<PEER_2>"],
       "values": [
-        [[], [], []],
-        [[], ["73.3", "Aaa"], ["69.2", "Aaa"], ["71.0", "Aaa"]]
+        [[], [], [], []],
+        [[], ["<target_rev>", "<target_score>"], ["<peer1_rev>", "<peer1_score>"], ["<peer2_rev>", "<peer2_score>"]]
       ]
     },
     "esg_analysis": {
@@ -364,45 +385,59 @@ are fine) — the builder handles empties gracefully and the deck will stay well
 
 ---
 
-## Deck structure
+## Report structure
 
-The Python builder emits these 23 slides, in this order:
+The Python builder emits these 26 sections as HTML, in this order:
 
 1. Cover
-2. Part 1 divider
-3. Sector Overview (3-column chips)
-4. Moody's View (outlook text + positioning + outlook pie)
-5. Global Macro Outlook (GDP table + takeaways)
-6. Rating Actions YTD (table)
-7. Part 2 divider
-8. Financial Analysis (bullets + rating history + rating trajectory line)
-9. Revenue Distribution (two pies + commentary)
-10. SWOT (2×2)
-11. Key Financial Metrics (four bar charts)
-12. Strategic Updates (2 columns)
-13. News, M&A & Leadership
-14. External Trends, Pressures & Risks
-15. Part 3 divider
-16. Peer Comparison Summary (table + commentary)
-17. Detailed Peer Comparison (wide financial table)
-18. Peer Comparison — Debt (two horizontal bar charts)
-19. Peer Comparison — Profitability (two horizontal bar charts)
-20. Peer Scatter Plots (two scatters)
-21. Scorecard Comparison (multi-column factor table)
-22. ESG Analysis (table + commentary)
-23. Sources (appendix)
+2. Agenda
+3. Part 1 divider
+4. Sector Overview (3-column chips)
+5. Moody's View (outlook text + positioning + outlook pie)
+6. Global Macro Outlook (GDP table + takeaways)
+7. Rating Actions YTD (table)
+8. Part 2 divider
+9. Financial Analysis (bullets + rating history line chart + rating rationale)
+10. Revenue Distribution (two pie charts + commentary)
+11. SWOT (2×2)
+12. Key Financial Metrics (four bar charts in 2×2 grid)
+13. Strategic Updates (2 columns)
+14. News, M&A & Leadership
+15. External Trends, Pressures & Risks
+16. Part 3 divider
+17. Peer Comparison Summary (table + commentary)
+18. Detailed Peer Comparison (wide financial table)
+19. Peer Comparison — Debt (two horizontal bar charts)
+20. Peer Comparison — Profitability (two horizontal bar charts)
+21. Peer Scatter Plots (two scatter charts)
+22. Scorecard Comparison (multi-column factor table)
+23. ESG Analysis (table + commentary)
+24. Citations (appendix — canonical numbered [n] references with hyperlinked titles)
+25. Thank You
+26. Disclaimer
 
-The builder's brand palette: `NAVY=#0A1264`, `BRIGHT=#005EFF`, `MID=#35397E`,
-`PURPLE=#7677A7`, `PALE=#A2A2C4`, `VERY_PALE=#CFD0E1`, `PINK=#D9017A`, `TEAL=#4FB3AE`,
-`GOLD=#C4A51A`, `LIGHT_GRAY=#D7D8D7`. Outlook pie palette (case-insensitive):
-`Stable → LIGHT_GRAY`, `Positive → TEAL`, `Negative → GOLD`, `Under Review → BRIGHT`.
+The builder's data-visualization palette (Moody's official, priority order):
+`#1 BRIGHT_BLUE=#005eff`, `#2 TEAL=#5eb6bc`, `#3 GOLD=#c7ab21`, `#4 MID_BLUE=#5c068c`,
+`#5 PINK=#ba0168`, `#6 PURPLE=#c64809`, `#7 PALE=#bed6ff`, `NAVY=#040826`,
+`LIGHT_GRAY=#e1e2e1`.
+
+Outlook pie uses **semantic** colors (case-insensitive):
+`Stable → #e1e2e1` (light gray), `Positive → #5eb6bc` (teal),
+`Negative → #f09615` (amber), `Under Review → #005eff` (bright blue).
+
+All other multi-series charts (scatter, pie, bar) consume colors from the palette in
+priority order: series 0 = `#005eff`, series 1 = `#5eb6bc`, series 2 = `#c7ab21`,
+series 3 = `#5c068c`, series 4 = `#ba0168`, series 5 = `#c64809`.
+
+Charts are rendered client-side via Chart.js (loaded from cdnjs.cloudflare.com CDN).
+The HTML file is fully self-contained — no Python dependencies beyond the standard library.
 
 ---
 
 ## Tips
 
 - Run ALL data-gathering tool calls in a single parallel batch.
-- Keep the target company first in every peer table — the `.pptx` and the
+- Keep the target company first in every peer table — the HTML report and the
   commentary all assume this ordering.
 - `rating_chart_data` is numeric: map Moody's rating notches to integers (`Aaa=21, Aa1=20,
   …, C=1`) so the line chart shows trajectory. Both `rating_history` and
@@ -411,15 +446,22 @@ The builder's brand palette: `NAVY=#0A1264`, `BRIGHT=#005EFF`, `MID=#35397E`,
 - Pie percentages must sum to 100 — bucket small categories into "Other".
 - `key_metrics` arrays must match `periods` length. Use `null` for missing points.
 - Scorecard header rows use `is_header=true` and `values[row] = [[], [], ...]` (empty
-  per-company entries). The builder turns these into merged header rows in the `.pptx`.
+  per-company entries). The builder turns these into highlighted header rows in the HTML table.
+- **Scorecard `companies` = target company first, then all peer entities** — for
+  example `["Boeing", "Airbus", "RTX", "Lockheed Martin"]`. Never put two time-horizons
+  of the same company here. `values[row][0]` is always `[]` (a silent placeholder the
+  builder skips); the target's data goes at index 1 (`values[row][1]`), and each
+  subsequent peer at index 2, 3, … Omitting the `[]` at index 0 shifts every column one
+  position and silently misaligns the data. Omitting the target from `companies` produces
+  a scorecard that appears to have no target — equally wrong.
 - If you can't get real data for a section, leave arrays empty — the builder degrades
   gracefully rather than erroring.
-- Dates in the deck are just strings; format however reads best (e.g., "Nov 20, 2025").
+- Dates in the report are just strings; format however reads best (e.g., "Nov 20, 2025").
 - The `<output-dir>` name should be lower-cased and hyphen-joined (e.g.
   `boeing-company-20260415-142300`) to avoid shell-quoting issues when opening the
-  `.pptx`.
-- Revenue value labels must use comma-separated thousands with zero decimal places
-  (`#,##0`). Use `"#,##0"` as the `y_format` argument in `add_bar_chart` for the `.pptx`.
+  `.html` file.
+- Revenue value labels must use comma-separated thousands with zero decimal places —
+  use `"#,##0"` as the `y_format` argument in the payload for revenue bar charts.
 - **Never copy `period` values from `sample_payload.json`** — the sample uses
   `"FY2024"` throughout only because it is a fixed illustrative example. In a real
   run, read the period label from the `getEntityFinancials` response for each

@@ -56,20 +56,17 @@ This skill may **only** extract information from the following two sources:
    is older than **100 days** from today, discard it and treat the transcript as unavailable
    for that company. Do not fall back to any other source — handle the company per the
    missing-transcript policy (note in the Executive Summary, omit from every other section).
-   These rules apply to **every** section of the report. No section may be enriched with credit,
-   sector, ESG, peer, filings, or news data.
+These rules apply to **every** section of the report. No section may be enriched with credit,
+sector, ESG, peer, filings, or news data.
 
 ## Bundled files
-
 - `assets/template.html` — self-contained static report shell (CSS + named section placeholders).
   No embedded data, no inline script. Treat this file as the **read-only structural reference**:
   read it, fill it in, and write the complete filled document to a new `.html` file in
   `/mnt/user-data/outputs/`.
-
 ## Template (shared)
 
 Before emitting the HTML report, **read both**:
-
 1. [`skills/shared/template/SKILL.md`](../shared/template/SKILL.md) — authoring rules (which
    classes / snippets are owned by the shared layer, allowed per-skill overrides, outlook-badge
    usage).
@@ -77,12 +74,12 @@ Before emitting the HTML report, **read both**:
    canonical CSS (inside `<style id="shared-template-css">`) and literal HTML markup snippets
    (inside `<template>` tags) for the document head, cover, TOC, section block, sources-section
    wrapper, footer, and outlook-badge.
-   **Lookup order — always check the shared template before inventing.** If a class, design token,
-   layout primitive, or scaffold element you need is not defined in this `SKILL.md` or already
-   present in this skill's `assets/template.html`, the shared template skill is authoritative. Do
-   not invent CSS, HTML scaffolds, or design tokens that the shared skill already provides; do not
-   silently restyle anything the shared skill owns (cover, TOC, section, sources-section wrapper,
-   footer, outlook-badge, design tokens, reset, body / page base).
+**Lookup order — always check the shared template before inventing.** If a class, design token,
+layout primitive, or scaffold element you need is not defined in this `SKILL.md` or already
+present in this skill's `assets/template.html`, the shared template skill is authoritative. Do
+not invent CSS, HTML scaffolds, or design tokens that the shared skill already provides; do not
+silently restyle anything the shared skill owns (cover, TOC, section, sources-section wrapper,
+footer, outlook-badge, design tokens, reset, body / page base).
 
 At emit time, copy the **contents** (not the `<style>` wrapper) of `<style id="shared-template-css">`
 from the shared asset into the parent template's reserved marker region between the CSS-comment
@@ -103,19 +100,18 @@ solid-fill or inline-color overrides.
 
 Before emitting any `[n]` reference inline, any per-section recap block, or the end-of-document
 Citations block, **read both**:
-
 1. [`skills/shared/citations/SKILL.md`](../shared/citations/SKILL.md) — authoring rules
    (numbering, hyperlinking, source data shape, carve-outs).
 2. [`skills/shared/citations/assets/template.html`](../shared/citations/assets/template.html) —
    canonical CSS (inside `<style id="shared-citations-css">`) and literal HTML markup snippets
    (inside `<template>` tags) for inline references, the end-of-document Citations block, and
    the optional `.section-citations` recap.
-   At emit time, copy the **contents** (not the wrapper) of `<style id="shared-citations-css">`
-   from the shared asset into the parent template's reserved marker region, located inside
-   `assets/template.html` between the CSS-comment markers
-   `/* BEGIN shared-citations-css … */` and `/* END shared-citations-css */`. The parent
-   template no longer carries duplicated citation CSS — those rules ship only in the shared
-   asset.
+At emit time, copy the **contents** (not the wrapper) of `<style id="shared-citations-css">`
+from the shared asset into the parent template's reserved marker region, located inside
+`assets/template.html` between the CSS-comment markers
+`/* BEGIN shared-citations-css … */` and `/* END shared-citations-css */`. The parent
+template no longer carries duplicated citation CSS — those rules ship only in the shared
+asset.
 
 Skill-specific carve-outs that override or extend the shared rules are listed in the section
 synthesis rules below — most importantly: **the numeric `.yoy-change` cell stays
@@ -147,13 +143,12 @@ the scaffold for the final artifact. Do **not** copy it to the workspace and do 
 For each company, fire the following calls in a single parallel batch (one message, many tool calls):
 
 ### Earnings call transcript (×4 per company) — primary source
-
-| Category label        | Keywords                                                                                                    |
-| --------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Revenue & Price       | `Revenue, Net Sales, Sales, Volumes, Units sold, Price, Pricing`                                            |
-| Sector & Market       | `Industry, Sector Performance, Demand, Market Condition`                                                    |
+| Category label        | Keywords                                                                                            |
+|-----------------------|-----------------------------------------------------------------------------------------------------|
+| Revenue & Price       | `Revenue, Net Sales, Sales, Volumes, Units sold, Price, Pricing`                                    |
+| Sector & Market       | `Industry, Sector Performance, Demand, Market Condition`                                            |
 | Supply Chain & Region | `Supply Chain, Materials, Tariffs, Input, Logistics, Regional Performance, Geographic Condition, Geography` |
-| Guidance & Events     | `Business Outlook, Guidance, Revision, Corporate Events, Transaction`                                       |
+| Guidance & Events     | `Business Outlook, Guidance, Revision, Corporate Events, Transaction`                               |
 
 ### Web search fallback (only if `searchEntityEarningsCall` returns nothing usable)
 
@@ -192,9 +187,9 @@ The HTML file **must**:
   row labels, and element IDs exactly. Only the empty targets defined below are populated.
 - Be written in a single `create_file` call (no progressive `str_replace` edits, no
   multi-file split).
-  Render order of content inside the file follows the page top-to-bottom so the artifact is
-  human-readable as well as browser-renderable: cover/TOC fields first, then sections 1 → 13, then
-  sources.
+Render order of content inside the file follows the page top-to-bottom so the artifact is
+human-readable as well as browser-renderable: cover/TOC fields first, then sections 1 → 13, then
+sources.
 
 Use earnings call transcript content as the **sole** source for every section. Do not enrich
 with credit, sector outlook, ESG, peer, or news data — those tools are not permitted in this
@@ -206,7 +201,6 @@ URL-less fallback, and the rule that `n` matches the row position of the source 
 `#ecs-sources` are defined in [skills/shared/citations/SKILL.md](../shared/citations/SKILL.md).
 
 ### Cover / header fields (write first)
-
 - `#ecs-report-date` — e.g. `April 4, 2026` (plain text)
 - `#ecs-footer-date` — same value (plain text)
 - `#ecs-company-count` — number of companies (plain text)
@@ -216,7 +210,6 @@ URL-less fallback, and the rule that `n` matches the row position of the source 
   container (`<div class="cover-top has-cover-image">` and/or `<div class="cover-bottom has-cover-image">`).
   If you do not have images, leave the template as-is — the empty image strips will collapse
   automatically and the cover will render as a clean navy block with the accent bar.
-
 ### Section synthesis rules
 
 > **Per-section omit rule (applies to every section a–l).** If a company's earnings call
@@ -290,34 +283,33 @@ The `<strong class="subsection-title">…</strong>` subtitle **must be a single 
 - `#ecs-sources` — end-of-document Citations rows. One `<div class="source-item">` per
   source, in `[1], [2], …` order, using the canonical row markup from the shared citations
   skill.
-
 ---
 
 ## Streaming protocol (element → content mapping)
 
-| Element ID                    | Content type                                                                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `#ecs-report-date`            | Plain text date                                                                                                                 |
-| `#ecs-footer-date`            | Plain text date (same value)                                                                                                    |
-| `#ecs-company-count`          | Plain text integer                                                                                                              |
-| `#ecs-company-chips`          | Sequence of `<span class="company-chip">…</span>`                                                                               |
-| `#ecs-cover-img-right`        | `<img>` element — set `src` attribute                                                                                           |
-| `#ecs-cover-img-bottom`       | `<img>` element — set `src` attribute                                                                                           |
-| `#ecs-executive-summary`      | One or more `<p>`; prose may carry inline citations                                                                             |
-| `#ecs-credit-badge`           | Single `<div class="credit-badge …">` element                                                                                   |
-| `#ecs-overall-credit`         | `<p>` intro + `<ul><li>` bullets; prose may carry inline citations                                                              |
-| `#ecs-tbody-revenue`          | `<tr>` rows with `.yoy-change` class; commentary cell may carry inline citations                                                |
-| `#ecs-tbody-volumes`          | `<tr>` rows with `.yoy-change` class; commentary cell may carry inline citations                                                |
-| `#ecs-tbody-prices`           | `<tr>` rows with `.yoy-change` class; commentary cell may carry inline citations                                                |
-| `#ecs-qualitative`            | `<strong class="subsection-title">` + `<p>` (×3); prose may carry inline citations                                              |
-| `#ecs-end-markets`            | `<strong class="subsection-title">` + `<ul><li>` (×4); bullets may carry inline citations                                       |
-| `#ecs-supply-chain`           | `<strong class="subsection-title">` + `<ul><li>` (×3); bullets may carry inline citations                                       |
-| `#ecs-geography`              | `<strong class="subsection-title">Region: Summary</strong>` + `<ul><li>` (×4 fixed regions); bullets may carry inline citations |
-| `#ecs-outlook`                | `<strong class="subsection-title">` + `<ul><li>` per company; bullets may carry inline citations                                |
-| `#ecs-revisions`              | `<strong class="subsection-title">` + `<ul><li>` per company; bullets may carry inline citations                                |
-| `#ecs-events`                 | `<strong class="subsection-title">` + `<ul><li>` per company; bullets may carry inline citations                                |
-| `#ecs-cite-a` … `#ecs-cite-l` | `<div class="section-citations">…</div>` (optional, see shared citations skill)                                                 |
-| `#ecs-sources`                | `<div class="source-item">` rows (see shared citations skill)                                                                   |
+| Element ID                       | Content type                                                       |
+|----------------------------------|--------------------------------------------------------------------|
+| `#ecs-report-date`               | Plain text date                                                    |
+| `#ecs-footer-date`               | Plain text date (same value)                                       |
+| `#ecs-company-count`             | Plain text integer                                                 |
+| `#ecs-company-chips`             | Sequence of `<span class="company-chip">…</span>`                  |
+| `#ecs-cover-img-right`           | `<img>` element — set `src` attribute                              |
+| `#ecs-cover-img-bottom`          | `<img>` element — set `src` attribute                              |
+| `#ecs-executive-summary`         | One or more `<p>`; prose may carry inline citations |
+| `#ecs-credit-badge`              | Single `<div class="credit-badge …">` element                      |
+| `#ecs-overall-credit`            | `<p>` intro + `<ul><li>` bullets; prose may carry inline citations |
+| `#ecs-tbody-revenue`             | `<tr>` rows with `.yoy-change` class; commentary cell may carry inline citations |
+| `#ecs-tbody-volumes`             | `<tr>` rows with `.yoy-change` class; commentary cell may carry inline citations |
+| `#ecs-tbody-prices`              | `<tr>` rows with `.yoy-change` class; commentary cell may carry inline citations |
+| `#ecs-qualitative`               | `<strong class="subsection-title">` + `<p>` (×3); prose may carry inline citations |
+| `#ecs-end-markets`               | `<strong class="subsection-title">` + `<ul><li>` (×4); bullets may carry inline citations |
+| `#ecs-supply-chain`              | `<strong class="subsection-title">` + `<ul><li>` (×3); bullets may carry inline citations |
+| `#ecs-geography`                 | `<strong class="subsection-title">Region: Summary</strong>` + `<ul><li>` (×4 fixed regions); bullets may carry inline citations |
+| `#ecs-outlook`                   | `<strong class="subsection-title">` + `<ul><li>` per company; bullets may carry inline citations |
+| `#ecs-revisions`                 | `<strong class="subsection-title">` + `<ul><li>` per company; bullets may carry inline citations |
+| `#ecs-events`                    | `<strong class="subsection-title">` + `<ul><li>` per company; bullets may carry inline citations |
+| `#ecs-cite-a` … `#ecs-cite-l`    | `<div class="section-citations">…</div>` (optional, see shared citations skill) |
+| `#ecs-sources`                   | `<div class="source-item">` rows (see shared citations skill)      |
 
 ### Reference HTML snippets
 
@@ -327,21 +319,7 @@ The `<strong class="subsection-title">…</strong>` subtitle **must be a single 
 <tr>
   <td class="company-name">Company A</td>
   <td class="yoy-change up">+5.20%</td>
-  <td>
-    Revenue growth driven by pricing gains in North America
-    <a
-      href="https://example.com/transcript-q1-2026"
-      target="_blank"
-      class="cite-ref"
-      >[1]</a
-    >, partially offset by volume declines in EMEA
-    <a
-      href="https://example.com/credit-opinion-a"
-      target="_blank"
-      class="cite-ref"
-      >[2]</a
-    >.
-  </td>
+  <td>Revenue growth driven by pricing gains in North America <a href="https://example.com/transcript-q1-2026" target="_blank" class="cite-ref">[1]</a>, partially offset by volume declines in EMEA <a href="https://example.com/credit-opinion-a" target="_blank" class="cite-ref">[2]</a>.</td>
 </tr>
 ```
 
@@ -362,24 +340,8 @@ The `<strong class="subsection-title">…</strong>` subtitle **must be a single 
 ```html
 <strong class="subsection-title">North America</strong>
 <ul>
-  <li>
-    Retail demand held up against tariff pass-through
-    <a
-      href="https://example.com/transcript-q1-2026"
-      target="_blank"
-      class="cite-ref"
-      >[1]</a
-    >.
-  </li>
-  <li>
-    Pricing remained disciplined across grocery and consumables
-    <a
-      href="https://example.com/sector-outlook"
-      target="_blank"
-      class="cite-ref"
-      >[3]</a
-    >.
-  </li>
+  <li>Retail demand held up against tariff pass-through <a href="https://example.com/transcript-q1-2026" target="_blank" class="cite-ref">[1]</a>.</li>
+  <li>Pricing remained disciplined across grocery and consumables <a href="https://example.com/sector-outlook" target="_blank" class="cite-ref">[3]</a>.</li>
 </ul>
 ```
 
@@ -391,21 +353,18 @@ blocks, and the end-of-document Citations block.
 ### Class-selection rules
 
 **`.yoy-change`** modifier (on the second `<td>` of YOY rows):
-
 - `up` — value starts with `+`, equals `Up`, or parses to a positive number
 - `down` — value starts with `-`, equals `Down`, or parses to a negative number
 - `flat` — value equals `Flat` or `0`
 - `na` — value is `Not specified`, `N/A`, empty, or `—`
-  **`.credit-badge`** modifier (for `#ecs-credit-badge`):
+**`.credit-badge`** modifier (for `#ecs-credit-badge`):
 - `positive`, `negative`, or `neutral`. Label text is the capitalized sentiment.
-
 ### Conventions
 
 - Use `<p>` for paragraphs, `<ul><li>` for bullets, `<strong class="subsection-title">…</strong>` for bold subheaders inside prose containers.
 - Emit inline citations per [skills/shared/citations/SKILL.md](../shared/citations/SKILL.md). Inline citations are the primary attribution mechanism — the optional per-section blocks (`#ecs-cite-a` … `#ecs-cite-l`) remain available as supplementary summary boxes. Numeric `.yoy-change` cells stay citation-free.
 - Do NOT include overall section titles — the template already has those.
 - `yoy_change` values: `+X.XX%` or `-X.XX%` if numeric, else `Up` / `Down` / `Flat` / `Not specified`.
-
 ---
 
 ## Step 5 — Tell the user
