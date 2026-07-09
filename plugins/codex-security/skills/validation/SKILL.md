@@ -1,8 +1,6 @@
 ---
 name: validation
 description: Use when Codex is already in the validation phase of a security scan or the user explicitly asks to determine whether one or more candidate security findings are valid. Do not use as the primary trigger for full PR, commit, branch, patch, or repository scans.
-metadata:
-  short-description: Validate candidate security findings
 ---
 
 # Security Validation

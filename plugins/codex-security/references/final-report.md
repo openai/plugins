@@ -7,6 +7,8 @@ Use this guidance when authoring canonical report semantics and returning the ge
 The final readable output is a deterministic projection of `scan-manifest.json`, `findings.json`, and `coverage.json`:
 
 - primary readable markdown report at the final scan report path from `scan-artifacts.md`
+- optional detailed vulnerability write-ups under `findings/<slug>/`, linked from the primary report through `finding.writeup.reportPath`
+- optional structural hardening guidance under `hardening/`, linked from the primary report through `scan.hardening.portfolioPath`
 
 When writing `findings.json` alongside this readable output, populate the optional structured details in `finding-detail-fields.md` from the same validated evidence. Do not parse the rendered report back into finding data.
 
@@ -22,9 +24,13 @@ Canonical report semantics live in these fields:
 
 - `scan-manifest.json`: `scan.scope` and `scan.threatModel`
 - `findings.json`: each finding's `summary`, `codeEvidence`, `rootCause`, `validation`, `attackPath.dataflow`, `attackPath.reachability`, `severity.rationale`, `severity.changeConditions`, `remediation`, `remediationTests`, and `preventiveControls`
+- `findings.json`: optional `writeup.reportPath` for a derived, unsealed detailed vulnerability report written under `findings/<slug>/<slug>.md`
+- `scan-manifest.json`: optional `scan.hardening.portfolioPath` for the derived, unsealed design portfolio at `hardening/hardening.md`
 - `coverage.json`: `surfaces` including `riskArea` and `notes`, plus `openQuestions`
 
 Older v1 producers may omit the new optional fields. Finalization uses explicit JSON-derived fallback text in that case; it never reads a pre-existing report to fill gaps.
+
+When `scan.hardening.portfolioPath` is present, include a short `## Structural Hardening` section linking the portfolio. Keep individual proposal links and the full option analysis in `hardening/hardening.md` rather than copying them into the primary scan report. The portfolio is design guidance, not evidence that any finding has been remediated.
 
 When there are no reportable findings, include a short `No findings` section that explains why nothing survived discovery or the later reportability gates. For repository-wide and scoped-path scans with a coverage ledger, still include `Reviewed Surfaces` so checked, rejected, not-applicable, and follow-up-needed surfaces remain auditable.
 
@@ -61,13 +67,17 @@ Populate `scan.threatModel` from the completed threat-model analysis. The detail
 
 Start this section with the findings summary table.
 
+For Deep Security Scan outputs, group the summary table by `extensions.candidateId` and use columns `Findings`, `Reports`, `Severity`, `Confidence`, and `Detailed write-up`. `deep_repository` scans always use this presentation. Scoped-path deep outputs use it when the reportable child findings carry the deep-scan identifiers described below; ordinary scoped standard scans keep the standard table. Emit one table row per reportable canonical DSS finding. `Findings` contains the vulnerability title without duplicated trailing report or provenance annotations. `Reports` lists every child finding's unique `extensions.reportId`, with each id linking to that child's detailed summary section. For compatibility with older deep-scan artifacts, fall back to `extensions.ledgerRowId`; when a ledger row produced multiple reports, use each child's unique trailing title annotation or instance identity rather than displaying duplicate labels. `Detailed write-up` lists the corresponding `writeup.reportPath` link for every child report. Preserve every child report as its own detailed section below the grouped table. When child reports have different severity or confidence levels, list every distinct level in the grouped row. In the scan summary, distinguish the number of reportable DSS findings from the number of child report instances. For every other scan mode, preserve the standard columns `Finding`, `Severity`, `Confidence`, and `Detailed write-up`, with the finding title linking to the detailed summary section.
+
 After the summary table, include a compact `### Confidence Scale` table with columns `Label` and `Meaning`:
 
 - `high`: direct source, configuration, or runtime evidence supports the finding, with no material unresolved reachability or exploitability blocker.
 - `medium`: source evidence supports a plausible issue, but runtime behavior, deployment configuration, role reachability, type constraints, or exploit reliability still need proof.
 - `low`: weak or incomplete evidence; include only when the user explicitly wants follow-up candidates in the final report.
 
-Then render each finding as:
+When a finding records `writeup.reportPath`, link the detailed report from the findings summary and do not duplicate the complete finding inline. The linked write-up is a derived, unsealed readable output; the canonical finding remains the source of truth for adapters and regeneration. Findings without a write-up continue to use the inline format below for compatibility.
+
+Render each inline finding as:
 
 `### [<number>] <title>`
 
@@ -82,7 +92,7 @@ For each finding include a compact two-column metadata table immediately below t
 
 Use a concrete category such as `Authorization bypass / IDOR`, `Path traversal`, `SQL injection`, `XXE`, `Open redirect`, or `Hardcoded credentials`. Do not use generic placeholders such as `security scan finding`.
 
-The summary table should link each finding title to its detailed finding section with an intra-document markdown anchor. Keep the link text identical to the detailed heading title, without the numeric prefix. Use the detailed heading slug generated from `[<number>] <title>`; for example, link finding 1 to `#1-example-title`.
+For standard scan modes, the summary table should link each finding title to its detailed finding section with an intra-document markdown anchor. For the Deep Security Scan grouped presentation, the report id in the `Reports` column owns that link instead. Keep the displayed vulnerability title and report id aligned with the corresponding detailed heading. Use the explicit finding anchor emitted by the deterministic projection.
 The summary table and the detailed finding sections must use the same descending severity order: all `critical` findings first, then `high`, then `medium`, then `low`. Renumber findings after sorting so the table order, detailed headings, and anchors match.
 
 Affected lines must include the root broken control or dangerous sink line when that line is identifiable, not only the public wrapper, route, or caller that makes it reachable. For wrapper-to-shared-helper findings, list both the reachable wrapper/entrypoint and the underlying parser, deserializer, path/archive helper, expression evaluator, or auth/authz control line. If a seeded file, class, package, or hunk shares the surviving proof tuple, keep that seed anchor in affected lines instead of replacing it with a broader sibling-only location. If the bug is caused by unsafe transformation or selection before the sink, include the split, parse, canonicalization, normalization, comparison, regex, object-selection, or object-binding line where the control fails. For parser, XML, deserialization, and object-construction findings, include the concrete codec, converter, deserializer, parser feature setup, resolver, class filter, or container handler line when that line performs recursive parsing, type resolution, object conversion, class filtering, or fail-open hardening. For central file-format object models, include low-level helper lines such as `to*Array`, `toList`, `getObject`, numeric conversion, iterator, size-based allocation, unchecked cast, or collection-to-array loops when those helpers are the broken malformed-input control. For recursive placeholder/template findings, include the helper/parser setup line that enables recursive expansion or expression evaluation, not only the later resolver or render call. For resource-serving findings, include the allowlist, path-matcher, URL decoding, canonicalization, or resource-selection line that decides whether the attacker-selected resource is allowed. For stateful authentication protocol findings, include the principal/credential/token/issuer installation, rebind/reauthentication, or validated-vs-consumed object-selection line that creates the auth bypass. For SSO/SAML/federation findings, include the response/assertion selection, signed-object lookup, cloned/returned assertion, subject, audience, recipient, destination, ACS URL, or issuer-binding line that determines which identity object is trusted. For polymorphic or request-selected handler, operation, converter, filter, validator, or strategy families, include the concrete subclass/implementation line that transforms, validates, canonicalizes, selects, or reinterprets attacker input before a shared sink/control, including specialized helper methods and branch predicates inside the concrete class when they perform or enable the unsafe transform. If a special-case branch such as append, wildcard, fallback, copy/move `from`, default-value, or type-resolution handling bypasses or narrows validation, include that branch-local root-control line even when a shared helper is also affected. If the finding text says a shared flaw affects "all", "every", or "any" concrete operation, codec, converter, handler, validator, filter, or resolver, the affected lines must include the concrete implementations identified during discovery or validation; do not rely on "and related classes" prose for independently reachable root-control lines. If equivalent resolver/filter controls are duplicated across core, server, client, remoting, plugin, or import packages, include the runtime/exported implementation that enforces the broken control. For repeated vulnerable templates, routes, query builders, parser operations, or auth/object-access endpoints, keep each independently vulnerable file and line as its own affected instance; do not hide sibling instances as extra context on one representative finding when they can be attacked independently. The Codex review directive should point at the tightest root-cause line unless the wrapper or concrete implementation line is the actual broken control.
@@ -94,7 +104,9 @@ Then render these subsections under each finding:
   - Wrap code identifiers, RPC names, functions, types, fields, parameters, configuration keys, and literal values in single backticks.
 - `#### Root Cause`
   - State the violated security invariant and explain exactly how the implementation breaks it.
-  - Show the smallest source snippets needed to compare the intended control with the vulnerable path. Populate the shared `codeEvidence` catalog and select those snippets with `rootCause.evidenceRefs`.
+  - Walk the vulnerable call stack from the code that accepts or decodes user-controlled input through each meaningful call or transformation to the missing control, dangerous operation, and security-relevant consumer. Do not begin at the sink when an earlier input boundary is known.
+  - Give every displayed `codeEvidence` item a role and an explanation that names the carried value and the next callee or state transition. Order `rootCause.evidenceRefs` from input to outcome, with any `expected_control` comparison after the vulnerable stack.
+  - Show the smallest complete snippets needed for that walkthrough. Omit incidental helpers, but do not skip a call boundary whose behavior is necessary to understand how attacker input reaches the broken invariant.
   - Do not emit generic prose that only repeats an affected `path:line` already present in the metadata table.
 - `#### Validation`
   - Include method, checklist items, evidence, and remaining uncertainty.
@@ -144,6 +156,14 @@ Each finding should make it easy for an application security engineer or softwar
 - what the smallest safe fix is
 
 Include the final markdown report path in the response so the user can find the readable report easily.
+
+After a completed scan:
+
+- If the scan found reportable issues, ask whether the user wants to export the findings as JSON, SARIF, or CSV, generate patches, or track selected findings. Name the highest-priority finding.
+- Offer tracking only when `$track-findings` can use an available destination, such as Linear, Jira, or GitHub Issues. Name the destination in the question.
+- If the report names a specific follow-up, ask whether the user wants to investigate it.
+- If the scan found nothing and has no specific follow-up, do not add a generic question.
+- Wait for the user's answer before exporting findings, generating patches, tracking findings, or starting another scan.
 
 ## Codex Review Directives
 

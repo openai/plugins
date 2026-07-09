@@ -1,14 +1,11 @@
 ---
 name: security-scan
-description: "Use when the user asks for a repository-wide or scoped-path security scan."
-metadata:
-  short-description: Run security scan
-  capability-profile: security_scan
+description: "Use for a standard, single-pass security audit of an entire repository or a scoped path, package folder, or submodule with no diff to review.  This is the default repository scan.  Do not use for PR/commit/branch/working-tree diffs, or for deep, multi-pass, or variance-reducing scans."
 ---
 
 # Security Scan
 
-Used when a user wants to audit an entire repository or a user-specified path, package, folder, or submodule-like scope for security vulnerabilities. Keep the scan phases separate and produce final HTML and markdown reports.
+Used when a user wants to audit an entire repository or a user-specified path, package, folder, or submodule-like scope for security vulnerabilities. Keep the scan phases separate and produce the final markdown report.
 
 ## Setup Workspace Routing
 
@@ -88,22 +85,27 @@ Follow this plan in order. Do not skip ahead to a later phase until the current 
 
 1. Resolve the scan target, `repo_name`, `security_scans_dir`, `scan_id`, `scan_dir`, and `artifacts_dir` using `../../references/scan-artifacts.md`.
 2. Create or adopt the scan goal described in `Goal Setup` for that active scan context.
-3. Run `$threat-model` first.
+3. Read `../../references/security-guidance.md`, compile the resolved scan target's policy to `<context_dir>/security_guidance.md`, and read it before threat modeling or inspecting source code.
+4. Run `$threat-model` first.
   - Copy the repository-scoped threat model to the per-scan threat model path without alteration for auditability.
   - Treat the per-scan threat model path as the source of truth threat model for later phases.
-4. Run `$finding-discovery` as the second step, against the resolved repository or scoped path and using the per-scan threat model as context.
+5. Run `$finding-discovery` as the second step, against the resolved repository or scoped path and using the per-scan threat model as context.
   - Stop at discovery only when the ranked runtime-surface worklist exists and the coverage ledger has closed every applicable high-impact and seeded root-control row as `suppressed`, `not_applicable`, or `deferred` with exact reasons. Open, reportable, or unresolved seeded rows continue to validation even when they are not yet numbered as findings.
-5. Run `$validation` as the third step, for each candidate that came out of discovery and each open, reportable, or deferred seeded/root-control ledger row that still needs closure.
+6. Run `$validation` as the third step, for each candidate that came out of discovery and each open, reportable, or deferred seeded/root-control ledger row that still needs closure.
   - Pass the resolved scan scope, discovery notes, and candidate inventory to validation. Validation should preserve or suppress the provided instances; it should not independently broaden or narrow the requested repository or scoped-path scan.
   - Each candidate finding's candidate-ledger path from `../../references/scan-artifacts.md` is part of the validation input for every scan scope. Every candidate finding that came out of discovery must have a discovery receipt before validation starts and a validation receipt before the scan can proceed to final reporting.
   - For repository-wide and scoped-path scans, the discovery worklists, work ledger, raw candidates, per-finding candidate ledgers, deduped candidates, and discovery coverage ledger from `../../references/scan-artifacts.md` are part of the validation input; the ledger is a coverage artifact, not just a findings tracker. Raw candidates should already include the discovering file-review subagent's or parent agent's candidate-local validation evidence and attack-path facts before dedupe, and each per-finding candidate ledger should prove that its raw candidate finding received both checks or has an explicit deferred reason. Validation should preserve checked surfaces with not_applicable, suppressed, deferred, and reportable dispositions, reconcile cross-file proof gaps, and continue the ledger's high-impact sibling checks when needed rather than narrowing to one representative finding.
   - When multiple candidates or coverage-ledger rows need validation and subagents are available under the resolved scan authorization, divide validation across validation subagents by candidate, deduped candidate, or ledger row. Each validation subagent must receive the candidate or row, discovery evidence, artifact paths, and candidate-ledger path it owns, then write or return the validation report update and validation receipt for that assignment.
   - As coverage-ledger rows are validated, keep the saved per-finding validation reports current enough that reportable, suppressed, not_applicable, and deferred closure rows survive interruption or later phase summarization, including exact root-control file:line and seed-anchor file:line when distinct.
-6. Run `$attack-path-analysis` as the fourth step, for findings and validation closure rows that still need reportability, attack-path, and severity analysis after validation.
+7. Run `$attack-path-analysis` as the fourth step, for findings and validation closure rows that still need reportability, attack-path, and severity analysis after validation.
   - Each candidate finding's candidate-ledger path from `../../references/scan-artifacts.md` is part of the attack-path input for every scan scope. Every candidate finding that reaches attack-path analysis must have an attack-path receipt before final reporting, even when the final decision is `ignore`, suppressed, or deferred.
   - When multiple validated candidates or validation closure rows need attack-path analysis and subagents are available under the resolved scan authorization, divide attack-path work across attack-path subagents by candidate or row. Each attack-path subagent must receive the validation evidence, affected root-control and sink lines, artifact paths, and candidate-ledger path it owns, then write or return attack-path facts, severity/policy analysis, and the attack-path receipt for that assignment.
-7. Author the complete canonical JSON contract last using `../../references/final-report.md`; do not author reports. Complete the scan so finalization projects the validated JSON into the final markdown report. In the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly.
+8. Assemble the complete canonical JSON contract last using `../../references/final-report.md`; do not author `report.md`.
   - Populate the optional structured details in `../../references/finding-detail-fields.md` from the same validated evidence used in the generated report.
+  - For every reportable finding, run `$vulnerability-writeup` with exactly one dedicated write-up sub-agent. Give it only that finding, its validation and attack-path evidence, relevant source paths and revision, PoC inputs, and the target output directory.
+  - Write the derived report to `findings/<slug>/<slug>.md` with supporting PoC files under `findings/<slug>/poc/`. Verify the report is a regular file, then set that finding's `writeup.reportPath` to the matching safe relative path. Do not add the derived report to the sealed artifact list.
+  - After every write-up is ready, run `$propose-security-hardening` once over the complete finding collection, detailed write-ups, threat model, coverage, and relevant source. Write its portfolio to `hardening/hardening.md`, its structured analysis to `hardening/hardening.json`, and any proposals and diagrams below `hardening/`. Verify `hardening/hardening.md` is a regular file, then set `scan.hardening.portfolioPath` to the fixed relative path `hardening/hardening.md`. Do not add these derived files to the sealed artifact list. Skip this step and omit `scan.hardening` when there are no reportable findings.
+  - Complete the scan once, after all write-ups, hardening guidance, and canonical JSON are ready, so finalization projects the validated JSON and derived-document links into `report.md`. In the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly.
 
 ## Scan Scope
 
@@ -130,7 +132,7 @@ Use the per-scan artifact directory layout from `../../references/scan-artifacts
 
 ## Final Output
 
-Populate all final report semantics in the canonical manifest, findings, and coverage JSON using `../../references/final-report.md`. Then complete the scan; finalization owns markdown report generation. Emit Codex app review directives from the completed canonical findings.
+Populate all final report semantics in the canonical manifest, findings, and coverage JSON using `../../references/final-report.md`. Generate one detailed `vulnerability-writeup` for every reportable finding, then run `propose-security-hardening` once over the complete collection and record the safe derived-document paths. Complete the scan once after both stages; finalization owns `report.md` generation. Emit Codex app review directives from the completed canonical findings.
 
 ## Hard Rules
 
@@ -139,7 +141,7 @@ Read `../../references/shared-hard-rules.md` before applying scan-mode-specific 
 - After any app setup handoff has provided a `scanId`, or in the non-app terminal/chat workflow, create or adopt the scan goal only after the capability preflight has returned `ready`, and before substantive scan work. Do not complete it until the resolved in-scope files/worklist rows, candidate ledgers, and final reports meet the `Goal Setup` closure criteria.
 - For repository-wide and scoped-path scans, do not equate broad sink counts with completed coverage. The coverage ledger must close each applicable high-impact shard row as `reportable`, `suppressed`, `not_applicable`, or `deferred`.
 - For every scan scope, candidate-finding coverage is required. Do not finalize a candidate finding until its candidate-ledger path from `../../references/scan-artifacts.md` shows discovery, validation, and attack-path receipts for that exact candidate, or an explicit deferred reason for the missing proof.
-- For repository-wide and scoped-path scans, subagent dispatch must have explicit ownership: ranking subagents own one generated `rank_shards/*.input.jsonl` shard of at most five rows and write only its matching worker-local `.output.jsonl`; file-review subagents own one assessed file or tiny shard and return full-file receipts plus pre-dedupe finding objects with candidate-local validation evidence and attack-path facts; validation subagents own one candidate or ledger row that needs validation closure; attack-path subagents own one validated candidate or validation closure row; the parent agent owns bounded worker orchestration, ledger reconciliation, aggregation, cross-file dedupe, and final closure.
+- For repository-wide and scoped-path scans, subagent dispatch must have explicit ownership: each of no more than six ranking subagents owns one static `rank_worker_assignments.json` pool slot containing one or more generated `rank_shards/*.input.jsonl` shards of at most 150 rows, processes its ordered list sequentially, and writes only the matching worker-local `.output.jsonl` files; file-review subagents own one assessed file or tiny shard and return full-file receipts plus pre-dedupe finding objects with candidate-local validation evidence and attack-path facts; validation subagents own one candidate or ledger row that needs validation closure; attack-path subagents own one validated candidate or validation closure row; the parent agent owns bounded worker orchestration, ledger reconciliation, aggregation, cross-file dedupe, and final closure.
 - For repository-wide and scoped-path scans, candidate-finding coverage is separate from file coverage. Do not dedupe or finalize a raw candidate finding until its candidate-ledger path from `../../references/scan-artifacts.md` shows candidate-local validation and candidate-local attack-path receipts, or an explicit deferred reason for missing proof.
 - Candidate ids are optional links from coverage rows to findings; a not_applicable, suppressed, or deferred row is still required when the surface was in scope.
 - For repository-wide and scoped-path scans, the ranked runtime-surface worklist must exist before discovery is considered complete, and the coverage ledger must be materially broader than the promoted candidate list.

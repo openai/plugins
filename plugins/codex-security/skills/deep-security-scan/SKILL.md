@@ -1,9 +1,6 @@
 ---
 name: deep-security-scan
 description: Use when the user asks for a deep, exhaustive, multi-pass, or variance-reducing repository-wide or scoped-path Codex Security scan. Run repeated independent discovery passes over one resolved scope with worker-specific threat models, semantically merge candidates, synthesize one canonical validation threat model, then run validation, attack-path analysis, canonical JSON completion, and generated reporting once. Do not use for PRs, commits, branch diffs, or working-tree diffs.
-metadata:
-  short-description: Run a deeper Codex Security scan
-  capability-profile: deep_security_scan
 ---
 
 # Deep Security Scan
@@ -20,7 +17,7 @@ The top-level coordinator must inspect `otherRunningDeepScans` only once for eac
 
 - If it is empty, continue normally.
 - If it is non-empty, show a compact warning. For each other scan, include only its target path, current phase in plain language, and human-friendly start time. Do not include scan IDs, raw timestamps, update times, or commentary about stale records or interrupted threads. Add one short sentence that running Deep Security Scans concurrently can increase CPU, memory, and token consumption and slow both scans.
-- After showing those details in an interactive Codex session, optimistically call `request_user_input` so the user can choose without typing:
+- After showing those details in an interactive Codex session, optimistically call the native `request_user_input` tool so the user can choose without typing. If the native tool is unavailable or errors, use the Codex Security MCP fallback described below:
 
 ```text
 request_user_input(
@@ -44,7 +41,7 @@ request_user_input(
 )
 ```
 
-- If `request_user_input` is unavailable or errors, ask the user to choose `Continue` or `Cancel` in chat. In either case, stop for the answer. Do not run preflight, create or adopt goals, create shared worklists, or create workers while waiting.
+- If native `request_user_input` is unavailable or errors, call `request_codex_security_user_input` with the same `questions` payload. This fallback uses MCP form elicitation and must only be called in an interactive session. If it returns `accepted`, follow its answer. If it is unavailable or errors, ask the user to choose `Continue` or `Cancel` in chat. If it returns `declined` or `cancelled`, do not infer an answer; leave the scan paused and state that an explicit choice is still required. In every waiting case, stop for the answer. Do not run preflight, create or adopt goals, create shared worklists, or create workers while waiting.
 - Continue only after explicit confirmation. If the user chooses `Cancel`, call `fail_codex_security_scan` for the new scan with a concise cancellation reason and perform no substantive scan work. Do not modify or fail any previously running scan.
 
 Otherwise, in a host that renders MCP Apps and exposes the Codex Security setup continuation tools:
@@ -56,9 +53,9 @@ Otherwise, in a host that renders MCP Apps and exposes the Codex Security setup 
 5. If the wait returns `status: "started"`, require its `scanId`, call `get_codex_security_scan_context` with that `scanId`, and pass its `handoffClaimToken` when present. Apply the `otherRunningDeepScans` confirmation above, then run the preflight in `../../references/config-preflight.md` for the selected target and `deep_security_scan` profile before goal setup, threat modeling, worker creation, or other substantive scan work.
 6. If the wait returns `status: "already_delivered"`, end the current turn without loading scan context or starting scan work. Another continuation already owns the scan.
 7. If the wait returns `status: "timed_out"`, end the current turn and tell the user to finish setup and use **Continue in Codex** after pressing Start scan. Do not run preflight, create or adopt coordinator or worker-local goals, open another workspace, or pivot to terminal/chat fallback.
-8. Continue after a `ready` result, explaining material warn or suggest limitations. If preflight is `blocked` or `incomplete` with actionable remediation, present the exact reasons and config delta, ask whether to apply the remediation, and stop for the user's answer before creating or adopting coordinator or worker-local goals or calling `fail_codex_security_scan`. Do not fail automatically for declined or unavailable remediation, helper errors, or a non-ready rerun. Preserve the running scan and retry or hand off while recovery may still be possible. If the user declines required remediation, ask whether to cancel or leave the scan running for a later retry. Call `fail_codex_security_scan` with the exact reason only after documented recovery is exhausted and the blocker is confirmed unrecoverable, or when the user explicitly cancels.
+8. Continue after a `ready` result, explaining material warn or suggest limitations. If preflight is `blocked` or `incomplete` with actionable remediation, first classify the session as described in `../../references/config-preflight.md`; `codex exec`, headless, and automation runs are non-interactive and must never call `request_user_input`, `request_codex_security_user_input`, or wait for chat. Present the exact reasons and config delta. In an interactive session, follow the native-first remediation question flow in that reference, including its MCP elicitation and plain-chat fallbacks, and stop for the user's answer before creating or adopting coordinator or worker-local goals or calling `fail_codex_security_scan`. In a non-interactive session, follow the narrow automatic-remediation path in that reference: apply only concrete Codex config patches, rerun preflight once, and continue only after `ready`. Do not fail or cancel automatically for unavailable remediation, helper errors, or a non-ready rerun. Preserve the running scan and retry or hand off while recovery may still be possible. If an interactive user declines required remediation, ask whether to cancel or leave the scan running for a later retry. Call `fail_codex_security_scan` with the exact reason only after documented recovery is exhausted and the blocker is confirmed unrecoverable, or when the user explicitly cancels.
 
-In Codex CLI, including interactive and headless runs, or hosts without those capabilities, use the existing prompt-only terminal/chat preflight and scan workflow and shared artifact paths. Do not call `open_codex_security_workspace` or `await_codex_security_scan_start` on this path. The terminal/chat fallback cannot use this app-backed concurrency check; continue its existing workflow unchanged. Once `open_codex_security_workspace` succeeds in an MCP Apps-capable host, remain on the app path: immediately call `await_codex_security_scan_start`; a `status: "timed_out"` result means end the turn and point the user to **Continue in Codex**, while `status: "already_delivered"` means stop because another continuation owns the scan. Do not start a terminal/chat fallback for either result.
+In Codex CLI, including interactive and headless runs, or hosts without those capabilities, use the prompt-only terminal/chat preflight and scan workflow and shared artifact paths. Do not call `open_codex_security_workspace` or `await_codex_security_scan_start` on this path. The terminal/chat fallback cannot use this app-backed concurrency check. For a blocked preflight, follow the shared interactive-versus-non-interactive remediation handling in `../../references/config-preflight.md`; specifically, `codex exec` is non-interactive, must not call `request_user_input` or `request_codex_security_user_input`, and must not leave the run waiting for an answer it cannot receive. Once `open_codex_security_workspace` succeeds in an MCP Apps-capable host, remain on the app path: immediately call `await_codex_security_scan_start`; a `status: "timed_out"` result means end the turn and point the user to **Continue in Codex**, while `status: "already_delivered"` means stop because another continuation owns the scan. Do not start a terminal/chat fallback for either result.
 
 ## Overview
 
@@ -76,7 +73,7 @@ Do not replace Codex Security's established scan rules with custom shortcuts.
 
 ## Required Capabilities
 
-Read `../../references/config-preflight.md` and dispatch and await the preflight execution described there with the `deep_security_scan` capability profile before evaluating the workflow-specific requirements below, including after an app wait or direct continuation has produced a `scanId` and loaded its authoritative scan context. Follow the returned block/warn/suggest results. For an app-generated scan, ask before applying actionable remediation and wait without creating coordinator or worker-local goals or calling `fail_codex_security_scan`. Do not fail automatically for declined or unavailable remediation, helper errors, or a non-ready rerun; preserve the running scan and retry or hand off while recovery may still be possible. Call `fail_codex_security_scan` only after documented recovery is exhausted and the blocker is confirmed unrecoverable, or when the user explicitly cancels. Do not treat a config value that differs from a suggested patch as a warning unless the capability requirement itself is unmet.
+Read `../../references/config-preflight.md` and dispatch and await the preflight execution described there with the `deep_security_scan` capability profile before evaluating the workflow-specific requirements below, including after an app wait or direct continuation has produced a `scanId` and loaded its authoritative scan context. Follow the returned block/warn/suggest results. In an interactive app-generated scan, use the reference's native `request_user_input` remediation question with its `request_codex_security_user_input` and plain-chat fallbacks before applying actionable remediation, and wait without creating coordinator or worker-local goals or calling `fail_codex_security_scan`. In a non-interactive session, follow the reference's narrow automatic-remediation path and continue only after the rerun is `ready`. Do not fail or cancel automatically for unavailable remediation, helper errors, or a non-ready rerun; preserve a durable running scan and retry or hand off while recovery may still be possible. Call `fail_codex_security_scan` only after documented recovery is exhausted and the blocker is confirmed unrecoverable, or when the user explicitly cancels. Do not treat a config value that differs from a suggested patch as a warning unless the capability requirement itself is unmet.
 
 Before starting substantive scan phases, confirm that the Codex Security plugin skills needed by this workflow are available:
 
@@ -168,9 +165,10 @@ Start this setup only after `Setup Workspace Routing` has either loaded the app-
    - `coverage_dir`
    - `reconciliation_dir`
    - `findings_dir`
-5. Do not generate a shared pre-discovery threat model in the coordinator.
-6. Reserve Codex Security's standard per-scan `<context_dir>/threat_model.md` path for the later canonical validation threat model that will be synthesized only after the discovery loop reaches a terminal state.
-7. Create the fixed parent-provided coverage scope before any discovery worker starts:
+5. Read `../../references/security-guidance.md` and compile the resolved scan target's policy to `<context_dir>/security_guidance.md` before creating discovery workers. Each worker reads that file before threat modeling or source review.
+6. Do not generate a shared pre-discovery threat model in the coordinator.
+7. Reserve Codex Security's standard per-scan `<context_dir>/threat_model.md` path for the later canonical validation threat model that will be synthesized only after the discovery loop reaches a terminal state.
+8. Create the fixed parent-provided coverage scope before any discovery worker starts:
    - generate `<discovery_dir>/rank_input.jsonl` once using Codex Security's ordinary deterministic exhaustive-scan worklist helper: `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-repo-rank-input --repo <repo_root> --scope <scope> --out <discovery_dir>/rank_input.jsonl`
    - use the repository root as `<scope>` for a repository-wide target and the exact resolved relative or absolute scoped path for a scoped-path target
    - treat Deep Security Scan as exhaustive for this version: run `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.jsonl --out <discovery_dir>/deep_review_input.jsonl` and declare that worklist pair authoritative and exhaustive for every worker
@@ -254,6 +252,7 @@ Before substantive worker work, create or adopt one worker-local Codex goal if y
 If a compatible active goal already exists in this worker thread, continue under it instead of creating a duplicate. If goal tools are unavailable, state the same objective in your first visible update and continue. Do not mark the worker-local goal complete until the threat model, finding discovery report, repository-wide ledgers, candidate ledgers, and coordinator-facing summary for your assigned artifact paths are saved or returned.
 
 Use the provided resolved scan target exactly as given.
+Before generating your threat model or inspecting source code, read `<context_dir>/security_guidance.md` in full.
 First generate your own threat model for that resolved target using the ordinary `$codex-security:threat-model` rules, but write it only to your worker-specific threat-model output path. Do not read, reuse, overwrite, or infer a shared coordinator threat model.
 Then run `$codex-security:finding-discovery` using your own worker-specific target threat model as the threat-model source of truth.
 Do not reinterpret the target, run the top-level `$codex-security:validation` phase, run the top-level `$codex-security:attack-path-analysis` phase, author canonical final artifacts, or edit repository files.
@@ -496,14 +495,18 @@ Once the recorded terminal state is present:
    - treat this canonical validation threat model as downstream context for validation and attack-path analysis, not as a retroactive filter over the discovery candidate set
 3. confirm `<context_dir>/threat_model.md` exists, then run `$codex-security:validation` once over the canonical merged discovery inputs
 4. run `$codex-security:attack-path-analysis` once over the surviving validated findings and closure rows that require it
-5. populate the complete canonical manifest, findings, and coverage JSON once using `../../references/final-report.md`, then complete the scan so finalization generates the markdown report projection; in the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly
+5. populate the complete canonical manifest, findings, and coverage JSON once using `../../references/final-report.md`
+   - for every reportable child finding, set `extensions.candidateId` to its canonical merged candidate id, `extensions.ledgerRowId` to its originating closure-row id, and `extensions.reportId` to a unique, stable human-readable id for that final child report; keep the vulnerability title human-readable and do not rely on a title suffix as the only copy of any id
+   - for every reportable finding, run `$codex-security:vulnerability-writeup` with exactly one dedicated write-up sub-agent, write `findings/<slug>/<slug>.md` plus any `findings/<slug>/poc/` files, verify the report exists, and set the safe relative `writeup.reportPath`
+   - after every write-up is ready, run `$codex-security:propose-security-hardening` once over the complete finding collection, write-ups, threat model, coverage, and relevant source; write `hardening/hardening.md`, `hardening/hardening.json`, and any proposals and diagrams below `hardening/`; verify the portfolio is a regular file and set `scan.hardening.portfolioPath` to `hardening/hardening.md`; skip this step when there are no reportable findings
+   - keep every write-up and hardening document derived and unsealed, then complete the scan once so finalization generates the markdown report projection and links; in the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly
 
 Do not bypass validation simply because a candidate recurred across multiple discovery workers. Recurrence is search evidence, not reportability proof.
 
 ## Final Output Rules
 
 - Emit only the ordinary Codex Security generated report output and review directives expected for the resolved scan target.
-- Do not author `report.md`. Populate all report semantics in canonical JSON using `../../references/final-report.md`, call scan completion, and include the generated markdown report path in the response.
+- Do not author `report.md`. Populate scan-level semantics in canonical JSON, generate one detailed write-up per reportable finding, run the hardening analysis once over the complete collection, record the safe derived-document paths, call scan completion once, and include the generated markdown report path in the response.
 - Populate the optional structured details in `../../references/finding-detail-fields.md` from the same validated evidence used in the generated report.
 - Keep priorities, severities, confidence, affected locations, validation reasoning, reachability, attack paths, and remediation in the normal Codex Security style.
 - Do not mention:

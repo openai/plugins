@@ -1,8 +1,6 @@
 ---
 name: finding-discovery
 description: Use when Codex is already in the finding-discovery phase of a security scan or the user explicitly asks to discover candidate security findings in a repository or code change. Do not use as the primary trigger for full PR, commit, branch, patch, or repository scans.
-metadata:
-  short-description: Discover security findings
 ---
 
 # Security Finding Discovery
@@ -17,6 +15,10 @@ The path references in this skill are the default locations for this phase.
 If the user explicitly provides a different path for a required input or output, use the user-provided path instead of the corresponding default path referenced in this skill.
 If a required input is still missing, stop and ask the user for it before continuing.
 Use the shared scan artifact path conventions in `../../references/scan-artifacts.md`.
+
+## SECURITY.md Guidance Gate
+
+Read `../../references/security-guidance.md` and resolve the applicable policy before inspecting each source file. A delegated file-review worker must do the same before reading its assigned source.
 
 ### Code Diff Workflow
 If the scan target is for a targeted code-diff:

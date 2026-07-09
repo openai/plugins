@@ -4,7 +4,7 @@ Use this contract for `$triage-finding` first-pass output. The skill performs st
 
 ## Schema Fit
 
-`plugins/codex-security/schemas/findings.schema.json` is not the normalization shape for triage inputs.
+`../../../schemas/findings.schema.json` is not the normalization shape for triage inputs.
 
 That schema is for completed Codex Security scan artifacts. It requires scan metadata, generated finding ids, occurrence ids, fingerprints, severity,
 remediation, provenance, and locations. Triage inputs often arrive as incomplete claims from SARIF snippets, CVEs, advisories, scanner tickets, bug bounty reports, or pasted text. The normalization step should preserve those claims without inventing completed-scan fields.

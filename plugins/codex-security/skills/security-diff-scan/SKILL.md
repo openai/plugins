@@ -1,14 +1,11 @@
 ---
 name: security-diff-scan
 description: "Use when the user asks for a security review of a pull request, commit, branch diff, working-tree patch, or other Git-backed change set."
-metadata:
-  short-description: Run security diff scan
-  capability-profile: security_diff_scan
 ---
 
 # Security Diff Scan
 
-Used when a user wants to review a Git-backed change set for security regressions. Keep the scan phases separate and produce final HTML and markdown reports.
+Used when a user wants to review a Git-backed change set for security regressions. Keep the scan phases separate and produce the final markdown report.
 
 ## Setup Workspace Routing
 
@@ -88,18 +85,23 @@ Follow this plan in order. Do not skip ahead to a later phase until the current 
 
 1. Resolve the Git-backed scan target, `repo_name`, `security_scans_dir`, `scan_id`, `scan_dir`, and `artifacts_dir` using `../../references/scan-artifacts.md`.
 2. Create or adopt the scan goal described in `Goal Setup` for that active scan context.
-3. Run `$threat-model` first.
+3. Read `../../references/security-guidance.md`, compile the repository's policy to `<context_dir>/security_guidance.md`, and read it before threat modeling or inspecting source code.
+4. Run `$threat-model` first.
   - Copy the repository-scoped threat model to the per-scan threat model path without alteration for auditability.
   - Treat the per-scan threat model path as the source of truth threat model for later phases.
-4. Run `$finding-discovery` as the second step, against the resolved diff and using the per-scan threat model as context.
+5. Run `$finding-discovery` as the second step, against the resolved diff and using the per-scan threat model as context.
   - If discovery produces no technically plausible candidates, stop there, skip validation and attack-path analysis, complete the canonical JSON contract, and finalize the scan.
-5. Run `$validation` as the third step, for each candidate that came out of discovery.
+6. Run `$validation` as the third step, for each candidate that came out of discovery.
   - Pass the resolved diff scope, discovery notes, and candidate inventory to validation. Validation should preserve or suppress the provided instances; it should not independently broaden the review into a repository-wide scan.
   - Each candidate finding's `findings/<candidate_id>/candidate_ledger.jsonl` is part of the validation input. Every candidate finding that came out of discovery must have a discovery receipt before validation starts and a validation receipt before the scan can proceed to final reporting.
-6. Run `$attack-path-analysis` as the fourth step, for findings that still need reportability, attack-path, and severity analysis after validation.
+7. Run `$attack-path-analysis` as the fourth step, for findings that still need reportability, attack-path, and severity analysis after validation.
   - Each candidate finding's `findings/<candidate_id>/candidate_ledger.jsonl` is part of the attack-path input. Every candidate finding that reaches attack-path analysis must have an attack-path receipt before final reporting, even when the final decision is `ignore`, suppressed, or deferred.
-7. Author the complete canonical JSON contract last using `../../references/final-report.md`; do not author reports. Complete the scan so finalization projects the validated JSON into the final markdown report. In the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly.
+8. Assemble the complete canonical JSON contract last using `../../references/final-report.md`; do not author `report.md`.
   - Populate the optional structured details in `../../references/finding-detail-fields.md` from the same validated evidence used in the generated report.
+  - For every reportable finding, run `$vulnerability-writeup` with exactly one dedicated write-up sub-agent. Give it only that finding, its validation and attack-path evidence, relevant source paths and revision, PoC inputs, and the target output directory.
+  - Write the derived report to `findings/<slug>/<slug>.md` with supporting PoC files under `findings/<slug>/poc/`. Verify the report is a regular file, then set that finding's `writeup.reportPath` to the matching safe relative path. Do not add the derived report to the sealed artifact list.
+  - After every write-up is ready, run `$propose-security-hardening` once over the complete finding collection, detailed write-ups, threat model, coverage, and relevant source. Write its portfolio to `hardening/hardening.md`, its structured analysis to `hardening/hardening.json`, and any proposals and diagrams below `hardening/`. Verify `hardening/hardening.md` is a regular file, then set `scan.hardening.portfolioPath` to the fixed relative path `hardening/hardening.md`. Do not add these derived files to the sealed artifact list. Skip this step and omit `scan.hardening` when there are no reportable findings.
+  - Complete the scan once, after all write-ups, hardening guidance, and canonical JSON are ready, so finalization projects the validated JSON and derived-document links into `report.md`. In the terminal/chat workflow without `complete_codex_security_scan`, run `python <plugin_dir>/scripts/finalize_scan_contract.py --scan-dir <scan_dir> --source-root <repo_root>` directly.
 
 ## Phase Scope
 
@@ -127,8 +129,8 @@ Use `../security-scan/references/scan-artifacts-and-ledger.md` for the shared sc
 
 Diff scans should:
 
-- generate `rank_input.jsonl` deterministically from changed source-like files with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <artifacts_dir>/rank_input.jsonl` for PR, commit, and branch diffs, or `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <artifacts_dir>/rank_input.jsonl` for a local patch
-- copy every diff row into `deep_review_input.jsonl` with `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <artifacts_dir>/rank_input.jsonl --out <artifacts_dir>/deep_review_input.jsonl`
+- generate `rank_input.jsonl` deterministically from changed source-like files with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.jsonl` for PR, commit, and branch diffs, or `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.jsonl` for a local patch
+- copy every diff row into `deep_review_input.jsonl` with `<python_command> <plugin_dir>/scripts/generate_rank_input.py copy-deep-review-input --rank-input <discovery_dir>/rank_input.jsonl --out <discovery_dir>/deep_review_input.jsonl`
 - deep-review every file in `deep_review_input.jsonl`
 - add directly supporting files only when repository evidence shows they are needed to understand the changed security behavior
 - stay anchored to the changed code and directly supporting files rather than broadening into unrelated repository-wide enumeration
@@ -151,7 +153,7 @@ This keeps diff scans precise while avoiding the common failure mode where one r
 
 ## Final Output
 
-Populate all final report semantics in the canonical manifest, findings, and coverage JSON using `../../references/final-report.md`. Then complete the scan; finalization owns markdown report generation. Emit Codex app review directives from the completed canonical findings. Commit scans use this same final-output contract because they are a diff-scan target type.
+Populate all final report semantics in the canonical manifest, findings, and coverage JSON using `../../references/final-report.md`. Generate one detailed `vulnerability-writeup` for every reportable finding, then run `propose-security-hardening` once over the complete collection and record the safe derived-document paths. Complete the scan once after both stages; finalization owns `report.md` generation. Emit Codex app review directives from the completed canonical findings. Commit scans use this same final-output contract because they are a diff-scan target type.
 
 ## Hard Rules
 

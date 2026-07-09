@@ -11,6 +11,7 @@ import io
 import json
 import math
 import os
+import re
 import sqlite3
 import stat
 import sys
@@ -47,32 +48,28 @@ from finalize_scan_contract import (
     write_scan_local_bytes,
 )
 from finding_preview import bounded_finding_details
+from workbench_cli import parse_args
 from workbench_constants import (
     ARTIFACTS,
     CLAIM_LEASE_SECONDS,
     DELIVERED_ACTION_LEASE_SECONDS,
     DIFF_TARGET_KINDS,
     EMPTY_GIT_TREE,
-    EXPORT_FORMATS,
     FINDING_ABSOLUTE_PATH_BYTES,
-    FINDING_CLOSE_REASONS,
     FINDING_LEVEL_BYTES,
     FINDING_LOCATION_PATH_BYTES,
     FINDING_LOCATION_ROLE_BYTES,
     FINDING_LOCATIONS_LIMIT,
     FINDING_REMEDIATION_BYTES,
-    FINDING_STATUSES,
     FINDING_SUMMARY_BYTES,
     FINDING_TITLE_BYTES,
     FINDINGS_PAGE_MAX,
     FINDINGS_RESULT_LIMIT,
     MAX_CAPABILITY_PREFLIGHT_INPUT_JSON_BYTES,
     MAX_CAPABILITY_PREFLIGHT_PERSISTED_JSON_BYTES,
-    MODES,
     PATCH_ARTIFACT_MAX_BYTES,
     PATCH_PREVIEW_BYTES,
     PHASES,
-    REMEDIATION_UPDATE_STATES,
     SQLITE_RETRY_ATTEMPTS,
 )
 from workbench_progress import reportable_count
@@ -95,209 +92,14 @@ from workbench_target import (
 from workbench_validation import (
     optional_text,
     require_handoff_claim_token,
+    require_occurrence,
     require_uuid,
     validate_handoff_delivery_thread,
 )
 
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    subparsers = parser.add_subparsers(dest="command", required=True)
-
-    create_workspace = subparsers.add_parser("create-workspace")
-    create_workspace.add_argument("--workspace-id", required=True)
-    create_workspace.add_argument("--thread-id")
-    create_workspace.add_argument("--target-path")
-    create_workspace.add_argument("--target-title")
-    create_workspace.add_argument("--target-summary")
-    create_workspace.add_argument("--user-context")
-    create_preflight = create_workspace.add_mutually_exclusive_group()
-    create_preflight.add_argument("--capability-preflight-json")
-    create_preflight.add_argument("--capability-preflight-json-file", type=Path)
-    create_workspace.add_argument("--scope")
-    create_workspace.add_argument("--mode", choices=MODES, default="standard")
-    create_workspace.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS)
-    create_workspace.add_argument("--diff-base-revision")
-    create_workspace.add_argument("--diff-head-revision")
-    create_workspace.add_argument("--diff-content-digest")
-
-    get_workspace = subparsers.add_parser("get-workspace")
-    get_workspace.add_argument("--workspace-id", required=True)
-    get_workspace.add_argument("--thread-id")
-
-    get_latest_workspace = subparsers.add_parser("get-latest-workspace")
-    get_latest_workspace.add_argument("--thread-id", required=True)
-
-    inspect_target = subparsers.add_parser("inspect-target")
-    inspect_target.add_argument("--target-path", required=True)
-
-    inspect_setup = subparsers.add_parser("inspect-setup")
-    inspect_setup.add_argument("--target-path", required=True)
-    inspect_setup.add_argument("--scope", required=True)
-    inspect_setup.add_argument("--mode", choices=MODES, required=True)
-    inspect_setup.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS)
-    inspect_setup.add_argument("--diff-base-revision")
-    inspect_setup.add_argument("--diff-head-revision")
-    inspect_setup.add_argument("--diff-content-digest")
-
-    begin_diff_resolution = subparsers.add_parser("begin-diff-resolution")
-    begin_diff_resolution.add_argument("--workspace-id", required=True)
-    begin_diff_resolution.add_argument("--request-id", required=True)
-    begin_diff_resolution.add_argument("--target-path", required=True)
-    begin_diff_resolution.add_argument("--user-context", required=True)
-
-    cancel_diff_resolution = subparsers.add_parser("cancel-diff-resolution")
-    cancel_diff_resolution.add_argument("--workspace-id", required=True)
-    cancel_diff_resolution.add_argument("--request-id", required=True)
-
-    set_diff_target = subparsers.add_parser("set-diff-target")
-    set_diff_target.add_argument("--workspace-id", required=True)
-    set_diff_target.add_argument("--request-id", required=True)
-    set_diff_target.add_argument("--target-summary", required=True)
-    set_diff_target.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS, required=True)
-    set_diff_target.add_argument("--diff-base-revision")
-    set_diff_target.add_argument("--diff-head-revision")
-    set_diff_target.add_argument("--diff-content-digest")
-
-    save_workspace = subparsers.add_parser("save-workspace")
-    save_workspace.add_argument("--workspace-id", required=True)
-    save_workspace.add_argument("--target-path", required=True)
-    save_workspace.add_argument("--scope", required=True)
-    save_workspace.add_argument("--mode", choices=MODES, required=True)
-    save_workspace.add_argument("--target-summary")
-    save_workspace.add_argument("--user-context")
-    save_workspace.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS)
-    save_workspace.add_argument("--diff-base-revision")
-    save_workspace.add_argument("--diff-head-revision")
-    save_workspace.add_argument("--diff-content-digest")
-
-    set_capability_preflight = subparsers.add_parser("set-capability-preflight")
-    set_capability_preflight.add_argument("--workspace-id", required=True)
-    set_capability_preflight.add_argument("--checked-target-path", required=True)
-    set_capability_preflight.add_argument("--checked-mode", choices=MODES, required=True)
-    set_preflight = set_capability_preflight.add_mutually_exclusive_group(required=True)
-    set_preflight.add_argument("--capability-preflight-json")
-    set_preflight.add_argument("--capability-preflight-json-file", type=Path)
-
-    start_scan = subparsers.add_parser("start-scan")
-    start_scan.add_argument("--workspace-id", required=True)
-    start_scan.add_argument("--scan-root")
-
-    get_scan = subparsers.add_parser("get-scan")
-    get_scan.add_argument("--scan-id", required=True)
-    get_scan.add_argument("--occurrence-id")
-
-    list_findings = subparsers.add_parser("list-findings")
-    list_findings.add_argument("--scan-id", required=True)
-    list_findings.add_argument("--offset", type=non_negative_int, default=0)
-    list_findings.add_argument("--limit", type=positive_int, default=FINDINGS_PAGE_MAX)
-
-    update_progress = subparsers.add_parser("update-progress")
-    update_progress.add_argument("--scan-id", required=True)
-    update_progress.add_argument("--phase", choices=PHASES)
-    update_progress.add_argument("--review-items-total", type=non_negative_int)
-    update_progress.add_argument("--review-items-completed", type=non_negative_int)
-    update_progress.add_argument("--reportable-findings-count", type=non_negative_int)
-    update_progress.add_argument("--deep-review-pass", type=positive_int)
-
-    complete_scan = subparsers.add_parser("complete-scan")
-    complete_scan.add_argument("--scan-id", required=True)
-
-    cancel_scan = subparsers.add_parser("cancel-scan")
-    cancel_scan.add_argument("--scan-id", required=True)
-    cancel_scan.add_argument("--thread-id", required=True)
-
-    fail_scan = subparsers.add_parser("fail-scan")
-    fail_scan.add_argument("--scan-id", required=True)
-    fail_scan.add_argument("--message", required=True)
-
-    mark_handoff_delivered = subparsers.add_parser("mark-handoff-delivered")
-    mark_handoff_delivered.add_argument("--scan-id", required=True)
-    mark_handoff_delivered.add_argument("--claim-token", required=True)
-    mark_handoff_delivered.add_argument("--thread-id")
-
-    claim_handoff_delivery = subparsers.add_parser("claim-handoff-delivery")
-    claim_handoff_delivery.add_argument("--scan-id", required=True)
-    claim_handoff_delivery.add_argument("--claim-token", required=True)
-    claim_handoff_delivery.add_argument("--take-over-stale", action="store_true")
-
-    release_handoff_delivery = subparsers.add_parser("release-handoff-delivery")
-    release_handoff_delivery.add_argument("--scan-id", required=True)
-    release_handoff_delivery.add_argument("--claim-token", required=True)
-
-    set_finding_triage = subparsers.add_parser("set-finding-triage")
-    set_finding_triage.add_argument("--occurrence-id", required=True)
-    set_finding_triage.add_argument("--status", choices=FINDING_STATUSES, required=True)
-    set_finding_triage.add_argument("--close-reason", choices=FINDING_CLOSE_REASONS)
-    set_finding_triage.add_argument("--note")
-
-    request_finding_remediation = subparsers.add_parser("request-finding-remediation")
-    request_finding_remediation.add_argument("--occurrence-id", required=True)
-    request_finding_remediation.add_argument("--request-id", required=True)
-    request_finding_remediation.add_argument("--action-token", required=True)
-
-    request_finding_remediation_action = subparsers.add_parser("request-finding-remediation-action")
-    request_finding_remediation_action.add_argument("--occurrence-id", required=True)
-    request_finding_remediation_action.add_argument("--request-id", required=True)
-    request_finding_remediation_action.add_argument(
-        "--expected-version", type=positive_int, required=True
-    )
-    request_finding_remediation_action.add_argument(
-        "--action", choices=("apply", "verify"), required=True
-    )
-    request_finding_remediation_action.add_argument("--action-token", required=True)
-
-    claim_finding_remediation_resend = subparsers.add_parser("claim-finding-remediation-resend")
-    claim_finding_remediation_resend.add_argument("--occurrence-id", required=True)
-    claim_finding_remediation_resend.add_argument("--request-id", required=True)
-    claim_finding_remediation_resend.add_argument("--action-token", required=True)
-
-    mark_finding_remediation_delivered = subparsers.add_parser("mark-finding-remediation-delivered")
-    mark_finding_remediation_delivered.add_argument("--occurrence-id", required=True)
-    mark_finding_remediation_delivered.add_argument("--request-id", required=True)
-    mark_finding_remediation_delivered.add_argument("--action-token", required=True)
-
-    release_finding_remediation_claim = subparsers.add_parser("release-finding-remediation-claim")
-    release_finding_remediation_claim.add_argument("--occurrence-id", required=True)
-    release_finding_remediation_claim.add_argument("--request-id", required=True)
-    release_finding_remediation_claim.add_argument("--action-token", required=True)
-
-    remediation.register_cancel_finding_remediation_request(subparsers)
-
-    set_finding_remediation = subparsers.add_parser("set-finding-remediation")
-    set_finding_remediation.add_argument("--occurrence-id", required=True)
-    set_finding_remediation.add_argument("--request-id", required=True)
-    set_finding_remediation.add_argument("--action-token", required=True)
-    set_finding_remediation.add_argument("--expected-version", type=positive_int, required=True)
-    set_finding_remediation.add_argument(
-        "--state", choices=REMEDIATION_UPDATE_STATES, required=True
-    )
-    set_finding_remediation.add_argument("--summary")
-    set_finding_remediation.add_argument("--patch-path")
-    set_finding_remediation.add_argument("--patch-digest")
-    set_finding_remediation.add_argument("--base-revision")
-    set_finding_remediation.add_argument("--verification-summary")
-
-    export_findings = subparsers.add_parser("export-findings")
-    export_findings.add_argument("--scan-id", required=True)
-    export_findings.add_argument("--format", choices=EXPORT_FORMATS, required=True)
-
-    subparsers.add_parser("database-info")
-    return parser.parse_args()
-
-
-def non_negative_int(value: str) -> int:
-    parsed = int(value)
-    if parsed < 0:
-        raise argparse.ArgumentTypeError("expected a non-negative integer")
-    return parsed
-
-
-def positive_int(value: str) -> int:
-    parsed = int(value)
-    if parsed < 1:
-        raise argparse.ArgumentTypeError("expected a positive integer")
-    return parsed
+FINDING_ARTIFACT_DIRECTORIES_LIMIT = 80
+FINDING_ARTIFACTS_LIMIT = 40
+FINDING_WRITEUP_REPORT_PATH = re.compile(r"^findings/([a-z0-9][a-z0-9._-]*)/\1\.md$")
 
 
 def now() -> str:
@@ -1129,18 +931,6 @@ def require_scan(connection: sqlite3.Connection, scan_id: str) -> sqlite3.Row:
     row = connection.execute("SELECT * FROM scans WHERE id = ?", (scan_id,)).fetchone()
     if row is None:
         raise SystemExit("Codex Security scan not found.")
-    return row
-
-
-def require_occurrence(connection: sqlite3.Connection, occurrence_id: str) -> sqlite3.Row:
-    occurrence_id = optional_text(occurrence_id, maximum=256)
-    if occurrence_id is None:
-        raise SystemExit("occurrence-id is required.")
-    row = connection.execute(
-        "SELECT * FROM finding_occurrences WHERE id = ?", (occurrence_id,)
-    ).fetchone()
-    if row is None:
-        raise SystemExit("Codex Security finding occurrence not found.")
     return row
 
 
@@ -2516,28 +2306,48 @@ def write_csv_export(connection: sqlite3.Connection, scan: sqlite3.Row) -> Path:
     scan_dir = require_canonical_scan_directory(Path(scan["scan_dir"]))
     output = io.StringIO(newline="")
     writer = csv.writer(output)
-    writer.writerow(
-        (
-            "occurrence_id",
-            "finding_id",
-            "title",
-            "summary",
-            "severity",
-            "confidence",
-            "status",
-            "close_reason",
-            "note",
-            "remediation",
-            "path",
-            "start_line",
-            "end_line",
-        )
+    deep_scan = scan["mode"] == "deep"
+    candidate_ids_by_occurrence: dict[str, str] = {}
+    if deep_scan:
+        findings_document = read_json_object(scan_dir / ARTIFACTS["findings"])
+        findings = findings_document.get("findings")
+        if not isinstance(findings, list):
+            raise SystemExit("findings.json must contain a findings array.")
+        for finding in findings:
+            if not isinstance(finding, dict):
+                raise SystemExit("findings.json entries must be objects.")
+            occurrence_id = finding.get("occurrenceId")
+            extensions = finding.get("extensions")
+            candidate_id = extensions.get("candidateId") if isinstance(extensions, dict) else None
+            if isinstance(occurrence_id, str) and isinstance(candidate_id, str):
+                candidate_ids_by_occurrence[occurrence_id] = candidate_id
+    columns = (
+        "occurrence_id",
+        "finding_id",
+        *(("candidate_id",) if deep_scan else ()),
+        "title",
+        "summary",
+        "severity",
+        "confidence",
+        "status",
+        "close_reason",
+        "note",
+        "remediation",
+        "path",
+        "start_line",
+        "end_line",
     )
+    writer.writerow(columns)
     for row in finding_export_rows(connection, scan["id"]):
         writer.writerow(
             (
                 csv_cell(row["occurrence_id"]),
                 csv_cell(row["finding_id"]),
+                *(
+                    (csv_cell(candidate_ids_by_occurrence.get(row["occurrence_id"])),)
+                    if deep_scan
+                    else ()
+                ),
                 csv_cell(row["title"]),
                 csv_cell(row["summary"]),
                 csv_cell(row["severity"]),
@@ -3333,10 +3143,79 @@ def finding_result(
         "title": bounded_output_text(occurrence["title"], FINDING_TITLE_BYTES),
         "triage": finding_triage_result(connection, occurrence["id"]),
     }
+    result.pop("artifactPaths", None)
     source_excerpt = finding_source_excerpt(scan, target, locations)
     if source_excerpt:
         result["sourceExcerpt"] = source_excerpt
+    artifact_paths = finding_artifact_paths(Path(scan["scan_dir"]), details)
+    result["artifactPaths"] = artifact_paths
     return result
+
+
+def finding_artifact_paths(scan_dir: Path, details: dict[str, Any]) -> list[str]:
+    writeup = details.get("writeup")
+    if not isinstance(writeup, dict):
+        return []
+    report_path = writeup.get("reportPath")
+    if (
+        not isinstance(report_path, str)
+        or FINDING_WRITEUP_REPORT_PATH.fullmatch(report_path) is None
+    ):
+        return []
+    report_relative = PurePosixPath(report_path)
+    artifacts = []
+    if scan_local_regular_file(scan_dir, report_path):
+        artifacts.append(report_path)
+
+    poc_relative = report_relative.parent / "poc"
+    poc_root = scan_dir.joinpath(*poc_relative.parts)
+    try:
+        if not stat.S_ISDIR(poc_root.stat(follow_symlinks=False).st_mode):
+            return artifacts
+    except OSError:
+        return artifacts
+
+    directories_seen = 0
+    for current_directory, directory_names, file_names in os.walk(
+        poc_root, topdown=True, followlinks=False
+    ):
+        directories_seen += 1
+        if directories_seen > FINDING_ARTIFACT_DIRECTORIES_LIMIT:
+            directory_names[:] = []
+            break
+        current_path = Path(current_directory)
+        directory_names[:] = [
+            name for name in sorted(directory_names) if not (current_path / name).is_symlink()
+        ]
+        for file_name in sorted(file_names):
+            candidate = current_path / file_name
+            try:
+                relative_path = candidate.relative_to(scan_dir).as_posix()
+            except ValueError:
+                continue
+            if not scan_local_regular_file(scan_dir, relative_path):
+                continue
+            artifacts.append(relative_path)
+            if len(artifacts) >= FINDING_ARTIFACTS_LIMIT:
+                return artifacts
+    return artifacts
+
+
+def scan_local_regular_file(scan_dir: Path, relative_path: str) -> bool:
+    if len(relative_path.encode("utf-8")) > FINDING_LOCATION_PATH_BYTES:
+        return False
+    try:
+        descriptor = open_scan_local_file_descriptor(
+            scan_dir,
+            relative_path,
+            f"finding artifact {relative_path}",
+        )
+    except (ContractError, OSError):
+        return False
+    try:
+        return stat.S_ISREG(os.fstat(descriptor).st_mode)
+    finally:
+        os.close(descriptor)
 
 
 def bounded_output_text(value: Any, maximum_bytes: int) -> str:
@@ -3566,7 +3445,7 @@ def compact_timestamp() -> str:
 
 
 def main() -> None:
-    args = parse_args()
+    args = parse_args(__doc__)
     if args.command == "inspect-target":
         result = inspect_target(args.target_path)
         print(json.dumps(result, allow_nan=False, sort_keys=True))

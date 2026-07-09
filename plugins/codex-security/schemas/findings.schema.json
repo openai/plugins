@@ -199,6 +199,18 @@
               }
             }
           },
+          "writeup": {
+            "type": "object",
+            "required": [
+              "reportPath"
+            ],
+            "properties": {
+              "reportPath": {
+                "type": "string",
+                "pattern": "^findings/([a-z0-9][a-z0-9._-]*)/\\1\\.md$"
+              }
+            }
+          },
           "codeEvidence": {
             "type": "array",
             "items": {
@@ -233,6 +245,10 @@
                   "minimum": 1
                 },
                 "language": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role": {
                   "type": "string",
                   "minLength": 1
                 },
@@ -320,7 +336,21 @@
             }
           },
           "extensions": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+              "candidateId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ledgerRowId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reportId": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
           }
         }
       }

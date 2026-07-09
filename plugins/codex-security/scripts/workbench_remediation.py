@@ -4,9 +4,14 @@ from __future__ import annotations
 
 import argparse
 import sqlite3
-import uuid
+import sys
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
+
+# Some plugin hosts launch Python with safe-path isolation enabled.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from workbench_validation import require_occurrence, require_uuid
 
 
 def register_cancel_finding_remediation_request(subparsers: Any) -> None:
@@ -19,11 +24,11 @@ def register_cancel_finding_remediation_request(subparsers: Any) -> None:
 def cancel_finding_remediation_request(
     connection: sqlite3.Connection, args: argparse.Namespace
 ) -> str:
-    request_id = _require_uuid(args.request_id, "request-id")
-    action_token = _require_uuid(args.action_token, "action-token")
+    request_id = require_uuid(args.request_id, "request-id")
+    action_token = require_uuid(args.action_token, "action-token")
     connection.execute("BEGIN IMMEDIATE")
     try:
-        occurrence = _require_occurrence(connection, args.occurrence_id)
+        occurrence = require_occurrence(connection, args.occurrence_id)
         current = connection.execute(
             "SELECT * FROM finding_remediation_attempts WHERE request_id = ?",
             (request_id,),
@@ -97,24 +102,6 @@ def _cancel_generation(
         """,
         (restored_state, timestamp, previous["request_id"]),
     )
-
-
-def _require_uuid(value: str, label: str) -> str:
-    try:
-        return str(uuid.UUID(value))
-    except ValueError as exc:
-        raise SystemExit(f"{label} must be a UUID.") from exc
-
-
-def _require_occurrence(connection: sqlite3.Connection, occurrence_id: str) -> sqlite3.Row:
-    if not occurrence_id or len(occurrence_id) > 256:
-        raise SystemExit("occurrence-id is required.")
-    occurrence = connection.execute(
-        "SELECT * FROM finding_occurrences WHERE id = ?", (occurrence_id,)
-    ).fetchone()
-    if occurrence is None:
-        raise SystemExit("Codex Security finding occurrence not found.")
-    return occurrence
 
 
 def main() -> None:

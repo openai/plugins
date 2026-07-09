@@ -118,6 +118,10 @@ def bounded_finding_details(value: Any) -> dict[str, Any]:
                 reserved_fields,
             )
 
+    writeup = value.get("writeup")
+    if isinstance(writeup, dict) and isinstance(writeup.get("reportPath"), str):
+        prepared["writeup"] = {"reportPath": bounded_json_text(writeup["reportPath"], 512)[0]}
+
     evidence_key = next(
         (key for key in ("codeEvidence", "code_evidence") if key in value),
         None,

@@ -5,7 +5,7 @@ Use this reference only when the destination is `jira`.
 ## Contract
 
 - Track one validated finding or an explicitly selected batch of up to 25. Use one Jira Cloud issue per finding.
-- Use only the native [$atlassian-rovo](app://connector_692de805e3ec8191834719067174a384) app. Reuse needs read access but not write access. Create and update need both. Stop if the app is unavailable, disconnected, cannot read the destination, or cannot perform the approved mutation.
+- Use only the native [$atlassian](app://connector_692de805e3ec8191834719067174a384) app. Reuse needs read access but not write access. Create and update need both. Stop if the app is unavailable, disconnected, cannot read the destination, or cannot perform the approved mutation.
 - Pin one authenticated Atlassian identity, site and `cloudId`, project key, and issue type from duplicate checks through readback. Use the same destination and issue type for every item in a batch. Start a separate run for work that needs another site, project, or issue type.
 - Require the user to explicitly confirm that the project audience is approved to see the finding details. One confirmation may cover an exact reviewed batch. Jira create permission does not prove who can read the issues.
 

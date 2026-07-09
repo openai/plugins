@@ -14,6 +14,8 @@ Optional structured finding details used by rich consumers are documented in `fi
 
 The existing `report.md` output remains a readable projection. Generated exports such as SARIF are also downstream projections, not part of the canonical semantic source of truth.
 
+Deep-scan SARIF results and CSV rows preserve their existing instance-level presentation and add only the canonical candidate id needed to group child reports. Standard-scan CSV presentation remains unchanged.
+
 This bundle records immutable scan observations. It is not a workflow-state database. Consumers must store mutable annotations, lifecycle decisions, external links, retention policy, and synchronization state separately.
 
 Retention is an explicit consumer decision. Producing a completed-scan bundle must not silently copy it into an archive.

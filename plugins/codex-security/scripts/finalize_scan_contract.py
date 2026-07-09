@@ -322,6 +322,35 @@ def _require_scan_local_file(scan_dir: Path, relative_path: str, context: str) -
     os.close(descriptor)
 
 
+def _require_derived_writeup_files(scan_dir: Path, findings: dict[str, Any]) -> None:
+    for index, finding in enumerate(findings.get("findings", [])):
+        if not isinstance(finding, dict):
+            continue
+        writeup = finding.get("writeup")
+        if not isinstance(writeup, dict):
+            continue
+        report_path = writeup.get("reportPath")
+        if isinstance(report_path, str):
+            _require_scan_local_file(
+                scan_dir,
+                report_path,
+                f"findings[{index}].writeup.reportPath",
+            )
+
+
+def _require_hardening_portfolio_file(scan_dir: Path, scan: dict[str, Any]) -> None:
+    hardening = scan.get("hardening")
+    if not isinstance(hardening, dict):
+        return
+    portfolio_path = hardening.get("portfolioPath")
+    if isinstance(portfolio_path, str):
+        _require_scan_local_file(
+            scan_dir,
+            portfolio_path,
+            "manifest.scan.hardening.portfolioPath",
+        )
+
+
 def _read_scan_local_json_bytes(
     scan_dir: Path, relative_path: str, context: str
 ) -> tuple[dict[str, Any], bytes]:
@@ -1097,6 +1126,10 @@ def _sarif_result(
         "occurrenceId": finding["occurrenceId"],
         "severity": finding["severity"]["level"],
     }
+    extensions = finding.get("extensions")
+    candidate_id = extensions.get("candidateId") if isinstance(extensions, dict) else None
+    if isinstance(candidate_id, str) and candidate_id:
+        properties["candidateId"] = candidate_id
     partial_fingerprints = {
         "codexSecurity/v1": finding["fingerprints"]["primary"],
     }
@@ -1343,6 +1376,8 @@ def finalize_scan(
     _validate_findings(manifest, findings)
     _validate_coverage(manifest, coverage, scan_dir)
     _validate_canonical_schemas_before_projection(manifest, findings, coverage, schema_dir)
+    _require_derived_writeup_files(scan_dir, findings)
+    _require_hardening_portfolio_file(scan_dir, scan)
     if was_sealed:
         _validate_sealed_coverage_receipts(scan, coverage)
         _validate_manifest(manifest)

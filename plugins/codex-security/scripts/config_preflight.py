@@ -8,10 +8,14 @@ import json
 import os
 import re
 import sys
-import tomllib
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
+
+try:
+    import tomllib
+except ModuleNotFoundError:  # pragma: no cover - Python 3.10 only
+    import tomli as tomllib
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REGISTRY = PLUGIN_ROOT / "preflight" / "capability-profiles.toml"

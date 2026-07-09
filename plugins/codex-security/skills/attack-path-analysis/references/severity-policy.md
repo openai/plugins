@@ -9,11 +9,11 @@ Use this guidance after attack-path facts, reachability, and counterevidence are
 - Do **not** keep `critical` based on contrived, highly speculative, or edge-case-only exploit stories unless the threat model explicitly supports those conditions. Critical DEMANDS attention implying an immediate likely threat.
 - Do **not** keep `high`/`critical` for strange configurations or odd codebase behaviors unless there is clear evidence that an in-scope attacker can realistically exploit them for major impact.
 - Do **not** rely on unusual operator mistakes, internal-only access, or non-attacker-reachable code paths to justify severe external impact unless the repository threat model says those actors/paths are in scope.
-- If the issue is a real bug but not actually a security vulnerability, classify it as `ignore` (or if you have to `low`) for criticality purposes.
-- If there actually provable that there is no bug at all (the description is entirely wrong or made up and you actually got that real proof that it is so), then label it as `ignore` for criticality to mark a false-positive.
+- If the issue is a real bug but not actually a security vulnerability, classify it as `ignore` (or, if you have to, `low`) for criticality purposes.
+- If it is actually provable that there is no bug at all (the description is entirely wrong or made up and you actually got that real proof that it is so), then label it as `ignore` for criticality to mark a false-positive.
 
 Non-exhaustive examples of vulnerabilities that often support `critical` when evidenced in code and context:
-- Credible RCE or arbitrary code execution (command injection, LFI exec, trivial memory corruption exploits, etc); Requires actual proof that attacker input cause this from in-scope attack surface
+- Credible RCE or arbitrary code execution (command injection, LFI exec, trivial memory corruption exploits, etc.). Requires actual proof that attacker input causes this from an in-scope attack surface.
 - Real XSS with meaningful proven impact (for example session/token theft, account compromise, privileged action execution, etc)
 - Account takeover or strong authentication bypass, especially if it is 0-click
 - Missing authorization checks / authorization bypass / tenant-boundary break (trivial IDOR, easy to swap out org or use ids with no authz, etc)
@@ -21,19 +21,19 @@ Non-exhaustive examples of vulnerabilities that often support `critical` when ev
 - Trivial memory corruption exploits with known exploit patterns which require little effort to exploit
 - SQL or other Database or query injection with clear proof of path from attacker input from in-scope attack surface and impact of the injection (leaks sensitive data, inserts dangerous records)
 - Sandbox, container, VM, browser, or interpreter escape that breaks an intended isolation boundary
-- Server-side-template-injection when it leads to RCE or leaking of secrets; with actual proof that the templating library can be exploited to do this (RCE escape or secrets/credentials in scope); with actual proof that this can be reached from in-scope attack surface
+- Server-side template injection when it leads to RCE or leaking of secrets, with actual proof that the templating library can be exploited to do this (RCE escape or secrets/credentials in scope) and that this can be reached from an in-scope attack surface
 - Arbitrary file write in executable, startup, config, or firmware paths with a realistic path to persistence or code execution. Requires proof that an attacker can actually trigger this from in-scope attack surface.
 - Logic flaws that allow irreversible or broad compromise of integrity at scale, such as unauthenticated deletion of other users' data, cross-tenant tampering with sensitive records, or unauthorized modification of security-critical configuration, when the impact is clearly demonstrated and severe enough to be compromise-equivalent; when there is actual proof that this logic can be exercised from in-scope attack-surface.
 - etc, other bugs not listed which follow this level of critical severity and impact; with actual proof that these bugs are reachable from in-scope attack-surface.
 
 Non-exhaustive examples of vulnerabilities that often support `high` when evidenced in code and context:
-- Sever Side Request Forgery where there is actual proof of both 1. Attacker can control the url being requested (bypassing protections around that) from in-scope attack-surface and 2. That there are likely other local/lan/cloud services which can be reached to show actual impact. Be careful with reporting webhooks unless there is clear proof that it is dangerous, but do not treat a product-intended webhook/download/callback feature or optional operator allow/deny list as suppression evidence when attacker-controlled destinations can still reach internal, metadata, file-backed, redirect, or side-effecting targets.
+- Server Side Request Forgery where there is actual proof that (1) an attacker can control the url being requested (bypassing protections around that) from in-scope attack-surface and (2) there are likely other local/lan/cloud services which can be reached to show actual impact. Be careful with reporting webhooks unless there is clear proof that it is dangerous, but do not treat a product-intended webhook/download/callback feature or optional operator allow/deny list as suppression evidence when attacker-controlled destinations can still reach internal, metadata, file-backed, redirect, or side-effecting targets.
 - Exploitable memory corruption with clear, major impact or ease of exploitation
 - Arbitrary file read that exposes less-sensitive user data or source code (if you have actual proof it reveals env secrets, then it is critical)
 - Arbitrary file write in executable, startup, config, or firmware paths with a realistic path to persistence or code execution
 - CSRF when it enables important state-changing actions such as credential changes, permission changes, payment / billing changes, security-setting changes, or other materially harmful actions, and the victim interaction required is realistic, and is not mitigated by any of these : `same-site strict cookies, auth headers, csrf tokens, PUT/PATCH/DELETE, enforced json request body content type`.
 - Hardcoded or default credentials that are valid and reachable and give meaningful access, but not sufficiently broad or privileged to justify high.
-- Cryptographic failures that allow signature forgery, token forgery, trusted artifact forgery, secure-channel bypass, or decryption of highly sensitive data in a way that directly enables compromise; with actual proof that these are practical attacks and reachable and doable from in-scope attack-surface.
+- Cryptographic failures that allow signature forgery, token forgery, trusted artifact forgery, secure-channel bypass, or decryption of highly sensitive data in a way that directly enables compromise, with actual proof that these attacks are practical and can be carried out from an in-scope attack surface.
 - Supply-chain or update-channel compromise that allows malicious code or malicious trusted artifacts to be delivered to users, servers, agents, or endpoints, including signing bypass or package source substitution with real impact. This should focus on actual supply-chain risk and risk around CI actions, not just "does npm report outdated packages"
 - Authorization bypass, IDOR, or privilege escalation that exposes or modifies meaningful sensitive data or privileged functionality, but is narrower in scope, limited to a smaller set of objects, limited to same-tenant boundaries, or otherwise less catastrophic than the critical cases above.
 - XXE with clear proof that an attacker can control the XML document through in-scope attack-surface and that the XML engine is vulnerable to XXE
@@ -115,7 +115,7 @@ Use missing deployment or ingress evidence to lower confidence or keep fields un
 Severity calibration and final policy-adjustment matrix:
 
 - `impact=high`:
-  - `likelihood=high` -> `high`
+  - `likelihood=high` -> `critical` only when the critical criteria above are satisfied; otherwise `high`
   - `likelihood=medium` -> `medium`
   - `likelihood=low` -> `ignore`
   - `likelihood=ignore` -> `ignore`

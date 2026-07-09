@@ -242,6 +242,17 @@
             }
           }
         },
+        "hardening": {
+          "type": "object",
+          "required": [
+            "portfolioPath"
+          ],
+          "properties": {
+            "portfolioPath": {
+              "const": "hardening/hardening.md"
+            }
+          }
+        },
         "coverageRef": {
           "const": "coverage.json"
         },

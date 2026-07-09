@@ -14,6 +14,7 @@ The adapter:
 - preserves the semantic fingerprint under `codexSecurity/v1`
 - emits GitHub's source-line `primaryLocationLineHash` when it can safely hash a bounded regular non-symlink source file inside the available source root
 - maps categorical severity to SARIF `level`
+- preserves a deep scan's canonical `candidateId` under each child result's properties so consumers can group results without changing the original SARIF result presentation
 
 Lifecycle, rich validation evidence, attack-path context, and coverage are lossy or omitted in SARIF. Preserve them in semantic JSON.
 
