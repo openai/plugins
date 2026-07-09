@@ -93,10 +93,6 @@ Mark resolved components. If all components are resolved, skip 2a-ii and 2a-iii.
 **2a-ii — REQUIRED if unresolved components remain: Inspect existing screens.** Check if the target file already contains screens using the same design system. A single `use_figma` call that walks an existing frame's instances gives you an exact, authoritative component map:
 
 ```js
-// Read-only discovery — skip invisible content inside instances (hidden
-// variants etc.) for the hundreds-of-times-faster findAllWithCriteria.
-figma.skipInvisibleInstanceChildren = true;
-
 const frame = figma.currentPage.findOne(n => n.name === "Existing Screen");
 const uniqueSets = new Map();
 frame.findAllWithCriteria({ types: ["INSTANCE"] }).forEach(inst => {
@@ -172,9 +168,6 @@ If initial searches return empty, try shorter fragments or different naming conv
 Inspect an existing screen's bound variables for the most authoritative results:
 
 ```js
-// Read-only discovery — skip invisible instance interiors for speed.
-figma.skipInvisibleInstanceChildren = true;
-
 const frame = figma.currentPage.findOne(n => n.name === "Existing Screen");
 
 // boundVariables can live on any scene node — enumerating every scene type
@@ -205,9 +198,6 @@ See [variable-patterns.md](../figma-use/references/variable-patterns.md) for bin
 Search for styles using `search_design_system` with `includeStyles: true` and terms like "heading", "body", "shadow", "elevation". Or inspect what an existing screen uses:
 
 ```js
-// Read-only discovery — skip invisible instance interiors for speed.
-figma.skipInvisibleInstanceChildren = true;
-
 const frame = figma.currentPage.findOne(n => n.name === "Existing Screen");
 const styles = { text: new Map(), effect: new Map() };
 
@@ -406,9 +396,6 @@ If you ran `generate_figma_design` in parallel (mandatory when the source contai
 
 1. Find all image nodes in the capture output by searching for fills with `type === "IMAGE"`:
    ```js
-   // Read-only image inventory — skip invisible instance interiors for speed.
-   figma.skipInvisibleInstanceChildren = true;
-
    const capture = await figma.getNodeByIdAsync("CAPTURE_NODE_ID");
    const imageNodes = capture.findAll(() => true).flatMap(n => {
      if (!Array.isArray(n.fills)) return [];

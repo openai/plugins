@@ -24,7 +24,6 @@ After building, read back the actual font on every text node and compare it agai
 
 ```js
 // Verify rendered text uses the product font(s) discovered above.
-figma.skipInvisibleInstanceChildren = true;
 const wrapper = await figma.getNodeByIdAsync("WRAPPER_ID");
 // The product font(s) — NOT a default like "Inter". Include every family the
 // product legitimately uses (e.g. a primary plus a mono for code).

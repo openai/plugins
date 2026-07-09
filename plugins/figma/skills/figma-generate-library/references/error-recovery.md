@@ -342,10 +342,6 @@ If any entity is missing, treat the phase that created it as incomplete and re-r
 ### Step 1: Inspect the file for `run_id` tags
 
 ```javascript
-// Read-only resume inventory — dsb-tagged nodes are top-level user-created
-// frames, never inside instances, so skip invisible instance interiors.
-figma.skipInvisibleInstanceChildren = true;
-
 const TARGET_RUN_ID = 'ds-build-2024-001';
 const inventory = { pages: [], variables: [], componentSets: [], frames: [] };
 

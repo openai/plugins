@@ -13,7 +13,6 @@
 - Sequential awaits — batch independent async calls with `Promise.all` (including `import*ByKeyAsync` families)
 - Prefer indexed lookups (`getNodeByIdAsync`, `findAllWithCriteria`, `node.query`) over `findAll`/`findOne` full-tree scans
 - Scope traversal to the smallest known ancestor (never `figma.root.findAll`; prefer `someFrame.findAllWithCriteria` over `figma.currentPage.findAllWithCriteria`)
-- Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal that doesn't need the interior of component instances
 - Variable scopes and mode pitfalls
 - Node cleanup and empty-fill pitfalls
 - "no such property" errors — reading or calling members not defined on the node type
@@ -447,10 +446,9 @@ page.findAllWithCriteria({ pluginData: { keys: ['dsb_key', 'dsb_run_id'] } })
 page.findAllWithCriteria({ sharedPluginData: { namespace: 'dsb', keys: ['key', 'run_id'] } })
 ```
 
-Two more rules that apply to any traversal — see also the dedicated [Scope traversal to the smallest known ancestor](#scope-traversal-to-the-smallest-known-ancestor) gotcha below:
+One more rule applies to any traversal — see also the dedicated [Scope traversal to the smallest known ancestor](#scope-traversal-to-the-smallest-known-ancestor) gotcha below:
 
 1. **Narrow the scope.** `frame.findAll(...)` is much cheaper than `figma.currentPage.findAll(...)`. Hold onto the smallest known subtree.
-2. **Skip invisible instance children when relevant** — see the dedicated [Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal](#set-figmaskipinvisibleinstancechildren--true-for-read-only-traversal) gotcha. One line at the top of the script, up to hundreds of times faster on large files.
 
 ```js
 // WRONG — full-tree scan for a single node you already have an ID for
@@ -491,7 +489,7 @@ Name-only lookups (`findOne(n => n.name === 'X')`) cannot use criteria — they 
 
 ## Scope traversal to the smallest known ancestor
 
-Every `findAll` / `findOne` / `findAllWithCriteria` walks the entire subtree of the receiver. Picking the right receiver is the single biggest performance lever you have — bigger than the type index, bigger than `skipInvisibleInstanceChildren`. Cheapest to most expensive:
+Every `findAll` / `findOne` / `findAllWithCriteria` walks the entire subtree of the receiver. Picking the right receiver is the single biggest performance lever you have — bigger than the type index. Cheapest to most expensive:
 
 | Receiver | Walks… |
 |---|---|
@@ -518,27 +516,6 @@ const inFrame = frame.findAllWithCriteria({ types: ['INSTANCE'] })
 **Never loop `figma.root.children` calling `setCurrentPageAsync(page)` and then `page.findAll(...)`** — that's the same antipattern in slow motion: one whole-page scan per page, plus the cost of switching pages. If work spans multiple pages, **fan out** instead: emit one `use_figma` per page in parallel (see [Set current page once per `use_figma` call](#set-current-page-once-per-use_figma-call--split-multi-page-work-into-parallel-calls)).
 
 When you don't have a frame ID handy, capture one from a parent call and pass it to subsequent calls — `getNodeByIdAsync(id).findAllWithCriteria(...)` beats `figma.currentPage.findAllWithCriteria(...)` every time the target subtree is smaller than the page.
-
-## Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal
-
-**Rule: set `figma.skipInvisibleInstanceChildren = true` at the top of any read-only script that doesn't need the interior of component instances.** It prunes every invisible node inside instances (and that node's descendants, even visible ones) from traversal and from `getNodeByIdAsync`. Per the [Figma docs](https://developers.figma.com/docs/plugins/api/properties/figma-skipinvisibleinstancechildren/), this can make `findAllWithCriteria` up to **hundreds of times faster** on large documents.
-
-```js
-// Top of script — set once, before any traversal.
-figma.skipInvisibleInstanceChildren = true
-
-// Now findAll / findOne / findAllWithCriteria / getNodeByIdAsync all skip
-// invisible content inside instances (and their descendants).
-const components = figma.currentPage.findAllWithCriteria({ types: ['COMPONENT'] })
-return components.map(c => c.id)
-```
-
-**Key points:**
-- **Default is not consistent across surfaces.** `true` in Dev Mode; `false` in Figma and FigJam. Set it explicitly — don't rely on the default.
-- **Only prunes inside `INSTANCE` subtrees.** Invisible nodes outside instances are still traversed normally. COMPONENT (master) subtrees are not affected.
-- **Stale references throw.** Once the flag is `true`, any node handle you previously captured for a pruned (invisible-in-instance) node throws when you read a property on it. Don't toggle the flag mid-script if you've already cached such handles.
-- **Don't set it when you need invisible variants.** Scripts that read or mutate hidden states of a component instance (e.g. inspecting the `disabled` variant's text, restyling all variants of a component set) must leave the flag at `false`.
-- **Safe for almost all read-only discovery and most mutations:** find/replace, style auditing, plugin-data inventory, variable usage scans, idempotency lookups, batch property changes via `setProperties()` on top-level instances. Hidden variants aren't displayed anyway, so skipping them rarely matters.
 
 ## Font style names are file-dependent — use `listAvailableFontsAsync` to discover them
 

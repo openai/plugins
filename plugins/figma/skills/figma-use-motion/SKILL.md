@@ -12,7 +12,7 @@ Motion context for the `use_figma` MCP tool. [figma-use](../figma-use/SKILL.md) 
 
 ## Runtime Gating
 
-Motion APIs are gated behind the `metronome_plugin_api` user feature flag. When the calling user doesn't have it, every motion property and helper referenced in this skill throws `"<name>" is not a supported API`.
+Motion APIs are gated behind the `metronome` user feature flag. When the calling user doesn't have it, every motion property and helper referenced in this skill throws `"<name>" is not a supported API`.
 
 **Bail out fast on that error.** Do not retry; tell the user motion isn't enabled for them and stop. Otherwise you'll burn calls and confuse the user with repeated identical failures.
 

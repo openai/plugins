@@ -240,9 +240,6 @@ Interpret: check if variables use `ALL_SCOPES` (bad), check naming convention (s
 ### List Component Sets with Properties
 
 ```javascript
-// Read-only inspection — skip invisible instance interiors for speed.
-figma.skipInvisibleInstanceChildren = true;
-
 // To inspect a specific page, switch to it first:
 // await figma.setCurrentPageAsync(targetPage);
 const componentSets = figma.currentPage.findAllWithCriteria({ types: ['COMPONENT_SET'] });

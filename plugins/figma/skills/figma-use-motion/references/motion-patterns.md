@@ -2,7 +2,7 @@
 
 Use this reference when a `use_figma` task adds, edits, removes, or inspects Motion animation on Figma design nodes.
 
-This is for Plugin API code executed through the MCP `use_figma` tool. Follow the main `figma-use` rules: use top-level `await`, use `return` for output, do not call `figma.closePlugin()`, do not use `figma.notify()`, and return every mutated node ID. Runtime gating (`metronome_plugin_api`) and the exposed-API surface are summarised in [figma-use-motion/SKILL.md](../SKILL.md) — bail closed on `"not a supported API"`.
+This is for Plugin API code executed through the MCP `use_figma` tool. Follow the main `figma-use` rules: use top-level `await`, use `return` for output, do not call `figma.closePlugin()`, do not use `figma.notify()`, and return every mutated node ID. Runtime gating (`metronome`) and the exposed-API surface are summarised in [figma-use-motion/SKILL.md](../SKILL.md) — bail closed on `"not a supported API"`.
 
 **`node.animations` reflects manual-keyframe tracks only at present.** Applying an animation style writes its metadata to `node.animationStyles` but the style-generated tracks are not materialized into `node.animations` yet. Validate style writes by reading back `node.animationStyles`, not `node.animations`.
 

@@ -24,11 +24,6 @@ async function cleanupOrphans(runId) {
     throw new Error('cleanupOrphans: runId is required.')
   }
 
-  // dsb-tagged nodes are top-level user-created frames, never inside
-  // component instances — skip invisible instance interiors to speed up the
-  // pluginData scan dramatically on large files.
-  figma.skipInvisibleInstanceChildren = true
-
   const removedIds = []
   const originalPage = figma.currentPage
 

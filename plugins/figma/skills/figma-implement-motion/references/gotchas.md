@@ -28,7 +28,7 @@ Everything here is **Figma-specific** — general CSS/animation wisdom is not re
 
 **Symptom**: A design with animated groups behind a mask layer positions correctly (the mask follows the group as it animates), but the mask's own properties — mask size, image, position — aren't animatable.
 
-**Why**: Mask positioning during group animation was fixed in `share/motion/src/internal/keyframe_conversion.ts` and `sites-runtime/src/attributes/masks.ts`. However, there is no code path that animates the mask *itself* as a property; no keyframe tracks target mask-size or mask-position.
+**Why**: Mask positioning during group animation is handled in `sites-runtime/src/attributes/masks.ts`. However, there is no code path that animates the mask *itself* as a property; no keyframe tracks target mask-size or mask-position.
 
 **Fix**: If the user's intent is to animate the mask image/size/position itself, surface this as unsupported. Animating a *masked* group is fine.
 

@@ -393,10 +393,6 @@ return figma.root.children.map(p => ({ id: p.id, name: p.name }));
 
 Step 2: in the **next assistant turn, emit one `use_figma` per page in parallel** (a single message containing N tool-use blocks). Each runs:
 ```js
-// Read-only inspection — skip invisible instance interiors for the
-// hundreds-of-times-faster findAllWithCriteria.
-figma.skipInvisibleInstanceChildren = true;
-
 const page = await figma.getNodeByIdAsync(PAGE_ID);
 await figma.setCurrentPageAsync(page);
 // findAllWithCriteria uses an indexed type lookup — hundreds of times faster

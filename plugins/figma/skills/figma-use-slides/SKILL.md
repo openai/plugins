@@ -175,9 +175,6 @@ return grid.map((row, rowIdx) =>
 
 **Get text content from a specific slide:**
 ```js
-// Read-only text inventory — skip invisible instance interiors for speed.
-figma.skipInvisibleInstanceChildren = true;
-
 const slide = figma.getNodeById("TARGET_SLIDE_ID");
 // findAllWithCriteria uses an indexed type lookup — much faster than
 // findAll(n => n.type === 'TEXT') on slides with many shapes/images.

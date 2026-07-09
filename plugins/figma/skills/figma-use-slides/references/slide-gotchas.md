@@ -9,7 +9,6 @@
 - Sequential awaits — batch independent async calls with `Promise.all`
 - Prefer indexed lookups over `findAll`/`findOne` full-tree scans
 - Scope traversal to the smallest known ancestor (a slide, not the page)
-- Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal
 - SLIDE_GRID and SLIDE_ROW are opaque nodes
 - Validation without get_metadata
 - Building multi-element slides
@@ -53,19 +52,6 @@ const texts = slide.findAllWithCriteria({ types: ['TEXT'] })
 ```
 
 See [figma-use → gotchas.md → Scope traversal to the smallest known ancestor](../../figma-use/references/gotchas.md#scope-traversal-to-the-smallest-known-ancestor).
-
-
-## Set `figma.skipInvisibleInstanceChildren = true` for read-only traversal
-
-Same rule as in design files (see [figma-use → gotchas.md → Set figma.skipInvisibleInstanceChildren](../../figma-use/references/gotchas.md#set-figmaskipinvisibleinstancechildren--true-for-read-only-traversal)). One line at the top of any read-only slide-inspection script. Decks tend to be component-heavy (icons, logo lockups, repeating frames), so this flag is especially impactful.
-
-```js
-figma.skipInvisibleInstanceChildren = true
-const slide = await figma.getNodeByIdAsync(SLIDE_ID)
-const texts = slide.findAllWithCriteria({ types: ['TEXT'] })
-```
-
-Leave the flag off if you specifically need to read invisible content inside an instance (e.g., inspecting all variants of a deck-template instance).
 
 
 ## Sequential awaits — batch independent async calls with `Promise.all`

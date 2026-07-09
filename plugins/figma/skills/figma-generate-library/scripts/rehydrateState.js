@@ -9,11 +9,6 @@
  * @returns {{ runId: string, taggedNodes: Object<string, {nodeId: string, type: string, name: string, phase: string}>, variableCollections: Array, variables: Array, styles: Array }}
  */
 async function rehydrateState(runId) {
-  // Read-only inventory — dsb-tagged nodes are user-created top-level frames,
-  // never inside instances, so skip invisible instance interiors for the
-  // hundreds-of-times-faster findAllWithCriteria.
-  figma.skipInvisibleInstanceChildren = true
-
   const taggedNodes = {}
   const variableCollections = []
   const variables = []

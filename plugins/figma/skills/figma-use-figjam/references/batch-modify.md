@@ -26,22 +26,7 @@ const textNodesSlow = figma.currentPage.findAll((n) => n.type === 'TEXT')
 figma.closePlugin()
 ```
 
-### 2. Skip Invisible Instance Children
-
-For large files with many component instances, this significantly speeds up traversal — up to hundreds of times faster on `findAllWithCriteria`. See [figma-use → gotchas.md → Set figma.skipInvisibleInstanceChildren](../../figma-use/references/gotchas.md#set-figmaskipinvisibleinstancechildren--true-for-read-only-traversal) for the full rule and caveats. Don't enable it when you specifically need to read or mutate invisible content inside instances.
-
-```javascript
-// Enable at the start of your script
-figma.skipInvisibleInstanceChildren = true
-
-// Now findAll / findOne / findAllWithCriteria skip hidden content inside
-// instances. Combine with the type-indexed lookup from Tip 1 for max speed.
-const visibleText = figma.currentPage.findAllWithCriteria({ types: ['TEXT'] })
-
-figma.closePlugin()
-```
-
-### 3. Limit Search Scope
+### 2. Limit Search Scope
 
 Search within a specific node rather than the entire page.
 
