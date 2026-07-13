@@ -18,7 +18,8 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "developerName": "ClickUp"
+    "developerName": "ClickUp",
+    "websiteURL": "https://clickup.com"
   },
   "author": {
     "name": "ClickUp"
