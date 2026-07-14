@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Copy Paste"
+  short_description: "Copy exact Figma layers across files"
+  default_prompt: "Use $figma-copy-paste to copy an exact frame between Figma files and verify fidelity."

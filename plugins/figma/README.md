@@ -7,6 +7,7 @@ It currently includes these skills:
 
 - `figma-implement-design`
 - `figma-code-connect`
+- `figma-copy-paste`
 - `figma-create-design-system-rules`
 - `figma-create-new-file`
 - `figma-generate-design`
@@ -18,6 +19,7 @@ It currently includes these skills:
 - translating Figma frames and components into production-ready UI code
 - inspecting design context and screenshots through the connected Figma tools
 - creating parserless Code Connect template files for published Figma components
+- copying exact, editable screens, components, and layers between Figma files
 - generating project-specific design system rules for Figma-to-code workflows
 - creating or updating full screens and design system libraries in Figma
 - creating new Figma or FigJam files when needed for a workflow
@@ -64,6 +66,7 @@ The current skill set is focused on these workflows:
 
 - implementing designs from Figma with high visual fidelity
 - creating parserless Code Connect templates for published Figma components
+- transferring existing Figma content between files without recreating or flattening it
 - generating durable project rules for future Figma-to-code work
 - creating or updating Figma files, screens, and design system libraries
 
