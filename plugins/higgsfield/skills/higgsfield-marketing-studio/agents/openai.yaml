@@ -1,0 +1,4 @@
+interface:
+  display_name: "Higgsfield Marketing"
+  short_description: "Create Higgsfield ads and brand assets"
+  default_prompt: "Use $higgsfield-marketing-studio to make a UGC product ad."

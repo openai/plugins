@@ -1,0 +1,44 @@
+{
+  "name": "higgsfield",
+  "version": "0.1.0",
+  "description": "Higgsfield AI MCP plugin for image and video generation, marketing assets, character workflows, billing, and Virality Predictor video analysis.",
+  "author": {
+    "name": "Higgsfield AI",
+    "url": "https://higgsfield.ai"
+  },
+  "homepage": "https://higgsfield.ai",
+  "license": "MIT",
+  "keywords": [
+    "higgsfield",
+    "image-generation",
+    "video-generation",
+    "marketing",
+    "creative-ai",
+    "virality-predictor",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Higgsfield",
+    "shortDescription": "Generate images, videos, marketing assets, and analyze virality with Higgsfield MCP",
+    "longDescription": "Connect Codex to Higgsfield AI through the Higgsfield MCP server for image and video generation, job and media workflows, marketing studio tools, character workflows, billing views, and Virality Predictor video analysis.",
+    "developerName": "Higgsfield AI",
+    "category": "Design",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://higgsfield.ai",
+    "privacyPolicyURL": "https://higgsfield.ai/privacy-policy",
+    "termsOfServiceURL": "https://higgsfield.ai/terms-of-use-agreement",
+    "defaultPrompt": [
+      "Create a cinematic short video with Higgsfield"
+    ],
+    "composerIcon": "./assets/higgsfield-small.svg",
+    "logo": "./assets/higgsfield.png",
+    "screenshots": [],
+    "brandColor": "#C8FF3D"
+  }
+}

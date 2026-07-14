@@ -1,0 +1,4 @@
+interface:
+  display_name: "Higgsfield Images"
+  short_description: "Generate and edit images with Higgsfield MCP"
+  default_prompt: "Use $higgsfield-generate-image to create a polished product hero image."

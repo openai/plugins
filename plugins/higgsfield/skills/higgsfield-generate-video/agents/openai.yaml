@@ -1,0 +1,4 @@
+interface:
+  display_name: "Higgsfield Videos"
+  short_description: "Create videos with Higgsfield MCP"
+  default_prompt: "Use $higgsfield-generate-video to turn this image into a cinematic short video."

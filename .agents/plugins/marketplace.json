@@ -307,6 +307,18 @@
       "category": "Developer Tools"
     },
     {
+      "name": "higgsfield",
+      "source": {
+        "source": "local",
+        "path": "./plugins/higgsfield"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    },
+    {
       "name": "sentry",
       "source": {
         "source": "local",
