@@ -298,8 +298,7 @@ if ('fills' in node && Array.isArray(node.fills)) {
 return {
   name: node.name,
   type: node.type,
-  fills: fillInfo,
-  sharedPluginData: node.getSharedPluginData('dsb', 'key') || null
+  fills: fillInfo
 };
 ```
 

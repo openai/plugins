@@ -1,44 +1,27 @@
 {
-  "name": "hubspot",
-  "version": "2.0.3",
-  "description": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations.",
-  "author": {
-    "name": "HubSpot",
-    "url": "https://www.hubspot.com/"
-  },
-  "homepage": "https://www.hubspot.com/",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [
-    "hubspot",
-    "crm",
-    "sales",
-    "pipeline",
-    "customer-support"
-  ],
-  "skills": "./skills/",
   "apps": "./.app.json",
+  "author": {
+    "name": "HubSpot"
+  },
+  "description": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations. Read from and write to deals, contacts, companies, tickets, engagements, and other objects you have permission to access. Prepare reports, update deal stages, log calls and emails, create tasks, or review pipeline details before meetings. Use it for quick updates in chat or comprehensive CRM management, all grounded in your actual HubSpot data. Learn more: https://knowledge.hubspot.com/integrations/connect-your-hubspot-account-to-chatgpt",
   "interface": {
-    "displayName": "HubSpot",
-    "shortDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations.",
-    "longDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations. Read from and write to deals, contacts, companies, tickets, engagements, and other objects you have permission to access. Prepare reports, update deal stages, log calls and emails, create tasks, or review pipeline details before meetings. Use it for quick updates in chat or comprehensive CRM management, all grounded in your actual HubSpot data.",
-    "developerName": "HubSpot",
+    "capabilities": [],
     "category": "Business & Operations",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
-    "websiteURL": "https://www.hubspot.com/",
-    "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
-    "termsOfServiceURL": "https://legal.hubspot.com/terms-of-service",
     "defaultPrompt": [
-      "Review pipeline health and flag risky open deals",
-      "Prepare an account brief for a customer meeting",
-      "Find CRM records with stale or missing data"
+      "Create a follow-up task to schedule a meeting with Brightlane",
+      "Show me unresolved high-priority tickets",
+      "Which lead sources brought in the most contacts this quarter?"
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
-  }
+    "developerName": "HubSpot",
+    "displayName": "[Testing] HubSpot",
+    "longDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations. Read from and write to deals, contacts, companies, tickets, engagements, and other objects you have permission to access. Prepare reports, update deal stages, log calls and emails, create tasks, or review pipeline details before meetings. Use it for quick updates in chat or comprehensive CRM management, all grounded in your actual HubSpot data. Learn more: https://knowledge.hubspot.com/integrations/connect-your-hubspot-account-to-chatgpt",
+    "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
+    "shortDescription": "Insights to action in HubSpot",
+    "supportURL": "https://help.hubspot.com/",
+    "termsOfServiceURL": "https://legal.hubspot.com/terms-of-service",
+    "websiteURL": "https://www.hubspot.com/"
+  },
+  "name": "hubspot",
+  "skills": "./skills",
+  "version": "4.0.0"
 }

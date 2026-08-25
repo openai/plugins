@@ -1,80 +1,28 @@
 ---
 name: gmail
-description: Manage Gmail inbox triage, mailbox search, thread summaries, action extraction, reply drafting, and email forwarding through connected Gmail data. Use when the user wants to inspect a mailbox or thread, search email with Gmail query syntax, summarize messages, extract decisions and follow-ups, prepare replies or forwarded messages, or organize messages with explicit confirmation before send, archive, delete, or label actions.
+description: Manage Gmail search, thread reading, summaries, reply or forward drafts, self-delivery, inbox triage, and label actions. Use for mailbox analysis, pasted Gmail links, email replies or forwards, inbox cleanup, or explicit Gmail writes.
 ---
 
 # Gmail
 
-## Overview
+- `search_emails` returns message-level summaries, not grouped threads. Shortlist first; use `batch_read_email` for several shortlisted bodies, and `read_email_thread` when surrounding conversation changes a summary, reply, recipient choice, or triage bucket. Use `search_email_ids` only when the next action specifically needs IDs. Pass `tags` as `list[str]` with uppercase system labels; use Gmail query syntax such as `label:foo` or `in:anywhere` for custom labels and All Mail.
+- Continue older matching results with `next_page_token` instead of rerunning a loose query. For “newsletters I stopped reading” or similar sender-level questions, use newsletter-like candidate queries and group by normalized sender rather than treating stale unread as a proxy. `has:attachment` can include calendar and `.ics` traffic.
 
-Use this skill to turn noisy email threads into clear summaries, action lists, and ready-to-send drafts. Prefer Gmail-native search and read workflows, preserve message context, and avoid changing message state without explicit user intent.
+## Pasted Gmail links
 
-## Preferred Deliverables
+- Treat Gmail web links as bounded best-effort only. Accept only HTTPS on exact host `mail.google.com` with `/mail/u/<decimal account-index>/#<view>/<token>` or `/mail/#<view>/<token>`; view is `all`, `inbox`, `sent`, `starred`, `snoozed`, `drafts`, `trash`, `spam`, or `important`, and the fragment must contain exactly one nonempty token. Ignore a token query suffix such as `?attachment_id=...`, preserve token case, and reject search/label/category/settings/compose routes, lookalike hosts, and non-HTTPS URLs without Gmail calls.
+- For a supported link, call `read_email_thread` with the token using default `id_type="message"`; retry once with the same token and `id_type="thread"` only if the first lookup is invalid or not found. If either succeeds, use the returned thread as context. Never broaden into search, guessing, pagination, or repeated retries, and do not thread-retry after auth, authorization, availability, rate-limit, or transient errors.
+- `/u/<index>/` is a browser slot, not connector account selection. After mismatch or two exact misses, stop and request sender + subject + approximate date, RFC 822 Message-ID, pasted email text, or the correct connected mailbox.
 
-- Thread briefs that capture the latest status, decisions, open questions, and next actions.
-- Reply or forward drafts that are ready to paste, review, or send.
-- Inbox triage lists that group messages by urgency or follow-up state.
+## Writes
 
-## Workflow Skills
+- Send, archive, trash, label, or move only when the user clearly asked for that state change. Preserve exact recipients, subjects, quoted facts, dates, and links unless asked to change them; disambiguate competing threads or recipient identities before acting.
+- `forward_emails` takes `message_ids: list[str]`, sends one separate new forwarded email per source message, inlines that source content, preserves its attachments, and places a `note` above it.
+- After a Gmail write, report the completed operation and enough non-sensitive, user-meaningful context to verify it: for example, replied to “<subject>”, sent “<subject>” to <recipients>, or forwarded “<subject>” to <recipients>. Do not expose raw message or thread identifiers. If the action only created a draft, say so explicitly and never imply it was sent; avoid quoting body content or other sensitive details unless needed.
+- After `create_draft`, include the returned `web_url` as an openable link so the user can review the saved draft in Gmail. Do not construct a Gmail URL from raw identifiers.
+- For explicit self-delivery such as “email me,” call `send_email` directly with `to: "me"` and omit `cc` and `bcc`; do not draft or ask another confirmation merely because the body was generated this turn. This exception applies only to the authenticated account.
+- `apply_labels_to_emails` takes message IDs and add/remove label names as lists plus `create_missing_labels: bool`; use `bulk_label_matching_emails` for a clear query-defined set and `apply_labels_to_emails` for an inspected ID shortlist.
 
-| Workflow | Skill |
-| --- | --- |
-| Inbox triage, urgency ranking, and follow-up detection | [../gmail-inbox-triage/SKILL.md](../gmail-inbox-triage/SKILL.md) |
+## Triage
 
-## Reference Notes
-
-| Task | Reference |
-| --- | --- |
-| Search planning, refinement, pagination, and body-fetch strategy | [references/search-workflow.md](./references/search-workflow.md) |
-| Pasted Gmail URL recognition, exact-ID attempts, and fast-fail recovery | [references/pasted-link-workflow.md](./references/pasted-link-workflow.md) |
-| Label application, relabeling, and label-based cleanup | [references/label-actions.md](./references/label-actions.md) |
-| Self-delivery requests such as "email me," "send this to me," or automation delivery | [references/self-delivery.md](./references/self-delivery.md) |
-| Reply drafting, reply-all decisions, and tone matching | [references/reply-workflow.md](./references/reply-workflow.md) |
-| Email forwarding, context notes, and intent framing | [references/forward-workflow.md](./references/forward-workflow.md) |
-
-When the user supplies a Gmail web URL, do not pass the URL directly to Gmail tools or turn it into a broad mailbox search. Follow the pasted-link workflow for a bounded exact-ID attempt and immediate recovery guidance when the link cannot be resolved.
-
-## Mailbox Analysis Pattern
-
-For mailbox analysis requests such as triage, follow-up detection, topic summaries, cleanup, thread understanding, or "what matters here" questions, use this pattern:
-
-1. Strongly prefer Gmail-native `search_emails` first. Use Gmail query syntax for most mailbox tasks because it gives the model precise control over dates, senders, unread state, attachments, subjects, and exclusions, and `search_emails` returns richer summaries than `search_email_ids` without requiring an extra hop.
-2. `search_emails` returns message-level summaries, not thread-grouped results. If several messages look related or a conversation may matter, expand the specific items of interest with `read_email_thread`.
-3. Use `tags` only in the connector's expected shape: `list[str]`. Do not pass a single string. Prefer uppercase Gmail system labels when filtering by built-in labels.
-4. Label search is supported. Use Gmail query syntax for label-aware search, for example `label:foo`, and use `tags` for built-in/system-label filtering when that is cleaner.
-5. Common system labels to use in `tags` include `INBOX`, `STARRED`, `TRASH`, `DRAFT`, `SENT`, `SPAM`, `UNREAD`, and `IMPORTANT`. For All Mail, prefer Gmail query syntax such as `in:anywhere` rather than guessing a tag value.
-6. Use Gmail-native `batch_read_email` when you need the body of multiple shortlisted emails, and escalate to `read_email_thread` only when the surrounding conversation changes the answer.
-7. Use `search_email_ids` only when the next tool specifically needs message IDs and the richer `search_emails` response would not help you decide what to do.
-8. Summarize before writing when the request is ambiguous, and keep analysis separate from actions like send, archive, trash, or label changes unless the user explicitly asked for them.
-
-## Write Safety
-
-- Preserve exact recipients, subject lines, quoted facts, dates, and links from the source thread unless the user asks to change them.
-- When drafting a reply, call out any assumptions, missing context, or information that still needs confirmation.
-- Treat send, archive, trash, label, and move operations as explicit actions that require clear user intent.
-- If a thread has multiple possible recipients or parallel conversations, identify the intended thread before drafting or acting.
-- When supporting context such as policy docs, CRM notes, or Slack history is unavailable, do not foreground that limitation unless it materially changes the recommendation. Prefer a draft grounded in the email thread itself, and mention missing internal context only as a brief confidence note when necessary.
-
-## Output Conventions
-
-- Summaries should lead with the latest status, then list decisions, open questions, and action items.
-- Inbox triage should use explicit buckets such as urgent, waiting, and FYI when that helps the user scan quickly.
-- When ranking urgency or follow-up state, state the search scope and coverage, such as "from the most recent 15 inbox messages" or "from unread inbox messages matching this query."
-- When the task depends on whether the user "opened" or ignored email, treat that as an inference from Gmail read state unless the connector exposes stronger engagement data.
-- Avoid absolute claims like "the only urgent email" unless the mailbox scan was comprehensive enough to support that conclusion.
-- When the result comes from a narrowed search or shortlist, report that confidence and mention what was excluded.
-- Draft replies should be concise and ready to paste or send, with greeting, body, and closing when appropriate.
-- If a reply depends on missing facts, present a short draft plus a list of unresolved details.
-- When multiple emails are involved, reference the sender and timestamp of the message that matters most.
-- Avoid repetitive meta-explanations about inaccessible internal sources in normal deliverables. If the user wants provenance, summarize the evidence used; otherwise keep the output focused on the draft, summary, or next action.
-
-## Example Requests
-
-- "Summarize the latest thread with Acme and tell me what I still owe them."
-- "Draft a reply that confirms Tuesday works and asks for the final agenda."
-- "Go through my unread inbox and group emails into urgent, waiting, and low priority."
-- "Prepare a polite follow-up to the recruiter thread if I have not replied yet."
-
-## Light Fallback
-
-If thread or inbox data is missing, say that Gmail access may be unavailable or scoped to the wrong account and ask the user to reconnect or clarify which mailbox or thread should be used.
+- Default direct inbox triage to `INBOX` plus a clear timeframe. When a low-signal notification may hide a long active thread, `read_email_thread` exposes `total_messages`; use it to detect the expansion risk before classifying.

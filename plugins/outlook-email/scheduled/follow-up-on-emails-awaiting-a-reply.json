@@ -1,0 +1,9 @@
+{
+  "name": "Follow up on emails awaiting a reply",
+  "prompt": "Review Outlook conversations from the last 14 days where someone owes me an answer or deliverable, or where I am waiting on a reply to my request. Skip the last two business days, bulk outreach, and resolved threads. Add the `Follow Up` category and draft concise nudges for up to three clearly stalled, high-priority conversations. Never send.",
+  "schedule": {
+    "type": "weekly",
+    "days": ["TU", "TH"],
+    "time": "10:00"
+  }
+}

@@ -6,7 +6,7 @@ When to read: for non-meeting structural writes, template-preserving edits, reco
 
 1. Confirm the target working doc URL and attach to that exact doc through the available Google Docs connector/app tools; for connector-native creation, use the create response as the new target identity. Do not leave work on a stale or different document.
 2. This plugin runs in a blind Codex local-plugin environment. Use Google Docs connector/app tools directly for document reads and writes.
-3. Do not use code-mode bridge writes, nested Codex connector writes, browser-only edits, or local helper scripts as the normal write path for this skill.
+3. Do not use code-mode bridge writes, nested Codex connector writes, browser-only edits, or local helper scripts as the normal write path. The only code-mode exception is the checked-in Google Docs workflow selected before the first write for exact native dropdown creation or mutation.
 4. Browser Use, visible-tab checks, cursor placement, screenshots, and live browser-rendered page scans are unavailable and must not be required for success.
 5. Reuse the current resolved target document id and `tabId` when available, but re-confirm them before writes.
 6. Avoid repeated speculative attach or probe loops when a known document id and `tabId` can be reused.
@@ -20,9 +20,9 @@ Use connector readback as the source of truth.
 
 Default workflow:
 
-1. Call the narrowest connector read that still exposes the needed structure.
-2. Use full `get_document` for tabs, headings, paragraph indexes, text styles, paragraph styles, tables, lists, smart chips, and building-block-like regions.
-3. Record compact working notes from the response before writing: document id, URL, `revisionId`, tab id, target section ranges, paragraph element ranges, table coordinates, style anchors, chip element types, and list state.
+1. Before the first write to an existing document, use the checked-in file-backed trusted read in `reference-trusted-read-wrapper.md`. It returns a compact manifest and persists the full `get_document` result, advisory control inventory, normalized outline, and annotated document text at the returned paths.
+2. After the initial trusted read, call the narrowest connector read that still exposes the needed structure. Use full `get_document` for tabs, headings, paragraph indexes, text styles, paragraph styles, tables, lists, smart chips, and building-block-like regions.
+3. Record compact working notes from the response before writing: document id, URL, `revisionId`, tab id, target section ranges, paragraph element ranges, table coordinates, style anchors, chip element types, list state, and trusted-read control warnings.
 4. Compose request objects directly from those notes and the examples in `reference-direct-request-composition.md`.
 5. Use connector reads again after writes, after source/destination switching, after a connector error, when another user may have edited the doc, or when the previous read lacks a field required for a safe write.
 
@@ -30,7 +30,7 @@ Do not replace structure readback with Drive `fetch`, plain-text export, or HTML
 
 Do not use exact text range searches as the primary way to target chip display text or repeated sections. Chip display text can appear in `get_document` element properties even when exact-text helpers do not return a useful range.
 
-If the connector response is too large to reason over directly, do not invent a local parsing script during the edit. Narrow the next connector read to the relevant tab, section, paragraph range, table, or exact non-chip anchor, then continue from connector-visible indexes.
+If the document is too large to read at once, search the checked-in bridge's normalized `document-text.md` or `document-outline.json` artifact and read bounded sections. For follow-up connector reads, narrow to the relevant tab, section, paragraph range, table, or exact non-chip anchor. Do not invent a local parsing script during the edit.
 
 ## Target-Document Invariant
 

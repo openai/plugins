@@ -48,6 +48,30 @@
         "Explains that /u/1 is a browser account slot and does not select a connector account",
         "Asks the user to connect the mailbox containing the message or provide fetchable identifying information"
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "Send me a weekly project update with a greeting, two short paragraphs, three bullets, and a sign-off.",
+      "expected_output": "Send the message to the authenticated user with explicit Markdown blocks that preserve paragraphs, the list, and the signature.",
+      "files": [],
+      "expectations": [
+        "Reads the outgoing email formatting and self-delivery references",
+        "Uses real blank lines between the greeting, paragraphs, list, and sign-off",
+        "Uses Markdown list syntax and content_type=text/markdown",
+        "Calls send_email directly with to=me and does not create a draft"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Email this text to myself and preserve its literal line breaks exactly; I do not need rich formatting: Alpha\nBeta\n\nGamma",
+      "expected_output": "Send a plain-text message that preserves the supplied newline characters exactly.",
+      "files": [],
+      "expectations": [
+        "Reads the outgoing email formatting and self-delivery references",
+        "Uses content_type=text/plain",
+        "Preserves real newline characters rather than escaped \\n text",
+        "Calls send_email directly with to=me and does not create a draft"
+      ]
     }
   ]
 }

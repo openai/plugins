@@ -1,0 +1,8 @@
+{
+  "name": "Track an active workstream",
+  "prompt": "Review the Slack channels and threads relevant to my active workstream since the last run, or the last 24 hours on the first run. Surface new action items and commitments, decisions or direction changes, blockers and risks, approaching deadlines, unanswered questions, and emerging feedback or bug patterns. Group related updates, identify owners and next steps when known, link the source threads, and clearly flag items that remain unowned or unresolved. Skip routine chatter and unchanged items. If nothing material changed, say so briefly.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:30"
+  }
+}

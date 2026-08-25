@@ -4274,12 +4274,7 @@ interface GlassEffect {
  * @see https://developers.figma.com/docs/plugins/api/Effect
  */
 type Effect =
-  | DropShadowEffect
-  | InnerShadowEffect
-  | BlurEffect
-  | NoiseEffect
-  | TextureEffect
-  | GlassEffect
+  DropShadowEffect | InnerShadowEffect | BlurEffect | NoiseEffect | TextureEffect | GlassEffect
 /**
  * @see https://developers.figma.com/docs/plugins/api/Constraints
  */
@@ -5100,12 +5095,7 @@ type Action =
       readonly type: 'UPDATE_MEDIA_RUNTIME'
       readonly destinationId: string | null
       readonly mediaAction:
-        | 'PLAY'
-        | 'PAUSE'
-        | 'TOGGLE_PLAY_PAUSE'
-        | 'MUTE'
-        | 'UNMUTE'
-        | 'TOGGLE_MUTE_UNMUTE'
+        'PLAY' | 'PAUSE' | 'TOGGLE_PLAY_PAUSE' | 'MUTE' | 'UNMUTE' | 'TOGGLE_MUTE_UNMUTE'
     }
   | {
       readonly type: 'UPDATE_MEDIA_RUNTIME'
@@ -5391,7 +5381,7 @@ interface BaseNodeMixin extends PluginDataMixin, DevResourcesMixin {
    *
    * @remarks
    *
-   * Each call to this method sets entirely new relaunch data, removing any relaunch data and associated buttons/descriptions from before. To maintain buttons from a previous call one can store the button information using [setPluginData](https://developers.figma.com/docs/plugins/api/properties/nodes-setplugindata) and later fetch it with [getPluginData](https://developers.figma.com/docs/plugins/api/PageNode#getplugindata) before passing it on to `setRelaunchData`.
+   * Each call to this method sets entirely new relaunch data, removing any relaunch data and associated buttons/descriptions from before. To maintain buttons from a previous call, store the button information with `setSharedPluginData(namespace, key, value)` and fetch it with `getSharedPluginData(namespace, key)` before passing it on to `setRelaunchData`.
    *
    * To use this API, the plugin manifest must include a `relaunchButtons` section: see the [manifest guide](https://developers.figma.com/docs/plugins/manifest#relaunchbuttons) for more information.
    *
@@ -5468,32 +5458,6 @@ interface BaseNodeMixin extends PluginDataMixin, DevResourcesMixin {
  */
 interface PluginDataMixin {
   /**
-   * Retrieves custom information that was stored on this node or style using {@link PluginDataMixin.setPluginData}. If there is no data stored for the provided key, an empty string is returned.
-   */
-  getPluginData(key: string): string
-  /**
-   * Lets you store custom information on any node or style, **private** to your plugin. The total size of your entry (`pluginId`, `key`, `value`) cannot exceed 100 kB.
-   *
-   * @param key - The key under which to store the data. This is similar to writing to a plain object via `obj[key] = value`.
-   * @param value - The data you want to store. If you want to store a value type other than a string, encode it as a JSON string first via `JSON.stringify` and `JSON.parse`. If you set the value to the empty string (""), the key/value pair is removed.
-   *
-   * @remarks
-   *
-   * The data is specific to your plugin ID. Plugins with other IDs won't be able to read this data. You can retrieve it later by calling `getPluginData` with the same key. To find all data stored on a node or style by your plugin use `getPluginDataKeys`.
-   *
-   * Caution: ⚠ The data is stored privately for **stability**, not **security**. It prevents other plugins from accessing with your data. It does not, however, prevent users from seeing the data given sufficient effort. For example, they could export the document as a .fig file and try to decode it.
-   *
-   * Caution: ⚠ Data will become inaccessible if your plugin ID changes.
-   *
-   *
-   * Caution: ⚠ Total entry size cannot exceed 100 kB.
-   */
-  setPluginData(key: string, value: string): void
-  /**
-   * Retrieves a list of all keys stored on this node or style using using {@link PluginDataMixin.setPluginData}. This enables iterating through all data stored privately on a node or style by your plugin.
-   */
-  getPluginDataKeys(): string[]
-  /**
    * Retrieves custom information that was stored on this node or style using {@link PluginDataMixin.setSharedPluginData}. If there is no data stored for the provided namespace and key, an empty string is returned.
    */
   getSharedPluginData(namespace: string, key: string): string
@@ -5508,7 +5472,7 @@ interface PluginDataMixin {
    *
    * This lets you store custom information on any node or style. You can retrieve it later by calling {@link PluginDataMixin.getSharedPluginData} with the same namespace and key. To find all data stored on a node or style in a particular namespace, use {@link PluginDataMixin.getSharedPluginDataKeys}.
    *
-   * Any data you write using this API will be readable by any plugin. The intent is to allow plugins to interoperate with each other. Use {@link PluginDataMixin.setPluginData} instead if you don't want other plugins to be able to read your data.
+   * Any data you write using this API will be readable by any plugin. The intent is to allow plugins to interoperate with each other.
    *
    * You must also provide a `namespace` argument to avoid key collisions with other plugins. This argument is mandatory to prevent multiple plugins from using generic key names like `data` and overwriting one another. We recommend passing a value that identifies your plugin. This namespace can be given to authors of other plugins so that they can read data from your plugin.
    *
@@ -5931,7 +5895,6 @@ interface ChildrenMixin {
    * @param criteria - An object of type {@link FindAllCriteria} that specifies the search criteria. The following criterias are currently supported:
    * - Nodes with specific {@link NodeType | types}
    * - Nodes with {@link PluginDataMixin.getSharedPluginData | SharedPluginData } by their namespace and keys.
-   * - Nodes with {@link PluginDataMixin.getPluginData | PluginData } by their keys.
    * - A combination of any of the above.
    *
    * @remarks
@@ -5964,23 +5927,6 @@ interface ChildrenMixin {
    * })
    * ```
    *
-   * ### Find by plugin data
-   * ```ts
-   * // Find all nodes in the current page with plugin data
-   * // for the current plugin.
-   * const nodes = figma.currentPage.findAllWithCriteria({
-   *   pluginData: {}
-   * })
-   *
-   * // Find all nodes in the current page with plugin data
-   * // for the current plugin with keys "a" or "b"
-   * const nodes = figma.currentPage.findAllWithCriteria({
-   *   pluginData: {
-   *     keys: ["a", "b"]
-   *   }
-   * })
-   * ```
-   *
    * ### Find by shared plugin data
    * ```ts
    * // Find all nodes in the current page with shared plugin data
@@ -6006,13 +5952,6 @@ interface ChildrenMixin {
    * You can combine multiple criterias for further narrow your search.
    *
    * ```ts
-   * // Find all text nodes in the current page with plugin data
-   * // for the current plugin
-   * const nodes = figma.currentPage.findAllWithCriteria({
-   *   types: ["TEXT"],
-   *   pluginData: {}
-   * })
-   *
    * // Find all text nodes in the current page with shared plugin data
    * // stored on the "bar" namespace
    * const nodes = figma.currentPage.findAllWithCriteria({
@@ -6159,9 +6098,7 @@ interface DimensionAndPositionMixin {
  * @see https://developers.figma.com/docs/plugins/api/node-properties
  */
 interface LayoutMixin
-  extends DimensionAndPositionMixin,
-    AutoLayoutChildrenMixin,
-    GridChildrenMixin {
+  extends DimensionAndPositionMixin, AutoLayoutChildrenMixin, GridChildrenMixin {
   /**
    * The actual bounds of a node accounting for drop shadows, thick strokes, and anything else that may fall outside the node's regular bounding box defined in `x`, `y`, `width`, and `height`. The `x` and `y` inside this property represent the absolute position of the node on the page. This value will be `null` if the node is invisible.
    */
@@ -7414,8 +7351,7 @@ interface CustomVariableWidthStrokeProperties {
  * @see https://developers.figma.com/docs/plugins/api/VariableWidthStrokeProperties
  */
 declare type VariableWidthStrokeProperties =
-  | PresetVariableWidthStrokeProperties
-  | CustomVariableWidthStrokeProperties
+  PresetVariableWidthStrokeProperties | CustomVariableWidthStrokeProperties
 /**
  * @see https://developers.figma.com/docs/plugins/api/ComplexStrokeProperties
  */
@@ -7952,7 +7888,8 @@ interface PublishableMixin {
  * @see https://developers.figma.com/docs/plugins/api/node-properties
  */
 interface DefaultShapeMixin
-  extends BaseNodeMixin,
+  extends
+    BaseNodeMixin,
     SceneNodeMixin,
     ReactionMixin,
     BlendMixin,
@@ -7963,7 +7900,8 @@ interface DefaultShapeMixin
  * @see https://developers.figma.com/docs/plugins/api/node-properties
  */
 interface BaseFrameMixin
-  extends BaseNodeMixin,
+  extends
+    BaseNodeMixin,
     SceneNodeMixin,
     ChildrenMixin,
     ContainerMixin,
@@ -8023,10 +7961,7 @@ interface BaseFrameMixin
 interface DefaultFrameMixin extends BaseFrameMixin, FramePrototypingMixin, ReactionMixin {}
 
 interface OpaqueNodeMixin
-  extends BaseNodeMixin,
-    SceneNodeMixin,
-    ExportMixin,
-    DimensionAndPositionMixin {}
+  extends BaseNodeMixin, SceneNodeMixin, ExportMixin, DimensionAndPositionMixin {}
 
 interface MinimalBlendMixin {
   /**
@@ -8254,11 +8189,13 @@ interface VariantMixin {
 }
 interface ComponentPropertiesMixin {
   /**
-   * All component properties and their default values that exist on this component set. `'VARIANT'` properties will also have a list of all variant options. `'BOOLEAN'`, `'TEXT'`, and `'INSTANCE_SWAP'` properties will have their names suffixed by a unique identifier starting with `'#'`, which is helpful for quickly distinguishing multiple component properties that have the same name in the Figma UI. The entire property name should be used for all Component property-related API methods and properties.
+   * All component properties and their default values that exist on this component set or non-variant component. `'VARIANT'` properties will also have a list of all variant options. `'BOOLEAN'`, `'TEXT'`, and `'INSTANCE_SWAP'` properties will have their names suffixed by a unique identifier starting with `'#'`, which is helpful for quickly distinguishing multiple component properties that have the same name in the Figma UI. The entire property name should be used for all Component property-related API methods and properties.
    *
    * @remarks
    *
    * [Component properties-related properties](https://help.figma.com/hc/en-us/articles/5579474826519-Create-and-use-component-properties) define parts of the component people can change by tying them to specific design properties. You can create component properties for any main component or component set, and apply them to nested layers of the component or variant.
+   *
+   * On a component node, this property can only be read when the component is not a variant. For a variant component whose parent is a component set, read `componentPropertyDefinitions` from the parent component set instead.
    *
    * ```ts title="Component properties-related properties and methods for component sets, components, and instances"
    * componentSet.componentPropertyDefinitions
@@ -8328,7 +8265,7 @@ interface ComponentPropertiesMixin {
    * component.deleteComponentProperty("PrimaryButtonIcon#5:5")
    *
    * // componentPropertyDefinitions and componentProperties work similarly for
-   * // main components and their instances but will never have 'VARIANT'
+   * // non-variant main components and their instances but will never have 'VARIANT'
    * // properties.
    * component.componentPropertyDefinitions
    *
@@ -9143,11 +9080,7 @@ interface ExplicitVariableModesMixin {
   setExplicitVariableModeForCollection(collection: VariableCollection, modeId: string): void
 }
 interface PageNode
-  extends BaseNodeMixin,
-    ChildrenMixin,
-    ExportMixin,
-    ExplicitVariableModesMixin,
-    MeasurementsMixin {
+  extends BaseNodeMixin, ChildrenMixin, ExportMixin, ExplicitVariableModesMixin, MeasurementsMixin {
   /**
    * The type of this node, represented by the string literal "PAGE"
    */
@@ -9345,7 +9278,8 @@ interface FrameNode extends DefaultFrameMixin {
   clone(): FrameNode
 }
 interface GroupNode
-  extends BaseNodeMixin,
+  extends
+    BaseNodeMixin,
     SceneNodeMixin,
     ReactionMixin,
     ChildrenMixin,
@@ -9368,7 +9302,8 @@ interface GroupNode
  * @see https://developers.figma.com/docs/plugins/api/TransformGroupNode
  */
 interface TransformGroupNode
-  extends BaseNodeMixin,
+  extends
+    BaseNodeMixin,
     SceneNodeMixin,
     ReactionMixin,
     ChildrenMixin,
@@ -9402,7 +9337,8 @@ interface SliceNode extends BaseNodeMixin, SceneNodeMixin, LayoutMixin, ExportMi
   clone(): SliceNode
 }
 interface RectangleNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     CornerMixin,
     ComplexStrokesMixin,
@@ -9420,10 +9356,7 @@ interface RectangleNode
   clone(): RectangleNode
 }
 interface LineNode
-  extends DefaultShapeMixin,
-    ConstraintMixin,
-    AnnotationsMixin,
-    ComplexStrokesMixin {
+  extends DefaultShapeMixin, ConstraintMixin, AnnotationsMixin, ComplexStrokesMixin {
   /**
    * The type of this node, represented by the string literal "LINE"
    */
@@ -9434,7 +9367,8 @@ interface LineNode
   clone(): LineNode
 }
 interface EllipseNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     CornerMixin,
     ComplexStrokesMixin,
@@ -9454,7 +9388,8 @@ interface EllipseNode
   arcData: ArcData
 }
 interface PolygonNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     CornerMixin,
     ComplexStrokesMixin,
@@ -9474,7 +9409,8 @@ interface PolygonNode
   pointCount: number
 }
 interface StarNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     CornerMixin,
     ComplexStrokesMixin,
@@ -9500,7 +9436,8 @@ interface StarNode
   innerRadius: number
 }
 interface VectorNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     CornerMixin,
     ComplexStrokesMixin,
@@ -9517,7 +9454,8 @@ interface VectorNode
   clone(): VectorNode
 }
 interface TextNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     NonResizableTextMixin,
     ComplexStrokesMixin,
@@ -9588,7 +9526,8 @@ interface TextNode
  * @see https://developers.figma.com/docs/plugins/api/TextPathNode
  */
 interface TextPathNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     NonResizableTextPathMixin,
     ComplexStrokesMixin,
@@ -9702,10 +9641,7 @@ interface ComponentSetNode extends BaseFrameMixin, PublishableMixin, ComponentPr
  * @see https://developers.figma.com/docs/plugins/api/ComponentNode
  */
 interface ComponentNode
-  extends DefaultFrameMixin,
-    PublishableMixin,
-    VariantMixin,
-    ComponentPropertiesMixin {
+  extends DefaultFrameMixin, PublishableMixin, VariantMixin, ComponentPropertiesMixin {
   /**
    * The type of this node, represented by the string literal "COMPONENT"
    */
@@ -9816,7 +9752,8 @@ interface InstanceNode extends DefaultFrameMixin, VariantMixin {
   removeOverrides(): void
 }
 interface BooleanOperationNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ChildrenMixin,
     CornerMixin,
     ComplexStrokesMixin,
@@ -9862,10 +9799,7 @@ interface StickyNode extends OpaqueNodeMixin, MinimalFillsMixin, MinimalBlendMix
   clone(): StickyNode
 }
 interface StampNode
-  extends DefaultShapeMixin,
-    ConstraintMixin,
-    StickableMixin,
-    AspectRatioLockMixin {
+  extends DefaultShapeMixin, ConstraintMixin, StickableMixin, AspectRatioLockMixin {
   /**
    * The type of this node, represented by the string literal "STAMP"
    */
@@ -9997,7 +9931,8 @@ interface TableCellNode extends MinimalFillsMixin {
   readonly width: number
 }
 interface HighlightNode
-  extends DefaultShapeMixin,
+  extends
+    DefaultShapeMixin,
     ConstraintMixin,
     CornerMixin,
     VectorLikeMixin,
@@ -10023,10 +9958,7 @@ interface WashiTapeNode extends DefaultShapeMixin, StickableMixin, AspectRatioLo
   clone(): WashiTapeNode
 }
 interface ShapeWithTextNode
-  extends OpaqueNodeMixin,
-    MinimalFillsMixin,
-    MinimalBlendMixin,
-    MinimalStrokesMixin {
+  extends OpaqueNodeMixin, MinimalFillsMixin, MinimalBlendMixin, MinimalStrokesMixin {
   /**
    * The type of this node, represented by the string literal "SHAPE_WITH_TEXT".
    */
@@ -10546,14 +10478,7 @@ interface ExtendedVariableCollection extends Omit<VariableCollection, 'addMode'>
   removeMode(modeId: string): void
 }
 type AnnotationCategoryColor =
-  | 'yellow'
-  | 'orange'
-  | 'red'
-  | 'pink'
-  | 'violet'
-  | 'blue'
-  | 'teal'
-  | 'green'
+  'yellow' | 'orange' | 'red' | 'pink' | 'violet' | 'blue' | 'teal' | 'green'
 interface AnnotationCategory {
   /**
    * The unique identifier of the annotation category.
@@ -10778,11 +10703,7 @@ interface MediaNode extends OpaqueNodeMixin {
  * @see https://developers.figma.com/docs/plugins/api/SectionNode
  */
 interface SectionNode
-  extends ChildrenMixin,
-    MinimalFillsMixin,
-    OpaqueNodeMixin,
-    DevStatusMixin,
-    AspectRatioLockMixin {
+  extends ChildrenMixin, MinimalFillsMixin, OpaqueNodeMixin, DevStatusMixin, AspectRatioLockMixin {
   /**
    * The type of this node, represented by the string literal "SECTION"
    */
@@ -10927,14 +10848,7 @@ interface SlideTransition {
    * The easing of the slide transition.
    */
   readonly curve:
-    | 'EASE_IN'
-    | 'EASE_OUT'
-    | 'EASE_IN_AND_OUT'
-    | 'LINEAR'
-    | 'GENTLE'
-    | 'QUICK'
-    | 'BOUNCY'
-    | 'SLOW'
+    'EASE_IN' | 'EASE_OUT' | 'EASE_IN_AND_OUT' | 'LINEAR' | 'GENTLE' | 'QUICK' | 'BOUNCY' | 'SLOW'
   /**
    * The timing of the slide transition.
    */
@@ -11248,25 +11162,6 @@ interface FindAllCriteria<T extends NodeType[]> {
    * ```
    */
   types?: T
-  /**
-   * If specified, the search will match nodes that have {@link PluginDataMixin.getPluginData | PluginData} stored for your plugin.
-   *
-   * ```ts
-   * // Find children that have plugin data stored.
-   * node.findAllWithCriteria({ pluginData: {} })
-   *
-   * // Find children that have plugin data stored with keys
-   * // "a" or "b"
-   * node.findAllWithCriteria({
-   *   pluginData: {
-   *     keys: ["a", "b"]
-   *   }
-   * })
-   * ```
-   */
-  pluginData?: {
-    keys?: string[]
-  }
   /**
    * If specified, the search will match nodes that have {@link PluginDataMixin.getSharedPluginData | SharedPluginData} stored on the given `namespace` and `keys`.
    *

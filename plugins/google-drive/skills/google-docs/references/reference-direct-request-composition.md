@@ -177,6 +177,10 @@ If the peer template uses a specific existing list style, read the peer bullet p
 
 Replace placeholder values such as `EVENT_START_RFC3339`, `DOC_ID`, and example email addresses with live source values before writing.
 
+Before composing a batch, apply the mandatory policy in `reference-smart-chips-and-building-blocks.md`: every concrete semantic date uses `insertDate`; every relevant person uses `insertPerson` whenever a verified email is available; every available Google Calendar event URL, Google Docs URL, Google Sheets URL, and Google Slides URL uses `insertRichLink`. Canonicalize Docs/Sheets/Slides URLs with `scripts/canonicalize_google_workspace_url.mjs` and use its `canonicalUri`; retain a returned `deepLinkUri` only as a separate location-specific hyperlink when useful. These rules apply inside tables, lists, metadata fields, citations, and source lists as well as body prose. Do not invent missing timestamps, emails, or URLs.
+
+For a copied document, inventory existing `richLink` URIs too. Canonicalize relevant retained Workspace chips and remove irrelevant reference-era chips; do not apply the rule only to new insertions.
+
 Date chip:
 
 ```json
@@ -230,12 +234,16 @@ Rich link:
 
 For date chips, omit output-only `displayText`. Include `timeZoneId` only when the selected `timeFormat` requires a timezone display.
 
+## Style-Preserving Ordinary Hyperlinks
+
+For a non-Workspace ordinary hyperlink, sample the exact live label's text and paragraph style before linking. Apply the link together with the sampled font family, size, weight, bold, italic, foreground color, underline state, and baseline offset. Explicitly preserve `underline: false` and the existing non-link color when present; a link-only style update can turn a template heading blue or underlined. Re-read and compare both the URL and style fields. See `reference-citations-and-hyperlinks.md`.
+
 ## Verification Readback
 
 After a write:
 
 1. Re-read the edited area with one connector read path that exposes the fields needed for verification.
-2. Confirm the response contains the expected `dateElement`, `person`, and `richLink` element types when chips were requested.
-3. Confirm paragraph styles, links, list state, tables, and images match the intended shape where relevant.
+2. Confirm the response contains the expected `dateElement`, `person`, and `richLink` element types for every mandatory chip opportunity and every explicitly requested chip.
+3. Confirm paragraph styles, link URLs and pre-link typography, list state, tables, and images match the intended shape where relevant.
 4. Confirm no leftover placeholder text, unintended empty bullets, duplicate sections, or wrong-tab insertion exists.
 5. If the connector response to `mcp__codex_apps__google_drive._batch_update_document` lacks `documentId`, `replies`, or `writeControl`, treat the write status as suspect and verify by readback before continuing.

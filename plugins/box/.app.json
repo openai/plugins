@@ -1,7 +1,8 @@
 {
   "apps": {
     "box": {
-      "id": "asdk_app_695bfc98071c8191bac7bc479aa27de7"
+      "id": "asdk_app_695bfc98071c8191bac7bc479aa27de7",
+      "required": false
     }
   }
 }

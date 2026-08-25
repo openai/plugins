@@ -54,4 +54,4 @@ Use this reference when a Google Slides workflow needs to replace a screenshot, 
 ## Failure Policy
 
 - If the named chart is missing, then and only then consider creating a replacement chart.
-- If the replacement introduces a layout problem, switch to [visual-change-loop](./visual-change-loop.md) or [visual-iteration](./visual-iteration.md) and adjust only the affected slide.
+- If the replacement introduces a layout problem, switch to [visual-change-loop](./visual-change-loop.md) and adjust only the affected slide.

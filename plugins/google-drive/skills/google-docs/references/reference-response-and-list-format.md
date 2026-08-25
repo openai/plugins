@@ -20,6 +20,19 @@ When to read: any task that writes answer content, takeaways, risks, or supporti
 8. When normalizing a label-and-body section out of list form, remove list formatting from the label paragraphs too, not only the inserted answer paragraphs.
 9. Never leave an empty list paragraph behind after deleting or rewriting content unless the template or Meeting notes UI shape intentionally requires that placeholder. Clean up unintended dangling bullets explicitly.
 
+## Native Lists Inside Table Cells
+
+Use this workflow only when creating or repairing an actual list inside a table cell:
+
+1. Read the table with `get_tables` and resolve the exact row, column, cell, and item paragraphs. Use full `get_document` when list metadata is not exposed by the table read.
+2. Insert item text without literal bullets, dashes used as bullets, or typed number prefixes.
+3. Re-read final paragraph ranges after insertion.
+4. Apply `createParagraphBullets` only to complete intended item paragraphs, using the peer list behavior when one exists.
+5. Exclude cell labels, prompt paragraphs, neighboring content, and the terminal empty cell paragraph.
+6. Verify the cell coordinates, connector-visible list metadata, nesting, and absence of typed marker substitutes.
+
+A visible `•`, `-`, or `1.` prefix is not proof of a native list.
+
 ## Spacing And Native Formatting
 
 1. Do not add blank paragraphs solely for visual spacing. Use paragraph style, table structure, or section structure instead.

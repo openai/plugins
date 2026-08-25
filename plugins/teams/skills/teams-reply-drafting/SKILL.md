@@ -28,7 +28,7 @@ Use this skill to identify Teams messages that likely need a reply and produce d
    - named chat or DM: `resolve_chat`, then `list_chat_messages`
 2. If no explicit scope was provided, start with:
    - `list_chats(unread_only=True)` for unread direct conversations and group chats
-   - `list_recent_threads` for recent channel or chat activity
+   - focused `search` queries for messages sent to the user, sent by the user, or mentioning the user
 3. Expand only the conversations needed to answer accurately:
    - unread chats first
    - then recent messages containing direct questions or clear asks

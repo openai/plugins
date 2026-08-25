@@ -28,8 +28,8 @@ Use this skill to produce a daily digest of important Teams activity from select
 3. Prefer direct container reads over broad search:
    - channels: `list_channel_messages`
    - chats: `list_chat_messages`
-4. If the user named a team but not a channel, use `list_recent_threads` scoped to that team to discover recent channel threads, then expand only the highest-signal channels with direct reads.
-5. If the user named topics but not exact containers, use `list_recent_threads` as a shortlist and expand only chats or channels whose recent activity plausibly matches the topic.
+4. If the user named a team but not a channel, use `list_channels` to resolve its channels, then use focused `search` queries to find the active ones before expanding only the highest-signal channels.
+5. If the user named topics but not exact containers, use focused `search` queries for those topics, people, and dates, then expand only the relevant chats or channels.
 6. Prioritize decisions, blockers, asks, ownership changes, timeline shifts, and notable replies.
 7. Group the digest by channel, chat, or workstream, depending on what makes the summary easiest to scan.
 8. If the digest identifies follow-ups and the user wants them tracked, route to the Planner skill. Do not create Planner tasks as a side effect of a digest request.

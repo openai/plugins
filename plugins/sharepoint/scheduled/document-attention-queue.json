@@ -1,0 +1,8 @@
+{
+  "name": "Document attention queue",
+  "prompt": "Review the SharePoint files relevant to me and surface recent changes, comments, and follow-ups that need my attention.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

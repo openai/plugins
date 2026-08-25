@@ -1,0 +1,9 @@
+{
+  "name": "Catch up on Slack replies",
+  "prompt": "Review recent DMs, group DMs, mentions, and thread replies that clearly need an answer and have been waiting at least four business hours. Skip anything already resolved or answered, read the full thread, and prioritize by urgency and age. Return the ask, relevant context, source link, and a paste-ready reply or escalation. Never send.",
+  "schedule": {
+    "type": "hourly",
+    "intervalHours": 4,
+    "days": ["MO", "TU", "WE", "TH", "FR"]
+  }
+}

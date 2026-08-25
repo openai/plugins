@@ -25,7 +25,7 @@ Use this skill to produce a priority queue or task list from recent Teams activi
 2. If the user provided channels, chats, teams, or people, keep the triage inside that scope.
 3. With no explicit scope, prioritize:
    - `list_chats(unread_only=True)` for unread chat signal
-   - `list_recent_threads` for recent channel and chat activity
+   - focused `search` queries for messages sent to the user, sent by the user, or mentioning the user
 4. Expand only the containers needed to determine what matters:
    - unread chats first via `list_chat_messages`
    - then recent channels or chats via `list_channel_messages` or `list_chat_messages`

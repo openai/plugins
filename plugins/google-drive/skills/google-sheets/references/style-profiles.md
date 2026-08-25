@@ -18,7 +18,7 @@ Defaults:
 - white grid with black text
 - light gray header rows
 - subtle borders only where they aid scanning
-- filters and freeze panes for tabular data
+- filters and freeze panes for scrolling tabular data; skip for small static ranges, matrices, and calculation grids unless requested otherwise
 - plain source URL columns
 - apply the same default style profile consistently across every sheet after native conversion or live writeback, including imported object-level styling such as table/banding styles or conditional formats
 

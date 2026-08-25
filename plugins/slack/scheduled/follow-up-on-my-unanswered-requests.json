@@ -1,0 +1,8 @@
+{
+  "name": "Follow up on my unanswered requests",
+  "prompt": "Review questions, requests, and review asks I sent in Slack channels or group DMs over the last seven business days. Find threads where I am still waiting on someone else for an answer, decision, action, or ETA after one business day. Skip anything answered, resolved, or superseded, plus FYIs and announcements. For each remaining request, state who or what I am waiting on, include the source link, and draft a concise follow-up. Never send.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "16:00"
+  }
+}

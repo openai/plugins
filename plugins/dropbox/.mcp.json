@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "dropbox": {
+      "type": "http",
+      "url": "https://mcp.dropbox.com/mcp"
+    }
+  }
+}

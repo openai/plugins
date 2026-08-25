@@ -1,50 +1,62 @@
 ---
 name: canva-branded-presentation
-description: Create on-brand Canva presentations from a brief, outline, existing Canva doc, or design link. Use when the user wants a branded slide deck, wants to turn notes into a presentation, or needs a presentation generated in Canva with the right brand kit and a clear slide plan.
+description: Create on-brand Canva presentations from an outline or brief. Use when the user asks to create a branded presentation, make an on-brand deck, turn an outline into slides, or generate a presentation from a brief. Input can be text directly in the message, a Canva design ID, a reference to a Canva doc by name, or a Canva design link (e.g., https://www.canva.com/design/...).
 ---
 
-# Canva Branded Presentation
+# Canva Branded Presentation Creator
 
-## Overview
-
-Use this skill to turn a brief, outline, or existing Canva content into a branded presentation. Gather the source content first, choose the right brand kit, and generate presentation candidates before creating the editable deck.
-
-## Preferred Deliverables
-
-- A clear presentation brief with title, scope, key messages, and a narrative arc.
-- A slide plan with concrete titles, goals, bullets, and visual guidance.
-- A new editable Canva presentation created from the user's preferred candidate.
+Create professional, on-brand presentations in Canva from user-provided outlines or briefs.
 
 ## Workflow
 
-1. Identify the content source before generating. Accept direct text, a Canva design link, or a Canva document/design name that can be found through search.
-2. Read the source content when it lives in Canva. Use the available Canva search and editing tools to locate the design, open it, and extract the material that should drive the deck.
-3. List the available brand kits. If there is only one, use it automatically. If there are multiple, ask the user to choose before generating.
-4. Build a strong generation prompt. Include a working title, topic, key messages, visual style, story arc, and a slide-by-slide plan.
-5. Generate presentation candidates in Canva and show the options to the user before creating the final design.
-6. Create the editable presentation from the selected candidate and return the Canva link.
+1. **Get the content source**
+   - If the user provides text directly, use that as the outline/brief
+   - If the user provides a **Canva design ID** directly (typically starts with `D`, e.g. `DABcd1234ef`), use it as `design_id` with `Canva:start-editing-transaction` to read its contents; **do not** use `Canva:search-designs` for a raw ID
+   - If the user provides a Canva design link (e.g., `https://www.canva.com/design/DAG.../...`), extract the design ID from the URL and use `Canva:start-editing-transaction` to read its contents
+   - If the user references a Canva doc by name, use `Canva:search-designs` to find it, then `Canva:start-editing-transaction` to read its contents
 
-## Write Safety
+2. **List available brand kits**
+   - Call `Canva:list-brand-kits` to retrieve the user's brand kits
+   - If only one brand kit exists, use it automatically without asking
+   - If multiple brand kits exist, present the options and ask the user to select one
 
-- Keep the original source design untouched unless the user explicitly asks to modify it.
-- If multiple matching source designs or brand kits appear, identify the exact one before generating.
-- Preserve specific names, dates, metrics, and claims from the source content unless the user asks to change them.
-- If the brief is sparse, expand it thoughtfully, but call out major assumptions that shape the narrative.
+3. **Generate the presentation**
+   - Call `Canva:generate-design` with:
+     - `design_type`: "presentation"
+     - `brand_kit_id`: the selected brand kit ID
+     - `query`: a detailed prompt following the presentation format below
+   - Show the generated candidates to the user
 
-## Output Conventions
+4. **Finalize**
+   - Ask the user which candidate they prefer
+   - Call `Canva:create-design-from-candidate` to create the editable design
+   - Provide the user with the link to their new presentation
 
-- When helpful, summarize the deck direction before generation: title, audience, key message, and slide count.
-- For larger decks, present a concise slide plan before or alongside candidate generation.
-- When showing results, distinguish clearly between generated candidates and the final editable deck.
-- Return the final Canva design link once the chosen candidate has been created.
+## Presentation Query Format
 
-## Example Requests
+Structure the query for `Canva:generate-design` with these sections:
 
-- "Create a branded presentation from this launch outline."
-- "Turn this Canva doc into a polished deck using our brand kit."
-- "Make an on-brand sales presentation from this brief."
-- "Generate a presentation from this Canva design link."
+**Presentation Brief**
+- Title: working title for the deck
+- Topic/Scope: 1-2 lines describing the subject
+- Key Messages: 3-5 main takeaways
+- Style Guide: tone and imagery style based on the brief
 
-## Light Fallback
+**Narrative Arc**
+One paragraph describing the story flow (e.g., Hook → Problem → Solution → Proof → CTA).
 
-If the source design or brand kit cannot be found, say that Canva access may be unavailable or pointed at the wrong account and ask the user to reconnect or identify the right design or brand kit.
+**Slide Plan**
+For each slide include:
+- Slide N — "Exact Title"
+- Goal: one sentence on the slide's purpose
+- Bullets (3-6): short, parallel phrasing with specifics
+- Visuals: explicit recommendation (chart type, diagram, image subject)
+- Speaker Notes: 2-4 sentences of narrative detail
+
+## Notes
+
+- If multiple brand kits exist, confirm selection before generating; if only one, use it automatically
+- If the outline is sparse, expand it into a complete slide plan with reasonable content
+- For briefs (narrative descriptions), extract key points and structure them into slides
+- Aim for clear, action-oriented slide titles
+- Autofill requires a Canva Enterprise plan

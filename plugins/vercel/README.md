@@ -4,7 +4,7 @@ This directory packages the upstream [vercel/vercel-plugin](https://github.com/v
 
 ## What is included
 
-- `skills/` from the upstream plugin (47 skills with retrieval metadata for Codex discovery)
+- `skills/` from the upstream plugin (54 skills with retrieval metadata for Codex discovery)
 - `.app.json` for the connected Vercel app
 - `vercel.md` ecosystem reference graph
 - `agents/` specialist agent definitions
@@ -107,7 +107,7 @@ vercel/
 ├── .codex-plugin/plugin.json       # Plugin manifest
 ├── .app.json                        # Connected Vercel app manifest
 ├── vercel.md                        # Ecosystem graph + conventions
-├── skills/                          # 47 skills discovered via SKILL.md metadata
+├── skills/                          # 54 skills discovered via SKILL.md metadata
 │   ├── agent-browser/
 │   ├── ai-elements/
 │   ├── ai-gateway/

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "slack": {
+      "type": "http",
+      "url": "https://mcp.slack.com/mcp",
+      "oauth": {
+        "client_id": "<SLACK_PUBLIC_CLIENT_ID>"
+      }
+    }
+  }
+}

@@ -4,25 +4,32 @@ When to read: before final handoff, and before any large section replacement.
 
 ## Critical Invariant
 
-Final output quality is not just structural completeness. In this blind environment, the task is unfinished until connector readback verifies the inserted content, target location, document structure, tab identity, links, tables, chips, and connector-visible style fields.
+Final output quality is not just structural completeness. Connector readback of what exists is not proof that nothing required is missing. The task is unfinished until the final readback reconciles the in-memory coverage map and, when applicable, the template/reference semantic inventory.
 
-Do not claim rendered visual checks, page fit, crop quality, or visible alignment from connector readback or HTML export alone. If PDF export and page raster inspection are available, use `reference-pdf-export-visual-qa.md` for rendered-page verification. If a quality property cannot be verified, report it as unverified rather than complete.
+Do not use PDF or HTML checks as completeness checks. They verify rendered or structural presentation after semantic coverage passes. If a quality property cannot be verified, report it as unverified rather than complete.
 
 ## Final Readback Checklist
 
-1. Re-read the document text and full structure from the connector.
+1. Re-read the document text and full structure from the connector once content has settled.
 2. Confirm the document id, title, and `tabId` when applicable.
-3. Confirm every requested section is present in the intended order.
-4. Confirm new headings use the intended named style and connector-visible text style fields.
-5. Confirm body paragraphs, lists, and bullets have the intended text and list state.
-6. Confirm links cover the exact intended labels, with no missing or extra neighboring characters.
-7. Confirm new or edited tables have the intended row count, column count, cell text, table anchor, and connector-visible styling.
-8. Confirm existing template containers were filled in place instead of bypassed with a parallel draft section.
-9. Confirm supported smart chips and building-block-like regions preserve expected element types such as `dateElement`, `person`, and `richLink`; visible text alone is not enough.
-10. Confirm inserted figures or images are present in connector readback if the task required them.
-11. Confirm no placeholder text, unintended empty bullets, duplicate answer sections, or unintended leftover scaffolding remains.
-12. For layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable edits, run PDF-export visual QA when available.
-13. If connector metadata, HTML export, and PDF-export visual QA are insufficient to judge a rendered visual property, state the limitation plainly.
+3. Reconcile every coverage-map obligation as present, unavailable-with-disclosure, or omitted-by-explicit-user-direction.
+4. For template/reference work, compare every semantic-inventory component with the final structure and confirm the source remains unchanged.
+5. Confirm requested sections and source content appear in the intended order and destination.
+6. Confirm explicit output forms use the required native table/list/control/figure shape or carry an approved limitation.
+7. Confirm requested facts, citations, and source links appear with exact native hyperlink ranges.
+8. Confirm headings, body paragraphs, table cells, and lists have the intended content, style, and native list state.
+9. Confirm supported chips and building-block-like regions preserve expected element types; visible text alone is not enough.
+10. When dropdowns are in scope, verify provider identity, ordered options, selected value, location, and anchors.
+11. Confirm figures/images are present and no placeholders, instruction text, duplicate sections, empty bullets, or scaffolding remain.
+12. Only after semantic coverage passes, run one representation-and-density pass: remove duplicated rationale, consolidate genuinely comparable repeated records into a readable native table, and keep source links inline or in a compact source block when a separate source page adds no value. Never remove a unique obligation.
+13. For layout-sensitive work, run PDF-export visual QA; state any unavailable rendered property plainly.
+
+## Repair Scope
+
+- Semantic reconciliation may reopen content scope to repair a prompt/content omission, source/template omission, or native-structure fidelity defect.
+- Formatting repair may not reopen content scope unless it exposes a semantic omission.
+- Re-read only repaired ranges unless the repair changes the containing structure; re-export only an affected layout-sensitive result.
+- During evaluation, record repairs as prompt/content omission, source/template omission, native-structure fidelity, targeting, formatting, or pagination/layout.
 
 ## HTML Export Proxy
 
@@ -55,7 +62,10 @@ PDF export plus page raster inspection is the preferred rendered-page check for 
 4. Reject tables whose schema is too wide to be reasonable from the column count and text lengths, even if rendered fit cannot be inspected.
 5. Reject header cells with partial hyperlinks, partial bolding, or mixed styling inside a single intended label when connector ranges expose the mismatch.
 6. Reject any required figure that is absent from connector readback or only represented by placeholder text.
-7. Prefer a connector-verified clean text-first document over optional visual work that cannot be inserted or verified safely.
+7. Reject a targeted edit that rebuilt the document, changed sampled out-of-scope structure, or modified a reusable source template.
+8. Reject a result that replaced a dropdown or other native control with visible text or a placeholder glyph.
+9. Reject an intended list represented only by typed bullet or number characters.
+10. Prefer a connector-verified clean text-first document over optional visual work that cannot be inserted or verified safely.
 
 ## Design Quality Checks
 
@@ -68,20 +78,20 @@ Use these checks for presentation-oriented documents such as plans, briefs, repo
 5. Prefer fewer, wider, more readable tables over many narrow grids. Two or three columns are usually safer for narrative business documents than four or more columns.
 6. Keep cell copy short. If a table cell needs multiple sentences, split the idea into prose plus a smaller table or convert the table into a board/card pattern.
 7. For multi-section deliverables, check that each section has a distinct role and rhythm. Repeating the same pattern in every section is a design smell.
-8. If connector readback shows many tables, repeated column counts, or repeated first-row/header treatment, run an explicit density and monotony review before handoff.
+8. If connector readback shows many tables, repeated column counts, or repeated first-row/header treatment, review scanability and remove structures that do not improve comprehension.
 9. Use HTML export, when available, to inspect generated CSS and markup for repeated table patterns, over-wide grids, identical colors, and weak hierarchy.
 10. If design quality cannot be verified directly, be conservative: simplify the structure, reduce grid density, and report which rendered properties remain unverified.
+11. Treat a sparsely occupied trailing page containing only source links, continued bullets, or an orphaned note as an observed layout defect unless the prompt or source requires an appendix. Repair it by consolidating repeated text, integrating links, or tightening local spacing—not by omitting obligations or violating typography floors.
 
 ## Final Pass Order
 
-1. Re-read the target document and resolve `tabId` if needed.
-2. Check section order and completeness.
-3. Check headings, body text, lists, links, citations, tables, and figures through connector data.
-4. Run the design quality checks when the document is presentation-oriented or the user asked for polish, visuals, charts, tables, or readability.
-5. Export `text/html` when available and check generated markup/CSS for rendered-structure sanity.
-6. Run PDF-export visual QA when the task is layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable and the export/raster toolchain is available.
-7. Apply focused repair writes for any connector-observable, design-quality, HTML-export, or PDF visual mismatch.
-8. Re-read the repaired ranges and re-export HTML/PDF if the repair changed layout-sensitive content.
-9. In the final response, distinguish connector facts, HTML-export checks, PDF-export visual checks, and unverified rendered properties.
-10. If the edit created a skeleton because source notes were unavailable, say that it created a notes skeleton rather than saying it added substantive meeting notes.
-11. If smart-chip or building-block-like content was involved, state whether chip parity was preserved, approximated, or not applicable.
+1. Re-read the settled document once and reconcile the coverage map.
+2. Compare template/reference semantic inventory and preservation anchors when applicable.
+3. Verify required native forms, evidence links, figures, controls, and connector-visible formatting.
+4. Repair semantic omissions or fidelity defects.
+5. After coverage passes, perform the single representation-and-density pass from the checklist; do not create a later rewrite cycle.
+6. Run design checks and optional HTML structure sanity checks.
+7. Run PDF-export visual QA for layout-sensitive work; PDF verifies layout, not completeness.
+8. Repair observed visual defects and re-read/re-export only the affected result.
+9. In the final response, distinguish connector facts, semantic/native verification, HTML/PDF checks, and unverified properties.
+10. If source notes were unavailable, describe the result as a skeleton rather than substantive notes.

@@ -13,7 +13,7 @@ Common patterns found in meeting notes and how to parse them.
 **Examples:**
 ```
 @john to update documentation
-@sarah will create the report  
+@sarah will create the report
 @mike should review PR #123
 @lisa needs to test the feature
 ```

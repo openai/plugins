@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "gmail": {
+      "type": "http",
+      "url": "https://gmailmcp.googleapis.com/mcp/v1",
+      "scopes": [
+        "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.compose",
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/gmail.metadata"
+      ],
+      "oauth": {
+        "callback_port": 12798,
+        "client_id": "<GMAIL_PUBLIC_CLIENT_ID>",
+        "client_secret": "<GMAIL_CLIENT_SECRET>"
+      }
+    }
+  }
+}

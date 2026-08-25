@@ -1,7 +1,12 @@
 {
   "apps": {
     "github": {
-      "id": "connector_76869538009648d5b282a4bb21c3d157"
+      "id": "connector_76869538009648d5b282a4bb21c3d157",
+      "required": false
+    },
+    "github-astemu": {
+      "id": "asdk_app_69e6a1094d24819195c59daad9e9069a",
+      "required": false
     }
   }
 }

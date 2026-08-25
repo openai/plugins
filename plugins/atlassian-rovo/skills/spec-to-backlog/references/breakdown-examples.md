@@ -293,7 +293,7 @@ Redesign main dashboard with modern UI framework, improve performance, maintain 
 ### Too Granular
 ❌ **Bad:**
 - "Create User model"
-- "Create User controller"  
+- "Create User controller"
 - "Create User view"
 - "Write User tests"
 - "Update User documentation"

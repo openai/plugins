@@ -1,0 +1,3 @@
+interface:
+  display_name: "Eve"
+  short_description: "Durable AI agents with the eve framework"

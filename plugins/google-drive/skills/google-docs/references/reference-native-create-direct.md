@@ -2,9 +2,11 @@
 
 When to read: for blank or basic new Google Docs that can be created directly with native Google Drive and Docs connector APIs.
 
+Do not use blank creation to rebuild a supplied Google Doc template/reference. Resolve that task through `reference-template-preservation-and-edit-scope.md` and use a native copy unless the user explicitly requests selective reference use and no selected native structure must carry forward.
+
 ## Decision Boundary
 
-Use connector-native creation when the request can be satisfied by Google Docs primitives with no meaningful quality loss:
+Use connector-native creation when no supplied Google Doc template/reference constrains the output, or when the user explicitly requests selective reference use and no selected native structure must carry forward, and the request can be satisfied by Google Docs primitives with no meaningful quality loss:
 
 - blank Google Doc
 - basic text document
@@ -15,7 +17,7 @@ Use connector-native creation when the request can be satisfied by Google Docs p
 - supported smart chips such as dates, people, and rich links
 - lightweight docs where native Google Docs default styling is acceptable
 
-Use DOCX-first creation instead when the user asks for a polished or complex deliverable:
+Only when no supplied Google Doc template/reference constrains the output, use DOCX-first creation instead when the user asks for a polished or complex deliverable:
 
 - polished report, brief, proposal, whitepaper, handout, or formal artifact
 - complex visual hierarchy, branding, or custom design system
@@ -24,7 +26,7 @@ Use DOCX-first creation instead when the user asks for a polished or complex del
 - complex tables or long multi-section documents where document-authoring tooling gives better control
 - explicit `.docx`, Word compatibility, PDF-style QA, or high-fidelity export requirements
 
-If the request is ambiguous, prefer connector-native creation for normal Google Docs and DOCX-first creation for deliverables that sound designed, branded, or layout-sensitive.
+If the request is ambiguous and a Google Doc template/reference is present, return to the native copy/adaptation route. Otherwise, prefer connector-native creation for normal Google Docs and DOCX-first creation for deliverables that sound designed, branded, or layout-sensitive.
 
 ## Blank Doc Flow
 

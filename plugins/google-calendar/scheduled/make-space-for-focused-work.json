@@ -1,0 +1,9 @@
+{
+  "name": "Make space for focused work",
+  "prompt": "Review the next five workdays and find meeting-heavy days without an uninterrupted 90-minute break. Add one private Focus Time block in the longest open window, using the earliest window to break ties. Never move or overlap meetings or duplicate an existing focus block, and report days with no viable opening.",
+  "schedule": {
+    "type": "weekly",
+    "days": ["MO"],
+    "time": "08:00"
+  }
+}

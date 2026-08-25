@@ -1,6 +1,6 @@
 {
   "name": "google-calendar",
-  "version": "1.2.3",
+  "version": "1.2.5-alpha.0",
   "description": "Connect Google Calendar for scheduling, availability, daily briefs, and event management.",
   "author": {
     "name": "OpenAI",
@@ -12,7 +12,12 @@
   "license": "MIT",
   "keywords": [
     "google-calendar",
+    "google",
+    "google workspace",
     "calendar",
+    "events",
+    "meetings",
+    "availability",
     "agenda",
     "daily-brief",
     "scheduling",
@@ -20,8 +25,9 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "Google Calendar",
+    "displayName": "[Testing] Google Calendar",
     "shortDescription": "Manage Google Calendar events and schedules",
     "longDescription": "Use Google Calendar to summarize a day, check availability, list calendars, and create, update, or delete events directly from task prompts.",
     "developerName": "OpenAI",

@@ -291,7 +291,7 @@ getJiraProjectIssueTypesMetadata(
 
 **Determine appropriate issue type:**
 - For bugs/errors → Use "Bug" (if available)
-- For issues without errors → Use "Task" or "Issue" 
+- For issues without errors → Use "Task" or "Issue"
 - Fallback → First available non-Epic, non-Subtask type
 
 **Create the issue:**
@@ -431,7 +431,7 @@ Match: 70% - Similar symptoms, different error
 **PROJ-123** - [summary] (Resolved, 8 months ago)
 Match: 60% - Related component, but was fixed
 
-**Recommendation:** 
+**Recommendation:**
 1. Add to PROJ-456 (most similar)
 2. Reference PROJ-234 in your comment (might be related)
 3. Note PROJ-123 was previously fixed (possible regression)

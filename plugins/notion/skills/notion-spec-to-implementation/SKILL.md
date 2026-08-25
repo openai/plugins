@@ -27,8 +27,8 @@ Convert a Notion spec into linked implementation plans, tasks, and ongoing statu
 
 ### 0) If Notion tools are unavailable, pause and ask the user to connect the Notion app:
 1. Enable the bundled Notion app for this plugin or session.
-2. Complete the Notion auth flow if Codex prompts for it.
-3. Restart Codex or the current session if the tools still do not appear.
+2. Complete the Notion auth flow if prompted.
+3. Start a new session if the tools still do not appear.
 
 After the app is connected, finish your answer and tell the user to retry so they can continue with Step 1.
 

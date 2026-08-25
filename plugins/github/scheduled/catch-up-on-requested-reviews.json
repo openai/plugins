@@ -1,0 +1,8 @@
+{
+  "name": "Catch up on requested reviews",
+  "prompt": "Find open, non-draft GitHub pull requests requesting my review that are ready for attention. Skip PRs I already reviewed when nothing material changed, then prioritize by urgency, age, and whether the author is blocked. Return the PR link, a concise change and risk summary, the specific review needed, and any failing checks or missing context. Do not submit a review, comment, or change GitHub.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "09:00"
+  }
+}

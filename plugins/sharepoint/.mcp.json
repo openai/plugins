@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "sharepoint": {
+      "url": "https://agent365.svc.cloud.microsoft/agents/servers/mcp_SharePointRemoteServer",
+      "oauth": {
+        "client_id": "<SHAREPOINT_PUBLIC_CLIENT_ID>"
+      },
+      "scopes": [
+        "https://agent365.svc.cloud.microsoft/agents/servers/mcp_SharePointRemoteServer/.default",
+        "openid",
+        "profile",
+        "offline_access"
+      ]
+    }
+  }
+}

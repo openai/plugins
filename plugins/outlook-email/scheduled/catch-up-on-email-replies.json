@@ -1,0 +1,8 @@
+{
+  "name": "Catch up on email replies",
+  "prompt": "Find Outlook conversations from the last 30 days that clearly need a response and have been waiting more than three business days. Skip newsletters, automated or FYI mail, CC-only threads, existing drafts, and anything already answered. Prioritize by deadline, sender relationship, and age, then draft replies for the five most important conversations. Never send.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "16:30"
+  }
+}

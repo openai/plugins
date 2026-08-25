@@ -1,50 +1,67 @@
 ---
 name: canva-translate-design
-description: Translate the text in a Canva design into another language while preserving the original layout as much as possible. Use when the user wants a localized or translated version of an existing Canva design and expects the original file to remain unchanged.
+description: Translate all text in a Canva design to another language, creating a translated copy. Faster than manually copying and editing each text box in Canva's editor. Use when users say "translate my design to [language]", "make a Spanish/French/etc version", or "localize my Canva design".
 ---
 
-# Canva Translate Design
+# Canva Translate
 
-## Overview
-
-Use this skill to create a translated copy of an existing Canva design. Find the source design, duplicate it safely, translate text elements into the target language, and save the localized version only after the user approves.
-
-## Preferred Deliverables
-
-- A translated copy of the original Canva design in the requested language.
-- A concise note about any text-length or layout risks introduced by translation.
-- A final Canva link to the saved translated design.
+Translate all text elements in a Canva design to a target language, creating a new copy with translated content.
 
 ## Workflow
 
-1. Locate the design from a Canva URL or by searching for its title. If multiple matches appear, identify the right design before continuing.
-2. Create a copy of the design so the original stays untouched.
-3. Start an editing transaction on the copied design and gather the text elements that need translation.
-4. Translate each text element into the requested language while preserving meaning, line breaks, and important formatting cues.
-5. Apply the translated text in a single batched edit when possible, and update the design title to reflect the target language.
-6. Show the translated preview or summarize the pending result, ask for approval to save, then commit the transaction and return the new design link.
+### 1. Locate the Design
 
-## Write Safety
+If user provides a **design ID** directly (typically starts with `D`, e.g. `DABcd1234ef`), use that as the design identifier; **do not** pass it to `Canva:search-designs` (search is for titles, not IDs).
 
-- Always work on a copy rather than the original design.
-- Preserve proper nouns, product names, and brand language unless the user asks for deeper localization.
-- Warn the user when translation is likely to expand text enough to require layout cleanup in Canva.
-- Treat the final save as an explicit action that follows user approval.
+If user provides a **URL**: Extract the design ID from the URL (format: `https://www.canva.com/design/{design_id}/...`).
 
-## Output Conventions
+If user provides a **name**: Use `Canva:search-designs` to find the design by title. If multiple matches, ask user to clarify.
 
-- State the source design and target language up front.
-- Call out any translation assumptions, especially around brand names or ambiguous phrases.
-- Mention likely layout risks before the final save when text expansion is significant.
-- Return the saved translated design link after commit.
+### 2. Create a Translated Copy
 
-## Example Requests
+Use `Canva:resize-design` with the same dimensions to create a copy. This preserves the original design untouched.
 
-- "Translate my Canva poster into Spanish."
-- "Make a French version of this design."
-- "Localize this Canva design for German."
-- "Create a Portuguese copy of this brochure."
+### 3. Start Editing Transaction
 
-## Light Fallback
+Use `Canva:start-editing-transaction` on the new copy to get:
+- `transaction_id` for making edits
+- All text elements with their `element_id` and current text content
 
-If the source design cannot be found or opened for editing, say that Canva access may be unavailable or pointed at the wrong account and ask the user to reconnect or identify the exact design to translate.
+### 4. Translate Text
+
+For each text element returned:
+1. Translate the text to the target language (use Claude's translation capability)
+2. Preserve formatting cues (line breaks, emphasis patterns)
+3. Keep proper nouns, brand names, and technical terms as appropriate
+
+### 5. Apply Translations
+
+Use `Canva:perform-editing-operations` with `replace_text` operations for all translated elements. Batch all replacements in a single call.
+
+Also update the design title to indicate the language (e.g., append " (Spanish)" or use translated title).
+
+### 6. Commit Changes
+
+After showing the user the translated preview thumbnail:
+1. Ask for explicit approval to save
+2. Use `Canva:commit-editing-transaction` to finalize
+3. Provide the link to the new translated design
+
+## Example Interaction
+
+**User**: Translate my "Summer Sale Poster" to French
+
+**Steps**:
+1. Search: `Canva:search-designs` with query "Summer Sale Poster"
+2. Copy: `Canva:resize-design` to create duplicate
+3. Edit: `Canva:start-editing-transaction` on copy
+4. Translate all text elements to French
+5. Apply: `Canva:perform-editing-operations` with all `replace_text` operations
+6. Show preview, get approval, commit
+
+## Important Notes
+
+- Always create a copy—never modify the original design
+- Batch all text replacements in one `perform-editing-operations` call for efficiency
+- If translation significantly changes text length, warn user that layout adjustments may be needed in Canva
+- For designs with many pages, translate all pages in the same transaction

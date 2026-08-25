@@ -1,0 +1,4 @@
+interface:
+  display_name: "Box Legal Intake"
+  short_description: "Run client intake workflows in Box"
+  default_prompt: "Use $box-legal-workflows-intake to review and route this client intake in Box."

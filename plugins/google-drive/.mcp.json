@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "google-drive": {
+      "type": "http",
+      "url": "https://drivemcp.googleapis.com/mcp/v1",
+      "scopes": [
+        "https://www.googleapis.com/auth/drive",
+        "https://www.googleapis.com/auth/drive.readonly",
+        "https://www.googleapis.com/auth/drive.file"
+      ],
+      "oauth": {
+        "callback_port": 12798,
+        "client_id": "<GOOGLE_DRIVE_PUBLIC_CLIENT_ID>",
+        "client_secret": "<GOOGLE_DRIVE_CLIENT_SECRET>"
+      }
+    }
+  }
+}

@@ -50,6 +50,6 @@ All templates can be customized:
 
 1. **Choose template first**: Select before gathering context
 2. **Gather Notion content**: Search and fetch relevant pages
-3. **Enrich with research**: Add Codex insights where valuable
+3. **Enrich with research**: Add supplemental insights where valuable
 4. **Customize as needed**: Adapt template to specific situation
 5. **Share early**: Give attendees time to review

@@ -23,9 +23,9 @@ This workflow is hybrid:
 
 ## Naming conventions
 
-- Branch: `codex/{description}` when starting from main/master/default.
+- Branch: `agent/{description}` when starting from main/master/default.
 - Commit: `{description}` (terse).
-- PR title: `[codex] {description}` summarizing the full diff.
+- PR title: `{description}` summarizing the full diff.
 
 ## Workflow
 
@@ -33,7 +33,7 @@ This workflow is hybrid:
    - Run `git status -sb` and inspect the diff before staging.
    - If the working tree contains unrelated changes, do not default to `git add -A`. Ask the user which files belong in the PR.
 2. Determine the branch strategy.
-   - If on `main`, `master`, or another default branch, create `codex/{description}`.
+   - If on `main`, `master`, or another default branch, create `agent/{description}`.
    - Otherwise stay on the current branch.
 3. Stage only the intended changes.
    - Prefer explicit file paths when the worktree is mixed.

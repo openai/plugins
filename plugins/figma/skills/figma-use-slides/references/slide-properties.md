@@ -82,7 +82,7 @@ The speaker notes editor in Figma Slides supports a subset of markdown formattin
 The following markdown is **not supported** and will be stored as raw text (the markdown syntax characters will appear literally in the notes):
 - Headings (`# text`, `## text`)
 - Code blocks (`` `code` `` or ` ``` `)
-- Links (`[text](url)`)
+- Links (`[text](https://example.com)`)
 - Underline
 
 ## InteractiveSlideElementNode

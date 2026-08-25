@@ -1,0 +1,8 @@
+{
+  "name": "Today's agenda",
+  "prompt": "Review today's primary Outlook calendar and prepare a concise agenda and meeting-prep brief. Highlight conflicts, useful open time, pending invitations over the next seven days, and anything I should read or do before meetings. For conflicting or duplicate invites, recommend whether to accept, decline, or reschedule; do not respond to invites or change the calendar.",
+  "schedule": {
+    "type": "weekdays",
+    "time": "08:00"
+  }
+}

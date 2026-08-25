@@ -1,6 +1,6 @@
 {
   "name": "figma",
-  "version": "2.0.13",
+  "version": "2.0.18",
   "description": "Figma workflows for design implementation, Code Connect templates, and design system rule generation.",
   "author": {
     "name": "Figma",
@@ -11,6 +11,11 @@
   "license": "LicenseRef-Figma-Developer-Terms",
   "keywords": [
     "figma",
+    "design",
+    "prototyping",
+    "collaboration",
+    "developer handoff",
+    "design systems",
     "design-to-code",
     "ui-implementation",
     "code-connect",
@@ -20,7 +25,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "Figma",
+    "displayName": "[Testing] Figma",
     "shortDescription": "Design-to-code workflows powered by the Figma integration",
     "longDescription": "Figma workflows for implementing designs in code, creating Code Connect templates for published Figma components, and generating project-specific design system rules for repeatable Figma-to-code work.",
     "developerName": "Figma",
@@ -41,6 +46,7 @@
     "brandColor": "#1ABCFE",
     "composerIcon": "./assets/logo-padded.png",
     "logo": "./assets/logo-padded.png",
+    "logoDark": "./assets/logo-padded.png",
     "screenshots": []
   }
 }

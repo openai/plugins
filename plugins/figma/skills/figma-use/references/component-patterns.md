@@ -256,11 +256,11 @@ This works for icons, avatars, badges, or any swappable nested element.
 return figma.root.children.map(p => ({ id: p.id, name: p.name }));
 ```
 
-Then in the **next assistant turn, emit one `use_figma` per page in parallel** (a single message with N tool-use blocks). Each script runs:
+Then issue one `use_figma` call per page in parallel. Each script runs:
 
 ```javascript
 // Step 2 — one call per page, currentPage set exactly once.
-// The agent MUST issue N of these in parallel in one message — do not loop pages inside the script.
+// Issue these calls in parallel; do not loop pages inside the script.
 const page = await figma.getNodeByIdAsync(PAGE_ID); // PAGE_ID supplied by caller
 await figma.setCurrentPageAsync(page);
 // Indexed type lookup — much faster than findAll with a side-effect predicate.
@@ -274,6 +274,9 @@ See [gotchas.md → Set current page once per `use_figma` call](gotchas.md#set-c
 
 ```javascript
 const cs = await figma.getNodeByIdAsync('COMPONENT_SET_ID');
+if (!cs || cs.type !== 'COMPONENT_SET') {
+  throw new Error('Expected a component set');
+}
 const variantNames = cs.children.map(c => c.name);
 const propDefs = cs.componentPropertyDefinitions;
 return { variantNames, propDefs };
@@ -289,7 +292,7 @@ return { variantNames, propDefs };
 return figma.root.children.map(p => ({ id: p.id, name: p.name }));
 ```
 
-**Step 2** — the agent MUST emit one `use_figma` per page in parallel (a single message with N tool-use blocks). Each script:
+**Step 2** — issue one `use_figma` call per page in parallel. Each script:
 
 ```javascript
 const page = await figma.getNodeByIdAsync(PAGE_ID);
@@ -479,15 +482,19 @@ function getRelevantComponentNode(mainComponent) {
  * @returns {Record<string, {name: string, type: string, key: string, variantOptions?: string[]}>}
  */
 function getComponentProps(node) {
+  const owner = node.type === "COMPONENT" && node.parent.type === "COMPONENT_SET"
+    ? node.parent
+    : node;
+  const definitions = owner.componentPropertyDefinitions;
   const result = {};
-  for (let key in node.componentPropertyDefinitions) {
+  for (const key in definitions) {
     const prop = {
       name: key.replace(/#[^#]+$/, ""),
-      type: node.componentPropertyDefinitions[key].type,
+      type: definitions[key].type,
       key: key
     };
     if (prop.type === "VARIANT") {
-      prop.variantOptions = node.componentPropertyDefinitions[key].variantOptions;
+      prop.variantOptions = definitions[key].variantOptions;
     }
     result[key] = prop;
   }

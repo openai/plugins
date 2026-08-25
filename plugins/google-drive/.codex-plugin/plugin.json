@@ -1,6 +1,6 @@
 {
   "name": "google-drive",
-  "version": "0.1.7",
+  "version": "0.1.14-alpha.1",
   "description": "Use Google Drive as the single entrypoint for Drive, Docs, Sheets, and Slides work.",
   "author": {
     "name": "OpenAI",
@@ -12,6 +12,13 @@
   "license": "MIT",
   "keywords": [
     "google-drive",
+    "google",
+    "google workspace",
+    "drive",
+    "docs",
+    "sheets",
+    "slides",
+    "files",
     "google-docs",
     "google-sheets",
     "google-slides",
@@ -19,8 +26,9 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "Google Drive",
+    "displayName": "[Testing] Google Drive",
     "shortDescription": "Work across Drive, Docs, Sheets, and Slides",
     "longDescription": "Use Google Drive as one unified Google file plugin for search, file organization, sharing, and Google Docs, Google Sheets, and Google Slides workflows.",
     "developerName": "OpenAI",
