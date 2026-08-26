@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Expedia icon</title>
+  <desc id="desc">A yellow circular Expedia mark with a dark blue arrow pointing northeast.</desc>
+  <circle cx="256" cy="256" r="256" fill="#FFDD2D"/>
+  <path d="M111.668 166.476 150.45 127.65c4.984-4.99 11.746-7.794 18.797-7.794h210.32c14.675 0 26.57 11.895 26.57 26.57v231.16c0 7.05-2.8 13.812-7.785 18.797l-38.78 38.78c-3.737 3.737-10.128 1.09-10.128-4.195V212.76L226.58 335.622c-4.984 4.984-11.744 7.784-18.793 7.784h-38.263c-6.846 0-12.396-5.55-12.396-12.396v-38.264c0-7.048 2.8-13.808 7.784-18.792L287.776 151.09h-171.71c-5.535 0-8.31 6.693-4.398 10.607Z" fill="#171B3F"/>
+  <rect x="116.32" y="365.06" width="57.3" height="57.3" rx="6.2" fill="#171B3F"/>
+</svg>
