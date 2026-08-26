@@ -1,7 +1,0 @@
-interface:
-  display_name: "Reply Drafting"
-  short_description: "Draft Slack replies from context"
-  icon_small: "./assets/slack-small.svg"
-  icon_large: "./assets/slack.png"
-  brand_color: "#611F69"
-  default_prompt: "Use $slack-reply-drafting to identify Slack messages that likely need a response and draft reply text grounded in the conversation context."

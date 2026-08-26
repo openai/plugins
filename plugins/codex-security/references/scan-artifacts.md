@@ -11,6 +11,7 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 - `security_scans_dir=<system_temp_dir>/codex-security-scans/<repo_name>`
 - `scan_id=<commit>_<scan timestamp>`
 - `scan_dir=<security_scans_dir>/<scan_id>`
+- `target_paths_file=$CODEX_SECURITY_TARGET_PATHS_FILE` for SDK scoped-path scans; this read-only scope input lives in the isolated Codex home outside the model-writable scan directory. Pass it directly to `make-repo-scope-input --scopes-file` and `bind-repo-scopes --scopes-file` before finalization, and do not print, evaluate, modify, or treat its contents as shell syntax.
 - `artifacts_dir=<scan_dir>/artifacts`
 - `context_dir=<artifacts_dir>/01_context`
 - `discovery_dir=<artifacts_dir>/02_discovery`
@@ -18,7 +19,7 @@ Use these shared path conventions for Codex Security scan workflows unless the u
 - `reconciliation_dir=<artifacts_dir>/04_reconciliation`
 - `findings_dir=<artifacts_dir>/05_findings`
 
-The MCP app resolves the platform temporary directory automatically. For a manual workflow, use the active process temporary directory (for example, `%TEMP%` on Windows or `$TMPDIR` when configured on Unix-like hosts) instead of hardcoding `/tmp`.
+The plugin resolves the platform temporary directory automatically. For a manual workflow, use the active process temporary directory (for example, `%TEMP%` on Windows or `$TMPDIR` when configured on Unix-like hosts) instead of hardcoding `/tmp`.
 
 Resolve `<python_command>` to the configured Python interpreter (`$PYTHON` when one is provided), otherwise use `python` on Windows and `python3` on Unix-like hosts.
 
@@ -37,13 +38,16 @@ End each repository-scoped threat model with these two lines:
 
 ## Finding Discovery (Phase 2) Paths
 
-### Coverage Planning
+### Deep Scan Discovery
+
+Workbench-owned Standard scans submit findings and coverage through `record_codex_security_scan_draft`; SDK-owned Standard scans write unsealed canonical files directly. Deep scans run complete Standard scan workers, each of which saves `complete: false` checkpoints and submits its final validated findings, coverage, threat model, and optional scope through its bound `record_codex_security_scan_draft` tool. Pending candidates retain their original evidence in `coverage.deferred`. Host-owned immutable checkpoints survive retries, cancellation, and failure; a checkpoint alone is never an accepted complete worker result. The coordinator semantically reduces those complete results and writes the parent scan's unsealed `scan-manifest.json`, `findings.json`, and `coverage.json`. The parent does not list candidates, rerun validation or attack-path phases, or submit another draft.
+
+The worklist, per-finding receipt, and phase-report paths below apply only to standalone or legacy Diff workflows. Compact Workbench Diff scans use one shared `<discovery_dir>/candidate_ledger.jsonl`, written by `record_codex_security_discovery_candidates` and updated by the bound batch tools `record_codex_security_candidate_validations` and `record_candidate_attack_paths`; they do not create per-finding ledgers, reports, or receipts. Standard and Deep scans assemble validated findings directly without persisted source inventories or candidate ledgers.
+
+### Diff Discovery And Coverage
 
 - Advisory seed research: `<context_dir>/seed_research.md`
-- Scoped ranking input: `<discovery_dir>/rank_input.jsonl` if applicable
-- Scoped ranking shards: `<discovery_dir>/rank_shards/rank-shard-NNNN.input.jsonl` and matching worker-local `.output.jsonl` files if ranking applies
-- Scoped ranking worker assignments: `<discovery_dir>/rank_worker_assignments.json` if ranking applies
-- Scoped ranking output: `<discovery_dir>/rank_output.jsonl` if applicable
+- Changed source input: `<discovery_dir>/rank_input.jsonl`
 - Scoped deep-review input: `<discovery_dir>/deep_review_input.jsonl` if applicable
 - Finding discovery report: `<discovery_dir>/finding_discovery_report.md`
 
@@ -54,9 +58,10 @@ End each repository-scoped threat model with these two lines:
 
 ### Candidate Reconciliation
 
-- Candidate findings directory: `<findings_dir>/`
-- Per-finding directory: `<findings_dir>/<candidate_id>/`
-- Per-finding candidate ledger: `<findings_dir>/<candidate_id>/candidate_ledger.jsonl`
+- Compact Diff candidate ledger: `<discovery_dir>/candidate_ledger.jsonl`
+- Standalone or legacy Diff candidate findings directory: `<findings_dir>/`
+- Standalone or legacy Diff per-finding directory: `<findings_dir>/<candidate_id>/`
+- Standalone or legacy Diff per-finding candidate ledger: `<findings_dir>/<candidate_id>/candidate_ledger.jsonl`
 - Scoped dedupe report: `<reconciliation_dir>/dedupe_report.md` if applicable
 - Scoped deduped candidates: `<reconciliation_dir>/deduped_candidates.jsonl` if applicable
 
@@ -68,17 +73,25 @@ End each repository-scoped threat model with these two lines:
 
 ## Validation (Phase 3) Paths
 
+Standard scans and Deep Standard scan workers include validation directly in their final finding semantics. Compact Diff scans record validation through their bound batch tool. Standalone or legacy Diff workflows may use these paths:
+
 - Scan-level validation summary: `<findings_dir>/validation_summary.md` if applicable
 - Per-finding validation report: `<findings_dir>/<candidate_id>/validation_report.md`
 - Per-finding validation artifacts: `<findings_dir>/<candidate_id>/validation_artifacts/`
 
 ## Attack-Path Analysis (Phase 4) Paths
 
+Standard scans and Deep Standard scan workers include attack-path analysis directly in their final finding semantics. Compact Diff scans record attack-path decisions through their bound batch tool. Standalone or legacy Diff workflows may use these paths:
+
 - Scan-level attack-path analysis report: `<findings_dir>/attack_path_analysis_report.md` if applicable
 - Per-finding attack-path analysis report: `<findings_dir>/<candidate_id>/attack_path_analysis_report.md`
 
 ## Final Report Paths
 
+- Workbench-owned Standard draft: `record_codex_security_scan_draft({ scanId, handoffClaimToken?, scope?, threatModel?, findings, coverage })`
+- Bound Deep Standard worker result: `record_codex_security_scan_draft({ scanId, scope?, threatModel?, findings, coverage })`; the Deep coordinator writes the aggregated parent draft
+- SDK-owned Standard draft: unsealed `scan-manifest.json`, `findings.json`, and `coverage.json` under the SDK-provided scan directory
+- Deep or explicitly requested Standard completed results: `get_codex_security_completed_scan({ scanId, handoffClaimToken? })`
 - Final scan report: `<scan_dir>/report.md`
 - Detailed vulnerability write-up: `<scan_dir>/findings/<slug>/<slug>.md`
 - Per-finding PoC and supporting files: `<scan_dir>/findings/<slug>/poc/...`
@@ -94,5 +107,5 @@ End each repository-scoped threat model with these two lines:
 
 - Put scan phase outputs and supporting evidence under the numbered artifact subdirectories above.
 - Keep fix-finding outputs outside the numbered scan phases because fix-finding can run standalone or against an existing scan.
-- Do not author the final `report.md` directly. Put complete scan-level report semantics in the canonical JSON files and detailed per-finding prose in `findings/<slug>/<slug>.md`. Put derived design guidance under `hardening/`. Finalization deterministically writes the unsealed `report.md` projection and links any recorded write-ups and hardening portfolio. Do not add these derived documents to the sealed artifact list.
+- Do not author the final `report.md` directly. Put complete scan-level report semantics in the canonical JSON files. Detailed per-finding prose in `findings/<slug>/<slug>.md` and derived design guidance under `hardening/` are optional for every scan mode. Finalization deterministically writes the unsealed `report.md` projection and links any recorded write-ups and hardening portfolio. Do not add these derived documents to the sealed artifact list.
 - Keep the full scan bundle together under `scan_dir`.

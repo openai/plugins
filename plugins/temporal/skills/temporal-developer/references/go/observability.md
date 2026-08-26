@@ -28,6 +28,7 @@ func MyWorkflow(ctx workflow.Context, input string) (string, error) {
 ```
 
 The workflow logger automatically:
+
 - Suppresses duplicate logs during replay
 - Includes workflow context (workflow ID, run ID, etc.)
 
@@ -45,6 +46,7 @@ func MyActivity(ctx context.Context, input string) (string, error) {
 ```
 
 Activity logger includes:
+
 - Activity ID, type, and task queue
 - Workflow ID and run ID
 - Attempt number (for retries)
@@ -60,42 +62,67 @@ logger.Info("Processing order")  // includes orderId and customerId
 
 ## Customizing the Logger
 
-Set a custom logger via `client.Options{Logger: myLogger}`. Implement the `log.Logger` interface (Debug, Info, Warn, Error methods).
+The SDK ships a single built-in **`slog` adapter** (`log.NewStructuredLogger`) and considers `slog` (go 1.21+) the universal bridge to other logging libraries.
 
-### Using slog (Go 1.21+)
+### The `log.Logger` Interface
+
+```go
+// go.temporal.io/sdk/log
+type Logger interface {
+    Debug(msg string, keyvals ...interface{})
+    Info(msg string, keyvals ...interface{})
+    Warn(msg string, keyvals ...interface{})
+    Error(msg string, keyvals ...interface{})
+}
+```
+
+Optional companion interfaces: `WithLogger` (adds `.With()`) and `WithSkipCallers` (fixes caller frames).
+
+### Using slog (Recommended)
 
 ```go
 import (
     "log/slog"
     "os"
 
-    tlog "go.temporal.io/sdk/log"
+    "go.temporal.io/sdk/log"
 )
 
 slogHandler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug})
-logger := tlog.NewStructuredLogger(slog.New(slogHandler))
+logger := log.NewStructuredLogger(slog.New(slogHandler))
 
 c, err := client.Dial(client.Options{
     Logger: logger,
 })
 ```
 
-### Using Third-Party Loggers (Logrus, Zap, etc.)
+### Using slog as a Bridge to Third-Party Loggers
 
-Use the [logur](https://github.com/logur/logur) adapter package:
+Any third-party logger that can back an `slog.Handler` works with `log.NewStructuredLogger` — this includes zap, zerolog, logrus, and most modern Go logging libraries. The pattern is: create an `slog.Handler` from your logger, then wrap it with `log.NewStructuredLogger`.
+
+**Example with Zap:**
 
 ```go
 import (
-    "github.com/sirupsen/logrus"
-    logrusadapter "logur.dev/adapter/logrus"
-    "logur.dev/logur"
+    "log/slog"
+
+    "go.uber.org/zap"
+    "go.uber.org/zap/exp/zapslog"
+    "go.temporal.io/sdk/log"
 )
 
-logger := logur.LoggerToKV(logrusadapter.New(logrus.New()))
+zapLogger, _ := zap.NewProduction()
+handler := zapslog.NewHandler(zapLogger.Core())
+logger := log.NewStructuredLogger(slog.New(handler))
+
 c, err := client.Dial(client.Options{
     Logger: logger,
 })
 ```
+
+### Direct Adapter (Alternative)
+
+If you cannot use the slog bridge, you can implement the `log.Logger` interface directly. The Temporal samples repo has a ~60-line [zap adapter](https://github.com/temporalio/samples-go/blob/main/zapadapter/zap_adapter.go) that implements `Logger`, `WithLogger`, and `WithSkipCallers` and can be copied into your project.
 
 ## Metrics
 
@@ -134,6 +161,7 @@ c, err := client.Dial(client.Options{
 ```
 
 Key SDK metrics:
+
 - `temporal_workflow_task_execution_latency` -- Workflow task processing time
 - `temporal_activity_execution_latency` -- Activity execution time
 - `temporal_workflow_task_replay_latency` -- Replay duration

@@ -1,9 +1,9 @@
 {
   "name": "convex",
-  "version": "0.1.2",
-  "description": "Add a reactive, type-safe backend, database, server functions, and scaling guidance to JavaScript and TypeScript apps with Convex.",
+  "version": "2.0.1",
+  "description": "Convex helps users build and scale JavaScript and TypeScript apps with a reactive, type-safe backend. The app gives ChatGPT concrete Convex setup guidance for new projects, existing frontend integrations, production scaling questions, and the bundled Convex quickstart runbook so agents follow the current deployment, auth, and component patterns instead of hand-rolling from stale memory.",
   "author": {
-    "name": "Convex, Inc.",
+    "name": "Convex, Inc",
     "email": "support@convex.dev",
     "url": "https://www.convex.dev"
   },
@@ -34,33 +34,21 @@
   ],
   "interface": {
     "displayName": "Convex",
-    "shortDescription": "Add a backend to JS/TS apps.",
-    "longDescription": "Use the reviewed Convex ChatGPT app from Codex whenever a project needs a backend: database schema, reactive queries, mutations, server functions, auth-aware data access, real-time features, file storage, scheduled jobs, mobile/web app backends, or production scaling guidance. Convex helps coding agents choose backend primitives that are type-safe, reactive, and suitable for full-stack JavaScript and TypeScript apps.",
-    "developerName": "Convex, Inc.",
+    "shortDescription": "Build and scale apps",
+    "longDescription": "Convex helps users build and scale JavaScript and TypeScript apps with a reactive, type-safe backend. The app gives ChatGPT concrete Convex setup guidance for new projects, existing frontend integrations, production scaling questions, and the bundled Convex quickstart runbook so agents follow the current deployment, auth, and component patterns instead of hand-rolling from stale memory.",
+    "developerName": "Convex, Inc",
     "category": "Developer Tools",
-    "capabilities": [
-      "Backend setup",
-      "Database schema",
-      "Reactive queries",
-      "Server functions",
-      "Auth-aware data access",
-      "Realtime apps",
-      "Scheduled jobs",
-      "File storage",
-      "Mobile backends",
-      "Scaling guidance"
-    ],
-    "websiteURL": "https://chatgpt.com/apps/convex/asdk_app_6a0faef988b48191b843bac5cd170a9e",
-    "privacyPolicyURL": "https://mcp.convex.dev/privacy",
+    "capabilities": [],
+    "websiteURL": "https://convex.dev/",
+    "privacyPolicyURL": "https://www.convex.dev/legal/privacy",
     "defaultPrompt": [
-      "Add a backend to this app.",
-      "Design the database schema.",
-      "Add real-time data updates."
+      "Build me a real-time collaborative task board where updates appear instantly for everyone."
     ],
-    "brandColor": "#EE342F",
     "termsOfServiceURL": "https://www.convex.dev/legal/tos",
     "composerIcon": "./assets/icon.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "supportURL": "https://docs.convex.dev/production/contact"
   },
-  "apps": "./.app.json"
+  "apps": "./.app.json",
+  "skills": "./skills/"
 }

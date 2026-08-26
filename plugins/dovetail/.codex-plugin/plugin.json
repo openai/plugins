@@ -1,7 +1,7 @@
 {
   "name": "dovetail",
-  "version": "1.0.3",
-  "description": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
+  "version": "1.0.0",
+  "description": "Connect Dovetail inside ChatGPT to turn customer feedback into decisions without leaving your conversation. Search your Dovetail workspace for relevant projects, notes, docs, and themes, and get results back instantly. Ask things like “Summarize top friction points impacting enterprise renewal conversations” to surface evidence in seconds.",
   "author": {
     "name": "Dovetail",
     "url": "https://dovetail.com"
@@ -11,9 +11,9 @@
   "keywords": [],
   "apps": "./.app.json",
   "interface": {
-    "displayName": "Dovetail ",
-    "shortDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
-    "longDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation. Search your Dovetail workspace for relevant projects, notes, docs, and themes, and get results back instantly. Ask things like \u201cSummarize top friction points impacting enterprise renewal conversations\u201d to surface evidence in seconds.",
+    "displayName": "Dovetail",
+    "shortDescription": "Turn feedback into decisions",
+    "longDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation. Search your Dovetail workspace for relevant projects, notes, docs, and themes, and get results back instantly. Ask things like “Summarize top friction points impacting enterprise renewal conversations” to surface evidence in seconds.",
     "developerName": "Dovetail",
     "category": "Productivity",
     "capabilities": [],
@@ -26,7 +26,8 @@
     "termsOfServiceURL": "https://dovetail.com/legal/user-terms-of-service/",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://docs.dovetail.com/"
   },
   "homepage": "https://dovetail.com"
 }

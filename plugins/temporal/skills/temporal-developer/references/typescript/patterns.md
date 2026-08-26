@@ -289,6 +289,7 @@ export async function scopedWorkflow(): Promise<void> {
 **WHY**: Triggers provide a one-shot promise that resolves when a signal is received. Cleaner than condition() for single-value signals.
 
 **WHEN to use**:
+
 - Waiting for a single response (approval, completion notification)
 - Converting signal-based events into awaitable promises
 
@@ -351,10 +352,12 @@ export async function handlerAwareWorkflow(): Promise<string> {
 ## Activity Heartbeat Details
 
 ### WHY:
+
 - **Support activity cancellation** - Cancellations are delivered via heartbeat; activities that don't heartbeat won't know they've been cancelled
 - **Resume progress after worker failure** - Heartbeat details persist across retries
 
 ### WHEN:
+
 - **Cancellable activities** - Any activity that should respond to cancellation
 - **Long-running activities** - Track progress for resumability
 - **Checkpointing** - Save progress periodically

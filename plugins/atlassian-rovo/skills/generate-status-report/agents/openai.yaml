@@ -1,3 +1,0 @@
-interface:
-  display_name: "Generate Status Report"
-  short_description: "Create project status reports from Jira"

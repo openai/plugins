@@ -1,7 +1,0 @@
-interface:
-  display_name: "Channel Summarization"
-  short_description: "Summarize one Slack channel"
-  icon_small: "./assets/slack-small.svg"
-  icon_large: "./assets/slack.png"
-  brand_color: "#611F69"
-  default_prompt: "Use $slack-channel-summarization to review one Slack channel, using the requested window when provided and otherwise the last 100 messages, then produce a concise summary, post-ready update, or summary canvas."

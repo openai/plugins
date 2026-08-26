@@ -14,7 +14,9 @@ Java workflow code runs in a cooperative threading model where only one workflow
 
 `temporal-workflowcheck` (static analysis, beta) and `WorkflowReplayer` (replay testing) can help uncover some violations, but they are not exhaustive — careful code review and adherence to the rules below remain essential.
 
-## Forbidden Operations
+## Forbidden Operations in Workflows
+
+The following are forbidden inside workflow code but are appropriate to use in activities.
 
 - `Thread.sleep()` — blocks the real thread, bypasses Temporal timers
 - `new Thread()` or thread pools — breaks the cooperative threading model

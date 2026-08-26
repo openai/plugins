@@ -1,9 +1,9 @@
 {
   "name": "hebbia",
-  "version": "1.0.3",
-  "description": "Institutional research and financial workflows",
+  "version": "1.0.0",
+  "description": "Bring Hebbia's institutional intelligence into ChatGPT and Codex. The Hebbia MCP server lets you tap into your firm's knowledge and premium public to make better decisions on deals and investments and run financial workflows from research to reports, slides, and financial models.",
   "author": {
-    "name": "Hebbia",
+    "name": "Hebbia Inc.",
     "url": "https://www.hebbia.ai"
   },
   "homepage": "https://www.hebbia.ai",
@@ -13,9 +13,9 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Hebbia",
-    "shortDescription": "Institutional research and financial workflows",
+    "shortDescription": "AI for financial rigor",
     "longDescription": "Bring Hebbia's institutional intelligence into ChatGPT and Codex. The Hebbia MCP server lets you tap into your firm's knowledge and premium public to make better decisions on deals and investments and run financial workflows from research to reports, slides, and financial models.",
-    "developerName": "Hebbia",
+    "developerName": "Hebbia Inc.",
     "category": "Business & Operations",
     "capabilities": [],
     "websiteURL": "https://www.hebbia.ai",
@@ -27,6 +27,9 @@
     "brandColor": "#4657F5",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "screenshots": []
+    "screenshots": [],
+    "privacyPolicyURL": "https://www.hebbia.com/privacy/",
+    "termsOfServiceURL": "https://www.hebbia.com/terms-of-service/",
+    "brandColorDark": "#4657F5"
   }
 }

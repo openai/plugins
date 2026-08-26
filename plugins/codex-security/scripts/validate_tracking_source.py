@@ -11,9 +11,9 @@ from types import ModuleType
 from typing import Any
 
 
-def _load_finalizer() -> ModuleType:
-    script = Path(__file__).resolve().with_name("finalize_scan_contract.py")
-    spec = importlib.util.spec_from_file_location("codex_security_scan_contract", script)
+def _load_scan_contract_validator() -> ModuleType:
+    script = Path(__file__).resolve().with_name("validate_scan_contract.py")
+    spec = importlib.util.spec_from_file_location("codex_security_scan_validator", script)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"could not load scan contract validator: {script}")
     module = importlib.util.module_from_spec(spec)
@@ -21,7 +21,9 @@ def _load_finalizer() -> ModuleType:
     return module
 
 
-FINALIZER = _load_finalizer()
+SCAN_CONTRACT = _load_scan_contract_validator()
+FINALIZER = SCAN_CONTRACT.FINALIZER
+validate_contract = SCAN_CONTRACT.validate_contract
 
 
 def _select_findings(
@@ -52,49 +54,8 @@ def validate_source(
     if finding_id is not None and fingerprint is not None:
         raise ValueError("use only one of --finding-id or --fingerprint")
 
-    scan_dir = scan_dir.expanduser().resolve(strict=True)
-    schema_dir = Path(__file__).resolve().parents[1] / "schemas"
-    manifest, _ = FINALIZER._read_scan_local_json_bytes(
-        scan_dir,
-        "scan-manifest.json",
-        "scan-manifest.json",
-    )
-    FINALIZER._validate_manifest(manifest)
-    FINALIZER.validate_against_schema(manifest, schema_dir / "scan-manifest.schema.json")
-
-    scan = FINALIZER._require_dict(manifest, "scan", "manifest")
-    findings_ref = scan["findingsRef"]
-    findings_document, findings_bytes = FINALIZER._read_scan_local_json_bytes(
-        scan_dir,
-        findings_ref,
-        findings_ref,
-    )
-    coverage_ref = scan["coverageRef"]
-    coverage_document, coverage_bytes = FINALIZER._read_scan_local_json_bytes(
-        scan_dir,
-        coverage_ref,
-        coverage_ref,
-    )
-    FINALIZER._validate_existing_seal(
-        scan_dir,
-        scan,
-        artifact_contents={
-            findings_ref: findings_bytes,
-            coverage_ref: coverage_bytes,
-        },
-    )
-    FINALIZER._validate_findings(manifest, findings_document)
-    FINALIZER._enrich_findings(manifest, findings_document)
-    FINALIZER._validate_coverage(manifest, coverage_document, scan_dir)
-    FINALIZER._validate_sealed_coverage_receipts(scan, coverage_document)
-    FINALIZER.validate_against_schema(
-        findings_document,
-        schema_dir / "findings.schema.json",
-    )
-    FINALIZER.validate_against_schema(
-        coverage_document,
-        schema_dir / "coverage.schema.json",
-    )
+    validated = validate_contract(scan_dir)
+    findings_document = validated["findings"]
     return _select_findings(
         findings_document["findings"],
         finding_id,

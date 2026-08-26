@@ -1,13 +1,35 @@
 {
-  "name": "hex",
-  "version": "0.1.0",
-  "description": "Hex workflows for searching projects and asking Hex Threads questions about workspace data.",
+  "apps": "./.app.json",
   "author": {
-    "name": "OpenAI"
+    "name": "Hex"
   },
+  "description": "Answer data questions and spin up new analyses with the Hex Agent.",
   "homepage": "https://hex.tech/",
-  "repository": "https://github.com/openai/plugins/tree/main/plugins/hex",
-  "license": "Proprietary",
+  "interface": {
+    "brandColor": "#182A4D",
+    "brandColorDark": "#B2C4E7",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Data & Analytics",
+    "composerIcon": "./assets/composer-icon.png",
+    "defaultPrompt": [
+      "pull up my board meeting dashboard",
+      "who are our top customers by revenue?",
+      "how is our sales conversion vs. benchmarks?"
+    ],
+    "developerName": "Hex",
+    "displayName": "Hex",
+    "logo": "./assets/hex.png",
+    "longDescription": "Answer data questions and spin up new analyses with the Hex Agent.",
+    "privacyPolicyURL": "https://learn.hex.tech/docs/trust/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Ask questions, run analyses",
+    "termsOfServiceURL": "https://learn.hex.tech/docs/legal/terms-and-conditions",
+    "websiteURL": "https://hex.tech/"
+  },
   "keywords": [
     "hex",
     "data-analysis",
@@ -16,26 +38,9 @@
     "dashboards",
     "notebooks"
   ],
+  "license": "Proprietary",
+  "name": "hex",
+  "repository": "https://github.com/openai/plugins/tree/main/plugins/hex",
   "skills": "./skills/",
-  "apps": "./.app.json",
-  "interface": {
-    "displayName": "Hex",
-    "shortDescription": "Search Hex projects and ask Hex Threads questions",
-    "longDescription": "Hex helps users find existing Hex projects, dashboards, and data apps, then ask Hex Threads questions when the user explicitly wants to work in Hex.",
-    "developerName": "Hex",
-    "category": "Data & Analytics",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
-    "websiteURL": "https://hex.tech/",
-    "privacyPolicyURL": "https://learn.hex.tech/docs/trust/privacy-policy",
-    "termsOfServiceURL": "https://learn.hex.tech/docs/legal/terms-and-conditions",
-    "defaultPrompt": "Search Hex projects or ask a Hex Thread question when the user explicitly wants Hex.",
-    "brandColor": "#182A4D",
-    "composerIcon": "./assets/hex.png",
-    "logo": "./assets/hex.png",
-    "screenshots": []
-  }
+  "version": "1.0.0"
 }

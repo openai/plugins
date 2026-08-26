@@ -1,45 +1,27 @@
 {
-  "name": "morningstar",
-  "version": "1.0.3",
-  "description": "Morningstar fund research plugin for screening, summarizing, and comparing funds and ETFs using the Morningstar ChatGPT app.",
-  "author": {
-    "name": "Morningstar",
-    "url": "https://www.morningstar.com"
-  },
-  "homepage": "https://www.morningstar.com",
-  "repository": "https://github.com/Morningstar/morningstar-plugins",
-  "license": "MIT",
-  "keywords": [
-    "morningstar",
-    "funds",
-    "etf",
-    "research",
-    "screening"
-  ],
-  "skills": "./skills/",
   "apps": "./.app.json",
+  "author": {
+    "name": "Morningstar Inc."
+  },
+  "description": "Integrate Morningstar's comprehensive investment data and independent research directly into your AI workflows. Through our MCP-powered connector, clients can explore cross-asset coverage, including funds, equities, and beyond, enhanced by forward-looking insights from our global analyst teams. Access trusted, unbiased intelligence to support investment decisions, due diligence, and portfolio strategy in one seamless experience.",
   "interface": {
-    "displayName": "Morningstar",
-    "shortDescription": "Screen, summarize, and compare funds with the Morningstar app.",
-    "longDescription": "Bundled Morningstar fund workflows for Codex: production screening with normalization, fund returns screening, single-fund deep summaries, and side-by-side comparison for 2 to 4 funds. The plugin links to the reviewed Morningstar ChatGPT app for authenticated data access and includes explicit data-availability disclosures.",
-    "developerName": "Morningstar",
+    "capabilities": [],
     "category": "Finance",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
-    "websiteURL": "https://www.morningstar.com",
-    "privacyPolicyURL": "https://www.morningstar.com/company/privacy-center/privacy-policy",
-    "termsOfServiceURL": "https://www.morningstar.com/company/terms-and-conditions",
     "defaultPrompt": [
-      "Use fund-screener to find Gold-rated US large-cap ETFs.",
-      "Use fund-summarizer to analyze VFIAX.",
-      "Use fund-comparison to compare VFIAX, SWPPX, and FXAIX."
+      "Screen for ETFs with a Medalist Rating better than Silver, a Morningstar Rating over 4 stars, in the Large Value category.",
+      "Compare the funds SOXX and VOO.",
+      "What are some datapoints that help me evaluate the performance of a fund?"
     ],
-    "brandColor": "#E4572E",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
-    "screenshots": []
-  }
+    "developerName": "Morningstar Inc.",
+    "displayName": "Morningstar",
+    "longDescription": "Integrate Morningstar's comprehensive investment data and independent research directly into your AI workflows. Through our MCP-powered connector, clients can explore cross-asset coverage, including funds, equities, and beyond, enhanced by forward-looking insights from our global analyst teams. Access trusted, unbiased intelligence to support investment decisions, due diligence, and portfolio strategy in one seamless experience.",
+    "privacyPolicyURL": "https://www.morningstar.com/company/privacy-policy",
+    "shortDescription": "Investment and market insights",
+    "supportURL": "https://www.morningstar.com/business/products/direct-ai-solutions",
+    "termsOfServiceURL": "https://www.morningstar.com/user-agreement",
+    "websiteURL": "https://www.morningstar.com/business/products/direct-ai-solutions"
+  },
+  "name": "morningstar",
+  "skills": "./skills",
+  "version": "5.0.0"
 }

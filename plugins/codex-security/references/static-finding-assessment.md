@@ -47,10 +47,7 @@ Before treating a static path as security-relevant, classify:
 - policy basis: repository policy, product docs, deploy/config evidence,
   package metadata, code comments, threat model, or unknown
 
-A reachable dataflow is not enough on its own. Static evidence is strongest when the vulnerable condition is reachable and the source crosses a product security boundary the project appears to support.
-
-If a path is only example-only, fixture-only, docs-only, generated-only,
-vendored-only, local-only, trusted configuration, or intentionally code-executing extension behavior, record that as counterevidence unless other repository evidence shows the surface is shipped, deployed, documented for untrusted users, or bypasses a supported hardening/auth boundary.
+Check whether untrusted input can reach the bug.
 
 ## Static Confidence
 

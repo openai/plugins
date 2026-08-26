@@ -1,8 +1,8 @@
 {
-  "apps": {
+  "apps":
+  {
     "google-calendar": {
-      "id": "connector_947e0d954944416db111db556030eea6",
-      "required": false
+      "id": "connector_947e0d954944416db111db556030eea6"
     }
   }
 }

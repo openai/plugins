@@ -1,6 +1,6 @@
 {
   "name": "github",
-  "version": "0.1.6",
+  "version": "0.1.11",
   "description": "Inspect repositories, triage pull requests and issues, debug CI, and publish changes through a hybrid GitHub connector and CLI workflow.",
   "author": {
     "name": "OpenAI",
@@ -12,25 +12,27 @@
   "license": "MIT",
   "keywords": [
     "github",
+    "microsoft",
+    "git",
+    "repositories",
+    "source control",
+    "pull requests",
+    "github actions",
+    "ci/cd",
     "pull-request",
     "code-review",
     "issues",
     "ci",
     "actions"
   ],
-  "skills": "./skills/",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "GitHub",
     "shortDescription": "Triage PRs, issues, CI, and publish flows",
     "longDescription": "Use GitHub to inspect repositories, review pull requests, address feedback, debug failing Actions checks, and prepare code changes for review through a connector-first workflow with targeted CLI fallbacks.",
     "developerName": "OpenAI",
     "category": "Developer Tools",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
+    "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://github.com/",
     "privacyPolicyURL": "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement",
     "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
@@ -38,7 +40,8 @@
       "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review"
     ],
     "composerIcon": "./assets/github-small.svg",
-    "logo": "./assets/logo.png",
+    "logo": "./assets/github.png",
+    "logoDark": "./assets/github-dark.png",
     "screenshots": [],
     "brandColor": "#24292F"
   }

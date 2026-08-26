@@ -125,11 +125,13 @@ dataConverter := converter.NewCompositeDataConverter(
 ## Protobuf Support
 
 Binary protobuf:
+
 ```go
 converter.NewProtoPayloadConverter()
 ```
 
 JSON protobuf:
+
 ```go
 converter.NewProtoJSONPayloadConverter()
 ```

@@ -423,10 +423,12 @@ public class MyWorkflowImpl implements MyWorkflow {
 ## Activity Heartbeat Details
 
 ### WHY:
+
 - **Support activity cancellation** — Cancellations are delivered via heartbeat; activities that don't heartbeat won't know they've been cancelled
 - **Resume progress after worker failure** — Heartbeat details persist across retries
 
 ### WHEN:
+
 - **Cancellable activities** — Any activity that should respond to cancellation
 - **Long-running activities** — Track progress for resumability
 - **Checkpointing** — Save progress periodically

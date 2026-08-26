@@ -1,46 +1,50 @@
 {
-	"name": "remotion",
-	"version": "1.0.3",
-	"description": "Remotion video creation skills — best practices, animations, audio, captions, 3D, and more for building programmatic videos with React.",
-	"author": {
-		"name": "Remotion",
-		"email": "hi@remotion.dev",
-		"url": "https://remotion.dev"
-	},
-	"homepage": "https://remotion.dev",
-	"repository": "https://github.com/remotion-dev/remotion",
-	"license": "MIT",
-	"keywords": [
-		"remotion",
-		"video",
-		"react",
-		"animation",
-		"composition",
-		"rendering",
-		"ffmpeg",
-		"captions",
-		"audio"
-	],
-	"skills": "./skills/",
-	"interface": {
-		"displayName": "Remotion",
-		"shortDescription": "Create motion graphics from prompts",
-		"longDescription": "Build videos programmatically with Remotion and React. Covers animations, timing, audio, captions, 3D, transitions, charts, text effects, and more.",
-		"developerName": "Remotion",
-		"category": "Creativity",
-		"capabilities": ["Read", "Write"],
-		"websiteURL": "https://remotion.dev",
-		"privacyPolicyURL": "https://remotion.pro/privacy",
-		"termsOfServiceURL": "https://remotion.pro/terms",
-		"defaultPrompt": [
-			"Create an animated chart with 5 bars",
-			"Make an animated call-to-action subscribe button for our YouTube channel",
-			"Use Remotion to add captions and audio to a video composition."
-		],
-		"screenshots": [],
-		"brandColor": "#0B84F3",
-		"composerIcon": "./assets/icon.png",
-		"logo": "./assets/logo.png",
-		"logoDark": "./assets/logo-dark.png"
-	}
+  "author": {
+    "email": "hi@remotion.dev",
+    "name": "Remotion",
+    "url": "https://remotion.dev"
+  },
+  "description": "Remotion video creation skills \u2014 best practices, animations, audio, captions, 3D, and more for building programmatic videos with React.",
+  "homepage": "https://remotion.dev",
+  "interface": {
+    "brandColor": "#0B84F3",
+    "brandColorDark": "#0C85F4",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "category": "Creativity",
+    "composerIcon": "./.codex-plugin/assets/composer-icon.svg",
+    "defaultPrompt": [
+      "Create an animated chart with 5 bars",
+      "Make an animated call-to-action subscribe button for our YouTube channel",
+      "Use Remotion to add captions and audio to a video composition."
+    ],
+    "developerName": "Remotion",
+    "displayName": "Remotion",
+    "logo": "./.codex-plugin/assets/logo.png",
+    "logoDark": "./.codex-plugin/assets/logo-dark.png",
+    "longDescription": "Build videos programmatically with Remotion and React. Covers animations, timing, audio, captions, 3D, transitions, charts, text effects, and more.",
+    "privacyPolicyURL": "https://www.remotion.dev/privacy",
+    "shortDescription": "Make videos agentically",
+    "supportURL": "https://remotion.dev/support",
+    "termsOfServiceURL": "https://www.remotion.dev/terms",
+    "websiteURL": "https://remotion.dev"
+  },
+  "keywords": [
+    "remotion",
+    "video",
+    "react",
+    "animation",
+    "composition",
+    "rendering",
+    "ffmpeg",
+    "captions",
+    "audio"
+  ],
+  "license": "MIT",
+  "name": "remotion",
+  "repository": "https://github.com/remotion-dev/remotion",
+  "skills": "./skills/",
+  "version": "1.0.7"
 }

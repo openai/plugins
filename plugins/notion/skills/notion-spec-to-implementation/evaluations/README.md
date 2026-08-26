@@ -1,13 +1,13 @@
 # Spec to Implementation Skill Evaluations
 
-Evaluation scenarios for testing the Spec to Implementation skill across different Codex models.
+Evaluation scenarios for testing the Spec to Implementation skill across different model configurations.
 
 ## Purpose
 
 These evaluations ensure the Spec to Implementation skill:
 - Finds and parses specification pages accurately
 - Breaks down specs into actionable implementation plans
-- Creates tasks that Codex can implement with clear acceptance criteria
+- Creates tasks an implementation agent can execute with clear acceptance criteria
 - Tracks progress and updates implementation status
 - Works consistently across Haiku, Sonnet, and Opus
 

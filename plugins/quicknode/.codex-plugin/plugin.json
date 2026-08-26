@@ -1,7 +1,7 @@
 {
   "name": "quicknode",
-  "version": "1.0.3",
-  "description": "Manage your Quicknode infrastructure directly in OpenAI.",
+  "version": "1.0.0",
+  "description": "Manage your Quicknode infrastructure directly in OpenAI. Create and manage endpoints, monitor logs and usage, configure security and rate limits, and review billing from one conversation.",
   "author": {
     "name": "Quicknode",
     "url": "https://www.quicknode.com/"
@@ -12,7 +12,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Quicknode",
-    "shortDescription": "Manage your Quicknode infrastructure directly in OpenAI.",
+    "shortDescription": "Quicknode for OpenAI Builders",
     "longDescription": "Manage your Quicknode infrastructure directly in OpenAI. Create and manage endpoints, monitor logs and usage, configure security and rate limits, and review billing from one conversation.",
     "developerName": "Quicknode",
     "category": "Developer Tools",
@@ -25,7 +25,8 @@
     "privacyPolicyURL": "https://www.quicknode.com/privacy",
     "termsOfServiceURL": "https://www.quicknode.com/terms",
     "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "supportURL": "https://support.quicknode.com/"
   },
   "homepage": "https://www.quicknode.com/"
 }

@@ -1,9 +1,9 @@
 {
   "name": "deepnote",
-  "version": "0.1.5",
-  "description": "Use Deepnote's collaborative data workspace to explore data, automate notebooks and SQL workflows, and turn analysis into shareable results.",
+  "version": "2.0.0",
+  "description": "Bring your Deepnote workspace into Codex. Search your workspace, trigger analytical workflows across 60+ data connectors, and use the output in Codex. No SQL, R, or Python knowledge required with the help of OpenAI models.\n\nWith Deepnote MCP, you can:\n\n- Search across your projects, notebooks, and integrations\n- Run an end-to-end notebook\n- Pull the latest result from the notebook runs\n- See scheduled runs in the workspace\n\nAll this while respecting your Deepnote workspace’s permissions. Note: this MCP requires an active Deepnote account and a Deepnote API token (https://deepnote.com/docs/deepnote-api).",
   "author": {
-    "name": "Deepnote",
+    "name": "Deepnote, inc.",
     "url": "https://deepnote.com"
   },
   "homepage": "https://deepnote.com",
@@ -21,16 +21,16 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Deepnote",
-    "shortDescription": "Explore data and automate analysis in Deepnote",
+    "shortDescription": "Run data workflows with agents",
     "longDescription": "Deepnote gives teams a collaborative workspace for notebooks, SQL, apps, and data workflows. This plugin helps OpenAI work with connected Deepnote projects, inspect and run notebooks, and turn workspace context into useful analysis and shareable results.",
-    "developerName": "Deepnote",
+    "developerName": "Deepnote, inc.",
     "category": "Data & Analytics",
     "capabilities": [
       "Interactive",
       "Read",
       "Write"
     ],
-    "websiteURL": "https://deepnote.com",
+    "websiteURL": "https://deepnote.com/",
     "privacyPolicyURL": "https://deepnote.com/privacy",
     "termsOfServiceURL": "https://deepnote.com/terms",
     "defaultPrompt": [
@@ -42,6 +42,7 @@
     "composerIcon": "./assets/composer.svg",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "screenshots": []
+    "screenshots": [],
+    "brandColorDark": "#3793EF"
   }
 }

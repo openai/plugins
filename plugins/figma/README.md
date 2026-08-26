@@ -32,11 +32,11 @@ with this shape:
 
 - `.codex-plugin/plugin.json`
   - required plugin manifest
-  - defines plugin metadata and points Codex at the plugin contents
+  - defines plugin metadata and points the runtime at the plugin contents
 
 - `.app.json`
   - plugin-local app dependency manifest
-  - points Codex at the connected Figma integration used by the bundled skills
+  - points the runtime at the connected Figma integration used by the bundled skills
 
 - `agents/`
   - plugin-level agent metadata

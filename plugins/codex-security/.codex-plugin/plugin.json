@@ -1,12 +1,12 @@
 {
   "name": "codex-security",
-  "version": "0.1.11",
+  "version": "0.1.22",
   "description": "Codex Security workflows for security scans, analysis, and investigation.",
   "author": {
     "name": "OpenAI"
   },
   "homepage": "https://developers.openai.com/codex/security",
-  "repository": "https://github.com/openai/plugins",
+  "repository": "https://github.com/openai/openai/tree/master/chatgpt/oai-maintained-plugins/plugins/codex-security",
   "license": "Proprietary",
   "keywords": [
     "security",
@@ -20,7 +20,7 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Codex Security",
-    "shortDescription": "Security scanning for your codebase",
+    "shortDescription": "Scan your codebase for risks",
     "longDescription": "Codex Security packages reusable workflows for security scans, analysis, validation, and investigation across code, diffs, and related artifacts.",
     "developerName": "OpenAI",
     "category": "Security",

@@ -29,7 +29,6 @@ const worker = await Worker.create({
 
 Use this with *extreme caution*.
 
-
 ## Function Replacement
 
 Functions like `Math.random()`, `Date`, and `setTimeout()` are replaced by deterministic versions.

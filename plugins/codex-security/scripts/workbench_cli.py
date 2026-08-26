@@ -8,14 +8,17 @@ from pathlib import Path
 
 # Some plugin hosts launch Python with safe-path isolation enabled.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import deep_scan_workbench as deep_scan
 import workbench_remediation as remediation
 from workbench_constants import (
     DIFF_TARGET_KINDS,
     EXPORT_FORMATS,
     FINDING_CLOSE_REASONS,
+    FINDING_SEVERITIES,
     FINDING_STATUSES,
     FINDINGS_PAGE_MAX,
     MODES,
+    PHASE_PROGRESS_UNITS,
     PHASES,
     REMEDIATION_UPDATE_STATES,
 )
@@ -32,9 +35,6 @@ def parse_args(description: str) -> argparse.Namespace:
     create_workspace.add_argument("--target-title")
     create_workspace.add_argument("--target-summary")
     create_workspace.add_argument("--user-context")
-    create_preflight = create_workspace.add_mutually_exclusive_group()
-    create_preflight.add_argument("--capability-preflight-json")
-    create_preflight.add_argument("--capability-preflight-json-file", type=Path)
     create_workspace.add_argument("--scope")
     create_workspace.add_argument("--mode", choices=MODES, default="standard")
     create_workspace.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS)
@@ -45,9 +45,6 @@ def parse_args(description: str) -> argparse.Namespace:
     get_workspace = subparsers.add_parser("get-workspace")
     get_workspace.add_argument("--workspace-id", required=True)
     get_workspace.add_argument("--thread-id")
-
-    get_latest_workspace = subparsers.add_parser("get-latest-workspace")
-    get_latest_workspace.add_argument("--thread-id", required=True)
 
     inspect_target = subparsers.add_parser("inspect-target")
     inspect_target.add_argument("--target-path", required=True)
@@ -61,25 +58,6 @@ def parse_args(description: str) -> argparse.Namespace:
     inspect_setup.add_argument("--diff-head-revision")
     inspect_setup.add_argument("--diff-content-digest")
 
-    begin_diff_resolution = subparsers.add_parser("begin-diff-resolution")
-    begin_diff_resolution.add_argument("--workspace-id", required=True)
-    begin_diff_resolution.add_argument("--request-id", required=True)
-    begin_diff_resolution.add_argument("--target-path", required=True)
-    begin_diff_resolution.add_argument("--user-context", required=True)
-
-    cancel_diff_resolution = subparsers.add_parser("cancel-diff-resolution")
-    cancel_diff_resolution.add_argument("--workspace-id", required=True)
-    cancel_diff_resolution.add_argument("--request-id", required=True)
-
-    set_diff_target = subparsers.add_parser("set-diff-target")
-    set_diff_target.add_argument("--workspace-id", required=True)
-    set_diff_target.add_argument("--request-id", required=True)
-    set_diff_target.add_argument("--target-summary", required=True)
-    set_diff_target.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS, required=True)
-    set_diff_target.add_argument("--diff-base-revision")
-    set_diff_target.add_argument("--diff-head-revision")
-    set_diff_target.add_argument("--diff-content-digest")
-
     save_workspace = subparsers.add_parser("save-workspace")
     save_workspace.add_argument("--workspace-id", required=True)
     save_workspace.add_argument("--target-path", required=True)
@@ -92,45 +70,177 @@ def parse_args(description: str) -> argparse.Namespace:
     save_workspace.add_argument("--diff-head-revision")
     save_workspace.add_argument("--diff-content-digest")
 
-    set_capability_preflight = subparsers.add_parser("set-capability-preflight")
-    set_capability_preflight.add_argument("--workspace-id", required=True)
-    set_capability_preflight.add_argument("--checked-target-path", required=True)
-    set_capability_preflight.add_argument("--checked-mode", choices=MODES, required=True)
-    set_preflight = set_capability_preflight.add_mutually_exclusive_group(required=True)
-    set_preflight.add_argument("--capability-preflight-json")
-    set_preflight.add_argument("--capability-preflight-json-file", type=Path)
-
     start_scan = subparsers.add_parser("start-scan")
     start_scan.add_argument("--workspace-id", required=True)
     start_scan.add_argument("--scan-root")
+    start_scan.add_argument("--model")
+    start_scan.add_argument("--reasoning-effort")
+
+    start_prompt_only_scan = subparsers.add_parser("start-prompt-only-scan")
+    start_prompt_only_scan.add_argument("--thread-id", required=True)
+    start_prompt_only_scan.add_argument("--target-path", required=True)
+    start_prompt_only_scan.add_argument("--scope", required=True)
+    start_prompt_only_scan.add_argument("--mode", choices=("diff", "standard"), required=True)
+    start_prompt_only_scan.add_argument("--target-summary")
+    start_prompt_only_scan.add_argument("--user-context")
+    start_prompt_only_scan.add_argument("--diff-target-kind", choices=DIFF_TARGET_KINDS)
+    start_prompt_only_scan.add_argument("--diff-base-revision")
+    start_prompt_only_scan.add_argument("--diff-head-revision")
+    start_prompt_only_scan.add_argument("--diff-content-digest")
+    start_prompt_only_scan.add_argument("--scan-root")
+    start_prompt_only_scan.add_argument("--model")
+    start_prompt_only_scan.add_argument("--reasoning-effort")
+
+    start_headless_standard_scan = subparsers.add_parser("start-headless-standard-scan")
+    start_headless_standard_scan.add_argument("--thread-id", required=True)
+    start_headless_standard_scan.add_argument("--target-path", required=True)
+    start_headless_standard_scan.add_argument("--scope", required=True)
+    start_headless_standard_scan.add_argument("--target-summary")
+    start_headless_standard_scan.add_argument("--user-context")
+    start_headless_standard_scan.add_argument("--scan-root")
+    start_headless_standard_scan.add_argument("--model")
+    start_headless_standard_scan.add_argument("--reasoning-effort")
+    start_headless_standard_scan.set_defaults(
+        mode="standard",
+        diff_target_kind=None,
+        diff_base_revision=None,
+        diff_head_revision=None,
+        diff_content_digest=None,
+    )
+
+    deep_scan.register_subcommands(subparsers, positive_int)
 
     get_scan = subparsers.add_parser("get-scan")
     get_scan.add_argument("--scan-id", required=True)
     get_scan.add_argument("--occurrence-id")
 
+    get_scan_feedback = subparsers.add_parser("get-scan-feedback")
+    get_scan_feedback.add_argument("--scan-id", required=True)
+
+    update_scan_context = subparsers.add_parser("update-scan-context")
+    update_scan_context.add_argument("--scan-id", required=True)
+    update_scan_context.add_argument("--user-context", required=True)
+    update_scan_context_owner = update_scan_context.add_mutually_exclusive_group(required=True)
+    update_scan_context_owner.add_argument("--workspace-id")
+    update_scan_context_owner.add_argument("--thread-id")
+    update_scan_context.add_argument("--claim-token")
+
+    list_scans = subparsers.add_parser("list-scans")
+    list_scans.add_argument("--query")
+    list_scans.add_argument("--target-id")
+    list_scans.add_argument("--status", choices=("running", "complete", "failed", "canceled"))
+    list_scans.add_argument("--mode", choices=MODES)
+    list_scans.add_argument("--repository")
+    list_scans.add_argument("--scan-root")
+    list_scans.add_argument("--offset", type=non_negative_int, default=0)
+    list_scans.add_argument("--limit", type=positive_int)
+
+    list_unmatched_scan_pairs = subparsers.add_parser("list-unmatched-scan-pairs")
+    list_unmatched_scan_pairs.add_argument("--repository", required=True)
+    list_unmatched_scan_pairs.add_argument("--force", action="store_true")
+
+    register_cli_scan = subparsers.add_parser("register-cli-scan")
+    register_cli_scan.add_argument("--scan-dir", required=True)
+    register_cli_scan.add_argument("--repository", required=True)
+    register_cli_scan.add_argument("--recipe-json", required=True)
+    register_cli_scan.add_argument("--user-context")
+    register_cli_scan.add_argument("--parent-scan-id")
+    register_cli_scan.add_argument("--archive-existing", action="store_true")
+    register_cli_scan.add_argument("--archived-scan-dir")
+
+    set_scan_thread = subparsers.add_parser("set-scan-thread")
+    set_scan_thread.add_argument("--scan-id", required=True)
+    set_scan_thread.add_argument("--thread-id", required=True)
+
+    get_scan_recipe = subparsers.add_parser("get-scan-recipe")
+    get_scan_recipe.add_argument("--scan-id", required=True)
+
+    compare_scans = subparsers.add_parser("compare-scans")
+    compare_scans.add_argument("--before-scan-id", required=True)
+    compare_scans.add_argument("--after-scan-id", required=True)
+    compare_scans.add_argument("--include-matching-inputs", action="store_true")
+    compare_scans.add_argument("--require-matches", action="store_true")
+
+    save_scan_comparison = subparsers.add_parser("save-scan-comparison")
+    save_scan_comparison.add_argument("--before-scan-id", required=True)
+    save_scan_comparison.add_argument("--after-scan-id", required=True)
+    save_scan_comparison.add_argument("--matches-json", required=True)
+
+    list_global_findings = subparsers.add_parser("list-global-findings")
+    list_global_findings.add_argument("--query")
+    list_global_findings.add_argument("--severity", choices=FINDING_SEVERITIES)
+    list_global_findings.add_argument("--status", choices=FINDING_STATUSES)
+    list_global_findings.add_argument("--target-id")
+    list_global_findings.add_argument("--offset", type=non_negative_int, default=0)
+    list_global_findings.add_argument("--limit", type=positive_int, default=FINDINGS_PAGE_MAX)
+    list_repositories = subparsers.add_parser("list-repositories")
+    list_repositories.add_argument("--query")
+    list_repositories.add_argument("--target-id")
+    list_repositories.add_argument("--status", choices=("scanned", "not_scanned", "open_findings"))
+    list_repositories.add_argument("--offset", type=non_negative_int, default=0)
+    list_repositories.add_argument("--limit", type=positive_int)
+
     list_findings = subparsers.add_parser("list-findings")
     list_findings.add_argument("--scan-id", required=True)
+    list_findings.add_argument("--query")
+    list_findings.add_argument("--severity", choices=FINDING_SEVERITIES)
+    list_findings.add_argument("--status", choices=FINDING_STATUSES)
     list_findings.add_argument("--offset", type=non_negative_int, default=0)
     list_findings.add_argument("--limit", type=positive_int, default=FINDINGS_PAGE_MAX)
 
     update_progress = subparsers.add_parser("update-progress")
     update_progress.add_argument("--scan-id", required=True)
     update_progress.add_argument("--phase", choices=PHASES)
+    update_progress.add_argument("--phase-items-total", type=non_negative_int)
+    update_progress.add_argument("--phase-items-completed", type=non_negative_int)
+    update_progress.add_argument("--phase-progress-unit", choices=PHASE_PROGRESS_UNITS)
+    update_progress.add_argument("--preflight-issues-json")
     update_progress.add_argument("--review-items-total", type=non_negative_int)
     update_progress.add_argument("--review-items-completed", type=non_negative_int)
     update_progress.add_argument("--reportable-findings-count", type=non_negative_int)
     update_progress.add_argument("--deep-review-pass", type=positive_int)
+    update_progress.add_argument("--claim-token")
+    update_progress.add_argument("--coordinator-generation", type=positive_int)
+    update_progress.add_argument("--model")
+    update_progress.add_argument("--reasoning-effort")
+
+    prepare_scan_completion = subparsers.add_parser("prepare-scan-completion")
+    prepare_scan_completion.add_argument("--scan-id", required=True)
+    prepare_scan_completion.add_argument("--claim-token")
 
     complete_scan = subparsers.add_parser("complete-scan")
     complete_scan.add_argument("--scan-id", required=True)
+    complete_scan.add_argument("--claim-token")
+    complete_scan.add_argument("--cost-json")
+    complete_scan.add_argument("--thread-id")
+
+    complete_budget_exhausted_scan = subparsers.add_parser("complete-budget-exhausted-scan")
+    complete_budget_exhausted_scan.add_argument("--scan-id", required=True)
+    complete_budget_exhausted_scan.add_argument("--cost-json", required=True)
+    complete_budget_exhausted_scan.add_argument("--message")
 
     cancel_scan = subparsers.add_parser("cancel-scan")
     cancel_scan.add_argument("--scan-id", required=True)
-    cancel_scan.add_argument("--thread-id", required=True)
+    cancel_scan.add_argument("--thread-id")
 
     fail_scan = subparsers.add_parser("fail-scan")
     fail_scan.add_argument("--scan-id", required=True)
     fail_scan.add_argument("--message", required=True)
+    fail_scan.add_argument("--claim-token")
+    fail_scan.add_argument("--cost-json")
+
+    preserve_scan = subparsers.add_parser("preserve-scan-results")
+    preserve_scan.add_argument("--scan-id", required=True)
+    preserve_scan.add_argument("--thread-id")
+    preserve_scan.add_argument("--claim-token")
+    preserve_scan.add_argument("--coordinator-generation", type=positive_int)
+
+    write_scan_draft = subparsers.add_parser("write-scan-draft")
+    write_scan_draft.add_argument("--scan-id", required=True)
+    write_scan_draft.add_argument("--draft-path", required=True)
+    write_scan_draft.add_argument("--checkpoint-path")
+    write_scan_draft.add_argument("--expected-draft-digest")
+    write_scan_draft.add_argument("--claim-token")
 
     mark_handoff_delivered = subparsers.add_parser("mark-handoff-delivered")
     mark_handoff_delivered.add_argument("--scan-id", required=True)
@@ -145,6 +255,11 @@ def parse_args(description: str) -> argparse.Namespace:
     release_handoff_delivery = subparsers.add_parser("release-handoff-delivery")
     release_handoff_delivery.add_argument("--scan-id", required=True)
     release_handoff_delivery.add_argument("--claim-token", required=True)
+
+    attach_scan_continuation_thread = subparsers.add_parser("attach-scan-continuation-thread")
+    attach_scan_continuation_thread.add_argument("--scan-id", required=True)
+    attach_scan_continuation_thread.add_argument("--claim-token", required=True)
+    attach_scan_continuation_thread.add_argument("--thread-id", required=True)
 
     set_finding_triage = subparsers.add_parser("set-finding-triage")
     set_finding_triage.add_argument("--occurrence-id", required=True)
@@ -204,7 +319,13 @@ def parse_args(description: str) -> argparse.Namespace:
     export_findings.add_argument("--format", choices=EXPORT_FORMATS, required=True)
 
     subparsers.add_parser("database-info")
-    return parser.parse_args()
+    arguments = sys.argv[1:]
+    if "--user-context-stdin" in arguments:
+        if arguments.count("--user-context-stdin") != 1 or "--user-context" in arguments:
+            parser.error("pass exactly one user-context transport")
+        index = arguments.index("--user-context-stdin")
+        arguments[index] = "--user-context=" + sys.stdin.buffer.read().decode("utf-8")
+    return parser.parse_args(arguments)
 
 
 def non_negative_int(value: str) -> int:

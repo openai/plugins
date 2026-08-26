@@ -1,8 +1,7 @@
 {
   "apps": {
     "stripe": {
-      "id": "asdk_app_6983c208e5f8819196b7511519f97993",
-      "required": false
+      "id": "asdk_app_6983c208e5f8819196b7511519f97993"
     }
   }
 }

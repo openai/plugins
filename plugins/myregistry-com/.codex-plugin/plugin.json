@@ -1,7 +1,7 @@
 {
   "name": "myregistry-com",
-  "version": "1.0.3",
-  "description": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
+  "version": "2.0.1",
+  "description": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want! Create a universal gift list for weddings, baby showers, birthdays, or any celebration and add gifts from any store.",
   "author": {
     "name": "MyRegistry.com",
     "url": "https://www.myregistry.com/"
@@ -12,13 +12,13 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "MyRegistry.com",
-    "shortDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
+    "shortDescription": "All Stores, One Registry®",
     "longDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want! Create a universal gift list for weddings, baby showers, birthdays, or any celebration and add gifts from any store.",
     "developerName": "MyRegistry.com",
     "category": "Other",
     "capabilities": [],
     "defaultPrompt": [
-      "Find the relevant registry details in MyRegistry.com"
+      "What gifts do I have on my gift list?"
     ],
     "screenshots": [],
     "websiteURL": "https://www.myregistry.com/",
@@ -26,7 +26,8 @@
     "termsOfServiceURL": "https://www.myregistry.com/Info/terms.aspx",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://myregistry.com/Info/ContactUs.aspx"
   },
   "homepage": "https://www.myregistry.com/"
 }

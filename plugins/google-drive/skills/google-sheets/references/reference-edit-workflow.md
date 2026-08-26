@@ -4,6 +4,8 @@ When to read: before existing Google Sheets inspection that may lead to an edit,
 
 ## Workflow
 
+Read `./reference-live-read-search-safety.md` before connector reads or row search, and `./reference-native-cell-structure.md` before extending populated rows or columns.
+
 1. If the spreadsheet or tab is not already grounded, identify it first and read metadata before deeper reads or writes.
 2. Prefer narrow reads and row search over dumping large tabs into context.
 3. Ground the task in exact sheet, range, header, and formula context before proposing changes.
@@ -19,6 +21,9 @@ When to read: before existing Google Sheets inspection that may lead to an edit,
 13. If the user asks to clean, normalize, or restructure data, summarize the intended table shape before writing.
 14. For exact-row, fixed-count, or report-style tasks, keep the findings narrowly scoped to the requested conclusions only.
 15. Do not add extra metrics, adjacent commentary, or bonus rows unless the user asked for them.
+16. After writing, run `./reference-visual-quality.md` before the final answer.
+
+Preserve existing values, formulas, validation, chips, and formatting outside the requested change. For content-only edits, retain the target cell's formatting unless the user asks to change it.
 
 ## Output Conventions
 

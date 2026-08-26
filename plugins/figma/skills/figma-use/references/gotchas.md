@@ -252,20 +252,11 @@ figma.notify("Done!")
 return "Done!"
 ```
 
-## `getPluginData()` / `setPluginData()` are not supported
+## Prefer returned IDs for workflow state
 
-These APIs are not available in `use_figma`. Use `getSharedPluginData()` / `setSharedPluginData()` instead (these ARE supported), or track nodes by returning IDs.
+Return node IDs and keep workflow state outside the Figma file. Put human-readable component purpose and usage in `description`.
 
 ```js
-// WRONG — not supported in use_figma
-node.setPluginData('my_key', 'my_value')
-const val = node.getPluginData('my_key')
-
-// CORRECT — use shared plugin data (requires a namespace)
-node.setSharedPluginData('my_namespace', 'my_key', 'my_value')
-const val = node.getSharedPluginData('my_namespace', 'my_key')
-
-// ALSO CORRECT — return node IDs and track them across calls
 const rect = figma.createRectangle()
 return { nodeId: rect.id }
 // Then pass nodeId as a string literal in the next use_figma call
@@ -423,27 +414,19 @@ await Promise.all(uniqueFonts.map(f => figma.loadFontAsync(f)))
 
 **Rule: use `findAllWithCriteria({ types: [...] })` for type-based searches. Reserve `findOne` / `findAll(predicate)` for cases the criteria API can't express** — name patterns, regex, capability checks (`'fills' in n`), or any predicate that touches properties the engine doesn't index.
 
-`findAll` and `findOne` walk the entire subtree node-by-node and run a JS predicate on each one. For anything the Figma engine already indexes (type, pluginData, sharedPluginData), there is a much faster API. Use this table:
+`findAll` and `findOne` walk the entire subtree node-by-node and run a JS predicate on each one. For supported criteria such as type, use the faster API in this table:
 
 | You want… | DON'T | DO |
 |---|---|---|
 | One specific node, you have its ID | `page.findOne(n => n.id === id)` | `await figma.getNodeByIdAsync(id)` |
 | All nodes of a given type | `page.findAll(n => n.type === 'TEXT')` | `page.findAllWithCriteria({ types: ['TEXT'] })` |
 | Type + a few cheap attributes (`name`, `visible`, etc.) | `page.findAll(n => n.type === 'TEXT' && n.name === 'Title')` | `page.query('TEXT[name=Title]')` (see [SKILL.md → node.query](../SKILL.md#nodequeryselector--css-like-node-search)) |
-| Nodes with plugin data | `page.findAll(n => n.getPluginData('key'))` | `page.findAllWithCriteria({ pluginData: { keys: ['key'] } })` |
-| Nodes with shared plugin data | `page.findAll(n => n.getSharedPluginData('ns', 'key'))` | `page.findAllWithCriteria({ sharedPluginData: { namespace: 'ns', keys: ['key'] } })` |
 
-**`types` and `pluginData.keys` are arrays — pass multiple values in a single call instead of issuing N separate ones.** A union over `types` is OR'd; multiple `pluginData.keys` match nodes that carry *any* of the given keys.
+**`types` is an array — pass multiple values in a single call instead of issuing N separate ones.** A union over `types` is OR'd.
 
 ```js
 // Multiple types in one call — returns COMPONENT ∪ COMPONENT_SET in one indexed pass
 page.findAllWithCriteria({ types: ['COMPONENT', 'COMPONENT_SET'] })
-
-// Multiple pluginData keys in one call — matches nodes that have any of them
-page.findAllWithCriteria({ pluginData: { keys: ['dsb_key', 'dsb_run_id'] } })
-
-// Multiple sharedPluginData keys (under the same namespace)
-page.findAllWithCriteria({ sharedPluginData: { namespace: 'dsb', keys: ['key', 'run_id'] } })
 ```
 
 One more rule applies to any traversal — see also the dedicated [Scope traversal to the smallest known ancestor](#scope-traversal-to-the-smallest-known-ancestor) gotcha below:
@@ -963,8 +946,8 @@ Common shapes the bug takes — what you tried vs. where the member actually liv
 | `defaultVariant`, `variantGroupProperties` | `COMPONENT_SET` only | every other type |
 | `figma.createPage` | Design files only (`figma.com/design/...`) | FigJam (`/board/`) and Slides (`/slides/`) — see Page Rules |
 
-Verify any member you're unsure about against [plugin-api-standalone.d.ts](plugin-api-standalone.d.ts) before using it. Names that "sound plausible" but aren't in the typings will always throw — the typings are the source of truth.
-
+Verify any member you're unsure about against `plugin-api-standalone.d.ts` before using it. Names that "sound plausible" but aren't in the typings will always throw — the typings are the source of truth.
+For `componentPropertyDefinitions`, checking only `node.type === 'COMPONENT'` is insufficient because variants have that type too. Resolve the owner first: keep a `COMPONENT_SET`, promote a variant `COMPONENT` to its parent set, keep a non-variant `COMPONENT`, and reject every other node type. See [component-patterns.md → Component-property owner narrowing](component-patterns.md#component-property-owner-narrowing) for the owner-narrowing rule.
 **Optional chaining (`?.`) does NOT defend against this.** The property access happens before `?.` is evaluated, so `node.children?.length` still throws on a `TEXT` node. The same applies to `try { node.fills }` — the access throws inside the try, which works for catching, but you should narrow up front instead.
 
 **How to avoid:**
@@ -989,7 +972,7 @@ v.dashPattern = [4, 8]
 node.customColor = '#ff0000'  // Error — not a real API property
 ```
 
-**How to avoid this**: Before setting any property, verify it exists on the node type by grepping [plugin-api-standalone.d.ts](plugin-api-standalone.d.ts). Property names that sound plausible but aren't in the typings will always throw.
+**How to avoid this**: Before setting any property, verify it exists on the node type by grepping `plugin-api-standalone.d.ts`. Property names that sound plausible but aren't in the typings will always throw.
 
 ## `detachInstance()` invalidates ancestor node IDs
 

@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -37,6 +38,7 @@ from pathlib import Path
 # Some plugin hosts launch Python with safe-path isolation enabled.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from rank_preview import DEFAULT_PREVIEW_BYTES, TEXT_CODE_EXTENSIONS, preview_for
+from workbench_target import git_directory_snapshot_paths
 
 EXCLUDED_DIRS = {
     ".cache",
@@ -117,6 +119,7 @@ EXCLUDED_FILENAMES = {
 SHARD_INPUT_GLOB = "rank-shard-*.input.jsonl"
 SHARD_OUTPUT_GLOB = "rank-shard-*.output.jsonl"
 SHARD_INPUT_PATTERN = re.compile(r"^rank-shard-([0-9]{4,})\.input\.jsonl$")
+DIRECT_SCOPE_PREVIEW_READ_BYTES = 64 * 1024
 RANK_POOL_PLAN_SCHEMA_VERSION = 1
 RANK_POOL_STRATEGY = "round_robin"
 RANK_POOL_WORKER_CAP = 6
@@ -139,6 +142,10 @@ def parse_args() -> argparse.Namespace:
         default=".",
         help="Path within the repository to scan. Defaults to the repository root.",
     )
+    make.add_argument(
+        "--scopes-file",
+        help="JSON array of repository-relative files and directories to scan together.",
+    )
     make.add_argument("--out", required=True, help="Output rank_input.jsonl path.")
     make.add_argument("--area", default="", help="Area label. Defaults to scope.")
     make.add_argument(
@@ -147,6 +154,26 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_PREVIEW_BYTES,
         help=f"Maximum UTF-8 bytes in each preview. Defaults to {DEFAULT_PREVIEW_BYTES}.",
     )
+
+    scoped = subparsers.add_parser(
+        "make-repo-scope-input",
+        help="List every explicitly scoped file without ranking or reading its contents.",
+    )
+    scoped.add_argument("--repo", required=True, help="Repository root.")
+    scoped.add_argument(
+        "--scopes-file",
+        required=True,
+        help="JSON array of repository-relative files and directories to scan together.",
+    )
+    scoped.add_argument("--out", required=True, help="Output scoped-source-input.jsonl path.")
+
+    bind = subparsers.add_parser(
+        "bind-repo-scopes",
+        help="Copy SDK scoped-path targets into the unsealed manifest and coverage documents.",
+    )
+    bind.add_argument("--scopes-file", required=True, help="JSON array of requested scopes.")
+    bind.add_argument("--manifest", required=True, help="Unsealed scan-manifest.json path.")
+    bind.add_argument("--coverage", required=True, help="Unsealed coverage.json path.")
 
     diff = subparsers.add_parser(
         "make-diff-rank-input",
@@ -261,17 +288,57 @@ def path_is_excluded(path: Path) -> bool:
     return path.name.endswith((".min.js", ".map"))
 
 
-def resolve_scope(repo: Path, scope: str) -> Path:
-    scope_path = Path(scope).expanduser()
+def windows_stream_component(path: Path) -> str | None:
+    """Return the first NTFS alternate-data-stream component."""
+
+    if os.name != "nt":
+        return None
+    return next(
+        (component for component in path.parts if component != path.anchor and ":" in component),
+        None,
+    )
+
+
+def resolve_scope(
+    repo: Path,
+    scope: str,
+    *,
+    expand_user: bool = True,
+    reject_symlinks: bool = False,
+) -> Path:
+    scope_path = Path(scope).expanduser() if expand_user else Path(scope)
+    stream = windows_stream_component(scope_path)
+    if stream is not None:
+        raise SystemExit(f"Scope must not use an NTFS alternate data stream: {stream}")
     if not scope_path.is_absolute():
         scope_path = repo / scope_path
+    if reject_symlinks:
+        repository = repo.resolve()
+        try:
+            relative = scope_path.relative_to(repository)
+        except ValueError as exc:
+            raise SystemExit(f"Scope must be inside repo: {scope_path}") from exc
+        ancestor = repository
+        for part in relative.parts:
+            if part == "..":
+                if ancestor == repository:
+                    raise SystemExit(f"Scope must be inside repo: {scope_path}")
+                ancestor = ancestor.parent
+                continue
+            ancestor /= part
+            try:
+                metadata = ancestor.stat(follow_symlinks=False)
+            except OSError as exc:
+                raise SystemExit(f"Scope path not found: {ancestor}") from exc
+            if ancestor.is_symlink() or getattr(metadata, "st_reparse_tag", 0) & 0x20000000:
+                raise SystemExit(f"Requested scope must not contain symbolic links: {ancestor}")
     scope_path = scope_path.resolve()
     repo_resolved = repo.resolve()
     try:
         scope_path.relative_to(repo_resolved)
     except ValueError as exc:
         raise SystemExit(f"Scope must be inside repo: {scope_path}") from exc
-    if not scope_path.is_dir():
+    if not scope_path.is_dir() and not scope_path.is_file():
         raise SystemExit(f"Scope path not found: {scope_path}")
     return scope_path
 
@@ -280,7 +347,7 @@ def write_jsonl(output: Path, rows: list[JsonRow]) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", encoding="utf-8") as handle:
         for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")))
+            handle.write(json.dumps(row, ensure_ascii=True, separators=(",", ":")))
             handle.write("\n")
 
 
@@ -290,6 +357,20 @@ def write_json(output: Path, payload: dict[str, object]) -> None:
         json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+
+
+def load_scopes_file(scopes_file: Path) -> list[str]:
+    try:
+        loaded: object = json.loads(scopes_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"Unable to read scopes file: {scopes_file}") from exc
+    if (
+        not isinstance(loaded, list)
+        or not loaded
+        or any(not isinstance(scope, str) or not scope for scope in loaded)
+    ):
+        raise SystemExit(f"Scopes file must contain a non-empty JSON string array: {scopes_file}")
+    return loaded
 
 
 def load_jsonl(path: Path, label: str, validator: RowValidator) -> list[JsonRow]:
@@ -372,30 +453,167 @@ def make_repo_rank_input(args: argparse.Namespace) -> None:
     repo = Path(args.repo).expanduser().resolve()
     if not repo.is_dir():
         raise SystemExit(f"Repo path not found: {repo}")
-    scope_abs = resolve_scope(repo, args.scope)
-    scope_rel = scope_abs.relative_to(repo).as_posix()
-    area = args.area or scope_rel
+    scopes = [args.scope]
+    explicit_scopes = args.scopes_file is not None
+    if explicit_scopes:
+        scopes = load_scopes_file(Path(args.scopes_file).expanduser())
 
-    rows: list[JsonRow] = []
-    for path in scope_abs.rglob("*"):
-        try:
-            if not path.is_file():
+    resolved_scopes = [
+        resolve_scope(repo, scope, expand_user=not explicit_scopes) for scope in scopes
+    ]
+    directly_requested_files = {
+        scope_abs for scope_abs in resolved_scopes if explicit_scopes and scope_abs.is_file()
+    }
+    rows_by_path: dict[str, JsonRow] = {}
+    for scope_abs in resolved_scopes:
+        scope_rel = scope_abs.relative_to(repo)
+        area = args.area or scope_rel.as_posix()
+        candidates = (scope_abs,) if scope_abs.is_file() else scope_abs.rglob("*")
+        for path in candidates:
+            try:
+                if path.is_symlink() or not path.is_file():
+                    continue
+                path.resolve(strict=True).relative_to(repo)
+            except (OSError, ValueError):
                 continue
-        except OSError:
-            continue
-        rel = path.relative_to(repo)
-        if path_is_excluded(rel) or path.suffix.lower() not in TEXT_CODE_EXTENSIONS:
-            continue
+            rel = path.relative_to(repo)
+            directly_requested = path in directly_requested_files
+            excluded_path = (
+                path.relative_to(scope_abs if scope_abs.is_dir() else scope_abs.parent)
+                if explicit_scopes
+                else rel
+            )
+            if not directly_requested and (
+                path_is_excluded(excluded_path) or path.suffix.lower() not in TEXT_CODE_EXTENSIONS
+            ):
+                continue
 
-        preview, is_binary = preview_for(path, args.preview_bytes)
-        if is_binary:
-            continue
-        rows.append({"path": rel.as_posix(), "area": area, "preview": preview})
+            if (
+                directly_requested
+                and path.suffix.lower() not in TEXT_CODE_EXTENSIONS
+                and path.name not in EXCLUDED_FILENAMES
+            ):
+                preview = ""
+            else:
+                preview, is_binary = preview_for(
+                    path,
+                    args.preview_bytes,
+                    max_read_bytes=DIRECT_SCOPE_PREVIEW_READ_BYTES if directly_requested else None,
+                )
+                if is_binary and not directly_requested:
+                    continue
+            rows_by_path.setdefault(
+                rel.as_posix(),
+                {"path": rel.as_posix(), "area": area, "preview": preview},
+            )
 
-    rows.sort(key=lambda row: str(row["path"]))
+    rows = sorted(rows_by_path.values(), key=lambda row: str(row["path"]))
     output = Path(args.out).expanduser()
     write_jsonl(output, rows)
     print(f"Wrote {len(rows)} rows to {output}")
+
+
+def make_repo_scope_input(args: argparse.Namespace) -> None:
+    repo = Path(args.repo).expanduser().resolve()
+    if not repo.is_dir():
+        raise SystemExit(f"Repo path not found: {repo}")
+
+    scopes = load_scopes_file(Path(args.scopes_file).expanduser())
+    rows_by_path: dict[str, JsonRow] = {}
+    for scope in scopes:
+        scope_path = resolve_scope(repo, scope, expand_user=False, reject_symlinks=True)
+        if scope_path.is_file():
+            candidates = (scope_path,)
+        else:
+            git_candidates = git_directory_snapshot_paths(scope_path)
+            if git_candidates is not None:
+                candidates = git_candidates
+            else:
+                command = [
+                    "rg",
+                    "--files",
+                    "--hidden",
+                    "--no-require-git",
+                    "--null",
+                    "--glob",
+                    "!.git/**",
+                    "--",
+                    str(scope_path.relative_to(repo)),
+                ]
+                try:
+                    result = subprocess.run(command, cwd=repo, capture_output=True, check=False)
+                except OSError as exc:
+                    ignore_names = (".gitignore", ".ignore", ".rgignore")
+                    ancestors = (scope_path, *scope_path.parents)
+                    has_ignore_rules = (
+                        any((ancestor / ".git").exists() for ancestor in (repo, *repo.parents))
+                        or any(
+                            (ancestor / name).is_file()
+                            for ancestor in ancestors
+                            if ancestor == repo or repo in ancestor.parents
+                            for name in ignore_names
+                        )
+                        or any(
+                            path.name in ignore_names
+                            for path in scope_path.rglob("*")
+                            if path.is_file()
+                        )
+                    )
+                    if has_ignore_rules:
+                        raise SystemExit(
+                            "Could not safely enumerate ignored scoped files without Git or ripgrep."
+                        ) from exc
+                    candidates = scope_path.rglob("*")
+                else:
+                    if result.returncode not in (0, 1):
+                        detail = result.stderr.decode("utf-8", errors="replace").strip()
+                        raise SystemExit(f"Could not enumerate scoped repository files: {detail}")
+                    candidates = (
+                        repo / os.fsdecode(path) for path in result.stdout.split(b"\0") if path
+                    )
+        for path in candidates:
+            try:
+                if path.is_symlink() or not path.is_file():
+                    continue
+                relative = path.resolve(strict=True).relative_to(repo)
+            except (OSError, ValueError):
+                continue
+            if ".git" in relative.parts:
+                continue
+            rows_by_path.setdefault(relative.as_posix(), {"path": relative.as_posix()})
+
+    rows = sorted(rows_by_path.values(), key=lambda row: str(row["path"]))
+    output = Path(args.out).expanduser()
+    write_jsonl(output, rows)
+    print(f"Wrote {len(rows)} scoped paths to {output}")
+
+
+def bind_repo_scopes(args: argparse.Namespace) -> None:
+    scopes = load_scopes_file(Path(args.scopes_file).expanduser())
+    manifest_path = Path(args.manifest).expanduser()
+    coverage_path = Path(args.coverage).expanduser()
+    try:
+        manifest: object = json.loads(manifest_path.read_text(encoding="utf-8"))
+        coverage: object = json.loads(coverage_path.read_text(encoding="utf-8"))
+        if not isinstance(manifest, dict) or not isinstance(coverage, dict):
+            raise ValueError("expected JSON objects")
+        scan = manifest.get("scan")
+        if not isinstance(scan, dict):
+            raise ValueError("manifest.scan must be an object")
+        scope = scan.get("scope")
+        if not isinstance(scope, dict):
+            raise ValueError("manifest.scan.scope must be an object")
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as exc:
+        raise SystemExit("Unable to bind requested scopes into the scan contract") from exc
+    scope["includePaths"] = scopes
+    coverage["includePaths"] = scopes
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=True, indent=2) + "\n", encoding="utf-8"
+    )
+    coverage_path.write_text(
+        json.dumps(coverage, ensure_ascii=True, indent=2) + "\n", encoding="utf-8"
+    )
+    print(f"Bound {len(scopes)} requested scopes into the scan contract")
 
 
 def run_git_changed_paths(repo: Path, diff_args: list[str]) -> list[tuple[Path, str]]:
@@ -896,6 +1114,10 @@ def main() -> None:
     args = parse_args()
     if args.command == "make-repo-rank-input":
         make_repo_rank_input(args)
+    elif args.command == "make-repo-scope-input":
+        make_repo_scope_input(args)
+    elif args.command == "bind-repo-scopes":
+        bind_repo_scopes(args)
     elif args.command == "make-diff-rank-input":
         make_diff_rank_input(args)
     elif args.command == "make-rank-shards":

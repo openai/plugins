@@ -1,7 +1,7 @@
 {
   "name": "zoho",
-  "version": "1.0.3",
-  "description": "Manage Zoho CRM sales workflows",
+  "version": "2.0.0",
+  "description": "Zoho CRM is an AI-powered sales software that helps businesses of all sizes manage their sales better. With SFA features, advanced automation, easy-to-use UI, advanced analytics, and deep customization capabilities, Zoho CRM truly understands your business. \n\nWith Codex, you can extend the functionalities of Zoho CRM by simply prompting. Your business, your Zoho CRM—powered by Codex.",
   "author": {
     "name": "Zoho",
     "url": "https://www.zoho.com"
@@ -12,13 +12,13 @@
   "keywords": [],
   "apps": "./.app.json",
   "interface": {
-    "displayName": "Zoho",
-    "shortDescription": "Manage Zoho CRM sales workflows",
+    "displayName": "Zoho CRM",
+    "shortDescription": "Automate Sales Operations",
     "longDescription": "Zoho CRM is an AI-powered sales software that helps businesses of all sizes manage their sales better. With SFA features, advanced automation, easy-to-use UI, advanced analytics, and deep customization capabilities, Zoho CRM truly understands your business. \n\nWith Codex, you can extend the functionalities of Zoho CRM by simply prompting. Your business, your Zoho CRM—powered by Codex.",
     "developerName": "Zoho",
     "category": "Business & Operations",
     "capabilities": [],
-    "websiteURL": "https://www.zoho.com",
+    "websiteURL": "https://www.zoho.com/en-in/crm/",
     "defaultPrompt": [
       "Search Zoho CRM for open deals closing this quarter and summarize the highest-risk opportunities.",
       "Find Zoho CRM contacts at an account and summarize recent activities.",
@@ -27,6 +27,9 @@
     "brandColor": "#0068B8",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "screenshots": []
+    "screenshots": [],
+    "privacyPolicyURL": "https://www.zoho.com/en-in/terms.html",
+    "termsOfServiceURL": "https://www.zoho.com/privacy.html",
+    "brandColorDark": "#47AFFF"
   }
 }

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Moody's Earnings Brief"
-  short_description: "Produce an Earnings Call Summary HTML report for 2–5 companies, summarizing transcript insights across revenue, volumes, pricing, supply chain, guidance, and corporate events"
-  default_prompt: "Use Moody's Earnings Brief skill to resolve the target companies, gather their earnings call transcripts, and generate a complete Earnings Call Summary HTML report."

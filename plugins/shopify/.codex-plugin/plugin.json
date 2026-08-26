@@ -1,45 +1,27 @@
 {
-  "name": "shopify",
-  "version": "1.3.3",
-  "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code.",
-  "author": {
-    "name": "Shopify",
-    "url": "https://shopify.dev/"
-  },
-  "homepage": "https://github.com/Shopify/Shopify-AI-Toolkit",
-  "repository": "https://github.com/Shopify/Shopify-AI-Toolkit",
-  "license": "MIT",
-  "keywords": [
-    "shopify",
-    "mcp",
-    "graphql",
-    "liquid",
-    "storefront",
-    "admin-api"
-  ],
-  "skills": "./skills/",
   "apps": "./.app.json",
+  "author": {
+    "name": "Shopify"
+  },
+  "description": "Shopify for ChatGPT makes store building and management as easy as having a conversation. Effortlessly connect your existing store or create a new online store by describing your business. Simply chat to add products, adjust inventory across locations, create discount codes, browse recent orders, view customer details, or pull analytics on your store\u2019s performance.",
   "interface": {
-    "displayName": "Shopify",
-    "shortDescription": "Build Shopify apps, themes, storefronts, and APIs",
-    "longDescription": "Shopify developer tools for searching Shopify documentation, generating and validating GraphQL, Liquid, Hydrogen, Functions, UI extension, and CLI workflows. Skill scripts send usage telemetry to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
-    "developerName": "Shopify",
-    "category": "Developer Tools",
-    "capabilities": [
-      "Read",
-      "Write"
-    ],
-    "websiteURL": "https://shopify.dev/",
-    "privacyPolicyURL": "https://www.shopify.com/legal/privacy",
-    "termsOfServiceURL": "https://www.shopify.com/legal/terms",
+    "capabilities": [],
+    "category": "Business & Operations",
     "defaultPrompt": [
-      "Build a Shopify app or theme with current docs.",
-      "Generate and validate a Shopify GraphQL operation.",
-      "Use Shopify CLI to run or troubleshoot a store workflow."
+      "Upload and add this product to my store.",
+      "Show me the products I have in my store.",
+      "Show me my store's sales for the past three weeks."
     ],
-    "brandColor": "#008060",
-    "composerIcon": "./assets/logo-padded.svg",
-    "logo": "./assets/logo-padded.svg",
-    "screenshots": []
-  }
+    "developerName": "Shopify",
+    "displayName": "Shopify",
+    "longDescription": "Shopify for ChatGPT makes store building and management as easy as having a conversation. Effortlessly connect your existing store or create a new online store by describing your business. Simply chat to add products, adjust inventory across locations, create discount codes, browse recent orders, view customer details, or pull analytics on your store\u2019s performance.",
+    "privacyPolicyURL": "https://www.shopify.com/legal/privacy",
+    "shortDescription": "Build and manage your store",
+    "supportURL": "https://help.shopify.com",
+    "termsOfServiceURL": "https://www.shopify.com/legal/terms",
+    "websiteURL": "https://shopify.com"
+  },
+  "name": "shopify",
+  "skills": "./skills/",
+  "version": "3.0.0"
 }

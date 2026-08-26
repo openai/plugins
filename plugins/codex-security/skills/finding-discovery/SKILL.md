@@ -9,6 +9,8 @@ description: Use when Codex is already in the finding-discovery phase of a secur
 
 Investigate the proposed code or code changes for technically plausible security vulnerabilities using the threat model as context.
 
+Standard and Deep discovery workers follow their self-contained coordinator prompts; they do not invoke this skill. For an explicit standalone repository-discovery request, apply the relevant checklist below directly to the authorized current source without running the diff-only workflow or starting another scan.
+
 ## Artifact Resolution
 
 The path references in this skill are the default locations for this phase.
@@ -20,8 +22,12 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
 
 Read `../../references/security-guidance.md` and resolve the applicable policy before inspecting each source file. A delegated file-review worker must do the same before reading its assigned source.
 
+### Compact Diff Workflow
+
+When a running diff scan already supplies its file inventory through `list_codex_security_review_items`, review that inventory directly and record all candidates once with `record_codex_security_discovery_candidates`. Do not generate ranked worklists, per-finding ledgers, discovery receipts, or discovery reports. Skip the legacy workflow and artifact requirements below.
+
 ### Code Diff Workflow
-If the scan target is for a targeted code-diff:
+For a targeted code diff without an existing compact inventory:
 
 - Read `../security-scan/references/scan-artifacts-and-ledger.md`.
 - Generate `rank_input.jsonl` deterministically from changed source-like files with `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode revisions --head <head> --out <discovery_dir>/rank_input.jsonl` for PR, commit, and branch diffs, or `<python_command> <plugin_dir>/scripts/generate_rank_input.py make-diff-rank-input --repo <repo_root> --base <base> --mode local-patch --out <discovery_dir>/rank_input.jsonl` for a local patch.
@@ -30,10 +36,6 @@ If the scan target is for a targeted code-diff:
 - Deep-review every file in `deep_review_input.jsonl` using the shared scoped file-review rules.
 - Stay anchored to the changed code and directly supporting files. Unchanged siblings are context or negative controls unless the diff newly reaches them, weakens their shared control, or changes a shared sink/helper they depend on.
 - When the diff is too large to review credibly as one parent-agent pass, use file-review subagents when they are available under the resolved scan authorization and follow the shared scoped deep-review rules in `../security-scan/references/scan-artifacts-and-ledger.md#scoped-deep-review`.
-
-### Exhaustive Repository Or Scoped-Path Workflow
-
-If the scan target is repository-wide or a scoped path, follow the procedure in `../security-scan/references/repository-wide-scan.md` and every required reference it lists.
 
 ## Discovery Checklist
 
@@ -46,7 +48,6 @@ Use this checklist to keep discovery specific without turning it into validation
 - When the diff changes a shared helper, guard, route pattern, template pattern, or sink wrapper, expand to sibling call sites that the changed code directly affects, and keep each vulnerable instance addressable.
 - Look for attacker-controlled input, broken enforcement, or dangerous sinks introduced or made reachable by the change.
 - Stay anchored to the diff and the supporting files it depends on rather than drifting into unrelated repository scanning.
-- For repository-wide and scoped-path scans, stay anchored to `rank_input.jsonl`, `deep_review_input.jsonl`, the runtime inventory, and the coverage ledger rather than drifting into arbitrary text search.
 - For advisory-seeded repository-wide and scoped-path scans, keep any supplied advisory row id, exact file, line, source, sink, or broken-control hint visible in the candidate ledger. A neighboring same-CWE finding can be an additional candidate, but it does not satisfy the seeded row unless it covers the same vulnerable control and effect.
 - Do not group many vulnerable files under one candidate when the files have separate line-level source/sink/control evidence.
 - When a dangerous sink has multiple call sites, enumerate each call site with its own source and closest control.
@@ -140,17 +141,17 @@ Otherwise, for each candidate include:
 - taxonomy with CWE IDs when known
 - enough evidence that a later reviewer can understand why the candidate is technically plausible before validation
 
-When candidates are emitted, create the per-finding directory from `../../references/scan-artifacts.md` and append one discovery receipt to that finding's candidate ledger. The ledger row should identify the candidate, scan scope, discovery status, affected locations, and the discovery artifact or evidence that produced it.
+For legacy diff-scoped discovery without a compact inventory, when candidates are emitted, create the per-finding directory from `../../references/scan-artifacts.md` and append one discovery receipt to that finding's candidate ledger. The ledger row should identify the candidate, scan scope, discovery status, affected locations, and the discovery artifact or evidence that produced it.
 
 
 ## Hard Rules
 
 - Use the tools to examine repository files before making decisions.
 - Focus on the actual changes, not the commit message.
-- Stay anchored to the diff and the files it relies on for diff-scoped scans. For repository-wide and scoped-path scans, treat the resolved audit scope as in scope and ignore diff-overlap restrictions for affected locations.
+- Stay anchored to the diff and the files it relies on for diff-scoped scans.
 - Candidate discovery is about plausibility, not final severity.
-- Do not emit an untracked candidate. Every candidate finding needs a stable candidate id and a discovery receipt in its candidate-ledger path from `../../references/scan-artifacts.md` so later validation and attack-path analysis can prove coverage for that exact finding.
+- For legacy diff-scoped discovery without a compact inventory, do not emit an untracked candidate. Every candidate finding needs a stable candidate id and a discovery receipt in its candidate-ledger path from `../../references/scan-artifacts.md` so later validation and attack-path analysis can prove coverage for that exact finding.
 - Do not add `relevant_lines` when no bug exists. For diff-scoped scans, add `relevant_lines` only when the bug overlaps the diff and those lines are relevant to the bug.
 - Do not turn discovery into full validation or full severity calibration.
 - Continue reviewing until no additional distinct plausible candidates remain.
-- Save a final visible report using the finding discovery report path from `../../references/scan-artifacts.md`.
+- For legacy diff-scoped discovery without a compact inventory, save a final visible report using the finding discovery report path from `../../references/scan-artifacts.md`.

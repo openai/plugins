@@ -174,12 +174,14 @@ func FileProcessingWorkflow(ctx workflow.Context, file FileParam) error {
 ```
 
 Key points:
+
 - `workflow.ErrSessionFailed` is returned if the worker hosting the session dies
 - `CompleteSession` releases resources -- always call it (use `defer`)
 - Use case: file processing (download, process, upload on same host), GPU workloads, or any pipeline needing local state
 - `MaxConcurrentSessionExecutionSize` on `worker.Options` limits how many sessions a single worker can handle
 
 **Limitations:**
+
 - Sessions do not survive worker process restarts — if the worker dies, the session fails and activities must be retried from the workflow level
 - There is no server-side support for sessions — the Go SDK implements them entirely client-side using internal task queue routing
 - Session concurrency limiting is per-process, not per-host — only one worker process per host if you rely on this

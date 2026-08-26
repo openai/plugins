@@ -933,13 +933,23 @@ def structural_outline(path: Path, text: str) -> list[str]:
     return simple_language_outline(text, suffix)
 
 
-def preview_for(path: Path, preview_bytes: int) -> tuple[str, bool]:
+def preview_for(
+    path: Path, preview_bytes: int, *, max_read_bytes: int | None = None
+) -> tuple[str, bool]:
     try:
-        data = path.read_bytes()
+        with path.open("rb") as source:
+            sample = source.read(4096)
+            if is_binary_sample(sample):
+                return "", True
+            remaining = (
+                source.read()
+                if max_read_bytes is None
+                else source.read(max(0, max_read_bytes - len(sample)))
+            )
+            data = sample + remaining
     except OSError:
         return "", True
-    sample = data[:4096]
-    if is_binary_sample(sample):
+    if is_binary_sample(data):
         return "", True
     text = data.decode("utf-8", errors="ignore")
     outline = structural_outline(path, text)

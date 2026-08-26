@@ -1,0 +1,6 @@
+interface:
+  display_name: "Temporal Ops"
+  short_description: "Administer and diagnose Temporal Cloud and self-hosted environments"
+
+policy:
+  allow_implicit_invocation: false

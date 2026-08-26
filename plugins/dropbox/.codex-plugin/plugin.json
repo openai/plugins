@@ -28,7 +28,6 @@
     "termsOfServiceURL": "https://www.dropbox.com/terms",
     "websiteURL": "https://www.dropbox.com"
   },
-  "mcpServers": "./.mcp.json",
   "name": "dropbox",
   "skills": "./skills",
   "version": "5.0.1"

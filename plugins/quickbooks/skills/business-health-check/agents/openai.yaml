@@ -1,0 +1,7 @@
+interface:
+  display_name: "Business Health Check"
+  short_description: "Get a high-level overview of your business health from QuickBooks"
+  brand_color: "#2CA01C"
+  default_prompt: "Give me a high-level overview of my business health from QuickBooks."
+policy:
+  allow_implicit_invocation: true

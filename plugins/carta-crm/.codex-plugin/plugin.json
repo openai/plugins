@@ -1,7 +1,7 @@
 {
   "name": "carta-crm",
-  "version": "1.0.3",
-  "description": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in...",
+  "version": "2.0.1",
+  "description": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in one place. Track opportunities through each stage, capture meeting notes and key takeaways alongside the right deal or contact, and quickly find past context when you need it.",
   "author": {
     "name": "Carta Inc.",
     "url": "https://carta.com"
@@ -12,21 +12,20 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Carta CRM",
-    "shortDescription": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in...",
+    "shortDescription": "Find deals, investors, notes.",
     "longDescription": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in one place. Track opportunities through each stage, capture meeting notes and key takeaways alongside the right deal or contact, and quickly find past context when you need it.",
     "developerName": "Carta Inc.",
     "category": "Business & Operations",
     "capabilities": [],
-    "defaultPrompt": [
-      "Find the latest relationship context in Carta CRM"
-    ],
+    "defaultPrompt": null,
     "screenshots": [],
     "websiteURL": "https://carta.com",
     "privacyPolicyURL": "https://carta.com/legal/privacy/privacy-policy/",
     "termsOfServiceURL": "https://carta.com/legal/terms-agreements/terms-service/",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://support.carta.com/kb/en/"
   },
   "homepage": "https://carta.com"
 }

@@ -1,14 +1,33 @@
 {
-  "name": "hg-insights",
-  "version": "1.0.3",
-  "description": "Prospect data and revenue intelligence",
+  "apps": "./.app.json",
   "author": {
     "name": "HG Insights",
     "url": "https://hginsights.com"
   },
+  "description": "HG Insights - Revenue Growth Intelligence gives sales teams instant access to comprehensive prospect data. \nGet technology stacks, company firmographics, decision-maker contacts, IT spending insights, and contract intelligence for any company. \nSimply ask about a company by name or domain to uncover actionable sales intelligence powered by HG Insights data. \nRequires a RGI Developers or RGI Agents account from HG Insights.",
   "homepage": "https://hginsights.com",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
+  "interface": {
+    "brandColor": "#015AA0",
+    "brandColorDark": "#5FB8FE",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/composer-icon.png",
+    "defaultPrompt": [
+      "Find high-fit accounts in HG Insights showing buyer intent and summarize the best sales plays.",
+      "Use HG Insights to size this market and identify priority segments for our GTM plan.",
+      "Enrich these target accounts with HG Insights technographics, spend data, and buying signals."
+    ],
+    "developerName": "HG Insights",
+    "displayName": "HG Insights - RGI",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "HG Insights - Revenue Growth Intelligence gives sales teams instant access to comprehensive prospect data. \nGet technology stacks, company firmographics, decision-maker contacts, IT spending insights, and contract intelligence for any company. \nSimply ask about a company by name or domain to uncover actionable sales intelligence powered by HG Insights data. \nRequires a RGI Developers or RGI Agents account from HG Insights.",
+    "privacyPolicyURL": "https://hginsights.com/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Prospect intelligence for sale",
+    "termsOfServiceURL": "https://hginsights.com/terms-of-service",
+    "websiteURL": "https://hginsights.com"
+  },
   "keywords": [
     "hg-insights",
     "revenue-growth-intelligence",
@@ -17,26 +36,8 @@
     "buyer-intent",
     "account-intelligence"
   ],
-  "apps": "./.app.json",
-  "interface": {
-    "displayName": "HG Insights",
-    "shortDescription": "Prospect data and revenue intelligence",
-    "longDescription": "HG Insights - Revenue Growth Intelligence gives sales teams instant access to comprehensive prospect data. \nGet technology stacks, company firmographics, decision-maker contacts, IT spending insights, and contract intelligence for any company. \nSimply ask about a company by name or domain to uncover actionable sales intelligence powered by HG Insights data. \nRequires a RGI Developers or RGI Agents account from HG Insights.",
-    "developerName": "HG Insights",
-    "category": "Productivity",
-    "capabilities": [],
-    "websiteURL": "https://hginsights.com",
-    "privacyPolicyURL": "https://hginsights.com/privacy-page/",
-    "termsOfServiceURL": "https://hginsights.com/terms-of-service/",
-    "brandColor": "#015AA0",
-    "defaultPrompt": [
-      "Find high-fit accounts in HG Insights showing buyer intent and summarize the best sales plays.",
-      "Use HG Insights to size this market and identify priority segments for our GTM plan.",
-      "Enrich these target accounts with HG Insights technographics, spend data, and buying signals."
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
-  }
+  "license": "MIT",
+  "name": "hg-insights",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
 }

@@ -1,6 +1,6 @@
 {
   "name": "outlook-email",
-  "version": "0.1.3",
+  "version": "0.1.7",
   "description": "Work with Outlook Email using the configured Microsoft Outlook app connector.",
   "author": {
     "name": "OpenAI",
@@ -12,14 +12,19 @@
   "license": "MIT",
   "keywords": [
     "outlook-email",
+    "outlook",
     "email",
-    "microsoft"
+    "microsoft",
+    "microsoft 365",
+    "office 365",
+    "exchange",
+    "mail",
+    "inbox"
   ],
-  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Outlook Email",
-    "shortDescription": "Triage Outlook inboxes and draft replies",
+    "shortDescription": "Triage Outlook inboxes",
     "longDescription": "Use Outlook Email to triage inboxes, summarize threads, extract actions, and draft replies or forwards through the connected Microsoft Outlook app.",
     "developerName": "OpenAI",
     "category": "Communication",

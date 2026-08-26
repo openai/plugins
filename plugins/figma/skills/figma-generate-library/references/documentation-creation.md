@@ -190,8 +190,8 @@ async function createColorSwatch(parent, varName, variable) {
   label.characters = varName.split('/').pop(); // show leaf name only
   label.fontSize = 10;
   label.fills = [{ type: 'SOLID', color: { r: 0.35, g: 0.35, b: 0.35 } }];
-  label.layoutSizingHorizontal = 'FILL';
   swatchFrame.appendChild(label);
+  label.layoutSizingHorizontal = 'FILL';
 
   // Full path tooltip label (smaller, lighter)
   const pathLabel = figma.createText();
@@ -199,8 +199,8 @@ async function createColorSwatch(parent, varName, variable) {
   pathLabel.characters = varName;
   pathLabel.fontSize = 9;
   pathLabel.fills = [{ type: 'SOLID', color: { r: 0.6, g: 0.6, b: 0.6 } }];
-  pathLabel.layoutSizingHorizontal = 'FILL';
   swatchFrame.appendChild(pathLabel);
+  pathLabel.layoutSizingHorizontal = 'FILL';
 
   parent.appendChild(swatchFrame);
   return swatchFrame;
@@ -246,8 +246,8 @@ async function createColorSection(root, primitiveVars, semanticVars) {
   desc.characters = 'Primitive color palette and semantic color tokens. Semantic tokens reference primitives — always use semantic tokens in components.';
   desc.fontSize = 14;
   desc.fills = [{ type: 'SOLID', color: { r: 0.4, g: 0.4, b: 0.4 } }];
-  desc.layoutSizingHorizontal = 'FILL';
   section.appendChild(desc);
+  desc.layoutSizingHorizontal = 'FILL';
 
   // Primitive swatches row
   const primLabel = figma.createText();
@@ -338,8 +338,8 @@ async function createTypeSpecimen(parent, styleName, fontFamily, fontStyle, font
   nameText.characters = styleName;
   nameText.fontSize = 11;
   nameText.fills = [{ type: 'SOLID', color: { r: 0.55, g: 0.55, b: 0.55 } }];
-  nameText.layoutSizingHorizontal = 'FILL';
   row.appendChild(nameText);
+  nameText.layoutSizingHorizontal = 'FILL';
 
   // Sample text rendered in the actual style
   const specimen = figma.createText();
@@ -348,8 +348,8 @@ async function createTypeSpecimen(parent, styleName, fontFamily, fontStyle, font
   specimen.fontSize = fontSize;
   specimen.lineHeight = { value: lineHeight, unit: 'PIXELS' };
   specimen.fills = [{ type: 'SOLID', color: { r: 0.07, g: 0.07, b: 0.07 } }];
-  specimen.layoutSizingHorizontal = 'FILL';
   row.appendChild(specimen);
+  specimen.layoutSizingHorizontal = 'FILL';
 
   // Specification line
   const specs = figma.createText();
@@ -357,15 +357,15 @@ async function createTypeSpecimen(parent, styleName, fontFamily, fontStyle, font
   specs.characters = `${fontFamily} ${fontStyle} · ${fontSize}px · ${lineHeight}px line height`;
   specs.fontSize = 11;
   specs.fills = [{ type: 'SOLID', color: { r: 0.65, g: 0.65, b: 0.65 } }];
-  specs.layoutSizingHorizontal = 'FILL';
   row.appendChild(specs);
+  specs.layoutSizingHorizontal = 'FILL';
 
   // Divider line
   const divider = figma.createRectangle();
   divider.resize(1280, 1);
   divider.fills = [{ type: 'SOLID', color: { r: 0.9, g: 0.9, b: 0.9 } }];
-  divider.layoutSizingHorizontal = 'FILL';
   row.appendChild(divider);
+  divider.layoutSizingHorizontal = 'FILL';
 
   return row;
 }
@@ -766,8 +766,8 @@ async function createComponentDocFrame(page, componentName, description, usageNo
   title.characters = componentName;
   title.fontSize = 28;
   title.fills = [{ type: 'SOLID', color: { r: 0.07, g: 0.07, b: 0.07 } }];
-  title.layoutSizingHorizontal = 'FILL';
   doc.appendChild(title);
+  title.layoutSizingHorizontal = 'FILL';
 
   // Description
   const descText = figma.createText();
@@ -776,15 +776,15 @@ async function createComponentDocFrame(page, componentName, description, usageNo
   descText.fontSize = 13;
   descText.lineHeight = { value: 20, unit: 'PIXELS' };
   descText.fills = [{ type: 'SOLID', color: { r: 0.35, g: 0.35, b: 0.35 } }];
-  descText.layoutSizingHorizontal = 'FILL';
   doc.appendChild(descText);
+  descText.layoutSizingHorizontal = 'FILL';
 
   // Divider
   const divider = figma.createRectangle();
   divider.resize(280, 1);
   divider.fills = [{ type: 'SOLID', color: { r: 0.88, g: 0.88, b: 0.88 } }];
-  divider.layoutSizingHorizontal = 'FILL';
   doc.appendChild(divider);
+  divider.layoutSizingHorizontal = 'FILL';
 
   // Usage notes
   if (usageNotes.length > 0) {
@@ -802,8 +802,8 @@ async function createComponentDocFrame(page, componentName, description, usageNo
       noteText.fontSize = 12;
       noteText.lineHeight = { value: 18, unit: 'PIXELS' };
       noteText.fills = [{ type: 'SOLID', color: { r: 0.4, g: 0.4, b: 0.4 } }];
-      noteText.layoutSizingHorizontal = 'FILL';
       doc.appendChild(noteText);
+      noteText.layoutSizingHorizontal = 'FILL';
     }
   }
 

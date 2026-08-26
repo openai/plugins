@@ -1,9 +1,9 @@
 {
   "name": "brighthire",
-  "version": "0.1.1",
-  "description": "Connect Codex to BrightHire interview intelligence data through the BrightHire app connector.",
+  "version": "1.0.0",
+  "description": "BrightHire helps users search interview records, retrieve transcripts, AI notes, interview guides, scorecards, job descriptions, candidate summaries, scheduled interview context, and coaching reports they are authorized to view.",
   "author": {
-    "name": "BrightHire",
+    "name": "BrightHire by Zoom",
     "email": "support@brighthire.com",
     "url": "https://www.brighthire.com"
   },
@@ -21,15 +21,15 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "BrightHire",
-    "shortDescription": "Search and analyze BrightHire interviews, candidates, calls, and hiring data.",
-    "longDescription": "Use BrightHire from Codex to retrieve interview intelligence context, inspect calls and candidates, and support hiring workflows with governed access to BrightHire data.",
-    "developerName": "BrightHire",
+    "shortDescription": "Analyze interviews",
+    "longDescription": "BrightHire helps users search interview records, retrieve transcripts, AI notes, interview guides, scorecards, job descriptions, candidate summaries, scheduled interview context, and coaching reports they are authorized to view.",
+    "developerName": "BrightHire by Zoom",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Read"
     ],
-    "websiteURL": "https://www.brighthire.com",
+    "websiteURL": "https://brighthire.com",
     "privacyPolicyURL": "https://brighthire.com/privacy-policy/",
     "termsOfServiceURL": "https://brighthire.com/terms-of-service/",
     "defaultPrompt": [
@@ -40,6 +40,7 @@
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/logo.png",
-    "screenshots": []
+    "screenshots": [],
+    "brandColorDark": "#2563EB"
   }
 }

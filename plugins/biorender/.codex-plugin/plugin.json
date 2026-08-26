@@ -1,7 +1,7 @@
 {
   "name": "biorender",
-  "version": "1.0.2",
-  "description": "BioRender helps scientists create professional figures in minutes.",
+  "version": "2.0.0",
+  "description": "Search BioRender's library of scientific templates, find your files, and generate custom first-draft figures with AI. Results and previews appear right in your conversation, and every item links back to BioRender so you can open and keep editing.",
   "author": {
     "url": "https://biorender.com/",
     "name": "BioRender"
@@ -13,19 +13,18 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "BioRender",
-    "shortDescription": "BioRender helps scientists create professional figures in minutes.",
-    "longDescription": "BioRender helps scientists create professional figures in minutes. Access thousands of scientifically accurate templates and icons directly in Codex to visualize protocols, pathways, molecular structures, and more. Brainstorm with your team, communicate research concepts, or build publication-ready figures for presentations, manuscripts, grant proposals, and posters.",
+    "shortDescription": "Find and create figures",
+    "longDescription": "Search BioRender's library of scientific templates, find your files, and generate custom first-draft figures with AI. Results and previews appear right in your conversation, and every item links back to BioRender so you can open and keep editing.",
     "category": "Creativity",
     "capabilities": [],
     "websiteURL": "https://biorender.com/",
     "privacyPolicyURL": "https://biorender.com/privacy",
     "termsOfServiceURL": "https://www.biorender.com/terms-of-service",
-    "defaultPrompt": [
-      "Can you find me some GLP-1 diagram templates"
-    ],
+    "defaultPrompt": null,
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",
-    "developerName": "BioRender"
+    "developerName": "BioRender",
+    "supportURL": "https://help.biorender.com/"
   }
 }

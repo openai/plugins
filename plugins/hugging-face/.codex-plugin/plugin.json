@@ -1,6 +1,6 @@
 {
   "name": "hugging-face",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "Inspect models, datasets, Spaces, and research",
   "author": {
     "name": "Hugging Face",
@@ -35,9 +35,11 @@
     "defaultPrompt": [
       "Generate a realistic farm using FLUX.1"
     ],
-    "brandColor": "#FFD21E",
+    "brandColor": "#DAB31A",
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "supportURL": "https://huggingface.co/docs/hugs/en/help",
+    "brandColorDark": "#E5BE25"
   }
 }

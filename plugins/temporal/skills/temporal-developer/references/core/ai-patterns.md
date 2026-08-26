@@ -32,6 +32,7 @@ The remainder of this document describes general principles to follow when build
   - returns model response, as a typed structured output
 
 **Benefits**:
+
 - Single activity handles multiple use cases
 - Consistent retry handling
 - Centralized configuration
@@ -48,6 +49,7 @@ Workflow:
 ```
 
 **Benefits**:
+
 - Independent retry for each step
 - Clear audit trail in history
 - Easier testing and mocking
@@ -69,16 +71,16 @@ Workflow:
 Disable retries in LLM client libraries, let Temporal handle retries.
 
 - LLM Client Config:
-  - max_retries = 0  ← Disable client retries at the LLM client level
+  - max_retries = 0 ← Disable client retries at the LLM client level
 
 Use either the default activity retry policy, or customize it as needed for the situation.
 
 **Why**:
+
 - Temporal retries are durable (survive crashes)
 - Single retry configuration point
 - Better visibility into retry attempts
 - Consistent backoff behavior
-
 
 ### Pattern 5: Multi-Agent Orchestration
 
@@ -106,7 +108,7 @@ Deep Research Example:
 
 | Operation Type | Recommended Timeout |
 |----------------|---------------------|
-| Simple LLM calls (GPT-4, GPT-5) | 30 seconds |
+| Simple LLM calls (GPT-4, Claude-3) | 30 seconds |
 | Reasoning models (o1, o3, extended thinking) | 300 seconds (5 min) |
 | Web searches | 300 seconds (5 min) |
 | Simple tool execution | 30-60 seconds |
@@ -114,6 +116,7 @@ Deep Research Example:
 | Document processing | 60-120 seconds |
 
 **Rationale**:
+
 - Reasoning models need time for complex computation
 - Web searches may hit rate limits requiring backoff
 - Fast timeouts catch stuck operations
@@ -128,7 +131,6 @@ Parse rate limit info from API responses:
 - Response Headers:
   - Retry-After: 30
   - X-RateLimit-Remaining: 0
-
 - Activity:
   - If rate limited:
     - Raise retryable error with a next retry delay
@@ -137,12 +139,14 @@ Parse rate limit info from API responses:
 ## Error Handling
 
 ### Retryable Errors
+
 - Rate limits (429)
 - Timeouts
 - Temporary server errors (500, 502, 503)
 - Network errors
 
 ### Non-Retryable Errors
+
 - Invalid API key (401)
 - Invalid input/prompt
 - Content policy violations
@@ -161,5 +165,6 @@ Parse rate limit info from API responses:
 ## Observability
 
 See `references/{your_language}/observability.md` for the language you are working in for documentation on implementing observability in Temporal. It is generally recommended to add observability for:
+
 - Token usage, via activity logging
 - any else to help track LLM usage and debug agentic flows, within moderation.

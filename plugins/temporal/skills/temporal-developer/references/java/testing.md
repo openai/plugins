@@ -182,3 +182,74 @@ For activities that use `Activity.getExecutionContext()` or heartbeating, use `T
 4. Test replay compatibility when changing workflow code (see `references/java/determinism.md`)
 5. Test signal/query handlers explicitly
 6. Use unique task queues per test to avoid conflicts (handled automatically by `TestWorkflowExtension`)
+
+## Spring Boot Testing
+
+Two strategies — choose one per test class, do not mix them.
+
+### Embedded test server in Spring context
+
+For full integration tests that exercise the Spring context (DB, beans, config):
+
+```properties
+# src/test/resources/application-test.properties
+spring.temporal.test-server.enabled=true
+```
+
+```java
+@SpringBootTest
+@ActiveProfiles("test")
+class TeeTimeMonitorIntegrationTest {
+
+    @Autowired
+    WorkflowClient client;  // auto-configured to point at the embedded test server
+
+    @Test
+    void testWorkflow() {
+        var stub = client.newWorkflowStub(
+            TeeTimeMonitorWorkflow.class,
+            WorkflowOptions.newBuilder()
+                .setWorkflowId("test-" + UUID.randomUUID())
+                .setTaskQueue("golfnow")
+                .build()
+        );
+        var result = stub.monitorTeeTimes(new TTMonitorRequest(...));
+        assertNotNull(result);
+    }
+}
+```
+
+The embedded server does not support time-skipping. Use this when you need Spring beans (real DB, email service, etc.) wired alongside Temporal.
+
+### Unit tests without Spring context
+
+For faster, isolated tests with time-skipping support, use `TestWorkflowExtension` or `TestWorkflowEnvironment` directly. No Spring context starts, so activity dependencies must be provided manually (real instances or Mockito mocks):
+
+```java
+public class TeeTimeMonitorWorkflowTest {
+
+    @RegisterExtension
+    static final TestWorkflowExtension testWorkflow = TestWorkflowExtension.newBuilder()
+        .setWorkflowTypes(TeeTimeMonitorWorkflowImpl.class)
+        .setDoNotStart(true)
+        .build();
+
+    @Test
+    void testWorkflow(TestWorkflowEnvironment env, Worker worker, WorkflowClient client) {
+        GolfNowActivities activities = mock(GolfNowActivities.class, withSettings().withoutAnnotations());
+        when(activities.searchTeeTimes(any())).thenReturn(List.of());
+
+        worker.registerActivitiesImplementations(activities);
+        env.start();
+
+        var stub = client.newWorkflowStub(
+            TeeTimeMonitorWorkflow.class,
+            WorkflowOptions.newBuilder().setTaskQueue(worker.getTaskQueue()).build()
+        );
+        stub.monitorTeeTimes(new TTMonitorRequest(...));
+        verify(activities).searchTeeTimes(any());
+    }
+}
+```
+
+See the sections above for more detail on mocking, signals/queries, and replay testing.

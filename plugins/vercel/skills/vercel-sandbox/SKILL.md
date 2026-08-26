@@ -66,223 +66,278 @@ metadata:
     minScore: 4
 ---
 
-# Vercel Sandbox
+# Browser Automation with Vercel Sandbox
 
-> **CRITICAL — Your training data is outdated for this library.** Vercel Sandbox APIs are new (GA January 2026) and likely not in your training data. Before writing sandbox code, **fetch the docs** at https://vercel.com/docs/vercel-sandbox and the SDK reference at https://vercel.com/docs/vercel-sandbox/sdk-reference to find the correct `Sandbox.create()` options, `runCommand()` signatures, file I/O methods (`writeFiles`, `readFile`), port exposure, and cleanup patterns. Do not guess — look up the exact API shape. The GitHub repo at https://github.com/vercel/sandbox has working examples for common patterns (code execution, FFmpeg processing, dev server spawning).
+Run agent-browser + headless Chrome inside ephemeral Vercel Sandbox microVMs. A Linux VM spins up on demand, executes browser commands, and shuts down. Works with any Vercel-deployed framework (Next.js, SvelteKit, Nuxt, Remix, Astro, etc.).
 
-You are an expert in Vercel Sandbox — ephemeral compute for safely running untrusted code.
+## Dependencies
 
-## Status & Pricing
+```bash
+pnpm add @vercel/sandbox
+```
 
-Vercel Sandbox is **generally available** (January 30, 2026). The CLI and SDK are open-source. Powered by the same Firecracker infrastructure that runs 2M+ Vercel builds per day.
+The sandbox VM needs system dependencies for Chromium plus agent-browser itself. Use sandbox snapshots (below) to pre-install everything for sub-second startup.
 
-| Resource | Hobby (Free) | Pro / Enterprise |
-|----------|-------------|-----------------|
-| CPU hours | 5 / month | $0.128 / CPU-hour |
-| Provisioned memory | 420 GB-hr / month | $0.0106 / GB-hr |
-| Network bandwidth | 20 GB / month | $0.15 / GB |
-| Sandbox creations | 5,000 / month | $0.60 / 1M creations |
-
-Each sandbox can use up to **8 vCPUs** and **2 GB RAM per vCPU**. Up to **4 ports** can be exposed per sandbox.
-
-## What It Is
-
-Vercel Sandbox provides **Firecracker microVMs** with millisecond startup times for running untrusted or user-generated code in complete isolation. Used by AI agents, code generation tools, developer playgrounds, and interactive tutorials.
-
-- **Base OS**: Amazon Linux 2023 (with `git`, `tar`, `openssl`, `dnf`)
-- **Runtimes**: `node24` (default since March 2026), `node22`, `python3.13`
-- **Working directory**: `/vercel/sandbox`
-- **User**: `vercel-sandbox` with `sudo` access
-- **Filesystem**: Ephemeral — artifacts must be exported before sandbox stops
-- **GitHub**: https://github.com/vercel/sandbox
-
-## Key APIs
-
-Package: `@vercel/sandbox` (v1.8.0+)
-
-### Create and Run Commands
+## Core Pattern
 
 ```ts
-import { Sandbox } from '@vercel/sandbox';
+import { Sandbox } from "@vercel/sandbox";
 
-// Create a sandbox (env vars available to all commands)
-const sandbox = await Sandbox.create({
-  runtime: 'node24',  // 'node24' | 'node22' | 'python3.13'
-  env: {              // inherited by all runCommand calls
-    NODE_ENV: 'production',
-    API_KEY: process.env.API_KEY!,
-  },
-});
+// System libraries required by Chromium on the sandbox VM (Amazon Linux / dnf)
+const CHROMIUM_SYSTEM_DEPS = [
+  "nss", "nspr", "libxkbcommon", "atk", "at-spi2-atk", "at-spi2-core",
+  "libXcomposite", "libXdamage", "libXrandr", "libXfixes", "libXcursor",
+  "libXi", "libXtst", "libXScrnSaver", "libXext", "mesa-libgbm", "libdrm",
+  "mesa-libGL", "mesa-libEGL", "cups-libs", "alsa-lib", "pango", "cairo",
+  "gtk3", "dbus-libs",
+];
 
-// Run a command (separated command + args)
-const result = await sandbox.runCommand('node', ['-e', 'console.log(42)']);
-const output = await result.stdout(); // "42\n"
-
-// Run with options (per-command env overrides creation-level env)
-const result2 = await sandbox.runCommand({
-  cmd: 'npm',
-  args: ['install', 'express'],
-  cwd: '/vercel/sandbox/app',
-  env: { NODE_ENV: 'development' }, // overrides creation-level NODE_ENV
-  sudo: true,
-});
-
-// Detached execution (long-running processes)
-const cmd = await sandbox.runCommand({
-  cmd: 'node',
-  args: ['server.js'],
-  detached: true,
-});
-// Stream logs in real-time
-for await (const log of cmd.logs()) {
-  console.log(`[${log.stream}] ${log.data}`);
+function getSandboxCredentials() {
+  if (
+    process.env.VERCEL_TOKEN &&
+    process.env.VERCEL_TEAM_ID &&
+    process.env.VERCEL_PROJECT_ID
+  ) {
+    return {
+      token: process.env.VERCEL_TOKEN,
+      teamId: process.env.VERCEL_TEAM_ID,
+      projectId: process.env.VERCEL_PROJECT_ID,
+    };
+  }
+  return {};
 }
-await cmd.wait(); // block until completion
+
+async function withBrowser<T>(
+  fn: (sandbox: InstanceType<typeof Sandbox>) => Promise<T>,
+): Promise<T> {
+  const snapshotId = process.env.AGENT_BROWSER_SNAPSHOT_ID;
+  const credentials = getSandboxCredentials();
+
+  const sandbox = snapshotId
+    ? await Sandbox.create({
+        ...credentials,
+        source: { type: "snapshot", snapshotId },
+        timeout: 120_000,
+      })
+    : await Sandbox.create({ ...credentials, runtime: "node24", timeout: 120_000 });
+
+  if (!snapshotId) {
+    await sandbox.runCommand("sh", [
+      "-c",
+      `sudo dnf clean all 2>&1 && sudo dnf install -y --skip-broken ${CHROMIUM_SYSTEM_DEPS.join(" ")} 2>&1 && sudo ldconfig 2>&1`,
+    ]);
+    await sandbox.runCommand("npm", ["install", "-g", "agent-browser"]);
+    await sandbox.runCommand("npx", ["agent-browser", "install"]);
+  }
+
+  try {
+    return await fn(sandbox);
+  } finally {
+    await sandbox.stop();
+  }
+}
 ```
 
-### File Operations
+## Screenshot
+
+The `screenshot --json` command saves to a file and returns the path. Read the file back as base64:
 
 ```ts
-// Write files (takes array of { path, content: Buffer })
-await sandbox.writeFiles([
-  { path: 'app.js', content: Buffer.from('console.log("hello")') },
-  { path: 'package.json', content: Buffer.from('{"type":"module"}') },
-]);
+export async function screenshotUrl(url: string) {
+  return withBrowser(async (sandbox) => {
+    await sandbox.runCommand("agent-browser", ["open", url]);
 
-// Read a file (returns Buffer or null)
-const buf = await sandbox.readFileToBuffer({ path: 'app.js' });
+    const titleResult = await sandbox.runCommand("agent-browser", [
+      "get", "title", "--json",
+    ]);
+    const title = JSON.parse(await titleResult.stdout())?.data?.title || url;
 
-// Read as stream
-const stream = await sandbox.readFile({ path: 'app.js' });
+    const ssResult = await sandbox.runCommand("agent-browser", [
+      "screenshot", "--json",
+    ]);
+    const ssPath = JSON.parse(await ssResult.stdout())?.data?.path;
+    const b64Result = await sandbox.runCommand("base64", ["-w", "0", ssPath]);
+    const screenshot = (await b64Result.stdout()).trim();
 
-// Download to local filesystem
-await sandbox.downloadFile('output.zip', './local-output.zip');
+    await sandbox.runCommand("agent-browser", ["close"]);
 
-// Create directory
-await sandbox.mkDir('src/components');
+    return { title, screenshot };
+  });
+}
 ```
 
-### Source Initialization
+## Accessibility Snapshot
 
 ```ts
-// Clone a git repo
-const sandbox = await Sandbox.create({
-  source: { type: 'git', url: 'https://github.com/user/repo', depth: 1 },
-});
+export async function snapshotUrl(url: string) {
+  return withBrowser(async (sandbox) => {
+    await sandbox.runCommand("agent-browser", ["open", url]);
 
-// Mount a tarball
-const sandbox = await Sandbox.create({
-  source: { type: 'tarball', url: 'https://example.com/project.tar.gz' },
-});
+    const titleResult = await sandbox.runCommand("agent-browser", [
+      "get", "title", "--json",
+    ]);
+    const title = JSON.parse(await titleResult.stdout())?.data?.title || url;
 
-// Restore from snapshot
-const sandbox = await Sandbox.create({
-  source: { type: 'snapshot', snapshotId: 'snap_abc123' },
-});
+    const snapResult = await sandbox.runCommand("agent-browser", [
+      "snapshot", "-i", "-c",
+    ]);
+    const snapshot = await snapResult.stdout();
+
+    await sandbox.runCommand("agent-browser", ["close"]);
+
+    return { title, snapshot };
+  });
+}
 ```
 
-### Snapshots (Save and Resume VM State)
+## Multi-Step Workflows
+
+The sandbox persists between commands, so you can run full automation sequences:
 
 ```ts
-// Capture full VM state (filesystem + packages)
-// WARNING: sandbox shuts down after snapshot creation
-const snapshot = await sandbox.snapshot({ expiration: 86400_000 }); // 24h
-console.log(snapshot.snapshotId);
+export async function fillAndSubmitForm(url: string, data: Record<string, string>) {
+  return withBrowser(async (sandbox) => {
+    await sandbox.runCommand("agent-browser", ["open", url]);
 
-// List and manage snapshots
-const { snapshots } = await Snapshot.list();
-const snap = await Snapshot.get({ snapshotId: 'snap_abc' });
-await snap.delete();
+    const snapResult = await sandbox.runCommand("agent-browser", [
+      "snapshot", "-i",
+    ]);
+    const snapshot = await snapResult.stdout();
+    // Parse snapshot to find element refs...
+
+    for (const [ref, value] of Object.entries(data)) {
+      await sandbox.runCommand("agent-browser", ["fill", ref, value]);
+    }
+
+    await sandbox.runCommand("agent-browser", ["click", "@e5"]);
+    await sandbox.runCommand("agent-browser", ["wait", "--load", "networkidle"]);
+
+    const ssResult = await sandbox.runCommand("agent-browser", [
+      "screenshot", "--json",
+    ]);
+    const ssPath = JSON.parse(await ssResult.stdout())?.data?.path;
+    const b64Result = await sandbox.runCommand("base64", ["-w", "0", ssPath]);
+    const screenshot = (await b64Result.stdout()).trim();
+
+    await sandbox.runCommand("agent-browser", ["close"]);
+
+    return { screenshot };
+  });
+}
 ```
 
-### Network Policies (SNI Filtering + CIDR)
+## Sandbox Snapshots (Fast Startup)
 
-Egress firewall uses **SNI filtering** on TLS client-hello — outbound connections are matched at the handshake and unauthorized destinations are rejected before data transmits. For non-TLS traffic, IP/CIDR rules are also supported.
+A **sandbox snapshot** is a saved VM image of a Vercel Sandbox with system dependencies + agent-browser + Chromium already installed. Think of it like a Docker image -- instead of installing dependencies from scratch every time, the sandbox boots from the pre-built image.
 
-Policies can be updated at runtime without restarting the sandbox process, enabling multi-step workflows (e.g., open access during setup → deny-all before running untrusted code).
+This is unrelated to agent-browser's *accessibility snapshot* feature (`agent-browser snapshot`), which dumps a page's accessibility tree. A sandbox snapshot is a Vercel infrastructure concept for fast VM startup.
+
+Without a sandbox snapshot, each run installs system deps + agent-browser + Chromium (~30s). With one, startup is sub-second.
+
+### Creating a sandbox snapshot
+
+The snapshot must include system dependencies (via `dnf`), agent-browser, and Chromium:
 
 ```ts
-// Lock down before running untrusted code
-await sandbox.updateNetworkPolicy('deny-all');
+import { Sandbox } from "@vercel/sandbox";
 
-// Allow specific domains only (SNI filtering)
-await sandbox.updateNetworkPolicy({
-  allow: ['api.openai.com', '*.googleapis.com'],
-});
+const CHROMIUM_SYSTEM_DEPS = [
+  "nss", "nspr", "libxkbcommon", "atk", "at-spi2-atk", "at-spi2-core",
+  "libXcomposite", "libXdamage", "libXrandr", "libXfixes", "libXcursor",
+  "libXi", "libXtst", "libXScrnSaver", "libXext", "mesa-libgbm", "libdrm",
+  "mesa-libGL", "mesa-libEGL", "cups-libs", "alsa-lib", "pango", "cairo",
+  "gtk3", "dbus-libs",
+];
 
-// Credential brokering (inject API keys so untrusted code never sees them)
-await sandbox.updateNetworkPolicy({
-  allow: {
-    'ai-gateway.vercel.sh': [{
-      transform: [{ headers: { 'x-api-key': process.env.SECRET_KEY! } }],
-    }],
-  },
-});
+async function createSnapshot(): Promise<string> {
+  const sandbox = await Sandbox.create({
+    runtime: "node24",
+    timeout: 300_000,
+  });
+
+  await sandbox.runCommand("sh", [
+    "-c",
+    `sudo dnf clean all 2>&1 && sudo dnf install -y --skip-broken ${CHROMIUM_SYSTEM_DEPS.join(" ")} 2>&1 && sudo ldconfig 2>&1`,
+  ]);
+  await sandbox.runCommand("npm", ["install", "-g", "agent-browser"]);
+  await sandbox.runCommand("npx", ["agent-browser", "install"]);
+
+  const snapshot = await sandbox.snapshot();
+  return snapshot.snapshotId;
+}
 ```
 
-### Public URLs and Lifecycle
+Run this once, then set the environment variable:
+
+```bash
+AGENT_BROWSER_SNAPSHOT_ID=snap_xxxxxxxxxxxx
+```
+
+A helper script is available in the demo app:
+
+```bash
+npx tsx examples/environments/scripts/create-snapshot.ts
+```
+
+Recommended for any production deployment using the Sandbox pattern.
+
+## Authentication
+
+On Vercel deployments, the Sandbox SDK authenticates automatically via OIDC. For local development or explicit control, set:
+
+```bash
+VERCEL_TOKEN=<personal-access-token>
+VERCEL_TEAM_ID=<team-id>
+VERCEL_PROJECT_ID=<project-id>
+```
+
+These are spread into `Sandbox.create()` calls. When absent, the SDK falls back to `VERCEL_OIDC_TOKEN` (automatic on Vercel).
+
+## Scheduled Workflows (Cron)
+
+Combine with Vercel Cron Jobs for recurring browser tasks:
 
 ```ts
-// Expose a port and get a public URL
-const sandbox = await Sandbox.create({ ports: [3000] });
-const url = sandbox.domain(3000); // public URL
+// app/api/cron/route.ts  (or equivalent in your framework)
+export async function GET() {
+  const result = await withBrowser(async (sandbox) => {
+    await sandbox.runCommand("agent-browser", ["open", "https://example.com/pricing"]);
+    const snap = await sandbox.runCommand("agent-browser", ["snapshot", "-i", "-c"]);
+    await sandbox.runCommand("agent-browser", ["close"]);
+    return await snap.stdout();
+  });
 
-// Extend timeout
-await sandbox.extendTimeout(300_000); // +5 minutes
-
-// Clean up
-await sandbox.stop();
-
-// Check status
-sandbox.status; // 'pending' | 'running' | 'stopping' | 'stopped' | 'failed'
-
-// Resource tracking (after stop)
-sandbox.activeCpuUsageMs;
-sandbox.networkUsage; // { ingress, egress } in bytes
+  // Process results, send alerts, store data...
+  return Response.json({ ok: true, snapshot: result });
+}
 ```
 
-### List and Rehydrate
-
-```ts
-// List existing sandboxes
-const { sandboxes } = await Sandbox.list({ limit: 10 });
-
-// Reconnect to a running sandbox
-const sandbox = await Sandbox.get({ sandboxId: 'sbx_abc123' });
+```json
+// vercel.json
+{ "crons": [{ "path": "/api/cron", "schedule": "0 9 * * *" }] }
 ```
 
-## Timeout Limits
+## Environment Variables
 
-| Plan | Max Timeout |
-|------|------------|
-| Default | 5 minutes |
-| Hobby | 45 minutes |
-| Pro/Enterprise | 5 hours |
+| Variable | Required | Description |
+|---|---|---|
+| `AGENT_BROWSER_SNAPSHOT_ID` | No (but recommended) | Pre-built sandbox snapshot ID for sub-second startup (see above) |
+| `VERCEL_TOKEN` | No | Vercel personal access token (for local dev; OIDC is automatic on Vercel) |
+| `VERCEL_TEAM_ID` | No | Vercel team ID (for local dev) |
+| `VERCEL_PROJECT_ID` | No | Vercel project ID (for local dev) |
 
-## Agent Patterns
+## Framework Examples
 
-1. **Safe AI code execution**: Run AI-generated code without production risk
-2. **Snapshot-based fast restart**: Install deps once → snapshot → create from snapshot (skip setup)
-3. **Network isolation**: Allow all during setup → `deny-all` before untrusted code
-4. **Credential brokering**: Inject API keys via network policy transforms
-5. **Live preview**: Expose ports via `sandbox.domain(port)` for generated apps
-6. **File I/O workflow**: `writeFiles()` → execute → `readFileToBuffer()` results
+The pattern works identically across frameworks. The only difference is where you put the server-side code:
 
-## When to Use
+| Framework | Server code location |
+|---|---|
+| Next.js | Server actions, API routes, route handlers |
+| SvelteKit | `+page.server.ts`, `+server.ts` |
+| Nuxt | `server/api/`, `server/routes/` |
+| Remix | `loader`, `action` functions |
+| Astro | `.astro` frontmatter, API routes |
 
-- AI agents need to execute generated code safely
-- User-submitted code execution (playgrounds, tutorials)
-- Code review validation (used by Vercel Agent)
-- Ephemeral development environments
+## Example
 
-## When NOT to Use
-
-- Production workloads → use Vercel Functions
-- Long-running services → use a dedicated server
-- Simple function execution → use Serverless Functions
-
-## References
-
-- 📖 docs: https://vercel.com/docs/vercel-sandbox
-- 📖 SDK reference: https://vercel.com/docs/vercel-sandbox/sdk-reference
-- 📖 GitHub: https://github.com/vercel/sandbox
+See `examples/environments/` in the agent-browser repo for a working app with the Vercel Sandbox pattern, including a sandbox snapshot creation script, streaming progress UI, and rate limiting.

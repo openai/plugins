@@ -1,33 +1,31 @@
 {
-  "name": "close",
-  "version": "1.0.3",
-  "description": "Reference and update Close CRM",
-  "author": {
-    "name": "Close",
-    "url": "https://www.close.com"
-  },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
+  "author": {
+    "name": "Elastic, Inc."
+  },
+  "description": "Close stores every call, email, SMS, and meeting your team touches, not just contact records. Connect it to ChatGPT and your conversation history becomes something you can actually work from.\n\nAsk ChatGPT to catch you up on a deal, summarize recent calls, draft follow-ups, update records, or build outreach workflows without bouncing between tools. Close is built around communication. Calls, emails, SMS, and meetings are all logged and searchable, giving ChatGPT far more context than traditional CRMs built mostly for record-keeping.\n\nClose also includes Chloe, a built-in AI sales teammate embedded directly into your workflows. Together, ChatGPT and Chloe help teams stay on top of follow-up, prioritize outreach, and keep deals moving.",
   "interface": {
-    "displayName": "Close",
-    "developerName": "Close",
-    "shortDescription": "Reference and update Close CRM",
-    "longDescription": "With Close's ChatGPT app, ChatGPT will be able to reference and update Close for any task you can dream up. Whether you need to generate a custom report, research and create a new lead list, get a summary of recent interactions with a customer, or create new Workflows - all you have to do is ask ChatGPT to take care of it for you.",
-    "category": "Business & Operations",
     "capabilities": [],
-    "brandColor": "#50C078",
+    "category": "Business & Operations",
+    "composerIcon": "./assets/composer-icon.png",
+    "composerIconDark": "./assets/composer-icon-dark.png",
     "defaultPrompt": [
-      "Find Close opportunities with no recent activity and summarize recommended next steps.",
-      "Search Close for leads from a company and summarize status, owner, and last touch.",
-      "Create a pipeline review from Close for deals closing this month."
+      "Who has closed the most deals over the last 90 days?",
+      "Which opportunities should I follow up on?",
+      "What have we learned from prospect conversations this week?"
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
+    "developerName": "Elastic, Inc.",
+    "displayName": "Close",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Close stores every call, email, SMS, and meeting your team touches, not just contact records. Connect it to ChatGPT and your conversation history becomes something you can actually work from.\n\nAsk ChatGPT to catch you up on a deal, summarize recent calls, draft follow-ups, update records, or build outreach workflows without bouncing between tools. Close is built around communication. Calls, emails, SMS, and meetings are all logged and searchable, giving ChatGPT far more context than traditional CRMs built mostly for record-keeping.\n\nClose also includes Chloe, a built-in AI sales teammate embedded directly into your workflows. Together, ChatGPT and Chloe help teams stay on top of follow-up, prioritize outreach, and keep deals moving.",
+    "privacyPolicyURL": "https://www.close.com/privacy",
+    "shortDescription": "Close CRM for ChatGPT",
+    "supportURL": "https://help.close.com",
+    "termsOfServiceURL": "https://www.close.com/tos",
     "websiteURL": "https://www.close.com"
   },
-  "homepage": "https://www.close.com"
+  "name": "close",
+  "skills": "./skills",
+  "version": "2.0.1"
 }

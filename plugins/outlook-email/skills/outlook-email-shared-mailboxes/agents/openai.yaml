@@ -1,4 +1,0 @@
-interface:
-  display_name: "Shared Mailboxes"
-  short_description: "Read and act on delegated Outlook mailboxes"
-  default_prompt: "Use $outlook-email-shared-mailboxes to read a shared mailbox, send on behalf of it, or move and mark shared mailbox messages safely."

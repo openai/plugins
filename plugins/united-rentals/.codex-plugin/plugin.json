@@ -1,7 +1,7 @@
 {
   "name": "united-rentals",
-  "version": "1.0.3",
-  "description": "Get the right equipment for the job without guesswork.",
+  "version": "1.0.0",
+  "description": "Get the right equipment for the job without guesswork. Share your project details and receive tailored equipment recommendations, along with specifications to support confident selection.",
   "author": {
     "name": "United Rentals",
     "url": "https://www.unitedrentals.com"
@@ -12,7 +12,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "United Rentals",
-    "shortDescription": "Get the right equipment for the job without guesswork.",
+    "shortDescription": "Find equipment for your job",
     "longDescription": "Get the right equipment for the job without guesswork. Share your project details and receive tailored equipment recommendations, along with specifications to support confident selection.",
     "developerName": "United Rentals",
     "category": "Productivity",

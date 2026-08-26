@@ -1,0 +1,76 @@
+# CloudFormation template for creating an IAM role that a self-hosted Temporal Service can assume to invoke Lambda functions.
+# Transcribed verbatim from docs/production-deployment/worker-deployments/serverless-workers/self-hosted-setup.mdx:136-209
+AWSTemplateFormatVersion: '2010-09-09'
+Description:
+  Creates an IAM role that a self-hosted Temporal Service can assume to invoke Lambda functions for Serverless Workers.
+
+Parameters:
+  TemporalIamRoleArn:
+    Type: String
+    Description: The ARN of the IAM role or user that the Temporal Service runs as.
+
+  AssumeRoleExternalId:
+    Type: String
+    Description: A unique identifier to prevent confused deputy attacks.
+    AllowedPattern: '[a-zA-Z0-9_+=,.@-]*'
+    MinLength: 5
+    MaxLength: 45
+
+  LambdaFunctionARNs:
+    Type: CommaDelimitedList
+    Description: >-
+      Comma-separated list of Lambda function ARNs to invoke (e.g.,
+      arn:aws:lambda:us-west-2:123456789012:function:worker-1,arn:aws:lambda:us-west-2:123456789012:function:worker-2)
+
+  RoleName:
+    Type: String
+    Default: 'Temporal-Serverless-Worker'
+
+Resources:
+  TemporalServerlessWorker:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: [!Ref TemporalIamRoleArn]
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                'sts:ExternalId': [!Ref AssumeRoleExternalId]
+      Description: 'The role the Temporal Service uses to invoke Lambda functions for Serverless Workers'
+      MaxSessionDuration: 3600
+
+  TemporalLambdaInvokePermissions:
+    Type: AWS::IAM::Policy
+    DependsOn: TemporalServerlessWorker
+    Properties:
+      PolicyName: 'Temporal-Lambda-Invoke-Permissions'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - lambda:GetFunction
+            Resource: !Ref LambdaFunctionARNs
+      Roles:
+        - !Ref RoleName
+
+Outputs:
+  RoleARN:
+    Description: The ARN of the IAM role created for the Temporal Service
+    Value: !GetAtt TemporalServerlessWorker.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-RoleARN'
+
+  RoleName:
+    Description: The name of the IAM role
+    Value: !Ref RoleName
+
+  LambdaFunctionARNs:
+    Description: The Lambda function ARNs that can be invoked
+    Value: !Join [', ', !Ref LambdaFunctionARNs]

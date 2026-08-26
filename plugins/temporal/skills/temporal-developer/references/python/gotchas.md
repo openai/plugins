@@ -211,10 +211,12 @@ class GoodWorkflow:
 ### Not Handling Activity Cancellation
 
 Activities must **opt in** to receive cancellation. This requires:
+
 1. **Heartbeating** - Cancellation is delivered via heartbeat
 2. **Catching the cancellation exception** - Exception is raised when heartbeat detects cancellation
 
 **Cancellation exceptions:**
+
 - Async activities: `asyncio.CancelledError`
 - Sync threaded activities: `temporalio.exceptions.CancelledError`
 

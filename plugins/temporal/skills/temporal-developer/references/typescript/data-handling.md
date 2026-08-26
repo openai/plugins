@@ -7,6 +7,7 @@ The TypeScript SDK uses data converters to serialize/deserialize workflow inputs
 ## Default Data Converter
 
 The default converter handles:
+
 - `undefined` and `null`
 - `Uint8Array` (as binary)
 - JSON-serializable types

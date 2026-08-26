@@ -1,7 +1,0 @@
-interface:
-  display_name: "Daily Digest"
-  short_description: "Summarize today's Slack activity"
-  icon_small: "./assets/slack-small.svg"
-  icon_large: "./assets/slack.png"
-  brand_color: "#611F69"
-  default_prompt: "Use $slack-daily-digest to summarize today's important Slack activity from selected channels or topics."

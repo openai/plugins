@@ -1,33 +1,27 @@
 {
-  "name": "stripe",
-  "version": "1.0.2",
-  "description": "Payments and business tools",
-  "author": {
-    "name": "Stripe",
-    "url": "https://stripe.com"
-  },
-  "homepage": "https://stripe.com",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "skills": "./skills/",
   "apps": "./.app.json",
+  "author": {
+    "name": "Stripe"
+  },
+  "description": "Develop your payments integration faster with the ability to create products, prices, and payment links directly in ChatGPT. Run your business from ChatGPT with the ability to retrieve and manage payments, subscriptions, invoices, refunds, disputes, and customers. Build and debug your payment integration quicker than ever by searching the Stripe documentation and getting integration recommendations without needing to leave ChatGPT.",
   "interface": {
-    "displayName": "Stripe",
-    "developerName": "Stripe",
-    "shortDescription": "Payments and business tools",
-    "longDescription": "Payments and business tools",
-    "category": "Finance",
     "capabilities": [],
-    "websiteURL": "https://stripe.com",
-    "privacyPolicyURL": "https://stripe.com/privacy",
-    "termsOfServiceURL": "https://stripe.com/legal/ssa",
-    "brandColor": "#635BFF",
+    "category": "Finance",
     "defaultPrompt": [
-      "Use Stripe to help with this task"
+      "Show me the list of my customers",
+      "Show me what products I have",
+      "Tell me the prices I have created"
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
-  }
+    "developerName": "Stripe",
+    "displayName": "Stripe",
+    "longDescription": "Develop your payments integration faster with the ability to create products, prices, and payment links directly in ChatGPT. Run your business from ChatGPT with the ability to retrieve and manage payments, subscriptions, invoices, refunds, disputes, and customers. Build and debug your payment integration quicker than ever by searching the Stripe documentation and getting integration recommendations without needing to leave ChatGPT.",
+    "privacyPolicyURL": "https://stripe.com/privacy",
+    "shortDescription": "Accept payments. Grow revenue.",
+    "supportURL": "https://support.stripe.com",
+    "termsOfServiceURL": "https://stripe.com/legal/ssa",
+    "websiteURL": "https://stripe.com"
+  },
+  "name": "stripe",
+  "skills": "./skills",
+  "version": "7.0.0"
 }

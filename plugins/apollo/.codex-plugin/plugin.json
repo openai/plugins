@@ -1,32 +1,24 @@
 {
-  "name": "apollo",
-  "version": "1.0.2",
-  "description": "Prospecting and outbound execution in Apollo",
-  "author": {
-    "name": "Apollo",
-    "url": "https://www.apollo.io"
-  },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
-  "interface": {
-    "displayName": "Apollo",
-    "developerName": "Apollo",
-    "shortDescription": "Prospecting and outbound execution in Apollo",
-    "longDescription": "Apollo’s MCP connector lets ChatGPT safely work inside your Apollo workspace to accelerate prospecting and outbound execution. Search and qualify accounts and contacts using Apollo’s data, enrich records, summarize key context, and take action (e.g., create lists, log notes, generate tasks, and draft or assemble outbound using sequences) using your team’s rules and permissions. Designed for speed and control: ChatGPT can pull only what you ask for, respect workspace access, and produce outputs that are ready to review, personalize, and ship.",
-    "category": "Business & Operations",
-    "capabilities": [],
-    "brandColor": "#E8F028",
-    "defaultPrompt": [
-      "Find verified contacts matching this ICP in Apollo and rank the best prospects.",
-      "Research a company in Apollo and identify decision makers for this use case.",
-      "Build an outreach list for this industry with recent growth or hiring signals."
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png",
-    "websiteURL": "https://www.apollo.io"
+  "author": {
+    "name": "Apollo.io"
   },
-  "homepage": "https://www.apollo.io"
+  "description": "Apollo\u2019s MCP connector lets ChatGPT safely work inside your Apollo workspace to accelerate prospecting and outbound execution. Search and qualify accounts and contacts using Apollo\u2019s data, enrich records, summarize key context, and take action (e.g., create lists, log notes, generate tasks, and draft or assemble outbound using sequences) using your team\u2019s rules and permissions. Designed for speed and control: ChatGPT can pull only what you ask for, respect workspace access, and produce outputs that are ready to review, personalize, and ship.",
+  "interface": {
+    "capabilities": [],
+    "category": "Business & Operations",
+    "defaultPrompt": [
+      "Find 5 US Fintechs with job postings in last 90 days"
+    ],
+    "developerName": "Apollo.io",
+    "displayName": "Apollo.io",
+    "longDescription": "Apollo\u2019s MCP connector lets ChatGPT safely work inside your Apollo workspace to accelerate prospecting and outbound execution. Search and qualify accounts and contacts using Apollo\u2019s data, enrich records, summarize key context, and take action (e.g., create lists, log notes, generate tasks, and draft or assemble outbound using sequences) using your team\u2019s rules and permissions. Designed for speed and control: ChatGPT can pull only what you ask for, respect workspace access, and produce outputs that are ready to review, personalize, and ship.",
+    "privacyPolicyURL": "https://www.apollo.io/privacy-policy",
+    "shortDescription": "Find buyers and close deals",
+    "supportURL": "https://www.apollo.io/submit-a-request",
+    "termsOfServiceURL": "https://www.apollo.io/terms",
+    "websiteURL": "https://www.apollo.io/"
+  },
+  "name": "apollo",
+  "version": "4.0.1"
 }

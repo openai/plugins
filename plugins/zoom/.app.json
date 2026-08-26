@@ -1,8 +1,7 @@
 {
   "apps": {
     "zoom": {
-      "id": "asdk_app_69373a13116c819189d046aea1278836",
-      "required": false
+      "id": "asdk_app_69373a13116c819189d046aea1278836"
     }
   }
 }

@@ -19,6 +19,7 @@ Activities should be synchronous by default. Use async only when certain the cod
 The Python async event loop runs in a single thread. When any task runs, no other tasks can execute until an `await` is reached. If code makes a blocking call (file I/O, synchronous HTTP, etc.), the entire event loop freezes.
 
 **Consequences of blocking the event loop:**
+
 - Worker cannot communicate with Temporal Server
 - Workflow progress blocks across the worker
 - Potential deadlocks and unpredictable behavior
@@ -73,6 +74,7 @@ async def my_async_activity(name: str) -> str:
 | `httpx` | Both | Yes (use async mode) |
 
 **Example: Wrong way (blocks event loop)**
+
 ```python
 @activity.defn
 async def bad_activity(url: str) -> str:
@@ -82,6 +84,7 @@ async def bad_activity(url: str) -> str:
 ```
 
 **Example: Correct way (async-safe)**
+
 ```python
 @activity.defn
 async def good_activity(url: str) -> str:
@@ -150,6 +153,7 @@ For CPU-bound work and multi-core usage:
 ### Separate Workers for Workflows vs Activities
 
 Some teams deploy:
+
 - Workflow-only workers (CPU-bound, need deadlock detection)
 - Activity-only workers (I/O-bound, may need more parallelism)
 

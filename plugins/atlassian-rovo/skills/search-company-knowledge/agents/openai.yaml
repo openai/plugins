@@ -1,3 +1,0 @@
-interface:
-  display_name: "Search Company Knowledge"
-  short_description: "Search Confluence, Jira, and internal Atlassian context"

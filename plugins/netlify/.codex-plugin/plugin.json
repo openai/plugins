@@ -1,7 +1,7 @@
 {
   "name": "netlify",
-  "version": "1.1.2",
-  "description": "Deploy projects and manage preview or production releases on Netlify.",
+  "version": "1.0.0",
+  "description": "Build and deploy on Netlify",
   "author": {
     "name": "Netlify",
     "url": "https://www.netlify.com"
@@ -20,7 +20,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Netlify",
-    "shortDescription": "Deploy projects and manage releases",
+    "shortDescription": "Build and deploy on Netlify",
     "longDescription": "Use Netlify to inspect deployment state, manage sites, and pair the Netlify app with the curated deployment skill for preview and production workflows.",
     "developerName": "Netlify",
     "category": "Developer Tools",
@@ -37,6 +37,7 @@
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "logo": "./assets/app-icon.png",
+    "brandColorDark": "#52FFF1"
   }
 }

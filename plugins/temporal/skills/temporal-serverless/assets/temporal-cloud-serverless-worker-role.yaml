@@ -1,0 +1,99 @@
+# CloudFormation template for creating an IAM role that Temporal Cloud can assume to invoke Lambda functions.
+# Transcribed verbatim from docs/production-deployment/worker-deployments/serverless-workers/aws-lambda.mdx:404-501
+AWSTemplateFormatVersion: '2010-09-09'
+Description:
+  Creates an IAM role that Temporal Cloud can assume to invoke multiple Lambda functions for Serverless Workers.
+
+Parameters:
+  AssumeRoleExternalId:
+    Type: String
+    Description: A string you choose. Can be any value.
+    AllowedPattern: '[a-zA-Z0-9_+=,.@-]*'
+    MinLength: 5
+    MaxLength: 45
+
+  LambdaFunctionARNs:
+    Type: CommaDelimitedList
+    Description: >-
+      Comma-separated list of Lambda function ARNs to invoke (e.g.,
+      arn:aws:lambda:us-west-2:123456789012:function:worker-1,arn:aws:lambda:us-west-2:123456789012:function:worker-2)
+
+  RoleName:
+    Type: String
+    Default: 'Temporal-Cloud-Serverless-Worker'
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: 'Temporal Cloud Configuration'
+        Parameters:
+          - AssumeRoleExternalId
+      - Label:
+          default: 'Lambda Configuration'
+        Parameters:
+          - LambdaFunctionARNs
+          - RoleName
+    ParameterLabels:
+      AssumeRoleExternalId:
+        default: 'External ID'
+      LambdaFunctionARNs:
+        default: 'Lambda Function ARNs (comma-separated list)'
+      RoleName:
+        default: 'IAM Role Name'
+
+Resources:
+  TemporalCloudServerlessWorker:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                [
+                  arn:aws:iam::902542641901:role/wci-lambda-invoke,
+                  arn:aws:iam::160190466495:role/wci-lambda-invoke,
+                  arn:aws:iam::819232936619:role/wci-lambda-invoke,
+                  arn:aws:iam::829909441867:role/wci-lambda-invoke,
+                  arn:aws:iam::354116250941:role/wci-lambda-invoke,
+                ]
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                'sts:ExternalId': [!Ref AssumeRoleExternalId]
+      Description: 'The role Temporal Cloud uses to invoke Lambda functions for Serverless Workers'
+      MaxSessionDuration: 3600 # 1 hour
+
+  TemporalCloudLambdaInvokePermissions:
+    Type: AWS::IAM::Policy
+    DependsOn: TemporalCloudServerlessWorker
+    Properties:
+      PolicyName: 'Temporal-Cloud-Lambda-Invoke-Permissions'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - lambda:GetFunction
+            Resource: !Ref LambdaFunctionARNs
+      Roles:
+        - !Ref RoleName
+
+Outputs:
+  RoleARN:
+    Description: The ARN of the IAM role created for Temporal Cloud
+    Value: !GetAtt TemporalCloudServerlessWorker.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-RoleARN'
+
+  RoleName:
+    Description: The name of the IAM role
+    Value: !Ref RoleName
+
+  LambdaFunctionARNs:
+    Description: The Lambda function ARNs that can be invoked
+    Value: !Join [', ', !Ref LambdaFunctionARNs]

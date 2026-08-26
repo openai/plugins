@@ -47,7 +47,7 @@ async def charge_card(input: ChargeCardInput) -> str:
 ```python
 from datetime import timedelta
 from temporalio import workflow
-from temporalio.exceptions import ActivityError, ApplicationError
+from temporalio.exceptions import ActivityError, ApplicationError, is_cancelled_exception
 
 @workflow.defn
 class MyWorkflow:
@@ -59,6 +59,9 @@ class MyWorkflow:
                 start_to_close_timeout=timedelta(minutes=5),
             )
         except ActivityError as e:
+            # Let cancellation propagate so the workflow is canceled, not failed
+            if is_cancelled_exception(e):
+                raise
             workflow.logger.error(f"Activity failed: {e}")
             # Handle or re-raise
             raise ApplicationError("Workflow failed due to activity error")

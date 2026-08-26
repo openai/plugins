@@ -1,7 +1,7 @@
 {
   "name": "highlevel",
-  "version": "1.0.2",
-  "description": "HighLevel gives agencies a unified CRM, automation, and client communication platform.",
+  "version": "1.0.0",
+  "description": "Interact with your CRM business data",
   "author": {
     "url": "https://www.gohighlevel.com",
     "name": "HighLevel"
@@ -13,9 +13,9 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "HighLevel",
-    "shortDescription": "HighLevel gives agencies a unified CRM, automation, and client communication platform.",
-    "longDescription": "HighLevel gives agencies a unified CRM, automation, and client communication platform. This connector lets you securely bring HighLevel data\u2014contacts, opportunities, appointments, conversations and more\u2014into GPT, turning raw records into clear summaries, next-step recommendations, and ready-to-use content. Analyze pipelines, qualify leads, and prepare follow-ups in seconds without leaving the chat.",
-    "category": "Productivity",
+    "shortDescription": "Interact with your CRM business data",
+    "longDescription": "HighLevel gives agencies a unified CRM, automation, and client communication platform. This connector lets you securely bring HighLevel data—contacts, opportunities, appointments, conversations and more—into GPT, turning raw records into clear summaries, next-step recommendations, and ready-to-use content. Analyze pipelines, qualify leads, and prepare follow-ups in seconds without leaving the chat.",
+    "category": "Business & Operations",
     "capabilities": [],
     "websiteURL": "https://www.gohighlevel.com",
     "privacyPolicyURL": "https://www.gohighlevel.com/privacy-policy",

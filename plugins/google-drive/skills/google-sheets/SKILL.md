@@ -21,12 +21,17 @@ If the user has not provided explicit style direction, read `references/style-pr
 
 ## Default Routing
 
-1. New Google Sheets creation: first check whether the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or the `$Excel` skill is installed.
-2. If either is installed, YOU MUST use `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` or `$Excel` to create a local `.xlsx`. Then import the `.xlsx` into Drive as a native Google Sheets spreadsheet. Read `references/reference-import-spreadsheet-to-native-sheets.md`.
-4. If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
-5. Existing Google Sheets edits: use Google Sheets MCP directly.
+1. New Google Sheet from a native Google Sheets reference or template URL: copy the entire source workbook with the Drive file-copy action, then trim or repair the copy. Treat a deep-linked `gid` as the initial view, not copy scope. Duplicate one source sheet only when the user explicitly requests a single-sheet extraction. Do not rebuild through `.xlsx` when chips, validation, formulas, rich links, or formatting matter.
+2. Other new Google Sheets creation: Inspect the available skills and plugins for the registered `Spreadsheets` capability. It may be exposed as the `$Spreadsheets` skill, the `@Spreadsheets` plugin, or the plugin URI `plugin://spreadsheets@openai-primary-runtime`. If found, load and follow its instructions.
+   - If a system spreadsheet plugin or skill is installed, YOU MUST use it to create a local `.xlsx`. Then import the `.xlsx` into Drive as a native Google Sheets spreadsheet. For table-like option/list/dropdown columns, seed a valid row and add native table `DROPDOWN` columns post-import.
+   - If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
+3. Existing Google Sheets edits: use Google Sheets MCP directly.
 
 Do not reference the local `.xlsx` in the final answer. Your final answer includes the Google Spreadsheet link only.
+
+## File Safety
+
+Treat a provided Google Sheet as read-only unless the user explicitly asks to edit that file. When a task uses the Sheet as a reference, template, similar structure, or data source, copy it or create a separate Sheet, then verify the output spreadsheet ID differs before writing.
 
 ## Canonical Workflow Bias
 
@@ -40,16 +45,25 @@ For sheet creation and editing tasks, prefer this sequence when viable:
 2. Pick the correct default routing.
 3. Establish the sheet checklist or sheet plan.
 4. Build or edit the sheet.
-5. Verify the sheet is clean, complete, native, and scannable.
+5. Verify the sheet is clean, complete, native, and scannable per `references/reference-visual-quality.md`.
 6. Stop once the verified workflow has succeeded.
 
 If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
 
 ## Required Read Order (No Skips)
 
-If Default Routing uses `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` or `$Excel`:
-1. Read the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin skill or `$Excel` skill
+For every route that creates, imports, or edits a Google Sheet, read `references/reference-visual-quality.md` before final verification.
+
+If Default Routing uses native Google Sheets reference-follow creation:
+1. Read `references/reference-edit-workflow.md`
+2. Read `references/reference-live-read-search-safety.md`
+3. Read `references/reference-native-cell-structure.md`
+4. Read `references/reference-batch-update-recipes.md`
+
+If Default Routing uses the system spreadsheet plugin or skill like `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` or `$Spreadsheets`:
+1. Read the plugin/skill, e.g. `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)`
 2. Read `references/reference-import-spreadsheet-to-native-sheets.md`
+3. If the new Sheet has explicit or reference-derived option/list/dropdown columns, read `references/reference-batch-update-recipes.md` before the post-import table batch update.
 
 If Default Routing uses connector edit workflow:
 
@@ -63,7 +77,7 @@ Do not execute content edits until the required references are read in the curre
 
 ## Final Answer Requirement
 
-If the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin or the `$Excel` skill is installed, you MUST use one of them to create a local `.xlsx` and import it to Google Drive with `upload_mode: "native_google_sheets"`.
+Unless Default Routing selected native Google Sheets reference-follow creation, if the registered `Spreadsheets` capability like the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin is available, you MUST use one of them to create a local `.xlsx` and import it to Google Drive with `upload_mode: "native_google_sheets"`.
 Even though you created a local `.xlsx`, do not cite the local path in the final answer. The final answer cites only the Google Spreadsheet link.
 
 ## Connector Load Checklist
@@ -82,8 +96,10 @@ Even though you created a local `.xlsx`, do not cite the local path in the final
 | --- | --- |
 | Existing spreadsheet edit workflow, grounding, validation-backed cells, output conventions, and write planning | `references/reference-edit-workflow.md` |
 | Direct live range reads, cell reads, row searches, tab/range recovery, and oversized search avoidance | `references/reference-live-read-search-safety.md` |
+| Adding or inserting rows or columns beside populated data while preserving validation, chips, formulas, and formatting | `references/reference-native-cell-structure.md` |
+| Reference/template following from a provided Google Sheet | `references/reference-native-cell-structure.md` |
 | Raw Sheets write shapes and example `batch_update` bodies | `references/reference-batch-update-recipes.md` |
-| Importing a locally created `.xlsx`, `.xls`, `.ods`, `.csv`, or `.tsv` into Google Sheets | `references/reference-import-spreadsheet-to-native-sheets.md` |
+| Importing a local spreadsheet and upgrading intended tables to native Sheets tables | `references/reference-import-spreadsheet-to-native-sheets.md` |
 | Formula design, repair, rollout, or syntax refresh | `references/reference-formula-patterns.md` |
 | Chart creation, repair, chart-spec recall, or repositioning | `references/reference-chart-recipes.md` |
 | Unspecified styling for native Google Sheets destinations | `references/style-profiles.md` |

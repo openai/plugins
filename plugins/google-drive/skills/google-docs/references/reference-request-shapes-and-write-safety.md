@@ -8,6 +8,7 @@ When to read: non-meeting structural connector writes, table/form-like template 
 - Tab-Aware Calls
 - Request Key Reference
 - API Capability Boundaries
+- Explicit Output Forms
 - Range Safety
 - Local Style Baseline
 - Existing Table Writes
@@ -94,6 +95,25 @@ For calendar-backed Meeting notes, follow `reference-meeting-notes-direct.md`; i
 Do not claim support for true suggestion-mode edits through `batchUpdate`; it creates direct document edits. Do not claim support for arbitrary Google Docs UI building blocks as a single API object unless a connector read and write path for that object has been verified in the current workflow.
 For UI-only building blocks, exact parity requires copying a UI-inserted exemplar or template and editing supported child content in place. Recreating the visible text and table cells through `batchUpdate` is an approximation unless readback confirms every required native child component came from the copied exemplar.
 
+## Explicit Output Forms
+
+When the prompt explicitly requests one of these forms, or a supplied template/reference establishes it, preserve the form rather than substituting generic prose:
+
+| Requested form | Required behavior |
+| --- | --- |
+| Matrix, requirements matrix, or comparison matrix | Native table with the requested comparison fields |
+| Scorecard | Native table unless the supplied template establishes another native form |
+| Checklist or readiness tracker | Preserve native checkbox/status controls when present; otherwise use a table or structured list with explicit status fields and disclose the limitation |
+| Timeline | Preserve or create a native timeline table when the template/source uses tabular events |
+| Comparison table | Native table; buyer-need or option prose is not a substitute |
+| Chart, figure, image, or screenshot | Preserve or insert the supplied visual; do not leave an unapproved placeholder |
+| Sources, citations, or references | Native hyperlinks on the intended visible labels |
+| Template field or boxed section | Fill the existing answer container, not its instruction text |
+
+Do not infer these forms from an artifact category alone. If the requested native form is unavailable, preserve a copied exemplar, obtain approval for a fallback, or report the limitation before writing.
+
+When no output form is explicit, choose representation only after the obligations are fixed. If three or more items share the same decision fields, prefer one readable native table over repeated prose blocks when it materially improves comparison; this changes presentation, not scope. Keep prose or lists when the fields are not truly comparable or cells would become mini-paragraphs. Never infer a named matrix, scorecard, or checklist merely from the document category.
+
 ## Range Safety
 
 Before destructive writes:
@@ -122,6 +142,17 @@ Before destructive writes:
 11. `namedStyleType` alone is not proof that a heading matches the template. If nearby peer headings carry additional local text styling, compare against a concrete peer heading and reproduce that local treatment when needed.
 12. When the heading match is high stakes, prefer a connector read that exposes concrete text-style details for the peer heading instead of relying only on paragraph-text summaries.
 13. If the task includes figures, capture the intended text structure before figure placement. Headings, list formatting, and paragraph boundaries should be stable before connector-supported image insertion begins.
+
+## Conditional Style Intent
+
+- Preserve an existing template by default.
+- Use restrained normalization only when the user requests cleanup, simplification, or professionalization.
+- Use explicit redesign only when the user requests a new visual direction.
+- Apply global consistency only to fields and objects explicitly placed in scope.
+
+Do not require a style contract for ordinary work. For section insertion, reordering, or an observed table-boundary defect, sample the nearest equivalent boundary and repair only the affected paragraph fields after final indexes are known.
+
+For requests containing `all`, `every`, `throughout`, or an explicit consistency requirement, inventory the complete target set, apply only the requested fields, verify every target, and record explicit exceptions. Do not normalize unrelated properties.
 
 ## Existing Table Writes
 

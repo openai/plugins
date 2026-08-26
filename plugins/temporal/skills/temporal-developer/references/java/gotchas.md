@@ -7,6 +7,7 @@ Java-specific mistakes and anti-patterns. See also [Common Gotchas](../core/gotc
 **Critical: The Java SDK has NO sandbox.** Unlike Python (which uses a sandbox) or TypeScript (which uses V8 isolation), the Java SDK relies entirely on developer conventions. Non-deterministic calls silently succeed during initial execution but cause `NonDeterministicException` on replay.
 
 Forbidden in workflow code — use the Temporal `Workflow.*` equivalents instead:
+
 - `Thread.sleep` → `Workflow.sleep`
 - `UUID.randomUUID` → `Workflow.randomUUID`
 - `Math.random` → `Workflow.newRandom`
@@ -103,6 +104,7 @@ public class GoodWorkflow implements MyWorkflow {
 ### Not Handling Activity Cancellation
 
 Activities must **opt in** to receive cancellation. This requires:
+
 1. **Heartbeating** - Cancellation is delivered via heartbeat
 2. **Catching CanceledFailure** - Thrown when heartbeat detects cancellation
 

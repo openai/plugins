@@ -1,33 +1,26 @@
 {
-  "name": "omni-analytics",
-  "version": "1.0.4",
-  "description": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
-  "author": {
-    "name": "Omni Analytics",
-    "url": "https://www.omni.co"
-  },
-  "homepage": "https://www.omni.co",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
+  "author": {
+    "name": "Omni Analytics"
+  },
+  "description": "Omni lets users work with their organization's governed business intelligence data from ChatGPT. The app can list available Omni models, select the best topic for a question, generate and run a single analytical query, start Omni's full AI assistant for deeper multi-step analysis, check the assistant job status, and search Omni documentation.",
   "interface": {
-    "displayName": "Omni Analytics",
-    "shortDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
-    "longDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex. Allow internal teams to ask data questions in their AI workflows without logging into Omni directly, while still enforcing row-level security and business definitions.",
-    "developerName": "Omni Analytics",
-    "category": "Data & Analytics",
     "capabilities": [],
-    "websiteURL": "https://www.omni.co",
-    "privacyPolicyURL": "https://omni.co/privacy",
-    "termsOfServiceURL": "https://omni.co/terms",
+    "category": "Data & Analytics",
     "defaultPrompt": [
-      "Show me last year's orders by status"
+      "Show me last year's orders by status",
+      "Where are our users based?",
+      "Give me an analysis of our business over the last few years"
     ],
-    "brandColor": "#F686AC",
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png",
-    "screenshots": []
-  }
+    "developerName": "Omni Analytics",
+    "displayName": "Omni",
+    "longDescription": "Omni lets users work with their organization's governed business intelligence data from ChatGPT. The app can list available Omni models, select the best topic for a question, generate and run a single analytical query, start Omni's full AI assistant for deeper multi-step analysis, check the assistant job status, and search Omni documentation.",
+    "privacyPolicyURL": "https://omni.co/privacy",
+    "shortDescription": "Query business data",
+    "supportURL": "https://omni.co/customer-support",
+    "termsOfServiceURL": "https://omni.co/terms",
+    "websiteURL": "https://www.omni.co"
+  },
+  "name": "omni-analytics",
+  "version": "2.0.0"
 }

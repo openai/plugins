@@ -1,34 +1,25 @@
 {
-  "name": "lovable",
-  "version": "1.0.2",
-  "description": "Create full-stack web apps from prompts",
-  "author": {
-    "name": "Lovable",
-    "url": "https://lovable.dev"
-  },
-  "homepage": "https://lovable.dev",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
+  "author": {
+    "name": "Lovable Labs"
+  },
+  "description": "Build apps and websites",
   "interface": {
-    "displayName": "Lovable",
-    "shortDescription": "Create full-stack web apps from prompts",
-    "longDescription": "Creates full-stack web applications and websites from natural language prompts, handling build, backend, database, and authentication setup, and returning build status, URLs, and screenshots. Use to initiate or check website builds and to provide users with links to further modify or extend their sites in an external web interface.",
-    "developerName": "Lovable",
-    "category": "Developer Tools",
     "capabilities": [],
-    "websiteURL": "https://lovable.dev",
-    "privacyPolicyURL": "https://lovable.dev/privacy",
-    "termsOfServiceURL": "https://lovable.dev/terms",
+    "category": "Developer Tools",
     "defaultPrompt": [
-      "Find my Lovable app projects and summarize recent changes.",
-      "Review this Lovable project and identify what is ready to ship.",
-      "Draft a Lovable prompt to add authentication to this app."
+      "build me an AI-powered customer support app",
+      "build me an AI-powered coaching app",
+      "build me a marketing campaign planner"
     ],
-    "brandColor": "#FC5A28",
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png",
-    "screenshots": []
-  }
+    "developerName": "Lovable Labs",
+    "displayName": "Lovable",
+    "longDescription": "Build apps and websites",
+    "privacyPolicyURL": "https://lovable.dev/privacy",
+    "shortDescription": "Build apps and websites",
+    "termsOfServiceURL": "https://lovable.dev/terms",
+    "websiteURL": "https://lovable.dev/"
+  },
+  "name": "lovable",
+  "version": "2.0.1"
 }

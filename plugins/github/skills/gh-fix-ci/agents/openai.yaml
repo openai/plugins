@@ -1,6 +1,0 @@
-interface:
-  display_name: "CI Debug"
-  short_description: "Debug failing GitHub Actions checks"
-  icon_small: "./assets/github-small.svg"
-  icon_large: "./assets/github.png"
-  default_prompt: "Use $gh-fix-ci to inspect the failing GitHub Actions checks on this PR, summarize the root cause, and propose the smallest viable fix."

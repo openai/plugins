@@ -31,8 +31,8 @@ Non-exhaustive examples of vulnerabilities that often support `high` when eviden
 - Exploitable memory corruption with clear, major impact or ease of exploitation
 - Arbitrary file read that exposes less-sensitive user data or source code (if you have actual proof it reveals env secrets, then it is critical)
 - Arbitrary file write in executable, startup, config, or firmware paths with a realistic path to persistence or code execution
-- CSRF when it enables important state-changing actions such as credential changes, permission changes, payment / billing changes, security-setting changes, or other materially harmful actions, and the victim interaction required is realistic, and is not mitigated by any of these : `same-site strict cookies, auth headers, csrf tokens, PUT/PATCH/DELETE, enforced json request body content type`.
-- Hardcoded or default credentials that are valid and reachable and give meaningful access, but not sufficiently broad or privileged to justify high.
+- CSRF when it enables important state-changing actions such as credential changes, permission changes, payment / billing changes, or security-setting changes with realistic victim interaction. Evaluate actual browser request behavior, credential attachment, cookie policy, preflight requirements, server parsing, and effective anti-CSRF controls; an HTTP method or JSON content type alone is not a categorical defense.
+- Hardcoded or default credentials that are valid, reachable, and provide meaningful access warranting `high`, even when that access is not broad or privileged enough for `critical`.
 - Cryptographic failures that allow signature forgery, token forgery, trusted artifact forgery, secure-channel bypass, or decryption of highly sensitive data in a way that directly enables compromise, with actual proof that these attacks are practical and can be carried out from an in-scope attack surface.
 - Supply-chain or update-channel compromise that allows malicious code or malicious trusted artifacts to be delivered to users, servers, agents, or endpoints, including signing bypass or package source substitution with real impact. This should focus on actual supply-chain risk and risk around CI actions, not just "does npm report outdated packages"
 - Authorization bypass, IDOR, or privilege escalation that exposes or modifies meaningful sensitive data or privileged functionality, but is narrower in scope, limited to a smaller set of objects, limited to same-tenant boundaries, or otherwise less catastrophic than the critical cases above.
@@ -53,11 +53,11 @@ Examples that usually should not remain `high`/`critical` without very strong pr
 - Generic correctness/reliability bugs
 - Strange edge cases with unclear attacker value
 - Low-impact information leaks
-- Internal-only defects without realistic attacker reachability
+- Internal-only defects without attacker reachability
 - The report shows a bug class in isolation, but not a realistic exploit path.
 - The issue requires the attacker to already have privileged, admin, root, console, shell, or code-execution access.
 - "Could maybe matter if chained with many assumptions" arguments
-- Self-XSS, reflected XSS with only an alert-box proof, or XSS without demonstrated access to sensitive data, session material, privileged actions, or comparable real impact.
+- Self-XSS without a victim or meaningful boundary crossing, or XSS whose actual origin, browser reachability, and impact do not justify `high`/`critical`. An `alert` proof demonstrates JavaScript execution and is not evidence against reflected XSS.
 - SQLi or other injection claims with no demonstrated attacker control, no shown sink reachability, or only speculative impact.
 - CSRF on low-impact actions, cosmetic actions, logout, preferences, or actions requiring unrealistic victim behavior.
 - Open redirect, clickjacking, user enumeration, rate-limit weakness, banner leakage, version disclosure, directory listing, stack traces, internal hostnames, or basic error-message leakage, unless they are shown as part of a serious exploit chain.
@@ -91,6 +91,7 @@ Severity adjustment guidance:
 - Reduce severity when the path is localhost-only, self-only, highly constrained, dependent on unrealistic preconditions, or already requires privileged access unless the privilege-escalation delta is the issue.
 - Dangerous sink, scary bug class, or sensitive code area alone is not enough to preserve high severity.
 - If the issue is a real bug but not meaningfully reportable as a security problem in context, set the final policy decision to `ignore`.
+- Do not discard an otherwise reportable finding solely because its impact or likelihood is `low`; downgrade its severity instead.
 
 Final policy-adjustment guidance:
 
@@ -104,7 +105,6 @@ Final policy-adjustment guidance:
   - `localhost` usually supports low likelihood unless a lower-privileged attacker can realistically reach that listener
   - `none` does not increase likelihood based on exposure
 - Then decide reportability using the existing facts:
-  - if the component is not part of a real product surface or meaningful production workflow, set `ignore`
   - if repository evidence does not establish a realistic lower-privileged in-scope attacker path, set `ignore`
   - if the path is internal-only, developer-only, operator-only, localhost-only, privileged-local, or otherwise not meaningfully reportable in context, set `ignore`
 
@@ -117,27 +117,27 @@ Severity calibration and final policy-adjustment matrix:
 - `impact=high`:
   - `likelihood=high` -> `critical` only when the critical criteria above are satisfied; otherwise `high`
   - `likelihood=medium` -> `medium`
-  - `likelihood=low` -> `ignore`
+  - `likelihood=low` -> `low`
   - `likelihood=ignore` -> `ignore`
   - `likelihood=unknown` -> `medium`
 - `impact=medium`:
   - `likelihood=high` -> `medium`
   - `likelihood=medium` -> `low`
-  - `likelihood=low` -> `ignore`
+  - `likelihood=low` -> `low`
   - `likelihood=ignore` -> `ignore`
   - `likelihood=unknown` -> `low`
 - `impact=low`:
-  - `likelihood=high` -> `ignore`
-  - `likelihood=medium` -> `ignore`
-  - `likelihood=low` -> `ignore`
+  - `likelihood=high` -> `low`
+  - `likelihood=medium` -> `low`
+  - `likelihood=low` -> `low`
   - `likelihood=ignore` -> `ignore`
-  - `likelihood=unknown` -> `ignore`
+  - `likelihood=unknown` -> `low`
 - `impact=ignore`:
   - all likelihoods -> `ignore`
 - `impact=unknown`:
   - `likelihood=high` -> `medium`
   - `likelihood=medium` -> `low`
-  - `likelihood=low` -> `ignore`
+  - `likelihood=low` -> `low`
   - `likelihood=ignore` -> `ignore`
   - `likelihood=unknown` -> `low`
 

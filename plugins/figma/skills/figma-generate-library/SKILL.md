@@ -64,7 +64,7 @@ Work through the phases in order. Do not move to the next phase until the curren
 
 - [ ] 0a. Analyze codebase → extract tokens, components, naming conventions
 - [ ] 0b. Inspect Figma file → pages, variables, components, styles, existing conventions
-- [ ] 0c. Search subscribed libraries → use `search_design_system` for reusable assets
+- [ ] 0c. Discover and search libraries → call `get_libraries` for the target file before `search_design_system`
 - [ ] 0d. Lock v1 scope → exact token set + component list recorded before any creation
 - [ ] 0e. Map code → Figma → every conflict (code disagrees with Figma) resolved and recorded
 - [ ] 0f. Print a **gap analysis** to chat: what exists in code but not Figma, what exists in Figma but not code, and every conflict from 0e with its resolution
@@ -143,24 +143,20 @@ For EACH component (in dependency order: atoms before molecules), run the checkl
 
 ## 4. State Management (Required for Long Workflows)
 
-> **`getPluginData()` / `setPluginData()` are NOT supported in `use_figma`.** Use `getSharedPluginData()` / `setSharedPluginData()` instead (these ARE supported), or use name-based lookups and the state ledger (returned IDs).
+> Do not store workflow state on Figma objects. Use deterministic names for discovery and exact returned IDs in the state ledger. Put human-readable component purpose and usage guidance in the component or component-set `description`.
 
-| Entity type | Idempotency key | How to check existence |
+| Entity type | Stable identity | How to check existence |
 |-------------|----------------|----------------------|
-| Scene nodes (pages, frames, components) | `setSharedPluginData('dsb', 'key', value)` or unique name | `node.getSharedPluginData('dsb', 'key')` or `page.findOne(n => n.name === 'Button')` |
+| Pages and frames | Deterministic name + state-ledger ID | `figma.root.children.find(p => p.name === pageName)` or `await figma.getNodeByIdAsync(id)` |
+| Components and component sets | Variant/set name + state-ledger ID | `page.findOne(n => n.name === name)` or `await figma.getNodeByIdAsync(id)` |
 | Variables | Name within collection | `(await figma.variables.getLocalVariablesAsync()).find(v => v.name === name && v.variableCollectionId === collId)` |
 | Styles | Name | `getLocalTextStyles().find(s => s.name === name)` |
 
-Tag every created **scene node** immediately after creation:
-```javascript
-node.setSharedPluginData('dsb', 'run_id', RUN_ID);        // identifies this build run
-node.setSharedPluginData('dsb', 'phase', 'phase3');        // which phase created it
-node.setSharedPluginData('dsb', 'key', 'component/button');// unique logical key
-```
+Record every returned ID in the state ledger immediately after creation. Never use a fuzzy lookup to authorize deletion.
 
 **State persistence**: Do NOT rely solely on conversation context for the state ledger. Write it to disk:
 ```
-/tmp/dsb-state-{RUN_ID}.json
+/tmp/design-system-state-{RUN_ID}.json
 ```
 Re-read this file at the start of every turn. In long workflows, conversation context will be truncated — the file is the source of truth.
 
@@ -194,7 +190,14 @@ Maintain a state ledger tracking:
 
 Search FIRST in Phase 0, then again immediately before each component creation.
 
-**Start with `get_libraries`** to understand what libraries are available before searching blindly:
+Before calling `search_design_system` for a target file, you MUST call `get_libraries` first for that file. You MUST NOT assume libraries are added or available.
+
+An empty `get_libraries` result does NOT excuse skipping the search — it only means you have no library keys to scope with. `get_libraries` paginates (community UI kits appear only on the first page, org libraries page in batches of 20), so empty lists are not proof that no library exists. How to act on the result:
+
+- **Libraries returned** — run `search_design_system` scoped with `includeLibraryKeys`. Libraries in `libraries_available_to_add` are NOT searched by default; pass their `libraryKey`s to reach them.
+- **No libraries returned** — still run `search_design_system`, but omit `includeLibraryKeys`. Omitting it scopes the search to the file itself, which is exactly what you want when discovery returned nothing to scope by.
+
+Only once the search itself comes back empty may you record "no design system assets available" in the Phase 0f gap analysis and build from code tokens. Never infer "no libraries" from a failed or unattempted `get_libraries` call.
 
 ```
 // Discover all libraries accessible to the file
@@ -366,5 +369,4 @@ Reusable Plugin API helper functions. Embed in `use_figma` calls:
 | [bindVariablesToComponent.js](scripts/bindVariablesToComponent.js) | Bind design tokens to all component visual properties |
 | [createDocumentationPage.js](scripts/createDocumentationPage.js) | Create a page with title + description + section structure |
 | [validateCreation.js](scripts/validateCreation.js) | Verify created nodes match expected counts, names, structure |
-| [cleanupOrphans.js](scripts/cleanupOrphans.js) | Remove orphaned nodes by name convention or state ledger IDs |
-| [rehydrateState.js](scripts/rehydrateState.js) | Scan file for all pages, components, variables by name; returns full `{key → nodeId}` map for state reconstruction |
+| [cleanupOrphans.js](scripts/cleanupOrphans.js) | Remove only the exact node, variable, and collection IDs supplied from the state ledger |

@@ -1,6 +1,6 @@
 {
   "name": "coveo",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "Search your enterprise content",
   "author": {
     "url": "https://www.coveo.com",
@@ -26,6 +26,7 @@
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
     "logo": "./assets/app-icon.png",
-    "developerName": "Coveo"
+    "developerName": "Coveo",
+    "supportURL": "https://www.coveo.com/en/contact"
   }
 }

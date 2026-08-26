@@ -1,7 +1,7 @@
 {
   "name": "cube",
-  "version": "1.0.3",
-  "description": "With the Cube MCP Server, you can: - Query live Cube data from actuals, budgets, forecasts, variances, and...",
+  "version": "1.0.0",
+  "description": "With the Cube MCP Server, you can:\n- Query live Cube data from actuals, budgets, forecasts, variances, and more\n- Ask an AI to generate board decks, run variance analysis, or build financial summaries using your real Cube data\n- Drill into transaction-level detail and dimension breakdowns directly from an AI chat\n- Maintain full security: Cube's role-based access control (RBAC) security model enforces your user permissions on every AI request. If you can't see it in Cube, the AI can't see it either",
   "author": {
     "name": "Cube",
     "url": "https://www.cubesoftware.com/"
@@ -13,7 +13,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Cube",
-    "shortDescription": "With the Cube MCP Server, you can: - Query live Cube data from actuals, budgets, forecasts, variances, and...",
+    "shortDescription": "Analyze your financial data",
     "longDescription": "With the Cube MCP Server, you can:\n- Query live Cube data from actuals, budgets, forecasts, variances, and more\n- Ask an AI to generate board decks, run variance analysis, or build financial summaries using your real Cube data\n- Drill into transaction-level detail and dimension breakdowns directly from an AI chat\n- Maintain full security: Cube's role-based access control (RBAC) security model enforces your user permissions on every AI request. If you can't see it in Cube, the AI can't see it either",
     "developerName": "Cube",
     "category": "Finance",
@@ -27,6 +27,7 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://help.cubesoftware.com/"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "slack",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "description": "Work with Slack using the configured Slack integration.",
   "author": {
     "name": "OpenAI",
@@ -12,16 +12,20 @@
   "license": "MIT",
   "keywords": [
     "slack",
+    "salesforce",
     "chat",
-    "collaboration"
+    "collaboration",
+    "messaging",
+    "channels",
+    "threads",
+    "workplace chat"
   ],
-  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Slack",
     "shortDescription": "Read and manage Slack",
     "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
-    "developerName": "OpenAI",
+    "developerName": "Slack",
     "category": "Communication",
     "capabilities": [
       "Interactive",

@@ -28,7 +28,9 @@ The Temporal workflow sandbox will use the same random seed when replaying a wor
 
 See `references/typescript/determinism-protection.md` for more information about the sandbox.
 
-## Forbidden Operations
+## Forbidden Operations in Workflows
+
+The following are forbidden inside workflow code but are appropriate to use in activities.
 
 ```typescript
 // DO NOT do these in workflows:

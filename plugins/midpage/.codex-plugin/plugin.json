@@ -1,33 +1,23 @@
 {
-  "name": "midpage",
-  "version": "1.0.3",
-  "description": "Legal research with cited case law",
-  "author": {
-    "name": "Midpage",
-    "url": "https://www.midpage.ai"
-  },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "skills": "./skills/",
   "apps": "./.app.json",
+  "author": {
+    "name": "Midpage"
+  },
+  "description": "Connect ChatGPT to a database of case law. With the Midpage App, ChatGPT can conduct complex legal research, review opinions, and craft high quality work product. Everything is hyperlinked to real sources for easy verification.",
   "interface": {
-    "displayName": "Midpage",
-    "developerName": "Midpage",
-    "shortDescription": "Legal research with cited case law",
-    "longDescription": "Connect ChatGPT to a database of case law. With the Midpage App, ChatGPT can conduct complex legal research, review opinions, and craft high quality work product. Everything is hyperlinked to real sources for easy verification.",
-    "category": "Education & Research",
     "capabilities": [],
-    "brandColor": "#000000",
-    "defaultPrompt": [
-      "Search Midpage for cases relevant to this legal issue and summarize the strongest authorities.",
-      "Find statutes and regulations related to this matter and explain how they apply.",
-      "Draft a research memo from Midpage results with citations and open questions."
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png",
+    "category": "Education & Research",
+    "defaultPrompt": null,
+    "developerName": "Midpage",
+    "displayName": "Midpage Legal Research",
+    "longDescription": "Connect ChatGPT to a database of case law. With the Midpage App, ChatGPT can conduct complex legal research, review opinions, and craft high quality work product. Everything is hyperlinked to real sources for easy verification.",
+    "privacyPolicyURL": "https://www.midpage.ai/privacy-policy",
+    "shortDescription": "Conduct legal research",
+    "supportURL": "https://www.midpage.ai",
+    "termsOfServiceURL": "https://www.midpage.ai/terms-and-conditions",
     "websiteURL": "https://www.midpage.ai"
   },
-  "homepage": "https://www.midpage.ai"
+  "name": "midpage",
+  "skills": "./skills",
+  "version": "4.0.0"
 }

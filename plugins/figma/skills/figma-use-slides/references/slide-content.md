@@ -90,13 +90,15 @@ const container = figma.createAutoLayout("VERTICAL", {
 });
 
 slide.appendChild(container);
-container.layoutSizingHorizontal = "FILL";
+container.resize(slide.width - 80, container.height);
 container.layoutSizingVertical = "HUG";
+container.x = 40;
+container.y = 40;
 
 return { createdNodeIds: [container.id] };
 ```
 
-Remember: `layoutSizingHorizontal/Vertical = 'FILL'` must be set **after** `appendChild`.
+Slides are not auto-layout parents, so direct slide children cannot use `FILL`. Give the container an explicit width instead. For nested children, set `FILL` only after appending them to an auto-layout container.
 
 ## Working with components
 

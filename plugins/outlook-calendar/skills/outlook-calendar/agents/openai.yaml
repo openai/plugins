@@ -1,7 +1,0 @@
-interface:
-  display_name: "Outlook Calendar"
-  short_description: "Find availability and safe event changes"
-  icon_small: "./assets/outlook-calendar-small.svg"
-  icon_large: "./assets/outlook-calendar.svg"
-  brand_color: "#0078D4"
-  default_prompt: "Use $outlook-calendar to compare availability, explain Outlook meeting status, or draft the exact personal or shared-calendar event change, including Teams details when relevant."

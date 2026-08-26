@@ -1,6 +1,0 @@
-interface:
-  display_name: "Group Scheduler"
-  short_description: "Rank the best meeting times for several people"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/logo.png"
-  default_prompt: "Use $google-calendar-group-scheduler to find and rank the best group meeting times, with clear tradeoffs instead of an exhaustive list."

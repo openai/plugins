@@ -13,13 +13,15 @@ Temporal workflows are durable through history replay. For details on how this w
 ## Quick Start
 
 **Add Dependencies:** Install the Temporal SDK packages (use the package manager appropriate for your project):
+
 ```bash
-npm install @temporalio/client @temporalio/worker @temporalio/workflow @temporalio/activity
+npm install @temporalio/client @temporalio/worker @temporalio/workflow @temporalio/activity @temporalio/envconfig
 ```
 
-Note: if you are working in production, it is strongly advised to use ~ version constraints, i.e.  `npm install ... --save-prefix='~'` if using NPM.
+Note: if you are working in production, it is strongly advised to use ~ version constraints, i.e. `npm install ... --save-prefix='~'` if using NPM.
 
 **activities.ts** - Activity definitions (separate file to distinguish workflow vs activity code):
+
 ```typescript
 export async function greet(name: string): Promise<string> {
   return `Hello, ${name}!`;
@@ -27,6 +29,7 @@ export async function greet(name: string): Promise<string> {
 ```
 
 **workflows.ts** - Workflow definition (use type-only imports for activities):
+
 ```typescript
 import { proxyActivities } from '@temporalio/workflow';
 import type * as activities from './activities';
@@ -40,13 +43,19 @@ export async function greetingWorkflow(name: string): Promise<string> {
 }
 ```
 
-**worker.ts** - Worker setup (imports activities and workflows, runs indefinitely):
+**worker.ts** - Worker setup (registers activity and workflow, runs indefinitely and processes tasks):
+
 ```typescript
-import { Worker } from '@temporalio/worker';
+import { NativeConnection, Worker } from '@temporalio/worker';
+import { loadClientConnectConfig } from '@temporalio/envconfig';
 import * as activities from './activities';
 
 async function run() {
+  const config = loadClientConnectConfig();
+  const connection = await NativeConnection.connect(config.connectionOptions);
   const worker = await Worker.create({
+    connection,
+    namespace: config.namespace,
     workflowsPath: require.resolve('./workflows'), // For production, use workflowBundle instead
     activities,
     taskQueue: 'greeting-queue',
@@ -62,13 +71,17 @@ run().catch(console.error);
 **Start the worker:** Run `npx ts-node worker.ts` in the background.
 
 **client.ts** - Start a workflow execution:
+
 ```typescript
-import { Client } from '@temporalio/client';
+import { Client, Connection } from '@temporalio/client';
+import { loadClientConnectConfig } from '@temporalio/envconfig';
 import { greetingWorkflow } from './workflows';
 import { v4 as uuid } from 'uuid';
 
 async function run() {
-  const client = new Client();
+  const config = loadClientConnectConfig();
+  const connection = await Connection.connect(config.connectionOptions);
+  const client = new Client({ connection, namespace: config.namespace });
 
   const result = await client.workflow.execute(greetingWorkflow, {
     workflowId: uuid(),
@@ -87,16 +100,21 @@ run().catch(console.error);
 ## Key Concepts
 
 ### Workflow Definition
+
 - Async functions exported from workflow file
 - Use `proxyActivities()` with type-only imports
 - Use `defineSignal()`, `defineQuery()`, `defineUpdate()`, `setHandler()` for handlers
 
 ### Activity Definition
+
 - Regular async functions
 - Can perform I/O, network calls, etc.
 - Use `heartbeat()` for long operations
 
 ### Worker Setup
+
+- Load connection settings with `loadClientConnectConfig()` and pass them to `NativeConnection.connect()`
+- Pass `namespace: config.namespace` to `Worker.create()` - `NativeConnection` carries no namespace, and the Worker defaults to `default` without it
 - Use `Worker.create()` with `workflowsPath` (dev) or `workflowBundle` (production) - see `references/typescript/gotchas.md`
 - Import activities directly (not via proxy)
 
@@ -115,6 +133,7 @@ my_temporal_app/
 ```
 
 **In the Workflow file, use type-only imports for activities:**
+
 ```typescript
 // workflows/greeting.ts
 import { proxyActivities } from '@temporalio/workflow';
@@ -130,11 +149,13 @@ const { translate } = proxyActivities<typeof activities>({
 The TypeScript SDK runs workflows in an isolated V8 sandbox.
 
 **Automatic replacements:**
+
 - `Math.random()` → deterministic seeded PRNG
 - `Date.now()` → workflow start time
 - `setTimeout` → deterministic timer
 
 **Safe to use:**
+
 - `sleep()` from `@temporalio/workflow`
 - `condition()` for waiting
 - Standard JavaScript operations
@@ -160,6 +181,7 @@ See `references/typescript/testing.md` for info on writing tests.
 ## Additional Resources
 
 ### Reference Files
+
 - **`references/typescript/patterns.md`** - Signals, queries, child workflows, saga pattern, etc.
 - **`references/typescript/determinism.md`** - Essentials of determinism in TypeScript
 - **`references/typescript/gotchas.md`** - TypeScript-specific mistakes and anti-patterns
@@ -169,4 +191,5 @@ See `references/typescript/testing.md` for info on writing tests.
 - **`references/typescript/advanced-features.md`** - Schedules, worker tuning, and more
 - **`references/typescript/data-handling.md`** - Data converters, payload encryption, etc.
 - **`references/typescript/versioning.md`** - Patching API, workflow type versioning, Worker Versioning
+- **`references/typescript/standalone-activities.md`** - Standalone Activities: run an Activity directly from a Client without a Workflow (Public Preview). Concept overview at `references/core/standalone-activities.md`.
 - **`references/typescript/determinism-protection.md`** - V8 sandbox and bundling

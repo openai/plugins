@@ -1,9 +1,9 @@
 {
   "name": "fal",
-  "version": "1.0.3",
-  "description": "Generate and manage media with Fal models",
+  "version": "1.0.0",
+  "description": "Fal brings image, video, audio, 3D, training, and editing workflows into Codex through an OpenAI app connector plus focused production skills for model recommendation, schema inspection, pricing, async jobs, file uploads, and media generation.",
   "author": {
-    "name": "Fal",
+    "name": "features and labels",
     "url": "https://fal.ai"
   },
   "homepage": "https://fal.ai",
@@ -13,12 +13,12 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Fal",
-    "shortDescription": "Generate and manage media with Fal models",
+    "shortDescription": "Generate with Fal",
     "longDescription": "Fal brings image, video, audio, 3D, training, and editing workflows into Codex through an OpenAI app connector plus focused production skills for model recommendation, schema inspection, pricing, async jobs, file uploads, and media generation.",
-    "developerName": "Fal",
+    "developerName": "features and labels",
     "category": "Creativity",
     "capabilities": [],
-    "websiteURL": "https://fal.ai",
+    "websiteURL": "https://fal.ai/",
     "defaultPrompt": [
       "Use Fal to generate an image from this prompt and summarize the selected model settings.",
       "Find Fal models for image generation or editing and recommend the best fit for this task.",
@@ -27,6 +27,10 @@
     "brandColor": "#D60045",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "screenshots": []
+    "screenshots": [],
+    "supportURL": "https://fal.ai/docs/documentation/model-apis/support",
+    "privacyPolicyURL": "https://fal.ai/legal/privacy-policy",
+    "termsOfServiceURL": "https://fal.ai/legal/terms-of-service",
+    "brandColorDark": "#FF296E"
   }
 }

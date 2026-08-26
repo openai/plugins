@@ -4,7 +4,7 @@ Components overlap a lot with the idea of components in a codebase, but with som
 
 Properties can vary from code in different ways, but alignment to code can still happen without a direct relationship. For example, an interactive pattern in code (like a button) can have many states. A lot of these states (active, focused etc) would be expressed in Figma as variants, which is a concept more closely aligned to properties in a code library. In the case of web this is confusing since hover is not a prop, it is a pseudo selector. At the same time, a color variant might be perfectly aligned between design and code (a property in both places). These discrepancies are accounted for in translation with Figma's Code Connect (deterministic context mapping), but in the case of these tools, must be understood to be properly used.
 
-Figma has four property types, which can be inspected in the component definition's `componentPropertyDefinitions`. To fully understand the component, its descendants must be traversed. Property types include:
+Figma has four property types, which can be inspected through `componentPropertyDefinitions` on a component set or a non-variant component. A variant component does not own this property; inspect its parent component set instead. To fully understand the component, its descendants must be traversed. Property types include:
 
 - Variant
   - This is reflected as permutations of the component in a Component Set on the canvas. Each variant is explicitly visualized, including an redundant permutations ("Small + Primary + Disabled" may look the same as "Small Secondary Sisabled"). These permutations create different variants implicitly in Figma and it is handled through layer naming (`Variant=Primary,Size=Small,State=Disabled`).
@@ -20,7 +20,7 @@ Figma has four property types, which can be inspected in the component definitio
 
 ## Descriptions
 
-Components, component sets, and instances all inherit `PublishableMixin`, which includes a writable `description` string. Setting a description is important for any component intended to be used by others — it appears in Figma's dev mode and component panel, and is surfaced when reading component metadata.
+Components and component sets inherit `PublishableMixin`, which includes a writable `description` string. Frames, instances, and other scene nodes do not; accessing `description` on them throws instead of returning `undefined`. Setting a description is important for any component intended to be used by others — it appears in Figma's dev mode and component panel, and is surfaced when reading component metadata.
 
 Descriptions should explain the component's intent and any non-obvious usage constraints. They are not a substitute for Code Connect annotations, but they are always visible without any tooling setup.
 

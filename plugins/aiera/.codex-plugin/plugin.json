@@ -1,32 +1,35 @@
 {
-  "name": "aiera",
-  "version": "1.0.2",
-  "description": "Institutional financial data and events",
+  "apps": "./.app.json",
   "author": {
-    "name": "Aiera",
+    "name": "Aiera, Inc.",
     "url": "https://www.aiera.com"
   },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
+  "description": "Access institutional-grade financial data from Aiera, including live corporate events, filings, company publications, broker research, and much more.",
+  "homepage": "https://www.aiera.com",
   "interface": {
-    "displayName": "Aiera",
-    "developerName": "Aiera",
-    "shortDescription": "Institutional financial data and events",
-    "longDescription": "Access institutional-grade financial data from Aiera, including live corporate events, filings, company publications, broker research, and much more.",
-    "category": "Finance",
-    "capabilities": [],
     "brandColor": "#180830",
+    "brandColorDark": "#DFCFF7",
+    "capabilities": [],
+    "category": "Finance",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "Find the latest earnings call transcript for a company in Aiera and summarize key themes.",
       "Search Aiera events for mentions of a topic across this sector this quarter.",
       "Compare management commentary from the last two calls for a company."
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
+    "developerName": "Aiera, Inc.",
+    "displayName": "Aiera",
     "logo": "./assets/logo.png",
-    "websiteURL": "https://www.aiera.com"
+    "longDescription": "Access institutional-grade financial data from Aiera, including live corporate events, filings, company publications, broker research, and much more.",
+    "privacyPolicyURL": "https://aiera.com/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Finance data for professionals",
+    "termsOfServiceURL": "https://aiera.com/terms-of-service/",
+    "websiteURL": "https://www.aiera.com/"
   },
-  "homepage": "https://www.aiera.com"
+  "keywords": [],
+  "license": "MIT",
+  "name": "aiera",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
 }

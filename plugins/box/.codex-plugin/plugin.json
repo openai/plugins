@@ -1,22 +1,28 @@
 {
   "name": "box",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "description": "Search and reference your documents",
   "author": {
     "name": "OpenAI",
     "url": "https://www.box.com/home"
   },
-  "homepage": "https://www.box.com/home",
-  "repository": "https://github.com/openai/plugins",
+  "homepage": "https://developer.box.com/",
+  "repository": "https://github.com/box/box-for-ai",
   "license": "MIT",
-  "keywords": [],
-  "skills": "./skills/",
+  "keywords": [
+    "box",
+    "cloud storage",
+    "file sharing",
+    "documents",
+    "files",
+    "collaboration"
+  ],
   "apps": "./.app.json",
   "interface": {
     "displayName": "Box",
-    "shortDescription": "Search and reference your documents",
-    "longDescription": "Search and reference your documents in Box and work safely with Box content flows from Codex.",
-    "developerName": "OpenAI",
+    "shortDescription": "Search and reference documents",
+    "longDescription": "Search and reference your documents in Box and work safely with Box content flows.",
+    "developerName": "Box",
     "category": "Productivity",
     "capabilities": [],
     "websiteURL": "https://www.box.com/home",

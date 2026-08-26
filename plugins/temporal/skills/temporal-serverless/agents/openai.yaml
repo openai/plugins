@@ -1,0 +1,6 @@
+interface:
+  display_name: "Temporal Serverless"
+  short_description: "Deploy and operate Temporal Workers on serverless compute"
+
+policy:
+  allow_implicit_invocation: false

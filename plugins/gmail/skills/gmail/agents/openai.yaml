@@ -1,7 +1,0 @@
-interface:
-  display_name: "Gmail"
-  short_description: "Summarize threads and draft replies"
-  icon_small: "./assets/gmail-small.svg"
-  icon_large: "./assets/gmail.png"
-  brand_color: "#EA4335"
-  default_prompt: "Use $gmail to summarize a thread, extract actions, or draft the reply."

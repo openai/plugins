@@ -1,33 +1,37 @@
 {
-  "name": "docusign",
-  "version": "1.0.3",
-  "description": "Automate contract creation and insights",
+  "apps": "./.app.json",
   "author": {
     "name": "Docusign",
     "url": "https://www.docusign.com"
   },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
+  "description": "Simplify contract management with intelligent automation powered by Docusign. Go beyond simple execution to make complex agreement workflows effortless. Use natural language to create and send a contract, instantly surface insights like renewal dates and key obligations, and automate workflows that keep your business moving faster and with less friction.",
+  "homepage": "https://www.docusign.com",
   "interface": {
-    "displayName": "Docusign",
-    "developerName": "Docusign",
-    "shortDescription": "Automate contract creation and insights",
-    "longDescription": "Simplify contract management with intelligent automation powered by Docusign. Go beyond simple execution to make complex agreement workflows effortless. Use natural language to create and send a contract, instantly surface insights like renewal dates and key obligations, and automate workflows that keep your business moving faster and with less friction.",
-    "category": "Productivity",
+    "brandColor": "#DEB200",
+    "brandColorDark": "#FFD321",
     "capabilities": [],
-    "brandColor": "#FFCC00",
+    "category": "Productivity",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "Find DocuSign envelopes waiting on me and summarize what needs action.",
       "Search for agreements with a customer and pull signing status, recipients, and key dates.",
       "Review recently completed envelopes and extract renewal or obligation dates."
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
+    "developerName": "Docusign",
+    "displayName": "Docusign",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Simplify contract management with intelligent automation powered by Docusign. Go beyond simple execution to make complex agreement workflows effortless. Use natural language to create and send a contract, instantly surface insights like renewal dates and key obligations, and automate workflows that keep your business moving faster and with less friction.",
+    "privacyPolicyURL": "https://www.docusign.com/privacy",
+    "screenshots": [],
+    "shortDescription": "Manage contracts from ChatGPT",
+    "supportURL": "https://support.docusign.com/",
+    "termsOfServiceURL": "https://www.docusign.com/legal/terms-and-conditions",
     "websiteURL": "https://www.docusign.com"
   },
-  "homepage": "https://www.docusign.com"
+  "keywords": [],
+  "license": "MIT",
+  "name": "docusign",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
 }

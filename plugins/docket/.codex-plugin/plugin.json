@@ -1,7 +1,7 @@
 {
   "name": "docket",
-  "version": "1.0.3",
-  "description": "Docket AI makes your sales knowledge your instant superpower.",
+  "version": "1.0.0",
+  "description": "Docket AI makes your sales knowledge your instant superpower. Sales reps get accurate, on-demand answers to product, competitive, technical, and customer questions—pulled directly from your unified Sales Knowledge Lake™. Guided by verified company intel, reps handle objections confidently, uncover prospect details, and craft personalised responses on the spot.",
   "author": {
     "name": "Docket AI",
     "url": "https://www.docket.io/"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Docket",
-    "shortDescription": "Docket AI makes your sales knowledge your instant superpower.",
-    "longDescription": "Docket AI makes your sales knowledge your instant superpower. Sales reps get accurate, on-demand answers to product, competitive, technical, and customer questions\u2014pulled directly from your unified Sales Knowledge Lake\u2122. Guided by verified company intel, reps handle objections confidently, uncover prospect details, and craft personalised responses on the spot.",
+    "shortDescription": "Your product knowledge expert",
+    "longDescription": "Docket AI makes your sales knowledge your instant superpower. Sales reps get accurate, on-demand answers to product, competitive, technical, and customer questions—pulled directly from your unified Sales Knowledge Lake™. Guided by verified company intel, reps handle objections confidently, uncover prospect details, and craft personalised responses on the spot.",
     "developerName": "Docket AI",
     "category": "Productivity",
     "capabilities": [],

@@ -7,6 +7,7 @@ The Python SDK uses data converters to serialize/deserialize workflow inputs, ou
 ## Default Data Converter
 
 The default converter handles:
+
 - `None`
 - `bytes` (as binary)
 - Protobuf messages
@@ -59,6 +60,7 @@ client = await Client.connect(
 ## Custom Data Conversion
 
 Usually the easiest way to do this is via implementing an EncodingPayloadConverter and CompositePayloadConverter. See:
+
 - https://raw.githubusercontent.com/temporalio/samples-python/refs/heads/main/custom_converter/shared.py
 - https://raw.githubusercontent.com/temporalio/samples-python/refs/heads/main/custom_converter/starter.py
 

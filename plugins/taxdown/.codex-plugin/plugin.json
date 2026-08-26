@@ -1,7 +1,7 @@
 {
   "name": "taxdown",
-  "version": "1.0.3",
-  "description": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
+  "version": "1.0.0",
+  "description": "TaxDown te ayuda a resolver dudas fiscales en España, tanto para particulares como autónomos: deducciones, IRPF, renta y obligaciones fiscales, con respuestas claras y orientadas a tu caso.",
   "author": {
     "name": "TAXDOWN S.L.",
     "url": "https://taxdown.es/"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Taxdown",
-    "shortDescription": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones,...",
-    "longDescription": "TaxDown te ayuda a resolver dudas fiscales en Espa\u00f1a, tanto para particulares como aut\u00f3nomos: deducciones, IRPF, renta y obligaciones fiscales, con respuestas claras y orientadas a tu caso.",
+    "shortDescription": "Resuelve dudas fiscales España",
+    "longDescription": "TaxDown te ayuda a resolver dudas fiscales en España, tanto para particulares como autónomos: deducciones, IRPF, renta y obligaciones fiscales, con respuestas claras y orientadas a tu caso.",
     "developerName": "TAXDOWN S.L.",
     "category": "Finance",
     "capabilities": [],

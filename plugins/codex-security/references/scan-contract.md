@@ -1,14 +1,16 @@
-# Completed Scan Contract
+# Sealed Scan Contract
 
-This contract defines the canonical machine-readable documents for completed scans and their readable markdown report projection.
+This contract defines the canonical machine-readable documents for scans that reached a sealed terminal outcome and their readable markdown report projection.
 
 ## Canonical Documents
 
-A completed semantic bundle contains these files under `<scan_dir>`:
+A sealed terminal bundle contains these files under `<scan_dir>`:
 
-- `scan-manifest.json`: immutable completed-scan receipt after finalization
-- `findings.json`: semantic finding records for the completed scan
+- `scan-manifest.json`: immutable terminal scan receipt after finalization
+- `findings.json`: semantic finding records retained when the scan reached its terminal outcome
 - `coverage.json`: structured coverage summary with detailed receipt references
+
+Canonical UTF-8 document sizes are bounded consistently by the producer and SDK: `scan-manifest.json` is limited to 16 MiB, `findings.json` to 128 MiB, and `coverage.json` to 32 MiB. Finalization rejects oversized inputs or generated documents before sealing or changing scan outputs. Keep detailed evidence in scan-local artifacts and reference it from the canonical summaries.
 
 Optional structured finding details used by rich consumers are documented in `finding-detail-fields.md`. They remain part of each semantic finding record, not a projection parsed from a readable report.
 
@@ -18,16 +20,31 @@ Deep-scan SARIF results and CSV rows preserve their existing instance-level pres
 
 This bundle records immutable scan observations. It is not a workflow-state database. Consumers must store mutable annotations, lifecycle decisions, external links, retention policy, and synchronization state separately.
 
-Retention is an explicit consumer decision. Producing a completed-scan bundle must not silently copy it into an archive.
+Retention is an explicit consumer decision. Producing a sealed bundle must not silently copy it into an archive.
 
 ## Manifest Semantics
 
-A sealed manifest records the completed timestamp and hashes for the canonical documents and immutable evidence receipts included in that bundle. Readable reports and generated exports are projections and are not included in the canonical seal. Later adapters may read the sealed bundle to create projections, but must not mutate the sealed manifest or canonical documents. Store projections separately. Every sealed manifest includes exactly one artifact record for each canonical JSON document, and artifact paths must not repeat.
+A sealed manifest records the terminal timestamp and hashes for the canonical documents and immutable evidence receipts included in that bundle. Readable reports and generated exports are projections and are not included in the canonical seal. Later adapters may read the sealed bundle to create projections, but must not mutate the sealed manifest or canonical documents. Store projections separately. Every sealed manifest includes exactly one artifact record for each canonical JSON document, and artifact paths must not repeat.
+
+`scan.status` records why the bundle was sealed:
+
+| Status | Meaning |
+| --- | --- |
+| `completed` | The requested scan reached normal completion. |
+| `failed` | The scan stopped after an unrecoverable failure; retained artifacts may be partial. |
+| `canceled` | The scan stopped after an explicit cancellation; retained artifacts may be partial. |
+| `interrupted` | The scan stopped before normal completion because execution was interrupted; retained artifacts may be partial. |
+
+Only `completed` supports a completed-scan conclusion. For every stopped outcome, consumers must preserve retained findings and coverage while treating absence of findings as inconclusive.
 
 ## Target Snapshots
 
 Choose the target kind based on the reviewed content, not the scan invocation:
 `git_worktree` for a checked-out Git workspace, `directory_snapshot` for a non-Git directory, `git_diff` for a Git-backed change set, and `git_revision` for an exact immutable Git tree.
+
+For a workbench-backed scan, use the recorded target contract instead of inferring the kind from the checkout.
+A clean Git checkout has `allowedKinds: ["git_revision"]`: use its recorded revision and omit `snapshotDigest`.
+A dirty checkout has `allowedKinds: ["git_worktree"]`: copy `requiredSnapshotDigest` exactly.
 
 | Kind | Required snapshot fields |
 | --- | --- |
@@ -38,7 +55,7 @@ Choose the target kind based on the reviewed content, not the scan invocation:
 
 `targetId` identifies the stable repository or workspace. Prefer a digest of a sanitized canonical absolute remote URL when one exists. Otherwise use a digest of a stable local workspace identity. Never persist remote URL credentials, query parameters, fragments, or tokens.
 
-For dirty worktrees and diffs, calculate `snapshotDigest` from a deterministic representation of the reviewed content, including staged changes and reviewed untracked files where applicable. For directory snapshots, hash a sorted relative-path and file-hash inventory of the reviewed scope. Encode the result as `codex-security-snapshot/v1:sha256:<64 lowercase hex characters>`.
+For dirty worktrees and working-tree diffs, calculate `snapshotDigest` from a deterministic representation of the reviewed content, including staged changes and reviewed untracked files where applicable. For committed or revision-range diffs, derive it from the exact authoritative diff kind and immutable base/head revisions. For directory snapshots, hash a sorted relative-path and file-hash inventory of the reviewed scope. Encode the result as `codex-security-snapshot/v1:sha256:<64 lowercase hex characters>`.
 
 ## Finding Identity
 
@@ -58,7 +75,7 @@ Do not put line numbers in `identity.anchor`. When two sibling vulnerabilities s
 
 Fingerprint matching is a reconciliation signal, not proof that two findings are equivalent. Treat ambiguous matches as unresolved.
 
-When a finding has multiple affected locations, label the vulnerable control location `root_control` when one is known. Adapters use the first `root_control` location as the primary annotation location and otherwise fall back to the first affected location. Preserve supporting entrypoint, wrapper, sink, and concrete-implementation locations as additional evidence.
+When a finding has multiple affected locations, label the vulnerable control location `root_control` when one is known. Adapters keep the first `root_control` location first and otherwise fall back to the first affected location, while preserving every distinct entrypoint, wrapper, sink, concrete-implementation, and code-evidence occurrence as a matchable location.
 
 ## Rule ID Policy
 
@@ -102,6 +119,8 @@ Record:
 | `deep_repository` | Exhaustive repeated repository-wide scan |
 
 `inventoryStrategy` records how the producer enumerated the reviewed content, independently of the requested scan workflow:
+
+For a whole-repository Deep scan, keep `inventoryStrategy` as `repository`; repeated discovery is workflow metadata, not a different inventory strategy.
 
 | Inventory strategy | Meaning |
 | --- | --- |

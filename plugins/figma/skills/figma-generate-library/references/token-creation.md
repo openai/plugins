@@ -65,18 +65,12 @@ Key insight from M3: ALL 196 semantic color variables live in a SINGLE collectio
 ### Creating a Primitives Collection
 
 ```javascript
-const RUN_ID = "ds-build-2024-001"; // use the same RUN_ID throughout the build
-
 // Create the collection
 const primColl = figma.variables.createVariableCollection("Primitives");
 
 // Rename the default "Mode 1" to "Value"
 primColl.renameMode(primColl.modes[0].modeId, "Value");
 const valueMode = primColl.modes[0].modeId;
-
-// Tag for idempotency
-primColl.setSharedPluginData('dsb', 'run_id', RUN_ID);
-primColl.setSharedPluginData('dsb', 'key', 'collection/primitives');
 
 return {
   collectionId: primColl.id,
@@ -88,8 +82,6 @@ return {
 ### Creating a Semantic Color Collection with Light/Dark Modes
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
-
 const colorColl = figma.variables.createVariableCollection("Color");
 
 // Rename default "Mode 1" to "Light"
@@ -100,8 +92,6 @@ const lightModeId = colorColl.modes[0].modeId;
 // Throws "in addMode: Limited to N modes only" on Starter plan
 const darkModeId = colorColl.addMode("Dark");
 
-colorColl.setSharedPluginData('dsb', 'run_id', RUN_ID);
-colorColl.setSharedPluginData('dsb', 'key', 'collection/color');
 
 return {
   collectionId: colorColl.id,
@@ -115,14 +105,10 @@ return {
 ### Creating a Spacing Collection (single mode)
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
-
 const spacingColl = figma.variables.createVariableCollection("Spacing");
 spacingColl.renameMode(spacingColl.modes[0].modeId, "Value");
 const valueMode = spacingColl.modes[0].modeId;
 
-spacingColl.setSharedPluginData('dsb', 'run_id', RUN_ID);
-spacingColl.setSharedPluginData('dsb', 'key', 'collection/spacing');
 
 return {
   collectionId: spacingColl.id,
@@ -176,11 +162,9 @@ function hexToRgb(hex) {
   return { r: parseInt(c.slice(0,2),16)/255, g: parseInt(c.slice(2,4),16)/255, b: parseInt(c.slice(4,6),16)/255 };
 }
 
-const RUN_ID = "ds-build-2024-001";
-
 // Get the Primitives collection created in the previous step
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
-const primColl = collections.find(c => c.getSharedPluginData('dsb', 'key') === 'collection/primitives');
+const primColl = collections.find(c => c.name === 'Primitives');
 if (!primColl) throw new Error("Primitives collection not found — run collection creation first");
 const valueMode = primColl.modes[0].modeId;
 
@@ -219,8 +203,6 @@ const valueMode = primColl.modes[0].modeId;
       v.scopes = [];
       // Code syntax from the actual CSS variable name
       v.setVariableCodeSyntax('WEB', `var(--color-${name.replace('/', '-')})`);
-      v.setSharedPluginData('dsb', 'run_id', RUN_ID);
-      v.setSharedPluginData('dsb', 'key', `primitive/${name}`);
       created.push({ name, id: v.id });
     }
 
@@ -232,9 +214,8 @@ return { created, count: created.length };
 ### Creating FLOAT Variables (Spacing, Radius, Font Size)
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
-const spacingColl = collections.find(c => c.getSharedPluginData('dsb', 'key') === 'collection/spacing');
+const spacingColl = collections.find(c => c.name === 'Spacing');
 if (!spacingColl) throw new Error("Spacing collection not found");
 const valueMode = spacingColl.modes[0].modeId;
 
@@ -261,8 +242,6 @@ for (const { name, value, scope, cssVar } of [...spacingTokens, ...radiusTokens]
   v.setValueForMode(valueMode, value);
   v.scopes = [scope];
   v.setVariableCodeSyntax('WEB', `var(${cssVar})`);
-  v.setSharedPluginData('dsb', 'run_id', RUN_ID);
-  v.setSharedPluginData('dsb', 'key', name);
   created.push({ name, value, id: v.id });
 }
 
@@ -272,9 +251,8 @@ return { created, count: created.length };
 ### Creating STRING Variables (Font Family, Font Style)
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
-const typoPrimColl = collections.find(c => c.getSharedPluginData('dsb', 'key') === 'collection/typography-primitives');
+const typoPrimColl = collections.find(c => c.name === 'Typography Primitives');
 if (!typoPrimColl) throw new Error("Typography Primitives collection not found");
 const valueMode = typoPrimColl.modes[0].modeId;
 
@@ -294,8 +272,6 @@ for (const { name, value, scope, cssVar } of fontTokens) {
   v.setValueForMode(valueMode, value);
   v.scopes = [scope];
   v.setVariableCodeSyntax('WEB', `var(${cssVar})`);
-  v.setSharedPluginData('dsb', 'run_id', RUN_ID);
-  v.setSharedPluginData('dsb', 'key', `typo-prim/${name}`);
   created.push({ name, value, id: v.id });
 }
 
@@ -307,17 +283,14 @@ return { created, count: created.length };
 BOOLEAN variables have no scopes (scopes are not supported for BOOLEAN type).
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
-const coll = collections.find(c => c.getSharedPluginData('dsb', 'key') === 'collection/tokens');
+const coll = collections.find(c => c.name === 'Tokens');
 if (!coll) throw new Error("Collection not found");
 const valueMode = coll.modes[0].modeId;
 
 const v = figma.variables.createVariable('feature-flags/show-beta-badge', coll, 'BOOLEAN');
 v.setValueForMode(valueMode, false);
 // No scopes — BOOLEAN does not support scopes
-v.setSharedPluginData('dsb', 'run_id', RUN_ID);
-v.setSharedPluginData('dsb', 'key', 'feature-flags/show-beta-badge');
 
 return { id: v.id, name: v.name };
 ```
@@ -347,11 +320,10 @@ function hexToRgb(hex) {
   return { r: parseInt(c.slice(0,2),16)/255, g: parseInt(c.slice(2,4),16)/255, b: parseInt(c.slice(4,6),16)/255 };
 }
 
-const RUN_ID = "ds-build-2024-001";
 const collections = await figma.variables.getLocalVariableCollectionsAsync();
 
-const primColl = collections.find(c => c.getSharedPluginData('dsb', 'key') === 'collection/primitives');
-const colorColl = collections.find(c => c.getSharedPluginData('dsb', 'key') === 'collection/color');
+const primColl = collections.find(c => c.name === 'Primitives');
+const colorColl = collections.find(c => c.name === 'Color');
 if (!primColl || !colorColl) throw new Error("Collections not found — run primitive/color collection creation first");
 
 const primValueMode = primColl.modes[0].modeId;
@@ -360,16 +332,16 @@ const darkModeId = colorColl.modes.find(m => m.name === 'Dark').modeId;
 
 // Load all primitive variables for lookup
 const allVars = await figma.variables.getLocalVariablesAsync();
-const primsByKey = {};
+const primsByName = {};
 for (const v of allVars) {
   if (v.variableCollectionId === primColl.id) {
-    primsByKey[v.getSharedPluginData('dsb', 'key')] = v;
+    primsByName[v.name] = v;
   }
 }
 
 function getPrim(name) {
-  const v = primsByKey[`primitive/${name}`];
-  if (!v) throw new Error(`Primitive not found: primitive/${name}`);
+  const v = primsByName[name];
+  if (!v) throw new Error(`Primitive not found: ${name}`);
   return v;
 }
 
@@ -408,8 +380,6 @@ for (const { name, lightPrim, darkPrim, cssVar, scopes } of semanticColors) {
   v.scopes = scopes;
   // Code syntax
   v.setVariableCodeSyntax('WEB', `var(${cssVar})`);
-  v.setSharedPluginData('dsb', 'run_id', RUN_ID);
-  v.setSharedPluginData('dsb', 'key', name);
   created.push({ name, id: v.id });
 }
 
@@ -561,8 +531,6 @@ Shadows and composite typography cannot be variables — they are Styles.
 Reference from SDS (15 effect styles) and the SDS shadow pattern `Shadow/{Level}`:
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
-
 // Shadow definitions — CSS equivalent in comments
 // CSS: 0 1px 2px rgba(0,0,0,0.05)
 const shadows = [
@@ -658,8 +626,6 @@ for (const { name, effects } of shadows) {
   const style = figma.createEffectStyle();
   style.name = name;
   style.effects = effects;
-  style.setSharedPluginData('dsb', 'run_id', RUN_ID);
-  style.setSharedPluginData('dsb', 'key', `effect-style/${name}`);
   created.push({ name, id: style.id });
 }
 
@@ -671,8 +637,6 @@ return { created, count: created.length };
 Fonts must be loaded before creating text styles.
 
 ```javascript
-const RUN_ID = "ds-build-2024-001";
-
 // Define text styles — based on SDS typography hierarchy
 const textStyles = [
   // Display / Hero
@@ -715,8 +679,6 @@ for (const { name, family, style, size, lineHeight, letterSpacing } of textStyle
   ts.fontSize = size;
   ts.lineHeight = { value: lineHeight, unit: 'PIXELS' };
   ts.letterSpacing = { value: letterSpacing, unit: 'PIXELS' };
-  ts.setSharedPluginData('dsb', 'run_id', RUN_ID);
-  ts.setSharedPluginData('dsb', 'key', `text-style/${name}`);
   created.push({ name, id: ts.id });
 }
 
@@ -732,12 +694,9 @@ Every creation script should check whether the entity already exists before crea
 ### Check-Before-Create for Collections
 
 ```javascript
-const DSB_KEY = 'collection/primitives';
-const RUN_ID = "ds-build-2024-001";
-
 // Check if already exists
 const existing = await figma.variables.getLocalVariableCollectionsAsync();
-let primColl = existing.find(c => c.getSharedPluginData('dsb', 'key') === DSB_KEY);
+let primColl = existing.find(c => c.name === 'Primitives');
 
 if (primColl) {
   return { status: 'already_exists', collectionId: primColl.id, name: primColl.name };
@@ -746,8 +705,6 @@ if (primColl) {
 // Create only if not found
 primColl = figma.variables.createVariableCollection("Primitives");
 primColl.renameMode(primColl.modes[0].modeId, "Value");
-primColl.setSharedPluginData('dsb', 'run_id', RUN_ID);
-primColl.setSharedPluginData('dsb', 'key', DSB_KEY);
 
 return { status: 'created', collectionId: primColl.id };
 ```
@@ -755,12 +712,15 @@ return { status: 'created', collectionId: primColl.id };
 ### Check-Before-Create for Variables
 
 ```javascript
-const VARIABLE_KEY = 'primitive/blue/500';
-const RUN_ID = "ds-build-2024-001";
+const collections = await figma.variables.getLocalVariableCollectionsAsync();
+const primColl = collections.find(c => c.name === 'Primitives');
+if (!primColl) throw new Error('Primitives collection not found');
 
-// Check if already exists by sharedPluginData key
+// Variable names are unique within this deterministic collection.
 const allVars = await figma.variables.getLocalVariablesAsync();
-const existing = allVars.find(v => v.getSharedPluginData('dsb', 'key') === VARIABLE_KEY);
+const existing = allVars.find(v =>
+  v.variableCollectionId === primColl.id && v.name === 'blue/500'
+);
 
 if (existing) {
   return { status: 'already_exists', id: existing.id, name: existing.name };
@@ -770,32 +730,21 @@ if (existing) {
 return { status: 'created' };
 ```
 
-### sharedPluginData Tagging Strategy
-
-Tag every created node immediately after creation. The `key` is the stable logical identifier used for idempotency checks. The `run_id` identifies which build run created it (useful for cleanup).
+**Cleanup by exact state-ledger ID:**
 
 ```javascript
-node.setSharedPluginData('dsb', 'run_id', RUN_ID);       // build run ID
-node.setSharedPluginData('dsb', 'phase', 'phase1');       // which phase
-node.setSharedPluginData('dsb', 'key', 'color/bg/primary'); // stable logical key
-```
-
-**Cleanup by run ID (safe — targets only tagged nodes, never user-owned nodes):**
-
-```javascript
-const TARGET_RUN_ID = "ds-build-2024-001"; // run to remove
-const allVars = await figma.variables.getLocalVariablesAsync();
+const VARIABLE_IDS = ['VariableID:1:8', 'VariableID:1:9'];
 const removed = [];
-for (const v of allVars) {
-  if (v.getSharedPluginData('dsb', 'run_id') === TARGET_RUN_ID) {
-    removed.push(v.name);
-    v.remove();
-  }
+for (const id of VARIABLE_IDS) {
+  const variable = await figma.variables.getVariableByIdAsync(id);
+  if (!variable) continue;
+  removed.push(variable.id);
+  variable.remove();
 }
 return { removed, count: removed.length };
 ```
 
-**Never clean up by name prefix** (e.g., deleting everything starting with `color/`). This will destroy user-created variables that happen to share the prefix.
+**Never clean up by a name or prefix.** It can match data not created by the current workflow.
 
 ---
 

@@ -101,10 +101,6 @@ desc.fontSize = 14;
 desc.characters = 'Buttons allow users to take actions and make choices with a single tap.';
 docFrame.appendChild(desc);
 
-// Tag docFrame with sharedPluginData for idempotency
-docFrame.setSharedPluginData('dsb', 'run_id', RUN_ID);
-docFrame.setSharedPluginData('dsb', 'key', 'doc/button');
-
 return { docFrameId: docFrame.id, pageId: page.id };
 ```
 
@@ -120,7 +116,6 @@ The base component is the template from which all variants are cloned. It must h
 ### Complete Button Base Component Example
 
 ```javascript
-const RUN_ID = 'ds-build-2024-001'; // replace with your actual run ID
 await figma.setCurrentPageAsync(
   figma.root.children.find(p => p.name === 'Button')
 );
@@ -169,8 +164,6 @@ label.name = 'label';
 label.fontName = { family: 'Inter', style: 'Medium' };
 label.fontSize = 14;
 label.characters = 'Button';
-label.layoutSizingHorizontal = 'HUG';
-label.layoutSizingVertical = 'HUG';
 
 // Text fill — bound to color variable
 const textPaint = figma.variables.setBoundVariableForPaint(
@@ -180,6 +173,8 @@ const textPaint = figma.variables.setBoundVariableForPaint(
 );
 label.fills = [textPaint];
 comp.appendChild(label);
+label.layoutSizingHorizontal = 'HUG';
+label.layoutSizingVertical = 'HUG';
 
 // --- Icon placeholder (Rectangle for now — will be INSTANCE_SWAP) ---
 const iconBox = figma.createFrame();
@@ -189,11 +184,6 @@ iconBox.fills = [];
 iconBox.layoutSizingHorizontal = 'FIXED';
 iconBox.layoutSizingVertical = 'FIXED';
 comp.appendChild(iconBox);
-
-// Tag for idempotency
-comp.setSharedPluginData('dsb', 'run_id', RUN_ID);
-comp.setSharedPluginData('dsb', 'phase', 'phase3');
-comp.setSharedPluginData('dsb', 'key', 'component/button/base');
 
 return { baseCompId: comp.id };
 ```
@@ -241,7 +231,6 @@ For Button with Size × State = 15 combinations, add Style as a variant axis onl
 Build each variant by cloning the base component and adjusting the variable bindings that differ per variant. Pass in the base component ID from the previous call's state.
 
 ```javascript
-const RUN_ID = 'ds-build-2024-001';
 const BASE_COMP_ID = 'BASE_ID_FROM_STATE'; // from state ledger
 
 await figma.setCurrentPageAsync(
@@ -305,8 +294,6 @@ for (const size of axes.Size) {
       );
       labelNode.fills = [textPaint];
 
-      clone.setSharedPluginData('dsb', 'run_id', RUN_ID);
-      clone.setSharedPluginData('dsb', 'key', `component/button/variant/${size}/${style}/${state}`);
 
       components.push(clone);
     }
@@ -445,8 +432,6 @@ cs.cornerRadius = 8;
 cs.x = 680;
 cs.y = 40;
 
-cs.setSharedPluginData('dsb', 'run_id', 'ds-build-2024-001');
-cs.setSharedPluginData('dsb', 'key', 'componentset/button');
 
 return { componentSetId: cs.id };
 ```
@@ -550,12 +535,9 @@ iconComp.findAllWithCriteria({ types: ['VECTOR'] }).forEach(vec => {
   }
 });
 
-iconComp.setSharedPluginData('dsb', 'run_id', RUN_ID);
-iconComp.setSharedPluginData('dsb', 'key', 'icon/chevron-right');
 
 return { iconCompId: iconComp.id };
 ```
-
 **Then use the returned `iconCompId` as the default value for INSTANCE_SWAP:**
 ```javascript
 const iconKey = cs.addComponentProperty('Icon', 'INSTANCE_SWAP', ICON_COMP_ID);
@@ -564,12 +546,13 @@ const iconKey = cs.addComponentProperty('Icon', 'INSTANCE_SWAP', ICON_COMP_ID);
 **Constraining swap options with `preferredValues`:**
 After adding the INSTANCE_SWAP property, you can optionally limit which components appear in the swap picker:
 ```javascript
-// Get the property definitions to find the exact key
-const props = cs.componentPropertyDefinitions;
+const propertyOwner = cs?.type === 'COMPONENT' && cs.parent?.type === 'COMPONENT_SET' ? cs.parent : cs;
+if (!propertyOwner || !['COMPONENT', 'COMPONENT_SET'].includes(propertyOwner.type)) throw new Error('Expected a component set or non-variant component');
+const props = propertyOwner.componentPropertyDefinitions;
 const iconPropKey = Object.keys(props).find(k => k.startsWith('Icon'));
 
 // Set preferred values (array of component keys or instance IDs)
-cs.editComponentProperty(iconPropKey, {
+propertyOwner.editComponentProperty(iconPropKey, {
   preferredValues: [
     { type: 'COMPONENT', key: chevronRightComp.key },
     { type: 'COMPONENT', key: chevronLeftComp.key },
@@ -592,47 +575,7 @@ The `componentPropertyReferences` object maps a node's own property to a compone
 
 ---
 
-## 7. `sharedPluginData` Tagging for Idempotency
-
-Tag EVERY created node immediately after creation. This enables safe cleanup, resumability, and idempotency checks.
-
-```javascript
-// After creating any node:
-node.setSharedPluginData('dsb', 'run_id', RUN_ID);   // identifies the build run
-node.setSharedPluginData('dsb', 'phase', 'phase3');  // which phase created it
-node.setSharedPluginData('dsb', 'key', KEY);         // unique logical key for this entity
-
-// Reading back:
-const runId = node.getSharedPluginData('dsb', 'run_id'); // '' if not set
-const key   = node.getSharedPluginData('dsb', 'key');
-```
-
-**Key naming convention:** use `/`-separated logical paths that mirror the entity hierarchy:
-```
-'component/button/base'
-'component/button/variant/Medium/Primary/Default'
-'componentset/button'
-'doc/button'
-'page/button'
-```
-
-**Idempotency check before creating:** before creating a node, scan the current page for an existing node with the same `key`:
-
-```javascript
-// Indexed sharedPluginData lookup — the engine only visits nodes that
-// actually carry the dsb namespace key, not every node on the page.
-const existing = figma.currentPage
-  .findAllWithCriteria({ sharedPluginData: { namespace: 'dsb', keys: ['key'] } })
-  .filter(n => n.getSharedPluginData('dsb', 'key') === 'componentset/button');
-if (existing.length > 0) {
-  // Skip creation — already done. Return existing node's ID.
-  return { componentSetId: existing[0].id };
-}
-```
-
----
-
-## 8. Documentation
+## 7. Documentation
 
 ### Page title + description frame
 
@@ -668,13 +611,13 @@ cs.documentationLinks = [
 
 ---
 
-## 9. Validation
+## 8. Validation
 
 Always validate after creating or modifying a component before proceeding to the next one.
 
 ### `get_metadata` structural checks
 
-After creating the component set, call `get_metadata` on the ComponentSet node and verify:
+After creating the component set, call `get_metadata` on the `COMPONENT_SET` node ID (never an individual variant component ID) and verify:
 - `variantGroupProperties` lists the expected axes with the correct value arrays
 - `componentPropertyDefinitions` contains the expected TEXT/BOOLEAN/INSTANCE_SWAP properties
 - `children.length` equals the expected variant count (e.g., 18 for 3×2×3)
@@ -758,9 +701,9 @@ This gives you positions (grid working?), dimensions (size differentiation?), an
 
 ---
 
-## 10. Complete Worked Example: Button Component
+## 9. Complete Worked Example: Button Component
 
-This shows the full sequence of `use_figma` calls for a Button component, including state passing between calls. Replace `RUN_ID` and variable IDs with your actual values from the state ledger.
+This shows the full sequence of `use_figma` calls for a Button component, including state passing between calls. Replace variable IDs with the actual values from the state ledger.
 
 ### Call 1: Create the component page
 
@@ -771,8 +714,6 @@ This shows the full sequence of `use_figma` calls for a Button component, includ
 ```javascript
 let page = figma.root.children.find(p => p.name === 'Button');
 if (!page) { page = figma.createPage(); page.name = 'Button'; }
-page.setSharedPluginData('dsb', 'run_id', 'ds-build-2024-001');
-page.setSharedPluginData('dsb', 'key', 'page/button');
 return { pageId: page.id };
 ```
 
@@ -787,11 +728,9 @@ const PAGE_ID = 'PAGE_ID_FROM_STATE';
 const page = await figma.getNodeByIdAsync(PAGE_ID);
 await figma.setCurrentPageAsync(page);
 
-// Idempotency check — use the sharedPluginData index instead of a per-node
-// findAll callback.
 const existing = page
-  .findAllWithCriteria({ sharedPluginData: { namespace: 'dsb', keys: ['key'] } })
-  .filter(n => n.getSharedPluginData('dsb', 'key') === 'doc/button');
+  .findAllWithCriteria({ types: ['FRAME'] })
+  .filter(n => n.name === 'Button / Documentation');
 if (existing.length > 0) {
   return { docFrameId: existing[0].id };
 }
@@ -821,11 +760,9 @@ const desc = figma.createText();
 desc.fontName = { family: 'Inter', style: 'Regular' };
 desc.fontSize = 14;
 desc.characters = 'Buttons allow users to take actions with a single tap. Use Primary for the highest-emphasis action on a page, Secondary for supporting actions.';
-desc.layoutSizingHorizontal = 'FILL';
 docFrame.appendChild(desc);
+desc.layoutSizingHorizontal = 'FILL';
 
-docFrame.setSharedPluginData('dsb', 'run_id', 'ds-build-2024-001');
-docFrame.setSharedPluginData('dsb', 'key', 'doc/button');
 
 return { docFrameId: docFrame.id };
 ```
@@ -845,7 +782,6 @@ return { docFrameId: docFrame.id };
 **State output:** `{ variantIds: ['id1', 'id2', ..., 'id18'] }`
 
 ```javascript
-const RUN_ID = 'ds-build-2024-001';
 const BASE_ID = 'BASE_COMP_ID_FROM_STATE';
 const PAGE_ID = 'PAGE_ID_FROM_STATE';
 // Variable IDs from state ledger:
@@ -907,8 +843,6 @@ for (const size of axes.Size) {
         { type: 'SOLID', color: { r: 1, g: 1, b: 1 } }, 'color', txV
       )];
 
-      clone.setSharedPluginData('dsb', 'run_id', RUN_ID);
-      clone.setSharedPluginData('dsb', 'key', `component/button/variant/${size}/${style}/${state}`);
       components.push(clone);
     }
   }
@@ -969,7 +903,7 @@ return {
 ### Call 7: Validate with get_metadata
 
 **Goal:** Structural check — variant count, properties, axes.
-**Action:** Call `get_metadata` on the ComponentSet node ID (from state). Verify in the result:
+**Action:** Call `get_metadata` on the `COMPONENT_SET` node ID from state, not on any child variant component. Verify in the result:
 - `children.length === 18`
 - `variantGroupProperties` has `Size`, `Style`, `State` keys with correct value arrays
 - `componentPropertyDefinitions` has `Label`, `Show Icon`, `Icon` entries

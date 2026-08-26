@@ -1,32 +1,36 @@
 {
-  "name": "similarweb",
-  "version": "1.0.2",
-  "description": "Research web and app market intelligence",
+  "apps": "./.app.json",
   "author": {
-    "name": "Similarweb",
+    "name": "Similarweb Inc",
     "url": "https://www.similarweb.com"
   },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
+  "description": "Research any website or app inside ChatGPT using Similarweb's market intelligence data. Analyze competitor traffic, uncover top keywords, explore audience demographics, and benchmark performance across industries\u2014all through simple prompts. Ask things like \"Show me Nike's traffic sources breakdown\" or \"What keywords is Adidas ranking for?\" and get real-time insights without switching tools. Whether you're a marketer, analyst, investor, or strategist, Similarweb helps you turn competitive questions into answers instantly.",
+  "homepage": "https://www.similarweb.com",
   "interface": {
-    "displayName": "Similarweb",
-    "developerName": "Similarweb",
-    "shortDescription": "Research web and app market intelligence",
-    "longDescription": "Research any website or app inside ChatGPT using Similarweb's market intelligence data. Analyze competitor traffic, uncover top keywords, explore audience demographics, and benchmark performance across industries—all through simple prompts. Ask things like \"Show me Nike's traffic sources breakdown\" or \"What keywords is Adidas ranking for?\" and get real-time insights without switching tools. Whether you're a marketer, analyst, investor, or strategist, Similarweb helps you turn competitive questions into answers instantly.",
-    "category": "Data & Analytics",
-    "capabilities": [],
     "brandColor": "#F07028",
+    "brandColorDark": "#F07028",
+    "capabilities": [],
+    "category": "Data & Analytics",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "Analyze traffic trends for example.com versus its top competitors over the last six months.",
       "Find the top acquisition channels and referring sites for example.com and summarize growth opportunities.",
       "Compare audience geography and search keywords for example.com and a competitor."
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
+    "developerName": "Similarweb Inc",
+    "displayName": "Similarweb",
     "logo": "./assets/logo.png",
-    "websiteURL": "https://www.similarweb.com"
+    "longDescription": "Research any website or app inside ChatGPT using Similarweb's market intelligence data. Analyze competitor traffic, uncover top keywords, explore audience demographics, and benchmark performance across industries\u2014all through simple prompts. Ask things like \"Show me Nike's traffic sources breakdown\" or \"What keywords is Adidas ranking for?\" and get real-time insights without switching tools. Whether you're a marketer, analyst, investor, or strategist, Similarweb helps you turn competitive questions into answers instantly.",
+    "privacyPolicyURL": "https://www.similarweb.com/corp/legal/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Web, app, search & market data",
+    "supportURL": "https://support.similarweb.com/hc/en-us/requests/new?ticket_form_id=17333714317725",
+    "termsOfServiceURL": "https://www.similarweb.com/corp/legal/terms/",
+    "websiteURL": "https://similarweb.com"
   },
-  "homepage": "https://www.similarweb.com"
+  "keywords": [],
+  "license": "MIT",
+  "name": "similarweb",
+  "repository": "https://github.com/openai/plugins",
+  "version": "2.0.0"
 }

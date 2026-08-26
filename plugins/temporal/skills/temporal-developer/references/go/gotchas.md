@@ -206,6 +206,7 @@ func GoodWorkflow(ctx workflow.Context) error {
 ### Not Handling Activity Cancellation
 
 Activities must **opt in** to receive cancellation. This requires:
+
 1. **Heartbeating** - Cancellation is delivered via heartbeat
 2. **Checking ctx.Done()** - Detect when cancellation arrives
 

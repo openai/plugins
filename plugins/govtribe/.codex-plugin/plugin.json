@@ -1,7 +1,7 @@
 {
   "name": "govtribe",
-  "version": "1.0.3",
-  "description": "Search government contracts, awards, and vendors directly from Codex.",
+  "version": "6.0.0",
+  "description": "Search government contracts, awards, and vendors directly from ChatGPT. GovTribe brings U.S. procurement intelligence into your AI workflow—find relevant opportunities across federal agencies; analyze vendor competition; explore teaming partners; and track agency spending patterns. Whether you're researching new markets, conducting competitive analysis, or preparing a proposal, get instant access to billions in public sector data without leaving your conversation.",
   "author": {
     "name": "Government Executive Media Group LLC",
     "url": "https://govtribe.com/"
@@ -12,20 +12,23 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "GovTribe",
-    "shortDescription": "Search government contracts, awards, and vendors directly from Codex.",
-    "longDescription": "Search government contracts, awards, and vendors directly from Codex. GovTribe brings U.S. procurement intelligence into your AI workflow\u2014find relevant opportunities across federal agencies; analyze vendor competition; explore teaming partners; and track agency spending patterns. Whether you're researching new markets, conducting competitive analysis, or preparing a proposal, get instant access to billions in public sector data without leaving your conversation.",
+    "shortDescription": "Search US gov contracts & bids",
+    "longDescription": "Search government contracts, awards, and vendors directly from ChatGPT. GovTribe brings U.S. procurement intelligence into your AI workflow—find relevant opportunities across federal agencies; analyze vendor competition; explore teaming partners; and track agency spending patterns. Whether you're researching new markets, conducting competitive analysis, or preparing a proposal, get instant access to billions in public sector data without leaving your conversation.",
     "developerName": "Government Executive Media Group LLC",
-    "category": "Education & Research",
+    "category": "Business & Operations",
     "capabilities": [],
     "defaultPrompt": [
-      "Pull the relevant opportunity context from GovTribe"
+      "Find active AI cybersecurity opportunities and rank the best fits by deadline, buyer, set-aside, and next step.",
+      "Review this solicitation package for requirements, evaluation factors, risks, and open questions.",
+      "Find teaming partners for this opportunity and summarize fit, experience, and outreach next steps."
     ],
     "screenshots": [],
     "websiteURL": "https://govtribe.com/",
     "privacyPolicyURL": "https://docs.govtribe.com/user-guide/privacy-policy",
     "termsOfServiceURL": "https://docs.govtribe.com/user-guide/terms-of-use",
     "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "supportURL": "https://docs.govtribe.com/user-guide/contact-govtribe"
   },
   "homepage": "https://govtribe.com/"
 }

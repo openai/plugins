@@ -1,29 +1,22 @@
 {
-  "name": "meticulate",
-  "version": "1.0.2",
-  "description": "Research companies and similar targets",
-  "author": {
-    "name": "Meticulate"
-  },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
+  "author": {
+    "name": "Sales Armada, Inc."
+  },
+  "description": "Meticulate helps B2B teams discover target accounts, find prospects, review and approve outbound proposals, inspect prospecting activity, and tune targeting and messaging workflows from ChatGPT.",
   "interface": {
-    "displayName": "Meticulate",
-    "developerName": "Meticulate",
-    "shortDescription": "Research companies and similar targets",
-    "longDescription": "Meticulate helps sales and go-to-market teams research companies directly in ChatGPT. Upload a company list or describe the accounts you care about, then identify companies, find similar targets, pull key business details, and answer structured research questions across accounts.",
-    "category": "Productivity",
     "capabilities": [],
-    "brandColor": "#7000D8",
-    "defaultPrompt": [
-      "Search Meticulate for companies matching this ICP and summarize the strongest fits.",
-      "Look up a company by SFDC account ID and fetch its firmographic summary.",
-      "Find companies similar to this seed company and explain why they are good lookalikes."
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
-  }
+    "category": "Business & Operations",
+    "defaultPrompt": null,
+    "developerName": "Sales Armada, Inc.",
+    "displayName": "Meticulate",
+    "longDescription": "Meticulate helps B2B teams discover target accounts, find prospects, review and approve outbound proposals, inspect prospecting activity, and tune targeting and messaging workflows from ChatGPT.",
+    "privacyPolicyURL": "https://meticulate.ai/privacy",
+    "shortDescription": "Manage prospecting",
+    "supportURL": "https://meticulate.ai",
+    "termsOfServiceURL": "https://meticulate.ai/terms",
+    "websiteURL": "https://meticulate.ai"
+  },
+  "name": "meticulate",
+  "version": "3.0.0"
 }

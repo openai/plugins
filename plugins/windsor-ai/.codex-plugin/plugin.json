@@ -1,7 +1,7 @@
 {
   "name": "windsor-ai",
-  "version": "1.0.3",
-  "description": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
+  "version": "3.0.0",
+  "description": "Windsor.ai connects your marketing and business data sources to ChatGPT so you can ask questions in natural language and get answers from your connected accounts.\n\nCommon data sources customers connect include: Google Ads, Meta (Facebook) Ads, Instagram, LinkedIn Ads, LinkedIn Company Pages, TikTok Ads, GA4, Google Search Console, YouTube Analytics, Google Business Profile, HubSpot, Salesforce, Shopify, Klaviyo, Amazon Ads, Microsoft Ads (Bing), Google Merchant Center, Stripe, GoHighLevel, and more.  ￼",
   "author": {
     "name": "Windsor.ai",
     "url": "https://windsor.ai"
@@ -12,13 +12,15 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Windsor.ai",
-    "shortDescription": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
-    "longDescription": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural language and get answers from your connected accounts.\n\nCommon data sources customers connect include: Google Ads, Meta (Facebook) Ads, Instagram, LinkedIn Ads, LinkedIn Company Pages, TikTok Ads, GA4, Google Search Console, YouTube Analytics, Google Business Profile, HubSpot, Salesforce, Shopify, Klaviyo, Amazon Ads, Microsoft Ads (Bing), Google Merchant Center, Stripe, GoHighLevel, and more.  \ufffc",
+    "shortDescription": "Connect 330+ data sources",
+    "longDescription": "Windsor.ai connects your marketing and business data sources to ChatGPT so you can ask questions in natural language and get answers from your connected accounts.\n\nCommon data sources customers connect include: Google Ads, Meta (Facebook) Ads, Instagram, LinkedIn Ads, LinkedIn Company Pages, TikTok Ads, GA4, Google Search Console, YouTube Analytics, Google Business Profile, HubSpot, Salesforce, Shopify, Klaviyo, Amazon Ads, Microsoft Ads (Bing), Google Merchant Center, Stripe, GoHighLevel, and more.  ￼",
     "developerName": "Windsor.ai",
-    "category": "Data & Analytics",
+    "category": "Business & Operations",
     "capabilities": [],
     "defaultPrompt": [
-      "Pull the relevant attribution context from Windsor.ai"
+      "Find my worst-performing Meta Ads campaign in the last 30 days and pause it, after confirming with me.",
+      "Compare spend, clicks, and conversions across my connected ad channels for the last 30 days.",
+      "Which of my marketing data sources are connected, and what can I analyze?"
     ],
     "screenshots": [],
     "websiteURL": "https://windsor.ai",
@@ -26,7 +28,8 @@
     "termsOfServiceURL": "https://windsor.ai/terms-of-service/",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://support.windsor.ai"
   },
   "homepage": "https://windsor.ai"
 }

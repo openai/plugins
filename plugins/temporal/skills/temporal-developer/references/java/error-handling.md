@@ -77,6 +77,7 @@ Activity failures are always wrapped in `ActivityFailure`. The original exceptio
 ```java
 import io.temporal.failure.ActivityFailure;
 import io.temporal.failure.ApplicationFailure;
+import io.temporal.failure.CanceledFailure;
 import io.temporal.failure.TimeoutFailure;
 import io.temporal.workflow.Workflow;
 
@@ -86,6 +87,10 @@ public class MyWorkflowImpl implements MyWorkflow {
         try {
             return activities.riskyOperation();
         } catch (ActivityFailure af) {
+            // Let cancellation propagate so the workflow is canceled, not failed
+            if (af.getCause() instanceof CanceledFailure) {
+                throw af;
+            }
             if (af.getCause() instanceof ApplicationFailure) {
                 ApplicationFailure appFailure = (ApplicationFailure) af.getCause();
                 String type = appFailure.getType();

@@ -1,202 +1,190 @@
 ---
 name: google-docs
-description: Connector-first Google Docs creation and editing in local Codex plugin sessions, with direct native create and batchUpdate workflows for simple docs, DOCX-first import for polished deliverables, target-document checks, smart chip and building-block reconstruction, connector-readback verification, and reference routing for formatting, citations, tables, and write-safety.
+description: Prompt- and template-complete Google Docs creation and editing with explicit-instruction-authoritative structural preservation, including semantic roles, relationships, comparison dimensions, and instructed extensions; full-topology native-copy routing; source-grounded per-tab adaptation for past/example references; style-preserving hyperlink and table edits; canonical smart-chip-first authoring for dates and relevant supported people or Google resources; a file-backed advisory trusted read before existing-document writes; automatic protected-control awareness; direct connector APIs by default; DOCX-first import only when no supplied Google Doc template/reference constrains the output; and checked-in code mode only for exact native dropdown mutation. Use when Codex must create, edit, fill, adapt, redesign, or verify Google Docs without overriding explicit user/template instructions, adding unrequested document scope, or carrying stale reference facts into a new deliverable.
 ---
 
 # Google Docs
 
-Use this skill for Google Docs work in Codex local-plugin sessions.
-For blank or basic native Google Docs, create the doc directly with the Google Drive connector. Use `[@documents](plugin://documents@openai-primary-runtime)` plus DOCX import only when the requested deliverable needs polished document authoring, complex layout, visual design, image/figure placement, page-level QA, branded styling, or export-quality fidelity.
+Use this opt-in skill for Google Docs work in Codex local-plugin sessions. Draft once to the requested final shape, prove explicit prompt/source/template coverage, then compress repetition without removing unique requirements.
 
-## Purpose Of This File
-
-This file is intentionally minimal and covers:
-
-1. connector loading and runtime boundaries in the Codex local-plugin environment
-2. the direct native-create route for blank and basic Google Docs
-3. the DOCX-first native import route for polished or complex Google Docs
-4. the direct-request workflow for existing and newly created Google Docs
-5. stateful operation and mandatory routing to reference files
-
-All formatting, citation, table, request-shape, and production rules live in `references/`.
-Read only the references required for the task. For the common calendar-backed meeting-notes edit, `references/reference-meeting-notes-direct.md` is the single task reference unless the task adds tables, figures, citations, import/export, or other non-meeting-notes requirements.
+Code mode is preferred for the checked-in helpers below, but it is not a prerequisite for this workflow. If code mode is unavailable, reproduce the same routing, read and inventory, preservation, mutation, and verification workflow with the available connector or app tools; preserve all checks and adapt any operation without a non-code implementation to the closest supported equivalent, clearly disclosing any unavoidable fidelity difference.
 
 ## Default Routing
 
-Use this routing:
+Choose the route only after resolving whether a supplied Google Doc is a template, reference, example, or content-only source:
 
-1. Blank or basic native Google Docs creation: read `references/reference-native-create-direct.md`, call `mcp__codex_apps__google_drive._create_file` with `mime_type: "application/vnd.google-apps.document"`, and use direct Docs `batchUpdate` requests only if content is requested.
-2. Polished or complex net-new Google Docs creation: use `[@documents](plugin://documents@openai-primary-runtime)` to create a local `.docx` first, explicitly selecting the `google_docs_default` design preset unless the user asked for a special, branded, or highly polished visual treatment. Then read `references/reference-import-docx-to-native-docs.md` and import with `mcp__codex_apps__google_drive_import_document` using `upload_mode: "native_google_docs"`.
-3. If the Documents plugin is unavailable for a polished or complex deliverable, report that the required local Documents authoring path is unavailable. Do not block blank or basic native Google Doc creation on the Documents plugin.
-4. Existing Google Docs reads, summaries, edits, comments, and template-preserving modifications: use Google Docs connector or app tools directly.
+1. **Supplied Google Doc template or reference:** read `references/reference-template-preservation-and-edit-scope.md`, inspect the native reference signature below, and remain on a native Google Docs route. Do not delegate authoring to DOCX.
+   - Exact template replacement: copy the native document and replace content inside the copied structure.
+   - Template extension or adaptation: copy the native document, then make only the required native additions, removals, or expansions.
+   - Selective reference use: choose this only when the user explicitly asks to borrow selected parts. Use a native copy and prune it, or create a native Google Doc directly when the selected parts contain no native structure that must be carried forward.
+   - Multi-tab invariant: when the supplied document has more than one tab, start from a full native copy and preserve the complete tab tree—tab count, titles, order, and parent/nesting—unless the user explicitly requests a single-tab result, identifies selected tabs/parts to borrow, or directs removal. A URL that opens one tab and wording such as “use this as a reference” do not authorize collapsing the document.
+   - Structural preservation and content treatment are separate decisions. Structural preservation covers both native form and semantic organization: tab topology, section order, container identity and position, field roles, table row and column roles, comparison dimensions, ordering, dependencies, and operative instructions embedded in or adjacent to retained structures. It does not freeze the initial dimensions; when the user or template directs an extension, deletion, substitution, or reordering, perform that change inside the native structure. Applicable user and template instructions take precedence over this skill's layout, compaction, and styling defaults; those defaults apply only where the governing sources are silent. For a past/example reference used to build a new deliverable, retained tabs preserve their native structure and styling but default to `adapt content`; they do not preserve prior-project facts, people, dates, links, approvals, or copy. A “legacy,” “reference,” or “do not use” label does not make stale content acceptable in the finished artifact.
+2. **Blank or basic net-new native creation without a constraining Google Doc template/reference:** read `references/reference-native-create-direct.md`, create the file with `mcp__codex_apps__google_drive._create_file`, and use direct Docs `batchUpdate` requests when content is requested.
+3. **Polished or layout-sensitive net-new creation without a constraining Google Doc template/reference:** use `[@documents](plugin://documents@openai-primary-runtime)` with the `google_docs_default` preset, then read `references/reference-import-docx-to-native-docs.md` and import as native Google Docs. A supplied Google Doc template/reference disqualifies this route even when the requested result is polished; a content-only source does not. After import, replace mandatory chip-eligible values with native chips during post-import normalization.
+4. **Existing document reads, summaries, edits, comments, and preservation-only work:** use Google Docs connector or app tools directly. Before the first write to an existing document, use the checked-in file-backed trusted read described in `references/reference-trusted-read-wrapper.md`; inspect its compact control warning immediately and read normalized document content from the returned file path. Targeted follow-up reads may use connector tools directly.
+5. **Exact native dropdown creation, option replacement, or selected-value mutation:** use the checked-in Google Docs dropdown workflow for every mutation in the task after capability discovery. Read `references/reference-dropdown-code-mode.md`.
 
-Choose the simplest creation path that can faithfully satisfy the request. The connector-native path is the default for blank docs and basic documents with plain text, headings, lists, simple links, simple tables, and supported smart chips. The DOCX-import path is the high-quality workflow for deliverables where page layout, figure generation, visual polish, export quality, or full rendered visual QA matter.
+When the prompt is ambiguous, default to native copy-and-adapt rather than selective borrowing or DOCX reconstruction. Do not create a blank destination or begin a DOCX draft before this decision.
 
-The import reference owns the exact connector action, plugin install/reinstall handling, native-conversion verification, post-import normalization, and cleanup steps. Read it before any DOCX-first Google Docs import attempt.
+### Native reference signature
 
-For DOCX-first work, local DOCX staging hygiene is mandatory. Staging must be non-user-visible and untracked from the start. Do not create DOCX builder or helper scripts with tracked file-edit tools such as `apply_patch`, and do not create helper source files in the workspace or any path surfaced by Changes Made. Prefer the Documents plugin's built-in authoring workflow or a one-shot runtime command that keeps generation code ephemeral and persists only the required `.docx`, render outputs, and scratch assets in a per-task scratch directory. After successful native import and connector readback, remove those local staging artifacts unless the user explicitly asked to keep local files. Cleanup is required as a backstop, not as the visibility control.
+Before planning content for a supplied Google Doc template/reference:
 
-Do not reference the local `.docx` in the final answer after successful native import. The final answer includes the Google Docs link only.
+1. Read full document metadata and enumerate every tab before reading a single tab in depth: tab id, title, parent, nesting, and order. A URL ending in `?tab=t.0` identifies the initially visible tab, not the full reference scope.
+2. Record a compact signature for relevant heading roles: named style, font family, size, weight, color, and spacing.
+3. Record each relevant table's tab, shape, semantic row and column roles, comparison dimensions, applicable instructions in or adjacent to the table, borders, fills, padding, widths, and representative text styling.
+4. Record relevant native elements and their locations: people/date/rich-link chips, links, images, lists, controls, headers, and footers.
+5. Give every tab two treatments: a structural treatment (`retain`, `extend`, `reorder by user direction`, or `remove by user direction`) and a content treatment (`carry current content`, `adapt`, `replace`, or `clear`). Unmentioned tabs default to `retain structure`; when the reference describes a different project, event, product, experiment, incident, or time period, their content defaults to `adapt`, never carry.
+6. Record reference-only factual signatures that must not leak into a new deliverable: prior names and organizations, product/project identifiers, dates and times, venues, links and chips, owners and approvers, claims, metrics, statuses, and distinctive copy. The user prompt governs the requested outcome; applicable instructions in the selected template/reference govern how retained structures must be used or adapted; designated content sources govern facts. Skill defaults apply only where those authorities are silent. A template/reference governs facts only when the user explicitly makes its content authoritative.
 
-## Capability Position
+Do not flatten paragraphs across tabs until the tab tree is recorded. If a full response is too large or truncated, request `tabs(tabProperties)` first and inspect relevant tabs individually. For exact-template and template-adaptation work, use the Drive copy action exposed by the current runtime, then run the file-backed trusted read on the copied destination before its first write. If native copy is unavailable and tabs, styles, chips, controls, or other native semantics matter, stop rather than silently rebuild through DOCX.
 
-Connector-first creation and editing is the preferred path for blank docs, basic native docs, existing native Google Docs, and targeted post-import edits. It is strong for text, headings, bullets, links, simple tables, tabs, comments, supported smart chips, meeting-notes-like building-block reconstruction, and template-preserving insertions.
+Do not block blank or basic eligible creation on the Documents plugin. For eligible DOCX-first work, keep staging untracked and non-user-visible, clean it after successful native import and readback, and return only the Google Docs link unless the user requested local files.
 
-It is not a universal replacement for DOCX-first creation. Use DOCX-first creation for net-new polished deliverables where page layout, figure generation, export quality, or full rendered visual QA matter.
+## Coverage-First Authoring Contract
 
-For template-preserving work, sample the nearest comparable live document structure before writing. Reproduce connector-visible structure and supported element types rather than approximating everything as plain text. For unsupported UI-only constructs, copy an existing template document or recreate the observable constituent structure; do not claim native UI building-block insertion unless connector readback proves it.
+1. Derive completeness only from explicit user requirements, supplied source content the user asks to carry forward, and applicable template/reference instructions, fields, containers, or functional sections.
+2. Before drafting, keep a compact in-memory coverage map with: obligation, authority (`prompt`, `source`, or `template/reference`), required output form, planned destination, and final state (`present`, `unavailable-with-disclosure`, or `omitted-by-explicit-user-direction`). Distinguish factual authority from structural authority: a past/example reference may authorize form, semantic organization, instructions, and style without authorizing any of its facts. Do not persist, serialize, count, hash, or script-validate the map.
+3. Use document archetypes only to organize requested material. They never create obligations, sections, evidence requirements, or depth by themselves.
+4. Draft once toward the intended final shape; do not create an intentionally maximal draft. Prove coverage before optimizing length.
+5. Research externally only when requested, when current/time-sensitive facts are material, or when supplied sources cannot support required factual accuracy. For requested evidence, follow `references/reference-citations-and-hyperlinks.md`.
+6. Include methodology, assumptions, alternatives, risks, or sensitivity only when requested or materially necessary to satisfy an obligation.
+7. Compress repeated wording and duplicated rationale only after coverage passes. Never remove or merge a unique requirement, requested fact/citation/source, template instruction, field or functional section, distinct decision/owner/dependency/risk/action, comparison dimension, or requested native structure merely to shorten the document.
+8. If complete content cannot meet an explicit page limit without unreadable text or a typography-floor violation, report the conflict rather than silently omit content.
+9. Never fill a missing fact from a past/example reference merely because its slot needs content. Use the current source, a clearly labeled recommendation, or an explicit unavailable/TBD disclosure. Do not carry a reference-only schedule time, person, link, metric, status, or claim into the new artifact.
 
-## Google Docs Default Preset
+Do not use required-unit or evidence ledgers, evidence-level classifications, archetype completeness budgets, document-mode contracts, typography exception ledgers, density-trigger ledgers, a draft-everything-then-compress workflow, or automatic depth based only on document category.
 
-For DOCX-first Google Docs creation, `google_docs_default` is the default visual contract. Do not let the Documents skill infer `standard_business_brief`, `compact_reference_guide`, or another Word-oriented preset from the content archetype alone. The expected result is a native-feeling Google Doc after import: Arial-based typography, black title/headings/body text, simple title block, restrained spacing, real lists, and no imported Word-template chrome such as blue headings, colored callouts, dense table borders, or running header/footer furniture.
+## Native Smart-Chip Authoring Invariant
 
-Use a different Documents preset only when the user explicitly asks for a special visual treatment, a branded document, or a more polished formal artifact than a normal Google Doc.
+Use native smart chips whenever the connector supports them and the source contains the required semantic value. The following cases are mandatory, not optional polish:
 
-## Runtime Model
+1. Insert every concrete semantic date added to the document as a `dateElement` with `insertDate`, including dates in prose, metadata fields, lists, and tables. Do not newly type a date as plain text. If the source does not identify the date precisely enough to produce a faithful timestamp, do not invent missing date components; preserve an existing ambiguous value or surface the ambiguity.
+2. First decide whether a person belongs in the finished document. For every template/reference person chip, classify the role as `carry forward`, `replace from source`, or `remove as example/project-specific content`. Do not preserve a person merely to retain a chip count, and do not discard a reusable/current template contact merely because the task source omits them. When a relevant person name remains or is added and a verified email address is available, use a `person` chip with `insertPerson`. Use plain text only when no email is available, and never guess an address.
+3. When a Google Calendar event URL is available, represent the event with a `richLink` chip using `insertRichLink`. Keep descriptive context outside the chip rather than duplicating the raw URL.
+4. Represent every link to a Google Doc, Google Sheet, or Google Slides presentation as a `richLink` chip using `insertRichLink`, including links in narrative text, tables, citations, source lists, and appendices. This applies to copied existing links as well as newly inserted links. Canonicalize every retained Workspace URI with `scripts/canonicalize_google_workspace_url.mjs`; replace relevant noncanonical rich links, remove irrelevant reference-era links, and use the canonical file URL without account-routing segments, share parameters, tab/range/heading/slide queries, or fragments. When a location-specific deep link is materially useful, keep the canonical file chip and add a separate readable ordinary hyperlink for that location. Never leave an ordinary Workspace hyperlink as the sole representation.
 
-This plugin is for the local Codex plugin environment.
+For other supported Google resource URLs, prefer a `richLink` when it is convenient and improves scanning. Plan chip positions while composing the text skeleton, account for each chip's one-code-unit range, and verify the native element type and properties after writing. These requirements apply to direct-native, copied-template, existing-document, and post-import workflows. Read `references/reference-smart-chips-and-building-blocks.md` and the request examples in `references/reference-direct-request-composition.md` before the first chip write.
 
-1. Use Google Docs connector or app tools directly from Codex for reads, writes, and verification.
-2. Do not use code-mode bridge writes or subprocess connector writes for this skill.
-3. Do not run local `gdocs_*` helper scripts to digest `get_document` output or generate `batchUpdate` request arrays.
-4. Prepare request JSON directly from connector readback, source data, and the examples in `references/reference-direct-request-composition.md`.
-5. Keep connector calls separate from any local helper processing, and do not use embedded-runtime helper snippets or assumed global connector bindings.
-6. This environment has no Browser Use or live browser-rendered inspection. Do not require browser foregrounding, screenshots, cursor placement, live rendered-page scans, or visible-tab checks.
+## Launch-Blocking Output Invariant
 
-## Stateful Operation
+A result is incomplete if it silently omits an explicit requirement, requested source content, template/reference field, required link or figure, requested native structure, mandatory smart chip, or distinct functional section. Matching visible text is not enough when native semantics are required. These are content failures, not optional polish.
 
-Maintain working state for the active document task instead of re-deriving context from scratch after every step.
-Keep the target URL, document id, `tabId`, source materials, relevant readback snippets, resolved sections or tables, live indexes, write batches, and verification status current as the task progresses.
-Refresh that state before connector writes when source gathering, document switches, connector errors, or runtime resets could make it stale.
+Unavailable information may remain visibly TBD or be disclosed only when the source truly lacks it. Preserve unsupported native structures by copy, use an explicitly approved fallback, or stop before destructive work. A shorter document is not automatically better.
 
-## Non-Negotiable Output Invariant
+## Runtime And Dropdown Route
 
-Inserted or edited content must match the surrounding document's existing structure and connector-observable presentation closely enough that it should read as native template content.
-This is launch-blocking, not cosmetic. Treat missing section hierarchy, mismatched heading level, font family, font size, bolding, link coverage, table styling, chip type, or template-shape drift visible in connector data as a failed output that must be corrected before handoff. Do not claim rendered visual verification from connector readback or HTML export alone.
+Direct connector execution is the default. Do not use ad hoc code-mode bridges, subprocess connector writers, private Google RPCs, browser/UI writers, model-authored executable helpers, or `google-docs-cm`.
 
-When Google Drive PDF export and local PDF page rasterization are available, use the PDF-export visual QA workflow in `references/reference-pdf-export-visual-qa.md` after connector readback for layout-sensitive work. That workflow can verify exported Google Docs PDF pages for clipping, overlap, page breaks, table fit, and figure placement. If PDF export or raster review is unavailable, state the limitation plainly and do not imply rendered visual QA passed.
+Resolve dropdown intent before the first write:
 
-For presentation-oriented documents, structural completeness is not enough. A document can have all requested sections, headings, tables, and placeholders resolved while still being too dense, monotonous, or hard to scan. Treat readability, hierarchy, and appropriate use of visual devices as part of completion, not as optional polish.
+| Task | Route |
+| --- | --- |
+| No dropdown involvement | Direct connector |
+| Preserve an existing dropdown | Direct connector with targeted preservation |
+| Create a native dropdown | Checked-in Google Docs dropdown code mode |
+| Replace dropdown options | Checked-in Google Docs dropdown code mode |
+| Change selected value | Checked-in Google Docs dropdown code mode |
+| Text/table edits plus dropdown mutation | Dropdown code mode owns every mutation |
+| Required dropdown tools unavailable | Stop before exact mutation |
 
-## Canonical Workflow Bias
-
-Prefer one simple proven workflow over a large tree of recovery branches.
-When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
-Do not let accumulated edge-case guardrails turn a straightforward document task into a long blocker-analysis exercise.
-For net-new Google Doc requests, follow Default Routing first: connector-native for blank/basic docs, DOCX-first for polished/complex deliverables.
-For existing document editing tasks, connector-created docs with content, and follow-on edits after a DOCX import, use direct connector `batchUpdate` request composition when viable.
+Exact mutation requires runtime discovery of both `getDocumentDropdowns` and `updateDocumentDropdown`. Public Docs `batchUpdate` cannot prove dropdown semantics. Once dropdown code mode is selected, do not switch writers mid-task.
 
 ## Direct-Request Workflow
 
-For connector-created docs with content, existing document editing tasks, and follow-on edits after a DOCX import, use this sequence when viable:
+For native copies, connector-created docs with content, existing-document edits, and post-import repairs:
 
-1. Gather the required source material.
-2. Create or attach to the destination document.
-3. Resolve the exact destination `documentId`, URL, and `tabId` if tabs are present.
-4. Read the destination through the connector. Use full `get_document` when structure, styles, tabs, tables, chips, or building-block-like content matter.
-5. Make compact working notes from the connector response: target section ranges, relevant paragraph start/end indexes, element types, paragraph styles, text styles, table coordinates, list state, and revision id.
-6. Sample the local template shape, including paragraph styles, list state, tables, links, and supported chip element types.
-7. Compose the smallest clear `batchUpdate` request batch directly in the connector call. Split large or fragile edits into verified batches.
-8. Use `write_control.requiredRevisionId` when the write is based on a fresh revision id and collaborator conflicts should fail fast.
-9. Re-read the edited area after each substantial write, then continue from live indexes.
-10. Verify and normalize formatting, links, chips, tables, and headings before final handoff.
+1. Gather the requested source material.
+2. Copy, create, or attach to the destination document according to the resolved route.
+3. Resolve the exact document id, URL, complete tab tree, active `tabId`, and current revision where exposed.
+4. For the first full read before writing an existing document, invoke `host/docs-trusted-read-file-bridge.mjs` exactly as described in `references/reference-trusted-read-wrapper.md`. It persists the raw response, control inventory, machine-readable outline, and annotated model-readable text while returning automatic advisory control awareness. Do not transport the raw response with `text()` or `apply_patch`.
+5. Read the returned `document_text` artifact, inspect `controlAwareness`, and record compact working notes for target ranges, nearby styles, table coordinates, native elements, revision, and preservation warnings. Read the raw result only when normalized artifacts omit a required field.
+6. For template/reference work, compare the copied destination against the native reference signature before drafting. If the source has multiple tabs, confirm the destination already has the same complete tab topology before any content write; do not proceed from a blank or single-tab destination. Apply the separate structural/content treatment for every tab, and do not finish one tab while leaving other retained tabs as historical reference material. For structured existing-document work, use the targeted snapshot in `references/reference-template-preservation-and-edit-scope.md`.
+7. Classify every planned and copied semantic date, relevant known-email person, Google Calendar event URL, and Google Docs/Sheets/Slides URL; canonicalize retained Workspace file URLs and allocate mandatory `insertDate`, `insertPerson`, or `insertRichLink` requests rather than emitting plain text or ordinary hyperlinks.
+8. Compose the smallest clear `batchUpdate` request batch. Split large or fragile edits into verified batches.
+9. Use `write_control.requiredRevisionId` when a fresh revision should fail fast on collaborator conflicts.
+10. Re-read after substantive or index-shifting writes and continue from live indexes.
+11. Reconcile the coverage map, then verify and repair requested content and connector-observable presentation before final handoff.
 
-For any secondary element that cannot be verified through connector reads, either use a connector-supported path with readback or clearly state the verification limit.
+Do not rebuild an entire document to perform a targeted edit. If a native component cannot be safely preserved or verified, stop before destructive work and report the limitation.
 
-If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
+## Stateful Operation
+
+Keep the target URL, document id, tab tree, active `tabId`, source materials, relevant readback, live ranges, write batches, and verification status current. Refresh state after document switches, source gathering, connector errors, or runtime resets.
 
 ## Meeting-Notes Fast Path
 
-For requests like "add meeting notes for today's/tomorrow's meeting from my calendar":
+For calendar-backed meeting-notes requests, read only `references/reference-meeting-notes-direct.md` unless the task adds tables, figures, citations, import/export, or other requirements. Use connector readback—not HTML or PDF—as the verification surface for this text-only path.
 
-1. Read only `references/reference-meeting-notes-direct.md` unless the task adds tables, figures, citations, import/export, or other non-meeting-notes requirements.
-2. Follow that reference directly; it owns Calendar lookup, Meeting notes shape, empty placeholders, attendee chips, declined-attendee styling, and fast connector readback.
-3. Do not export HTML or PDF for this text-only fast path. Connector readback is the verification surface for chips, bullets, headings, and target identity.
+## Universal Completion Checks
 
-## Release-Blocker Checklist
+Before handoff, verify:
 
-Before final handoff, explicitly verify these with connector readback:
+1. the target document and complete tab topology are correct; for a multi-tab template/reference, every source tab has both its planned structural treatment and its completed content treatment, or an explicit user-authorized removal
+2. every coverage-map obligation is present, explicitly unavailable, or omitted only by user direction
+3. required source content and template/reference fields are in the intended location and form
+4. relevant heading and table style signatures match the template/reference except for intentional changes; expanded tables reuse the canonical peer's header/body cell styles, borders, fills, padding, widths, and typography
+5. headings, body text, native links, tables, figures, and lists are coherent and readable
+6. every mandatory chip opportunity is represented by `dateElement`, `person`, or canonical `richLink` as applicable; copied relevant rich links are canonicalized, no ordinary Docs/Sheets/Slides hyperlink is the sole representation, each retained person chip passed the relevance decision, and relevant existing chips, native controls, and other native elements read back with the correct connector-visible semantics
+7. each retained tab is source-current; no reference-only facts, obsolete names/chips, dates, times, links, claims, statuses, distinctive prior-project copy, placeholders, duplicate sections, accidental empty bullets, or scaffolding remain. Historical content may remain only when the user explicitly requested it
+8. every ordinary hyperlink preserves the sampled surrounding font family, size, weight, emphasis, color, underline state, and paragraph role after readback
+9. no unrelated source or template structure changed
+10. layout-sensitive work passed final PDF visual QA, or the unavailable verification is stated plainly
 
-1. every new or edited table has the intended rows, columns, cell text, table anchor, style requests, and column widths where the connector exposes them
-2. every new or edited heading, label, and body block matches surrounding connector-visible style fields such as named style, font family, font size, bolding, links, and list state; imported net-new Docs should read back as Arial-based, black-text documents without obvious blue-heading or Word-template residue
-3. every new or edited smart chip or building-block-like region preserves connector-visible element types where supported: `dateElement`, `person`, and `richLink`
-4. every meeting-notes-like block was composed from sampled peer structure and `references/reference-meeting-notes-direct.md`
-5. every inserted figure or image uses a connector-supported insertion path and is present in connector readback; if rendered placement cannot be inspected, say so plainly
-6. the document is not relying on one repeated structure everywhere; for example, a long run of similar tables or identical header colors should be treated as a design smell unless the source template clearly calls for it
-7. for layout-sensitive work, complete `references/reference-section-completeness-and-final-pass.md` and `references/reference-pdf-export-visual-qa.md` as applicable; if connector readback, HTML export, and PDF-export visual QA do not prove a rendered visual property, do not assert that property as verified
-
-If any check fails, the task is not complete.
-If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
-
-For connector-native creation and existing Google Doc edits, the following are workflow failures unless the user explicitly requested that export format for a separate deliverable:
-
-1. using Drive `fetch` or plain-text/HTML export as the primary structure source instead of connector reads
-2. invoking a non-connector write path for this skill, including code-mode bridge writes, nested Codex connector writes, or local `gdocs_*` helper scripts
-3. claiming a script/planner/builder path was used
-4. approximating supported chips as plain text when `insertDate`, `insertPerson`, or `insertRichLink` can express them
+Run feature-specific checks only for features used: evidence targets, template/reference semantic inventory, dropdown metadata, table-cell native lists, explicit global formatting, branded furniture, figures, or layout-sensitive rendering. Semantic reconciliation may reopen content scope to repair an omission; formatting repair may not unless it exposes one. During evaluation, classify repairs as prompt/content omission, source/template omission, native-structure fidelity, targeting, formatting, or pagination/layout.
 
 ## Required Read Order
 
-Before any Google Docs creation, content write, or edit operation:
+Before writing, read only the references selected by the active route:
 
-If Default Routing uses connector-native create:
+- Blank native doc: `references/reference-native-create-direct.md`.
+- Basic native doc with content: `references/reference-native-create-direct.md` and `references/reference-direct-request-composition.md`.
+- Supplied Google Doc template/reference: `references/reference-template-preservation-and-edit-scope.md` before choosing a construction route; do not use DOCX-first import.
+- DOCX-first import for eligible reference-free creation: the Documents skill and `references/reference-import-docx-to-native-docs.md`; use task-specific references for requested shapes, evidence, or post-import repairs.
+- Calendar-backed meeting notes: `references/reference-meeting-notes-direct.md`.
+- Simple text or supported-chip edit: `references/reference-direct-request-composition.md`.
+- Any output containing a semantic date, a person whose verified email is available, a Google Calendar event URL, or a Google Docs/Sheets/Slides URL: `references/reference-smart-chips-and-building-blocks.md` and `references/reference-direct-request-composition.md`.
+- Any Google Docs/Sheets/Slides URL with account-routing, sharing, tab, range, heading, bookmark, or slide-specific parameters: run `scripts/canonicalize_google_workspace_url.mjs` before `insertRichLink`.
+- First write to an existing Google Doc: `references/reference-trusted-read-wrapper.md`; use the file-backed bridge for the initial full read, then continue on the selected direct or dropdown route.
+- Non-meeting structural edit: `references/reference-connector-runtime-and-safety.md`, `references/reference-foreground-guard.md`, `references/reference-request-shapes-and-write-safety.md`, and `references/reference-direct-request-composition.md`.
+- Existing structured document, template/reference adaptation, tab duplication, branded furniture, or work near native controls: also `references/reference-template-preservation-and-edit-scope.md` and, when an explicit output form is requested, `references/reference-request-shapes-and-write-safety.md`.
+- Research, current facts, metrics, citations, benchmarks, or source links: `references/reference-citations-and-hyperlinks.md`.
+- Non-simple chip, dropdown, or building-block work: also `references/reference-smart-chips-and-building-blocks.md`.
+- Exact dropdown create/options/selection mutation: `references/reference-dropdown-code-mode.md`, `references/reference-template-preservation-and-edit-scope.md`, and `references/reference-smart-chips-and-building-blocks.md`.
+- List inside a table cell or boxed section: also `references/reference-response-and-list-format.md` and `references/reference-table-formatting-deep-dive.md`.
+- Explicit formatting of all/every/throughout analogous tables: `references/reference-request-shapes-and-write-safety.md` and `references/reference-table-formatting-deep-dive.md`.
+- Layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable work: `references/reference-section-completeness-and-final-pass.md` and `references/reference-pdf-export-visual-qa.md` before handoff.
 
-1. For a blank Google Doc, read only `references/reference-native-create-direct.md`.
-2. For a basic doc with content, read `references/reference-native-create-direct.md` and `references/reference-direct-request-composition.md`.
-3. Read task-specific files from the matrix below only when that task area is present.
+Do not bulk-read the reference folder. Do not execute content writes until route-required references are read in the current turn.
 
-If Default Routing uses `[@documents](plugin://documents@openai-primary-runtime)`:
+## Connector Safety
 
-1. Read the `[@documents](plugin://documents@openai-primary-runtime)` plugin skill.
-2. Read `references/reference-import-docx-to-native-docs.md`.
-3. For the post-import normalization pass, also read `references/reference-request-shapes-and-write-safety.md`, `references/reference-headings-and-question-format.md`, `references/reference-response-and-list-format.md`, and `references/reference-section-completeness-and-final-pass.md`.
+1. Confirm the exact target document, complete tab tree, and active `tabId` before writes.
+2. Resolve the section, table, cell, paragraph, or native control from current connector readback.
+3. Use full `get_document` when styles, lists, tables, chips, tabs, headers, footers, or native controls matter; use targeted reads only for simple unambiguous text.
+4. Use `get_tables` before table creation, population, list-in-cell work, or global table formatting.
+5. Re-read after insertions, deletions, table changes, native-control changes, or other index-shifting operations.
+6. Create a native copy before adapting a reusable Google Doc template/reference; edit an explicitly targeted working document in place.
+7. Never claim a connector or native feature is unavailable without current-run capability evidence.
 
-If Default Routing uses connector edit workflow for an existing document:
+## Task Reference Map
 
-1. For calendar-backed Meeting notes, read only `references/reference-meeting-notes-direct.md` unless the task clearly needs another reference.
-2. For simple chip/text edits, read only `references/reference-direct-request-composition.md` unless the task clearly needs another reference.
-3. For non-meeting structural edits, read `references/reference-connector-runtime-and-safety.md`, `references/reference-foreground-guard.md`, `references/reference-request-shapes-and-write-safety.md`, and `references/reference-direct-request-composition.md`.
-4. For non-simple smart-chip or building-block parity work, also read `references/reference-smart-chips-and-building-blocks.md`.
-5. Read other task-specific files from the matrix below only when that task area is present.
-6. Before final handoff for layout-sensitive, table-heavy, figure-heavy, polished, or final-deliverable edits, read `references/reference-pdf-export-visual-qa.md`.
-7. If uncertain, prefer the smallest likely relevant reference set; do not bulk-read the reference folder before a straightforward meeting-notes edit.
-
-Do not execute creation or content edits until the required references are read in the current turn.
-
-## Connector Load Checklist
-
-1. Confirm the exact target Google Doc URL or document id and attach to that exact doc through the available Google Docs connector/app tools. For connector-native creation, the `_create_file` response establishes the new target document identity.
-2. If the user only gives a title or title keywords for an existing doc, use the connector/app search path to identify candidate docs before asking for a URL. For a new blank/basic doc, treat the title as the new file name instead of searching for an existing doc unless the user asks to reuse one.
-3. Resolve and record the document id and, if present, the working `tabId`.
-4. Treat target-document identity as a hard precondition for connector writes.
-5. Before each edit pass, identify the section, paragraph, table, cell, or chip range from current connector readback.
-6. Before every connector write batch, apply the target-document guard: re-confirm the target document id, URL, and `tabId` from connector data. Do not re-read the guard reference file for each batch once the rule is known.
-7. Do not use Browser Use, visible tab checks, or live browser-rendered inspection as requirements in this environment.
-8. Use the narrowest connector read that preserves safety:
-   - use full `get_document` when styles, tabs, lists, chips, tables, or building-block-like structures matter
-   - use exact text/range helpers only for simple text anchors that do not involve chips or repeated sections
-   - use table-specific reads before editing or rebuilding table content
-9. Re-read after substantial edits so later writes use live indexes and current structure. Prefer one targeted read when it fully answers the verification question, but never fan out several paragraph/range reads against the same edited region. Use one full `get_document` when targeted reads cannot expose required chips, styles, lists, or multiple nearby paragraphs.
-10. If the document has tabs, resolve the correct `tabId` and carry it through all reads and writes.
-11. If the source doc is a template, create a copy before any edits.
-12. Do not claim the connector is unavailable, read-only, or blocked unless the current session has already established that through actual capability evidence in this run.
-
-## Task To Reference Map
-
-| Task area | Required reference file |
+| Task area | Reference |
 | --- | --- |
-| Calendar-backed Meeting notes, empty placeholders, attendee chips, declined-attendee styling, and fast connector readback | `references/reference-meeting-notes-direct.md` |
-| Blank or basic connector-native Google Docs creation | `references/reference-native-create-direct.md` |
-| Runtime attachment, section targeting, safety, and recovery | `references/reference-connector-runtime-and-safety.md` |
-| Importing a locally created `.docx` into native Google Docs | `references/reference-import-docx-to-native-docs.md` |
-| Confirming the target Google Doc before every write batch | `references/reference-foreground-guard.md` |
-| Request objects, tab-aware calls, range-safe writes, sampling the local style baseline, and connector-readback verification when style metadata is incomplete | `references/reference-request-shapes-and-write-safety.md` |
-| Preparing non-meeting direct `batchUpdate` request arrays from connector readback, including index ledgers, supported chip examples, and verification | `references/reference-direct-request-composition.md` |
-| Header and prompt structure, including bolding the question being answered and matching local heading/body typography | `references/reference-headings-and-question-format.md` |
-| Response structure, list behavior, and one-idea-per-bullet formatting | `references/reference-response-and-list-format.md` |
-| Citation formatting and hyperlink requirements | `references/reference-citations-and-hyperlinks.md` |
-| Existing smart-chip inspection, non-simple smart-chip parity, and building-block support tiers | `references/reference-smart-chips-and-building-blocks.md` |
-| Native table creation, local table-style matching, population, styling, and acceptance checks | `references/reference-table-formatting-deep-dive.md` |
-| Figures, diagrams, image preparation, insertion, and figure-block placement | `references/reference-figures-and-image-insertion.md` |
-| Section completeness, source-list formatting, typography consistency, connector-observable comparison, and final production pass | `references/reference-section-completeness-and-final-pass.md` |
-| PDF export, page rasterization, thumbnail limitations, and rendered visual QA | `references/reference-pdf-export-visual-qa.md` |
+| Blank/basic native creation | `references/reference-native-create-direct.md` |
+| Runtime attachment and recovery | `references/reference-connector-runtime-and-safety.md` |
+| File-backed trusted read, automatic control awareness, and normalized document content | `references/reference-trusted-read-wrapper.md` |
+| DOCX import without a constraining Google Doc template/reference | `references/reference-import-docx-to-native-docs.md` |
+| Target confirmation | `references/reference-foreground-guard.md` |
+| Request shapes and range safety | `references/reference-request-shapes-and-write-safety.md` |
+| Direct request examples and supported chips | `references/reference-direct-request-composition.md` |
+| Headings and question formatting | `references/reference-headings-and-question-format.md` |
+| Lists, including lists inside table cells | `references/reference-response-and-list-format.md` |
+| Citations and hyperlinks | `references/reference-citations-and-hyperlinks.md` |
+| Template and edit-surface preservation | `references/reference-template-preservation-and-edit-scope.md` |
+| Chips, dropdown preservation, and building blocks | `references/reference-smart-chips-and-building-blocks.md` |
+| Exact dropdown mutation | `references/reference-dropdown-code-mode.md` |
+| Tables and explicit global table formatting | `references/reference-table-formatting-deep-dive.md` |
+| Figures and images | `references/reference-figures-and-image-insertion.md` |
+| Final structural and visual QA | `references/reference-section-completeness-and-final-pass.md` |
+| Native PDF visual QA | `references/reference-pdf-export-visual-qa.md` |

@@ -1,6 +1,6 @@
 {
   "name": "teams",
-  "version": "0.1.3",
+  "version": "0.1.8",
   "description": "Work with Teams using the configured Microsoft Teams app connector.",
   "author": {
     "name": "OpenAI",
@@ -12,14 +12,20 @@
   "license": "MIT",
   "keywords": [
     "teams",
+    "microsoft teams",
     "chat",
-    "microsoft"
+    "microsoft",
+    "microsoft 365",
+    "office 365",
+    "meetings",
+    "messages",
+    "channels",
+    "video conferencing"
   ],
-  "skills": "./skills/",
   "apps": "./.app.json",
   "interface": {
     "displayName": "Teams",
-    "shortDescription": "Summarize Teams and draft follow-ups",
+    "shortDescription": "Summarize Teams and follow up",
     "longDescription": "Use Teams to summarize chats, extract actions, and draft channel or meeting follow-ups through the connected Microsoft Teams app.",
     "developerName": "OpenAI",
     "category": "Communication",

@@ -238,9 +238,14 @@ node.remove()
 
 ## Descriptions & Documentation Links
 
+Only access `description` on components and component sets. Accessing it on a
+frame, instance, or other scene node throws instead of returning `undefined`.
+
 ```js
 // Description — plain text, shown in Figma's component panel
-node.description = "A short summary of this component's purpose and usage."
+if (node.type === "COMPONENT" || node.type === "COMPONENT_SET") {
+  node.description = "A short summary of this component's purpose and usage."
+}
 
 // Documentation links — array of {uri, label} shown as clickable links
 componentSet.documentationLinks = [

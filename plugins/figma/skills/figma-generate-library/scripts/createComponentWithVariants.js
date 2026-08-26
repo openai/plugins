@@ -8,6 +8,7 @@
  *
  * @param {{
  *   name: string,
+ *   description?: string,
  *   variantAxes: Record<string, string[]>,
  *   baseProps: {
  *     width: number,
@@ -21,19 +22,19 @@
  *   page: PageNode
  * }} config
  *   - `name`: Component set name (e.g. "Button").
+ *   - `description`: Optional human-readable purpose and usage guidance.
  *   - `variantAxes`: Each key is a variant property name; each value is an array of
  *     allowed values. All combinations are generated (Cartesian product).
  *     Example: { Size: ['Small', 'Medium', 'Large'], Style: ['Primary', 'Ghost'] }
  *     produces 6 variants.
  *   - `baseProps`: Visual properties applied to every variant.
  *   - `page`: The PageNode to create components on (must be set as current page by caller).
- * @param {string} [runId] - Optional dsb_run_id to tag every node.
  * @returns {Promise<{
  *   componentSet: ComponentSetNode,
  *   variants: ComponentNode[]
  * }>}
  */
-async function createComponentWithVariants(config, runId) {
+async function createComponentWithVariants(config) {
   const { name, variantAxes, baseProps, page } = config
 
   // Ensure we are on the correct page
@@ -85,13 +86,6 @@ async function createComponentWithVariants(config, runId) {
       comp.paddingRight = baseProps.padding.right ?? 0
     }
 
-    // Plugin data
-    const variantKey = axisNames.map((ax, i) => `${ax}:${combo[i]}`).join('|')
-    comp.setPluginData('dsb_key', `component/${name}/${variantKey}`)
-    if (runId) {
-      comp.setPluginData('dsb_run_id', runId)
-    }
-
     page.appendChild(comp)
     components.push(comp)
   }
@@ -99,9 +93,8 @@ async function createComponentWithVariants(config, runId) {
   // Combine into a component set
   const componentSet = figma.combineAsVariants(components, page)
   componentSet.name = name
-  componentSet.setPluginData('dsb_key', `componentSet/${name}`)
-  if (runId) {
-    componentSet.setPluginData('dsb_run_id', runId)
+  if (config.description) {
+    componentSet.description = config.description
   }
 
   // Grid layout — variants stack at (0, 0) after combineAsVariants; reposition them.

@@ -10,7 +10,7 @@ disable-model-invocation: false
 
 Create Code Connect template files (`.figma.ts`) that map Figma components to code snippets. Given a Figma URL, follow the steps below to create a template.
 
-> **Note:** This project may also contain parser-based `.figma.tsx` files (using `figma.connect()`, published via CLI). This skill covers **templates files only** — `.figma.ts` files that use the MCP tools to fetch component context from Figma.
+> **You write `.figma.ts` template files ONLY — never `.figma.tsx`.** This skill produces *parserless templates*: a `.figma.ts` file whose default export uses a `` figma.code`...` `` tagged template. Do **NOT** write a `.figma.tsx` file and do **NOT** use `figma.connect()` — that is the separate **parser-based** Code Connect format (published a different way) and is the **wrong artifact** for this skill; output written as `.figma.tsx` is rejected outright. If a `.figma.tsx` already exists for a component, leave it untouched and add your `.figma.ts` template alongside it. A capable model may be tempted to reach for the more familiar `.figma.tsx` / `figma.connect()` pattern from memory — resist it; here the correct output is **always** `.figma.ts` + `figma.code`.
 
 ## Prerequisites
 
@@ -99,7 +99,7 @@ Read the code component's source to understand its props interface — this info
 
 ### File location
 
-Place the file alongside existing Code Connect templates (`.figma.tsx` or `.figma.ts` files). Check `figma.config.json` `include` patterns for the correct directory. Name it `ComponentName.figma.ts`.
+Place the file alongside existing Code Connect files. Check `figma.config.json` `include` patterns for the correct directory. **Name it `ComponentName.figma.ts` — never `ComponentName.figma.tsx`.** The `.figma.tsx` extension is the parser-based format; do not create one or modify an existing one.
 
 ### Template structure
 
@@ -318,6 +318,7 @@ export default {
 
 Read back the `.figma.ts` file and review it against the following:
 
+- **Correct file type & format (check this FIRST)** — the file is `ComponentName.figma.ts` (NOT `.figma.tsx`), and its default export is a parserless template using a `` figma.code`...` `` tagged template. It must NOT use `figma.connect()` (the parser-based format). If you wrote `.figma.tsx` or `figma.connect()`, discard it and rewrite as a `.figma.ts` `figma.code` template.
 - **Property coverage** — every Figma property from Step 3 should be accounted for in the template. Flag any that are missing and ask the user if they were intentionally omitted.
 - **Valid, correctly typed code** — all emitted code must be valid and correctly typed against the code component's `Props` interface. Never make up component properties — if a Figma property has no corresponding code prop, omit it rather than invent one.
 - **No hardcoded children** — verify that every INSTANCE_SWAP property and child component slot uses the dynamic APIs (`getInstanceSwap()`, `findInstance()`, `findConnectedInstance()`, etc.) with `executeTemplate()`. No slot should contain hardcoded component content.

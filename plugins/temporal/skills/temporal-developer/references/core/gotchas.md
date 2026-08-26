@@ -9,6 +9,7 @@ This document provides a general overview of conceptual-level gotchas in Tempora
 **The Problem**: Activities may execute more than once due to retries or Worker failures. If an activity calls an external service without an idempotency key, you may charge a customer twice, send duplicate emails, or create duplicate records.
 
 **Symptoms**:
+
 - Duplicate side effects (double charges, duplicate notifications)
 - Data inconsistencies after retries
 
@@ -21,6 +22,7 @@ This document provides a general overview of conceptual-level gotchas in Tempora
 **The Problem**: Code in workflow functions runs on first execution AND on every replay. Any side effect (logging, notifications, metrics, etc.) will happen multiple times and non-deterministic code (IO, current time, random numbers, threading, etc.) won't replay correctly.
 
 **Symptoms**:
+
 - Non-determinism errors
 - Sandbox violations, depending on SDK language
 - Duplicate log entries
@@ -28,11 +30,12 @@ This document provides a general overview of conceptual-level gotchas in Tempora
 - Inflated metrics
 
 **The Fix**:
+
 - Use Temporal replay-aware managed side effects for common, non-business logic cases:
-    - Temporal workflow logging
-    - Temporal date time
-    - Temporal UUID generation
-    - Temporal random number generation
+  - Temporal workflow logging
+  - Temporal date time
+  - Temporal UUID generation
+  - Temporal random number generation
 - Put all other side effects in Activities
 
 See `references/core/determinism.md` for more info.
@@ -42,10 +45,12 @@ See `references/core/determinism.md` for more info.
 **The Problem**: If Worker A runs part of a workflow with code v1, then Worker B (with code v2) picks it up, replay may produce different Commands.
 
 **Symptoms**:
+
 - Non-determinism errors after deploying new code
 - Errors mentioning "command mismatch" or "unexpected command"
 
 **The Fix**:
+
 - Use Worker Versioning for production deployments
 - Use patching APIs
 - During development: kill old workers before starting new ones
@@ -60,6 +65,7 @@ See `references/core/versioning.md` for more info.
 **The Problem**: Using aggressive activity retry policies that give up too easily.
 
 **Symptoms**:
+
 - Workflows failing on transient errors
 - Unnecessary workflow failures during brief outages
 
@@ -72,6 +78,7 @@ See `references/core/versioning.md` for more info.
 **The Problem**: Queries and update validators are read-only. Modifying state causes non-determinism on replay, and must strictly be avoided.
 
 **Symptoms**:
+
 - State inconsistencies after workflow replay
 - Non-determinism errors
 
@@ -82,6 +89,7 @@ See `references/core/versioning.md` for more info.
 **The Problem**: Queries and update validators must return immediately. They cannot await activities, child workflows, timers, or conditions.
 
 **Symptoms**:
+
 - Query / update validators timeouts
 - Deadlocks
 
@@ -110,6 +118,7 @@ See language-specific gotchas for details.
 **The Problem**: Not testing what happens when things go wrong.
 
 **Questions to answer**:
+
 - What happens when an Activity exhausts all retries?
 - What happens when a workflow is cancelled mid-execution?
 - What happens during a Worker restart?
@@ -121,6 +130,7 @@ See language-specific gotchas for details.
 **The Problem**: Changing workflow code without verifying existing workflows can still replay.
 
 **Symptoms**:
+
 - Non-determinism errors after deployment
 - Stuck workflows that can't make progress
 
@@ -133,6 +143,7 @@ See language-specific gotchas for details.
 **The Problem**: Catching errors without proper handling hides failures.
 
 **Symptoms**:
+
 - Silent failures
 - Workflows completing "successfully" despite errors
 - Difficult debugging
@@ -144,10 +155,12 @@ See language-specific gotchas for details.
 **The Problem**: Marking transient errors as non-retryable, or permanent errors as retryable.
 
 **Symptoms**:
+
 - Workflows failing on temporary network issues (if marked non-retryable)
 - Infinite retries on invalid input (if marked retryable)
 
 **The Fix**:
+
 - **Retryable**: Network errors, timeouts, rate limits, temporary unavailability
 - **Non-retryable**: Invalid input, authentication failures, business rule violations, resource not found
 
@@ -158,6 +171,7 @@ See language-specific gotchas for details.
 **The Problem**: When a workflow is cancelled, cleanup code after the cancellation point doesn't run unless explicitly protected.
 
 **Symptoms**:
+
 - Resources not released after cancellation
 - Incomplete compensation/rollback
 - Leaked state
@@ -169,26 +183,53 @@ See language-specific gotchas for details.
 **The Problem**: Activities must opt in to receive cancellation. Without proper handling, a cancelled activity continues running to completion, wasting resources.
 
 **Requirements for activity cancellation**:
+
 1. **Heartbeating** - Cancellation is delivered via heartbeat. Activities that don't heartbeat won't know they've been cancelled.
 2. **Checking for cancellation** - Activity must explicitly check for cancellation or await a cancellation signal.
 
 **Symptoms**:
+
 - Cancelled activities running to completion
 - Wasted compute on work that will be discarded
 - Delayed workflow cancellation
 
 **The Fix**: Heartbeat regularly and check for cancellation. See language-specific gotchas for implementation patterns.
 
+## CLI Gotchas for Developers
+
+### Dev Server Is In-Memory and Not for Production
+
+The dev server loses all state on restart (use `--db-filename` to persist) and runs everything in a single process. See `dev-management.md` for the full flag table and persistence guidance. Even with persistence enabled, the dev server should NEVER be used for production deployments.
+
+### `workflow update` Is a Command Group, Not a Single Command
+
+Running `temporal workflow update` alone will not work. Use the correct subcommand:
+
+- `temporal workflow update execute` -- start an update and wait for completion.
+- `temporal workflow update start` -- fire an update and wait for acceptance. Requires `--wait-for-stage accepted`.
+- `temporal workflow update result` -- get the result of a previously started update.
+- `temporal workflow update describe` -- check an update's current status.
+
+### `--wait-for-stage` Only Accepts `accepted`
+
+Despite looking like an enum, the only valid value for `--wait-for-stage` on `temporal workflow update start` is `accepted`. Passing `completed` or other values will fail. The flag is required to allow a future CLI version to choose a default.
+
+### `--reapply-type` Only Accepts `Signal` or `None`
+
+When resetting a workflow with `temporal workflow reset`, `--reapply-type` controls which events get reapplied after the reset point. Only `Signal` and `None` are valid values.
+
 ## Payload Size Limits
 
 **The Problem**: Temporal has built-in limits on payload sizes. Exceeding them causes workflows to fail.
 
 **Limits**:
+
 - Max 2MB per individual payload
 - Max 4MB per gRPC message
-- Max 50MB for complete workflow history (aim for <10MB in practice)
+- Max 50MB for complete workflow history (aim for < 10MB in practice)
 
 **Symptoms**:
+
 - Payload too large errors
 - gRPC message size exceeded errors
 - Workflow history growing unboundedly

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Daily Brief"
-  short_description: "Summarize a day into a readable agenda"
-  default_prompt: "Use $outlook-calendar-daily-brief to summarize my Outlook calendar for today with conflicts and free windows."

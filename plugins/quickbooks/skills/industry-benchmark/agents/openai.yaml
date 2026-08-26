@@ -1,0 +1,7 @@
+interface:
+  display_name: "Industry Benchmark"
+  short_description: "Compare a QuickBooks business or provided metric with regional and national industry peers"
+  brand_color: "#2CA01C"
+  default_prompt: "Compare my business against similar businesses in my industry."
+policy:
+  allow_implicit_invocation: true

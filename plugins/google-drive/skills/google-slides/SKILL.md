@@ -1,170 +1,164 @@
 ---
 name: google-slides
-description: Google Slides work for finding, reading, summarizing, creating, importing, template following, visual cleanup, source-deck adaptation, structural repair, and content edits in native Slides decks.
+description: Route Google Slides authoring requests and derive a design system from a native template or reference deck. Use this skill when the user provides an existing native Google Slides deck as a template, reference, or prior-period source, or asks to edit, update, repair, restyle, or clean up an existing native Google Slides deck. Use the Presentations skill instead for net-new presentation creation when no existing native Google Slides deck must be followed.
 ---
 
 # Google Slides
 
-Use this skill for Google Slides work in Codex local-plugin sessions.
+## Route the Request
 
-## Purpose Of This File
+- Use `[@presentations](plugin://presentations@openai-primary-runtime)` to create a net-new presentation when no existing native Google Slides deck is the template or reference.
+- Use this skill to create a presentation by following an existing native Google Slides template, reference deck, or prior-period deck.
+- Use this skill to edit, update, repair, restyle, or clean up an existing native Google Slides deck.
+- If a request combines new content with an existing native Google Slides deck that must be followed, use this skill.
+- Do not use this skill to author a blank or from-scratch presentation.
 
-This file is intentionally minimal and only covers:
+## Parse a Template Deck
 
-1. connector loading and runtime boundaries in the Codex `node_repl` world
-2. mandatory routing to reference files
-3. routing to workflow references
+If code mode is unavailable in the current Codex environment, reproduce the same read-to-file, parse, and render workflow with the available connector and local tools. Preserve the same artifacts and validation steps; do not skip the workflow merely because code mode cannot be used.
 
-Detailed write, chart, thumbnail, creation, and final-pass rules live in `references/`.
-Latency is not a constraint for this skill, so always read the relevant reference files before performing the task.
+For template or reference following, first use code mode to read the complete template/reference presentation directly into a file. Set `SKILL_DIR` to this skill's absolute directory and `WORKSPACE` to an absolute task workspace, then run this in one `functions.exec` call:
 
-The active/main agent must personally read this file and every relevant reference file in the current turn. Do not delegate reference-file reading or summarization to a subagent and then rely on that summary for the workflow. This is not a general prohibition on subagents: they may still be used for other well-scoped execution, extraction, or QA work after the main agent has loaded the applicable skill guidance itself.
+```js
+const SKILL_DIR = "<absolute-skill-directory>";
+const WORKSPACE = "<absolute-task-workspace>";
+const loaded = await tools.exec_command({
+  cmd: `/bin/cat -- '${SKILL_DIR}/host/read-template-to-file.mjs'`,
+  workdir: SKILL_DIR,
+  login: false,
+  yield_time_ms: 30000,
+  max_output_tokens: 20000,
+});
+if (loaded.exit_code !== 0) throw new Error("Could not load the template reader");
+const { readTemplateToFile } = new Function(
+  `${loaded.output.replace(/^\s*export\s+/gm, "")}\nreturn { readTemplateToFile };`,
+)();
+const result = await readTemplateToFile({
+  presentationId: "<presentation-id>",
+  outputPath: `${WORKSPACE}/raw-template.json`,
+  workspaceRoot: WORKSPACE,
+  skillRoot: SKILL_DIR,
+  tools,
+});
+text(JSON.stringify(result));
+```
 
-## Runtime Model
+The reader omits the `fields` argument so the connector returns the full presentation resource, then writes the unmodified connector response to `raw-template.json` without placing it in model context.
 
-1. Use Google Slides connector or app tools directly from Codex when they are available.
-2. Use `node_repl` only for source processing or small JavaScript utilities that are not connector calls.
-3. Do not use embedded-runtime helper snippets or assumed global connector bindings.
-4. Connector tools are not called from inside `node_repl`. Treat connector calls and `node_repl` helper work as separate execution surfaces.
-5. Browser Use is not the Slides editing path. Use connector reads, slide structure, and thumbnails.
+Next, set `NODE` to the bundled Node.js executable returned by the workspace dependency loader and run:
 
-## Default Routing
+```bash
+"$NODE" "$SKILL_DIR/scripts/parse_template_design_system.mjs" \
+  --input "$WORKSPACE/raw-template.json" \
+  --output "$WORKSPACE/design-system.json" \
+  --catalog "$WORKSPACE/design-catalog.md"
+```
 
-Unless the user asks otherwise:
+`--catalog` is optional. Use the JSON for master families, layout and placeholder IDs, inherited styles, theme colors, protected regions, and exemplar geometry. Use the catalog as a compact planning view. Confirm semantic and visual interpretations against rendered source slides; the parser derives structure but does not render the deck.
 
-1. New deck from a provided native Google Slides template or reference deck: copy the provided deck directly in Google Drive, then use Slides `batchUpdate` on the copy. Read `references/reference-template-reference-deck-copy-workflow.md`.
-2. Net-new Google Slides deck without a provided native Slides template or reference deck: use `[@presentations](plugin://presentations@openai-primary-runtime)` to create a local `.pptx` first. Then read `references/reference-import-presentation.md` and import with `mcp__codex_apps__google_drive_import_presentation` using `upload_mode: "native_google_slides"`.
-3. If the Presentations plugin is unavailable for a net-new deck that does not use the native Slides copy workflow, do not create the deck directly. Report that the required local Presentations authoring path is unavailable.
-4. Existing Google Slides reads, summaries, edits, comments, and template-preserving modifications: use Google Slides connector or app tools directly.
+## Render a Deck
 
-For net-new Google Slides without a provided native Slides template or reference deck, the PPTX-import path is the only currently supported high-quality workflow. Do not create a blank Google Slides deck and fill it with Google Slides write APIs, use Computer Use, use Browser Use, or build the deck directly in Google Drive unless the user explicitly asks for that alternate workflow. If they do, mention first that output quality is expected to be best when a local `.pptx` is imported through the Google Drive plugin.
+Export a deck once as PDF and render every slide locally instead of fetching one thumbnail per slide. Set `PDFTOPPM` to `pdftoppm` inside the native-binaries directory returned by the workspace dependency loader, then run this in one `functions.exec` call:
 
-For new decks from a provided native Google Slides template or reference deck, do not create a local `.pptx` first. Copy the provided deck directly, treat the copy as the destination deck, and create/edit slides there with `batchUpdate` using duplicated exemplar slides or layouts from the copied deck. Populate existing template objects first: replace text, images, charts, tables, and placeholder content in the copied slide's existing slots instead of adding new primary content boxes.
+```js
+const SKILL_DIR = "<absolute-skill-directory>";
+const WORKSPACE = "<absolute-task-workspace>";
+const PDFTOPPM = "<absolute-native-binaries-directory>/pdftoppm";
+const loaded = await tools.exec_command({
+  cmd: `/bin/cat -- '${SKILL_DIR}/host/export-and-render-slides.mjs'`,
+  workdir: SKILL_DIR,
+  login: false,
+  yield_time_ms: 30000,
+  max_output_tokens: 30000,
+});
+if (loaded.exit_code !== 0) throw new Error("Could not load the slide renderer");
+const { exportAndRenderSlides } = new Function(
+  `${loaded.output.replace(/^\s*export\s+/gm, "")}\nreturn { exportAndRenderSlides };`,
+)();
+const result = await exportAndRenderSlides({
+  presentationId: "<presentation-id>",
+  outputDir: `${WORKSPACE}/renders/<deck-name>`,
+  workspaceRoot: WORKSPACE,
+  skillRoot: SKILL_DIR,
+  designSystemPath: `${WORKSPACE}/design-system.json`,
+  pdftoppmPath: PDFTOPPM,
+  dpi: 120,
+  tools,
+});
+text(JSON.stringify(result));
+```
 
-The slide-planning, archetype-selection, hierarchy, semantic-emphasis, evidence-legibility, and deck-consistency rules apply across both creation paths and to slides added to existing decks. Only source-parity requirements such as exact text preservation, speaker-note parity, and media-ID parity depend on a source-based adaptation or migration request.
+Use the helper as shown instead of calling Drive `fetch` or `export_file` directly. It automatically handles current reference-backed and legacy inline responses, writes `presentation.pdf`, and returns ordered PNGs mapped to native slide IDs. It fails if the PDF page count differs from the design system. Use a fresh output directory, then inspect every PNG with `view_image`; create a local contact sheet when useful.
 
-The import reference owns the exact connector action, plugin install/reinstall handling, native-conversion verification, post-import verification, and cleanup expectations. Read it before any net-new Google Slides import attempt.
+## Build From the Template
 
-For imports and any explicit direct-create override, wait for the write action to complete, then perform connector readback or Drive metadata readback before returning a Google Slides URL or presentation id. Use only a URL or id observed from the completed connector result or readback. Do not synthesize or predict Google Slides URLs, and do not present a URL as ready if readback fails.
+For template or reference following, copy the template once and edit only the copy.
 
-## Non-Negotiable Output Invariant
+Before making mutations, use the design catalog and rendered template slides to choose and record for every planned output slide:
 
-Inserted or edited content must match the target deck's existing structure and connector-observable presentation closely enough that it reads as native deck content. Net-new slides must use a coherent archetype, hierarchy, and visual system rather than an arbitrary collection of objects.
-Treat wrong target deck, wrong slide, stale object IDs, missing chart updates, leftover placeholder or template sample text, empty or unresolved placeholder objects, primary content placed in newly created freeform boxes while an inherited or template slot remains unused, clipped text, broken slide order, or unverified visible layout changes as failed output that must be corrected before handoff.
+- its narrative role;
+- the native template exemplar slide ID or layout ID;
+- whether it will be built by duplicating the exemplar or creating from the layout.
 
-For Slides batch updates, API success is not completion. A fresh post-write LARGE thumbnail and examining the image by curling it is required for every touched slide. You MUST curl the image after requesting thumbnail. No skip.
-For net-new Google Slides without a provided native Slides template or reference deck, create a local `.pptx` with `[@presentations](plugin://presentations@openai-primary-runtime)` and import it to Google Drive with `upload_mode: "native_google_slides"`.
+Match exemplars by narrative role, content density, evidence type, orientation, hierarchy, and meaning-bearing slots—not merely by object count or visual similarity. If the user links a particular template slide, inspect it explicitly and use it when it fits the requested role.
 
-## Canonical Workflow Bias
+Do not use an exemplar containing device mockups, photography, screenshots, charts, or other meaning-bearing slide-local media unless every such element is explicitly mapped to destination content as keep, replace, or delete. If every element cannot be mapped, choose another exemplar.
 
-Prefer one simple proven workflow over a large tree of recovery branches.
-When a task matches a known successful pattern, follow that pattern directly instead of re-evaluating every possible insertion or fallback path.
-Do not let accumulated edge-case guardrails turn a straightforward Slides task into a long blocker-analysis exercise.
+Treat template placeholder media as meaning-bearing slide-local media. Explicitly map every image and video slot in a selected exemplar—especially speaker portraits—to keep, replace, or delete; never leave an unmapped placeholder in the output.
 
-For deck creation and editing tasks, prefer this general sequence when viable:
+Prefer these construction methods in order:
 
-1. gather the required source material
-2. attach to or create the destination presentation
-3. read the deck structure and target slides
-4. establish the slide checklist or slide plan
-5. write small, grounded batches with live object IDs
-6. verify through connector readback and post-batch thumbnails
-7. stop once the deck is clean, complete, and scannable
+1. Duplicate a rendered template exemplar when its design depends on slide-local shapes, image or chart frames, tables, groups, video, custom text styles, footer treatment, or other native objects.
+2. Create from an inspected template layout only when its inherited placeholders are sufficient.
+3. Populate, replace, or remove existing exemplar objects and inherited placeholders before creating new primary text, image, table, chart, or shape objects.
+4. Create a new composition only when no inspected exemplar or layout can support the content; keep it consistent with the nearest template family.
 
-If a simple verified workflow is viable, use it. Do not drift into speculative alternate paths.
+Treat slide-local structure as part of the template. When a duplicated exemplar already contains a table, title frame, card structure, divider, footer, image frame, or other reusable structural object, edit it in place. Do not delete and recreate it merely to simplify implementation. Remove an object only after explicitly mapping it to `delete` because the destination slide does not need it.
 
-## Release-Blocker Checklist
+Preserve the intrinsic aspect ratio of every image and video. Never stretch media by independently setting its width and height or by applying unequal horizontal and vertical scaling without deriving both from its intrinsic dimensions. Do not blindly reuse an exemplar media transform when the replacement has a different aspect ratio.
 
-Before final handoff, explicitly verify these with connector readback and thumbnails where relevant:
+Use crop-to-fill only for decorative photography or full-bleed imagery where edge cropping is safe. Fit screenshots, charts, diagrams, UI, and videos fully within the intended frame so all meaning-bearing content remains visible; center the result, and prefer empty margins to distortion or loss of important content. Treat stretched media or improperly cropped meaning-bearing content as a concrete visual defect.
 
-1. the target presentation id, title, and URL are the intended deck
-2. every edited slide in scope was read after the write
-3. every slide touched by a batch update has a fresh post-write thumbnail check
-4. every changed chart is refreshed or replaced in the intended footprint, with obsolete placeholder text removed unless the user asked to keep it
-5. every new or edited shape, image, table, and text box stays inside the slide bounds unless intentionally full-bleed
-6. no slide in a multi-slide task was skipped, duplicated, or left in a mixed old/new state
-7. duplicated slides that needed reordering were moved only after a post-duplicate readback, with `slideObjectIds` listed in current presentation order
-8. no visual property is claimed as verified unless connector data or a fresh thumbnail supports it
-9. final presentation output is an editable Google Slides deck, not one PNG per slide; verify editable components with `mcp__codex_apps__google_drive_get_presentation` or `mcp__codex_apps__google_drive_get_slide`
-10. for imports and direct creates, the final returned URL or presentation id came from a completed connector result or readback, not a predicted Google Slides URL
-11. for template/reference-deck copies, the final returned URL or presentation id came from the completed copy result or readback, not from the source deck or a predicted URL
-12. Even when a local pptx was created for an import workflow, do not cite the local pptx path as a deliverable in your final answer. Your final answer must only reference the verified gsuite link.
-13. for any slide inserted from a layout (`slideLayoutReference`, `predefinedLayout`, or inherited master/layout placeholders), every inherited placeholder object was populated, replaced, or intentionally deleted; do not rely on thumbnails alone because empty placeholders can be invisible
-14. for template/reference-deck copies, full `get_presentation` or per-slide `get_slide` readback was used for final structural validation; `get_presentation_outline` alone is insufficient
-15. for template/reference-deck copies, content-bearing placeholders and reusable template objects were used where they exist; newly created primary text/image boxes are justified by the chosen slide plan, not a shortcut around the template
-16. when adapting or migrating provided source material, source-to-destination fidelity was checked for substantive text, visuals, charts, tables, links, media type and source identifier when active/accessible, and non-empty speaker notes; no required source content disappeared or was silently summarized
-17. text hierarchy and layout semantics remain meaningful: mixed heading/body style runs were not flattened, blank bulleted paragraphs do not render stray bullets, and inherited emphasis does not imply unsupported totals, rankings, categories, status, or importance
-18. visual evidence is presentation-readable, not merely unclipped: crops preserve essential regions, important labels and footnotes remain legible, and landscape evidence was not forced into an unsuitable portrait frame
-19. no generic editor prompts, bracketed instructions, sample copy, lorem ipsum, old-event content, or other template scaffolding remains unless explicitly requested by the user
+Preserve each exemplar's font family, weighted font family, font size, bold and italic state, color, paragraph styling, geometry, and object type by default. Change one of these only to resolve a concrete content-fit defect.
 
-**Slides**
+Preserve the template's font sizes whenever possible. If text overflows, first consider a small, local font-size reduction; do not shrink an entire mixed-style text box to solve one overflowing passage. Never reduce narrative body or list text below 12 pt. If the template already defines smaller narrative text for the same role, preserve that template size but do not reduce it further. Template-native captions, footers, source notes, and micro-labels may remain smaller, but do not reuse those smaller styles for narrative content.
 
-* Content: ensure the content covers everything requested by the user and ensure the storytelling of the overall deck is coherent.
-* Search: use `web.run`'s `image_query` for efficient image search instead of `search_query`.
-* Visual assets: DO NOT use Python to draw any images; DO NOT use programmatic vector shapes for visuals; DO NOT use programmatic drawings of any sort. Use image search or imagegen instead! By default, DO NOT reuse the same image more than once (unless it's a background). Not only do you need to prepare visuals for the main concept, you also need to get decorative visuals. Before sourcing or generating visuals, be mindful of the desired aspect ratio, placement, and cropping options on the slide. For example, if you intend to place text to the left of the image containing a person, you should ask imagegen to put the person on the right side of the image.
-* Default styling: use one composition instead of a collection of UI panels. UI-like styling typically includes card grids, pills, badges, button-like text boxes, tab or navigation patterns, repeated modular panels, dense dashboard-style layouts, and other component-library aesthetics that imply interactivity. Use stylized text boxes less, favoring a flat structure on the canvas.
-* Visual storytelling: Prioritize visual storytelling by default, favoring real images, generated visuals, diagrams, plots, and charts to convey concepts whenever appropriate rather than relying solely on plain text, especially when the user does not provide assets. As a general rule of thumb, aim for approximately 2-4 visual assets per slide, including meaningful styling elements, adjusting as needed based on the topic, complexity, and overall theme of the task.
-* Connectors in diagrams: In the final implementation, create connectors (arrows/edges) before creating entity nodes, so edges appear behind nodes and never cross through node shapes or labels. If this ordering is awkward during early iteration, you may create nodes first in the initial draft, then switch to connectors-first in the revised code.
-* Overlap: You MUST fix ALL unintended overlap errors before you deliver the slides! It's of paramount importance!
-* Font size: When a template is provided, match its font sizes. Avoid overly small text. When no template or style guidance is given, a good rule of thumb is at least 42pt for deck titles, 32pt for slide titles, and 17pt for body text. If you see overflow/overlap, try cutting content before shrinking text further to improve text layout.
-* Text layout: for net-new authoring where wording is flexible, shorten copy when needed. When the user supplied required wording or source material whose fidelity matters, do not silently shorten or summarize it; choose a denser archetype, restructure within the slide, split only when the request permits it, or flag the tradeoff. Inspect visually for unexpected text wrapping. NEVER put 2 lines of text into a title/banner text box meant for a single line of text.
-* Diagrams implementation: use native PowerPoint shapes for simple diagrams; use Graphviz for complex relational/topological/network-like diagrams; use imagegen for highly aesthetic, illustrative, or scientific infographic diagrams (e.g. chemical structures, circuit diagrams, etc.).
-* Title slide: Keep the title slide minimal and simple. Avoid cramming in too much information.
-* When to use diagrams: Prefer data-driven charts or plots when applicable; use diagrams only when they improve the storytelling (not to fill empty space).
+If content still does not fit readably, choose a denser suitable exemplar or shorten flexible wording while preserving the original meaning, tone, facts, and required details. Treat reaching the 12 pt narrative floor, visible overcrowding, conspicuously undersized text, or leaving a major intended region unused as evidence that the archetype is wrong—not as a cue for further local typography repairs. Restore the template size and switch to a more appropriate exemplar or shorten the copy; do not apply a uniform minimum-size style to an entire text box or keep adjusting paragraphs to force an unsuitable exemplar. If adapting an image-led exemplar requires deleting its principal media slot and leaving that region empty, choose a text-first exemplar instead.
 
-If any check fails, the task is not complete.
+Treat multiple text and paragraph styles within one text box as structural. If a text box combines a title, kicker, label, body, or other differently styled runs, replace the corresponding text while preserving the existing run and paragraph styles. Do not apply one uniform style to the entire text box.
 
-## Required Read Order (No Skips)
+Before replacing text in a mixed-style text box, record its existing text and paragraph runs and update the corresponding ranges. Do not use `deleteText` over `ALL` followed by `insertText` and `updateTextStyle` over `ALL`; if replacement changes run lengths, reconstruct the original styled ranges explicitly.
 
-Before any content write or edit operation:
+Use native paragraph bullets for lists. Never type leading hyphens or visible bullet glyphs such as `•`, `◦`, `▪`, or `‣` into inserted text to imitate a bulleted list. When an exemplar uses a custom bullet character or style, preserve its existing list formatting and edit the paragraph text without replacing or normalizing the marker.
 
-The active/main agent must perform this reading itself. Do not assign these files to subagents for summarization. Subagents remain available for other independent tasks after the main agent has read the applicable guidance.
+Every bulleted paragraph must contain visible text. Never leave an empty or whitespace-only bulleted paragraph. When an exemplar contains more list items than needed, delete the unused paragraph or remove its bullet formatting; use paragraph spacing instead of a blank bullet to create vertical separation.
 
-"Relevant" means the baseline safety references below plus every matching task-specific row in the task map. It does not require unrelated reference files unless the task is ambiguous.
+Do not create from a blank layout when an inspected rich exemplar can support the narrative role and evidence type.
 
-1. Read `references/reference-connector-runtime-and-safety.md`.
-2. Read `references/reference-target-presentation-guard.md`.
-3. Read `references/reference-google-slides-mcp-discovery.md`.
-4. Read `references/reference-request-shapes-and-write-safety.md`.
-5. Read `references/reference-thumbnail-visual-verification.md`.
-6. Read every task-specific file from the matrix below.
-7. If the task spans multiple categories, read all matching files.
-8. If uncertain, read every file in `references/`.
+Use one consistent exemplar or layout family for truly recurring slide roles. This does not mean collapsing visually distinct section-title, speaker, agenda, or content archetypes into one generic construction. If content does not fit, shorten flexible wording or choose a better-fitting template archetype; do not flatten the template's typography or redesign a sparse composition into a dense canvas.
 
-For net-new local `.pptx` creation, read the `[@presentations](plugin://presentations@openai-primary-runtime)` authoring skill before creating the deck.
+Preserve native links, notes, tables, charts, and media types when supported, and remove stale exemplar content. Keep unused template-library slides until the delivered slides and final order are verified, then delete them last.
 
-Do not execute content edits until the required references are read in the current turn.
+Do not rasterize editable source narrative text merely to preserve its appearance. Recreate it as native Google Slides text using the template's typography and hierarchy. Text may remain rasterized only when it is intrinsically part of a required screenshot or other source media asset.
 
-## Connector Load Checklist
+## Work Efficiently
 
-1. Confirm the exact target Google Slides URL or presentation id.
-2. Resolve and record the presentation id, title, slide count, and target slide object IDs.
-3. Treat target-presentation identity as a hard precondition for connector writes.
-4. Before each edit pass, identify the slide, object IDs, and current geometry through connector reads.
-5. Before every connector write batch, re-read `references/reference-target-presentation-guard.md` and re-confirm the target presentation and slide object IDs.
-6. Read via connector first, using the current Google Slides actions:
-   - get presentation, text, or outline
-   - get slide
-   - get slide thumbnail before and after batch updates, and when visual evidence matters
-7. If the source is a template or existing deck that should be preserved, create a copy before editing.
-8. Do not claim the connector is unavailable, read-only, or blocked unless the current session has established that through capability evidence.
+Read, parse, and render each unchanged template or content source only once. Reuse the local design system, catalog, PDF, and rendered images.
 
-## Task To Reference Map
+Complete all planned slide construction and content population before output visual QA. Confirm the delivered slide IDs through one live structural readback, then remove unused template-library slides and establish the final order before the first output PDF render.
 
-| Task area | Required reference file |
-| --- | --- |
-| Runtime attachment, target identity, safety, and recovery | `references/reference-connector-runtime-and-safety.md` |
-| Confirming the target presentation before every write batch | `references/reference-target-presentation-guard.md` |
-| Google Slides MCP discovery, connector wrapper vs official Slides API mapping, method catalog, and batchUpdate request catalog | `references/reference-google-slides-mcp-discovery.md` |
-| Batch update request shape, live object IDs, geometry, and write safety | `references/reference-request-shapes-and-write-safety.md` |
-| Deck summaries, candidate slides, multi-slide edits, translation, or deck-wide changes | `references/reference-read-before-write-and-deck-scope.md` |
-| Any layout, styling, image, chart, or placement change | `references/reference-thumbnail-visual-verification.md` |
-| New deck from a provided native Google Slides template or reference deck | `references/reference-template-reference-deck-copy-workflow.md` |
-| New deck creation, copy-from-template workflows, or final handoff after any write | `references/reference-new-deck-and-final-pass.md` |
-| Local `.ppt`, `.pptx`, or `.odp` import | `references/reference-import-presentation.md` |
-| Visual cleanup, overflow, spacing, alignment, or deck polish | `references/reference-visual-iteration.md` |
-| Migrating source content onto a template deck with fidelity requirements | `references/reference-template-migration.md` |
-| Any multi-slide creation, source adaptation, template following, or layout-selection workflow | `references/reference-slide-planning-and-layout-selection.md` |
-| Choosing slide archetypes, compositions, or repeated layout families for any created or adapted slide | `references/reference-slide-archetype-mapping.md` |
-| Chart refresh, chart replacement, or Sheets-sourced chart work | `references/reference-chart-workflows.md` |
-| Copy-and-fill raw batch update examples | `references/reference-batch-update-recipes.md` |
+Read and parse the output once after its final slide set and order are established. Reuse that output design system after text, style, image, or media repairs. Parse it again only when a structural mutation changes slide IDs, slide count, or slide order.
+
+Before the first output PDF render, run the local issue checker on the raw presentation JSON already saved by that structural readback:
+
+```bash
+"$NODE" "$SKILL_DIR/scripts/check_output_issues.mjs" \
+  --input "$WORKSPACE/raw-output.json" \
+  --output "$WORKSPACE/output-issues.json"
+```
+
+The checker makes no API or render calls. It reports only compact, object-level findings for empty native bullet paragraphs, duplicate or typed bullet markers, explicitly undersized narrative text, unresolved generic placeholder text, empty text placeholders, and structurally blank slides. Repair every `error` before rendering. Treat `warning` findings as review prompts and preserve intentional template-native exceptions. Combine applicable repairs with the existing consolidated repair pass; do not add a read, parse, render, or diagnostic-rerun cycle solely to clear warnings.
+
+Inspect every delivered slide from one output render and collect all concrete defects before repairing. Prefer one consolidated repair pass, but perform a second consolidated pass when defects remain. A structural rebuild invalidates prior visual QA: render the complete delivered deck again and use the second repair pass if needed. Do not perform more than two repair passes. Do not create additional read, parse, or render cycles without a concrete defect or structural change that invalidates an existing artifact.
+
+Complete duplication and slide creation before reordering. Reorder in a separate mutation after structural readback, using each delivered slide ID exactly once.

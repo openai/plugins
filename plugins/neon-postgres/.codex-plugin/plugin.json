@@ -1,15 +1,36 @@
 {
-  "name": "neon-postgres",
-  "version": "1.0.3",
-  "description": "Manage Neon Serverless Postgres projects and databases with the neon-postgres agent skill and the Neon MCP Server",
+  "apps": "./.app.json",
   "author": {
-    "name": "Neon",
     "email": "andre@neon.tech",
+    "name": "Databricks Inc.",
     "url": "https://neon.com"
   },
+  "description": "Interact with your Neon Postgres databases in natural language:\n\n- Manage projects, branches, and databases with conversational commands\n- Run SQL queries and make schema changes without writing code\n- Use branch-based migrations for safer schema modifications",
   "homepage": "https://neon.com/docs/ai/neon-mcp-server",
-  "repository": "https://github.com/openai/plugins",
-  "license": "Apache-2.0",
+  "interface": {
+    "brandColor": "#37C38F",
+    "brandColorDark": "#3CC894",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/composer-icon.svg",
+    "defaultPrompt": [
+      "Use Neon to create a new Serverless Postgres database for my project and help me connect to it."
+    ],
+    "developerName": "Databricks Inc.",
+    "displayName": "Neon Postgres",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo-dark.png",
+    "longDescription": "Use the Neon Postgres plugin to create and manage Neon Serverless Postgres projects and databases. Includes the Neon MCP Server for project and database management, and the neon-postgres skill with guides on connection methods, branching, autoscaling, Neon Auth, and more.",
+    "privacyPolicyURL": "https://neon.com/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Manage Neon Postgres databases",
+    "supportURL": "https://neon.com/docs/introduction/support",
+    "termsOfServiceURL": "https://neon.com/terms-of-service",
+    "websiteURL": "https://neon.com"
+  },
   "keywords": [
     "neon",
     "postgres",
@@ -18,28 +39,9 @@
     "mcp",
     "sql"
   ],
+  "license": "Apache-2.0",
+  "name": "neon-postgres",
+  "repository": "https://github.com/openai/plugins",
   "skills": "./skills/",
-  "apps": "./.app.json",
-  "interface": {
-    "displayName": "Neon Postgres",
-    "shortDescription": "Manage Neon Serverless Postgres projects and databases",
-    "longDescription": "Use the Neon Postgres plugin to create and manage Neon Serverless Postgres projects and databases. Includes the Neon MCP Server for project and database management, and the neon-postgres skill with guides on connection methods, branching, autoscaling, Neon Auth, and more.",
-    "developerName": "Neon",
-    "category": "Developer Tools",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
-    "websiteURL": "https://neon.com",
-    "privacyPolicyURL": "https://neon.com/privacy-policy",
-    "termsOfServiceURL": "https://neon.com/terms-of-service",
-    "defaultPrompt": [
-      "Use Neon to create a new Serverless Postgres database for my project and help me connect to it."
-    ],
-    "brandColor": "#37C38F",
-    "composerIcon": "./assets/neon-small.svg",
-    "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png",
-    "screenshots": []
-  }
+  "version": "1.0.0"
 }

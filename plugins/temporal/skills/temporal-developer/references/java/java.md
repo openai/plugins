@@ -9,20 +9,29 @@ The Temporal Java SDK (`io.temporal:temporal-sdk`) uses an interface + implement
 **Add Dependencies:**
 
 Gradle:
+
 ```groovy
 implementation 'io.temporal:temporal-sdk:1.+'
+implementation 'io.temporal:temporal-envconfig:1.+'
 ```
 
 Maven:
+
 ```xml
 <dependency>
     <groupId>io.temporal</groupId>
     <artifactId>temporal-sdk</artifactId>
     <version>[1.0,)</version>
 </dependency>
+<dependency>
+    <groupId>io.temporal</groupId>
+    <artifactId>temporal-envconfig</artifactId>
+    <version>[1.0,)</version>
+</dependency>
 ```
 
 **GreetActivities.java** - Activity interface:
+
 ```java
 package greetingapp;
 
@@ -38,6 +47,7 @@ public interface GreetActivities {
 ```
 
 **GreetActivitiesImpl.java** - Activity implementation:
+
 ```java
 package greetingapp;
 
@@ -51,6 +61,7 @@ public class GreetActivitiesImpl implements GreetActivities {
 ```
 
 **GreetingWorkflow.java** - Workflow interface:
+
 ```java
 package greetingapp;
 
@@ -66,6 +77,7 @@ public interface GreetingWorkflow {
 ```
 
 **GreetingWorkflowImpl.java** - Workflow implementation:
+
 ```java
 package greetingapp;
 
@@ -90,23 +102,25 @@ public class GreetingWorkflowImpl implements GreetingWorkflow {
 }
 ```
 
-**GreetingWorker.java** - Worker setup:
+**GreetingWorker.java** - Worker setup (registers activity and workflow, runs indefinitely and processes tasks):
+
 ```java
 package greetingapp;
 
 import io.temporal.client.WorkflowClient;
+import io.temporal.envconfig.ClientConfigProfile;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.worker.Worker;
 import io.temporal.worker.WorkerFactory;
 
 public class GreetingWorker {
 
-    public static void main(String[] args) {
-        // Create gRPC stubs for local dev server (localhost:7233)
-        WorkflowServiceStubs service = WorkflowServiceStubs.newLocalServiceStubs();
-
-        // Create client
-        WorkflowClient client = WorkflowClient.newInstance(service);
+    public static void main(String[] args) throws Exception {
+        ClientConfigProfile profile = ClientConfigProfile.load();
+        WorkflowServiceStubs service =
+            WorkflowServiceStubs.newServiceStubs(profile.toWorkflowServiceStubsOptions());
+        WorkflowClient client =
+            WorkflowClient.newInstance(service, profile.toWorkflowClientOptions());
 
         // Create factory and worker
         WorkerFactory factory = WorkerFactory.newInstance(client);
@@ -127,20 +141,25 @@ public class GreetingWorker {
 **Start the worker:** Run `GreetingWorker.main()` (e.g., `./gradlew run` or `mvn compile exec:java -Dexec.mainClass="greetingapp.GreetingWorker"`).
 
 **Starter.java** - Start a workflow execution:
+
 ```java
 package greetingapp;
 
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
+import io.temporal.envconfig.ClientConfigProfile;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 
 import java.util.UUID;
 
 public class Starter {
 
-    public static void main(String[] args) {
-        WorkflowServiceStubs service = WorkflowServiceStubs.newLocalServiceStubs();
-        WorkflowClient client = WorkflowClient.newInstance(service);
+    public static void main(String[] args) throws Exception {
+        ClientConfigProfile profile = ClientConfigProfile.load();
+        WorkflowServiceStubs service =
+            WorkflowServiceStubs.newServiceStubs(profile.toWorkflowServiceStubsOptions());
+        WorkflowClient client =
+            WorkflowClient.newInstance(service, profile.toWorkflowClientOptions());
 
         GreetingWorkflow workflow = client.newWorkflowStub(
             GreetingWorkflow.class,
@@ -161,6 +180,7 @@ public class Starter {
 ## Key Concepts
 
 ### Workflow Definition
+
 - Annotate interface with `@WorkflowInterface`
 - Put any state initialization logic in the workflow constructor to guarantee that it happens before signals/updates arrive. If your state initialization logic requires the workflow parameters, then add the `@WorkflowInit` decorator and parameters to your constructor.
 - Annotate entry point method with `@WorkflowMethod` (exactly one per interface)
@@ -170,17 +190,22 @@ public class Starter {
 - Implementation class implements the interface
 
 ### Activity Definition
+
 - Annotate interface with `@ActivityInterface`
 - Optionally annotate methods with `@ActivityMethod` (for custom names)
 - Implementation class can throw any exception
 - Call from workflow via `Workflow.newActivityStub()`
 
 ### Worker Setup
+
+- Load connection settings with `ClientConfigProfile.load()` and use the profile to configure both service stubs and the client
 - `WorkflowServiceStubs` -- gRPC connection to Temporal Server
 - `WorkflowClient` -- client used by worker to communicate with server
 - `WorkerFactory` -- creates Worker instances
 - `Worker` -- polls a single Task Queue, register workflows and activities on it
 - Call `factory.start()` to begin polling
+
+For Spring Boot apps, `temporal-spring-boot-starter` handles all of the above automatically via auto-configuration. See `references/java/integrations/spring-boot.md`.
 
 ## File Organization Best Practice
 
@@ -201,6 +226,7 @@ greetingapp/
 The Java SDK has **no sandbox**. The developer is fully responsible for writing deterministic workflow code. All non-deterministic operations must happen in Activities.
 
 **Do not use in workflow code:**
+
 - `Thread` / `new Thread()` -- use `Workflow.newTimer()` or `Async.function()`
 - `synchronized` / `Lock` -- workflow code is single-threaded
 - `UUID.randomUUID()` -- use `Workflow.randomUUID()`
@@ -210,7 +236,8 @@ The Java SDK has **no sandbox**. The developer is fully responsible for writing 
 - `Thread.sleep()` -- use `Workflow.sleep()`
 - Mutable static fields -- workflow instances must not share state
 
-**Use Workflow.* APIs instead:**
+**Use `Workflow.*` APIs instead:**
+
 - `Workflow.sleep()` for timers
 - `Workflow.currentTimeMillis()` for current time
 - `Workflow.randomUUID()` for UUIDs
@@ -238,6 +265,7 @@ See `references/java/testing.md` for info on writing tests.
 ## Additional Resources
 
 ### Reference Files
+
 - **`references/java/patterns.md`** - Signals, queries, child workflows, saga pattern, etc.
 - **`references/java/determinism.md`** - Determinism rules and safe alternatives for Java
 - **`references/java/gotchas.md`** - Java-specific mistakes and anti-patterns
@@ -247,3 +275,8 @@ See `references/java/testing.md` for info on writing tests.
 - **`references/java/advanced-features.md`** - Schedules, worker tuning, and more
 - **`references/java/data-handling.md`** - Data converters, Jackson, payload encryption
 - **`references/java/versioning.md`** - Patching API, workflow type versioning, Worker Versioning
+- **`references/java/standalone-activities.md`** - Standalone Activities: run an Activity directly from a Client without a Workflow (Public Preview). Concept overview at `references/core/standalone-activities.md`.
+
+### Java Integrations
+
+For Java-specific third-party integrations (Spring Boot, Spring AI, etc.), see `references/integrations.md` and filter for Java. Reference files live under `references/java/integrations/`.

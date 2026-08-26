@@ -1,41 +1,25 @@
 {
-  "name": "calendly",
-  "version": "1.0.2",
-  "description": "Scheduling links, availability, and bookings",
-  "author": {
-    "name": "Calendly",
-    "url": "https://calendly.com"
-  },
-  "homepage": "https://calendly.com",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [
-    "calendly",
-    "calendar",
-    "scheduling",
-    "meetings",
-    "availability",
-    "events"
-  ],
   "apps": "./.app.json",
+  "author": {
+    "name": "Calendly"
+  },
+  "description": "Bring Calendly into ChatGPT to take scheduling actions through simple prompts. Create and update event types, generate scheduling links, adjust availability, book or cancel meetings, and more — right in ChatGPT.",
   "interface": {
-    "displayName": "Calendly",
-    "shortDescription": "Scheduling links, availability, and bookings",
-    "longDescription": "Bring Calendly into ChatGPT to take scheduling actions through simple prompts. Create and update event types, generate scheduling links, adjust availability, book or cancel meetings, and more — right in ChatGPT.",
-    "developerName": "Calendly",
-    "category": "Productivity",
     "capabilities": [],
-    "websiteURL": "https://calendly.com",
-    "privacyPolicyURL": "https://calendly.com/legal/privacy-notice",
-    "termsOfServiceURL": "https://calendly.com/legal/customer-terms-conditions",
-    "brandColor": "#006BFF",
+    "category": "Productivity",
     "defaultPrompt": [
-      "Find my upcoming Calendly meetings and summarize who I am meeting with.",
-      "Check Calendly availability for this week and suggest open meeting slots.",
-      "Review recent Calendly events and summarize attendee details and follow-ups."
+      "Create a new 30-minute event type called Intro Meeting to meet via Zoom.",
+      "Cancel my 10am Coffee Chat appointment on Friday morning."
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
-  }
+    "developerName": "Calendly",
+    "displayName": "Calendly",
+    "longDescription": "Bring Calendly into ChatGPT to take scheduling actions through simple prompts. Create and update event types, generate scheduling links, adjust availability, book or cancel meetings, and more — right in ChatGPT.",
+    "privacyPolicyURL": "https://calendly.com/legal/privacy-notice",
+    "shortDescription": "Manage bookings & availability",
+    "supportURL": "https://calendly.com/help/support",
+    "termsOfServiceURL": "https://calendly.com/legal/customer-terms-conditions",
+    "websiteURL": "https://calendly.com"
+  },
+  "name": "calendly",
+  "version": "2.0.0"
 }

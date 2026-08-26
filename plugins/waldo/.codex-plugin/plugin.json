@@ -1,7 +1,7 @@
 {
   "name": "waldo",
-  "version": "1.0.3",
-  "description": "Waldo is an AI-powered strategy platform for agencies and brands.",
+  "version": "4.0.1",
+  "description": "Waldo helps users research brands, advertising, social conversations, trends, and captured workspace intelligence by combining specialized skills with external data and authenticated workspace context.",
   "author": {
     "name": "Curiosities, Inc.",
     "url": "https://www.waldo.fyi"
@@ -12,20 +12,24 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Waldo",
-    "shortDescription": "Waldo is an AI-powered strategy platform for agencies and brands.",
-    "longDescription": "Waldo is an AI-powered strategy platform for agencies and brands. Run strategy agent, explore collected signals \u2014 paid ads, brand mentions, audience conversations, trending topics, and more \u2014 and retrieve data across your team's brand spaces.",
+    "shortDescription": "Your brand intelligence engine",
+    "longDescription": "Waldo helps users research brands, advertising, social conversations, trends, and captured workspace intelligence by combining specialized skills with external data and authenticated workspace context.",
     "developerName": "Curiosities, Inc.",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [],
     "defaultPrompt": [
-      "Check the relevant mobile test coverage in Waldo"
+      "What are current trends and sentiment on social in the clean beauty space?",
+      "What audience behaviors are changing in the energy drink category?",
+      "What are the creative themes on Nike’s owned channels and in their paid ads?"
     ],
     "screenshots": [],
     "websiteURL": "https://www.waldo.fyi",
     "privacyPolicyURL": "https://www.waldo.fyi/privacy",
     "termsOfServiceURL": "https://www.waldo.fyi/tos",
     "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "supportURL": "https://www.waldo.fyi/support"
   },
-  "homepage": "https://www.waldo.fyi"
+  "homepage": "https://www.waldo.fyi",
+  "skills": "./skills/"
 }

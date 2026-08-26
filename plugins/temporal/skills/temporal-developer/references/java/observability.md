@@ -31,6 +31,7 @@ public class OrderWorkflowImpl implements OrderWorkflow {
 ```
 
 The workflow logger automatically:
+
 - Suppresses duplicate logs during replay
 - Includes workflow context (workflow ID, run ID, etc.)
 - Uses SLF4J under the hood

@@ -1,7 +1,7 @@
 {
   "name": "mem",
-  "version": "1.0.2",
-  "description": "Give Codex the full context of your second brain by connecting your Mem knowledge base.",
+  "version": "4.0.1",
+  "description": "Give ChatGPT the full context of your second brain by connecting your Mem knowledge base. Search your AI notebook for context, capture and recall ideas, save chats into new notes, edit and update living docs, and organize your AI workspace — simply by asking ChatGPT. Use for: synthesizing and pulling actions items from meeting notes, deep research, personal knowledge management (PKM), knowledge repository building, task management, prioritization, and content development. Example prompts: \"Search my notes for pricing strategy and validate our thinking with research.\" \"Create a note from this chat and add it to our GTM collection.\" \"List all open tasks from this week's notes and add to my to-do list.\"",
   "author": {
     "name": "Mem Labs, Inc.",
     "url": "https://mem.ai"
@@ -12,20 +12,19 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Mem",
-    "shortDescription": "Give Codex the full context of your second brain by connecting your Mem knowledge base.",
-    "longDescription": "Give Codex the full context of your second brain by connecting your Mem knowledge base. Search your AI notebook for context, capture and recall ideas, save chats into new notes, edit and update living docs, and organize your AI workspace \u2014 simply by asking Codex. Use for: synthesizing and pulling actions items from meeting notes, deep research, personal knowledge management (PKM), knowledge repository building, task management, prioritization, and content development. Example prompts: \"Search my notes for pricing strategy and validate our thinking with research.\" \"Create a note from this chat and add it to our GTM collection.\" \"List all open tasks from this week's notes and add to my to-do list.\"",
+    "shortDescription": "Save & Search Notes & Meetings",
+    "longDescription": "Give ChatGPT the full context of your second brain by connecting your Mem knowledge base. Search your AI notebook for context, capture and recall ideas, save chats into new notes, edit and update living docs, and organize your AI workspace — simply by asking ChatGPT. Use for: synthesizing and pulling actions items from meeting notes, deep research, personal knowledge management (PKM), knowledge repository building, task management, prioritization, and content development. Example prompts: \"Search my notes for pricing strategy and validate our thinking with research.\" \"Create a note from this chat and add it to our GTM collection.\" \"List all open tasks from this week's notes and add to my to-do list.\"",
     "developerName": "Mem Labs, Inc.",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": [
-      "Find the relevant notes in Mem"
-    ],
+    "defaultPrompt": null,
     "screenshots": [],
     "websiteURL": "https://mem.ai",
     "privacyPolicyURL": "https://get.mem.ai/pages/privacy",
     "termsOfServiceURL": "https://get.mem.ai/pages/terms-of-service",
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "logo": "./assets/app-icon.png",
+    "supportURL": "https://help.mem.ai"
   },
   "homepage": "https://mem.ai"
 }

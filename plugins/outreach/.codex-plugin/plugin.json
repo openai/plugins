@@ -1,34 +1,36 @@
 {
-  "name": "outreach",
-  "version": "1.0.2",
-  "description": "Revenue workflow automation with Outreach",
+  "apps": "./.app.json",
   "author": {
-    "name": "Outreach",
+    "name": "Outreach Corporation",
     "url": "https://www.outreach.io"
   },
+  "description": "Bring Outreach knowledge and actions into ChatGPT so your teams can move faster, combine insights across systems, and complete advanced revenue tasks without switching tools. Outreach is an end-to-end AI Revenue Platform for all go-to-market teams. By embedding agentic AI across every revenue workflow, Outreach increases sales productivity, boosts pipeline, and gives leaders the visibility and predictability they need to grow revenue at scale.",
   "homepage": "https://www.outreach.io",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
   "interface": {
-    "displayName": "Outreach",
-    "shortDescription": "Revenue workflow automation with Outreach",
-    "longDescription": "Bring Outreach knowledge and actions into ChatGPT so your teams can move faster, combine insights across systems, and complete advanced revenue tasks without switching tools. Outreach is an end-to-end AI Revenue Platform for all go-to-market teams. By embedding agentic AI across every revenue workflow, Outreach increases sales productivity, boosts pipeline, and gives leaders the visibility and predictability they need to grow revenue at scale.",
-    "developerName": "Outreach",
-    "category": "Business & Operations",
+    "brandColor": "#5951FF",
+    "brandColorDark": "#5951FF",
     "capabilities": [],
-    "websiteURL": "https://www.outreach.io",
-    "privacyPolicyURL": "https://www.outreach.io/privacy-policy",
-    "termsOfServiceURL": "https://www.outreach.io/terms-of-service",
+    "category": "Business & Operations",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "Find stalled Outreach prospects and summarize the next best follow-up.",
       "Search Outreach sequences for this account and summarize recent engagement.",
       "Draft a concise Outreach follow-up using recent prospect activity."
     ],
-    "brandColor": "#5951FF",
-    "composerIcon": "./assets/logo.png",
+    "developerName": "Outreach Corporation",
+    "displayName": "Outreach",
     "logo": "./assets/logo.png",
-    "screenshots": []
-  }
+    "longDescription": "Bring Outreach knowledge and actions into ChatGPT so your teams can move faster, combine insights across systems, and complete advanced revenue tasks without switching tools. Outreach is an end-to-end AI Revenue Platform for all go-to-market teams. By embedding agentic AI across every revenue workflow, Outreach increases sales productivity, boosts pipeline, and gives leaders the visibility and predictability they need to grow revenue at scale.",
+    "privacyPolicyURL": "https://www.outreach.io/privacy-statement",
+    "screenshots": [],
+    "shortDescription": "AI Agents for Revenue Teams",
+    "supportURL": "https://support.outreach.io/",
+    "termsOfServiceURL": "https://www.outreach.ai/terms",
+    "websiteURL": "https://www.outreach.io"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "name": "outreach",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
 }

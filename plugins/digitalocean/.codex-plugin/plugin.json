@@ -36,6 +36,7 @@
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
-    "screenshots": []
+    "screenshots": [],
+    "brandColorDark": "#40D5E5"
   }
 }

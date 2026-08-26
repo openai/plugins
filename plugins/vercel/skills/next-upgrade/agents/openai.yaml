@@ -1,0 +1,3 @@
+interface:
+  display_name: "Next.js Upgrade"
+  short_description: "Next.js version upgrade and codemod expert guidance"

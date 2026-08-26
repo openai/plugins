@@ -1,3 +1,0 @@
-# No additional Python dependencies required.
-# build_html.py uses only the Python standard library.
-# Charts are rendered in-browser via Chart.js (loaded from CDN).

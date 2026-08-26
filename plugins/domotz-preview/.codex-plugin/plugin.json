@@ -1,7 +1,7 @@
 {
   "name": "domotz-preview",
-  "version": "1.0.3",
-  "description": "Monitor and manage your network infrastructure through natural language.",
+  "version": "1.0.0",
+  "description": "Monitor and manage your network infrastructure through natural language. Query devices, check alerts, inspect metrics, manage configurations, and control power across all your sites. Requires a Domotz account enabled to the MCP Preview program.",
   "author": {
     "name": "Domotz",
     "url": "https://www.domotz.com"
@@ -12,7 +12,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Domotz (Preview)",
-    "shortDescription": "Monitor and manage your network infrastructure through natural language.",
+    "shortDescription": "Monitor and manage networks",
     "longDescription": "Monitor and manage your network infrastructure through natural language. Query devices, check alerts, inspect metrics, manage configurations, and control power across all your sites. Requires a Domotz account enabled to the MCP Preview program.",
     "developerName": "Domotz",
     "category": "Productivity",

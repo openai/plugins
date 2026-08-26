@@ -1,34 +1,29 @@
 {
-  "name": "quickbooks",
-  "version": "1.0.3",
-  "description": "Analyze finances and manage QuickBooks records",
-  "author": {
-    "name": "QuickBooks",
-    "url": "https://quickbooks.intuit.com"
-  },
-  "homepage": "https://quickbooks.intuit.com",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
+  "author": {
+    "name": "Intuit QuickBooks"
+  },
+  "description": "Turn your business's raw financial data into clear financial insights. Analyze profitability, cash flow, accounts receivable and payable, and compare your performance against similar businesses in your industry and region. Generate accounting-compliant profit & loss, cash flow statements, balance sheets, and AR/AP aging reports in minutes. Manage invoices, estimates, payments, customers, products, and payroll directly from chat. Upload or paste transactions into the QuickBooks ChatGPT App to analyze personalized results, and view peer loan benchmarks as your business evolves.",
   "interface": {
-    "displayName": "QuickBooks",
-    "shortDescription": "Analyze finances and manage QuickBooks records",
-    "longDescription": "Turn your business's raw financial data into clear financial insights. Analyze profitability, cash flow, accounts receivable and payable, and compare your performance against similar businesses in your industry and region. Generate accounting-compliant profit & loss, cash flow statements, balance sheets, and AR/AP aging reports in minutes. Manage invoices, estimates, payments, customers, products, and payroll directly from chat. Upload or paste transactions into the QuickBooks ChatGPT App to analyze personalized results, and view peer loan benchmarks as your business evolves.",
-    "developerName": "QuickBooks",
-    "category": "Finance",
-    "capabilities": [],
-    "websiteURL": "https://quickbooks.intuit.com",
-    "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
-    "termsOfServiceURL": "https://quickbooks.intuit.com/legal/",
-    "defaultPrompt": [
-      "Find overdue QuickBooks invoices and summarize who needs follow-up.",
-      "Pull QuickBooks expenses by category this month and flag anomalies.",
-      "Review QuickBooks customers and recent payments for this account."
-    ],
     "brandColor": "#2CA01C",
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png",
-    "screenshots": []
-  }
+    "brandColorDark": "#6FE35F",
+    "capabilities": [],
+    "category": "Finance",
+    "defaultPrompt": [
+      "Show top five industries in California by monthly profit",
+      "How does my profit compare to top 5 industries in my area",
+      "Show me my profit and loss statement from QuickBooks"
+    ],
+    "developerName": "Intuit QuickBooks",
+    "displayName": "Intuit QuickBooks",
+    "longDescription": "Turn your business's raw financial data into clear financial insights. Analyze profitability, cash flow, accounts receivable and payable, and compare your performance against similar businesses in your industry and region. Generate accounting-compliant profit & loss, cash flow statements, balance sheets, and AR/AP aging reports in minutes. Manage invoices, estimates, payments, customers, products, and payroll directly from chat. Upload or paste transactions into the QuickBooks ChatGPT App to analyze personalized results, and view peer loan benchmarks as your business evolves.",
+    "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
+    "shortDescription": "Business finances made simple",
+    "supportURL": "https://quickbooks.intuit.com/learn-support/en-us",
+    "termsOfServiceURL": "https://www.intuit.com/legal/terms/en-us/quickbooks/online/",
+    "websiteURL": "https://quickbooks.intuit.com"
+  },
+  "name": "quickbooks",
+  "skills": "./skills",
+  "version": "6.0.0"
 }

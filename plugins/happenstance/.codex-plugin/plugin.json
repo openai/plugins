@@ -1,7 +1,7 @@
 {
   "name": "happenstance",
-  "version": "1.0.3",
-  "description": "Happenstance searches your professional network using natural language to find the right people.",
+  "version": "1.0.0",
+  "description": "Happenstance searches your professional network using natural language to find the right people. Results surface mutual connections and rank by relationship strength, helping you find the warmest intro path. Deep research anyone to get comprehensive profiles with career history and expertise. Ideal for sales, recruiting, venture capital, and business development.",
   "author": {
     "name": "Happenstance, Inc.",
     "url": "https://happenstance.ai"
@@ -12,7 +12,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Happenstance",
-    "shortDescription": "Happenstance searches your professional network using natural language to find the right people.",
+    "shortDescription": "Search your network",
     "longDescription": "Happenstance searches your professional network using natural language to find the right people. Results surface mutual connections and rank by relationship strength, helping you find the warmest intro path. Deep research anyone to get comprehensive profiles with career history and expertise. Ideal for sales, recruiting, venture capital, and business development.",
     "developerName": "Happenstance, Inc.",
     "category": "Productivity",
@@ -26,7 +26,8 @@
     "termsOfServiceURL": "https://happenstance.ai/terms",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://happenstance.ai/contact"
   },
   "homepage": "https://happenstance.ai"
 }

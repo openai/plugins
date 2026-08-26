@@ -1,4 +1,0 @@
-interface:
-  display_name: "Spreadsheets"
-  short_description: "Edit SharePoint workbooks while preserving formulas"
-  default_prompt: "Use $sharepoint-spreadsheets to update this SharePoint workbook while preserving formulas, sheet structure, and formatting."

@@ -27,11 +27,11 @@ with this shape:
 
 - `.codex-plugin/plugin.json`
   - required plugin manifest
-  - defines plugin metadata and points Codex at the plugin contents
+  - defines plugin metadata and points the runtime at the plugin contents
 
 - `.app.json`
   - plugin-local app manifest
-  - points Codex at the connected Notion app used by the bundled skills
+  - points the runtime at the connected Notion app used by the bundled skills
 
 - `agents/`
   - plugin-level agent metadata

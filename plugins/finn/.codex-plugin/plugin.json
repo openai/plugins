@@ -1,7 +1,7 @@
 {
   "name": "finn",
-  "version": "1.0.4",
-  "description": "A FINN car subscription is a flexible way to stay mobile anytime - without long-term commitments like buyin...",
+  "version": "1.0.0",
+  "description": "A FINN car subscription is a flexible way to stay mobile anytime - without long-term commitments like buying or leasing a car. With a fixed monthly rate that already includes insurance, maintenance, registration, and even CO₂ offsetting, the car subscription offers full transparency and convenience.\n\nBest of all, you can book online in just a few minutes, and your new car will be delivered straight to your doorstep or you can pick it up at one of our stations.",
   "author": {
     "name": "FINN GmbH",
     "url": "https://www.finn.com/de-DE"
@@ -12,8 +12,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "FINN",
-    "shortDescription": "A FINN car subscription is a flexible way to stay mobile anytime - without long-term commitments like buyin...",
-    "longDescription": "A FINN car subscription is a flexible way to stay mobile anytime - without long-term commitments like buying or leasing a car. With a fixed monthly rate that already includes insurance, maintenance, registration, and even CO\u2082 offsetting, the car subscription offers full transparency and convenience.\n\nBest of all, you can book online in just a few minutes, and your new car will be delivered straight to your doorstep or you can pick it up at one of our stations.",
+    "shortDescription": "Just drive FINN",
+    "longDescription": "A FINN car subscription is a flexible way to stay mobile anytime - without long-term commitments like buying or leasing a car. With a fixed monthly rate that already includes insurance, maintenance, registration, and even CO₂ offsetting, the car subscription offers full transparency and convenience.\n\nBest of all, you can book online in just a few minutes, and your new car will be delivered straight to your doorstep or you can pick it up at one of our stations.",
     "developerName": "FINN GmbH",
     "category": "Travel",
     "capabilities": [],
@@ -26,7 +26,8 @@
     "termsOfServiceURL": "https://www.finn.com/de-DE/terms-of-use",
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://support.finn.com/hc/de-de"
   },
   "homepage": "https://www.finn.com/de-DE"
 }

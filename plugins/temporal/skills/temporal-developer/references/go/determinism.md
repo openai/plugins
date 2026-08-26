@@ -8,9 +8,9 @@ The Go SDK has NO runtime sandbox (unlike Python/TypeScript). Workflows must be 
 
 Temporal provides durable execution through **History Replay**. When a Worker restores workflow state, it re-executes workflow code from the beginning. This requires the code to be **deterministic**. See `references/core/determinism.md` for a deep explanation.
 
-## Forbidden Operations
+## Forbidden Operations in Workflows
 
-Do not use any of the following in workflow code:
+Do not use any of the following in workflow code (they are appropriate to use in activities):
 
 - **Native goroutines** (`go func()`) -- use `workflow.Go()` instead
 - **Native channels** (`chan`, send, receive, `range` over channel) -- use `workflow.Channel` instead

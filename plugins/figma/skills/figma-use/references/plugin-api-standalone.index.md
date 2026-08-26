@@ -1,6 +1,6 @@
 # Plugin API Index
 
-> Full typings: `plugin-api-standalone.d.ts` (11,292 lines)  
+> Full typings: `plugin-api-standalone.d.ts` (11,327 lines)
 > Grep by symbol name to jump to definition. All `L#` line numbers refer to that file.
 
 ---
@@ -128,13 +128,13 @@ setBoundVariableForEffect(effect, field, variable)  → returns NEW effect — r
 setBoundVariableForLayoutGrid(grid, field, variable)
 ```
 
-**Variable (L10204):** `name`, `resolvedType`, `codeSyntax`, `scopes`, `hiddenFromPublishing`, `valuesByMode`, `variableCollectionId`
+**Variable (L10153):** `name`, `resolvedType`, `codeSyntax`, `scopes`, `hiddenFromPublishing`, `valuesByMode`, `variableCollectionId`
 
 - `setVariableCodeSyntax(platform, value)` — platform: `'WEB' | 'ANDROID' | 'iOS'`
 - `setValueForMode(collectionId, modeId, value)`
 - `remove()`
 
-**VariableCollection (L10418):** `name`, `modes`, `variableIds`, `defaultModeId`, `hiddenFromPublishing`
+**VariableCollection (L10367):** `name`, `modes`, `variableIds`, `defaultModeId`, `hiddenFromPublishing`
 
 - `addMode(name)` → `modeId`; `removeMode(modeId)`; `renameMode(modeId, name)`
 
@@ -146,37 +146,37 @@ setBoundVariableForLayoutGrid(grid, field, variable)
 
 | Node                   | L#     | Key characteristics                                |
 | ---------------------- | ------ | -------------------------------------------------- |
-| `DocumentNode`         | L8960  | Root; `children: PageNode[]`                       |
-| `PageNode`             | L9119  | `children`, local styles, `backgrounds`            |
-| `FrameNode`            | L9311  | `DefaultFrameMixin` — auto-layout, clips, children |
-| `GroupNode`            | L9321  | Children only, no auto-layout                      |
-| `ComponentNode`        | L9678  | Like Frame + publishable                           |
-| `ComponentSetNode`     | L9653  | Variant set container                              |
-| `InstanceNode`         | L9719  | Like Frame; `mainComponent`, `detach()`            |
-| `RectangleNode`        | L9378  | `DefaultShapeMixin` + corners                      |
-| `EllipseNode`          | L9410  | + `arcData`                                        |
-| `LineNode`             | L9396  |                                                    |
-| `PolygonNode`          | L9430  |                                                    |
-| `StarNode`             | L9450  |                                                    |
-| `VectorNode`           | L9476  | Vector paths                                       |
-| `TextNode`             | L9493  | Rich text, fonts, segments                         |
-| `TextPathNode`         | L9564  | Text along path                                    |
-| `BooleanOperationNode` | L9792  | `booleanOperation` property                        |
-| `SliceNode`            | L9368  | Export only                                        |
-| `SectionNode`          | L10754 | Grouping + fills                                   |
-| `TableNode`            | L9862  | `TableCellNode` children                           |
+| `DocumentNode`         | L8909  | Root; `children: PageNode[]`                       |
+| `PageNode`             | L9068  | `children`, local styles, `backgrounds`            |
+| `FrameNode`            | L9260  | `DefaultFrameMixin` — auto-layout, clips, children |
+| `GroupNode`            | L9270  | Children only, no auto-layout                      |
+| `ComponentNode`        | L9627  | Like Frame + publishable                           |
+| `ComponentSetNode`     | L9602  | Variant set container                              |
+| `InstanceNode`         | L9668  | Like Frame; `mainComponent`, `detach()`            |
+| `RectangleNode`        | L9327  | `DefaultShapeMixin` + corners                      |
+| `EllipseNode`          | L9359  | + `arcData`                                        |
+| `LineNode`             | L9345  |                                                    |
+| `PolygonNode`          | L9379  |                                                    |
+| `StarNode`             | L9399  |                                                    |
+| `VectorNode`           | L9425  | Vector paths                                       |
+| `TextNode`             | L9442  | Rich text, fonts, segments                         |
+| `TextPathNode`         | L9513  | Text along path                                    |
+| `BooleanOperationNode` | L9741  | `booleanOperation` property                        |
+| `SliceNode`            | L9317  | Export only                                        |
+| `SectionNode`          | L10703 | Grouping + fills                                   |
+| `TableNode`            | L9811  | `TableCellNode` children                           |
 
-**FigJam only:** `StickyNode` L9812, `ConnectorNode` L10121, `ShapeWithTextNode` L9999, `StampNode` L9838, `CodeBlockNode` L10080, `EmbedNode` L10661, `LinkUnfurlNode` L10701, `MediaNode` L10721
+**FigJam only:** `StickyNode` L9761, `ConnectorNode` L10070, `ShapeWithTextNode` L9948, `StampNode` L9787, `CodeBlockNode` L10029, `EmbedNode` L10610, `LinkUnfurlNode` L10650, `MediaNode` L10670
 
-**Slides only:** `SlideNode` L10784, `SlideRowNode` L10809, `SlideGridNode` L10822
+**Slides only:** `SlideNode` L10733, `SlideRowNode` L10758, `SlideGridNode` L10771
 
 **Union types:**
 
 ```
-type SceneNode  (L10917) = FrameNode | GroupNode | SliceNode | RectangleNode | LineNode
+type SceneNode  (L10866) = FrameNode | GroupNode | SliceNode | RectangleNode | LineNode
   | EllipseNode | PolygonNode | StarNode | VectorNode | TextNode | ComponentSetNode
   | ComponentNode | InstanceNode | BooleanOperationNode | SectionNode | ...
-type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
+type BaseNode   (L10862) = DocumentNode | PageNode | SceneNode
 ```
 
 ---
@@ -186,30 +186,30 @@ type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
 | Mixin                        | L#    | Provides                                                                                        |
 | ---------------------------- | ----- | ----------------------------------------------------------------------------------------------- |
 | `BaseNodeMixin`              | L5284 | `id`, `name`, `type`, `parent`, `remove()`, plugin data                                         |
-| `SceneNodeMixin`             | L5561 | `visible`, `locked`, `opacity`, variable bindings                                               |
-| `ChildrenMixin`              | L5773 | `children`, `appendChild()`, `insertChild()`, `findAll()`, `findOne()`, `findAllWithCriteria()` |
-| `LayoutMixin`                | L6135 | `x`, `y`, `width`, `height`, `rotation`, `resize()`, `rescale()`                                |
-| `AutoLayoutMixin`            | L6436 | `layoutMode`, axis alignment, padding, `itemSpacing`, `layoutSizingHorizontal/Vertical`         |
-| `AutoLayoutChildrenMixin`    | L7064 | `layoutAlign`, `layoutGrow`, sizing — **set AFTER `appendChild()`**                             |
-| `GridLayoutMixin`            | L6939 | CSS Grid tracks, gap, template                                                                  |
-| `GridChildrenMixin`          | L7127 | grid child positioning                                                                          |
-| `GeometryMixin`              | L7485 | `fills`, `strokes`, `strokeWeight`, `strokeAlign`                                               |
-| `MinimalFillsMixin`          | L7328 | `fills` only                                                                                    |
-| `MinimalStrokesMixin`        | L7246 | `strokes`, `strokeWeight`                                                                       |
-| `BlendMixin`                 | L6339 | `opacity`, `blendMode`, `isMask`, `effects`                                                     |
-| `CornerMixin`                | L7537 | `cornerRadius`, `cornerSmoothing`                                                               |
-| `RectangleCornerMixin`       | L7560 | Per-corner radii                                                                                |
-| `ExportMixin`                | L7577 | `exportSettings`, `exportAsync()`                                                               |
-| `ReactionMixin`              | L7704 | `reactions` (prototyping)                                                                       |
-| `PublishableMixin`           | L7875 | `description`, `key`, `getPublishStatusAsync()`                                                 |
-| `VariantMixin`               | L8182 | `variantProperties`                                                                             |
-| `ComponentPropertiesMixin`   | L8229 | `componentProperties`, `addComponentProperty()`                                                 |
-| `PluginDataMixin`            | L5443 | `getSharedPluginData()`, `setSharedPluginData()` supported; `getPluginData()`, `setPluginData()` **NOT supported** |
-| `FramePrototypingMixin`      | L7651 | `overflowDirection`, `numberOfFixedChildren`                                                    |
-| `BaseFrameMixin`             | L7939 | ChildrenMixin + LayoutMixin + AutoLayoutMixin + GeometryMixin + …                               |
-| `DefaultFrameMixin`          | L7997 | BaseFrameMixin + FramePrototypingMixin + ReactionMixin                                          |
-| `DefaultShapeMixin`          | L7928 | BlendMixin + GeometryMixin + LayoutMixin + ExportMixin + ReactionMixin                          |
-| `ExplicitVariableModesMixin` | L9084 | `setExplicitVariableModeForCollection()`                                                        |
+| `SceneNodeMixin`             | L5535 | `visible`, `locked`, `opacity`, variable bindings                                               |
+| `ChildrenMixin`              | L5747 | `children`, `appendChild()`, `insertChild()`, `findAll()`, `findOne()`, `findAllWithCriteria()` |
+| `LayoutMixin`                | L6084 | `x`, `y`, `width`, `height`, `rotation`, `resize()`, `rescale()`                                |
+| `AutoLayoutMixin`            | L6385 | `layoutMode`, axis alignment, padding, `itemSpacing`, `layoutSizingHorizontal/Vertical`         |
+| `AutoLayoutChildrenMixin`    | L7013 | `layoutAlign`, `layoutGrow`, sizing — **set AFTER `appendChild()`**                             |
+| `GridLayoutMixin`            | L6888 | CSS Grid tracks, gap, template                                                                  |
+| `GridChildrenMixin`          | L7076 | grid child positioning                                                                          |
+| `GeometryMixin`              | L7434 | `fills`, `strokes`, `strokeWeight`, `strokeAlign`                                               |
+| `MinimalFillsMixin`          | L7277 | `fills` only                                                                                    |
+| `MinimalStrokesMixin`        | L7195 | `strokes`, `strokeWeight`                                                                       |
+| `BlendMixin`                 | L6288 | `opacity`, `blendMode`, `isMask`, `effects`                                                     |
+| `CornerMixin`                | L7486 | `cornerRadius`, `cornerSmoothing`                                                               |
+| `RectangleCornerMixin`       | L7509 | Per-corner radii                                                                                |
+| `ExportMixin`                | L7526 | `exportSettings`, `exportAsync()`                                                               |
+| `ReactionMixin`              | L7653 | `reactions` (prototyping)                                                                       |
+| `PublishableMixin`           | L7824 | `description`, `key`, `getPublishStatusAsync()`                                                 |
+| `VariantMixin`               | L8131 | `variantProperties`                                                                             |
+| `ComponentPropertiesMixin`   | L8178 | `componentProperties`, `addComponentProperty()`                                                 |
+| `PluginDataMixin`            | L5443 | `getSharedPluginData()`, `setSharedPluginData()`, `getSharedPluginDataKeys()`                     |
+| `FramePrototypingMixin`      | L7600 | `overflowDirection`, `numberOfFixedChildren`                                                    |
+| `BaseFrameMixin`             | L7888 | ChildrenMixin + LayoutMixin + AutoLayoutMixin + GeometryMixin + …                               |
+| `DefaultFrameMixin`          | L7946 | BaseFrameMixin + FramePrototypingMixin + ReactionMixin                                          |
+| `DefaultShapeMixin`          | L7877 | BlendMixin + GeometryMixin + LayoutMixin + ExportMixin + ReactionMixin                          |
+| `ExplicitVariableModesMixin` | L9033 | `setExplicitVariableModeForCollection()`                                                        |
 
 ---
 
@@ -249,7 +249,7 @@ type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
 | Type                | L#    | Notes                                                                                  |
 | ------------------- | ----- | -------------------------------------------------------------------------------------- |
 | `FontName`          | L3697 | `{ family: string, style: string }`                                                    |
-| `TextNode`          | L9493 | `characters`, `textAlignHorizontal`, `fontSize`, `fontName`, `getStyledTextSegments()` |
+| `TextNode`          | L9442 | `characters`, `textAlignHorizontal`, `fontSize`, `fontName`, `getStyledTextSegments()` |
 | `StyledTextSegment` | L4882 | Per-range text properties                                                              |
 | `LetterSpacing`     | L4826 | `{ value, unit: 'PIXELS'\|'PERCENT' }`                                                 |
 | `LineHeight`        | L4830 | `{ value, unit } \| { unit: 'AUTO' }`                                                  |
@@ -263,18 +263,18 @@ type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
 
 | Type                          | L#     | Notes                                                         |
 | ----------------------------- | ------ | ------------------------------------------------------------- |
-| `Variable`                    | L10204 | Core variable object                                          |
-| `VariableCollection`          | L10418 | Collection of variables + modes                               |
-| `VariableAlias`               | L10172 | Reference to another variable                                 |
-| `VariableValue`               | L10176 | `boolean \| string \| number \| RGB \| RGBA \| VariableAlias` |
-| `VariableResolvedDataType`    | L10171 | `'BOOLEAN' \| 'COLOR' \| 'FLOAT' \| 'STRING'`                 |
+| `Variable`                    | L10153 | Core variable object                                          |
+| `VariableCollection`          | L10367 | Collection of variables + modes                               |
+| `VariableAlias`               | L10121 | Reference to another variable                                 |
+| `VariableValue`               | L10125 | `boolean \| string \| number \| RGB \| RGBA \| VariableAlias` |
+| `VariableResolvedDataType`    | L10120 | `'BOOLEAN' \| 'COLOR' \| 'FLOAT' \| 'STRING'`                 |
 | `VariableDataType`            | L5023  | Includes `'VARIABLE_ALIAS' \| 'EXPRESSION'`                   |
-| `VariableScope`               | L10177 | Where variable can be applied                                 |
-| `CodeSyntaxPlatform`          | L10203 | `'WEB' \| 'ANDROID' \| 'iOS'`                                 |
-| `VariableBindableNodeField`   | L5712  | Node fields that accept variable binding                      |
-| `VariableBindableTextField`   | L5739  | Text-specific bindable fields                                 |
-| `VariableBindablePaintField`  | L5748  | `'color'`                                                     |
-| `VariableBindableEffectField` | L5751  | `'color'\|'radius'\|'spread'\|'offsetX'\|'offsetY'`           |
+| `VariableScope`               | L10126 | Where variable can be applied                                 |
+| `CodeSyntaxPlatform`          | L10152 | `'WEB' \| 'ANDROID' \| 'iOS'`                                 |
+| `VariableBindableNodeField`   | L5686  | Node fields that accept variable binding                      |
+| `VariableBindableTextField`   | L5713  | Text-specific bindable fields                                 |
+| `VariableBindablePaintField`  | L5722  | `'color'`                                                     |
+| `VariableBindableEffectField` | L5725  | `'color'\|'radius'\|'spread'\|'offsetX'\|'offsetY'`           |
 
 ---
 
@@ -282,13 +282,13 @@ type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
 
 | Interface        | L#     | Notes                                                  |
 | ---------------- | ------ | ------------------------------------------------------ |
-| `BaseStyleMixin` | L10977 | `name`, `id`, `key`, `type`, `description`, `remove()` |
-| `PaintStyle`     | L11002 | `type:'PAINT'`, `paints: Paint[]`                      |
-| `TextStyle`      | L11018 | `type:'TEXT'`, font properties                         |
-| `EffectStyle`    | L11087 | `type:'EFFECT'`, `effects: Effect[]`                   |
-| `GridStyle`      | L11103 | `type:'GRID'`, `layoutGrids`                           |
-| `type BaseStyle` | L11119 | Union of all four                                      |
-| `type StyleType` | L10955 | `'PAINT' \| 'TEXT' \| 'EFFECT' \| 'GRID'`              |
+| `BaseStyleMixin` | L10926 | `name`, `id`, `key`, `type`, `description`, `remove()` |
+| `PaintStyle`     | L10951 | `type:'PAINT'`, `paints: Paint[]`                      |
+| `TextStyle`      | L10967 | `type:'TEXT'`, font properties                         |
+| `EffectStyle`    | L11036 | `type:'EFFECT'`, `effects: Effect[]`                   |
+| `GridStyle`      | L11052 | `type:'GRID'`, `layoutGrids`                           |
+| `type BaseStyle` | L11068 | Union of all four                                      |
+| `type StyleType` | L10904 | `'PAINT' \| 'TEXT' \| 'EFFECT' \| 'GRID'`              |
 
 ---
 
@@ -363,7 +363,7 @@ type BaseNode   (L10913) = DocumentNode | PageNode | SceneNode
 
 **TeamLibraryAPI (L2372):** `getAvailableLibraryVariableCollectionsAsync()`, `importVariableByKeyAsync(key)`
 
-**Image (L11120):** `hash`, `getBytesAsync()`, `getSizeAsync()`
+**Image (L11069):** `hash`, `getBytesAsync()`, `getSizeAsync()`
 
 ---
 

@@ -4,7 +4,9 @@
 
 The Java SDK has **no sandbox** (only Python and TypeScript have sandboxing). Java relies on developer conventions and runtime replay detection to enforce determinism. A static analysis tool (`temporal-workflowcheck`) is available in beta.
 
-## Forbidden Operations
+## Forbidden Operations in Workflows
+
+The following are forbidden inside workflow code but are appropriate to use in activities.
 
 ```java
 // BAD: Non-deterministic operations in workflow code

@@ -1,69 +1,25 @@
 {
-  "name": "airtable",
-  "version": "0.1.3",
-  "description": "Airtable is the database and operations layer for your agents — whether running product, marketing, sales, ops, HR, or a custom business app. It combines structured data with multiplayer visual surfaces (grid, kanban, calendar, gallery, timeline) humans and agents share — plus sync integrations to Jira, Salesforce, Zendesk, Google Drive, Databricks, and the rest of your stack, all backed by enterprise governance. This plugin makes Codex fluent in Airtable: creating bases and schema, working with records, and sharing UI for collaboration. Uses the Airtable app connector.",
-  "author": {
-    "name": "Airtable",
-    "url": "https://www.airtable.com"
-  },
-  "homepage": "https://www.airtable.com",
-  "repository": "https://github.com/airtable/skills",
-  "license": "MIT",
-  "keywords": [
-    "airtable",
-    "database",
-    "relational-database",
-    "application-database",
-    "data-store",
-    "persistence",
-    "crud",
-    "product",
-    "product-ops",
-    "crm",
-    "sales",
-    "marketing",
-    "operations",
-    "hr",
-    "hiring",
-    "project-management",
-    "roadmap",
-    "customer-success",
-    "nocode",
-    "low-code",
-    "spreadsheet",
-    "collaboration",
-    "real-time",
-    "governance",
-    "workflow",
-    "automation",
-    "internal-tools",
-    "mcp",
-    "content"
-  ],
-  "skills": "./skills/",
   "apps": "./.app.json",
+  "author": {
+    "name": "Airtable"
+  },
+  "description": "Bring operational data and context into the flow of your ChatGPT conversations. You can ask questions, create and update records, and analyze your data\u2014all through conversation. Use the data in Airtable as input to the work you\u2019re doing in ChatGPT, like building a landing page using content you\u2019ve organized in Airtable. Make quick updates to Airtable without leaving the chat. Airtable for ChatGPT is ideal anytime you need quick access to structured internal data to inform your conversation.\n\nAirtable's App connects ChatGPT directly to your Airtable bases, so you can ask questions, create and update records, and analyze your data\u2014all through conversation",
   "interface": {
-    "displayName": "Airtable",
-    "shortDescription": "Database and operations layer for your agents.",
-    "longDescription": "Airtable is the database and operations layer for your agents — whether running product, marketing, sales, ops, HR, or a custom business app. It combines structured data with multiplayer visual surfaces (grid, kanban, calendar, gallery, timeline) humans and agents share — plus sync integrations to Jira, Salesforce, Zendesk, Google Drive, Databricks, and the rest of your stack, all backed by enterprise governance. This plugin makes Codex fluent in your Airtable bases: creating bases and schema, working with records, and sharing UI for collaboration. Uses the Airtable app connector.",
-    "developerName": "Airtable",
+    "capabilities": [],
     "category": "Productivity",
-    "capabilities": [
-      "Read",
-      "Write"
-    ],
-    "websiteURL": "https://www.airtable.com",
-    "privacyPolicyURL": "https://www.airtable.com/privacy",
-    "termsOfServiceURL": "https://www.airtable.com/company/tos",
     "defaultPrompt": [
-      "Set up a system to manage my team's operations.",
-      "Track my product roadmap, feedback, and releases.",
-      "I need a simple database for my project."
+      "show me a kanban of the product roadmap. What\u2019s at risk? What\u2019s up next?",
+      "which roadmap initiatives should I discuss with the enterprise sales team today?"
     ],
-    "brandColor": "#18BFFF",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png",
-    "screenshots": []
-  }
+    "developerName": "Airtable",
+    "displayName": "Airtable",
+    "longDescription": "Bring operational data and context into the flow of your ChatGPT conversations. You can ask questions, create and update records, and analyze your data\u2014all through conversation. Use the data in Airtable as input to the work you\u2019re doing in ChatGPT, like building a landing page using content you\u2019ve organized in Airtable. Make quick updates to Airtable without leaving the chat. Airtable for ChatGPT is ideal anytime you need quick access to structured internal data to inform your conversation.\n\nAirtable's App connects ChatGPT directly to your Airtable bases, so you can ask questions, create and update records, and analyze your data\u2014all through conversation",
+    "privacyPolicyURL": "https://www.airtable.com/company/privacy",
+    "shortDescription": "Add structured data to ChatGPT",
+    "supportURL": "https://support.airtable.com/docs/contacting-airtable-support",
+    "termsOfServiceURL": "https://www.airtable.com/company/tos",
+    "websiteURL": "https://airtable.com"
+  },
+  "name": "airtable",
+  "version": "6.0.1"
 }

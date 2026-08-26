@@ -1,7 +1,7 @@
 {
   "name": "skywatch",
-  "version": "1.0.3",
-  "description": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in...",
+  "version": "1.0.0",
+  "description": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in one place. SkyWatch lets you find archive imagery by location, date, resolution, and cloud cover, compare pricing across providers, and browse available satellites and product offerings. Results include direct links to view and order imagery on SkyWatch Explore.",
   "author": {
     "name": "SkyWatch Space Applications Inc.",
     "url": "https://skywatch.com"
@@ -13,10 +13,10 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "SkyWatch",
-    "shortDescription": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in...",
+    "shortDescription": "Search satellite imagery data",
     "longDescription": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in one place. SkyWatch lets you find archive imagery by location, date, resolution, and cloud cover, compare pricing across providers, and browse available satellites and product offerings. Results include direct links to view and order imagery on SkyWatch Explore.",
     "developerName": "SkyWatch Space Applications Inc.",
-    "category": "Productivity",
+    "category": "Data & Analytics",
     "capabilities": [],
     "websiteURL": "https://skywatch.com",
     "privacyPolicyURL": "https://skywatch.com/privacy/",
@@ -27,6 +27,7 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://skywatch.com/contact/"
   }
 }

@@ -1,14 +1,46 @@
 {
-  "name": "moody-s",
-  "version": "1.0.2",
-  "description": "Credit ratings, entity intelligence, and research via Moody's GenAI-Ready Data.",
+  "apps": "./.app.json",
   "author": {
     "name": "Moody's",
     "url": "https://www.moodys.com"
   },
+  "description": "Moody\u2019s provides GenAI-ready data including comprehensive entity data, ownership structures, financials, ratings, and research, to power advanced orchestration and multi-step analysis for credit assessment, compliance, sales intelligence, and risk monitoring. By combining Moody\u2019s deep domain expertise and advanced AI, we deliver relevant, consistent insights for transparent, confident decision-making across evolving enterprise workflows.",
   "homepage": "https://www.moodys.com/web/en/us/genai/model-context-protocol.html",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
+  "interface": {
+    "brandColor": "#003366",
+    "brandColorDark": "#99CCFF",
+    "capabilities": [
+      "Entity resolution and firmographics",
+      "Credit ratings and rating history",
+      "Credit opinions, outlooks, and rating drivers",
+      "Upgrade and downgrade trigger analysis",
+      "Rating methodology and scorecard factors",
+      "ESG credit considerations",
+      "Ownership, beneficial owners, ultimate owners, and subsidiaries",
+      "Financial statements, key indicators, and ratios",
+      "Company filings search and summarization",
+      "Research document search",
+      "Earnings-call transcript search",
+      "News monitoring",
+      "Peer identification",
+      "Sector outlook and country-risk context",
+      "Managers, directors, and key officers"
+    ],
+    "category": "Finance",
+    "composerIcon": "./assets/composer-icon.png",
+    "defaultPrompt": [
+      "List the most recent documents that cover AI policy in the US from Moody's"
+    ],
+    "developerName": "Moody's",
+    "displayName": "Moody\u2019s",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Moody\u2019s provides GenAI-ready data including comprehensive entity data, ownership structures, financials, ratings, and research, to power advanced orchestration and multi-step analysis for credit assessment, compliance, sales intelligence, and risk monitoring. By combining Moody\u2019s deep domain expertise and advanced AI, we deliver relevant, consistent insights for transparent, confident decision-making across evolving enterprise workflows.",
+    "privacyPolicyURL": "https://www.moodys.com/web/en/us/legal/privacy-policy.html",
+    "screenshots": [],
+    "shortDescription": "Detailed company and risk data",
+    "termsOfServiceURL": "https://www.moodys.com/web/en/us/legal/terms-of-use.html",
+    "websiteURL": "https://www.moodys.com/"
+  },
   "keywords": [
     "moodys",
     "credit",
@@ -31,42 +63,9 @@
     "earnings-calls",
     "news"
   ],
-  "apps": "./.app.json",
+  "license": "MIT",
+  "name": "moody-s",
+  "repository": "https://github.com/openai/plugins",
   "skills": "./skills/",
-  "interface": {
-    "displayName": "Moody's",
-    "shortDescription": "Credit ratings, research, entity intelligence, ownership, financials, and filings.",
-    "longDescription": "Connect to Moody's GenAI-Ready Data through the enterprise MCP integration. Resolve covered entities, retrieve ratings and outlooks, analyze credit opinions, scorecards, upgrade/downgrade drivers, ESG considerations, ownership structures, subsidiaries, company profiles, financial statements, filings, earnings-call transcripts, news, peer sets, sector outlooks, and country-risk context, all within your workflow.",
-    "developerName": "Moody's",
-    "category": "Finance",
-    "capabilities": [
-      "Entity resolution and firmographics",
-      "Credit ratings and rating history",
-      "Credit opinions, outlooks, and rating drivers",
-      "Upgrade and downgrade trigger analysis",
-      "Rating methodology and scorecard factors",
-      "ESG credit considerations",
-      "Ownership, beneficial owners, ultimate owners, and subsidiaries",
-      "Financial statements, key indicators, and ratios",
-      "Company filings search and summarization",
-      "Research document search",
-      "Earnings-call transcript search",
-      "News monitoring",
-      "Peer identification",
-      "Sector outlook and country-risk context",
-      "Managers, directors, and key officers"
-    ],
-    "websiteURL": "https://www.moodys.com",
-    "privacyPolicyURL": "https://www.moodys.com/web/en/us/legal/privacy-policy.html",
-    "termsOfServiceURL": "https://www.moodys.com/web/en/us/legal/terms-of-use.html",
-    "brandColor": "#003366",
-    "defaultPrompt": [
-      "Summarize a company's Moody's profile and ownership.",
-      "Summarize a company's Moody's ratings and credit opinion.",
-      "Summarize a company's latest financials and filings in Moody's."
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
-  }
+  "version": "3.0.0"
 }

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Shared Calendars"
-  short_description: "Safely write to delegated Outlook calendars"
-  default_prompt: "Use $outlook-calendar-shared-calendars to create, update, RSVP, cancel, delete, or attach files to events on delegated or shared Outlook calendars."

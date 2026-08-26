@@ -1,7 +1,7 @@
 {
   "name": "brex",
-  "version": "1.0.3",
-  "description": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
+  "version": "5.0.0",
+  "description": "Brex helps finance teams and employees review company spend through ChatGPT. Users can look up expenses, cards, limits, users, bills, vendors, and accounting records; analyze spend; attach receipts from HTTPS URLs; update memos and attendees; assign card expenses to limits; export expense data; and submit product feedback.",
   "author": {
     "name": "Brex Inc.",
     "url": "https://brex.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Brex",
-    "shortDescription": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
-    "longDescription": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.\n\nFor finance teams: Analyze spend, detect anomalies, and run custom queries and reports instantly to accelerate decisions and do more with less.\n\nFor employees: See how much you can spend, ask policy questions, check reimbursement status, manage travel, and more right in Codex.\n\nAccess is role-aware by default: employees see only what applies to them, while admins retain full visibility and control.",
+    "shortDescription": "Automate expense workflows",
+    "longDescription": "Brex helps finance teams and employees review company spend through ChatGPT. Users can look up expenses, cards, limits, users, bills, vendors, and accounting records; analyze spend; attach receipts from HTTPS URLs; update memos and attendees; assign card expenses to limits; export expense data; and submit product feedback.",
     "developerName": "Brex Inc.",
     "category": "Finance",
     "capabilities": [],
@@ -22,11 +22,12 @@
     "privacyPolicyURL": "https://www.brex.com/legal/privacy",
     "termsOfServiceURL": "https://www.brex.com/legal/platform-agreement",
     "defaultPrompt": [
-      "How much did I spend on Delta last year"
+      "How much did I spend on Delta last year?"
     ],
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://www.brex.com/support"
   }
 }

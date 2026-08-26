@@ -1,7 +1,7 @@
 {
   "name": "cogedim",
-  "version": "1.0.3",
-  "description": "Cogedim is one of France's leading real estate developers.",
+  "version": "2.0.0",
+  "description": "Cogedim is one of France's leading real estate developers. A specialist in off-plan sales (VEFA) for over 60 years, Cogedim guides you every step of the way, from defining your needs to handing over the keys.",
   "author": {
     "name": "ALTAREA PROMOTION MANAGEMENT",
     "url": "https://www.cogedim.com"
@@ -12,7 +12,7 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Cogedim",
-    "shortDescription": "Cogedim is one of France's leading real estate developers.",
+    "shortDescription": "Find your new home",
     "longDescription": "Cogedim is one of France's leading real estate developers. A specialist in off-plan sales (VEFA) for over 60 years, Cogedim guides you every step of the way, from defining your needs to handing over the keys.",
     "developerName": "ALTAREA PROMOTION MANAGEMENT",
     "category": "Other",

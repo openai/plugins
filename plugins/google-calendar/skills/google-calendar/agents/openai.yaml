@@ -1,7 +1,0 @@
-interface:
-  display_name: "Google Calendar"
-  short_description: "Find availability, reminders, and safe event changes"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/logo.png"
-  brand_color: "#4285F4"
-  default_prompt: "Use $google-calendar to compare availability, place temporary holds, add reminders, find the right room, or draft the exact event details, including recurring series changes when needed."

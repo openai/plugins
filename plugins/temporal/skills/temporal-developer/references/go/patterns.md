@@ -284,6 +284,7 @@ func ApprovalWorkflow(ctx workflow.Context) (string, error) {
 ```
 
 Key points:
+
 - `AddReceive(channel, callback)` -- fires when a channel has a message (must consume with `c.Receive`)
 - `AddFuture(future, callback)` -- fires when a future resolves (once per Selector)
 - `AddDefault(callback)` -- fires immediately if nothing else is ready
@@ -457,10 +458,12 @@ func MyWorkflow(ctx workflow.Context) (string, error) {
 ## Activity Heartbeat Details
 
 ### WHY:
+
 - **Support activity cancellation** -- Cancellations are delivered via heartbeat; activities that don't heartbeat won't know they've been cancelled
 - **Resume progress after worker failure** -- Heartbeat details persist across retries
 
 ### WHEN:
+
 - **Cancellable activities** -- Any activity that should respond to cancellation
 - **Long-running activities** -- Track progress for resumability
 - **Checkpointing** -- Save progress periodically

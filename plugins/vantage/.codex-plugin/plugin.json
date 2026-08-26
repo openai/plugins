@@ -1,7 +1,7 @@
 {
   "name": "vantage",
-  "version": "1.0.2",
-  "description": "Vantage is a cloud observability and optimization platform that aggregates cloud infrastructure costs acros...",
+  "version": "2.0.1",
+  "description": "Vantage is the system of record for allocating and optimizing cloud, SaaS, and AI costs. Vantage has multiple tools for optimizing cloud spend and provides organizations with advanced FinOps workflows and cost governance.",
   "author": {
     "name": "Vantage",
     "url": "https://www.vantage.sh"
@@ -12,14 +12,12 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Vantage",
-    "shortDescription": "Vantage is a cloud observability and optimization platform that aggregates cloud infrastructure costs acros...",
-    "longDescription": "Vantage is a cloud observability and optimization platform that aggregates cloud infrastructure costs across providers to deliver a centralized view into total cloud spend. Vantage has multiple tools for optimizing cloud spend and provides organizations with advanced FinOps workflows and cost governance.",
+    "shortDescription": "Analyze your cloud costs",
+    "longDescription": "Vantage is the system of record for allocating and optimizing cloud, SaaS, and AI costs. Vantage has multiple tools for optimizing cloud spend and provides organizations with advanced FinOps workflows and cost governance.",
     "developerName": "Vantage",
     "category": "Developer Tools",
     "capabilities": [],
-    "defaultPrompt": [
-      "Summarize the current cloud cost picture in Vantage"
-    ],
+    "defaultPrompt": null,
     "screenshots": [],
     "websiteURL": "https://www.vantage.sh",
     "privacyPolicyURL": "https://www.vantage.sh/legal/privacy-policy",

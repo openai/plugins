@@ -1,0 +1,223 @@
+[
+  {
+    "id": "nvidia-skill-finder-pos-vehicle-routing",
+    "question": "I need to solve a vehicle routing problem with time windows and capacity constraints. Is there an NVIDIA skill that can help?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies Decision Optimization as a strong NVIDIA taxonomy match, checks the live NVIDIA skills catalog, and recommends a current cuOpt routing skill rather than implementing a routing solver from memory.",
+    "expected_behavior": [
+      "Treats vehicle routing as a strong NVIDIA Decision Optimization signal",
+      "Checks the live NVIDIA catalog (e.g. `npx skills add nvidia/skills --list`) before naming a specific skill",
+      "Recommends a cuOpt routing-related skill if present in the catalog",
+      "Asks before installing the skill",
+      "Does not implement a routing solver before offering the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-gpu-pandas",
+    "question": "Can you help me accelerate my pandas ETL on GPUs?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies GPU DataFrames / Data Science as a strong NVIDIA taxonomy match, checks the live catalog, and recommends the current cuDF or RAPIDS-related skill if available.",
+    "expected_behavior": [
+      "Treats GPU pandas acceleration as a strong NVIDIA Data Science signal",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends a cuDF or accelerated-computing-cudf skill if present",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-openusd-optimization",
+    "question": "This OpenUSD scene loads slowly and uses too much VRAM. Is there a skill for optimizing it?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies OpenUSD performance tuning as a strong Physical AI / Omniverse signal, checks the live catalog, and recommends the current USD performance tuning skill if available \u2014 distinct from CAD-to-SimReady.",
+    "expected_behavior": [
+      "Treats OpenUSD scene optimization as a strong NVIDIA Physical AI signal",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends an Omniverse / OpenUSD performance tuning skill (e.g. omniverse-usd-performance-tuning) if present",
+      "Does not confuse this with CAD-to-SimReady conversion"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-dynamo-kv",
+    "question": "I want to set up KV-aware routing for an LLM serving endpoint.",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies KV-aware LLM routing as a strong NVIDIA Inference AI / Dynamo signal, checks the live catalog, and recommends a current Dynamo router skill if available.",
+    "expected_behavior": [
+      "Treats KV-aware LLM routing as a strong NVIDIA Inference AI signal",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends a Dynamo router skill (e.g. dynamo-router-starter) if present",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-dicom",
+    "question": "I need to convert a DICOM series into a volume and then run segmentation. Does NVIDIA have skills for that?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies DICOM and medical imaging segmentation as a strong Vision AI signal, checks the live catalog, and recommends current DICOM / NVIDIA medical AI skills if available.",
+    "expected_behavior": [
+      "Treats DICOM and segmentation as a strong NVIDIA Vision AI signal",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends current DICOM or medical imaging segmentation skills (e.g. dicom-series-to-volume, nv-segment-ct, nv-segment-ctmr) if present",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-cad-to-simready",
+    "question": "I have a CAD assembly that needs to become a SimReady OpenUSD asset for simulation.",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies CAD-to-SimReady as a strong Physical AI / Omniverse signal, checks the live NVIDIA catalog, and recommends the current SimReady or Omniverse CAD workflow skill if available.",
+    "expected_behavior": [
+      "Treats CAD-to-SimReady as a strong NVIDIA Physical AI signal",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends a SimReady or Omniverse CAD workflow skill (e.g. omniverse-cad-to-simready) if present",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-multigpu-training",
+    "question": "Help me train a large language model across multiple GPUs with NeMo or Megatron.",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent identifies multi-GPU LLM training and NeMo/Megatron as strong NVIDIA Training AI signals, checks the live catalog, and recommends a current training workflow skill if available.",
+    "expected_behavior": [
+      "Treats NeMo, Megatron, and multi-GPU LLM training as strong NVIDIA Training AI signals",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends a current NeMo or Megatron training skill (e.g. nemo-mbridge-mlm-bridge-training, nemo-automodel-distributed-training) if present",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-jetson-driver-install",
+    "question": "How can I install driver in my Jetson card?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent treats Jetson driver installation as a strong NVIDIA Robotics / Jetson workflow signal, checks the live NVIDIA catalog before naming a skill, and recommends the current Jetson setup or quick-start skill if available.",
+    "expected_behavior": [
+      "Invokes the NVIDIA skill finder for the Jetson driver / JetPack / BSP request",
+      "Attempts `npx skills add nvidia/skills --list` when shell access is available, or uses an approved catalog fallback if the CLI is unavailable",
+      "Does not count developer.nvidia.com or docs.nvidia.com product documentation as the live catalog check",
+      "Recommends a Jetson setup skill (e.g. jetson-quick-start) if present",
+      "Explains that Jetson drivers are normally bundled with JetPack / Jetson Linux rather than installed as standalone desktop drivers",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-pos-jetson-setup",
+    "question": "How should I setup my Jetson?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent treats Jetson setup as a strong NVIDIA Robotics / Jetson workflow signal, checks the live NVIDIA skills catalog before using product docs as the main answer, and recommends the current Jetson setup or quick-start skill if available.",
+    "expected_behavior": [
+      "Invokes the NVIDIA skill finder for the Jetson setup request",
+      "Attempts `npx skills add nvidia/skills --list` when shell access is available, or uses an approved catalog fallback if the CLI is unavailable",
+      "Does not count developer.nvidia.com or docs.nvidia.com product documentation as the live catalog check",
+      "Recommends a Jetson setup skill (e.g. jetson-quick-start) if present",
+      "Provides practical Jetson setup guidance only after the catalog lookup path",
+      "Asks before installing the skill"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-neg-express-route",
+    "question": "Add an Express route for POST /api/orders.",
+    "expected_skill": null,
+    "expected_script": null,
+    "ground_truth": "The agent treats 'route' as a web framework route, not a vehicle routing or NVIDIA skill discovery request.",
+    "expected_behavior": [
+      "Does not invoke the NVIDIA skill finder",
+      "Does not recommend cuOpt or any NVIDIA skill",
+      "Answers or implements the Express route task normally"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-neg-react-optimize",
+    "question": "Optimize my React page load performance and reduce bundle size.",
+    "expected_skill": null,
+    "expected_script": null,
+    "ground_truth": "The agent treats this as ordinary frontend performance work, not NVIDIA skill discovery.",
+    "expected_behavior": [
+      "Does not invoke the NVIDIA skill finder",
+      "Does not recommend Omniverse, GPU, or any NVIDIA skill",
+      "Handles the frontend performance request normally"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-neg-generic-kubernetes",
+    "question": "Deploy my web API to Kubernetes.",
+    "expected_skill": null,
+    "expected_script": null,
+    "ground_truth": "The agent treats this as generic deployment work because no NVIDIA, GPU, or accelerated infrastructure signal is present.",
+    "expected_behavior": [
+      "Does not invoke the NVIDIA skill finder",
+      "Does not recommend Dynamo, NIM, Holoscan, or any NVIDIA skill",
+      "Handles the Kubernetes deployment request normally"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-neg-python-refactor",
+    "question": "Refactor this Python module to make the code easier to read.",
+    "expected_skill": null,
+    "expected_script": null,
+    "ground_truth": "The agent treats this as ordinary code refactoring because no NVIDIA, GPU, or acceleration signal is present.",
+    "expected_behavior": [
+      "Does not invoke the NVIDIA skill finder",
+      "Does not recommend any NVIDIA skill",
+      "Handles the refactor normally"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-neg-video-editing",
+    "question": "Trim this video, add captions, and export it for social media.",
+    "expected_skill": null,
+    "expected_script": null,
+    "ground_truth": "The agent treats this as ordinary video editing work, not NVIDIA Vision AI or VSS.",
+    "expected_behavior": [
+      "Does not invoke the NVIDIA skill finder",
+      "Does not recommend VSS or any Vision AI skill",
+      "Handles the video editing request normally"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-diff-browse-no-keywords",
+    "question": "Show me what NVIDIA skills exist. I want to browse what's available.",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent treats this as a no-keyword browse request: it offers to list NVIDIA skill domains or fetches the catalog index, rather than dumping every skill or refusing.",
+    "expected_behavior": [
+      "Invokes the NVIDIA skill finder",
+      "Lists NVIDIA skill domains or asks which domain the user wants",
+      "Optionally fetches the catalog index (e.g. skills.sh.json)",
+      "Does not dump every skill at once"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-diff-deep-research",
+    "question": "I want to do deep research on a technical topic and synthesize what's known. Any NVIDIA skill for that?",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent routes 'deep research and synthesize' to the AI-Q research skill rather than to RAG or retrieval skills.",
+    "expected_behavior": [
+      "Invokes the NVIDIA skill finder",
+      "Checks the live NVIDIA catalog before naming a specific skill",
+      "Recommends an AI-Q research skill (e.g. aiq-research) for technical synthesis",
+      "Does not recommend rag-blueprint, nemo-retriever, or nemo-rl-auto-research as the primary fit"
+    ]
+  },
+  {
+    "id": "nvidia-skill-finder-diff-bare-invocation",
+    "question": "Help me find an NVIDIA skill.",
+    "expected_skill": "nvidia-skill-finder",
+    "expected_script": null,
+    "ground_truth": "The agent treats the bare invocation as low-signal: it asks a clarifying question about the user's task or offers to browse domains, rather than dumping the catalog or refusing.",
+    "expected_behavior": [
+      "Invokes the NVIDIA skill finder",
+      "Asks a clarifying question about the user's task, or offers domain browse as a path",
+      "Does not dump every skill at once",
+      "Does not install a skill without consent"
+    ]
+  }
+]

@@ -1,7 +1,7 @@
 {
   "name": "network-solutions",
-  "version": "1.0.3",
-  "description": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversat...",
+  "version": "1.0.0",
+  "description": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversational. Instead of searching one name at a time, users can describe their idea in plain language and instantly check domain availability across relevant extensions. The assistant helps refine names, suggest alternatives, and quickly identify options that are ready to register.\n\nBuilt to remove friction and frustration from domain discovery, this chat-powered experience keeps users moving forward when names are taken and surfaces smarter, brand-ready options in real time. Whether you’re launching a business, starting a personal project, or exploring new ideas, Network Solutions helps you go from concept to available domain with confidence.",
   "author": {
     "name": "Network Solutions",
     "url": "https://www.networksolutions.com/"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Network Solutions",
-    "shortDescription": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversat...",
-    "longDescription": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversational. Instead of searching one name at a time, users can describe their idea in plain language and instantly check domain availability across relevant extensions. The assistant helps refine names, suggest alternatives, and quickly identify options that are ready to register.\n\nBuilt to remove friction and frustration from domain discovery, this chat-powered experience keeps users moving forward when names are taken and surfaces smarter, brand-ready options in real time. Whether you\u2019re launching a business, starting a personal project, or exploring new ideas, Network Solutions helps you go from concept to available domain with confidence.",
+    "shortDescription": "Search, check & secure domains",
+    "longDescription": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversational. Instead of searching one name at a time, users can describe their idea in plain language and instantly check domain availability across relevant extensions. The assistant helps refine names, suggest alternatives, and quickly identify options that are ready to register.\n\nBuilt to remove friction and frustration from domain discovery, this chat-powered experience keeps users moving forward when names are taken and surfaces smarter, brand-ready options in real time. Whether you’re launching a business, starting a personal project, or exploring new ideas, Network Solutions helps you go from concept to available domain with confidence.",
     "developerName": "Network Solutions",
     "category": "Productivity",
     "capabilities": [],
@@ -26,6 +26,7 @@
     ],
     "screenshots": [],
     "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
+    "logo": "./assets/app-icon.png",
+    "supportURL": "https://www.networksolutions.com/help"
   }
 }

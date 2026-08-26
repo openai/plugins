@@ -1,7 +1,7 @@
 {
   "name": "statsig",
-  "version": "2.0.3",
-  "description": "Bring your Statsig workspace into Codex.",
+  "version": "3.0.0",
+  "description": "Bring your Statsig workspace into ChatGPT. Product builders can now explore, manage, and create Statsig experiments, feature gates, dynamic configs, and more directly in ChatGPT conversations.\n\nAsk things like:\n“Move this experiment to 50% rollout.”\n“Turn on this feature gate for all users.”\n“Show me which dynamic configs changed this week.”\n\"Explain how the DAU metric is defined.”\n\nYou can both read and write to Statsig: inspect experiment settings, read metric definitions, update allocations, toggle feature flags, edit targeting rules, and modify dynamic config values directly from ChatGPT.\n\nThe app connects through Statsig’s MCP server and honors your existing Statsig permissions, so you only see and change what you’re authorized to access—across projects, environments, and teams.",
   "author": {
     "name": "Statsig, LLC",
     "url": "https://statsig.com"
@@ -13,8 +13,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Statsig",
-    "shortDescription": "Bring your Statsig workspace into Codex.",
-    "longDescription": "Bring your Statsig workspace into Codex. Product builders can now explore, manage, and create Statsig experiments, feature gates, dynamic configs, and more directly in Codex conversations.\n\nAsk things like:\n\u201cMove this experiment to 50% rollout.\u201d\n\u201cTurn on this feature gate for all users.\u201d\n\u201cShow me which dynamic configs changed this week.\u201d\n\"Explain how the DAU metric is defined.\u201d\n\nYou can both read and write to Statsig: inspect experiment settings, read metric definitions, update allocations, toggle feature flags, edit targeting rules, and modify dynamic config values directly from Codex.\n\nThe app connects through Statsig\u2019s MCP server and honors your existing Statsig permissions, so you only see and change what you\u2019re authorized to access\u2014across projects, environments, and teams.",
+    "shortDescription": "Connect to Statsig",
+    "longDescription": "Bring your Statsig workspace into Codex. Product builders can now explore, manage, and create Statsig experiments, feature gates, dynamic configs, and more directly in Codex conversations.\n\nAsk things like:\n“Move this experiment to 50% rollout.”\n“Turn on this feature gate for all users.”\n“Show me which dynamic configs changed this week.”\n\"Explain how the DAU metric is defined.”\n\nYou can both read and write to Statsig: inspect experiment settings, read metric definitions, update allocations, toggle feature flags, edit targeting rules, and modify dynamic config values directly from Codex.\n\nThe app connects through Statsig’s MCP server and honors your existing Statsig permissions, so you only see and change what you’re authorized to access—across projects, environments, and teams.",
     "developerName": "Statsig, LLC",
     "category": "Developer Tools",
     "capabilities": [],
@@ -27,6 +27,7 @@
     "screenshots": [],
     "composerIcon": "./assets/logo.png",
     "logo": "./assets/logo.png",
-    "logoDark": "./assets/logo-dark.png"
+    "logoDark": "./assets/logo-dark.png",
+    "supportURL": "https://statsigcommunity.slack.com/join/shared_invite/zt-3lyt5mtn8-KEM9tqPvLkBJ9ZC2ULqoxw#/shared-invite/email"
   }
 }

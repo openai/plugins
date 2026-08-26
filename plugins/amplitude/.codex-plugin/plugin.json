@@ -1,26 +1,22 @@
 {
-  "name": "amplitude",
-  "version": "1.0.2",
-  "description": "Product analytics and funnels",
+  "apps": "./.app.json",
   "author": {
     "name": "Amplitude"
   },
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
-  "apps": "./.app.json",
+  "description": "Amplitude is a product intelligence platform that helps teams understand user behavior, measure impact, and decide what to build next. Connect your Amplitude workspace in ChatGPT to search charts and dashboards, query metrics and experiment results, explore events and properties, and create or update charts, dashboards, and alerts \u2014 without leaving the conversation.",
   "interface": {
-    "displayName": "Amplitude",
-    "shortDescription": "Product analytics and funnels",
-    "longDescription": "Product analytics and funnels",
-    "developerName": "Amplitude",
-    "category": "Data & Analytics",
     "capabilities": [],
-    "defaultPrompt": [
-      "Show the signup funnel trend in Amplitude"
-    ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
-  }
+    "category": "Business & Operations",
+    "defaultPrompt": null,
+    "developerName": "Amplitude",
+    "displayName": "Amplitude",
+    "longDescription": "Amplitude is a product intelligence platform that helps teams understand user behavior, measure impact, and decide what to build next. Connect your Amplitude workspace in ChatGPT to search charts and dashboards, query metrics and experiment results, explore events and properties, and create or update charts, dashboards, and alerts \u2014 without leaving the conversation.",
+    "privacyPolicyURL": "https://amplitude.com/privacy",
+    "shortDescription": "Product intelligence",
+    "supportURL": "https://support.amplitude.com/",
+    "termsOfServiceURL": "https://amplitude.com/terms",
+    "websiteURL": "https://amplitude.com/"
+  },
+  "name": "amplitude",
+  "version": "3.0.1"
 }

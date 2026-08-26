@@ -1,54 +1,26 @@
 {
-  "name": "dnb-finance-analytics",
-  "version": "1.0.2",
-  "description": "Commercial credit origination and risk workflows",
-  "author": {
-    "name": "Dun & Bradstreet",
-    "url": "https://www.dnb.com/"
-  },
-  "homepage": "https://www.dnb.com/",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [
-    "dnb",
-    "dun-bradstreet",
-    "finance-analytics",
-    "business-identity",
-    "company-data",
-    "firmographics",
-    "credit-risk",
-    "corporate-linkage",
-    "portfolio-management",
-    "credit-origination"
-  ],
   "apps": "./.app.json",
-  "skills": "./skills/",
+  "author": {
+    "name": "Dun & Bradstreet"
+  },
+  "description": "Enable AI-powered credit decisioning, portfolio monitoring, and risk management workflows using trusted D&B data and analytics. \n\nFor inquiries, please contact OpenAILeads@dnb.com\n\nD&B Finance Analytics empowers finance and credit teams to verify businesses, evaluate financial and predictive risk, accelerate credit decisions, monitor portfolio health, and take action through AI assistants, agents, and enterprise applications. By combining trusted D&B business intelligence, financial risk insights, predictive analytics, and workflow capabilities, organizations can bring credit and portfolio management processes directly into AI-driven workflows. \n\nAnchored by the global standard D\u2011U\u2011N\u2011S\u00ae Number and powered by the D&B Commercial Graph\u2122, D&B Finance Analytics helps organizations reduce ambiguity, improve consistency, and make more confident commercial credit decisions at scale. It also enables teams to move from insight to action through portfolio management and workflow capabilities available within D&B Finance Analytics. \n\nUse D&B Finance Analytics to: \n\nEvaluate credit recommendation: \n\"What is the recommended credit limit for [Company Name], and what factors contributed to that recommendation?\" \n\nAssess business risk: \n\"Summarize the financial risk, payment behavior, and predictive risk indicators for [Company Name].\" \n\nMonitor portfolio health: \n\"Which customers in my portfolio show elevated risk or signs of deterioration?\" \n\nPrioritize risk management activities: \n\"Which customers should I review first based on recent alerts, exposure, and risk changes?\" \n\nAnalyze ownership and corporate linkage: \n\"Show the ownership structure and related entities for [Company Name].\" \n\nTake action on portfolio: \n\"Create a folder named [Folder Name], move [Company Name] to the folder and assign Alert Profile [Alert Profile Name] to the folder.\" \n\nNote: Requires a D&B Finance Analytics license.",
   "interface": {
-    "displayName": "D&B Finance Analytics",
-    "shortDescription": "Commercial credit origination and risk workflows",
-    "longDescription": "Power commercial credit origination and portfolio management workflows with D&B Finance Analytics embedded AI decisioning layer.\n\nDun & Bradstreet connects the D&B Commercial Graph with proprietary customer data and credit policies to help evaluate applications, set credit limits, and uncover portfolio risk and opportunity.",
-    "developerName": "Dun & Bradstreet",
+    "capabilities": [],
     "category": "Finance",
-    "capabilities": [
-      "Portfolio search, filtering, aggregation, and sorting",
-      "Company search by name or D-U-N-S number",
-      "Detailed company credit-risk reports",
-      "Company ownership and linkage trees",
-      "Credit application decisioning",
-      "Portfolio folder creation, movement, and organization",
-      "Server-provided Finance Analytics skill discovery"
-    ],
-    "websiteURL": "https://www.dnb.com/",
-    "privacyPolicyURL": "https://www.dnb.com/about-us/data-transparency.html",
-    "termsOfServiceURL": "https://view.highspot.com/viewer/1c5acd1db08e2cc64faff50703335a1d",
-    "brandColor": "#004B8D",
     "defaultPrompt": [
-      "Show me all companies in my portfolio with a failure score above 80, sorted by outstanding balance.",
-      "Give me a full credit risk report for Acme Corp, including their payment history and risk scores.",
-      "Who are the parent and subsidiary companies of Global Logistics Inc? Show me the full ownership tree."
+      "What is the recommended credit limit for [Company Name], and what factors contributed to that recommendation?",
+      "Summarize the financial risk, payment behavior, and predictive risk indicators for [Company Name]",
+      "Which customers in my portfolio show elevated risk or signs of deterioration?"
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png"
-  }
+    "developerName": "Dun & Bradstreet",
+    "displayName": "D&B Finance Analytics",
+    "longDescription": "Enable AI-powered credit decisioning, portfolio monitoring, and risk management workflows using trusted D&B data and analytics. \n\nFor inquiries, please contact OpenAILeads@dnb.com\n\nD&B Finance Analytics empowers finance and credit teams to verify businesses, evaluate financial and predictive risk, accelerate credit decisions, monitor portfolio health, and take action through AI assistants, agents, and enterprise applications. By combining trusted D&B business intelligence, financial risk insights, predictive analytics, and workflow capabilities, organizations can bring credit and portfolio management processes directly into AI-driven workflows. \n\nAnchored by the global standard D\u2011U\u2011N\u2011S\u00ae Number and powered by the D&B Commercial Graph\u2122, D&B Finance Analytics helps organizations reduce ambiguity, improve consistency, and make more confident commercial credit decisions at scale. It also enables teams to move from insight to action through portfolio management and workflow capabilities available within D&B Finance Analytics. \n\nUse D&B Finance Analytics to: \n\nEvaluate credit recommendation: \n\"What is the recommended credit limit for [Company Name], and what factors contributed to that recommendation?\" \n\nAssess business risk: \n\"Summarize the financial risk, payment behavior, and predictive risk indicators for [Company Name].\" \n\nMonitor portfolio health: \n\"Which customers in my portfolio show elevated risk or signs of deterioration?\" \n\nPrioritize risk management activities: \n\"Which customers should I review first based on recent alerts, exposure, and risk changes?\" \n\nAnalyze ownership and corporate linkage: \n\"Show the ownership structure and related entities for [Company Name].\" \n\nTake action on portfolio: \n\"Create a folder named [Folder Name], move [Company Name] to the folder and assign Alert Profile [Alert Profile Name] to the folder.\" \n\nNote: Requires a D&B Finance Analytics license.",
+    "privacyPolicyURL": "https://www.dnb.com/about-us/data-transparency.html",
+    "shortDescription": "Commercial credit intelligence",
+    "supportURL": "https://service.dnb.com",
+    "termsOfServiceURL": "https://view.highspot.com/viewer/1c5acd1db08e2cc64faff50703335a1d",
+    "websiteURL": "https://www.dnb.com/"
+  },
+  "name": "dnb-finance-analytics",
+  "version": "2.0.0"
 }

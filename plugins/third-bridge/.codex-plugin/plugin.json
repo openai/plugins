@@ -1,31 +1,26 @@
 {
-  "name": "third-bridge",
-  "version": "1.0.3",
-  "description": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financia...",
-  "author": {
-    "name": "Third Bridge Group",
-    "url": "https://www.thirdbridge.com"
-  },
-  "homepage": "https://www.thirdbridge.com",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
-  "keywords": [],
   "apps": "./.app.json",
+  "author": {
+    "name": "Third Bridge Group"
+  },
+  "description": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financial and business analysis. Refocus on extracting high-quality, reliable information by querying Third Bridge\u2019s best-in-class substantial Library of expert content and data.\n\nOur MCP systematically and securely instructs Large Language Models (LLMs) to query insights from our database into their systems, streamlining your workflows and improving your output.",
   "interface": {
-    "displayName": "Third Bridge",
-    "shortDescription": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financia...",
-    "longDescription": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financial and business analysis. Refocus on extracting high-quality, reliable information by querying Third Bridge\u2019s best-in-class substantial Library of expert content and data.\n\nOur MCP systematically and securely instructs Large Language Models (LLMs) to query insights from our database into their systems, streamlining your workflows and improving your output.",
-    "developerName": "Third Bridge Group",
-    "category": "Finance",
     "capabilities": [],
-    "websiteURL": "https://www.thirdbridge.com",
-    "privacyPolicyURL": "https://www.thirdbridge.com/en-us/about-us/compliance/policies/privacy-policy",
-    "termsOfServiceURL": "https://www.thirdbridge.com/en-us/about-us/compliance/policies/third-bridge-mcp-pilot-terms",
+    "category": "Finance",
     "defaultPrompt": [
-      "Competitive analysis based on Third Bridge expert network"
+      "Competitive analysis based on Third Bridge expert network transcripts",
+      "Investment conclusion based Third Bridge expert network transcripts",
+      "Expert insights with citations to Third Bridge transcript sources"
     ],
-    "screenshots": [],
-    "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
-  }
+    "developerName": "Third Bridge Group",
+    "displayName": "Third Bridge",
+    "longDescription": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financial and business analysis. Refocus on extracting high-quality, reliable information by querying Third Bridge\u2019s best-in-class substantial Library of expert content and data.\n\nOur MCP systematically and securely instructs Large Language Models (LLMs) to query insights from our database into their systems, streamlining your workflows and improving your output.",
+    "privacyPolicyURL": "https://www.thirdbridge.com/en-us/about-us/compliance/policies/privacy-policy",
+    "shortDescription": "Expert-led enhanced insights",
+    "supportURL": "https://www.thirdbridge.com/en-us/about-us/contact-us",
+    "termsOfServiceURL": "https://www.thirdbridge.com/en-us/about-us/compliance/policies/authorized-user-terms-and-conditions",
+    "websiteURL": "https://www.thirdbridge.com"
+  },
+  "name": "third-bridge",
+  "version": "4.0.0"
 }

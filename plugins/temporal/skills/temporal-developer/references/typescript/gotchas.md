@@ -145,6 +145,7 @@ export async function workflowWithCleanup(): Promise<void> {
 ### Not Handling Activity Cancellation
 
 Activities must **opt in** to receive cancellation. This requires:
+
 1. **Heartbeating** - Cancellation is delivered via heartbeat
 2. **Checking for cancellation** - Either await `Context.current().cancelled` or use `cancellationSignal()`
 

@@ -62,6 +62,7 @@ async def request_approval(request_id: str) -> None:
 # Later, complete the activity from another process
 async def complete_approval(request_id: str, approved: bool):
     client = await Client.connect("localhost:7233", namespace="default")
+    # Retrieve the task token from external storage (e.g., database)
     task_token = await get_task_token(request_id)
 
     handle = client.get_async_activity_handle(task_token=task_token)
@@ -85,6 +86,7 @@ The Python SDK runs workflows in a sandbox to help you ensure determinism. You c
 **The Python SDK is NOT compatible with gevent.** Gevent's monkey patching modifies Python's asyncio event loop in ways that break the SDK's deterministic execution model.
 
 If your application uses gevent:
+
 - You cannot run Temporal workers in the same process
 - Consider running workers in a separate process without gevent
 - Use a message queue or HTTP API to communicate between gevent and Temporal processes
@@ -111,26 +113,56 @@ worker = Worker(
     graceful_shutdown_timeout=timedelta(seconds=30),
 )
 ```
+
+## DNS Resolver Configuration
+
+`DnsLoadBalancingConfig`  makes Core periodically re-resolve the client's target host and round-robin requests across the resolved addresses . Use it when `target_host` resolves to multiple A/AAAA records (e.g., a load-balanced gRPC frontend, multi-address private endpoints) and you want the client to spread RPCs across them.
+
+### Configuration
+
+```python
+from temporalio.client import Client
+from temporalio.service import DnsLoadBalancingConfig
+
+client = await Client.connect(
+    "frontend.example.internal:7233",
+    dns_load_balancing_config=DnsLoadBalancingConfig(
+        resolution_interval_millis=5000,  # re-resolve every 5 seconds
+    ),
+)
+```
+
+- The only field is `resolution_interval_millis: int = 30000`  — how often to re-resolve DNS, in milliseconds.
+- `DnsLoadBalancingConfig.default`  is a pre-built instance with the default 30-second interval.
+- `dns_load_balancing_config` defaults to 30 seconds if you don't pass anything explicitly.
+- Pass `dns_load_balancing_config=None` to disable DNS load balancing entirely.
+
+### Mutual exclusion with HTTP CONNECT proxy
+
+DNS load balancing and `HttpConnectProxyConfig` cannot be used together. When `http_connect_proxy_config` is set on the same client, DNS load balancing is **silently disabled**  — there is no error and no precedence flag. If you need both, you cannot have both; choose the one your network requires.
+
 ## Workflow Init Decorator
 
-Use `@workflow.init` to run initialization code when a workflow is first created.
+You should always put state initialization logic in the `__init__` of your workflow class, so that it happens before signals/updates arrive.
 
-**Purpose:** Execute some setup code before signal/update happens or run is invoked.
+Normally, your `__init__` must have no arguments. However, if you add the `@workflow.init` decorator, then your `__init__` instead receives the same workflow arguments that `@workflow.run` receives:
 
 ```python
 @workflow.defn
 class MyWorkflow:
     @workflow.init
     def __init__(self, initial_value: str) -> None:
-        # This runs only on first execution, not replay
+        # This runs when the Workflow is instantiated, including during replay
         self._value = initial_value
         self._items: list[str] = []
 
     @workflow.run
-    async def run(self) -> str:
+    async def run(self, initial_value: str) -> str:
         # self._value and self._items are already initialized
         return self._value
 ```
+
+`__init__` (with `@workflow.init`) and `@workflow.run` must have the same parameters with the same types. You cannot make blocking calls (activities, sleeps, etc.) from the `__init__`.
 
 ## Workflow Failure Exception Types
 

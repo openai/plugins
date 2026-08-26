@@ -1,7 +1,7 @@
 {
   "name": "responsive",
-  "version": "1.0.3",
-  "description": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
+  "version": "2.0.1",
+  "description": "Connects ChatGPT to Responsive so authenticated users can search approved company content, create and inspect assigned projects, generate first-draft responses, run Answer Agent, manage project comments, create intakes, and update answer workflows inside Responsive.",
   "author": {
     "name": "RFPIO Inc. (d/b/a Responsive)",
     "url": "https://www.responsive.io"
@@ -12,20 +12,23 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Responsive",
-    "shortDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
-    "longDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex. Search your Content Library and generate responses so you can move faster with trusted information and without switching tools.",
+    "shortDescription": "Responsive workflows",
+    "longDescription": "Connects ChatGPT to Responsive so authenticated users can search approved company content, create and inspect assigned projects, generate first-draft responses, run Answer Agent, manage project comments, create intakes, and update answer workflows inside Responsive.",
     "developerName": "RFPIO Inc. (d/b/a Responsive)",
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
-      "Pull the relevant proposal content from Responsive"
+      "Search our knowledge base for SOC 2 requirements around encryption.",
+      "Show all unanswered questions currently assigned to me and highlight the highest-priority ones.",
+      "Draft a response for this RFP question: Describe your incident response process and customer notification timelines."
     ],
     "screenshots": [],
     "websiteURL": "https://www.responsive.io",
     "privacyPolicyURL": "https://www.responsive.io/legal/privacy-policy",
     "termsOfServiceURL": "https://www.responsive.io/legal",
     "composerIcon": "./assets/logo.png",
-    "logo": "./assets/logo.png"
+    "logo": "./assets/logo.png",
+    "supportURL": "https://www.responsive.io"
   },
   "homepage": "https://www.responsive.io"
 }

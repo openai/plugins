@@ -1,6 +1,0 @@
-interface:
-  display_name: "Publish Changes"
-  short_description: "Commit, push, and open a PR"
-  icon_small: "./assets/yeet-small.svg"
-  icon_large: "./assets/yeet.png"
-  default_prompt: "Use $yeet to confirm the intended changes, create a focused commit, push it, and open a draft pull request."
