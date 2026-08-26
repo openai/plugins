@@ -1,0 +1,137 @@
+# Default KPI packs by sector. Metric IDs should match the canonical list used in input files.
+# You can override or extend KPIs per run in plan.json via kpi_overrides.include/exclude.
+
+packs:
+  saas:
+    display_name: "SaaS / Subscription"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - arr
+      - nrr
+      - grr
+      - net_new_arr
+      - gross_margin
+      - operating_margin
+      - fcf_margin
+    secondary_kpis:
+      - bookings
+      - billings
+      - rpo
+      - sbc_pct_revenue
+      - headcount
+      - cac
+      - cac_payback_months
+    driver_model: "saas_simple"
+
+  internet_consumer:
+    display_name: "Internet Consumer / Engagement"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - dau
+      - mau
+      - dau_mau
+      - arpu
+      - cpm
+    secondary_kpis:
+      - time_spent_minutes
+      - ads_load
+      - conversion_rate
+      - aov
+    driver_model: "consumer_ads_simple"
+
+  payments_fintech:
+    display_name: "Payments / Fintech"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - tpv
+      - take_rate
+      - active_accounts
+      - loss_rate
+    secondary_kpis:
+      - net_revenue
+      - gross_profit
+      - chargeback_rate
+    driver_model: "payments_simple"
+
+  semiconductors:
+    display_name: "Semiconductors / Hardware"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - gross_margin
+      - units
+      - asp
+      - backlog
+      - inventory_days
+    secondary_kpis:
+      - book_to_bill
+      - lead_time_weeks
+      - utilization_pct
+    driver_model: "units_asp_simple"
+
+  consumer_retail:
+    display_name: "Consumer / Retail"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - comp_sales
+      - gross_margin
+      - inventory
+      - inventory_turns
+    secondary_kpis:
+      - traffic
+      - aur
+      - markdown_rate
+      - shrink_rate
+    driver_model: "retail_simple"
+
+  industrials:
+    display_name: "Industrials"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - orders
+      - backlog
+      - book_to_bill
+      - operating_margin
+      - fcf
+    secondary_kpis:
+      - price_mix
+      - volume
+      - utilization_pct
+    driver_model: "industrials_simple"
+
+  banks:
+    display_name: "Banks"
+    primary_kpis:
+      - eps_diluted
+      - nii
+      - nim
+      - deposits
+      - loans
+      - net_charge_offs
+      - cet1
+    secondary_kpis:
+      - fee_income
+      - efficiency_ratio
+      - npl
+    driver_model: "banks_simple"
+
+  energy:
+    display_name: "Energy"
+    primary_kpis:
+      - revenue
+      - eps_diluted
+      - production_volume
+      - realized_price
+      - loe
+      - capex
+      - fcf
+      - net_debt
+    secondary_kpis:
+      - hedge_realized_price
+      - decline_rate
+    driver_model: "energy_simple"

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "library": "image-ad-library",
+  "packs": [
+    {
+      "id": "diverse-image-ad-archetypes",
+      "title": "Diverse Image Ad Archetypes",
+      "path": "packs/diverse-image-ad-archetypes.json",
+      "adCount": 25,
+      "summary": "Reusable ad-format archetypes for exploring very different campaign image directions from one supplied product, service, venue, offer, or business asset.",
+      "primaryMode": "ads"
+    },
+    {
+      "id": "digital-product-core-ad-prompts",
+      "title": "Digital Product Core Ad Prompts",
+      "path": "packs/digital-product-core-ad-prompts.json",
+      "adCount": 12,
+      "summary": "Screen-first ad routes for apps, SaaS, AI products, developer products, and other digital products where the UI is the product proof.",
+      "primaryMode": "ads"
+    }
+  ]
+}

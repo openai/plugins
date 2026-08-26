@@ -1,0 +1,8 @@
+scenario_name,metric_id,delta_type,delta_value,notes
+base,revenue,pct,0.0,Base case anchored to consensus
+bull,revenue,pct,0.02,Bull: +2% rev vs consensus
+bear,revenue,pct,-0.03,Bear: -3% rev vs consensus
+bull,gross_margin,bps,50,Bull: +50 bps GM vs consensus
+bear,gross_margin,bps,-75,Bear: -75 bps GM vs consensus
+bull,eps_diluted,pct,0.05,Bull: +5% EPS vs consensus (or compute via margin)
+bear,eps_diluted,pct,-0.10,Bear: -10% EPS vs consensus (or compute via margin)

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "library": "scene-library",
+  "packs": [
+    {
+      "id": "business-point-of-sale-scenes",
+      "title": "Business Point Of Sale Scenes",
+      "path": "packs/business-point-of-sale-scenes.json",
+      "sceneCount": 25,
+      "summary": "Slot-based commercial scene archetypes for placing products, services, venues, offers, and business assets into realistic point-of-sale, customer decision, demo, pickup, and handoff environments.",
+      "primaryMode": "scenes"
+    }
+  ]
+}

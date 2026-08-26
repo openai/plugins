@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mood board</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="codex-theme.css" />
+  <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="components/empty-state-grid/empty-state-grid.css" />
+</head>
+<body>
+  <main class="app codex-app" aria-label="Personalized image stream">
+    <div class="app-shell">
+      <header class="toolbar" aria-label="Mood board controls">
+        <div class="toolbar-copy">
+          <h1 id="boardTitle">Mood board</h1>
+          <p id="boardSummary">Visual references</p>
+        </div>
+      </header>
+      <div class="selection-action-toolbar viewer-actions" id="selectionActionToolbar" aria-label="Selected image actions" hidden>
+        <button type="button" id="selectionAttach">
+          <span class="button-icon" data-platform-icon="annotate"></span>
+          <span class="button-label">Attach</span>
+        </button>
+        <button class="is-destructive" type="button" id="selectionDelete">
+          <span class="button-icon" data-platform-icon="trash"></span>
+          <span class="button-label">Delete</span>
+        </button>
+        <div class="export-combo selection-export-combo" id="exportActions" hidden>
+          <button class="export-primary" id="exportPrimary" type="button" aria-label="Open selected images in Folder" title="Open in Folder">
+            <span class="export-destination-icon" id="exportPrimaryIcon" data-platform-icon="folder"></span>
+            <span class="button-label">Open in</span>
+          </button>
+          <button class="export-menu-trigger" id="exportMenuTrigger" type="button" aria-label="Choose open destination" aria-haspopup="menu" aria-expanded="false" title="Choose open destination">
+            <span data-platform-icon="chevron-down"></span>
+          </button>
+          <div class="export-menu" id="exportMenu" role="menu" aria-label="Open destinations" hidden>
+            <button class="export-menu-item" type="button" role="menuitem" data-export-target="finder">
+              <span class="export-menu-icon" data-platform-icon="folder"></span>
+              <span>Folder</span>
+            </button>
+            <button class="export-menu-item" type="button" role="menuitem" data-export-target="canva">
+              <span class="export-menu-icon" data-brand-icon="canva"></span>
+              <span>Canva</span>
+            </button>
+            <button class="export-menu-item" type="button" role="menuitem" data-export-target="figma">
+              <span class="export-menu-icon" data-brand-icon="figma"></span>
+              <span>Figma</span>
+            </button>
+          </div>
+        </div>
+        <button class="clear-selection-button" type="button" id="clearSelection" aria-label="Clear selection" title="Clear selection">
+          <span class="button-icon" data-platform-icon="x"></span>
+        </button>
+      </div>
+      <section class="feed" id="feed" aria-label="Mood-board images"></section>
+      <p class="sr-only" id="feedStatus" aria-live="polite"></p>
+    </div>
+  </main>
+
+  <template id="cardTemplate">
+    <figure class="tile">
+      <button class="select-button comment-button" type="button" aria-label="Select image" title="Select image" aria-pressed="false">
+        <span class="select-icon select-icon-add" data-platform-icon="plus" aria-hidden="true"></span>
+        <span class="select-icon select-icon-check" data-platform-icon="check" aria-hidden="true"></span>
+        <span class="select-icon select-icon-minus" data-platform-icon="minus" aria-hidden="true"></span>
+      </button>
+      <button class="remove-button" type="button" aria-label="Remove image" title="Remove image">
+        <span data-platform-icon="trash"></span>
+      </button>
+      <button class="tile-open expand-button" type="button">
+        <span class="generation-placeholder" aria-hidden="true" hidden>
+          <span class="generation-halftone-pulse">
+            <canvas class="generation-halftone-canvas"></canvas>
+          </span>
+          <span class="generation-failure">Couldn’t generate</span>
+        </span>
+        <span class="preview-loader" aria-hidden="true" hidden>
+          <span class="preview-loader-ring"></span>
+        </span>
+        <img alt="" />
+      </button>
+      <svg class="selection-border" aria-hidden="true" focusable="false">
+        <rect class="selection-border-rect"></rect>
+      </svg>
+    </figure>
+  </template>
+
+  <div class="viewer" id="viewer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mood board image viewer">
+    <p class="viewer-annotation-hint viewer-chrome">Click on the image to add comments</p>
+    <button class="viewer-close viewer-chrome" type="button" id="viewerClose" aria-label="Close" title="Close">
+      <span data-platform-icon="x"></span>
+    </button>
+    <button class="viewer-nav viewer-nav-prev viewer-chrome" type="button" id="viewerPrev" aria-label="Previous image" aria-keyshortcuts="ArrowLeft" title="Previous image">
+      <span data-platform-icon="chevron-left"></span>
+    </button>
+    <div class="viewer-stage">
+      <img class="viewer-image" id="viewerImage" alt="" data-codex-annotate-on-click data-codex-annotation-target-selector=".tile-open img" />
+      <section class="viewer-remix-panel viewer-chrome" id="viewerRemixPanel" aria-hidden="true" aria-label="Remix controls" hidden>
+        <section class="viewer-remix-section">
+          <div class="viewer-remix-control-row">
+            <div class="viewer-remix-slot-tabs" id="remixSlotTabs" role="tablist" aria-label="Variation type"></div>
+          </div>
+          <div class="viewer-remix-option-list" id="remixOptionList" role="tabpanel"></div>
+          <p class="viewer-remix-status" id="remixStatus" role="status" hidden></p>
+        </section>
+      </section>
+    </div>
+    <button class="viewer-nav viewer-nav-next viewer-chrome" type="button" id="viewerNext" aria-label="Next image" aria-keyshortcuts="ArrowRight" title="Next image">
+      <span data-platform-icon="chevron-right"></span>
+    </button>
+    <div class="viewer-toolbar viewer-chrome" aria-label="Image actions">
+      <div class="viewer-actions">
+        <button type="button" id="attachImage">
+          <span class="button-icon" data-platform-icon="annotate"></span>
+          <span class="button-label">Attach</span>
+        </button>
+        <button type="button" id="remixImage" aria-controls="viewerRemixPanel" aria-expanded="false">
+          <span class="button-icon" data-platform-icon="branch-alt"></span>
+          <span class="button-label">Remix</span>
+        </button>
+        <div class="export-combo viewer-export-combo" id="viewerExportActions" hidden>
+          <button class="export-primary" id="viewerExportPrimary" type="button" aria-label="Open current image in Folder" title="Open in Folder">
+            <span class="export-destination-icon" id="viewerExportPrimaryIcon" data-platform-icon="folder"></span>
+            <span class="button-label">Open in</span>
+          </button>
+          <button class="export-menu-trigger" id="viewerExportMenuTrigger" type="button" aria-label="Choose open destination" aria-haspopup="menu" aria-expanded="false" title="Choose open destination">
+            <span data-platform-icon="chevron-down"></span>
+          </button>
+          <div class="export-menu" id="viewerExportMenu" role="menu" aria-label="Open destinations" hidden>
+            <button class="export-menu-item" type="button" role="menuitem" data-export-target="finder">
+              <span class="export-menu-icon" data-platform-icon="folder"></span>
+              <span>Folder</span>
+            </button>
+            <button class="export-menu-item" type="button" role="menuitem" data-export-target="canva">
+              <span class="export-menu-icon" data-brand-icon="canva"></span>
+              <span>Canva</span>
+            </button>
+            <button class="export-menu-item" type="button" role="menuitem" data-export-target="figma">
+              <span class="export-menu-icon" data-brand-icon="figma"></span>
+              <span>Figma</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="platform-icons.js"></script>
+  <script src="generation-halftone-runtime.js"></script>
+  <script src="starter-intake-runtime.js"></script>
+  <script type="module" src="components/empty-state-grid/empty-state-grid.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "title": "ExampleCo: Draft Support Payload",
+  "issuer": {
+    "ticker": "EXCO"
+  },
+  "metadata": {
+    "payload_stage": "support",
+    "citation_policy": "warn",
+    "readiness_label": "Draft support only",
+    "readiness_posture": "working_draft"
+  },
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "stance": "Draft",
+            "summary": "Revenue was $100M but this draft intentionally lacks source support."
+          }
+        }
+      ]
+    }
+  ],
+  "sources": []
+}

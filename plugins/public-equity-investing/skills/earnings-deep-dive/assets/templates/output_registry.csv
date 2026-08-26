@@ -1,0 +1,5 @@
+OutputID,OutputName,Units,MappingType,Worksheet,Cell,NamedRange,Notes
+REV_NTM,Next-twelve-month revenue,USDm,NamedRange,MISSING,,REV_NTM,MISSING
+EPS_FY1,FY1 EPS,USD,NamedRange,MISSING,,EPS_FY1,MISSING
+FCF_FY1,FY1 FCF,USDm,NamedRange,MISSING,,FCF_FY1,MISSING
+TARGET_PRICE,Target price,USD,NamedRange,MISSING,,TARGET_PRICE,MISSING

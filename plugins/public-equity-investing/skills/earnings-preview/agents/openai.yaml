@@ -1,0 +1,5 @@
+interface:
+  display_name: "Earnings-Preview"
+  short_description: "Full pre-earnings preview reports with expectation bar, EPS-quality watch, scenarios, and call questions."
+policy:
+  allow_implicit_invocation: false

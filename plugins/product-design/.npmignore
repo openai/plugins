@@ -1,0 +1,13 @@
+# Local prototype/devtools runtime state should not ship in plugin bundles.
+.prototype-devtools/
+_prototype-devtools/
+**/.prototype-devtools/comment-tasks.json
+**/.prototype-devtools/design-token-manifest.json
+
+# Nested example/template installs can exist in local checkouts after previews.
+**/node_modules/
+**/dist/
+**/.vite/
+**/.npm-cache/
+**/__pycache__/
+**/*.pyc

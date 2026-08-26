@@ -1,0 +1,6 @@
+interface:
+  display_name: "Intake"
+  short_description: "Open Creative Production"
+  default_prompt: "Use $intake to open Creative Production and guide me through a flow."
+policy:
+  allow_implicit_invocation: true

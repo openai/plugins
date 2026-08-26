@@ -1,0 +1,7 @@
+interface:
+  display_name: Financials Normalizer
+  short_description: normalize messy Public Equity Investing financial source data into model-ready long-form outputs, source indexes, and qa flags.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: false

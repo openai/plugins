@@ -1,0 +1,6 @@
+/* Add app-specific styles here. Keep the template-owned runtime styles in styles.css unchanged. */
+
+.blank-canvas {
+  min-height: 100%;
+  padding: 72px 28px calc(var(--mobile-safe-area-height) + 34px);
+}

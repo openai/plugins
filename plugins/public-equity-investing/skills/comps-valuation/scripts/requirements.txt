@@ -1,0 +1,2 @@
+openpyxl>=3.0.10
+XlsxWriter>=3.0.0

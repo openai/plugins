@@ -1,0 +1,5 @@
+interface:
+  display_name: "Event Driven Analyzer"
+  short_description: "PM-quality dated event path, probability, payoff, and expected-return analysis for public-equity special situations."
+policy:
+  allow_implicit_invocation: false

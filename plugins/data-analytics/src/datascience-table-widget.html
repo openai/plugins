@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Analytics table</title>
+  </head>
+  <body>
+    <article class="widget" aria-label="Data Analytics table widget">
+      <header>
+        <div class="title-row">
+          <h1 id="title">Data Analytics table</h1>
+          <div class="query-actions">
+            <span class="query-status" id="query-status" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="subtitle" id="subtitle" hidden></p>
+      </header>
+      <div class="table-wrap" id="table-wrap"></div>
+      <div class="table-pagination" id="pagination" hidden></div>
+      <section class="query-preview" id="query-preview" aria-label="Source query" hidden>
+        <div class="query-preview-heading" id="query-heading">Source query</div>
+        <pre class="source-code" id="query-code"></pre>
+      </section>
+      <footer id="footer" hidden>
+        <span class="count" id="count"></span>
+        <ul class="notes" id="notes"></ul>
+      </footer>
+    </article>
+    <script type="module" src="./datascience-table-widget.js"></script>
+  </body>
+</html>

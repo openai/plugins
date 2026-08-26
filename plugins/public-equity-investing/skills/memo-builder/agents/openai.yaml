@@ -1,0 +1,5 @@
+interface:
+  display_name: Public Equity Investing Memo Builder
+  short_description: Draft and review formal Public Equity Investing memos, committee notes, PM updates, and research notes.
+policy:
+  allow_implicit_invocation: false

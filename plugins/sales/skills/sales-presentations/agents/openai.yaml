@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sales Presentations"
+  short_description: "Build customer-facing sales decision decks"
+  default_prompt: "Use $sales-presentations to turn this grounded sales output into a customer-facing decision deck."
+policy:
+  allow_implicit_invocation: false

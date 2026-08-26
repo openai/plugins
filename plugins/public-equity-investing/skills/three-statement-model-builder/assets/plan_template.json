@@ -1,0 +1,530 @@
+{
+  "meta": {
+    "company_name": "Atlas Precision Components",
+    "industry": "industrials",
+    "currency": "USD",
+    "units": "USD_mm",
+    "as_of_date": "2026-05-11",
+    "accounting_basis": "us_gaap",
+    "model_purpose": "illustrative screen-grade operating forecast",
+    "prepared_for": "senior review smoke test"
+  },
+  "source_basis": [
+    {
+      "id": "src_hist_2025",
+      "label": "illustrative audited historical statements through FY2025",
+      "source_type": "template",
+      "as_of_date": "2025-12-31",
+      "evidence_label": "source_reported",
+      "covers": ["historicals", "income_statement", "balance_sheet", "cash_flow"],
+      "confidence": "medium",
+      "notes": "template data for smoke testing; replace with actual company financials before decision use"
+    },
+    {
+      "id": "src_mgmt_plan",
+      "label": "illustrative management operating plan assumptions",
+      "source_type": "template",
+      "as_of_date": "2026-04-30",
+      "evidence_label": "company_provided",
+      "covers": ["revenue", "costs", "working_capital", "ppe", "debt", "tax"],
+      "confidence": "medium",
+      "notes": "placeholder management-plan style assumptions for deterministic pipeline smoke testing"
+    },
+    {
+      "id": "src_placeholder",
+      "label": "template placeholder assumptions",
+      "source_type": "template",
+      "as_of_date": "2026-05-11",
+      "evidence_label": "placeholder",
+      "covers": ["scenarios", "sensitivities", "covenants"],
+      "confidence": "low",
+      "notes": "active placeholders force screen-grade status until replaced with sourced assumptions"
+    }
+  ],
+  "timeline": {
+    "start_period": "FY2026",
+    "start_year": 2026,
+    "horizon_periods": 5,
+    "periodicity": "annual"
+  },
+  "historicals": {
+    "income_statement": {
+      "FY2024": {
+        "revenue": 620.0,
+        "cogs": 390.0,
+        "opex": 130.0,
+        "da": 34.0,
+        "interest": 18.0,
+        "taxes": 12.0,
+        "net_income": 36.0
+      },
+      "FY2025": {
+        "revenue": 680.0,
+        "cogs": 421.6,
+        "opex": 142.8,
+        "da": 36.0,
+        "interest": 20.0,
+        "taxes": 15.9,
+        "net_income": 43.7
+      }
+    },
+    "balance_sheet": {
+      "FY2024": {
+        "cash": 28.0,
+        "ar": 82.0,
+        "inventory": 95.0,
+        "other_current_assets": 18.0,
+        "ppe_net": 260.0,
+        "other_assets": 55.0,
+        "ap": 60.0,
+        "accrued_expenses": 44.0,
+        "deferred_revenue": 8.0,
+        "debt": 300.0,
+        "other_liabilities": 40.0,
+        "common_equity": 50.0,
+        "retained_earnings": 36.0
+      },
+      "FY2025": {
+        "cash": 35.0,
+        "ar": 90.0,
+        "inventory": 102.0,
+        "other_current_assets": 20.0,
+        "ppe_net": 284.0,
+        "other_assets": 57.0,
+        "ap": 66.0,
+        "accrued_expenses": 48.0,
+        "deferred_revenue": 9.0,
+        "debt": 305.0,
+        "other_liabilities": 42.0,
+        "common_equity": 50.0,
+        "retained_earnings": 68.0
+      }
+    },
+    "cash_flow": {
+      "FY2025": {
+        "net_income": 43.7,
+        "da": 36.0,
+        "change_nwc": 6.0,
+        "cfo": 73.7,
+        "capex": 60.0,
+        "debt_draws": 15.0,
+        "debt_repayments": 10.0,
+        "dividends": 11.7,
+        "cash_change": 7.0,
+        "ending_cash": 35.0
+      }
+    },
+    "debt_schedule": {
+      "FY2025": {
+        "beginning_debt": 300.0,
+        "draws": 15.0,
+        "repayments": 10.0,
+        "ending_debt": 305.0
+      }
+    },
+    "ppe": {
+      "FY2025": {
+        "beginning_ppe": 260.0,
+        "capex": 60.0,
+        "depreciation": 36.0,
+        "disposals": 0.0,
+        "ending_ppe": 284.0
+      }
+    },
+    "working_capital": {
+      "FY2025": {
+        "ar": 90.0,
+        "inventory": 102.0,
+        "other_current_assets": 20.0,
+        "ap": 66.0,
+        "accrued_expenses": 48.0,
+        "deferred_revenue": 9.0,
+        "nwc": 89.0
+      }
+    }
+  },
+  "revenue": {
+    "model": "segments",
+    "source_id": "src_mgmt_plan",
+    "segments": {
+      "core_components": {
+        "base_revenue": 470.0,
+        "growth_rates": {
+          "FY2026": 0.08,
+          "FY2027": 0.075,
+          "FY2028": 0.065,
+          "FY2029": 0.055,
+          "FY2030": 0.045
+        },
+        "evidence_label": "company_provided",
+        "source_id": "src_mgmt_plan"
+      },
+      "aftermarket_services": {
+        "base_revenue": 210.0,
+        "growth_rates": {
+          "FY2026": 0.115,
+          "FY2027": 0.105,
+          "FY2028": 0.095,
+          "FY2029": 0.08,
+          "FY2030": 0.065
+        },
+        "evidence_label": "company_provided",
+        "source_id": "src_mgmt_plan"
+      }
+    }
+  },
+  "costs": {
+    "source_id": "src_mgmt_plan",
+    "cogs": {
+      "method": "gross_margin",
+      "gross_margin": {
+        "FY2026": 0.385,
+        "FY2027": 0.392,
+        "FY2028": 0.398,
+        "FY2029": 0.402,
+        "FY2030": 0.405
+      },
+      "evidence_label": "company_provided",
+      "source_id": "src_mgmt_plan"
+    },
+    "opex": {
+      "method": "pct_revenue",
+      "pct_revenue": {
+        "FY2026": 0.205,
+        "FY2027": 0.200,
+        "FY2028": 0.195,
+        "FY2029": 0.190,
+        "FY2030": 0.188
+      },
+      "evidence_label": "company_provided",
+      "source_id": "src_mgmt_plan"
+    },
+    "payroll": {
+      "enabled": false
+    },
+    "other_costs": {}
+  },
+  "working_capital": {
+    "method": "days",
+    "source_id": "src_mgmt_plan",
+    "evidence_label": "company_provided",
+    "ar_days": {
+      "FY2026": 48.0,
+      "FY2027": 47.0,
+      "FY2028": 46.0,
+      "FY2029": 46.0,
+      "FY2030": 45.0
+    },
+    "inventory_days": {
+      "FY2026": 86.0,
+      "FY2027": 84.0,
+      "FY2028": 82.0,
+      "FY2029": 80.0,
+      "FY2030": 78.0
+    },
+    "ap_days": {
+      "FY2026": 57.0,
+      "FY2027": 58.0,
+      "FY2028": 59.0,
+      "FY2029": 60.0,
+      "FY2030": 60.0
+    },
+    "other_current_assets_pct_revenue": {
+      "FY2026": 0.030,
+      "FY2027": 0.030,
+      "FY2028": 0.029,
+      "FY2029": 0.029,
+      "FY2030": 0.028
+    },
+    "accrued_expenses_pct_revenue": {
+      "FY2026": 0.070,
+      "FY2027": 0.070,
+      "FY2028": 0.069,
+      "FY2029": 0.068,
+      "FY2030": 0.067
+    },
+    "deferred_revenue_pct_revenue": {
+      "FY2026": 0.014,
+      "FY2027": 0.014,
+      "FY2028": 0.014,
+      "FY2029": 0.013,
+      "FY2030": 0.013
+    }
+  },
+  "ppe": {
+    "source_id": "src_mgmt_plan",
+    "evidence_label": "company_provided",
+    "capex_method": "pct_revenue",
+    "capex_pct_revenue": {
+      "FY2026": 0.080,
+      "FY2027": 0.078,
+      "FY2028": 0.075,
+      "FY2029": 0.072,
+      "FY2030": 0.070
+    },
+    "depreciation_method": "pct_beginning_ppe",
+    "depreciation_pct_beginning_ppe": {
+      "FY2026": 0.135,
+      "FY2027": 0.135,
+      "FY2028": 0.132,
+      "FY2029": 0.130,
+      "FY2030": 0.128
+    },
+    "disposals": {}
+  },
+  "debt": {
+    "source_id": "src_mgmt_plan",
+    "evidence_label": "company_provided",
+    "beginning_debt": 305.0,
+    "beginning_revolver_drawn": 0.0,
+    "revolver_commitment": 75.0,
+    "mandatory_amortization": {
+      "FY2026": 8.0,
+      "FY2027": 10.0,
+      "FY2028": 12.0,
+      "FY2029": 14.0,
+      "FY2030": 16.0
+    },
+    "optional_draws": {},
+    "interest_rate": {
+      "FY2026": 0.075,
+      "FY2027": 0.073,
+      "FY2028": 0.071,
+      "FY2029": 0.070,
+      "FY2030": 0.070
+    },
+    "cash_sweep": {
+      "enabled": true,
+      "min_cash": 30.0,
+      "sweep_pct": 0.75
+    },
+    "covenants": {
+      "min_liquidity": 25.0,
+      "max_net_leverage": 3.75,
+      "min_interest_coverage": 2.0
+    }
+  },
+  "tax": {
+    "source_id": "src_mgmt_plan",
+    "evidence_label": "company_provided",
+    "book_tax_rate": 0.26,
+    "cash_tax_rate": 0.22,
+    "nol_balance": 0.0
+  },
+  "equity": {
+    "source_id": "src_mgmt_plan",
+    "evidence_label": "company_provided",
+    "common_equity": 50.0,
+    "dividends": {
+      "FY2026": 12.0,
+      "FY2027": 13.0,
+      "FY2028": 14.0,
+      "FY2029": 15.0,
+      "FY2030": 16.0
+    },
+    "buybacks": {},
+    "issuance": {}
+  },
+  "other_balance_sheet": {
+    "other_assets": 57.0,
+    "other_liabilities": 42.0
+  },
+  "scenarios": {
+    "base": {
+      "description": "management-plan style base case with modest operating leverage",
+      "evidence_label": "company_provided",
+      "overrides": {}
+    },
+    "downside": {
+      "description": "slower revenue, margin pressure, higher working capital drag, less debt paydown",
+      "evidence_label": "placeholder",
+      "overrides": {
+        "revenue": {
+          "segments": {
+            "core_components": {
+              "growth_rates": {
+                "FY2026": 0.035,
+                "FY2027": 0.030,
+                "FY2028": 0.025,
+                "FY2029": 0.020,
+                "FY2030": 0.020
+              }
+            },
+            "aftermarket_services": {
+              "growth_rates": {
+                "FY2026": 0.055,
+                "FY2027": 0.050,
+                "FY2028": 0.045,
+                "FY2029": 0.040,
+                "FY2030": 0.035
+              }
+            }
+          }
+        },
+        "costs": {
+          "cogs": {
+            "gross_margin": {
+              "FY2026": 0.365,
+              "FY2027": 0.365,
+              "FY2028": 0.368,
+              "FY2029": 0.370,
+              "FY2030": 0.372
+            }
+          },
+          "opex": {
+            "pct_revenue": {
+              "FY2026": 0.215,
+              "FY2027": 0.215,
+              "FY2028": 0.212,
+              "FY2029": 0.210,
+              "FY2030": 0.208
+            }
+          }
+        },
+        "working_capital": {
+          "ar_days": {
+            "FY2026": 52.0,
+            "FY2027": 53.0,
+            "FY2028": 53.0,
+            "FY2029": 52.0,
+            "FY2030": 52.0
+          },
+          "inventory_days": {
+            "FY2026": 92.0,
+            "FY2027": 92.0,
+            "FY2028": 90.0,
+            "FY2029": 90.0,
+            "FY2030": 88.0
+          },
+          "ap_days": {
+            "FY2026": 55.0,
+            "FY2027": 55.0,
+            "FY2028": 55.0,
+            "FY2029": 56.0,
+            "FY2030": 56.0
+          }
+        },
+        "ppe": {
+          "capex_pct_revenue": {
+            "FY2026": 0.082,
+            "FY2027": 0.082,
+            "FY2028": 0.080,
+            "FY2029": 0.078,
+            "FY2030": 0.076
+          }
+        },
+        "debt": {
+          "interest_rate": {
+            "FY2026": 0.083,
+            "FY2027": 0.083,
+            "FY2028": 0.082,
+            "FY2029": 0.081,
+            "FY2030": 0.080
+          },
+          "cash_sweep": {
+            "sweep_pct": 0.50
+          }
+        }
+      }
+    },
+    "upside": {
+      "description": "stronger services growth, better gross margin, modest working-capital improvement",
+      "evidence_label": "placeholder",
+      "overrides": {
+        "revenue": {
+          "segments": {
+            "core_components": {
+              "growth_rates": {
+                "FY2026": 0.105,
+                "FY2027": 0.095,
+                "FY2028": 0.080,
+                "FY2029": 0.065,
+                "FY2030": 0.055
+              }
+            },
+            "aftermarket_services": {
+              "growth_rates": {
+                "FY2026": 0.145,
+                "FY2027": 0.130,
+                "FY2028": 0.115,
+                "FY2029": 0.095,
+                "FY2030": 0.080
+              }
+            }
+          }
+        },
+        "costs": {
+          "cogs": {
+            "gross_margin": {
+              "FY2026": 0.395,
+              "FY2027": 0.405,
+              "FY2028": 0.412,
+              "FY2029": 0.417,
+              "FY2030": 0.420
+            }
+          },
+          "opex": {
+            "pct_revenue": {
+              "FY2026": 0.200,
+              "FY2027": 0.194,
+              "FY2028": 0.188,
+              "FY2029": 0.184,
+              "FY2030": 0.180
+            }
+          }
+        },
+        "working_capital": {
+          "ar_days": {
+            "FY2026": 46.0,
+            "FY2027": 45.0,
+            "FY2028": 44.0,
+            "FY2029": 44.0,
+            "FY2030": 43.0
+          },
+          "inventory_days": {
+            "FY2026": 82.0,
+            "FY2027": 80.0,
+            "FY2028": 78.0,
+            "FY2029": 76.0,
+            "FY2030": 74.0
+          },
+          "ap_days": {
+            "FY2026": 58.0,
+            "FY2027": 60.0,
+            "FY2028": 61.0,
+            "FY2029": 62.0,
+            "FY2030": 62.0
+          }
+        },
+        "ppe": {
+          "capex_pct_revenue": {
+            "FY2026": 0.078,
+            "FY2027": 0.075,
+            "FY2028": 0.072,
+            "FY2029": 0.070,
+            "FY2030": 0.068
+          }
+        },
+        "debt": {
+          "interest_rate": {
+            "FY2026": 0.072,
+            "FY2027": 0.070,
+            "FY2028": 0.069,
+            "FY2029": 0.068,
+            "FY2030": 0.068
+          },
+          "cash_sweep": {
+            "sweep_pct": 0.90
+          }
+        }
+      }
+    }
+  },
+  "sensitivities": {
+    "revenue_growth_shocks": [-0.05, 0.05],
+    "gross_margin_shocks": [-0.02, 0.02],
+    "dso_day_shocks": [5.0, -5.0],
+    "capex_pct_revenue_shocks": [0.01, -0.01],
+    "interest_rate_shocks": [0.01, -0.01]
+  }
+}

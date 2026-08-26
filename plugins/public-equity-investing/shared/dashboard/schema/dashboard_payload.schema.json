@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openai.com/public-equity-investing/dashboard_payload.schema.json",
+  "title": "Public Equity Investing Dashboard Payload",
+  "type": "object",
+  "required": ["kind", "title", "issuer", "tabs"],
+  "allOf": [
+    {
+      "if": {
+        "required": ["metadata"],
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "required": ["payload_stage"],
+            "properties": {
+              "payload_stage": {"const": "production"}
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["kind", "mode", "layout", "title", "issuer", "metadata", "hero", "snapshot", "tabs", "sources"],
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "required": [
+              "payload_stage",
+              "freeze_time",
+              "source_posture",
+              "readiness_label",
+              "readiness_posture",
+              "citation_policy",
+              "decision_context"
+            ],
+            "properties": {
+              "citation_policy": {"const": "strict"}
+            }
+          },
+          "hero": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "snapshot": {
+            "type": "array",
+            "minItems": 1
+          },
+          "sources": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "kind": {
+      "const": "public_equity_investing_dashboard.v1"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["tabs", "single_page"]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "object",
+      "properties": {
+        "ticker": {"type": "string"},
+        "name": {"type": "string"},
+        "exchange": {"type": "string"},
+        "sector": {"type": "string"},
+        "accent_color": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "payload_stage": {
+          "type": "string",
+          "enum": ["draft", "support", "production"]
+        },
+        "freeze_time": {"type": "string"},
+        "source_posture": {"type": "string"},
+        "readiness_label": {"type": "string"},
+        "readiness_posture": {"type": "string"},
+        "citation_policy": {
+          "type": "string",
+          "enum": ["warn", "strict"]
+        },
+        "decision_context": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "hero": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "snapshot": {
+      "type": "array",
+      "items": {"type": "object"}
+    },
+    "tabs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "modules"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "label": {"type": "string"},
+          "modules": {
+            "type": "array",
+            "items": {"type": "object"}
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "source_id": {"type": "string"},
+          "title": {"type": "string"},
+          "url": {"type": "string"},
+          "as_of": {"type": "string"},
+          "type": {"type": "string"},
+          "status": {"type": "string"},
+          "excerpt": {"type": "string"},
+          "pinpoint": {"type": "string"},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

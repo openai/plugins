@@ -1,0 +1,46 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "earnings_preview",
+  "layout": "single_page",
+  "title": "ExampleCo: Missing Source Fixture",
+  "issuer": {
+    "ticker": "EXCO",
+    "name": "ExampleCo"
+  },
+  "metadata": {
+    "payload_stage": "production",
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Source ledger intentionally omitted for negative validation.",
+    "readiness_label": "PM-ready fixture",
+    "readiness_posture": "pm_ready",
+    "citation_policy": "strict",
+    "decision_context": "Production dashboards must not pass without sources."
+  },
+  "hero": {
+    "headline": "ExampleCo: missing source ledger",
+    "dek": "This should fail production validation."
+  },
+  "snapshot": [
+    {
+      "label": "Status",
+      "value": "Blocked",
+      "detail": "Source ledger missing."
+    }
+  ],
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "stance": "Blocked",
+            "summary": "Production dashboards require a source ledger."
+          }
+        }
+      ]
+    }
+  ],
+  "sources": []
+}

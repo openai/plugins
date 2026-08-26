@@ -1,0 +1,6 @@
+interface:
+  display_name: "Research"
+  short_description: "Research UX pain and workflow friction for a digital product"
+  default_prompt: "Research user pain and workflow friction for this product."
+policy:
+  allow_implicit_invocation: false

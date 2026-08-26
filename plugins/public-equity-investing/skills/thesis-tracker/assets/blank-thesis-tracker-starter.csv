@@ -1,0 +1,18 @@
+section,field,value,notes
+Dashboard,Company / issuer,,
+Dashboard,Ticker / security,,
+Dashboard,Direction,,long / short / watchlist / rating
+Dashboard,Current thesis status,untested,"strengthening / intact / watch / impaired / broken / changed / untested / retired"
+Original underwriting,One-sentence thesis,,
+Original underwriting,Variant perception,,
+Original underwriting,Consensus / market setup,,
+Original underwriting,Valuation anchor,,
+Original underwriting,Kill criteria,,
+Evidence ledger,Date,,append-only
+Evidence ledger,Source,,
+Evidence ledger,Evidence fact,,
+Evidence ledger,Pillar affected,,
+Evidence ledger,Signal,,confirming / neutral / mixed / weakening / invalidating
+Decision log,Date,,append-only
+Decision log,Decision,,add / hold / trim / exit / cover / hedge / wait / re-underwrite
+Decision log,Next review,,

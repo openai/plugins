@@ -1,0 +1,119 @@
+{
+  "apps": {
+    "slack": {
+      "id": "asdk_app_69a1d78e929881919bba0dbda1f6436d",
+      "category": "Team communication",
+      "optional": true
+    },
+    "teams": {
+      "id": "connector_246af0940da3457da0e751171dc1ce60",
+      "category": "Team communication",
+      "optional": true
+    },
+    "notion": {
+      "id": "asdk_app_69c18c28f1188191bf5b8445c4ab0a2e",
+      "category": "Company docs",
+      "optional": true
+    },
+    "gmail": {
+      "id": "connector_2128aebfecb84f64a069897515042a44",
+      "category": "Email context",
+      "optional": true
+    },
+    "outlook_email": {
+      "id": "connector_4aaab2856305417b993eca9a216aaf6e",
+      "category": "Email context",
+      "optional": true
+    },
+    "outlook_calendar": {
+      "id": "connector_e6a7394682e24467ac68c60696f275a4",
+      "category": "Calendar context",
+      "optional": true
+    },
+    "google_calendar": {
+      "id": "connector_947e0d954944416db111db556030eea6",
+      "category": "Calendar context",
+      "optional": true
+    },
+    "google_drive": {
+      "id": "connector_5f3c8c41a1e54ad7a76272c89e2554fa",
+      "category": "Company docs",
+      "optional": true
+    },
+    "databricks": {
+      "id": "templated_apps_Databricks",
+      "category": "Data warehouse",
+      "optional": true
+    },
+    "bigquery": {
+      "id": "connector_7c3f2c8cdbf64bb0b183ff52f527a06e",
+      "category": "Data warehouse",
+      "optional": true
+    },
+    "snowflake": {
+      "id": "templated_apps_69ebf5c883c881919ef2719759f226f6",
+      "category": "Data warehouse",
+      "optional": true
+    },
+    "sharepoint": {
+      "id": "connector_1e4f6a44acf14e3ca1d96672f8c945bc",
+      "category": "Company docs",
+      "optional": true
+    },
+    "github": {
+      "id": "connector_76869538009648d5b282a4bb21c3d157",
+      "category": "Code repository",
+      "optional": true
+    },
+    "statsig": {
+      "id": "asdk_app_6967f065ac9481918969c660ff7686e9",
+      "category": "Behavior signals",
+      "optional": true
+    },
+    "sites": {
+      "id": "connector_20205bf7d4e99a89d7154bb849718324",
+      "category": "Application hosting",
+      "optional": true
+    },
+    "hex": {
+      "id": "connector_690a9430a270819196671dcb4c95898e",
+      "category": "Notebook lab",
+      "optional": true
+    },
+    "deepnote": {
+      "id": "asdk_app_69fb51f9519081919c1f3e44ea9a5a05",
+      "category": "Notebook lab",
+      "optional": true
+    },
+    "amplitude": {
+      "id": "connector_690e2dabf430819196f8b3701ec838ec",
+      "category": "Behavior signals",
+      "optional": true
+    },
+    "mixpanel": {
+      "id": "asdk_app_69b2e9aed45c8191b254b207dfcc2bb4",
+      "category": "Behavior signals",
+      "optional": true
+    },
+    "posthog": {
+      "id": "asdk_app_699caef2d680819188727b0ddbb349dd",
+      "category": "Behavior signals",
+      "optional": true
+    },
+    "omni-analytics": {
+      "id": "asdk_app_694e8b8715108191a49fe2db4398d9e2",
+      "category": "Dashboards and BI",
+      "optional": true
+    },
+    "metabase": {
+      "id": "templated_apps_6a044bbb47ec819193270b902fa5cd03",
+      "category": "Dashboards and BI",
+      "optional": true
+    },
+    "thoughtspot": {
+      "id": "asdk_app_69d8425f7a1c8191a438821b9c553b79",
+      "category": "Dashboards and BI",
+      "optional": true
+    }
+  }
+}

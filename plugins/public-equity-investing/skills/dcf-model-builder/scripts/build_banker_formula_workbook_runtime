@@ -1,0 +1,1120 @@
+#!/usr/bin/env python3
+"""Materialize the bundled DCF banker formula workbook template from plan.json.
+
+This is a template materializer: it preserves the shipped workbook's formulas,
+styles, tabs, and checks, then writes plan-derived inputs, source notes, and
+posture warnings into the control areas.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import sys
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Tuple
+from xml.etree import ElementTree as ET
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+SKILL_ROOT = SCRIPT_DIR.parent
+PLUGIN_ROOT = SKILL_ROOT.parents[1]
+sys.path.insert(0, str(SCRIPT_DIR))
+if str(PLUGIN_ROOT) not in sys.path:
+    sys.path.insert(0, str(PLUGIN_ROOT))
+
+from skill_core import load_json, validate_plan_structure  # noqa: E402
+from shared.model_citations import validate_model_citations  # noqa: E402
+from shared.workbook_inspection import inspect_formula_workbook  # noqa: E402
+
+NS_MAIN = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+NS_REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+ET.register_namespace("", NS_MAIN)
+ET.register_namespace("r", NS_REL)
+
+DEFAULT_TEMPLATE = SKILL_ROOT / "assets" / "templates" / "banker_formula_workbook_template.xlsx"
+OUTPUT_WORKBOOK = "banker_formula_workbook.xlsx"
+OUTPUT_RUN_LOG = "banker_formula_workbook_run_log.json"
+OUTPUT_MANIFEST = "manifest.json"
+OUTPUT_MODEL_CITATIONS = "model_citations.json"
+PARTIAL_CONTEXT_WARNING = "Screen-grade only; open assumptions or evidence gaps remain."
+TEMPLATE_FORECAST_PERIODS = 6
+FORECAST_COLS = ["B", "C", "D", "E", "F", "G"]
+MODEL_FORECAST_COLS = ["E", "F", "G", "H", "I", "J"]
+
+REQUIRED_SHEETS = [
+    "Cover",
+    "Executive Summary",
+    "Control Panel",
+    "Historical Financials",
+    "Revenue Build",
+    "Margin Cost Build",
+    "Working Capital",
+    "Capex D&A",
+    "Tax Schedule",
+    "Unlevered FCF",
+    "WACC",
+    "Terminal Value",
+    "DCF Valuation",
+    "Sensitivities",
+    "Checks",
+    "Source Notes",
+]
+
+
+class FormulaValue:
+    """Formula payload for an updated workbook cell."""
+
+    def __init__(self, expression: str) -> None:
+        self.expression = expression
+
+
+def formula(expression: str) -> FormulaValue:
+    return FormulaValue(expression)
+
+
+def _file_record(path: Path, role: str, description: str) -> Dict[str, Any]:
+    return {
+        "path": str(path),
+        "role": role,
+        "description": description,
+        "exists": True if path.name == OUTPUT_MANIFEST else path.exists(),
+    }
+
+
+def write_output_manifest(output_dir: Path, run_log: Dict[str, Any]) -> Dict[str, Any]:
+    manifest_path = output_dir / OUTPUT_MANIFEST
+    workbook_path = output_dir / OUTPUT_WORKBOOK
+    run_log_path = output_dir / OUTPUT_RUN_LOG
+    model_citations_path = output_dir / OUTPUT_MODEL_CITATIONS
+    hard_failures = run_log.get("hard_failures", [])
+    failed = bool(hard_failures)
+    status = run_log.get("status") or ("failed" if failed else "completed")
+    readiness_reason = (
+        "Formula workbook was written, but readiness gates failed. Treat it as a diagnostic artifact until repaired."
+        if failed
+        else ""
+    )
+    manifest = {
+        "manifest_version": "1.0",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "skill": "dcf-model-builder",
+        "status": status,
+        "artifact_mode": "banker_formula_workbook",
+        "model_status": run_log.get("model_status"),
+        "output_dir": str(output_dir),
+        "primary_human_deliverable": str(workbook_path),
+        "first_read": {"path": str(workbook_path), "role": "primary_human_deliverable", "why": "Open the formula workbook first; support files are audit/provenance material."},
+        "human_deliverables": [_file_record(workbook_path, "human_deliverable", "banker formula workbook")],
+        "companion_deliverables": [],
+        "support_artifacts": [
+            {"path": str(run_log_path), "role": "support_artifact", "artifact_type": "json", "description": "Formula workbook run log.", "user_visible_default": False, "support_reason": "Run log is audit support for workbook generation."},
+            {"path": str(model_citations_path), "role": "support_artifact", "artifact_type": "json", "description": "Source-to-cell provenance ledger.", "user_visible_default": False, "support_reason": "Citation JSON is renderer/provenance support, not the main deliverable."},
+        ],
+        "support_artifacts_user_visible_default": False,
+        "blocked_or_partial_status": {
+            "status": "not-decision-ready" if failed else "complete",
+            "reason": readiness_reason,
+            "missing_inputs": run_log.get("missing_inputs", []),
+            "hard_failures": hard_failures,
+        },
+        "final_response_guidance": {
+            "lead_with": "workbook_diagnostic_status" if failed else "primary_human_deliverable",
+            "mention_support_artifacts": "include run log and model citations for repair" if failed else "only_briefly_unless_requested",
+        },
+        "agent_artifacts": [
+            _file_record(run_log_path, "agent_artifact", "formula workbook run log"),
+            _file_record(model_citations_path, "agent_artifact", "source-to-cell provenance ledger"),
+            _file_record(manifest_path, "agent_artifact", "agent-facing output manifest"),
+        ],
+        "hard_failure_count": len(hard_failures),
+        "warning_count": len(run_log.get("warnings", [])),
+        "discipline_note": (
+            "Do not use this workbook for target, rating, sizing, or circulation until formula inspection failures are repaired."
+            if failed
+            else "Use the workbook as the main deliverable; manifest/run_log files are agent-facing support artifacts."
+        ),
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    return manifest
+
+
+def qname(tag: str) -> str:
+    return f"{{{NS_MAIN}}}{tag}"
+
+
+def col_to_num(col: str) -> int:
+    value = 0
+    for char in col:
+        value = value * 26 + ord(char.upper()) - 64
+    return value
+
+
+def cell_ref_parts(ref: str) -> Tuple[str, int]:
+    import re
+
+    match = re.fullmatch(r"([A-Z]+)([0-9]+)", ref)
+    if not match:
+        raise ValueError(f"Invalid cell reference: {ref}")
+    return match.group(1), int(match.group(2))
+
+
+def cell_sort_key(ref: str) -> Tuple[int, int]:
+    col, row = cell_ref_parts(ref)
+    return row, col_to_num(col)
+
+
+def is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value))
+
+
+def source_for_topic(plan: Dict[str, Any], topic: str) -> Optional[Dict[str, Any]]:
+    for source in plan.get("source_basis", []):
+        if isinstance(source, dict) and source.get("topic") == topic:
+            return source
+    return None
+
+
+def source_for_id(plan: Dict[str, Any], source_id: Optional[str]) -> Optional[Dict[str, Any]]:
+    if not source_id:
+        return None
+    for source in plan.get("source_basis", []):
+        if isinstance(source, dict) and str(source.get("id")) == str(source_id):
+            return source
+    return None
+
+
+def source_details(plan: Dict[str, Any], *, source_id: Optional[str] = None, topic: Optional[str] = None) -> Dict[str, str]:
+    source = source_for_id(plan, source_id) or (source_for_topic(plan, topic) if topic else None)
+    if not source:
+        return {
+            "source_id": str(source_id or topic or "model-output"),
+            "evidence_label": "derived",
+            "source_label": "Model output",
+            "source_date": "",
+            "freshness": "derived",
+            "url": "",
+        }
+    return {
+        "source_id": str(source.get("id") or source_id or topic or "source"),
+        "evidence_label": str(source.get("label") or source.get("evidence_label") or ""),
+        "source_label": str(source.get("source_name") or source.get("label") or source.get("title") or source.get("id") or ""),
+        "source_date": str(source.get("as_of_date") or source.get("date") or source.get("accessed_at") or ""),
+        "freshness": str(source.get("confidence") or source.get("freshness") or ""),
+        "url": str(source.get("url") or source.get("source_url") or ""),
+    }
+
+
+def citation_record(
+    plan: Dict[str, Any],
+    workbook_path: Path,
+    *,
+    record_id: str,
+    title: str,
+    sheet: str,
+    cell: str,
+    line_item: str,
+    section: str,
+    formula: str,
+    value: Any = "",
+    topic: Optional[str] = None,
+    source_id: Optional[str] = None,
+    scenario: str = "base",
+) -> Dict[str, Any]:
+    source = source_details(plan, source_id=source_id, topic=topic)
+    short_label = f"Model: {sheet}!{cell}"
+    return {
+        "id": record_id,
+        "title": title,
+        "short_label": short_label,
+        "type": "model_cell",
+        "quality": "model_output",
+        "citation_id": record_id,
+        "workbook_path": str(workbook_path),
+        "sheet": sheet,
+        "cell_or_range": cell,
+        "cell": cell,
+        "range": cell,
+        "metric_name": title,
+        "value": "" if value is None else str(value),
+        "formula": formula,
+        "source_ids": [source["source_id"]],
+        "assumption_flag": source["evidence_label"] in {"assumption", "internal_estimate", "estimate"},
+        "tie_out_status": "model_generated",
+        "scenario": scenario,
+        "statement": "DCF",
+        "section": section,
+        "line_item": line_item,
+        "source_id": source["source_id"],
+        "evidence_label": source["evidence_label"],
+        "source_label": source["source_label"],
+        "source_date": source["source_date"],
+        "freshness": source["freshness"],
+        "url": source["url"],
+        "aliases": [line_item, title, short_label],
+        "notes": "Formula workbook cell provenance generated by Public Equity Investing DCF formula mode.",
+    }
+
+
+def build_model_citations(plan: Dict[str, Any], workbook_path: Path) -> List[Dict[str, Any]]:
+    bridge = plan.get("ev_to_equity_bridge", {})
+    wacc = plan.get("wacc", {})
+    terminal = plan.get("terminal_value", {})
+    forecast = plan.get("forecast", {})
+    return [
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-wacc-base",
+            title="Base WACC",
+            sheet="WACC",
+            cell="B17",
+            line_item="wacc",
+            section="Cost of Capital",
+            formula="=B8*B15+B13*B14",
+            topic="wacc",
+            source_id=wacc.get("source_id"),
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-terminal-value",
+            title="Terminal Value",
+            sheet="Terminal Value",
+            cell="B12",
+            line_item="terminal_value",
+            section="Terminal Value",
+            formula='=IF(B4="Gordon Growth",B10,B11)',
+            topic="terminal_value",
+            source_id=terminal.get("source_id"),
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-enterprise-value",
+            title="Enterprise Value",
+            sheet="DCF Valuation",
+            cell="B6",
+            line_item="enterprise_value",
+            section="Valuation",
+            formula="=B4+B5",
+            topic="forecast",
+            source_id=forecast.get("source_id"),
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-equity-value",
+            title="Equity Value",
+            sheet="DCF Valuation",
+            cell="B16",
+            line_item="equity_value",
+            section="EV to Equity Bridge",
+            formula="=B6-B11-B12-B13+B14+B15",
+            topic="net_debt",
+            source_id=bridge.get("net_debt_source_id"),
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-diluted-shares",
+            title="Diluted Shares",
+            sheet="DCF Valuation",
+            cell="B17",
+            line_item="diluted_shares",
+            section="EV to Equity Bridge",
+            formula="='Control Panel'!$B$86",
+            value=bridge.get("diluted_shares"),
+            topic="share_count",
+            source_id=bridge.get("share_count_source_id"),
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-value-per-share",
+            title="DCF Value Per Share",
+            sheet="DCF Valuation",
+            cell="B18",
+            line_item="value_per_share",
+            section="Valuation",
+            formula="=B16/B17",
+            topic="share_count",
+            source_id=bridge.get("share_count_source_id"),
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:dcf-historical-revenue",
+            title="Historical Revenue",
+            sheet="Historical Financials",
+            cell="D6",
+            line_item="revenue",
+            section="Historical Financials",
+            formula="input from plan.json",
+            value=plan.get("historicals", {}).get("revenue"),
+            topic="historicals",
+            source_id=plan.get("historicals", {}).get("source_id"),
+        ),
+    ]
+
+
+def source_row(source: Optional[Dict[str, Any]], fallback_note: str) -> Tuple[str, str, str, str, str]:
+    if not source:
+        return ("Missing source", "placeholder", "", "Low", fallback_note)
+    return (
+        str(source.get("source_name", source.get("id", "source_basis"))),
+        str(source.get("label", "placeholder")),
+        str(source.get("as_of_date", "")),
+        str(source.get("confidence", "low")).title(),
+        str(source.get("notes", fallback_note)),
+    )
+
+
+def screen_grade_required(plan: Dict[str, Any]) -> bool:
+    weak_labels = {"placeholder", "analyst_estimate"}
+    for source in plan.get("source_basis", []):
+        label = str(source.get("label", "")).lower()
+        confidence = str(source.get("confidence", "")).lower()
+        if label in weak_labels or confidence == "low":
+            return True
+    return False
+
+
+def forecast_period_labels(plan: Dict[str, Any], warnings: List[str]) -> List[str]:
+    start_year = int(plan.get("historicals", {}).get("latest_year", plan.get("timeline", {}).get("start_year", 2025))) + 1
+    horizon = int(plan.get("timeline", {}).get("horizon_years", TEMPLATE_FORECAST_PERIODS))
+    if horizon != TEMPLATE_FORECAST_PERIODS:
+        warnings.append(
+            f"Formula template has {TEMPLATE_FORECAST_PERIODS} forecast columns; plan has {horizon}. "
+            "Values were extended or truncated for template compatibility."
+        )
+    return [f"{start_year + i}E" for i in range(TEMPLATE_FORECAST_PERIODS)]
+
+
+def merged_updates(*parts: Dict[str, Any]) -> Dict[str, Any]:
+    updates: Dict[str, Any] = {}
+    for part in parts:
+        updates.update(part)
+    return updates
+
+
+def build_period_header_updates(plan: Dict[str, Any], warnings: List[str]) -> Dict[str, Dict[str, Any]]:
+    hist_year = int(plan.get("historicals", {}).get("latest_year", plan.get("timeline", {}).get("start_year", 2025)))
+    forecast_labels = forecast_period_labels(plan, warnings)
+    headers = {"B5": "N/A", "C5": "N/A", "D5": f"{hist_year}A"}
+    update_series(headers, 5, forecast_labels, MODEL_FORECAST_COLS)
+    return {
+        sheet: dict(headers)
+        for sheet in [
+            "Historical Financials",
+            "Revenue Build",
+            "Margin Cost Build",
+            "Working Capital",
+            "Capex D&A",
+            "Tax Schedule",
+            "Unlevered FCF",
+        ]
+    }
+
+
+def extend_values(value: Any, length: int, field_name: str, warnings: List[str], default: Optional[float] = None) -> List[Optional[float]]:
+    if isinstance(value, list):
+        values = [float(v) if is_number(v) else default for v in value]
+    elif is_number(value):
+        values = [float(value)] * length
+    else:
+        values = [default] * length
+
+    if not values:
+        values = [default] * length
+    if len(values) < length:
+        warnings.append(f"{field_name} supplied {len(values)} values; final value repeated to fill template forecast columns.")
+        fill = values[-1]
+        values = values + [fill] * (length - len(values))
+    if len(values) > length:
+        warnings.append(f"{field_name} supplied {len(values)} values; truncated to template forecast columns.")
+        values = values[:length]
+    return values
+
+
+def scenario_values(plan: Dict[str, Any], scenario_name: str, field: str, warnings: List[str], default: Optional[float] = None) -> List[Optional[float]]:
+    scenario = plan.get("scenarios", {}).get(scenario_name, {})
+    return extend_values(scenario.get(field), TEMPLATE_FORECAST_PERIODS, f"scenarios.{scenario_name}.{field}", warnings, default)
+
+
+def update_series(updates: Dict[str, Any], row: int, values: List[Any], cols: List[str] = FORECAST_COLS) -> None:
+    for col, value in zip(cols, values):
+        if value is not None:
+            updates[f"{col}{row}"] = value
+
+
+def ebitda_margin_values(plan: Dict[str, Any], scenario_name: str, warnings: List[str]) -> List[Optional[float]]:
+    ebit = scenario_values(plan, scenario_name, "ebit_margin", warnings, 0.0)
+    da = scenario_values(plan, scenario_name, "da_percent_revenue", warnings, 0.0)
+    return [(e or 0.0) + (d or 0.0) for e, d in zip(ebit, da)]
+
+
+def wacc_value(plan: Dict[str, Any]) -> float:
+    wacc = plan.get("wacc", {})
+    tax = float(wacc.get("marginal_tax_rate", 0.0) or 0.0)
+    cost_equity = (
+        float(wacc.get("risk_free_rate", 0.0) or 0.0)
+        + float(wacc.get("beta", 0.0) or 0.0) * float(wacc.get("equity_risk_premium", 0.0) or 0.0)
+        + float(wacc.get("size_premium", 0.0) or 0.0)
+        + float(wacc.get("company_specific_premium", 0.0) or 0.0)
+        + float(wacc.get("country_risk_premium", 0.0) or 0.0)
+    )
+    after_tax_debt = float(wacc.get("pre_tax_cost_of_debt", 0.0) or 0.0) * (1.0 - tax)
+    debt_pct = float(wacc.get("target_debt_pct", 0.0) or 0.0)
+    equity_pct = float(wacc.get("target_equity_pct", 1.0) or 1.0)
+    preferred_pct = float(wacc.get("preferred_pct", 0.0) or 0.0)
+    preferred_cost = float(wacc.get("pre_tax_cost_of_preferred", 0.0) or 0.0)
+    base = cost_equity * equity_pct + after_tax_debt * debt_pct + preferred_cost * preferred_pct
+    return base + float(plan.get("scenarios", {}).get("base", {}).get("wacc_adjustment", 0.0) or 0.0)
+
+
+def net_debt_value(plan: Dict[str, Any]) -> float:
+    bridge = plan.get("ev_to_equity_bridge", {})
+    debt_like = (
+        float(bridge.get("debt", 0.0) or 0.0)
+        + float(bridge.get("leases", 0.0) or 0.0)
+        + float(bridge.get("pensions", 0.0) or 0.0)
+        + float(bridge.get("other_debt_like_items", 0.0) or 0.0)
+    )
+    return debt_like - float(bridge.get("cash", 0.0) or 0.0)
+
+
+def current_share_price_value(plan: Dict[str, Any]) -> Optional[float]:
+    bridge = plan.get("ev_to_equity_bridge", {})
+    current_share_price = (
+        bridge.get("current_share_price")
+        or plan.get("market", {}).get("current_share_price")
+        or plan.get("meta", {}).get("current_share_price")
+    )
+    return float(current_share_price) if is_number(current_share_price) else None
+
+
+def data_quality_hard_failures(plan: Dict[str, Any], warnings: List[str]) -> List[str]:
+    failures: List[str] = []
+    hist = plan.get("historicals", {})
+    opening_ppe = hist.get("ppe")
+    if is_number(opening_ppe):
+        revenue = float(hist.get("revenue", 0.0) or 0.0)
+        revenues: List[float] = []
+        for growth in scenario_values(plan, "base", "revenue_growth", warnings, 0.0):
+            revenue *= 1.0 + float(growth or 0.0)
+            revenues.append(revenue)
+        capex_rates = scenario_values(plan, "base", "capex_percent_revenue", warnings, 0.0)
+        da_rates = scenario_values(plan, "base", "da_percent_revenue", warnings, 0.0)
+        ppe = float(opening_ppe)
+        if ppe < 0.0:
+            failures.append("negative_historical_ppe")
+            warnings.append("Source-backed opening PP&E is negative; reconcile the historical balance before investment use.")
+            return failures
+        for revenue_value, capex_rate, da_rate in zip(revenues, capex_rates, da_rates):
+            ppe += revenue_value * (float(capex_rate or 0.0) - float(da_rate or 0.0))
+            if ppe < -0.1:
+                failures.append("negative_forecast_ppe_rollforward")
+                warnings.append("Base-case capex and D&A assumptions drive ending PP&E below zero; reconcile reinvestment assumptions before investment use.")
+                break
+    return failures
+
+
+def build_control_panel_updates(
+    plan: Dict[str, Any], missing_inputs: List[str], warnings: List[str], model_status: str
+) -> Dict[str, Any]:
+    meta = plan.get("meta", {})
+    bridge = plan.get("ev_to_equity_bridge", {})
+    wacc = plan.get("wacc", {})
+    terminal = plan.get("terminal_value", {})
+    periods = forecast_period_labels(plan, warnings)
+    screen_grade = screen_grade_required(plan)
+
+    current_share_price = current_share_price_value(plan)
+    if current_share_price is None:
+        missing_inputs.append("current_share_price")
+
+    updates: Dict[str, Any] = {
+        "B4": meta.get("company", "Company"),
+        "B5": meta.get("currency", "USD"),
+        "B6": meta.get("units", "$mm except per-share data"),
+        "B7": meta.get("valuation_date", meta.get("as_of_date", "")),
+        "B8": model_status,
+        "B9": "banker_formula_workbook",
+        "B10": "Base",
+        "B11": "Yes" if plan.get("forecast", {}).get("mid_year_convention") else "No",
+        "B12": current_share_price if current_share_price is not None else 0.0,
+        "B13": PARTIAL_CONTEXT_WARNING if screen_grade else "Source-backed DCF; review checks before circulation.",
+        "B14": "Gordon Growth" if terminal.get("method") == "perpetual_growth" else "Exit Multiple",
+        "B15": 0.0,
+        "B69": wacc.get("risk_free_rate", 0.0),
+        "B70": wacc.get("beta", 0.0),
+        "B71": wacc.get("equity_risk_premium", 0.0),
+        "B72": wacc.get("size_premium", 0.0),
+        "B73": wacc.get("pre_tax_cost_of_debt", 0.0),
+        "B74": wacc.get("target_debt_pct", 0.0),
+        "B76": "No",
+        "B77": wacc_value(plan),
+        "B79": "No external links",
+        "B83": plan.get("scenarios", {}).get("base", {}).get("terminal_growth_rate", terminal.get("perpetual_growth_rate", 0.0)),
+        "B84": terminal.get("exit_ebitda_multiple", 0.0),
+        "B85": net_debt_value(plan),
+        "B86": bridge.get("diluted_shares", 0.0),
+        "B87": bridge.get("minorities", 0.0),
+        "B88": bridge.get("preferred_stock", 0.0),
+        "B89": float(bridge.get("non_operating_assets", 0.0) or 0.0) + float(bridge.get("associates", 0.0) or 0.0),
+        "B90": -float(bridge.get("options", 0.0) or 0.0),
+    }
+    update_series(updates, 18, periods)
+
+    row_map = {"base": 21, "downside": 22, "upside": 23}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "revenue_growth", warnings, 0.0))
+    row_map = {"base": 26, "downside": 27, "upside": 28}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, ebitda_margin_values(plan, scenario_name, warnings))
+    row_map = {"base": 31, "downside": 32, "upside": 33}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "ebit_margin", warnings, 0.0))
+    row_map = {"base": 36, "downside": 37, "upside": 38}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "da_percent_revenue", warnings, 0.0))
+    row_map = {"base": 41, "downside": 42, "upside": 43}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "capex_percent_revenue", warnings, 0.0))
+    row_map = {"base": 46, "downside": 47, "upside": 48}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "nwc_percent_revenue", warnings, 0.0))
+    row_map = {"base": 51, "downside": 52, "upside": 53}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "tax_rate", warnings, 0.0))
+    row_map = {"base": 56, "downside": 57, "upside": 58}
+    for scenario_name, row in row_map.items():
+        update_series(updates, row, scenario_values(plan, scenario_name, "tax_rate", warnings, 0.0))
+
+    # The DCF template uses component working-capital drivers; the plan schema
+    # currently provides total operating NWC % revenue. Map that total to AR and
+    # zero the remaining components so model NWC still equals the plan driver.
+    base_nwc = scenario_values(plan, "base", "nwc_percent_revenue", warnings, 0.0)
+    update_series(updates, 61, base_nwc)
+    for row in [62, 63, 64, 65]:
+        update_series(updates, row, [0.0] * TEMPLATE_FORECAST_PERIODS)
+    missing_inputs.append("working_capital_component_split")
+
+    if "gross_profit_margin" not in plan.get("historicals", {}) and "gross_margin" not in plan.get("historicals", {}):
+        missing_inputs.append("gross_profit_margin_or_gross_profit_history")
+    if current_share_price is None:
+        warnings.append("Current share price was not provided; formula workbook uses 0.0 placeholder for upside/downside until supplied.")
+    warnings.append("Total operating NWC % revenue was mapped to the AR bucket because no AR/inventory/AP/OCA/OCL split is present in plan.json.")
+    return updates
+
+
+def build_cover_updates(plan: Dict[str, Any], model_status: str) -> Dict[str, Any]:
+    meta = plan.get("meta", {})
+    company = str(meta.get("company", "Company"))
+    ticker = str(meta.get("ticker", "")).strip()
+    issuer = f"{company} ({ticker})" if ticker else company
+    return {
+        "A1": f"{issuer} - DCF Valuation Workbook",
+        "A3": "Investment snapshot",
+        "A4": "Company",
+        "B4": issuer,
+        "A5": "Valuation date",
+        "B5": meta.get("valuation_date", meta.get("as_of_date", "")),
+        "A6": "Model status",
+        "B6": model_status,
+        "A7": "Current / implied value per share",
+        "B7": formula('TEXT(\'Executive Summary\'!B10,"$#,##0.00")&" / "&TEXT(\'Executive Summary\'!B9,"$#,##0.00")'),
+        "A8": "Base-case upside / downside",
+        "B8": formula('TEXT(\'Executive Summary\'!B11,"0.0%")'),
+        "A9": "WACC / terminal growth",
+        "B9": formula('TEXT(\'Control Panel\'!B78,"0.0%")&" / "&TEXT(\'Control Panel\'!B83,"0.0%")'),
+        "A31": "Key diligence warnings",
+        "A32": "History coverage",
+        "B32": "Only source-backed historical periods are shown; unavailable history is intentionally blank.",
+        "A33": "Operating drivers",
+        "B33": "Use sector-relevant KPI drivers where material; read Source Notes for disclosed proxies.",
+        "A34": "Model checks",
+        "B34": "Review Checks and Source Notes before using model outputs.",
+        "A35": "Readiness",
+        "B35": model_status,
+    }
+
+
+def build_executive_summary_updates(plan: Dict[str, Any], model_status: str) -> Dict[str, Any]:
+    screen_grade = screen_grade_required(plan)
+    return {
+        "A3": "Posture warning",
+        "B3": (
+            "Not decision-ready; repair hard-failure checks before investment use."
+            if model_status == "not-decision-ready"
+            else PARTIAL_CONTEXT_WARNING if screen_grade else "Source-backed DCF; review checks before circulation."
+        ),
+        "B27": "Add source-backed multi-year history before relying on trend conclusions.",
+    }
+
+
+def build_historical_updates(plan: Dict[str, Any], missing_inputs: List[str], warnings: List[str]) -> Dict[str, Any]:
+    hist = plan.get("historicals", {})
+    source = source_for_topic(plan, "historicals")
+    label = str(source.get("label", hist.get("source_id", "placeholder"))) if source else "placeholder"
+    note = "Latest historical year populated from plan.json; add multi-year sourced history before circulation."
+    latest_year = hist.get("latest_year")
+    updates: Dict[str, Any] = {}
+    for col in ["B", "C"]:
+        for row in [6, 8, 10, 12, 13, 15, 16, 17, 18, 20, 21]:
+            updates[f"{col}{row}"] = ""
+    for ref, expression in {
+        "B9": 'IFERROR(B8/B6,"")',
+        "B11": 'IFERROR(B10/B6,"")',
+        "B14": 'IFERROR(B13/B6,"")',
+        "C7": 'IFERROR(C6/B6-1,"")',
+        "C9": 'IFERROR(C8/C6,"")',
+        "C11": 'IFERROR(C10/C6,"")',
+        "C14": 'IFERROR(C13/C6,"")',
+        "C19": 'IF(AND(ISNUMBER(B18),ISNUMBER(C18)),C18/C6-B18/B6,"")',
+        "D7": 'IFERROR(D6/C6-1,"")',
+        "D19": 'IF(AND(ISNUMBER(C18),ISNUMBER(D18)),D18/D6-C18/C6,"")',
+    }.items():
+        updates[ref] = formula(expression)
+    if is_number(hist.get("revenue")):
+        updates["D6"] = hist["revenue"]
+    gross_profit = hist.get("gross_profit")
+    gross_margin = hist.get("gross_profit_margin", hist.get("gross_margin"))
+    if is_number(gross_profit):
+        updates["D8"] = gross_profit
+    elif is_number(gross_margin) and is_number(hist.get("revenue")):
+        updates["D8"] = float(hist["revenue"]) * float(gross_margin)
+    else:
+        updates["D8"] = ""
+    if is_number(hist.get("ebitda")):
+        updates["D10"] = hist["ebitda"]
+    if is_number(hist.get("da")):
+        updates["D12"] = hist["da"]
+    if is_number(hist.get("ebit")):
+        updates["D13"] = hist["ebit"]
+    if is_number(hist.get("cash_taxes")):
+        updates["D15"] = hist["cash_taxes"]
+    updates["D16"] = hist.get("net_income", "")
+    if is_number(hist.get("capex")):
+        updates["D17"] = hist["capex"]
+    if is_number(hist.get("net_working_capital")):
+        updates["D18"] = hist["net_working_capital"]
+    if is_number(hist.get("unlevered_fcf")):
+        updates["D20"] = hist["unlevered_fcf"]
+    updates["D21"] = hist.get("ppe", "")
+
+    for row in [6, 8, 10, 12, 13, 15, 16, 17, 18, 20, 21]:
+        updates[f"K{row}"] = label
+        updates[f"L{row}"] = note
+    if not is_number(hist.get("net_income")):
+        updates["K16"] = "not provided"
+        updates["L16"] = "Net income was not supplied for this FCFF historical display."
+    if not is_number(hist.get("ppe")):
+        updates["K21"] = "not provided"
+        updates["L21"] = "Opening PP&E was not supplied; forecast roll-forward is withheld."
+    missing_inputs.append("three_year_historical_financials")
+    warnings.append("Only the latest source-backed historical year is available; earlier historical columns were intentionally blanked rather than retaining template values.")
+    return updates
+
+
+def build_revenue_updates(plan: Dict[str, Any]) -> Dict[str, Any]:
+    hist = plan.get("historicals", {})
+    revenue = float(hist.get("revenue", 0.0) or 0.0)
+    updates: Dict[str, Any] = {
+        "B8": "N/A",
+        "C8": "N/A",
+        "D8": "Actual",
+        "B10": "",
+        "C10": "",
+        "B11": "",
+        "C11": "",
+        "D10": revenue,
+        "D11": 0.0,
+    }
+    for ref, expression in {
+        "B12": 'IFERROR(B10/B14,"")',
+        "C9": 'IFERROR(C14/B14-1,"")',
+        "C12": 'IFERROR(C10/C14,"")',
+        "C15": 'IFERROR(C14/B14-1,"")',
+        "D9": 'IFERROR(D14/C14-1,"")',
+        "D15": 'IFERROR(D14/C14-1,"")',
+    }.items():
+        updates[ref] = formula(expression)
+    return updates
+
+
+def build_historical_formula_guard_updates(plan: Dict[str, Any], missing_inputs: List[str], warnings: List[str]) -> Dict[str, Dict[str, Any]]:
+    margin_updates: Dict[str, Any] = {}
+    for row in [10, 14, 16]:
+        margin_updates[f"B{row}"] = formula(f'IFERROR(B{row - 1 if row == 10 else 13 if row == 14 else 15}/B8,"")')
+        margin_updates[f"C{row}"] = formula(f'IFERROR(C{row - 1 if row == 10 else 13 if row == 14 else 15}/C8,"")')
+    margin_updates["C17"] = formula('IF(AND(ISNUMBER(B16),ISNUMBER(C16)),C16-B16,"")')
+    margin_updates["D17"] = formula('IF(AND(ISNUMBER(C16),ISNUMBER(D16)),D16-C16,"")')
+
+    wc_updates: Dict[str, Any] = {}
+    for col in ["B", "C", "D"]:
+        for row in [9, 10, 11, 12, 13, 14, 15]:
+            wc_updates[f"{col}{row}"] = formula('""')
+    for col in ["B", "C"]:
+        for row in [16, 17, 18, 19]:
+            wc_updates[f"{col}{row}"] = formula('""')
+    wc_updates["D17"] = plan.get("historicals", {}).get("change_nwc", "")
+    wc_updates["D18"] = formula('IFERROR(D16/D8,"")')
+
+    capex_updates: Dict[str, Any] = {
+        "B10": formula('IFERROR(B9/B8,"")'),
+        "C10": formula('IFERROR(C9/C8,"")'),
+        "B14": formula('IFERROR(B12/B8,"")'),
+        "C14": formula('IFERROR(C12/C8,"")'),
+        "B15": formula('IFERROR(B12/B11,"")'),
+        "C15": formula('IFERROR(C12/C11,"")'),
+    }
+    if is_number(plan.get("historicals", {}).get("ppe")):
+        for col in ["B", "C"]:
+            for row in [11, 13, 15]:
+                capex_updates[f"{col}{row}"] = "n.m."
+        capex_updates["D11"] = ""
+        capex_updates["D13"] = plan["historicals"]["ppe"]
+        capex_updates["D15"] = ""
+    else:
+        missing_inputs.append("historical_ppe_or_reinvestment_support")
+        warnings.append("PP&E roll-forward is withheld because no source-backed opening PP&E balance was supplied; capex and D&A sustainability requires review.")
+        for col in ["B", "C", "D", *MODEL_FORECAST_COLS]:
+            for row in [11, 13, 15]:
+                capex_updates[f"{col}{row}"] = "n.m."
+
+    tax_updates: Dict[str, Any] = {}
+    for col in ["B", "C"]:
+        tax_updates[f"{col}9"] = formula(f'IFERROR(\'Historical Financials\'!{col}$15/{col}8,"")')
+        tax_updates[f"{col}10"] = formula(f'{col}9')
+
+    fcf_updates: Dict[str, Any] = {
+        "B13": "",
+        "C13": "",
+        "D13": plan.get("historicals", {}).get("change_nwc", ""),
+    }
+    return {
+        "Margin Cost Build": margin_updates,
+        "Working Capital": wc_updates,
+        "Capex D&A": capex_updates,
+        "Tax Schedule": tax_updates,
+        "Unlevered FCF": fcf_updates,
+    }
+
+
+def build_checks_updates() -> Dict[str, Any]:
+    return {
+        "A21": "Ending PP&E non-negative when roll-forward modeled",
+        "B21": formula('IF(COUNT(\'Capex D&A\'!E13:J13)=0,"Not modeled",MIN(\'Capex D&A\'!E13:J13))'),
+        "C21": formula('IF(B21="Not modeled","OPEN",IF(B21>=0,"OK","FAIL"))'),
+        "D21": "A source-backed PP&E roll-forward must not project negative assets",
+        "E21": "Hard failure when modeled",
+    }
+
+
+def build_source_notes_updates(plan: Dict[str, Any]) -> Dict[str, Any]:
+    rows = {
+        5: ("historicals", "Replace with filings, audit reports, or normalized financials."),
+        6: ("forecast", "Replace with sourced operating forecast, management case, or approved analyst case."),
+        7: ("wacc", "Replace with market data as of valuation date."),
+        8: ("terminal_value", "Confirm long-run growth, exit multiple, and terminal ROIC support."),
+        9: ("net_debt", "Replace with latest balance sheet and debt-like item bridge."),
+        10: ("share_count", "Replace with latest diluted share count or treasury-stock-method schedule."),
+    }
+    updates: Dict[str, Any] = {}
+    for row, (topic, fallback_note) in rows.items():
+        source, label, as_of, confidence, note = source_row(source_for_topic(plan, topic), fallback_note)
+        updates[f"B{row}"] = source
+        updates[f"C{row}"] = label
+        updates[f"D{row}"] = as_of
+        updates[f"E{row}"] = confidence
+        updates[f"F{row}"] = note
+        updates[f"G{row}"] = "Model owner"
+        updates[f"H{row}"] = "Open" if label in {"placeholder", "analyst_estimate"} or confidence.lower() == "low" else "Reviewed"
+
+    valuation_date = plan.get("meta", {}).get("valuation_date", "")
+    market = plan.get("market", {})
+    market_source = source_for_id(plan, market.get("source_id")) or source_for_topic(plan, "market_data")
+    price = current_share_price_value(plan)
+    market_fallback = "Current share price was not supplied with an attributable market-data source."
+    if price is not None:
+        market_fallback = f"Current share price input is {price:.2f}; add a source_basis market_data record before investment use."
+    price_source, price_label, price_as_of, price_confidence, price_note = source_row(market_source, market_fallback)
+    if price is None:
+        price_note = market_fallback
+    updates.update(
+        {
+            "B11": price_source,
+            "C11": price_label,
+            "D11": price_as_of or valuation_date,
+            "E11": price_confidence,
+            "F11": price_note,
+            "G11": "Model owner",
+            "H11": "Open" if price is None or price_label in {"placeholder", "analyst_estimate"} or price_confidence.lower() == "low" else "Reviewed",
+            "B12": "Plan schema",
+            "C12": "derived",
+            "D12": valuation_date,
+            "E12": "Medium",
+            "F12": "Forecast begins from total revenue unless a sector-relevant operating-driver schedule is provided; disclose any KPI proxy used for valuation.",
+            "G12": "Model owner",
+            "H12": "Open",
+        }
+    )
+    return updates
+
+
+def xml_sheet_paths(xlsx_path: Path) -> Dict[str, str]:
+    with zipfile.ZipFile(xlsx_path) as zf:
+        workbook = ET.fromstring(zf.read("xl/workbook.xml"))
+        rels = ET.fromstring(zf.read("xl/_rels/workbook.xml.rels"))
+        relmap = {rel.attrib["Id"]: rel.attrib["Target"] for rel in rels}
+        sheets_el = workbook.find(qname("sheets"))
+        if sheets_el is None:
+            return {}
+        paths: Dict[str, str] = {}
+        for sheet in sheets_el:
+            rid = sheet.attrib[f"{{{NS_REL}}}id"]
+            target = relmap[rid].lstrip("/")
+            paths[sheet.attrib["name"]] = target if target.startswith("xl/") else f"xl/{target}"
+        return paths
+
+
+def get_or_create_row(sheet_root: ET.Element, row_num: int) -> ET.Element:
+    sheet_data = sheet_root.find(qname("sheetData"))
+    if sheet_data is None:
+        sheet_data = ET.SubElement(sheet_root, qname("sheetData"))
+    for row in sheet_data.findall(qname("row")):
+        if int(row.attrib.get("r", "0")) == row_num:
+            return row
+    row = ET.Element(qname("row"), {"r": str(row_num)})
+    inserted = False
+    for idx, existing in enumerate(list(sheet_data)):
+        if existing.tag == qname("row") and int(existing.attrib.get("r", "0")) > row_num:
+            sheet_data.insert(idx, row)
+            inserted = True
+            break
+    if not inserted:
+        sheet_data.append(row)
+    return row
+
+
+def get_or_create_cell(row: ET.Element, ref: str) -> ET.Element:
+    for cell in row.findall(qname("c")):
+        if cell.attrib.get("r") == ref:
+            return cell
+    cell = ET.Element(qname("c"), {"r": ref})
+    new_col = col_to_num(cell_ref_parts(ref)[0])
+    inserted = False
+    for idx, existing in enumerate(list(row)):
+        if existing.tag == qname("c") and col_to_num(cell_ref_parts(existing.attrib.get("r", "A1"))[0]) > new_col:
+            row.insert(idx, cell)
+            inserted = True
+            break
+    if not inserted:
+        row.append(cell)
+    return cell
+
+
+def set_cell_value(cell: ET.Element, value: Any) -> None:
+    ref = cell.attrib.get("r", "")
+    style = cell.attrib.get("s")
+    cell.attrib.clear()
+    cell.attrib["r"] = ref
+    if style is not None:
+        cell.attrib["s"] = style
+    for child in list(cell):
+        cell.remove(child)
+    if isinstance(value, FormulaValue):
+        f = ET.SubElement(cell, qname("f"))
+        f.text = value.expression
+        return
+    if is_number(value):
+        v = ET.SubElement(cell, qname("v"))
+        v.text = str(float(value))
+    else:
+        cell.attrib["t"] = "inlineStr"
+        is_el = ET.SubElement(cell, qname("is"))
+        t = ET.SubElement(is_el, qname("t"))
+        t.text = "" if value is None else str(value)
+
+
+def patch_sheet_xml(xml_bytes: bytes, updates: Dict[str, Any]) -> bytes:
+    root = ET.fromstring(xml_bytes)
+    for ref, value in sorted(updates.items(), key=lambda item: cell_sort_key(item[0])):
+        _, row_num = cell_ref_parts(ref)
+        row = get_or_create_row(root, row_num)
+        cell = get_or_create_cell(row, ref)
+        cell.attrib["r"] = ref
+        set_cell_value(cell, value)
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def materialize_workbook(template: Path, output: Path, updates_by_sheet: Dict[str, Dict[str, Any]]) -> None:
+    sheet_paths = xml_sheet_paths(template)
+    missing = [sheet for sheet in updates_by_sheet if sheet not in sheet_paths]
+    if missing:
+        raise ValueError(f"Template missing sheets required for updates: {missing}")
+    with zipfile.ZipFile(template, "r") as zin, zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            for sheet, updates in updates_by_sheet.items():
+                if item.filename == sheet_paths[sheet]:
+                    data = patch_sheet_xml(data, updates)
+                    break
+            zout.writestr(item, data)
+
+
+def refresh_workbook_status(workbook_path: Path, plan: Dict[str, Any], model_status: str) -> None:
+    refreshed_path = workbook_path.with_name(f".{workbook_path.name}.status-refresh.xlsx")
+    materialize_workbook(
+        workbook_path,
+        refreshed_path,
+        {
+            "Cover": {"B6": model_status, "B35": model_status},
+            "Executive Summary": {"B3": build_executive_summary_updates(plan, model_status)["B3"]},
+            "Control Panel": {"B8": model_status},
+        },
+    )
+    refreshed_path.replace(workbook_path)
+
+
+def inspect_workbook(path: Path) -> Dict[str, Any]:
+    return inspect_formula_workbook(
+        path,
+        required_sheets=REQUIRED_SHEETS,
+        workbook_type="dcf",
+    )
+
+def build(plan_path: Path, output_dir: Path, template: Path) -> Dict[str, Any]:
+    plan = load_json(plan_path)
+    validation_errors = validate_plan_structure(plan)
+    if validation_errors:
+        raise ValueError("Plan validation failed before workbook materialization: " + "; ".join(validation_errors))
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    workbook_path = output_dir / OUTPUT_WORKBOOK
+    run_log_path = output_dir / OUTPUT_RUN_LOG
+    model_citations_path = output_dir / OUTPUT_MODEL_CITATIONS
+    warnings: List[str] = []
+    missing_inputs: List[str] = []
+    hard_failures = data_quality_hard_failures(plan, warnings)
+    initial_model_status = "not-decision-ready" if hard_failures else ("screen-grade" if screen_grade_required(plan) else "senior-review-ready")
+    period_updates = build_period_header_updates(plan, warnings)
+    guarded_historical_updates = build_historical_formula_guard_updates(plan, missing_inputs, warnings)
+    updates_by_sheet = {
+        "Cover": build_cover_updates(plan, initial_model_status),
+        "Executive Summary": build_executive_summary_updates(plan, initial_model_status),
+        "Control Panel": build_control_panel_updates(plan, missing_inputs, warnings, initial_model_status),
+        "Historical Financials": merged_updates(period_updates["Historical Financials"], build_historical_updates(plan, missing_inputs, warnings)),
+        "Revenue Build": merged_updates(period_updates["Revenue Build"], build_revenue_updates(plan)),
+        "Margin Cost Build": merged_updates(period_updates["Margin Cost Build"], guarded_historical_updates["Margin Cost Build"]),
+        "Working Capital": merged_updates(period_updates["Working Capital"], guarded_historical_updates["Working Capital"]),
+        "Capex D&A": merged_updates(period_updates["Capex D&A"], guarded_historical_updates["Capex D&A"]),
+        "Tax Schedule": merged_updates(period_updates["Tax Schedule"], guarded_historical_updates["Tax Schedule"]),
+        "Unlevered FCF": merged_updates(period_updates["Unlevered FCF"], guarded_historical_updates["Unlevered FCF"]),
+        "Checks": build_checks_updates(),
+        "Source Notes": build_source_notes_updates(plan),
+    }
+    materialize_workbook(template, workbook_path, updates_by_sheet)
+    inspection = inspect_workbook(workbook_path)
+    model_citations = build_model_citations(plan, workbook_path)
+    model_citations_path.write_text(
+        json.dumps({"model_citations": model_citations}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    inspection["anchor_map_path"] = str(model_citations_path)
+    inspection["anchor_map_present"] = len(model_citations) >= 5
+    citation_validation_errors = validate_model_citations({"model_citations": model_citations}, strict=True)
+
+    if not inspection["required_sheets_present"]:
+        hard_failures.append("banker_formula_workbook_missing_required_sheets")
+    if inspection["formula_count"] < inspection["minimum_formula_count"]:
+        hard_failures.append("banker_formula_workbook_formula_count_below_threshold")
+    if not inspection["required_formula_sheets_populated"]:
+        hard_failures.append("banker_formula_workbook_missing_required_formula_sheets")
+    if not inspection["cover_first"]:
+        hard_failures.append("banker_formula_workbook_cover_not_first_visible_sheet")
+    if not inspection.get("has_named_ranges") and not inspection.get("anchor_map_present"):
+        hard_failures.append("banker_formula_workbook_missing_named_ranges_or_anchor_map")
+    if citation_validation_errors:
+        hard_failures.append("banker_formula_workbook_model_citations_invalid")
+    if not inspection["has_styles"]:
+        hard_failures.append("banker_formula_workbook_styles_missing")
+    if not inspection["no_external_links"]:
+        hard_failures.append("banker_formula_workbook_contains_external_links")
+
+    model_status = "not-decision-ready" if hard_failures else ("screen-grade" if screen_grade_required(plan) else "senior-review-ready")
+    if model_status != initial_model_status:
+        refresh_workbook_status(workbook_path, plan, model_status)
+    run_status = "failed" if hard_failures else "completed"
+    run_log = {
+        "status": run_status,
+        "model_status": model_status,
+        "readiness_effect": model_status.replace("-", "_"),
+        "decision_impact": (
+            "Workbook readiness gates failed; the diagnostic workbook must not drive target, rating, sizing, or circulation."
+            if hard_failures
+            else "Formula workbook passed integrity gates; Excel or compatible software should recalculate on open before final circulation."
+        ),
+        "workbook_mode": "banker_formula_workbook",
+        "artifact_level": "banker_formula_workbook_template_materializer",
+        "template_path": str(template),
+        "output_paths": {
+            "banker_formula_workbook": str(workbook_path),
+            "banker_formula_workbook_run_log": str(run_log_path),
+            "model_citations": str(model_citations_path),
+            "manifest": str(output_dir / OUTPUT_MANIFEST),
+        },
+        "partial_context_warning": PARTIAL_CONTEXT_WARNING if screen_grade_required(plan) else None,
+        "missing_inputs": sorted(set(missing_inputs)),
+        "warnings": sorted(set(warnings)),
+        "hard_failures": hard_failures,
+        "workbook_inspection": inspection,
+        "model_citations_count": len(model_citations),
+        "model_citation_validation_errors": citation_validation_errors,
+        "formula_mode_limitations": [
+            "Preserves and populates the bundled DCF formula workbook template.",
+            "Does not synthesize new tabs, formulas, or workbook architecture beyond the shipped template.",
+            "The template has six forecast columns; plan vectors are extended or truncated for formula-mode compatibility.",
+            "Excel or compatible spreadsheet software should recalculate formulas after opening.",
+        ],
+    }
+    run_log_path.write_text(json.dumps(run_log, indent=2), encoding="utf-8")
+    write_output_manifest(output_dir, run_log)
+    return run_log
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Materialize the DCF banker formula workbook template from plan.json.")
+    parser.add_argument("plan_json", type=Path)
+    parser.add_argument("--output-dir", type=Path, default=None, help="Output directory for workbook, run log, and manifest. Defaults to ./output.")
+    parser.add_argument("--template", type=Path, default=DEFAULT_TEMPLATE)
+    args = parser.parse_args()
+    output_dir = args.output_dir if args.output_dir else Path.cwd() / "output"
+    try:
+        run_log = build(args.plan_json, output_dir, args.template)
+    except Exception as exc:
+        print(f"banker_formula_workbook materialization FAILED: {exc}", file=sys.stderr)
+        return 1
+    print(
+        json.dumps(
+            {
+                "model_status": run_log["model_status"],
+                "status": run_log["status"],
+                "workbook_mode": run_log["workbook_mode"],
+                "output_paths": run_log["output_paths"],
+                "hard_failures": run_log["hard_failures"],
+                "warnings": run_log["warnings"],
+                "missing_inputs": run_log["missing_inputs"],
+            },
+            indent=2,
+        )
+    )
+    return 2 if run_log["hard_failures"] else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

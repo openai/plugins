@@ -1,0 +1,6 @@
+interface:
+  display_name: "Index"
+  short_description: "Sales workflows and customer decision decks"
+  default_prompt: "Use $index to choose a Sales workflow or build a customer-ready business case and decision deck."
+policy:
+  allow_implicit_invocation: true

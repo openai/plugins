@@ -1,0 +1,185 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "portfolio_risk_position_sizing",
+  "layout": "single_page",
+  "title": "ACME Position Sizing Dashboard",
+  "subtitle": "Synthetic strict-mode example for sizing and risk constraints.",
+  "issuer": {
+    "ticker": "ACME",
+    "name": "ACME Software",
+    "sector": "Software",
+    "brand_dark_color": "#1f4b7a"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic thesis, portfolio, and market-data examples",
+    "citation_policy": "strict",
+    "decision_context": "Whether the position size should be constrained by downside loss or liquidity.",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Risk position sizing",
+    "headline": "Size is capped by liquidity and downside-loss constraints",
+    "dek": "The dashboard separates the PM action from the support bundle.",
+    "callout_label": "Binding Constraint",
+    "callout": "Liquidity exit, not conviction, is the binding sizing constraint in the synthetic example.",
+    "citations": [
+      "S1",
+      "S2"
+    ]
+  },
+  "snapshot": [
+    {
+      "label": "Action",
+      "value": "Start small",
+      "detail": "Use a starter size until live liquidity and downside inputs are refreshed.",
+      "status": "watch",
+      "citations": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "label": "Constraint",
+      "value": "Liquidity",
+      "detail": "Synthetic ADV support indicates exit capacity is the tightest check.",
+      "status": "risk",
+      "citations": [
+        "S2"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "sizing-decision",
+      "label": "Decision",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "label": "Sizing read",
+            "stance": "Watch",
+            "summary": "Use a starter position until liquidity, volatility, and downside support are refreshed.",
+            "stock_skew": "Upside is plausible but exit capacity gates the size.",
+            "citations": [
+              "S1",
+              "S2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "constraints",
+      "label": "Constraints",
+      "modules": [
+        {
+          "type": "table",
+          "data": {
+            "columns": [
+              "Constraint",
+              "Current read",
+              "Sizing implication",
+              "Open item"
+            ],
+            "rows": [
+              {
+                "Constraint": "Downside loss",
+                "Current read": "Needs refreshed target and downside case",
+                "Sizing implication": "Caps starter size",
+                "Open item": "Refresh target/downside support",
+                "citations": [
+                  "S1"
+                ]
+              },
+              {
+                "Constraint": "Liquidity exit",
+                "Current read": "Most restrictive based on synthetic ADV support",
+                "Sizing implication": "Binding constraint",
+                "Open item": "Refresh ADV and participation assumption",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "scenario_map",
+          "data": {
+            "cases": [
+              {
+                "label": "Base",
+                "status": "base",
+                "summary": "Position works if product catalyst and retention evidence hold.",
+                "citations": [
+                  "S1"
+                ]
+              },
+              {
+                "label": "Stress",
+                "status": "bear",
+                "summary": "Liquidity stress forces slower exit and smaller size.",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "monitoring",
+      "label": "Monitoring",
+      "modules": [
+        {
+          "type": "timeline",
+          "data": {
+            "events": [
+              {
+                "date": "Next review",
+                "event": "Refresh market data and risk inputs",
+                "impact": "Determines whether the starter size can be increased",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "missing_evidence",
+          "data": {
+            "items": [
+              "Live NAV, limits, price, ADV, volatility, borrow, and downside inputs are required before decision-grade sizing.",
+              "Factor and portfolio exposure outputs are unavailable in this synthetic example."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Synthetic ACME thesis summary",
+      "url": "https://example.com/acme-thesis",
+      "as_of": "2026-05-18",
+      "type": "user thesis",
+      "status": "synthetic example",
+      "excerpt": "Thesis, target, downside, and catalyst assumptions."
+    },
+    {
+      "id": "S2",
+      "title": "Synthetic liquidity and risk snapshot",
+      "url": "https://example.com/acme-risk",
+      "as_of": "2026-05-18",
+      "type": "risk data",
+      "status": "synthetic example",
+      "excerpt": "ADV, volatility, and exposure placeholders."
+    }
+  ]
+}

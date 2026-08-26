@@ -1,0 +1,194 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "portfolio_risk_hedge_design",
+  "layout": "single_page",
+  "title": "ACME Hedge Finder Dashboard",
+  "subtitle": "Synthetic strict-mode example for public-equity hedge selection.",
+  "issuer": {
+    "ticker": "ACME",
+    "name": "ACME Software",
+    "sector": "Software",
+    "brand_dark_color": "#1f4b7a"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic thesis, portfolio, and hedge-candidate examples",
+    "citation_policy": "strict",
+    "decision_context": "Whether the unwanted market and growth-factor exposure should be hedged or managed by a smaller equity size.",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Hedge finder",
+    "headline": "Hedge beta without hedging away the stock thesis",
+    "dek": "The dashboard separates retained exposure, basis risk, and readiness gaps.",
+    "callout_label": "Senior View",
+    "callout": "Use a liquid equity-index hedge only if it preserves the idiosyncratic product thesis; route credit hedges to Credit Markets.",
+    "citations": [
+      "S1",
+      "S2"
+    ]
+  },
+  "snapshot": [
+    {
+      "label": "Recommendation",
+      "value": "Partial index hedge",
+      "detail": "Preserves product-specific upside while reducing broad market drawdown risk.",
+      "status": "watch",
+      "citations": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "label": "Readiness",
+      "value": "Needs checks",
+      "detail": "Live pricing, risk model, and option-chain inputs must be refreshed before implementation.",
+      "status": "risk",
+      "citations": [
+        "S2"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "hedge-view",
+      "label": "Decision",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "label": "Hedge read",
+            "stance": "Watch",
+            "summary": "Prefer a partial index or sector hedge over a credit instrument; size down if basis risk is worse than the exposure.",
+            "stock_skew": "Retained exposure is the product catalyst and estimate-revision path.",
+            "citations": [
+              "S1",
+              "S2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "candidate-set",
+      "label": "Candidates",
+      "modules": [
+        {
+          "type": "table",
+          "data": {
+            "columns": [
+              "Candidate",
+              "Mechanism",
+              "Basis risk",
+              "Readiness"
+            ],
+            "rows": [
+              {
+                "Candidate": "Index hedge",
+                "Mechanism": "Reduces broad market beta while retaining issuer-specific thesis.",
+                "Basis risk": "May under-hedge software factor drawdown.",
+                "Readiness": "Needs live sizing checks",
+                "citations": [
+                  "S2"
+                ]
+              },
+              {
+                "Candidate": "Peer short basket",
+                "Mechanism": "Targets sector and factor exposure more directly.",
+                "Basis risk": "Can introduce independent short squeeze risk.",
+                "Readiness": "Needs borrow checks",
+                "citations": [
+                  "S2"
+                ]
+              },
+              {
+                "Candidate": "CDS hedge",
+                "Mechanism": "Credit-risk signal only in this plugin.",
+                "Basis risk": "Credit hedge construction routes to Credit Markets.",
+                "Readiness": "route_to_credit_markets",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "scenario_map",
+          "data": {
+            "cases": [
+              {
+                "label": "Thesis right",
+                "status": "bull",
+                "summary": "Equity alpha remains if the hedge does not remove product-specific upside.",
+                "citations": [
+                  "S1"
+                ]
+              },
+              {
+                "label": "Hedge fails",
+                "status": "bear",
+                "summary": "Proxy breaks if software factor sells off more than the broad index.",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "monitoring",
+      "label": "Monitoring",
+      "modules": [
+        {
+          "type": "timeline",
+          "data": {
+            "events": [
+              {
+                "date": "Next review",
+                "event": "Refresh hedge inputs",
+                "impact": "Determines whether to resize, roll, remove, or size down instead.",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "missing_evidence",
+          "data": {
+            "items": [
+              "Live pricing, correlations, borrow, option-chain depth, and risk-model exposure are required before calling the hedge implementation-ready.",
+              "Credit hedge candidates require a Credit Markets handoff rather than local implementation."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Synthetic ACME thesis summary",
+      "url": "https://example.com/acme-thesis",
+      "as_of": "2026-05-18",
+      "type": "user thesis",
+      "status": "synthetic example",
+      "excerpt": "Thesis and desired retained exposure."
+    },
+    {
+      "id": "S2",
+      "title": "Synthetic hedge-candidate snapshot",
+      "url": "https://example.com/acme-hedges",
+      "as_of": "2026-05-18",
+      "type": "risk data",
+      "status": "synthetic example",
+      "excerpt": "Candidate hedge, readiness, and basis-risk placeholders."
+    }
+  ]
+}

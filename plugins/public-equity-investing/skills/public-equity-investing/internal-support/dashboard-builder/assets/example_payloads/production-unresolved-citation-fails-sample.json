@@ -1,0 +1,55 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "earnings_preview",
+  "layout": "single_page",
+  "title": "ExampleCo: Bad Citation Fixture",
+  "issuer": {
+    "ticker": "EXCO",
+    "name": "ExampleCo"
+  },
+  "metadata": {
+    "payload_stage": "production",
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic source ledger with an intentionally unresolved citation.",
+    "readiness_label": "PM-ready fixture",
+    "readiness_posture": "pm_ready",
+    "citation_policy": "strict",
+    "decision_context": "Production dashboards must not pass unresolved citations."
+  },
+  "hero": {
+    "headline": "ExampleCo: unresolved citation",
+    "dek": "This should fail because it cites [S99]."
+  },
+  "snapshot": [
+    {
+      "label": "Status",
+      "value": "Blocked",
+      "detail": "Unknown citation is present.",
+      "citations": ["S99"]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "stance": "Blocked",
+            "summary": "The summary cites an unknown source [S99]."
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Known source",
+      "type": "Synthetic source",
+      "status": "Reviewed fixture",
+      "as_of": "2026-05-18"
+    }
+  ]
+}

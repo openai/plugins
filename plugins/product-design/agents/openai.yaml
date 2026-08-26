@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Design"
+  short_description: "Product Design audits, research, minimum briefs, ideation, prototypes, and visual QA"
+  default_prompt: "For designing, building, or extending UI work, resolve the minimum design brief and continue. Help with product-flow audits, design research, ideation, prototyping, or prototype QA."

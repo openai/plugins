@@ -1,0 +1,1486 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f6f6" />
+    <title>Revenue Leadership Command Center</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --canvas: #f6f6f6;
+        --surface: #ffffff;
+        --soft: #f0f0f0;
+        --tertiary: #e5e5e5;
+        --ink: #171717;
+        --muted: #626262;
+        --faint: #777777;
+        --line: #d2d2d2;
+        --accent: #171717;
+        --accent-soft: #f0f0f0;
+        --green: #00a240;
+        --green-soft: #edf8f1;
+        --amber: #a05d09;
+        --amber-soft: #fff6e8;
+        --red: #bb3437;
+        --red-soft: #fff1f1;
+        --page-width: 1320px;
+        --page-gutter: clamp(20px, 4vw, 44px);
+        --radius: 10px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font: 16px/1.65 var(--font);
+        letter-spacing: -.012em;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      body.drawer-open { overflow: hidden; }
+      [hidden] { display: none !important; }
+      button, input { font: inherit; }
+      button { color: inherit; }
+      button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      .shell {
+        width: 100%;
+        max-width: var(--page-width);
+        margin: 0 auto;
+        padding-right: var(--page-gutter);
+        padding-left: var(--page-gutter);
+      }
+      .eyebrow { color: var(--muted); font-size: 13px; font-weight: 560; letter-spacing: .025em; }
+      .topbar { border-bottom: 1px solid var(--line); background: var(--canvas); }
+      .masthead {
+        display: flex;
+        min-height: 104px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      .brand { display: flex; min-width: 0; align-items: center; gap: 17px; }
+      .brand-mark {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--soft);
+        color: var(--accent);
+        font-size: 17px;
+        font-weight: 620;
+      }
+      .codex-pet { width: 46px; height: 46px; flex: 0 0 auto; object-fit: contain; }
+      .brand-title { margin-top: 5px; font-size: 23px; font-weight: 590; letter-spacing: -.035em; line-height: 1.25; }
+      .viewer-persona { margin-top: 6px; color: var(--muted); font-size: 14px; }
+      .report-meta { display: grid; grid-template-columns: repeat(2, minmax(124px, auto)); align-items: center; gap: 33px; }
+      .meta-value { margin-top: 7px; font-size: 14px; font-weight: 560; white-space: nowrap; }
+      .navigation-wrap { position: sticky; z-index: 5; top: 0; border-bottom: 1px solid var(--line); background: rgb(255 255 255 / 96%); backdrop-filter: blur(12px); }
+      .navigation { display: flex; gap: clamp(24px, 4vw, 44px); overflow-x: auto; scrollbar-width: none; }
+      .navigation::-webkit-scrollbar { display: none; }
+      .navigation a {
+        display: flex;
+        min-height: 56px;
+        align-items: center;
+        gap: 9px;
+        border-bottom: 2px solid transparent;
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 535;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .navigation a[hidden] { display: none !important; }
+      .navigation a.active { border-bottom-color: var(--accent); color: var(--ink); }
+      .nav-index { color: var(--accent); font-size: 13px; font-weight: 650; }
+      main { padding-top: 64px; padding-bottom: 64px; }
+      .section { padding-bottom: 64px; margin-bottom: 64px; border-bottom: 1px solid var(--line); scroll-margin-top: 72px; }
+      .section:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(260px, .8fr);
+        align-items: end;
+        gap: 40px;
+        margin-bottom: 24px;
+      }
+      .section-heading h1, .section-heading h2 { max-width: 690px; margin: 10px 0 0; font-size: clamp(30px, 3.5vw, 44px); font-weight: 590; letter-spacing: -.05em; line-height: 1.2; }
+      .section-heading h2 { font-size: clamp(25px, 3vw, 35px); }
+      .section-heading p { max-width: 425px; margin: 0 0 4px auto; color: var(--muted); font-size: 15px; line-height: 1.75; }
+      .section-heading p strong { color: var(--ink); }
+      .kpi-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+      .kpi { min-width: 0; min-height: 178px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+      .metric-name { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+      .dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--green); }
+      .dot.attention { background: var(--amber); }
+      .metric-value { margin-top: 17px; font-size: 29px; font-weight: 610; letter-spacing: -.045em; line-height: 1.2; }
+      .metric-benchmark { margin-top: 9px; color: var(--muted); font-size: 13px; }
+      .metric-delta { margin-top: 7px; color: var(--green); font-size: 13px; font-weight: 585; }
+      .metric-delta.attention { color: var(--amber); }
+      .briefing {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        padding: 26px 28px;
+        margin-top: 25px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--soft);
+      }
+      .briefing-label { color: var(--ink); font-size: 15px; font-weight: 620; }
+      .briefing-copy { max-width: 880px; margin-top: 10px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+      .briefing-copy strong { color: var(--ink); font-weight: 610; }
+      .evidence-count { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); font-size: 12px; white-space: nowrap; }
+      .subheading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 50px 0 21px; }
+      .subheading h3 { margin: 6px 0 0; font-size: 20px; font-weight: 590; letter-spacing: -.035em; }
+      .subheading p { max-width: 380px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
+      .forecast-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(320px, .78fr); gap: 20px; }
+      .forecast-layout[data-panel-count="1"] { grid-template-columns: minmax(0, 1fr); }
+      .panel { min-width: 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+      .panel-label { color: var(--muted); font-size: 14px; }
+      .scenario-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+      .forecast-total { margin-top: 8px; font-size: 31px; font-weight: 610; letter-spacing: -.05em; }
+      .scenario-tabs { display: flex; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); }
+      .scenario-tabs button { min-height: 44px; padding: 8px 11px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 530; cursor: pointer; }
+      .scenario-tabs button.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 5px rgb(0 0 0 / 8%); }
+      .forecast-position { margin-top: 15px; color: var(--muted); font-size: 14px; line-height: 1.75; }
+      .forecast-position strong { color: var(--green); font-weight: 620; }
+      .forecast-position.attention strong { color: var(--amber); }
+      .forecast-gap-value { display: inline-block; inline-size: 7ch; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+      .forecast-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 18px 0; margin-top: 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .forecast-summary[data-metric-count="1"] { grid-template-columns: minmax(0, 1fr); }
+      .forecast-summary[data-metric-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .summary-label { color: var(--muted); font-size: 13px; }
+      .summary-value { margin-top: 7px; font-size: 16px; font-weight: 620; }
+      .summary-value.attention { color: var(--amber); }
+      .scenario-studio { padding: 20px; margin-top: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--soft); }
+      .studio-title { margin: 8px 0 18px; font-size: 15px; font-weight: 600; }
+      .sliders { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); column-gap: 22px; row-gap: 8px; }
+      .scenario-control { display: grid; min-width: 0; grid-row: span 4; grid-template-rows: subgrid; }
+      .slider-caption { display: flex; min-height: 3.1em; align-items: flex-start; justify-content: space-between; gap: 8px; color: var(--ink); font-size: 13px; font-weight: 545; line-height: 1.55; }
+      .slider-caption strong { flex: 0 0 4.5ch; inline-size: 4.5ch; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+      .slider-label { position: relative; display: inline-flex; min-width: 0; align-items: baseline; gap: 6px; }
+      .slider-info { position: relative; display: inline-grid; width: 44px; height: 44px; flex: 0 0 44px; place-items: center; padding: 0; border: 0; background: transparent; color: var(--muted); font-size: 12px; font-weight: 650; line-height: 1; cursor: help; }
+      .slider-info::before { position: absolute; width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 50%; content: ""; }
+      .slider-info:hover, .slider-info:focus-visible { color: var(--accent); }
+      .slider-definition { position: absolute; z-index: 6; top: calc(100% + 8px); left: 0; width: min(230px, 68vw); padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--ink); box-shadow: 0 8px 24px rgb(22 25 29 / 12%); font-size: 12px; font-weight: 450; line-height: 1.55; opacity: 0; pointer-events: none; visibility: hidden; transform: translateY(4px); transition: opacity 160ms ease, transform 180ms cubic-bezier(.2,.8,.2,1), visibility 0s linear 160ms; }
+      .slider-info:hover + .slider-definition, .slider-info:focus + .slider-definition { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+      .slider-baseline { display: block; min-height: 1.55em; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; line-height: 1.55; }
+      .slider-impact { display: block; min-height: 19px; color: var(--accent); font-size: 12px; font-weight: 550; line-height: 1.55; }
+      input[type="range"] { width: 100%; height: 44px; margin-top: 8px; accent-color: var(--accent); cursor: grab; touch-action: pan-y; }
+      .sliders input[type="range"] { margin-top: 0; }
+      input[type="range"]:active { cursor: grabbing; }
+      .component-values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding-top: 16px; margin-top: 17px; border-top: 1px solid var(--line); }
+      .component-values div { color: var(--muted); font-size: 12px; line-height: 1.55; }
+      .component-values strong { display: block; margin-top: 6px; color: var(--ink); font-size: 14px; }
+      .stacked-wrap { position: relative; margin-top: 34px; }
+      .target-label { position: absolute; z-index: 2; top: -26px; color: var(--ink); font-size: 12px; font-weight: 560; white-space: nowrap; }
+      .stacked-track { position: relative; }
+      .stacked-bar { display: flex; height: 15px; overflow: hidden; border-radius: 999px; background: transparent; }
+      .stacked-segment, .stacked-shortfall { height: 100%; flex: 0 0 auto; transition: width .24s ease; }
+      .stacked-shortfall { background: var(--line); }
+      .target-marker { position: absolute; z-index: 2; top: -5px; bottom: -5px; width: 2px; border-radius: 2px; background: var(--ink); box-shadow: 0 0 0 2px var(--surface); transform: translateX(-1px); pointer-events: none; }
+      .stacked-legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+      .legend-label { color: var(--muted); font-size: 12px; }
+      .legend-label i { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 3px; }
+      .legend-value { margin: 6px 0 0 13px; font-size: 13px; font-weight: 600; }
+      .weekly-panel { display: flex; min-height: 345px; flex-direction: column; }
+      .weekly-panel[data-has-history="false"] { min-height: auto; gap: 18px; }
+      .weekly-badge { float: right; padding: 6px 10px; border-radius: 999px; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 590; }
+      .weekly-total { margin-top: 9px; font-size: 31px; font-weight: 610; letter-spacing: -.05em; }
+      .bar-chart { display: flex; min-height: 208px; flex: 1; align-items: end; gap: 8px; padding: 48px 0 20px; }
+      .chart-column { display: flex; min-width: 0; flex: 1; flex-direction: column; align-items: center; gap: 9px; }
+      .chart-value, .chart-period { color: var(--muted); font-size: 12px; white-space: nowrap; }
+      .chart-bar { width: 100%; min-height: 27px; border-radius: 5px 5px 0 0; background: #d9e3ef; }
+      .chart-column:last-child .chart-bar { background: var(--accent); }
+      .weekly-implication { padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; line-height: 1.75; }
+      .weekly-implication strong { color: var(--ink); }
+      .account-briefing { margin-top: 0; margin-bottom: 24px; background: var(--accent-soft); border-color: rgb(23 23 23 / 12%); }
+      .account-workspace { display: block; width: 100%; }
+      .account-focus-search { display: flex; min-height: 44px; align-items: center; gap: 10px; margin-bottom: 14px; }
+      .account-focus-search[hidden] { display: none; }
+      .account-focus-search input { min-height: 44px; flex: 1; padding: 10px 13px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; }
+      .account-focus-search button { min-height: 44px; padding: 0 13px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+      .account-list { min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); }
+      .account-list-header, .focus-account-row {
+        display: grid;
+        grid-template-columns: minmax(180px, 1.8fr) minmax(95px, .8fr) minmax(120px, 1fr) minmax(86px, .8fr) 18px;
+        gap: 18px;
+        align-items: center;
+        padding: 19px 22px;
+      }
+      .account-list[data-priority="false"] .account-list-header,
+      .account-list[data-priority="false"] .focus-account-row {
+        grid-template-columns: minmax(180px, 1.8fr) minmax(95px, .8fr) minmax(120px, 1fr) 18px;
+      }
+      .account-list-header { min-height: 60px; background: var(--soft); color: var(--muted); font-size: 13px; font-weight: 565; }
+      #accountFocusList { max-height: min(805px, 72vh); overflow-y: auto; overscroll-behavior-y: auto; scrollbar-color: var(--line) transparent; scrollbar-width: thin; }
+      .focus-account-row { width: 100%; min-height: 91px; border: 0; border-top: 1px solid var(--line); background: var(--surface); text-align: left; cursor: pointer; }
+      .focus-account-row:hover { background: var(--soft); }
+      .focus-account-row.selected { background: var(--accent-soft); }
+      .account-label { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; gap: 6px; }
+      .account-name, .account-subline { display: block; }
+      .account-name { max-width: 100%; font-size: 15px; font-weight: 620; line-height: 1.5; }
+      .account-subline { margin-top: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+      .account-scope-badge { display: inline-flex; align-items: center; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--muted); font-size: 12px; font-weight: 540; line-height: 1.45; }
+      .account-amount, .account-seller { min-width: 0; font-size: 14px; font-weight: 550; }
+      .account-seller { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .account-priority { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 610; }
+      .account-priority.high { background: var(--red-soft); color: var(--red); }
+      .account-priority.action { background: var(--amber-soft); color: var(--amber); }
+      .account-priority.watch { background: var(--accent-soft); color: #2366a4; }
+      .account-priority.paused { background: var(--soft); color: var(--muted); }
+      .account-arrow { color: var(--muted); font-size: 15px; }
+      .account-drawer {
+        position: fixed;
+        z-index: 30;
+        inset: 0;
+        display: flex;
+        justify-content: flex-end;
+        background: rgb(22 25 29 / 38%);
+        backdrop-filter: blur(3px);
+        animation: drawer-backdrop-in 180ms ease both;
+      }
+      .account-drawer[hidden] { display: none; }
+      .account-drawer[data-state="closing"] { animation: drawer-backdrop-out 200ms ease both; pointer-events: none; }
+      .account-drawer-panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: grid;
+        width: min(100vw, clamp(420px, 54vw, 620px));
+        height: 100dvh;
+        max-height: 100dvh;
+        grid-template-rows: auto minmax(0, 1fr);
+        border-left: 1px solid var(--line);
+        background: var(--surface);
+        box-shadow: -18px 0 64px rgb(22 25 29 / 16%);
+        animation: drawer-slide-in 260ms cubic-bezier(.2,.8,.2,1) both;
+        transition: transform 220ms cubic-bezier(.2,.8,.2,1), opacity 180ms ease;
+      }
+      @keyframes drawer-backdrop-in { from { background-color: rgb(22 25 29 / 0%); } to { background-color: rgb(22 25 29 / 38%); } }
+      @keyframes drawer-slide-in { from { transform: translateX(24px); opacity: .94; } to { transform: translateX(0); opacity: 1; } }
+      .account-drawer[data-state="closing"] .account-drawer-panel { animation: drawer-slide-out 220ms cubic-bezier(.4,0,1,1) both; }
+      @keyframes drawer-backdrop-out { from { background-color: rgb(22 25 29 / 38%); } to { background-color: rgb(22 25 29 / 0%); } }
+      @keyframes drawer-slide-out { from { transform: translateX(0); opacity: 1; } to { transform: translateX(28px); opacity: 0; } }
+      .drawer-header {
+        display: flex;
+        min-height: 78px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0 26px;
+        border-bottom: 1px solid var(--line);
+      }
+      .drawer-title { margin: 0; font-size: 16px; font-weight: 585; }
+      .drawer-close {
+        display: grid;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .drawer-close:hover { background: var(--soft); }
+      .drawer-content { min-width: 0; min-height: 0; overflow-y: auto; padding: 30px; }
+      .account-detail { background: var(--surface); }
+      .account-detail-header { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+      .account-detail-header h3 { margin: 8px 0 0; font-size: 25px; font-weight: 605; letter-spacing: -.04em; }
+      .account-detail-amount { font-size: 22px; font-weight: 620; letter-spacing: -.04em; white-space: nowrap; }
+      .account-detail-meta { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 12px; color: var(--muted); font-size: 13px; }
+      .account-detail-meta .account-scope-badge { align-self: center; }
+      .account-concern { padding: 19px 20px; margin-top: 23px; border-left: 3px solid var(--amber); border-radius: 0 12px 12px 0; background: var(--amber-soft); }
+      .account-concern p { margin: 8px 0 0; color: var(--ink); font-size: 15px; line-height: 1.75; }
+      .executive-risk-label { display: inline-flex; margin-top: 10px; color: var(--amber); font-size: 13px; font-weight: 610; }
+      .executive-action { padding: 14px 15px; margin-top: 15px; border: 1px solid rgb(23 23 23 / 12%); border-radius: 10px; background: var(--surface); }
+      .executive-action-label { color: var(--ink); font-size: 13px; font-weight: 625; }
+      .executive-action p { margin-top: 7px; font-size: 14px; line-height: 1.65; }
+      .account-evidence-note { padding: 13px 15px; margin-top: 15px; border-radius: 9px; background: var(--soft); color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .account-detail-grid { display: grid; grid-template-columns: 1fr; gap: 18px; padding-top: 22px; margin-top: 21px; border-top: 1px solid var(--line); }
+      .account-detail-grid > div + div { padding-top: 17px; border-top: 1px solid var(--line); }
+      .detail-heading { font-size: 15px; font-weight: 625; }
+      .detail-list { display: grid; gap: 12px; padding: 0; margin: 13px 0 0; list-style: none; }
+      .detail-list li { position: relative; padding-left: 16px; color: var(--muted); font-size: 14px; line-height: 1.75; }
+      .detail-list li::before { position: absolute; top: 10px; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); content: ""; }
+      .source-chips { display: flex; flex-wrap: wrap; gap: 7px; padding-top: 20px; margin-top: 23px; border-top: 1px solid var(--line); }
+      .source-chip { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 12px; }
+      .performance-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+      .performance-table { width: 100%; min-width: 850px; border-collapse: collapse; text-align: left; }
+      .performance-table th { height: 60px; padding: 0 17px; background: var(--soft); color: var(--muted); font-size: 13px; font-weight: 565; white-space: nowrap; }
+      .performance-table td { padding: 17px; border-top: 1px solid var(--line); color: var(--ink); font-size: 14px; line-height: 1.55; }
+      .performance-row { cursor: pointer; outline-offset: -3px; transition: background 130ms ease; }
+      .performance-row:hover, .performance-row:focus-visible { background: var(--soft); }
+      .performance-row.selected, .performance-row.featured { background: var(--accent-soft); }
+      .performance-name { display: block; color: var(--ink); font-size: 15px; font-weight: 585; white-space: nowrap; }
+      .performance-secondary { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
+      .performance-value { font-size: 14px; font-weight: 560; white-space: nowrap; }
+      .performance-growth { color: var(--green); font-size: 13px; font-weight: 565; white-space: nowrap; }
+      .performance-growth.negative { color: var(--amber); }
+      .performance-status { display: inline-flex; align-items: center; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 575; white-space: nowrap; }
+      .performance-status.outperforming { background: var(--green-soft); color: var(--green); }
+      .performance-status.behind { background: var(--amber-soft); color: var(--amber); }
+      .performance-detail-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 18px 0; margin-top: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .performance-metric-label { display: block; color: var(--muted); font-size: 12px; }
+      .performance-metric-value { display: block; margin-top: 6px; color: var(--ink); font-size: 17px; font-weight: 590; }
+      .seller-heading { margin: 43px 0 16px; }
+      .seller-heading h3 { margin: 6px 0 0; font-size: 19px; font-weight: 590; letter-spacing: -.035em; }
+      .dashboard-footer { padding-top: 22px; padding-bottom: 29px; border-top: 1px solid var(--line); }
+      .disclosure { color: var(--faint); font-size: 12px; }
+      .empty-state { padding: 24px; color: var(--muted); font-size: 14px; }
+
+      @media (max-width: 980px) {
+        .masthead { gap: 24px; }
+        .brand-title { font-size: 19px; }
+        .report-meta { min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; }
+        .report-meta .meta-block { min-width: 0; }
+        .report-meta .meta-value { white-space: normal; overflow-wrap: anywhere; }
+        .section-heading { gap: 30px; }
+        .kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .forecast-layout { grid-template-columns: 1fr; }
+        .weekly-panel { min-height: 290px; }
+        .performance-table { min-width: 760px; }
+        .account-list-header, .focus-account-row { gap: 10px; padding-right: 14px; padding-left: 14px; }
+      }
+
+      @media (max-width: 940px) {
+        #accountFocusList { max-height: none; overflow-y: visible; }
+        .account-list-header, .focus-account-row { grid-template-columns: minmax(0, 1.7fr) minmax(78px, .76fr) minmax(100px, .95fr) minmax(77px, .8fr) 17px; }
+        .account-list[data-priority="false"] .account-list-header,
+        .account-list[data-priority="false"] .focus-account-row { grid-template-columns: minmax(0, 1.7fr) minmax(78px, .76fr) minmax(100px, .95fr) 17px; }
+      }
+
+      @media (max-width: 700px) {
+        .masthead { min-height: 116px; align-items: start; padding-top: 23px; padding-bottom: 21px; }
+        .brand { gap: 12px; }
+        .brand-mark { width: 40px; height: 40px; }
+        .brand-title { font-size: 19px; }
+        .report-meta { grid-template-columns: 1fr; gap: 11px; }
+        .report-meta .meta-block:first-child { display: none; }
+        .meta-value { font-size: 12px; }
+        .navigation { gap: 24px; }
+        main { padding-top: 62px; }
+        .section { padding-bottom: 60px; margin-bottom: 65px; }
+        .section-heading { grid-template-columns: 1fr; gap: 14px; }
+        .section-heading p { margin-left: 0; }
+        .briefing { grid-template-columns: 1fr; gap: 11px; }
+        .evidence-count { justify-self: start; }
+        .sliders { grid-template-columns: 1fr; }
+        .component-values, .stacked-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .account-list-header, .focus-account-row { grid-template-columns: minmax(0, 1.55fr) minmax(76px, .7fr) minmax(78px, .72fr) 15px; gap: 8px; }
+        .account-list-header .seller-column, .focus-account-row .seller-column { display: none; }
+        .account-list[data-priority="false"] .account-list-header,
+        .account-list[data-priority="false"] .focus-account-row { grid-template-columns: minmax(0, 1.55fr) minmax(76px, .7fr) 15px; }
+        .account-detail-grid { grid-template-columns: 1fr; gap: 21px; }
+        .performance-table-wrap { overflow-x: auto; }
+      }
+
+      @media (max-width: 640px) {
+        .account-drawer-panel { width: 100vw; }
+        .drawer-header { min-height: 64px; padding-right: 20px; padding-left: 20px; }
+        .drawer-content { padding: 20px; }
+      }
+
+      @media (max-width: 460px) {
+        .shell { padding-right: 18px; padding-left: 18px; }
+        .masthead { gap: 12px; }
+        .report-meta { display: none; }
+        .kpi-strip { grid-template-columns: 1fr; }
+        .scenario-head { flex-wrap: wrap; }
+        .forecast-summary { gap: 8px; }
+        .account-list-header, .focus-account-row { padding-right: 10px; padding-left: 10px; }
+        .drawer-content { padding: 18px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } .account-drawer, .account-drawer-panel { animation: none !important; transition: none !important; } }
+
+      @media print {
+        .navigation-wrap, .scenario-tabs { display: none !important; }
+        .section { break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell masthead">
+        <div class="brand">
+          <img class="codex-pet" id="codex-pet" alt="" hidden />
+          <div class="brand-mark" id="brand-mark" aria-hidden="true"></div>
+          <div>
+            <div class="eyebrow" id="company-name"></div>
+            <div class="brand-title" id="dashboard-title">Revenue Leadership Command Center</div>
+            <div class="viewer-persona" id="viewer-persona"></div>
+          </div>
+        </div>
+        <div class="report-meta">
+          <div class="meta-block"><div class="eyebrow">Quarter progress</div><div class="meta-value" id="quarter-progress"></div></div>
+          <div class="meta-block"><div class="eyebrow">Reporting snapshot</div><div class="meta-value" id="reporting-snapshot"></div></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="navigation-wrap" id="dashboard-navigation">
+      <nav class="shell navigation" aria-label="Dashboard sections">
+        <a class="active" href="#forecast" id="forecast-nav"><span class="nav-index">01</span>Forecast &amp; key metrics</a>
+        <a href="#accounts" id="accounts-nav"><span class="nav-index">02</span>Account Focus</a>
+        <a href="#team" id="team-nav"><span class="nav-index">03</span>Team Focus</a>
+      </nav>
+    </div>
+
+    <main class="shell">
+      <section class="section" id="forecast">
+        <div class="section-heading">
+          <div><div class="eyebrow" id="overview-kicker"></div><h1>Know where the quarter lands—and what can change it.</h1></div>
+          <p id="overview-summary"></p>
+        </div>
+        <div class="kpi-strip" id="kpi-strip"></div>
+        <article class="briefing" id="forecastBriefing">
+          <div><div class="briefing-label">Executive briefing</div><div class="briefing-copy" id="forecast-briefing-copy"></div></div>
+          <span class="evidence-count" id="forecast-evidence-count"></span>
+        </article>
+        <div class="subheading" id="forecast-subheading"><div><div class="eyebrow" id="forecast-eyebrow">Forecast scenario planner</div><h3 id="forecast-heading">What changes the quarter-end forecast</h3></div><p id="forecast-context"></p></div>
+        <div class="forecast-layout" id="forecast-layout">
+          <div class="panel" id="forecast-panel">
+            <div class="scenario-head" id="forecast-header"><div><div class="panel-label">Quarter outcome</div><div class="forecast-total" id="forecast-total"></div></div><div class="scenario-tabs" id="scenario-tabs"></div></div>
+            <div class="forecast-position" id="forecast-position"></div>
+            <div class="forecast-summary" id="forecast-summary"></div>
+            <div class="scenario-studio" id="scenario-studio"><div class="eyebrow">Scenario assumptions</div><div class="studio-title" id="studio-title"></div><div class="sliders" id="sliders"></div><div class="component-values" id="component-values"></div></div>
+            <div class="stacked-wrap" id="stacked-wrap"><div class="target-label" id="target-label"></div><div class="stacked-track" id="stacked-track"><div class="stacked-bar" id="stacked-bar" role="img"></div><span class="target-marker" id="target-marker" aria-hidden="true"></span></div><div class="stacked-legend" id="stacked-legend"></div></div>
+          </div>
+          <aside class="panel weekly-panel" id="weekly-panel"><div><span class="weekly-badge" id="weekly-badge"></span><div class="panel-label" id="weekly-heading">Weekly movement</div><div class="weekly-total" id="weekly-total"></div></div><div class="bar-chart" id="bar-chart"></div><div class="weekly-implication" id="weekly-implication"></div></aside>
+        </div>
+      </section>
+
+      <section class="section" id="accounts">
+        <div class="section-heading"><div><h2>Account Focus</h2></div></div>
+        <article class="briefing account-briefing" id="accountBriefing">
+          <div><div class="briefing-label">Account briefing</div><div class="briefing-copy" id="account-briefing-copy"></div></div>
+          <span class="evidence-count" id="account-evidence-count"></span>
+        </article>
+        <div class="account-workspace">
+          <div class="account-focus-search" id="account-focus-search-wrap">
+            <input id="account-focus-search" type="search" aria-label="Search verified accounts" aria-controls="accountFocusList" placeholder="Search verified accounts" />
+            <button id="account-focus-search-clear" type="button" aria-label="Clear verified account search" hidden>Clear</button>
+          </div>
+          <div class="account-list">
+            <div class="account-list-header"><span>Account</span><span>Size</span><span class="seller-column">Seller</span><span id="account-priority-heading">Priority</span><span aria-hidden="true"></span></div>
+            <div id="accountFocusList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="team">
+        <div class="section-heading"><div><div class="eyebrow">Team Focus</div><h2 id="team-heading">Team performance and coaching priorities</h2></div><p id="team-description">Performance, coverage, and support needs.</p></div>
+        <div class="performance-table-wrap" id="manager-table-wrap"><table class="performance-table" aria-label="Regional manager performance"><thead><tr><th>Manager</th><th>Region</th><th>Forecast / Target</th><th>Attainment</th><th>Weekly growth</th><th>Accounts</th><th>Status</th></tr></thead><tbody id="teamFocusGrid"></tbody></table></div>
+        <div class="seller-heading" id="seller-heading"><div class="eyebrow" id="seller-eyebrow">Seller performance</div><h3 id="seller-heading-title">Account executives across your division</h3></div>
+        <div class="performance-table-wrap" id="seller-table-wrap"><table class="performance-table" aria-label="Account executive performance"><thead><tr><th>Seller</th><th>Region</th><th>Manager</th><th>Forecast / Target</th><th>Attainment</th><th>Accounts</th><th>Status</th></tr></thead><tbody id="seller-grid"></tbody></table></div>
+      </section>
+    </main>
+
+    <footer class="shell dashboard-footer"><div class="disclosure" id="disclosure"></div></footer>
+
+    <div class="account-drawer account-drawer-overlay" id="account-drawer" role="dialog" aria-modal="true" aria-labelledby="account-drawer-title" hidden>
+      <aside class="account-drawer-panel" role="document">
+        <div class="drawer-header drawer-toolbar"><h2 class="drawer-title" id="account-drawer-title">Account details</h2><button class="drawer-close" id="account-drawer-close" type="button" aria-label="Close account details"><span aria-hidden="true">✕</span></button></div>
+        <article class="account-detail drawer-content" id="accountFocusDetail" tabindex="-1" aria-live="polite"></article>
+      </aside>
+    </div>
+
+    <script>
+      window.__LEADERSHIP_DATA__ = __LEADERSHIP_DATA_JSON__;
+
+      (() => {
+        "use strict";
+
+        const data = window.__LEADERSHIP_DATA__;
+        const topDeals = Array.isArray(data.topDeals) ? data.topDeals : [];
+        const divisionTeams = Array.isArray(data.divisionTeams) ? data.divisionTeams : [];
+        const accountSignals = Array.isArray(data.signals) ? data.signals : [];
+        const leadershipDecisions = Array.isArray(data.decisions) ? data.decisions : [];
+        const fictionalFixture = data.demo?.mode === "fictional" || data.disclosure?.isFictional === true;
+        const sourceIsVerified = (source) => Boolean(source)
+          && !/disconnected|unavailable|not connected/i.test(String(source.status || ""))
+          && (fictionalFixture ? source.verified !== false : source.verified === true);
+        const connectedSources = () => (Array.isArray(data.sourceCoverage) ? data.sourceCoverage : []).filter(sourceIsVerified);
+        const $ = (id) => document.getElementById(id);
+        function suppliedCodexPet(source) {
+          const pet = source?.codexPet;
+          const name = String(pet?.name || "").trim();
+          const imageUrl = String(pet?.imageUrl || "").trim();
+          return name && /^data:image\/(?:png|jpeg|gif|webp);base64,/i.test(imageUrl) ? { name, imageUrl } : null;
+        }
+        function renderCodexPet(source) {
+          const pet = suppliedCodexPet(source);
+          if (!pet) return;
+          const image = $("codex-pet");
+          const mark = $("brand-mark");
+          image.alt = pet.name + " · Codex pet";
+          image.addEventListener("error", () => { image.hidden = true; mark.hidden = false; }, { once: true });
+          image.src = pet.imageUrl;
+          image.hidden = false;
+          mark.hidden = true;
+        }
+        const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+        const hasNumber = (value) => value !== null && value !== undefined && value !== "" && Number.isFinite(Number(value));
+        const sourcedNumber = (value) => hasNumber(value) ? Number(value) : null;
+        const money = (value, precise = false) => {
+          if (!fictionalFixture && !hasNumber(value)) return "";
+          const amount = Number(value) || 0;
+          if (Math.abs(amount) >= 1000000) {
+            const digits = precise || Math.abs(amount) < 10000000 ? 2 : 1;
+            return "$" + (amount / 1000000).toFixed(digits).replace(/\.0$|(?<=\.[1-9])0$/, "") + "M";
+          }
+          return "$" + Math.round(amount / 1000).toLocaleString() + "K";
+        };
+        const signedMoney = (value) => (Number(value) >= 0 ? "+" : "−") + money(Math.abs(Number(value)));
+        const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+        const list = (value) => Array.isArray(value) ? value.filter(Boolean) : value ? [value] : [];
+        const companyName = typeof data.company === "string" ? data.company : data.company?.name || "Sales organization";
+        const scenarioOptions = (Array.isArray(data.forecast?.scenarios) ? data.forecast.scenarios : []).filter((scenario) => fictionalFixture || Boolean(scenario?.key && scenario?.label)
+          && hasNumber(scenario.commitCloseRate ?? scenario.commitRealization)
+          && hasNumber(scenario.additionalPipelineWinRate)
+          && hasNumber(scenario.dealSizeUplift));
+        const initialScenario = scenarioOptions.find((scenario) => scenario.key === "base") || scenarioOptions[0] || {};
+        const scenarioNumber = (value, fictionalDefault) => sourcedNumber(value) ?? (fictionalFixture ? fictionalDefault : null);
+        const state = {
+          scenario: initialScenario.key || "base",
+          sliders: {
+            commitCloseRate: scenarioNumber(initialScenario.commitCloseRate ?? initialScenario.commitRealization, 100),
+            additionalPipelineWinRate: scenarioNumber(initialScenario.additionalPipelineWinRate, 40),
+            dealSizeUplift: scenarioNumber(initialScenario.dealSizeUplift, 0)
+          },
+          selectedAccount: "",
+          accountQuery: "",
+          drawerOpen: false,
+          drawerCloseTimer: null,
+          drawerCloseListener: null,
+          returnFocus: null,
+          returnAccount: "",
+          returnPerformance: ""
+        };
+        const selectedScenario = () => scenarioOptions.find((item) => item.key === state.scenario) || initialScenario;
+        const priorityOrder = { High: 0, Action: 1, Watch: 2, Paused: 3 };
+
+        function decisionForAccount(name) {
+          return leadershipDecisions.find((decision) => list(decision.accounts).includes(name)) || {};
+        }
+
+        function accountRecords() {
+          const records = Array.isArray(data.accountOverview) && data.accountOverview.length
+            ? data.accountOverview.map((account) => fictionalFixture ? account : {
+              ...account,
+              priority: account.priority && !/^(?:unavailable|unknown|n\/?a|none)$/i.test(String(account.priority).trim()) ? account.priority : null,
+              priorityRank: hasNumber(account.priorityRank) ? Number(account.priorityRank) : null
+            })
+            : topDeals.map((deal, index) => {
+              const decision = decisionForAccount(deal.account);
+              return {
+                id: deal.opportunityId ?? deal.id ?? deal.accountId ?? deal.account ?? index,
+                _sourceDeal: deal,
+                name: deal.account,
+                value: deal.value,
+                seller: deal.owner,
+                priority: deal.priority && !/^(?:unavailable|unknown|n\/?a|none)$/i.test(String(deal.priority).trim()) ? deal.priority : fictionalFixture ? index < 3 ? "High" : index < 5 ? "Action" : index < 8 ? "Watch" : "Paused" : null,
+                priorityRank: hasNumber(deal.priorityRank) ? Number(deal.priorityRank) : fictionalFixture ? index + 1 : null,
+                stage: deal.stage,
+                type: deal.motion,
+                decisionDate: deal.closeWindow,
+                headline: decision.problem || decision.rationale || deal.risk,
+                briefing: deal.risk,
+                rationale: list(deal.risk),
+                monitor: list(deal.monitor).length ? list(deal.monitor) : list(deal.nextCustomerStep),
+                unblock: list(deal.helpUnblock).length ? list(deal.helpUnblock) : list(decision.proposedSolution || deal.leadershipDecision),
+                evidence: Array.isArray(decision.sourceEvidence) && decision.sourceEvidence.length ? decision.sourceEvidence : list(deal.sources),
+                nextStep: deal.nextCustomerStep
+              };
+            });
+          const preferredIds = records.map((account, index) => String(account.id ?? account.accountId ?? account.name ?? "").trim() || "account-" + index);
+          const reservedIds = new Set(preferredIds);
+          const usedIds = new Set();
+          const identified = records.map((account, index) => {
+            const preferred = preferredIds[index];
+            let id = preferred;
+            for (let suffix = 2; usedIds.has(id) || id !== preferred && reservedIds.has(id); suffix++) id = preferred + "--" + suffix;
+            usedIds.add(id);
+            return { ...account, id };
+          });
+          return identified.sort((first, second) => {
+            const firstPriority = priorityOrder[first.priority] ?? 9;
+            const secondPriority = priorityOrder[second.priority] ?? 9;
+            return firstPriority - secondPriority || (Number(first.priorityRank) || 99) - (Number(second.priorityRank) || 99);
+          });
+        }
+
+        function setupHeader() {
+          document.title = data.title || companyName + " Revenue Leadership Command Center";
+          $("brand-mark").textContent = companyName.charAt(0).toUpperCase();
+          const division = data.company?.division || (fictionalFixture ? "Enterprise Sales" : "");
+          $("company-name").textContent = [companyName, division].filter(Boolean).join(" · ");
+          $("dashboard-title").textContent = document.title.replace(companyName + " ", "");
+          const viewer = data.company?.divisionLead?.name || data.dashboardIdentity?.owner?.name || (fictionalFixture ? "Sales leader" : "");
+          const role = data.company?.leadershipRole || (fictionalFixture ? "Sales leadership" : "");
+          $("viewer-persona").textContent = [viewer, String(role).replace(/^Vice President/, "VP")].filter(Boolean).join(" · ");
+          const quarterProgress = $("quarter-progress");
+          const hasProgress = hasNumber(data.quarter?.elapsedPercent);
+          quarterProgress.textContent = hasProgress ? String(data.quarter.elapsedPercent) + "% elapsed" : "";
+          quarterProgress.hidden = !hasProgress;
+          const progressBlock = quarterProgress.closest?.(".meta-block");
+          if (progressBlock) progressBlock.hidden = !hasProgress;
+          const reportingSnapshot = $("reporting-snapshot");
+          const snapshot = data.reporting?.snapshot || (fictionalFixture ? "Current reporting snapshot" : "");
+          reportingSnapshot.textContent = snapshot;
+          reportingSnapshot.hidden = !snapshot;
+          const snapshotBlock = reportingSnapshot.closest?.(".meta-block");
+          if (snapshotBlock) snapshotBlock.hidden = !snapshot;
+          const reportingMeta = progressBlock?.parentElement;
+          if (reportingMeta) reportingMeta.hidden = !hasProgress && !snapshot;
+          const quarter = data.quarter?.label || (fictionalFixture ? "Current quarter" : "");
+          const teamCount = divisionTeams.length
+            ? divisionTeams.length + (fictionalFixture ? " regional teams" : divisionTeams.length === 1 ? " team" : " teams")
+            : "";
+          $("overview-kicker").textContent = [quarter, division, teamCount].filter(Boolean).join(" · ");
+          const target = sourcedNumber(data.forecast?.target);
+          const forecast = sourcedNumber(data.forecast?.base);
+          const accounts = sourcedNumber(data.reporting?.teamAccountCount) ?? accountRecords().length;
+          const leader = escape(data.company?.divisionLead?.name || "Your division");
+          if (forecast !== null && target !== null && target > 0) {
+            const gap = target - forecast;
+            $("overview-summary").innerHTML = leader + "’s forecast is tracking to <strong>" + Math.round(forecast / target * 100) + "% of target</strong> across <strong>" + escape(accounts) + " accounts</strong>, with a <strong>" + money(Math.abs(gap)) + "</strong> " + (gap >= 0 ? "bridge remaining" : "surplus to plan") + ".";
+          } else {
+            const availableDetails = [];
+            if (forecast !== null) availableDetails.push("Forecast " + money(forecast, true));
+            if (target !== null && target > 0) availableDetails.push("target " + money(target, true));
+            const forecastSummary = availableDetails.length ? ": <strong>" + escape(availableDetails.join(" · ")) + "</strong>" : "";
+            $("overview-summary").innerHTML = leader + "’s division" + forecastSummary + " across <strong>" + escape(accounts) + " accounts</strong>.";
+          }
+        }
+
+        function renderMetrics() {
+          const preferred = ["forecast", "confidence", "coverage", "pipelineCreated", "closedWon", "revenue"];
+          const availableText = (value) => value !== null && value !== undefined && String(value).trim() !== "" && !/^(?:[-—–]+|n\/?a|(?:no |missing )?data(?: available)?|(?:data |source )?unavailable|unknown|not (?:available|reported|connected))$/i.test(String(value).trim());
+          const metrics = preferred.map((key) => list(data.metrics).find((metric) => metric.key === key)).filter((metric) => metric && availableText(metric.label) && availableText(metric.display)).slice(0, 4);
+          const snapshots = list(data.forecast?.weekly);
+          const suppliedMovement = sourcedNumber(data.forecast?.weeklyMovement);
+          const latestSnapshot = sourcedNumber(snapshots.at(-1)?.value);
+          const previousSnapshot = sourcedNumber(snapshots.at(-2)?.value);
+          const currentForecast = sourcedNumber(data.forecast?.base);
+          const comparableMovement = latestSnapshot !== null && previousSnapshot !== null && currentForecast !== null && latestSnapshot === currentForecast
+            ? latestSnapshot - previousSnapshot : null;
+          const kpiStrip = $("kpi-strip");
+          kpiStrip.hidden = metrics.length === 0;
+          kpiStrip.innerHTML = metrics.map((metric) => {
+            const benchmark = availableText(metric.benchmark) ? '<div class="metric-benchmark">' + escape(metric.benchmark) + "</div>" : "";
+            let metricDelta = metric.delta;
+            if (metric.key === "forecast" && /\bweighted\s+forecast\b/i.test(String(metric.label)) && suppliedMovement !== null && snapshots.length >= 2) {
+              const amount = comparableMovement === null ? null : Math.abs(comparableMovement);
+              const formatted = amount === null ? null : (comparableMovement >= 0 ? "+" : "−") + (amount % 1000 === 0 ? money(amount) : "$" + (amount / 1000).toLocaleString("en-US", { maximumFractionDigits: 3 }) + "K");
+              const prefix = /^[+\-−–]?\s*\$\s*[\d,.]+(?:\s*[KMB])?/i;
+              metricDelta = formatted !== null && prefix.test(String(metricDelta ?? ""))
+                ? String(metricDelta).replace(prefix, formatted) : null;
+            }
+            const delta = availableText(metricDelta) ? '<div class="metric-delta ' + (metric.tone === "attention" ? "attention" : "") + '">' + escape(metricDelta) + "</div>" : "";
+            return '<article class="kpi"><div class="metric-name"><span class="dot ' + (metric.tone === "attention" ? "attention" : "") + '"></span>' + escape(metric.label) + '</div><div class="metric-value">' + escape(metric.display) + "</div>" + benchmark + delta + "</article>";
+          }).join("");
+          const forecast = sourcedNumber(data.forecast?.base);
+          const target = sourcedNumber(data.forecast?.target);
+          const highPriority = accountRecords().filter((account) => account.priority === "High");
+          const topAccount = highPriority[0];
+          const valuedHighPriority = highPriority.filter((account) => sourcedNumber(account.value) !== null);
+          const highValue = valuedHighPriority.reduce((total, account) => total + Number(account.value), 0);
+          const isDemo = data.demo?.mode === "fictional" || data.disclosure?.isFictional === true;
+          const rawConcern = String(topAccount?.briefing || topAccount?.headline || (isDemo ? "Review the highest-priority customer decision" : "")).trim().replace(/^Your (?=\$)/i, "A ").replace(/[.!?]+\s*$/, "");
+          const topConcern = rawConcern ? rawConcern + "." : "";
+          const hasForecastReadout = forecast !== null || target !== null && target > 0;
+          $("forecastBriefing").hidden = !hasForecastReadout && !topAccount;
+          const forecastReadout = forecast === null ? "" : money(forecast, true);
+          const targetReadout = target === null || target <= 0 ? forecast === null ? "" : ". " : forecast === null ? "Target " + money(target, true) + ". " : " against a " + money(target, true) + " goal. ";
+          const prioritySummary = topAccount && valuedHighPriority.length
+            ? escape(topAccount.name) + (highPriority.length > 1 ? " and " + (highPriority.length - 1) + " other priority accounts represent " : " represents ") + money(highValue, true) + (valuedHighPriority.length < highPriority.length ? " across known opportunities." : " in near-term opportunity.") + (topConcern ? " " + escape(topConcern) : "")
+            : topAccount && topConcern ? escape(topAccount.name) + ": " + escape(topConcern)
+            : isDemo ? "Review buyer decisions and named seller blockers." : "";
+          $("forecast-briefing-copy").innerHTML = "<strong>" + escape(data.company?.divisionLead?.name || "Your division") + "’s readout:</strong> " + forecastReadout + targetReadout + prioritySummary;
+          const signalCount = accountSignals.length || connectedSources().length;
+          const sources = connectedSources();
+          const evidenceCount = $("forecast-evidence-count");
+          evidenceCount.hidden = !signalCount;
+          evidenceCount.textContent = !signalCount ? "" : !isDemo && sources.length
+            ? sources.map((source) => String(source.name || source.label || "")).filter(Boolean).join(" · ")
+            : "Based on " + signalCount + " material signal" + (signalCount === 1 ? "" : "s");
+        }
+
+        function projectedComponents() {
+          const components = list(data.forecast?.components);
+          if (!fictionalFixture && !scenarioOptions.length) return components.filter((component) => component.key && hasNumber(component.value)).map((component) => ({ ...component, label: component.label || component.key, adjusted: Number(component.value) }));
+          const byKey = Object.fromEntries(components.map((component) => [component.key, component]));
+          const baseline = scenarioOptions.find((scenario) => scenario.key === "base") || initialScenario;
+          const expectedWinRate = (sourcedNumber(baseline.additionalPipelineWinRate) ?? (fictionalFixture ? 40 : 0)) / 100;
+          const weightedPipeline = (Number(byKey.bestCase?.value) || 0) + (Number(byKey.upside?.value) || 0);
+          const qualifiedPipeline = sourcedNumber(data.forecast?.qualifiedPipelineValue) ?? weightedPipeline / Math.max(expectedWinRate, .01);
+          const expansionPool = sourcedNumber(data.forecast?.eligibleExpansionValue) ?? list(data.topDeals).filter((deal) => /expansion/i.test(String(deal.motion || "")) && !/hold|freeze|froze|paused/i.test(String(deal.stage || "") + " " + String(deal.risk || ""))).reduce((total, deal) => total + Number(deal.value || 0), 0);
+          const committed = (Number(byKey.commit?.value) || 0) * Number(state.sliders.commitCloseRate || 0) / 100;
+          const pipelineWon = qualifiedPipeline * Number(state.sliders.additionalPipelineWinRate || 0) / 100;
+          const expansionEligible = Math.min(expansionPool, committed + pipelineWon);
+          return [
+            { ...(byKey.closedWon || {}), label: "Closed won", adjusted: Number(byKey.closedWon?.value) || 0 },
+            { ...(byKey.commit || {}), label: "Committed deals won", adjusted: committed },
+            { ...(byKey.bestCase || {}), label: "Additional pipeline won", adjusted: pipelineWon },
+            { ...(byKey.upside || {}), label: "Deal-size uplift", adjusted: expansionEligible * Number(state.sliders.dealSizeUplift || 0) / 100 }
+          ].filter((component) => component.key);
+        }
+
+        function renderScenarioControls(components) {
+          const controls = [
+            { key: "commitCloseRate", label: "Commit close rate", definition: "Committed deals expected to close this quarter.", min: 80, max: 100, component: "commit" },
+            { key: "additionalPipelineWinRate", label: "Additional pipeline win rate", definition: "Other qualified opportunities expected to close.", min: 0, max: 50, component: "bestCase" },
+            { key: "dealSizeUplift", label: "Average deal-size uplift", definition: "Added value on eligible expansion deals that close.", min: 0, max: 20, component: "upside" }
+          ];
+          const sliderRoot = $("sliders");
+          if (!sliderRoot.querySelector("[data-slider]")) {
+            const previousQuarter = data.forecast?.previousQuarter;
+            sliderRoot.innerHTML = controls.map((control) => {
+              const benchmark = previousQuarter?.[control.key];
+              const hasBenchmark = typeof benchmark === "number" && Number.isFinite(benchmark);
+              const benchmarkId = "slider-baseline-" + control.key;
+              const benchmarkLabel = typeof previousQuarter?.label === "string" && previousQuarter.label.trim() ? previousQuarter.label : "Last quarter";
+              const benchmarkMarkup = hasBenchmark ? '<span class="slider-baseline" id="' + benchmarkId + '">' + escape(benchmarkLabel) + ": " + benchmark + "%</span>" : '<span class="slider-baseline" aria-hidden="true"></span>';
+              const describedBy = "slider-definition-" + control.key + (hasBenchmark ? " " + benchmarkId : "");
+              return '<div class="scenario-control"><span class="slider-caption"><span class="slider-label"><span>' + escape(control.label) + '</span><button class="slider-info" type="button" aria-label="About ' + escape(control.label) + '" aria-describedby="slider-definition-' + control.key + '"><span aria-hidden="true">i</span></button><span class="slider-definition" id="slider-definition-' + control.key + '" role="tooltip">' + escape(control.definition) + '</span></span><strong data-slider-value="' + control.key + '"></strong></span>' + benchmarkMarkup + '<input aria-label="' + escape(control.label) + '" aria-describedby="' + describedBy + '" data-slider="' + control.key + '" type="range" min="' + control.min + '" max="' + control.max + '" step="1" /><span class="slider-impact" data-slider-impact="' + control.key + '"></span></div>';
+            }).join("");
+            sliderRoot.querySelectorAll("[data-slider]").forEach((control) => control.addEventListener("input", () => {
+              state.sliders[control.dataset.slider] = Number(control.value);
+              renderForecast();
+            }));
+          }
+          controls.forEach((config) => {
+            const control = sliderRoot.querySelector('[data-slider="' + config.key + '"]');
+            const value = Number(state.sliders[config.key] || 0);
+            control.value = String(value);
+            sliderRoot.querySelector('[data-slider-value="' + config.key + '"]').textContent = value + "%";
+            const component = components.find((item) => item.key === config.component);
+            const amount = component?.adjusted || 0;
+            const amountLabel = amount ? money(amount, true) : "$0";
+            const impact = config.key === "dealSizeUplift" ? "+" + amountLabel + " added to eligible deals" : amountLabel + " expected this quarter";
+            sliderRoot.querySelector('[data-slider-impact="' + config.key + '"]').textContent = impact;
+            control.setAttribute("aria-valuetext", value + "%; " + impact);
+          });
+        }
+
+        function renderForecast() {
+          const scenario = selectedScenario();
+          const components = projectedComponents();
+          const componentTotal = components.reduce((sum, component) => sum + component.adjusted, 0);
+          const hasScenarioModel = scenarioOptions.length > 0 && components.length > 0;
+          const forecast = sourcedNumber(data.forecast?.base);
+          const roundedComponents = Math.abs(componentTotal - Math.round(componentTotal)) < .000001 ? Math.round(componentTotal) : componentTotal;
+          const projected = hasScenarioModel ? roundedComponents : forecast ?? (components.length ? roundedComponents : null);
+          const sourcedTarget = sourcedNumber(data.forecast?.target);
+          const target = sourcedTarget !== null && sourcedTarget > 0 ? sourcedTarget : null;
+          const rawGap = target !== null && projected !== null ? target - projected : null;
+          const gap = rawGap !== null && Math.abs(rawGap) < .000001 ? 0 : rawGap;
+          const attainment = target !== null && projected !== null ? Math.round(projected / target * 100) : null;
+          const confidenceValue = sourcedNumber(scenario.confidence) ?? sourcedNumber(data.forecast?.confidence);
+          const confidence = confidenceValue === null ? null : fictionalFixture ? clamp(confidenceValue, 25, 98) : confidenceValue;
+          const snapshots = list(data.forecast?.weekly);
+          const weeks = snapshots.filter((week) => hasNumber(week.value));
+          const suppliedMovement = sourcedNumber(data.forecast?.weeklyMovement);
+          const latestSnapshot = sourcedNumber(snapshots.at(-1)?.value);
+          const previousSnapshot = sourcedNumber(snapshots.at(-2)?.value);
+          const comparableSnapshots = latestSnapshot !== null && previousSnapshot !== null && forecast !== null && latestSnapshot === forecast;
+          const movement = suppliedMovement === null ? null : snapshots.length >= 2
+            ? comparableSnapshots ? latestSnapshot - previousSnapshot : null
+            : suppliedMovement;
+          const absoluteMovement = movement === null ? null : Math.abs(movement);
+          const formattedMovement = movement === null ? "" : absoluteMovement % 1000 === 0
+            ? signedMoney(movement)
+            : (movement >= 0 ? "+" : "−") + "$" + (absoluteMovement / 1000).toLocaleString("en-US", { maximumFractionDigits: 3 }) + "K";
+          const hasWeeklyHistory = weeks.length >= 2;
+          const hasWeeklyEvidence = movement !== null || hasWeeklyHistory;
+          const hasForecastEvidence = projected !== null || components.length > 0 || confidence !== null;
+          const panelCount = Number(hasForecastEvidence) + Number(hasWeeklyEvidence);
+          const forecastLayout = $("forecast-layout");
+          forecastLayout.hidden = panelCount === 0;
+          forecastLayout.dataset.panelCount = String(panelCount);
+          $("forecast-subheading").hidden = panelCount === 0;
+          $("forecast-eyebrow").hidden = !hasScenarioModel;
+          $("forecast-heading").textContent = hasScenarioModel
+            ? "What changes the quarter-end forecast"
+            : hasForecastEvidence ? "Quarter-end forecast" : "Forecast movement";
+          $("forecast-panel").hidden = !hasForecastEvidence;
+          const weeklyPanel = $("weekly-panel");
+          weeklyPanel.hidden = !hasWeeklyEvidence;
+          weeklyPanel.dataset.hasHistory = String(hasWeeklyHistory);
+          $("weekly-heading").textContent = movement === null ? "Forecast history" : "Weekly movement";
+          const weeklyBadge = $("weekly-badge");
+          weeklyBadge.hidden = movement === null;
+          weeklyBadge.textContent = movement === null ? "" : movement > 0 ? "Improving" : movement < 0 ? "Declining" : "Unchanged";
+          const forecastContext = $("forecast-context");
+          forecastContext.hidden = movement === null;
+          forecastContext.innerHTML = movement === null ? "" : "Forecast " + (movement > 0 ? "improved" : movement < 0 ? "declined" : "was unchanged") + " <strong>" + formattedMovement + "</strong> since the previous weekly review.";
+          const forecastTotal = $("forecast-total");
+          forecastTotal.hidden = projected === null;
+          forecastTotal.textContent = projected === null ? "" : money(projected, true);
+          $("forecast-header").hidden = projected === null && !hasScenarioModel;
+          const forecastPosition = $("forecast-position");
+          forecastPosition.hidden = gap === null;
+          forecastPosition.className = "forecast-position" + (gap !== null && gap > 0 ? " attention" : "");
+          const targetRelationship = gap === null ? "" : gap === 0 ? "meets target" : money(Math.abs(gap)) + " " + (gap > 0 ? "below" : "above") + " target";
+          const visibleTargetRelationship = gap === null ? "" : gap === 0 ? "meets target" : '<span class="forecast-gap-value">' + money(Math.abs(gap)) + "</span> " + (gap > 0 ? "below" : "above") + " target";
+          if (gap !== null) {
+            const forecastLabel = hasScenarioModel ? escape(scenario.label) + " case" : "Forecast";
+            const guidance = hasScenarioModel ? " Adjust close rates and deal expansion to see what closes the gap." : "";
+            forecastPosition.innerHTML = "<strong>" + forecastLabel + " " + (gap === 0 ? "meets target" : "finishes " + visibleTargetRelationship) + ".</strong>" + guidance;
+          } else {
+            forecastPosition.innerHTML = "";
+          }
+          const scenarioTabs = $("scenario-tabs");
+          const multipleScenarios = hasScenarioModel && scenarioOptions.length > 1;
+          scenarioTabs.hidden = !multipleScenarios;
+          scenarioTabs.innerHTML = multipleScenarios ? scenarioOptions.map((option) => '<button type="button" class="' + (option.key === state.scenario ? "active" : "") + '" data-scenario="' + escape(option.key) + '">' + escape(option.label) + "</button>").join("") : "";
+          const summaryItems = [];
+          if (gap !== null) {
+            const gapDisplay = gap === 0 ? "$0" : (gap > 0 ? "−" : "+") + money(Math.abs(gap));
+            summaryItems.push('<div><div class="summary-label">Gap to ' + money(target) + ' plan</div><div class="summary-value ' + (gap > 0 ? "attention" : "") + '">' + gapDisplay + "</div></div>");
+          }
+          if (confidence !== null) summaryItems.push('<div><div class="summary-label">Modeled confidence</div><div class="summary-value">' + confidence + "%</div></div>");
+          if (attainment !== null) summaryItems.push('<div><div class="summary-label">Attainment path</div><div class="summary-value">' + attainment + "% of plan</div></div>");
+          const forecastSummary = $("forecast-summary");
+          forecastSummary.hidden = summaryItems.length === 0;
+          forecastSummary.dataset.metricCount = String(summaryItems.length);
+          forecastSummary.innerHTML = summaryItems.join("");
+          $("scenario-studio").hidden = !hasScenarioModel;
+          $("studio-title").textContent = hasScenarioModel ? scenario.label + " assumptions" + (attainment === null ? "" : " · " + attainment + "% attainment") : "";
+          if (hasScenarioModel) renderScenarioControls(components);
+          $("component-values").innerHTML = components.map((component) => "<div>" + escape(component.label) + "<strong>" + money(component.adjusted, true) + "</strong></div>").join("");
+          const axisMaximum = Math.max(target ?? 0, componentTotal, 1);
+          const targetPosition = target === null ? null : target / axisMaximum * 100;
+          const shortfall = gap !== null && gap > 0 ? gap : 0;
+          const stackedBar = $("stacked-bar");
+          stackedBar.dataset.axisMax = String(axisMaximum);
+          stackedBar.dataset.projectedTotal = String(componentTotal);
+          if (target === null) {
+            delete stackedBar.dataset.target;
+            delete stackedBar.dataset.targetPosition;
+          } else {
+            stackedBar.dataset.target = String(target);
+            stackedBar.dataset.targetPosition = String(targetPosition);
+          }
+          const accessibleForecast = projected === null ? "" : "Forecast components total " + money(projected, true);
+          const accessibleTarget = target === null ? "." : " against a " + money(target) + " target; " + attainment + "% attainment, " + targetRelationship + ".";
+          stackedBar.setAttribute("aria-label", accessibleForecast + accessibleTarget);
+          const targetMarker = $("target-marker");
+          const chartTargetLabel = $("target-label");
+          targetMarker.hidden = target === null || components.length === 0;
+          chartTargetLabel.hidden = target === null || components.length === 0;
+          chartTargetLabel.textContent = target === null ? "" : money(target) + " target";
+          if (targetPosition !== null) {
+            chartTargetLabel.style.left = targetPosition + "%";
+            chartTargetLabel.style.transform = targetPosition >= 90 ? "translateX(-100%)" : "translateX(-50%)";
+            targetMarker.style.left = targetPosition + "%";
+          }
+          stackedBar.innerHTML = components.map((component) => '<span class="stacked-segment" data-component-key="' + escape(component.key) + '" data-component-value="' + escape(component.adjusted) + '" style="width:' + component.adjusted / axisMaximum * 100 + "%;background:" + escape(component.color || "#171717") + '" title="' + escape(component.label) + ": " + money(component.adjusted, true) + '"></span>').join("") +
+            (shortfall > 0 ? '<span class="stacked-shortfall" data-component-key="shortfall" data-component-value="' + escape(shortfall) + '" style="width:' + shortfall / axisMaximum * 100 + '%" title="Remaining to target: ' + money(shortfall, true) + '"></span>' : "");
+          $("stacked-legend").innerHTML = components.map((component) => '<div><div class="legend-label"><i style="background:' + escape(component.color || "#171717") + '"></i>' + escape(component.label) + '</div><div class="legend-value">' + money(component.adjusted, true) + "</div></div>").join("");
+          $("stacked-wrap").hidden = components.length === 0;
+          const weeklyTotal = $("weekly-total");
+          weeklyTotal.hidden = movement === null;
+          weeklyTotal.textContent = movement === null ? "" : formattedMovement;
+          const low = Math.min(...weeks.map((week) => Number(week.value) || 0)) * .97;
+          const high = Math.max(...weeks.map((week) => Number(week.value) || 0));
+          const barChart = $("bar-chart");
+          barChart.hidden = !hasWeeklyHistory;
+          barChart.innerHTML = hasWeeklyHistory ? weeks.map((week) => '<div class="chart-column"><span class="chart-value">' + money(week.value, true) + '</span><span class="chart-bar" style="height:' + Math.round(34 + ((Number(week.value) - low) / Math.max(1, high - low)) * 95) + 'px"></span><span class="chart-period">' + escape(week.short) + "</span></div>").join("") : "";
+          let implication = "";
+          if (movement !== null && target !== null && forecast !== null) {
+            const priorGap = target - (forecast - movement);
+            if (priorGap > 0 && movement > 0) {
+              const recovered = Math.round(Math.min(movement, priorGap) / priorGap * 100);
+              implication = recovered + "% of the previous forecast gap was recovered this week.";
+            } else if (priorGap <= 0) {
+              implication = "The prior forecast was already at or above target; the sourced forecast " + (movement === 0 ? "was unchanged" : "moved " + formattedMovement) + " this week.";
+            } else if (movement < 0) {
+              implication = "The sourced forecast declined " + formattedMovement.replace(/^[+\-−–]/, "") + " this week; the previous shortfall increased.";
+            } else {
+              implication = "The sourced forecast was unchanged this week; no previous forecast gap was recovered.";
+            }
+          } else if (movement !== null) {
+            implication = movement === 0 ? "The sourced forecast was unchanged this week." : "The sourced forecast moved " + formattedMovement + " this week.";
+          }
+          const nextAccount = movement === null ? null : accountRecords().find((account) => account.name && (account.decisionDate || account.nextStep || account.headline));
+          if (nextAccount) {
+            const evidence = String(nextAccount.decisionDate || nextAccount.nextStep || nextAccount.headline).trim().replace(/^decision\s+(?:after|on|by|before|during)\s+/i, "").replace(/[.!?]+$/, "");
+            if (evidence) {
+              implication += fictionalFixture
+                ? " " + escape(String(nextAccount.name).split(/\s+/)[0]) + "’s " + escape(evidence) + " is the next customer decision to watch."
+                : " Next grounded customer decision: " + escape(nextAccount.name) + " — " + escape(evidence) + ".";
+            }
+          }
+          const weeklyImplication = $("weekly-implication");
+          weeklyImplication.hidden = !implication;
+          weeklyImplication.innerHTML = implication ? "<strong>Implication:</strong> " + implication : "";
+          $("scenario-tabs").querySelectorAll("[data-scenario]").forEach((button) => button.addEventListener("click", () => {
+            state.scenario = button.dataset.scenario;
+            const next = selectedScenario();
+            state.sliders = {
+              commitCloseRate: clamp(Number(next.commitCloseRate ?? next.commitRealization ?? 100), 80, 100),
+              additionalPipelineWinRate: clamp(Number(next.additionalPipelineWinRate ?? 40), 0, 50),
+              dealSizeUplift: clamp(Number(next.dealSizeUplift ?? 0), 0, 20)
+            };
+            renderForecast();
+          }));
+        }
+
+        function evidenceName(item) {
+          if (typeof item === "string") return item;
+          return item?.source || item?.name || item?.connector || "";
+        }
+
+        function visibleEvidence(account) {
+          const verifiedNames = new Set(connectedSources().map((source) => String(source.name || "").toLowerCase()));
+          return [...new Set(list(account.evidence).map(evidenceName).filter((name) => verifiedNames.has(String(name).toLowerCase())))];
+        }
+
+        function listMarkup(values, fallback) {
+          const items = list(values);
+          if (!items.length && fallback) items.push(fallback);
+          return '<ul class="detail-list">' + items.slice(0, 3).map((item) => "<li>" + escape(typeof item === "string" ? item : item?.detail || item?.label || item?.text || "") + "</li>").join("") + "</ul>";
+        }
+
+        function executiveAttention(account, decision, details) {
+          const context = String(account.briefing || details.risk || decision.problem || list(account.rationale)[1] || account.headline || (fictionalFixture ? "Review the current buyer decision and accountable owner." : ""));
+          if (!context) return { label: "", context: "" };
+          const evidence = (context + " " + list(account.monitor).join(" ")).toLowerCase();
+          let label = "Leadership attention needed";
+          if (/new (?:seller|representative|account executive)|ramping|ramp-up/.test(evidence)) label = "Seller support needed";
+          else if (/stall|stuck|freeze|paused|no progress/.test(evidence)) label = "Opportunity is stalling";
+          else if (/owner(?:ship)? (?:is )?(?:missing|unconfirmed)|unconfirmed (?:owner|sponsor)|owner(?:ship)? gap|no .* owner/.test(evidence)) label = "Ownership gap";
+          else if (/risk|exposed|unresolved|block|compet|unconfirmed|not validated/.test(evidence)) label = "Deal at risk";
+          return { label, context };
+        }
+
+        function renderAccountBriefing(records) {
+          const high = records.filter((record) => record.priority === "High");
+          const attention = records.filter((record) => record.priority === "High" || record.priority === "Action");
+          const valuedHigh = high.filter((record) => hasNumber(record.value));
+          const highValue = valuedHigh.reduce((total, record) => total + Number(record.value), 0);
+          const top = high[0] || records[0];
+          const topContext = String(top?.briefing || top?.headline || (fictionalFixture ? "Customer decision requires leadership support." : "")).replace(/^Your (?=\$)/i, "A ");
+          const groundedPriorities = records.filter((record) => Boolean(record.priority) && !/^(?:unavailable|unknown|n\/?a|none)$/i.test(String(record.priority).trim()));
+          const showBriefing = fictionalFixture || groundedPriorities.length > 0;
+          $("accountBriefing").hidden = !showBriefing;
+          const evidence = $("account-evidence-count");
+          evidence.hidden = !showBriefing;
+          if (!showBriefing) {
+            $("account-briefing-copy").innerHTML = "";
+            evidence.textContent = "";
+            return;
+          }
+          const ranking = fictionalFixture || hasNumber(top?.priorityRank) ? " ranks first:" : topContext ? " customer context:" : "";
+          const customer = top
+            ? "<strong>" + escape(top.name) + ranking + "</strong>" + (topContext ? " " + escape(topContext) : "")
+            : fictionalFixture ? "No named customer evidence was provided." : "";
+          const valueSummary = valuedHigh.length ? " The " + high.length + " highest-priority opportunities total " + money(highValue, true) + (valuedHigh.length < high.length ? " across known opportunities" : "") + "." : "";
+          $("account-briefing-copy").innerHTML = "<strong>" + attention.length + " account" + (attention.length === 1 ? "" : "s") + " need active attention.</strong>" + valueSummary + (customer ? " " + customer : "");
+          evidence.textContent = (fictionalFixture ? records.length : groundedPriorities.length) + " prioritized accounts";
+        }
+
+        function renderAccountDetail(account) {
+          if (!account) {
+            $("accountFocusDetail").innerHTML = fictionalFixture ? '<div class="empty-state">No verified account evidence is available.</div>' : "";
+            return;
+          }
+          const decision = decisionForAccount(account.name);
+          const monitor = list(account.monitor).length ? list(account.monitor) : list(decision.problem || decision.rationale || account.briefing);
+          const unblock = list(account.unblock).length ? list(account.unblock) : list(decision.proposedSolution || account.nextStep);
+          const nextStep = list(account.nextStep);
+          const matchingDeals = topDeals.filter((deal) => account.opportunityId != null
+            ? String(deal.opportunityId ?? deal.id ?? "") === String(account.opportunityId)
+            : deal.account === account.name);
+          const details = topDeals.includes(account._sourceDeal) ? account._sourceDeal
+            : matchingDeals.length === 1 ? matchingDeals[0] : {};
+          const rationale = (list(account.rationale).length ? list(account.rationale) : monitor).map((reason) => String(reason).replace(/^Your third-largest opportunity:/i, (account.seller || "The seller") + "’s third-largest opportunity:"));
+          const attention = executiveAttention(account, decision, details);
+          const executiveContext = String(attention.context).replace(/^Your (?=\$)/i, "A ");
+          const executiveAction = unblock[0] || decision.proposedSolution || nextStep[0] || (fictionalFixture ? "Confirm the accountable owner and the customer blocker that needs reviewed support." : "");
+          const managerReported = account.evidenceScope === "manager-reported";
+          const scopeBadge = managerReported ? '<span class="account-scope-badge">Manager-reported</span>' : "";
+          const accountConcern = executiveContext || executiveAction
+            ? '<div class="account-concern"><div class="detail-heading">Account Context and Recommended Action</div>' +
+              (attention.label ? '<span class="executive-risk-label">' + escape(attention.label) + "</span>" : "") +
+              (executiveContext ? "<p>" + escape(executiveContext) + "</p>" : "") +
+              (executiveAction ? '<div class="executive-action"><div class="executive-action-label">Recommended executive action</div><p>' + escape(executiveAction) + "</p></div>" : "") + "</div>"
+            : "";
+          const detailSections = [];
+          if (rationale.length || fictionalFixture && attention.context) {
+            detailSections.push('<div><div class="detail-heading">Priority Rationale</div>' + listMarkup(rationale, fictionalFixture ? attention.context : "") + "</div>");
+          }
+          if (monitor.length || fictionalFixture) {
+            detailSections.push('<div><div class="detail-heading">What to monitor</div>' + listMarkup(monitor, fictionalFixture ? "Track the customer decision and any unresolved technical or buying-team questions." : "") + "</div>");
+          }
+          if (nextStep.length || details.nextCustomerStep || fictionalFixture) {
+            detailSections.push('<div><div class="detail-heading">Seller’s next step</div>' + listMarkup(nextStep, details.nextCustomerStep || (fictionalFixture ? "Confirm the customer owner and document the next reviewed milestone." : "")) + "</div>");
+          }
+          const stage = account.stage || details.stage || (fictionalFixture ? "Stage under review" : "");
+          const owner = account.seller || details.owner || (fictionalFixture ? "Owner to confirm" : "");
+          const timing = account.decisionDate || details.closeWindow || (fictionalFixture ? "Decision timing to confirm" : "");
+          const accountMetadata = [stage, owner ? "Seller · " + owner : "", timing].filter(Boolean).map((value) => "<span>" + escape(value) + "</span>").join("") + scopeBadge;
+          const priority = account.priority && !/^(?:unavailable|unknown|n\/?a|none)$/i.test(String(account.priority).trim()) ? account.priority : fictionalFixture ? "Review" : "";
+          const eyebrow = (fictionalFixture || priority ? "Priority account" : "Account") + (priority ? " · " + escape(priority) : "");
+          const accountValue = money(account.value, true);
+          $("accountFocusDetail").innerHTML =
+            '<div class="account-detail-header"><div><div class="eyebrow">' + eyebrow + '</div><h3>' + escape(account.name) + '</h3>' + (accountMetadata ? '<div class="account-detail-meta">' + accountMetadata + "</div>" : "") + "</div>" + (accountValue ? '<div class="account-detail-amount">' + accountValue + "</div>" : "") + "</div>" +
+            accountConcern +
+            (managerReported ? '<div class="account-evidence-note">Manager-reported summary only. Validate customer evidence, buyer ownership, and timing before relying on this account update.</div>' : "") +
+            (detailSections.length ? '<div class="account-detail-grid">' + detailSections.join("") + "</div>" : "");
+        }
+
+        function renderAccountFocus() {
+          const allRecords = accountRecords();
+          const query = String(state.accountQuery || "").trim().toLowerCase();
+          const records = query
+            ? allRecords.filter((record) => String(record.name || "").toLowerCase().includes(query))
+            : allRecords;
+          if (state.selectedAccount && !records.some((record) => record.id === state.selectedAccount)) state.selectedAccount = "";
+          renderAccountBriefing(allRecords);
+          const search = $("account-focus-search-wrap");
+          if (search) search.hidden = !allRecords.length && !fictionalFixture;
+          const clear = $("account-focus-search-clear");
+          if (clear) clear.hidden = !query;
+          const hasPriority = fictionalFixture || allRecords.some((account) => Boolean(account.priority));
+          const accountList = $("accountFocusList").closest?.(".account-list") || $("account-list-root");
+          accountList.dataset.priority = String(hasPriority);
+          accountList.hidden = allRecords.length === 0 && !fictionalFixture;
+          $("account-priority-heading").hidden = !hasPriority;
+          $("accountFocusList").innerHTML = records.length ? records.map((account) => {
+            const selected = account.id === state.selectedAccount;
+            const priority = String(account.priority || (fictionalFixture ? "Watch" : ""));
+            const priorityCell = !hasPriority ? "" : "<span>" + (priority ? '<span class="account-priority ' + escape(priority.toLowerCase()) + '">' + escape(priority) + "</span>" : "") + "</span>";
+            const context = fictionalFixture
+              ? escape(account.stage || account.type || "Opportunity review")
+              : escape(account.stage || account.type || "");
+            const seller = account.seller || (fictionalFixture ? "Unassigned" : "");
+            return '<button type="button" class="focus-account-row' + (selected ? " selected" : "") + '" data-account-id="' + escape(account.id) + '" aria-expanded="' + String(selected && state.drawerOpen) + '" aria-controls="account-drawer" aria-haspopup="dialog"><span class="account-label"><span class="account-name">' + escape(account.name) + "</span>" + (context ? '<span class="account-subline">' + context + "</span>" : "") + '</span><span class="account-amount">' + money(account.value, true) + '</span><span class="account-seller seller-column">' + escape(seller) + "</span>" + priorityCell + '<span class="account-arrow" aria-hidden="true">' + (selected ? "↗" : "→") + "</span></button>";
+          }).join("") : query && allRecords.length
+            ? '<div class="empty-state">No verified accounts match your search.</div>'
+            : fictionalFixture ? '<div class="empty-state">No prioritized accounts were provided.</div>' : "";
+          renderAccountDetail(records.find((record) => record.id === state.selectedAccount));
+          $("accountFocusList").querySelectorAll("[data-account-id]").forEach((button) => button.addEventListener("click", () => {
+            const account = records.find((record) => record.id === button.dataset.accountId);
+            if (account) openAccountDrawer(account, button);
+          }));
+        }
+
+        function setupAccountSearch() {
+          const input = $("account-focus-search");
+          const clear = $("account-focus-search-clear");
+          if (!input || !clear) return;
+          input.addEventListener("input", () => {
+            state.accountQuery = input.value;
+            renderAccountFocus();
+          });
+          clear.addEventListener("click", () => {
+            input.value = "";
+            state.accountQuery = "";
+            renderAccountFocus();
+            input.focus();
+          });
+          input.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape" || !input.value) return;
+            event.preventDefault();
+            input.value = "";
+            state.accountQuery = "";
+            renderAccountFocus();
+          });
+        }
+
+        function beginDrawerOpening() {
+          const drawer = $("account-drawer");
+          const panel = drawer.querySelector(".account-drawer-panel");
+          if (state.drawerCloseTimer !== null) {
+            window.clearTimeout(state.drawerCloseTimer);
+            state.drawerCloseTimer = null;
+          }
+          if (state.drawerCloseListener && panel) panel.removeEventListener("animationend", state.drawerCloseListener);
+          state.drawerCloseListener = null;
+          delete drawer.dataset.state;
+          drawer.hidden = false;
+          document.body.classList.add("drawer-open");
+          $("accountFocusDetail").scrollTop = 0;
+          $("account-drawer-close").focus();
+        }
+
+        function openAccountDrawer(account, button) {
+          state.returnFocus = button || document.activeElement;
+          state.returnAccount = account.id;
+          state.returnPerformance = "";
+          state.selectedAccount = account.id;
+          state.drawerOpen = true;
+          document.querySelectorAll(".performance-row.selected").forEach((row) => row.classList.remove("selected"));
+          $("account-drawer-title").textContent = "Account details";
+          renderAccountFocus();
+          beginDrawerOpening();
+        }
+
+        function closeAccountDrawer() {
+          if (!state.drawerOpen) return;
+          state.drawerOpen = false;
+          const drawer = $("account-drawer");
+          const panel = drawer.querySelector(".account-drawer-panel");
+          const accountId = state.returnAccount;
+          const performanceId = state.returnPerformance;
+          const previousFocus = state.returnFocus;
+          drawer.querySelectorAll('[aria-expanded="true"]').forEach((element) => element.setAttribute("aria-expanded", "false"));
+          document.querySelectorAll('.focus-account-row[aria-expanded="true"]').forEach((element) => element.setAttribute("aria-expanded", "false"));
+          const finish = () => {
+            if (drawer.dataset.state !== "closing" || state.drawerOpen) return;
+            if (state.drawerCloseTimer !== null) window.clearTimeout(state.drawerCloseTimer);
+            state.drawerCloseTimer = null;
+            state.drawerCloseListener = null;
+            delete drawer.dataset.state;
+            drawer.hidden = true;
+            document.body.classList.remove("drawer-open");
+            document.querySelectorAll(".performance-row.selected").forEach((row) => row.classList.remove("selected"));
+            $("account-drawer-title").textContent = "Account details";
+            renderAccountFocus();
+            const selectedRow = Array.from($("accountFocusList").querySelectorAll("[data-account-id]"))
+              .find((button) => button.dataset.accountId === accountId);
+            const performanceRow = performanceId
+              ? Array.from(document.querySelectorAll("[data-performance-id]"))
+                .find((row) => row.dataset.performanceId === performanceId)
+              : null;
+            const restoreFocus = performanceRow || (previousFocus && previousFocus.isConnected !== false ? previousFocus : selectedRow);
+            if (restoreFocus && typeof restoreFocus.focus === "function") restoreFocus.focus();
+            state.returnFocus = null;
+            state.returnAccount = "";
+            state.returnPerformance = "";
+          };
+          drawer.dataset.state = "closing";
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !panel) {
+            finish();
+            return;
+          }
+          state.drawerCloseListener = finish;
+          panel.addEventListener("animationend", finish, { once: true });
+          state.drawerCloseTimer = window.setTimeout(finish, 320);
+        }
+
+        function setupAccountDrawer() {
+          const drawer = $("account-drawer");
+          $("account-drawer-close").addEventListener("click", closeAccountDrawer);
+          drawer.addEventListener("click", (event) => {
+            if (event.target === drawer) closeAccountDrawer();
+          });
+          document.addEventListener("keydown", (event) => {
+            if (!state.drawerOpen) {
+              if (event.key === "Escape" && document.activeElement?.classList.contains("slider-info")) {
+                document.activeElement.blur();
+              }
+              return;
+            }
+            if (event.key === "Escape") {
+              event.preventDefault();
+              closeAccountDrawer();
+              return;
+            }
+            if (event.key !== "Tab") return;
+            const focusable = Array.from(drawer.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+            if (!focusable.length) {
+              event.preventDefault();
+              return;
+            }
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first.focus();
+            }
+          });
+        }
+
+        function growthLabel(team) {
+          if (team.growthRate == null || team.growthRate === "") return "";
+          const rate = Number(team.growthRate);
+          if (!Number.isFinite(rate)) return "";
+          return (rate >= 0 ? "+" : "−") + Math.abs(rate).toFixed(1) + "% week over week";
+        }
+
+        function performanceAttainment(person) {
+          const supplied = person.attainment;
+          if (supplied !== null && supplied !== undefined && supplied !== "" && Number.isFinite(Number(supplied)) && Number(supplied) >= 0) return Number(supplied);
+          const forecast = person.forecast;
+          const target = person.target;
+          if (forecast === null || forecast === undefined || forecast === "" || target === null || target === undefined || target === "" || !Number.isFinite(Number(forecast)) || !Number.isFinite(Number(target)) || Number(target) <= 0) return null;
+          return Math.round(Number(forecast) / Number(target) * 1000) / 10;
+        }
+
+        function performanceStatus(attainment) {
+          if (attainment === null || attainment === undefined || attainment === "" || !Number.isFinite(Number(attainment))) return { label: "Unavailable", tone: "unavailable" };
+          return Number(attainment) >= 100
+            ? { label: "Outperforming", tone: "outperforming" }
+            : { label: "Behind plan", tone: "behind" };
+        }
+
+        function performanceRow(person, kind) {
+          const attainment = performanceAttainment(person);
+          const status = performanceStatus(attainment);
+          const personId = kind + ":" + String(person.name || "");
+          const role = fictionalFixture
+            ? kind === "manager" ? person.role || "Regional Sales Manager" : "Account Executive"
+            : person.role || "";
+          const identity = '<td><span class="performance-name">' + escape(person.name) + "</span>" + (role ? '<span class="performance-secondary">' + escape(role) + "</span>" : "") + "</td>";
+          const region = "<td>" + escape(person.region || person.team || (fictionalFixture ? "—" : "")) + "</td>";
+          const forecastValue = fictionalFixture || hasNumber(person.forecast)
+            ? '<span class="performance-value">' + money(person.forecast, true) + "</span>"
+            : "";
+          const targetValue = fictionalFixture || hasNumber(person.target)
+            ? '<span class="performance-secondary">of ' + money(person.target, true) + "</span>"
+            : "";
+          const forecast = "<td>" + forecastValue + targetValue + "</td>";
+          const percentage = "<td>" + (attainment !== null || fictionalFixture
+            ? '<span class="performance-value">' + (attainment === null ? "Unavailable" : escape(attainment) + "%") + "</span>"
+            : "") + "</td>";
+          const accountCount = hasNumber(person.accounts) ? person.accounts : hasNumber(person.accountCount) ? person.accountCount : null;
+          const accounts = "<td>" + escape(accountCount === null ? fictionalFixture ? "—" : "" : accountCount) + "</td>";
+          const badge = "<td>" + (attainment !== null || fictionalFixture
+            ? '<span class="performance-status ' + escape(status.tone) + '">' + escape(status.label) + "</span>"
+            : "") + "</td>";
+          const growth = growthLabel(person);
+          const managerSpecific = "<td>" + (growth || fictionalFixture
+            ? '<span class="performance-growth' + (Number(person.growthRate) < 0 ? " negative" : "") + '">' + escape(growth.replace(" week over week", "") || "—") + "</span>"
+            : "") + "</td>";
+          const sellerSpecific = "<td>" + escape(person.manager || (fictionalFixture ? "Manager to confirm" : "")) + "</td>";
+          const cells = kind === "manager"
+            ? identity + region + forecast + percentage + managerSpecific + accounts + badge
+            : identity + region + sellerSpecific + forecast + percentage + accounts + badge;
+          return '<tr class="performance-row' + (person.featured ? " featured" : "") + '" data-performance-id="' + escape(personId) + '" tabindex="0" aria-haspopup="dialog" aria-controls="account-drawer">' + cells + "</tr>";
+        }
+
+        function renderPerformanceDetail(person, kind) {
+          const attainment = performanceAttainment(person);
+          const status = performanceStatus(attainment);
+          const label = fictionalFixture
+            ? kind === "manager" ? "Regional manager" : "Account executive"
+            : person.role || (kind === "manager" ? "Manager" : "Seller");
+          const context = fictionalFixture
+            ? kind === "manager"
+              ? String(person.region || person.team || "Regional team") + " · " + String(person.role || "Regional Sales Manager")
+              : String(person.region || "Assigned region") + " · Manager: " + String(person.manager || "To confirm")
+            : [person.region || person.team, kind === "manager" ? person.role : person.manager ? "Manager: " + person.manager : ""].filter(Boolean).join(" · ");
+          const wins = list(kind === "manager" ? person.wins : person.goingWell || person.wins);
+          const attention = list(kind === "manager" ? person.attention : person.needsAttention || person.attention);
+          const growth = kind === "manager" ? growthLabel(person) : "";
+          const metric = (heading, value) => '<div><span class="performance-metric-label">' + escape(heading) + '</span><strong class="performance-metric-value">' + escape(value) + "</strong></div>";
+          const reports = kind === "manager" ? list(person.sellers).map((seller) => seller.name).filter(Boolean) : [];
+          const attainmentLabel = attainment === null ? fictionalFixture ? "Unavailable" : "" : attainment + "%";
+          const accountCount = hasNumber(person.accounts) ? String(person.accounts) : hasNumber(person.accountCount) ? String(person.accountCount) : "";
+          const metrics = [];
+          if (fictionalFixture || hasNumber(person.forecast)) metrics.push(metric("Forecast", money(person.forecast, true)));
+          if (fictionalFixture || hasNumber(person.target)) metrics.push(metric("Target", money(person.target, true)));
+          if (fictionalFixture || accountCount !== "") metrics.push(metric("Accounts", accountCount || (fictionalFixture ? "Unavailable" : "")));
+          if (kind === "manager" && (growth || fictionalFixture)) metrics.push(metric("Weekly growth", growth || "Not reported"));
+          if (kind !== "manager" && (attainment !== null || fictionalFixture)) metrics.push(metric("Attainment", attainmentLabel));
+          const details = [];
+          if (wins.length || fictionalFixture) details.push('<div><div class="detail-heading">' + "What's going well" + "</div>" + listMarkup(wins, fictionalFixture ? "Reviewed customer momentum and seller follow-through are visible." : "") + "</div>");
+          if (attention.length || fictionalFixture) details.push('<div><div class="detail-heading">Needs attention</div>' + listMarkup(attention, fictionalFixture ? "Confirm ownership of the highest-priority customer blocker." : "") + "</div>");
+          if (reports.length) details.push('<div><div class="detail-heading">Direct reports</div>' + listMarkup(reports) + "</div>");
+          $("accountFocusDetail").innerHTML =
+            '<div class="account-detail-header"><div><div class="eyebrow">' + escape(label) + (attainment !== null || fictionalFixture ? " · " + escape(status.label) : "") + '</div><h3>' + escape(person.name) + '</h3>' + (context ? '<div class="account-detail-meta"><span>' + escape(context) + "</span></div>" : "") + "</div>" + (attainmentLabel ? '<div class="account-detail-amount">' + escape(attainmentLabel) + "</div>" : "") + "</div>" +
+            (metrics.length ? '<div class="performance-detail-metrics">' + metrics.join("") + "</div>" : "") +
+            (details.length ? '<div class="account-detail-grid">' + details.join("") + "</div>" : "");
+        }
+
+        function openPerformanceDrawer(person, kind, row) {
+          state.returnFocus = row || document.activeElement;
+          state.returnAccount = "";
+          state.returnPerformance = row?.dataset.performanceId || kind + ":" + String(person.name || "");
+          state.selectedAccount = "";
+          state.drawerOpen = true;
+          renderAccountFocus();
+          document.querySelectorAll(".performance-row.selected").forEach((item) => item.classList.remove("selected"));
+          if (row) row.classList.add("selected");
+          $("account-drawer-title").textContent = kind === "manager" ? fictionalFixture ? "Regional manager details" : "Manager details" : "Seller details";
+          renderPerformanceDetail(person, kind);
+          beginDrawerOpening();
+        }
+
+        function bindPerformanceRows(container, people, kind) {
+          container.querySelectorAll("[data-performance-id]").forEach((row, index) => {
+            const person = people[index];
+            if (!person) return;
+            const open = () => openPerformanceDrawer(person, kind, row);
+            row.addEventListener("click", open);
+            row.addEventListener("keydown", (event) => {
+              if (event.key !== "Enter" && event.key !== " ") return;
+              event.preventDefault();
+              open();
+            });
+          });
+        }
+
+        function fallbackTeamFocus() {
+          return divisionTeams.map((team) => ({
+            name: team.manager,
+            role: team.role || (data.disclosure?.isFictional ? "Regional Sales Manager" : ""),
+            team: team.name,
+            region: team.region,
+            forecast: team.forecast,
+            target: team.target,
+            attainment: performanceAttainment(team),
+            growthRate: null,
+            wins: team.trend ? [team.trend] : [],
+            attention: list(team.attention || team.needsAttention).length
+              ? list(team.attention || team.needsAttention)
+              : data.disclosure?.isFictional ? ["Review current customer blockers with the accountable seller."] : [],
+            accounts: team.accounts ?? team.accountCount,
+            opportunities: team.opportunities,
+            sellers: list(data.sellerOverview).filter((seller) => seller.manager === team.manager)
+          }));
+        }
+
+        function applyPerformanceColumns(container, people, kind) {
+          if (fictionalFixture) return;
+          const table = container.closest("table");
+          if (!table) return;
+          const columns = kind === "manager"
+            ? ["name", "region", "forecast", "attainment", "growth", "accounts", "status"]
+            : ["name", "region", "manager", "forecast", "attainment", "accounts", "status"];
+          const supported = {
+            name: people.some((person) => Boolean(person.name)),
+            region: people.some((person) => Boolean(person.region || person.team)),
+            manager: people.some((person) => Boolean(person.manager)),
+            forecast: people.some((person) => hasNumber(person.forecast) || hasNumber(person.target)),
+            target: people.some((person) => hasNumber(person.target)),
+            attainment: people.some((person) => performanceAttainment(person) !== null),
+            growth: people.some((person) => Boolean(growthLabel(person))),
+            accounts: people.some((person) => hasNumber(person.accounts) || hasNumber(person.accountCount)),
+            status: people.some((person) => performanceAttainment(person) !== null)
+          };
+          const headers = Array.from(table.querySelectorAll("thead th"));
+          columns.forEach((column, index) => {
+            if (headers[index]) {
+              headers[index].hidden = !supported[column];
+              if (column === "forecast") headers[index].textContent = supported.target ? "Forecast / Target" : "Forecast";
+            }
+            container.querySelectorAll("tr").forEach((row) => {
+              if (row.children[index]) row.children[index].hidden = !supported[column];
+            });
+          });
+          const visibleColumns = columns.filter((column) => supported[column]).length;
+          table.dataset.visibleColumns = String(visibleColumns);
+          if (visibleColumns <= 4) table.style.minWidth = "0";
+        }
+
+        function renderTeamFocus() {
+          const suppliedTeams = Array.isArray(data.teamFocus) && data.teamFocus.length ? data.teamFocus : fallbackTeamFocus();
+          const teams = fictionalFixture ? suppliedTeams : suppliedTeams.filter((team) => Boolean(team.name));
+          const teamTable = $("teamFocusGrid");
+          teamTable.innerHTML = teams.map((team) => performanceRow(team, "manager")).join("");
+          applyPerformanceColumns(teamTable, teams, "manager");
+          bindPerformanceRows(teamTable, teams, "manager");
+          const roster = teams.flatMap((team) => list(team.sellers));
+          const fallbackRoster = Array.isArray(data.sellerOverview) ? data.sellerOverview : [];
+          const suppliedSellers = roster.length ? roster : fallbackRoster;
+          const sellers = fictionalFixture ? suppliedSellers : suppliedSellers.filter((seller) => Boolean(seller.name));
+          const sellerTable = $("seller-grid");
+          sellerTable.innerHTML = sellers.map((seller) => performanceRow(seller, "seller")).join("");
+          applyPerformanceColumns(sellerTable, sellers, "seller");
+          bindPerformanceRows(sellerTable, sellers, "seller");
+          if (!fictionalFixture) {
+            $("manager-table-wrap").hidden = teams.length === 0;
+            $("seller-heading").hidden = sellers.length === 0;
+            $("seller-table-wrap").hidden = sellers.length === 0;
+            $("team").hidden = teams.length === 0 && sellers.length === 0;
+            $("team-heading").textContent = "Team ownership and account coverage";
+            $("team-description").textContent = "People and account coverage across your division.";
+            $("seller-eyebrow").textContent = "Seller ownership";
+            $("seller-heading-title").textContent = "People supporting your accounts";
+          }
+        }
+
+        function renderDisclosure() {
+          const footer = $("disclosure").closest("footer");
+          const message = data.disclosure?.message || "";
+          const sourceNames = fictionalFixture ? "" : connectedSources().map((source) => String(source.name || source.label || "")).filter(Boolean).join(" · ");
+          footer.hidden = !message && !sourceNames && !fictionalFixture;
+          $("disclosure").textContent = message || sourceNames || (fictionalFixture ? "Fictional data · For demonstration only." : "");
+        }
+
+        function syncDashboardSections() {
+          if (fictionalFixture) return;
+          const placeholder = data.dashboardMode === "placeholder";
+          const accountCount = accountRecords().length;
+          const hasPeople = !$("manager-table-wrap").hidden || !$("seller-table-wrap").hidden;
+          const forecastEvidence = hasNumber(data.forecast?.base) || hasNumber(data.forecast?.target)
+            || hasNumber(data.forecast?.confidence) || hasNumber(data.forecast?.weeklyMovement)
+            || !$("kpi-strip").hidden || !$("forecast-layout").hidden;
+          $("accounts").hidden = placeholder || accountCount === 0;
+          $("team").hidden = placeholder || !hasPeople;
+          $("forecast").hidden = placeholder || !forecastEvidence && (accountCount > 0 || hasPeople);
+          if (placeholder) {
+            const disclosure = document.querySelector('[data-sales-dashboard-disclosure="placeholder"]');
+            if (disclosure && data.dashboardLabel) disclosure.textContent = data.dashboardLabel;
+            $("overview-kicker").hidden = !$("overview-kicker").textContent;
+            $("kpi-strip").hidden = true;
+            $("forecastBriefing").hidden = true;
+            $("forecast-subheading").hidden = true;
+            $("forecast-layout").hidden = true;
+          }
+          const sections = [
+            [$("forecast-nav"), $("forecast")],
+            [$("accounts-nav"), $("accounts")],
+            [$("team-nav"), $("team")]
+          ];
+          let index = 0;
+          sections.forEach(([link, section]) => {
+            link.hidden = placeholder || section.hidden;
+            if (!link.hidden) {
+              index += 1;
+              const label = link.querySelector(".nav-index");
+              if (label) label.textContent = String(index).padStart(2, "0");
+            }
+          });
+          $("dashboard-navigation").hidden = placeholder || index < 2;
+        }
+
+        function setupNavigation() {
+          const links = Array.from(document.querySelectorAll(".navigation a")).filter((link) => !link.hidden);
+          if (!("IntersectionObserver" in window)) return;
+          const observer = new IntersectionObserver((entries) => {
+            const visible = entries.filter((entry) => entry.isIntersecting).sort((first, second) => first.boundingClientRect.top - second.boundingClientRect.top)[0];
+            if (!visible) return;
+            links.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+          }, { rootMargin: "-12% 0px -76% 0px", threshold: 0 });
+          links.forEach((link) => {
+            const section = document.querySelector(link.getAttribute("href"));
+            if (section && !section.hidden) observer.observe(section);
+          });
+        }
+
+        setupHeader();
+        renderCodexPet(data);
+        renderMetrics();
+        renderForecast();
+        renderAccountFocus();
+        renderTeamFocus();
+        renderDisclosure();
+        syncDashboardSections();
+        setupNavigation();
+        setupAccountDrawer();
+        setupAccountSearch();
+      })();
+    </script>
+  </body>
+</html>

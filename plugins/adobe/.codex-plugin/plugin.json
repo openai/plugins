@@ -1,0 +1,27 @@
+{
+  "apps": "./.app.json",
+  "author": {
+    "name": "Adobe Inc"
+  },
+  "description": "Adobe unlocks more ways to create and get work done from the conversation. Previously available as Photoshop, the Adobe connector now brings creativity and productivity capabilities across Creative Cloud and Acrobat. Describe what you want to make or change, and Adobe can help turn ideas, images, videos, and documents into polished outputs — from editing photos and creating PDFs to designing social assets, resizing videos, searching Creative Cloud assets, and generating data-driven documents.\nKey capabilities:\n\n* Retouch portraits or edit photos in bulk: Drop in photos and describe the look you want — adjust color, lighting, and tone; remove distractions and generate new elements; apply Lightroom presets; remove backgrounds; blur, crop, resize, and expand images.\n* Design from template: Start from an Express template, update text and colors, and then animate for social media or convert to PDF.\n* Refine video for any platform: Upload a horizontal clip and ask to reformat it for YouTube Shorts, Instagram Reels, or any platform. You can also stitch clips into a single sequence.\n* Search and organize creative work: Describe what you're looking for and surface assets from your Creative Cloud library — by subject, style, mood, or content — without browsing folders.\n* Work with PDFs and documents: Create and convert polished PDFs and documents.\n* Create data-driven documents: Describe your output and provide your data — the connector turns raw data or content into formatted, shareable PDFs, including badges, cards, catalogs, and more.\n\nYou can get started as a guest, and sign in with your Adobe account for more capabilities and tools, Creative Cloud storage, and saved work across sessions.",
+  "interface": {
+    "capabilities": [],
+    "category": "Creativity",
+    "defaultPrompt": [
+      "turn my video into a short highlight reel",
+      "resize these photos for my social media platforms",
+      "find a template for a promotional flyer"
+    ],
+    "developerName": "Adobe Inc",
+    "displayName": "Adobe",
+    "longDescription": "Adobe unlocks more ways to create and get work done from the conversation. Previously available as Photoshop, the Adobe connector now brings creativity and productivity capabilities across Creative Cloud and Acrobat. Describe what you want to make or change, and Adobe can help turn ideas, images, videos, and documents into polished outputs — from editing photos and creating PDFs to designing social assets, resizing videos, searching Creative Cloud assets, and generating data-driven documents.\nKey capabilities:\n\n* Retouch portraits or edit photos in bulk: Drop in photos and describe the look you want — adjust color, lighting, and tone; remove distractions and generate new elements; apply Lightroom presets; remove backgrounds; blur, crop, resize, and expand images.\n* Design from template: Start from an Express template, update text and colors, and then animate for social media or convert to PDF.\n* Refine video for any platform: Upload a horizontal clip and ask to reformat it for YouTube Shorts, Instagram Reels, or any platform. You can also stitch clips into a single sequence.\n* Search and organize creative work: Describe what you're looking for and surface assets from your Creative Cloud library — by subject, style, mood, or content — without browsing folders.\n* Work with PDFs and documents: Create and convert polished PDFs and documents.\n* Create data-driven documents: Describe your output and provide your data — the connector turns raw data or content into formatted, shareable PDFs, including badges, cards, catalogs, and more.\n\nYou can get started as a guest, and sign in with your Adobe account for more capabilities and tools, Creative Cloud storage, and saved work across sessions.",
+    "privacyPolicyURL": "https://www.adobe.com/privacy/policy.html",
+    "shortDescription": "Design, combine, and edit",
+    "supportURL": "https://discord.gg/tppGPapr2e",
+    "termsOfServiceURL": "https://www.adobe.com/legal/terms.html",
+    "websiteURL": "https://www.adobe.com"
+  },
+  "name": "adobe",
+  "skills": "./skills",
+  "version": "8.0.0"
+}

@@ -1,0 +1,33 @@
+.source-code {
+  overflow: auto;
+  margin: 0;
+  border: 1px solid var(--ds-border-subtle);
+  border-radius: var(--ds-radius-panel);
+  background: var(--ds-code-container-bg);
+  color: var(--ds-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.code-token {
+  color: inherit;
+}
+
+.code-keyword {
+  color: var(--ds-blue-bright);
+  font-weight: 600;
+}
+
+.code-string {
+  color: var(--positive);
+}
+
+.code-number {
+  color: var(--stack-secondary);
+}
+
+.code-comment {
+  color: var(--ds-text-muted);
+  font-style: italic;
+}

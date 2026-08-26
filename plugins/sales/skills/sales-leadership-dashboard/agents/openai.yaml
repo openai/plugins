@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sales Leadership Dashboard"
+  short_description: "Real executive forecasts, accounts, and team performance"
+  default_prompt: "Use $sales-leadership-dashboard to create or update my real executive operating dashboard."
+policy:
+  allow_implicit_invocation: false

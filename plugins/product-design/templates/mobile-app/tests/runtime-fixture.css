@@ -1,0 +1,82 @@
+.fixture-screen {
+  background: #f6f6f6;
+}
+
+.fixture-content {
+  min-height: 1200px;
+  padding: 76px 24px 120px;
+}
+
+.fixture-content h1 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+.sheet-trigger {
+  margin-bottom: 24px;
+}
+
+.fixture-carousel {
+  width: 100%;
+}
+
+.fixture-carousel-track {
+  gap: 12px;
+}
+
+.carousel-card {
+  width: 180px;
+  height: 132px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 18px;
+  background: #d9e7ff;
+}
+
+[data-testid="tap-count"] {
+  display: block;
+  margin-top: 12px;
+}
+
+.fixture-tall-content {
+  min-height: 900px;
+  padding-top: 160px;
+}
+
+.keyboard-footer {
+  height: 84px;
+  padding: 14px 20px;
+  background: white;
+  border-top: 1px solid #ddd;
+}
+
+.keyboard-footer input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid #bbb;
+  border-radius: 24px;
+}
+
+.flow-fixture-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: var(--flow-header-content-height);
+  padding: 0 18px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.flow-fixture-header button {
+  justify-self: start;
+}
+
+.flow-fixture-footer {
+  display: flex;
+  justify-content: flex-end;
+  height: 64px;
+  padding: 10px 18px;
+  background: white;
+  border-top: 1px solid #ddd;
+}

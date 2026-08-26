@@ -1,0 +1,7 @@
+interface:
+  display_name: Meeting Prep
+  short_description: Create public-equity-investing meeting briefs, question lists, evidence requests, follow-ups, and call prep.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: false

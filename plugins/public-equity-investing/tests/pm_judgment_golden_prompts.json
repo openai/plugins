@@ -1,0 +1,51 @@
+{
+  "version": "2026-05-19",
+  "scope_note": "Plugin-local golden prompt manifest for Public Equity Investing v3. External plugin_evals tree intentionally not modified in this pass.",
+  "prompts": [
+    {
+      "id": "hf-long-sparse-data",
+      "skill": "long-short-pitch",
+      "prompt": "Build a hedge fund long pitch with sparse data and state what would make it investable or a pass."
+    },
+    {
+      "id": "crowded-short-missing-borrow",
+      "skill": "long-short-pitch",
+      "prompt": "Pressure-test a crowded short where borrow and short interest are missing."
+    },
+    {
+      "id": "long-only-benchmark-relative",
+      "skill": "idea-generation",
+      "prompt": "Triage a long-only benchmark-relative idea and identify active weight, downside, liquidity, and next workflow."
+    },
+    {
+      "id": "sell-side-initiation",
+      "skill": "initiating-coverage",
+      "prompt": "Create a sell-side initiation note with rating, target, estimate bridge, risks to rating, and source posture."
+    },
+    {
+      "id": "etf-index-constituent-diligence",
+      "skill": "company-tearsheet",
+      "prompt": "Build an ETF/index constituent diligence tearsheet with index weight, float, liquidity, factor exposure, and passive flow gaps."
+    },
+    {
+      "id": "index-deletion-event",
+      "skill": "event-driven-analyzer",
+      "prompt": "Analyze an index deletion event with flow-vs-ADV, liquidity, borrow, fundamental anchor, and exit plan."
+    },
+    {
+      "id": "portfolio-catalyst-calendar",
+      "skill": "catalyst-calendar",
+      "prompt": "Build a 90-day catalyst calendar for a portfolio ranked by decision pressure, not chronology."
+    },
+    {
+      "id": "post-earnings-thesis-update",
+      "skill": "thesis-tracker",
+      "prompt": "Update the thesis after earnings and separate company thesis, stock thesis, PM action, and falsifiers."
+    },
+    {
+      "id": "public-equity-source-packet-diligence",
+      "skill": "memo-builder",
+      "prompt": "Use a source packet to draft a public equity diligence memo with decision hinge, what is priced in, downside, disconfirmers, and missing evidence."
+    }
+  ]
+}

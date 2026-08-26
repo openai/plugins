@@ -1,0 +1,7 @@
+interface:
+  display_name: "Comps Valuation"
+  short_description: "Public-equity comps reports and workbook models"
+  brand_color: "#1F6FEB"
+  default_prompt: "Use $comps-valuation to analyze a public-equity peer set or build a comps valuation workbook."
+policy:
+  allow_implicit_invocation: false

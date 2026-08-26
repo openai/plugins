@@ -2220,6 +2220,78 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "data-analytics",
+      "source": {
+        "source": "local",
+        "path": "./plugins/data-analytics"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Data & Analytics"
+    },
+    {
+      "name": "product-design",
+      "source": {
+        "source": "local",
+        "path": "./plugins/product-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Creativity"
+    },
+    {
+      "name": "adobe",
+      "source": {
+        "source": "local",
+        "path": "./plugins/adobe"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity"
+    },
+    {
+      "name": "sales",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sales"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Business & Operations"
+    },
+    {
+      "name": "public-equity-investing",
+      "source": {
+        "source": "local",
+        "path": "./plugins/public-equity-investing"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Finance"
+    },
+    {
+      "name": "creative-production",
+      "source": {
+        "source": "local",
+        "path": "./plugins/creative-production"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Creativity"
     }
   ]
 }

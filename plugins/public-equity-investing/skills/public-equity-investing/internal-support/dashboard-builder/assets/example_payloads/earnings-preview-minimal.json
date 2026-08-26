@@ -1,0 +1,126 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "earnings_preview",
+  "layout": "single_page",
+  "title": "ExampleCo: Pre-Earnings Dashboard",
+  "subtitle": "Minimal fixture for renderer validation.",
+  "issuer": {
+    "ticker": "EXCO",
+    "name": "ExampleCo",
+    "exchange": "NYSE",
+    "sector": "Example sector",
+    "accent_color": "#245f5a"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-15 09:00 ET",
+    "source_posture": "Example fixture",
+    "citation_policy": "strict",
+    "decision_context": "Is the bar low enough into the print?",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Pre-earnings dashboard",
+    "headline": "ExampleCo: Q1 pre-print dashboard",
+    "dek": "Minimal renderer fixture.",
+    "callout_label": "Core Debate",
+    "callout": "Whether KPI stabilization is enough to support guidance.",
+    "citations": [
+      "S1"
+    ]
+  },
+  "snapshot": [
+    {
+      "label": "Event",
+      "value": "May 20, 2026",
+      "detail": "Example date.",
+      "status": "good",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "label": "Bar",
+      "value": "Consensus pending",
+      "detail": "Terminal-only field.",
+      "status": "gap"
+    }
+  ],
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "modules": [
+        {
+          "type": "decision_box",
+          "title": "PM View",
+          "eyebrow": "Overview",
+          "data": {
+            "stance": "Example stance.",
+            "summary": "This is a fixture, not investment analysis.",
+            "thesis_change": "Unchanged",
+            "estimate_revision": "Not applicable",
+            "stock_skew": "Not applicable",
+            "next_catalyst": "Example earnings",
+            "citations": [
+              "S1"
+            ],
+            "key_points": [
+              "Renderer supports decision boxes.",
+              "Missing data remains visible."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kpis",
+      "label": "KPIs",
+      "modules": [
+        {
+          "type": "table",
+          "title": "KPI Board",
+          "eyebrow": "Fixture",
+          "data": {
+            "columns": [
+              {
+                "key": "metric",
+                "label": "Metric"
+              },
+              {
+                "key": "bar",
+                "label": "Bar"
+              },
+              {
+                "key": "read",
+                "label": "Read"
+              }
+            ],
+            "rows": [
+              {
+                "metric": "Revenue",
+                "bar": "Not provided",
+                "read": "Keep visible as a gap.",
+                "citations": [
+                  "S1"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Fixture source",
+      "type": "Example source",
+      "status": "Reviewed fixture",
+      "note": "Example only.",
+      "excerpt": "Minimal payload source used for renderer validation.",
+      "as_of": "2026-05-15"
+    }
+  ]
+}

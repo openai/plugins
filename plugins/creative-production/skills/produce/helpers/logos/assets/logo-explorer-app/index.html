@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Logo Explorer</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="anchor-panel" aria-label="Selected logo concept">
+        <div class="anchor-media" id="anchorMedia"></div>
+        <div class="anchor-copy">
+          <p class="eyebrow" id="stageLabel">Logo exploration</p>
+          <h1 id="title">Logo Explorer</h1>
+          <p id="anchorSummary"></p>
+          <div class="meta-grid" id="metaGrid"></div>
+          <div class="actions">
+            <button id="exportJson" type="button">Export JSON</button>
+            <button id="exportMarkdown" type="button">Export handoff</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="board-section" aria-label="Logo options">
+        <div class="board-heading">
+          <h2>Logos</h2>
+          <p>Select one concept, reject poor fits, then export the handoff.</p>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+    </main>
+
+    <template id="tileTemplate">
+      <article class="tile">
+        <button class="reject" type="button" aria-label="Reject concept">x</button>
+        <div class="image-wrap">
+          <img alt="" />
+          <div class="placeholder">
+            <span>Generating</span>
+          </div>
+          <button class="retry" type="button">Retry</button>
+        </div>
+        <div class="tile-copy">
+          <strong></strong>
+          <span></span>
+        </div>
+      </article>
+    </template>
+
+    <div class="viewer" id="viewer" aria-hidden="true">
+      <button class="viewer-close" id="viewerClose" type="button">Close</button>
+      <img id="viewerImage" alt="" />
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

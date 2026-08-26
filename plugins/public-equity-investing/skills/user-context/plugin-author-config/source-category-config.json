@@ -1,0 +1,60 @@
+{
+  "schema_version": "public_equity_investing_source_category_config.v1",
+  "description": "Author-owned Public Equity Investing source category catalog. This file reserves static category ids, labels, and preference hints for the explicit source setup flow. It does not inspect connectors, claim readiness, select routes, or create category-state.json. User-specific source preferences and source-of-truth pointers live in $CODEX_HOME/state/plugins/{marketplace_id}/{plugin_id}/user-context.md.",
+  "categories": {
+    "company_filings_ir": {
+      "label": "company filings, IR materials, and reported financials",
+      "preferred_apps": [
+        "Quartr",
+        "Daloopa",
+        "Google Drive"
+      ]
+    },
+    "earnings_transcripts_presentations": {
+      "label": "earnings transcripts, presentations, and events",
+      "preferred_apps": [
+        "Quartr",
+        "FactSet",
+        "LSEG",
+        "S&P"
+      ]
+    },
+    "internal_research": {
+      "label": "internal research notes, expert context, and team discussions",
+      "preferred_apps": [
+        "Google Drive",
+        "Microsoft SharePoint",
+        "Slack",
+        "Microsoft Teams",
+        "Gmail",
+        "Outlook Email",
+        "Third Bridge"
+      ]
+    },
+    "portfolio_models_trackers": {
+      "label": "portfolio, watchlists, models, and thesis trackers",
+      "preferred_plugins": [
+        "Spreadsheets",
+        "Microsoft Excel"
+      ],
+      "preferred_apps": [
+        "Google Drive",
+        "Microsoft SharePoint",
+        "FactSet",
+        "Morningstar",
+        "Alpaca"
+      ]
+    },
+    "market_data_estimates": {
+      "label": "market data, consensus, estimates, and ownership",
+      "preferred_apps": [
+        "FactSet",
+        "LSEG",
+        "S&P",
+        "Morningstar",
+        "Daloopa",
+        "Alpaca"
+      ]
+    }
+  }
+}

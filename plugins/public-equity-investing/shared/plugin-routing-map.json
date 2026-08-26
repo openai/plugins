@@ -1,0 +1,1294 @@
+{
+  "version": "1.0",
+  "plugin": "public-equity-investing",
+  "routing_policy": {
+    "invocation_policy_reference": "shared/invocation-policy.md",
+    "playbook_reference": "shared/plugin-routing-playbook.md",
+    "default_routing_principle": "Route broad prompts by listed-equity investor workflow before choosing an individual skill. Pick one lead skill that owns the first real investment judgment or hero artifact, then call support skills only for the workstreams the lead skill assigns.",
+    "artifact_hierarchy": "Hero human deliverable first, companion workbook/report artifacts second, support JSON/CSV/Markdown/log/manifest files last.",
+    "support_artifact_policy": "Support outputs preserve evidence, source ids, assumptions, and validation status, but do not become the primary user-facing artifact unless the user explicitly asks for machine-readable output.",
+    "negative_boundary": "Do not activate on private-company diligence, credit-first analysis, personal financial advice, generic company summaries, or generic model/deck/report/document requests with no public-equity investment context. Corporate finance work, investment banking transaction execution, private markets diligence, and credit-security research remain outside scope unless the actual user task is a listed-equity investor workflow.",
+    "non_trigger_examples": [
+      "Why did this stock move today?",
+      "Summarize this company's earnings.",
+      "Build a valuation model for this business.",
+      "Make a generic report about this public company.",
+      "Prepare a meeting brief.",
+      "Clean this spreadsheet.",
+      "Draft a board deck.",
+      "Analyze the company's creditworthiness."
+    ]
+  },
+  "workflows": [
+    {
+      "workflow_id": "company_tearsheet",
+      "workflow_name": "Company tearsheet",
+      "investor_intent": "Build a cited baseline profile for a listed issuer, public-company peer, or public-sector comparable before deeper equity work.",
+      "typical_user_prompts": [
+        "Build a public-company tearsheet for ACME before we decide whether to do more work.",
+        "Create a cited profile of this listed issuer and its public peers."
+      ],
+      "lead_skill": "company-tearsheet",
+      "supporting_skills": [
+        "financial-source-of-truth",
+        "sector-context-overlay",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Cited company tearsheet HTML report or concise chat profile for narrow requests.",
+      "companion_deliverables": [
+        "source_register.csv",
+        "peer_metric_support.csv"
+      ],
+      "support_artifacts": [
+        "support/source_index.csv",
+        "logs/source_posture.json"
+      ],
+      "source_gates": [
+        "Verify issuer identity, ticker, exchange, fiscal calendar, and as-of date before citing market or financial facts.",
+        "Label unavailable market data, stale filings, and unsupported estimates instead of filling gaps."
+      ],
+      "quality_gates": [
+        "Do not imply a rating, target price, sizing view, or trade action unless the user asked for investment judgment and the route escalates to the owning workflow.",
+        "Keep company profile facts separate from PM judgment and assumptions."
+      ],
+      "routing_triggers": [
+        "public-company tearsheet",
+        "listed issuer profile",
+        "public issuer profile",
+        "public peer profile",
+        "company snapshot for a PM",
+        "ticker profile"
+      ],
+      "do_not_route_when": [
+        "The user asks for transaction, sale process, CIM, buyer list, or banker materials.",
+        "The user asks for creditworthiness, covenant, bond, loan, CDS, or distressed-debt analysis."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The request is a banker transaction profile, buyer-facing material, or deal-process artifact."},
+        {"to": "Credit Markets", "when": "The request is credit-security research or creditworthiness rather than common-equity context."}
+      ],
+      "clarifying_questions": [
+        "Is the profile for a PM screen, initiation, earnings prep, pitch, or meeting brief?"
+      ],
+      "stop_or_escalate_when": [
+        "Issuer identity or ticker cannot be resolved with enough confidence to support a public-equity artifact."
+      ]
+    },
+    {
+      "workflow_id": "initiating_coverage",
+      "workflow_name": "Initiating coverage",
+      "investor_intent": "Create a full public-equity initiation report with thesis, valuation, catalysts, risks, estimates, and target-price support.",
+      "typical_user_prompts": [
+        "Initiate coverage on this public company with a full investment view.",
+        "Build an initiation report with thesis, valuation, catalysts, and risk/reward."
+      ],
+      "lead_skill": "initiating-coverage",
+      "supporting_skills": [
+        "company-tearsheet",
+        "comps-valuation",
+        "dcf-model-builder",
+        "three-statement-model-builder",
+        "scenario-sensitivity-generator",
+        "catalyst-calendar",
+        "financial-source-of-truth",
+        "sector-context-overlay",
+        "deck-report-qc"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML initiation report with source ledger and investment conclusion.",
+      "companion_deliverables": [
+        "valuation_workbook.xlsx",
+        "scenario_support.xlsx",
+        "catalyst_calendar.html"
+      ],
+      "support_artifacts": [
+        "support/source_register.csv",
+        "support/model_citations.json",
+        "logs/readiness_manifest.json"
+      ],
+      "source_gates": [
+        "Verify current price, share count, financial history, estimates, and valuation as-of dates before stating a target or rating.",
+        "Separate confirmed facts, model assumptions, variant perception, and missing evidence."
+      ],
+      "quality_gates": [
+        "Do not publish a target price, rating, or action without visible source/model support and risk/reward logic.",
+        "Show what proves, kills, or changes the thesis."
+      ],
+      "routing_triggers": [
+        "initiate coverage",
+        "initiating coverage",
+        "full initiation report",
+        "target price",
+        "rating initiation",
+        "full public-equity investment report"
+      ],
+      "do_not_route_when": [
+        "The user only wants a quick company profile or single metric lookup.",
+        "The request is sell-side banking or client transaction coverage."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The output is a banker pitch, transaction deck, or issuer advisory package."},
+        {"to": "Credit Markets", "when": "The investment view is on bonds, loans, CDS, distressed debt, or credit spread instruments."}
+      ],
+      "clarifying_questions": [
+        "Is the intended audience long-only PM, long/short fund, sell-side research, or internal IC?"
+      ],
+      "stop_or_escalate_when": [
+        "Market data, estimates, or valuation inputs are too stale or unsupported for an initiation-level conclusion."
+      ]
+    },
+    {
+      "workflow_id": "earnings_preview",
+      "workflow_name": "Earnings preview",
+      "investor_intent": "Prepare a pre-print equity view before reported results, centered on the expectation bar, likely reaction drivers, scenarios, and call questions.",
+      "typical_user_prompts": [
+        "Build a pre-earnings preview for this stock.",
+        "Prepare the expectation bar, scenarios, and call questions before ACME reports."
+      ],
+      "lead_skill": "earnings-preview",
+      "supporting_skills": [
+        "company-tearsheet",
+        "financial-source-of-truth",
+        "sector-context-overlay",
+        "scenario-sensitivity-generator",
+        "portfolio-risk-management",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML pre-earnings report.",
+      "companion_deliverables": [
+        "earnings_scenario_support.xlsx",
+        "call_question_list.md"
+      ],
+      "support_artifacts": [
+        "support/kpi_history.csv",
+        "support/source_register.csv",
+        "logs/earnings_preview_manifest.json"
+      ],
+      "source_gates": [
+        "Verify event date, reporting period, current price, consensus, company guide, and relevant KPI history before framing the setup.",
+        "Label stale or unavailable consensus and market data rather than treating them as current."
+      ],
+      "quality_gates": [
+        "Every scenario must state what would move the stock, not only whether results beat or miss.",
+        "Call questions should map to thesis variables, not generic management prompts."
+      ],
+      "routing_triggers": [
+        "earnings preview",
+        "pre-earnings",
+        "pre print",
+        "pre-print",
+        "expectation bar",
+        "earnings setup",
+        "call questions before earnings",
+        "quarter preview"
+      ],
+      "do_not_route_when": [
+        "Results have already been released and the user asks for the post-print read.",
+        "The user only asks for a generic earnings summary with no investment mandate."
+      ],
+      "escalation_paths": [
+        {"to": "Corporate Finance", "when": "The request is internal company forecasting or budget variance, not public-equity investment work."},
+        {"to": "Credit Markets", "when": "The earnings question is for credit-security or spread impact analysis."}
+      ],
+      "clarifying_questions": [
+        "What audience and depth should control: quick PM setup, full report, or model-update package?"
+      ],
+      "stop_or_escalate_when": [
+        "The event date, period, or consensus baseline cannot be established."
+      ]
+    },
+    {
+      "workflow_id": "earnings_deep_dive",
+      "workflow_name": "Earnings deep dive",
+      "investor_intent": "Analyze reported results, transcript, guidance, call commentary, stock reaction, and model/thesis impact after a print.",
+      "typical_user_prompts": [
+        "Write the post-print deep dive after ACME reported.",
+        "Analyze the transcript, guidance update, and call commentary from this quarter."
+      ],
+      "lead_skill": "earnings-deep-dive",
+      "supporting_skills": [
+        "earnings-preview",
+        "equity-model-update",
+        "company-tearsheet",
+        "financial-source-of-truth",
+        "sector-context-overlay",
+        "scenario-sensitivity-generator",
+        "portfolio-risk-management",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML post-earnings report.",
+      "companion_deliverables": [
+        "model_update_workbook.xlsx",
+        "transcript_question_ledger.csv"
+      ],
+      "support_artifacts": [
+        "support/beat_miss_bridge.csv",
+        "support/transcript_claims.csv",
+        "logs/post_print_manifest.json"
+      ],
+      "source_gates": [
+        "Verify release, transcript, guidance, price reaction, and consensus/estimate baseline before drawing a post-print conclusion.",
+        "Separate reported facts, management commentary, guidance changes, market reaction, and PM judgment."
+      ],
+      "quality_gates": [
+        "State whether the print proves, weakens, or leaves the thesis unresolved.",
+        "Tie model changes and action implications to sourced items or explicit assumptions."
+      ],
+      "routing_triggers": [
+        "earnings deep dive",
+        "post-earnings",
+        "post earnings",
+        "post-print",
+        "post print",
+        "transcript",
+        "guidance update",
+        "call commentary",
+        "beat miss",
+        "earnings reaction",
+        "after results"
+      ],
+      "do_not_route_when": [
+        "The user asks for a pre-print setup before results are available.",
+        "The user wants a generic earnings summary with no investment conclusion, model effect, or thesis read-through."
+      ],
+      "escalation_paths": [
+        {"to": "Credit Markets", "when": "The post-print read-through is for bonds, loans, CDS, recovery, or credit spreads."},
+        {"to": "Corporate Finance", "when": "The task is internal variance analysis or management reporting."}
+      ],
+      "clarifying_questions": [
+        "Should the answer focus on thesis status, model changes, position action, or full post-print report?"
+      ],
+      "stop_or_escalate_when": [
+        "The release or transcript cannot be verified and the requested posture is PM-ready."
+      ]
+    },
+    {
+      "workflow_id": "equity_model_update",
+      "workflow_name": "Equity model update",
+      "investor_intent": "Refresh an existing public-company equity model with new actuals, guidance, assumptions, and a source-to-cell change log.",
+      "typical_user_prompts": [
+        "Update this public-equity model for the latest quarter.",
+        "Flow the new guidance through the model and show the source-to-cell changes."
+      ],
+      "lead_skill": "equity-model-update",
+      "supporting_skills": [
+        "financials-normalizer",
+        "excel-data-cleaner",
+        "financial-source-of-truth",
+        "model-audit-tieout",
+        "scenario-sensitivity-generator",
+        "earnings-deep-dive"
+      ],
+      "default_artifact_mode": "workbook",
+      "hero_deliverable": "Updated copied XLSX model with change log, source map, and review pack.",
+      "companion_deliverables": [
+        "model_audit_report.html",
+        "scenario_sensitivity_pack.xlsx"
+      ],
+      "support_artifacts": [
+        "support/source_to_cell_map.csv",
+        "support/change_log.csv",
+        "logs/model_update_manifest.json"
+      ],
+      "source_gates": [
+        "Work on a copied workbook and preserve formulas, tabs, links, and user content unless the user explicitly authorizes edits.",
+        "Tie material updated values to release, filing, transcript, guidance, model assumption, or provided source."
+      ],
+      "quality_gates": [
+        "Run model audit after material updates before calling the workbook review-ready.",
+        "Expose unsupported assumptions and broken checks on the cover or review pack."
+      ],
+      "routing_triggers": [
+        "equity model update",
+        "update the model",
+        "refresh model",
+        "flow actuals",
+        "flow guidance",
+        "source-to-cell",
+        "model change log",
+        "model-ready actuals"
+      ],
+      "do_not_route_when": [
+        "The user asks to build a fresh model from scratch rather than update an existing workbook.",
+        "The model is an internal FP&A budget, operating forecast, or transaction model."
+      ],
+      "escalation_paths": [
+        {"to": "Corporate Finance", "when": "The workbook is an internal operating plan, budget, close pack, or FP&A model."},
+        {"to": "Investment Banking", "when": "The model is a deal, merger, LBO, CIM, or financing model."}
+      ],
+      "clarifying_questions": [
+        "Can the workflow create a copied workbook, and which workbook/version controls?"
+      ],
+      "stop_or_escalate_when": [
+        "Workbook preservation constraints conflict with requested edits or source data conflicts would change the model materially."
+      ]
+    },
+    {
+      "workflow_id": "public_comps",
+      "workflow_name": "Public comps valuation",
+      "investor_intent": "Build public-company comparable valuation logic, peer selection, multiples, and investment read-through.",
+      "typical_user_prompts": [
+        "Build public comps for this stock and explain the valuation read-through.",
+        "Create a comps workbook and report for this listed company."
+      ],
+      "lead_skill": "comps-valuation",
+      "supporting_skills": [
+        "company-tearsheet",
+        "financial-source-of-truth",
+        "sector-context-overlay",
+        "scenario-sensitivity-generator",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "hybrid",
+      "hero_deliverable": "Comps workbook or polished standalone HTML comps report, depending on the requested output.",
+      "companion_deliverables": [
+        "public_comps_workbook.xlsx",
+        "peer_selection_note.html"
+      ],
+      "support_artifacts": [
+        "support/peer_set.csv",
+        "support/multiple_sources.csv",
+        "logs/comps_manifest.json"
+      ],
+      "source_gates": [
+        "Verify peer tickers, metric definitions, fiscal periods, share/EV inputs, and as-of date before showing multiples.",
+        "Separate public-company comps from transaction comps, private-market comps, and credit valuation."
+      ],
+      "quality_gates": [
+        "Peer inclusion/exclusion logic must be visible.",
+        "Valuation conclusions must show sensitivity to metric choice, period, and outliers."
+      ],
+      "routing_triggers": [
+        "public comps",
+        "trading comps",
+        "comparable company analysis",
+        "peer multiples",
+        "valuation multiple",
+        "relative valuation",
+        "comps workbook"
+      ],
+      "do_not_route_when": [
+        "The user asks for M&A transaction comps or banker valuation materials.",
+        "The user asks only for a generic business valuation with no listed-equity investor context."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The comps are for a pitch book, fairness support, sell-side process, or transaction deck."},
+        {"to": "Private Markets", "when": "The task is private-company diligence or sponsor IC valuation."}
+      ],
+      "clarifying_questions": [
+        "Should the output be an XLSX comps model, an HTML valuation memo, or both?"
+      ],
+      "stop_or_escalate_when": [
+        "Current market/EV inputs are unavailable and the requested output would imply investable valuation."
+      ]
+    },
+    {
+      "workflow_id": "public_dcf",
+      "workflow_name": "Public-company DCF",
+      "investor_intent": "Build a formula-first DCF workbook or valuation report for a listed equity using explicit source labels, WACC, terminal value, and EV/equity bridge.",
+      "typical_user_prompts": [
+        "Build a DCF for this public stock.",
+        "Create a source-labeled public-company DCF workbook and sensitivity pack."
+      ],
+      "lead_skill": "dcf-model-builder",
+      "supporting_skills": [
+        "financials-normalizer",
+        "financial-source-of-truth",
+        "scenario-sensitivity-generator",
+        "model-audit-tieout",
+        "comps-valuation"
+      ],
+      "default_artifact_mode": "workbook",
+      "hero_deliverable": "Formula-first public-equity DCF workbook with cover, checks, and sensitivities.",
+      "companion_deliverables": [
+        "valuation_summary.html",
+        "sensitivity_support.xlsx"
+      ],
+      "support_artifacts": [
+        "support/model_citations.json",
+        "support/assumptions.csv",
+        "logs/dcf_manifest.json"
+      ],
+      "source_gates": [
+        "Verify financial history, forecast assumptions, share count, net debt, WACC inputs, terminal value basis, and current price before presenting upside/downside.",
+        "Clearly label illustrative assumptions when sources are unavailable."
+      ],
+      "quality_gates": [
+        "Workbook checks must be visible and unsupported assumptions must be flagged.",
+        "Do not state a target price or recommendation unless the investment workflow asks for it and source/model support is present."
+      ],
+      "routing_triggers": [
+        "public-company DCF",
+        "public equity DCF",
+        "DCF workbook",
+        "target price model",
+        "FCFF",
+        "FCFE",
+        "terminal value",
+        "WACC sensitivity"
+      ],
+      "do_not_route_when": [
+        "The user asks for a deal DCF, fairness support, or investment-banking valuation package.",
+        "The task is only to audit an existing model."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The DCF is for transaction, fairness, board, or banker pitch work."},
+        {"to": "Corporate Finance", "when": "The model is an internal operating forecast or budget."}
+      ],
+      "clarifying_questions": [
+        "Is the user asking for a fresh workbook, an HTML valuation report, or an update to an existing model?"
+      ],
+      "stop_or_escalate_when": [
+        "The required market and capital-structure inputs are too incomplete for a valuation output."
+      ]
+    },
+    {
+      "workflow_id": "three_statement_model",
+      "workflow_name": "Three-statement model",
+      "investor_intent": "Build a formula-first public-equity operating model with linked income statement, balance sheet, cash flow, scenarios, and checks.",
+      "typical_user_prompts": [
+        "Build a public-company three-statement model.",
+        "Create a formula-first operating model for this listed issuer."
+      ],
+      "lead_skill": "three-statement-model-builder",
+      "supporting_skills": [
+        "financials-normalizer",
+        "financial-source-of-truth",
+        "scenario-sensitivity-generator",
+        "model-audit-tieout"
+      ],
+      "default_artifact_mode": "workbook",
+      "hero_deliverable": "Three-statement XLSX model with cover dashboard, source labels, scenarios, and checks.",
+      "companion_deliverables": [
+        "model_audit_report.html",
+        "assumption_support.csv"
+      ],
+      "support_artifacts": [
+        "support/normalized_financials.csv",
+        "logs/three_statement_manifest.json"
+      ],
+      "source_gates": [
+        "Verify periods, units, fiscal calendar, and historical financial statement alignment before model construction.",
+        "Preserve source labels for material facts and assumptions."
+      ],
+      "quality_gates": [
+        "Balance-sheet and cash-flow checks must be surfaced.",
+        "A table-of-contents cover is insufficient; the first tab must answer the investment/model question."
+      ],
+      "routing_triggers": [
+        "three-statement model",
+        "3 statement model",
+        "operating model",
+        "IS BS CF",
+        "linked financial model",
+        "working capital schedule",
+        "cash sweep"
+      ],
+      "do_not_route_when": [
+        "The model is a corporate budget, deal model, merger model, or LBO.",
+        "The user asks only to clean source data without building or updating a model."
+      ],
+      "escalation_paths": [
+        {"to": "Corporate Finance", "when": "The model is internal budgeting, FP&A, or operating planning."},
+        {"to": "Investment Banking", "when": "The model is a transaction, merger, LBO, or financing model."}
+      ],
+      "clarifying_questions": [
+        "What historical periods and forecast horizon should the workbook use?"
+      ],
+      "stop_or_escalate_when": [
+        "Historical statements cannot be reconciled enough to build a coherent model."
+      ]
+    },
+    {
+      "workflow_id": "long_short_pitch",
+      "workflow_name": "Long/short pitch",
+      "investor_intent": "Build a PM-facing trade pitch with variant perception, expression, catalyst path, risk/reward, sizing considerations, and exit/cover rules.",
+      "typical_user_prompts": [
+        "Build a long/short pitch for this stock.",
+        "Write the hedge-fund idea with variant perception, catalyst path, sizing, and exit rules."
+      ],
+      "lead_skill": "long-short-pitch",
+      "supporting_skills": [
+        "company-tearsheet",
+        "earnings-preview",
+        "earnings-deep-dive",
+        "comps-valuation",
+        "portfolio-risk-management",
+        "catalyst-calendar",
+        "financial-source-of-truth",
+        "sector-context-overlay"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "PM-facing HTML trade pitch or investment memo.",
+      "companion_deliverables": [
+        "risk_reward_sensitivity.xlsx",
+        "catalyst_calendar.html"
+      ],
+      "support_artifacts": [
+        "support/thesis_evidence.csv",
+        "support/variant_perception_ledger.csv",
+        "logs/pitch_manifest.json"
+      ],
+      "source_gates": [
+        "Verify current price, key facts, catalysts, valuation inputs, and company/security identity before recommending expression.",
+        "Distinguish long, short, pair, options, hedge, and watchlist posture."
+      ],
+      "quality_gates": [
+        "State why the market is wrong, what proves it, what kills it, and what action follows.",
+        "Do not provide a trade expression without caveats around missing evidence, liquidity, timing, and risk."
+      ],
+      "routing_triggers": [
+        "long/short pitch",
+        "long-short pitch",
+        "short pitch",
+        "long pitch",
+        "pair trade",
+        "variant perception",
+        "hedge fund idea",
+        "trade expression",
+        "add trim exit cover"
+      ],
+      "do_not_route_when": [
+        "The requested pitch is for a bond, loan, CDS, distressed debt, or capital-structure trade.",
+        "The task is only a generic company memo without position or thesis/action framing."
+      ],
+      "escalation_paths": [
+        {"to": "Credit Markets", "when": "The pitch is for credit instruments, spreads, recovery, or capital-structure trades."},
+        {"to": "Investment Banking", "when": "The pitch is a banker client deck or issuer advisory story."}
+      ],
+      "clarifying_questions": [
+        "Is the desired stance long, short, pair trade, watchlist, or risk-review?"
+      ],
+      "stop_or_escalate_when": [
+        "The security, position direction, or investable instrument is ambiguous enough to change the workflow."
+      ]
+    },
+    {
+      "workflow_id": "idea_generation",
+      "workflow_name": "Idea generation",
+      "investor_intent": "Screen or map listed-equity ideas, watchlists, sectors, themes, or candidate sets before selecting names for deeper work.",
+      "typical_user_prompts": [
+        "Generate public-equity ideas in this sector and triage the best candidates.",
+        "Build a watchlist screen with catalysts, valuation setup, and next research steps."
+      ],
+      "lead_skill": "idea-generation",
+      "supporting_skills": [
+        "company-tearsheet",
+        "catalyst-calendar",
+        "sector-context-overlay",
+        "financial-source-of-truth",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML idea-triage report.",
+      "companion_deliverables": [
+        "watchlist.xlsx",
+        "candidate_scoring.csv"
+      ],
+      "support_artifacts": [
+        "support/screen_inputs.csv",
+        "support/exclusion_log.csv",
+        "logs/idea_generation_manifest.json"
+      ],
+      "source_gates": [
+        "Identify the universe, region, sector, market-cap, liquidity, and data freshness before ranking candidates.",
+        "Separate screen signal, PM judgment, and missing evidence."
+      ],
+      "quality_gates": [
+        "Candidate ranking must explain why each name deserves work now.",
+        "Every recommendation should include next diligence step and disqualifier."
+      ],
+      "routing_triggers": [
+        "idea generation",
+        "idea funnel",
+        "watchlist",
+        "market map",
+        "screen for stocks",
+        "equity screen",
+        "candidate set",
+        "triage ideas"
+      ],
+      "do_not_route_when": [
+        "The user asks for private-company sourcing or sponsor deal screening.",
+        "The user asks for a single named-company deep dive."
+      ],
+      "escalation_paths": [
+        {"to": "Private Markets", "when": "The screen is for private-company sourcing, sponsor deal flow, or growth equity."},
+        {"to": "Credit Markets", "when": "The screen is for public-credit instruments or distressed credit ideas."}
+      ],
+      "clarifying_questions": [
+        "What universe and constraints should control the screen?"
+      ],
+      "stop_or_escalate_when": [
+        "The requested universe is not listed-equity or market-data support is unavailable for the promised ranking."
+      ]
+    },
+    {
+      "workflow_id": "thesis_tracker",
+      "workflow_name": "Thesis tracker",
+      "investor_intent": "Track thesis evidence, KPIs, catalysts, estimates, valuation, status, and review cadence for listed-equity decisions.",
+      "typical_user_prompts": [
+        "Build a thesis tracker for this public-equity position.",
+        "Update the thesis status, catalysts, KPIs, and evidence log for this stock."
+      ],
+      "lead_skill": "thesis-tracker",
+      "supporting_skills": [
+        "catalyst-calendar",
+        "earnings-deep-dive",
+        "portfolio-risk-management",
+        "financial-source-of-truth",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "hybrid",
+      "hero_deliverable": "Thesis tracker workbook or HTML thesis-status report, depending on requested persistence.",
+      "companion_deliverables": [
+        "thesis_tracker.xlsx",
+        "status_update.html"
+      ],
+      "support_artifacts": [
+        "support/evidence_log.csv",
+        "support/kpi_status.csv",
+        "logs/thesis_tracker_manifest.json"
+      ],
+      "source_gates": [
+        "Preserve existing thesis ids, catalyst ids, source ids, and review status when updating a tracker.",
+        "Separate evidence, PM interpretation, and action/status decision."
+      ],
+      "quality_gates": [
+        "Every status change needs a reason, source posture, and next review trigger.",
+        "Tracker outputs must avoid silently overwriting previous thesis state."
+      ],
+      "routing_triggers": [
+        "thesis tracker",
+        "track thesis",
+        "thesis status",
+        "evidence log",
+        "KPI tracker",
+        "watchlist status",
+        "post-catalyst update",
+        "monitor this position"
+      ],
+      "do_not_route_when": [
+        "The user only wants a one-time memo or trade pitch.",
+        "The workflow is private-company portfolio monitoring."
+      ],
+      "escalation_paths": [
+        {"to": "Private Markets", "when": "The tracker is for private portfolio companies or sponsor value creation."},
+        {"to": "Corporate Finance", "when": "The tracker is an internal operating KPI or budget tracker."}
+      ],
+      "clarifying_questions": [
+        "Is this a new tracker or an update to an existing tracker/workbook?"
+      ],
+      "stop_or_escalate_when": [
+        "Existing tracker state cannot be safely read or preserved for an update request."
+      ]
+    },
+    {
+      "workflow_id": "catalyst_calendar",
+      "workflow_name": "Catalyst calendar",
+      "investor_intent": "Build or update a dated public-equity catalyst calendar with event windows, investor read-through, status, and monitoring actions.",
+      "typical_user_prompts": [
+        "Build a 90-day catalyst calendar for this stock.",
+        "Track the key public-equity catalysts, dates, watch items, and evidence status."
+      ],
+      "lead_skill": "catalyst-calendar",
+      "supporting_skills": [
+        "company-tearsheet",
+        "earnings-preview",
+        "event-driven-analyzer",
+        "thesis-tracker",
+        "financial-source-of-truth",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished HTML catalyst calendar with dates, status, investor read, and source posture.",
+      "companion_deliverables": [
+        "catalyst_tracker.xlsx",
+        "calendar_support.csv"
+      ],
+      "support_artifacts": [
+        "support/event_source_ledger.csv",
+        "logs/catalyst_calendar_manifest.json"
+      ],
+      "source_gates": [
+        "Confirm dates, expected windows, inferred timing, and source confidence separately.",
+        "Distinguish company, regulatory, clinical, macro, index, and event-driven catalyst types."
+      ],
+      "quality_gates": [
+        "Every dated item needs source posture and investor read-through.",
+        "Unconfirmed or inferred timing must be labeled, not presented as confirmed dates."
+      ],
+      "routing_triggers": [
+        "catalyst calendar",
+        "60-day catalyst",
+        "90-day catalyst",
+        "upcoming catalysts",
+        "event calendar",
+        "monitoring windows",
+        "key dates",
+        "public-equity catalysts"
+      ],
+      "do_not_route_when": [
+        "The user asks for a full probability/payoff event underwriting rather than a calendar.",
+        "The catalysts are private-company diligence or banker process milestones."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The dates are deal-process milestones, bid deadlines, VDR tasks, or banker process tracking."},
+        {"to": "Private Markets", "when": "The dates are private-company diligence or portfolio-monitoring milestones."}
+      ],
+      "clarifying_questions": [
+        "What time window and event categories should be covered?"
+      ],
+      "stop_or_escalate_when": [
+        "Core event dates are unavailable and the requested output depends on a confirmed calendar."
+      ]
+    },
+    {
+      "workflow_id": "event_driven",
+      "workflow_name": "Event-driven analysis",
+      "investor_intent": "Underwrite a dated public-equity special situation with probability, payoff, timing, downside, and expected-return logic.",
+      "typical_user_prompts": [
+        "Analyze this merger-arb setup with probability, timing, and downside.",
+        "Build an event-driven analysis for this spin-off/tender/regulatory approval setup."
+      ],
+      "lead_skill": "event-driven-analyzer",
+      "supporting_skills": [
+        "catalyst-calendar",
+        "scenario-sensitivity-generator",
+        "portfolio-risk-management",
+        "financial-source-of-truth",
+        "sector-context-overlay",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML event report with probability/payoff path and decision read.",
+      "companion_deliverables": [
+        "event_scenario_math.xlsx",
+        "catalyst_calendar.html"
+      ],
+      "support_artifacts": [
+        "support/scenario_math.json",
+        "support/event_sources.csv",
+        "logs/event_driven_manifest.json"
+      ],
+      "source_gates": [
+        "Verify deal/event terms, current price, consideration, timing, conditions, regulatory path, downside reference, and spread before calculating expected return.",
+        "Label legal/regulatory uncertainty and avoid definitive legal conclusions."
+      ],
+      "quality_gates": [
+        "Success, delay, break, and downside cases must be visible when material.",
+        "Expected return must identify denominator, timing, and source/assumption basis."
+      ],
+      "routing_triggers": [
+        "event-driven",
+        "special situation",
+        "merger arb",
+        "merger arbitrage",
+        "spin-off",
+        "tender offer",
+        "regulatory approval",
+        "success delay break",
+        "expected return",
+        "spread analysis"
+      ],
+      "do_not_route_when": [
+        "The event is distressed debt, bankruptcy, exchange offer, restructuring, covenant, or recovery analysis.",
+        "The user only needs a dated calendar without probability/payoff underwriting."
+      ],
+      "escalation_paths": [
+        {"to": "Credit Markets", "when": "The event is a distressed exchange, bankruptcy, covenant, recovery, or debt-security setup."},
+        {"to": "Legal", "when": "The user asks for legal/regulatory conclusions rather than investment scenario framing."}
+      ],
+      "clarifying_questions": [
+        "Is the immediate output a full event report, scenario math, catalyst calendar, or position-risk view?"
+      ],
+      "stop_or_escalate_when": [
+        "Event terms or current pricing cannot be established enough to support probability/payoff analysis."
+      ]
+    },
+    {
+      "workflow_id": "portfolio_risk",
+      "workflow_name": "Portfolio risk and hedge",
+      "investor_intent": "Size listed-equity positions, design thesis-preserving hedges, and frame risk actions across longs, shorts, pairs, options, ETFs, and factor/macro proxies.",
+      "typical_user_prompts": [
+        "Size this public-equity position and design a thesis-preserving hedge.",
+        "Hedge this long while preserving upside to the thesis."
+      ],
+      "lead_skill": "portfolio-risk-management",
+      "supporting_skills": [
+        "long-short-pitch",
+        "thesis-tracker",
+        "scenario-sensitivity-generator",
+        "catalyst-calendar",
+        "financial-source-of-truth"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "HTML risk decision report or sizing/hedge workbook.",
+      "companion_deliverables": [
+        "sizing_scorecard.xlsx",
+        "hedge_candidate_scorecard.csv"
+      ],
+      "support_artifacts": [
+        "support/risk_inputs.json",
+        "support/hedge_candidates.csv",
+        "logs/portfolio_risk_manifest.json"
+      ],
+      "source_gates": [
+        "Identify position direction, current exposure, thesis, liquidity, event calendar, and constraints before sizing or hedge recommendations.",
+        "Separate thesis hedge, factor hedge, pair trade, option structure, and credit/capital-structure hedge boundaries."
+      ],
+      "quality_gates": [
+        "State what the hedge protects, what it gives up, and what would trigger unwind or resize.",
+        "Credit hedges, CDS, bonds, loans, and spread DV01 require Credit Markets unless used only as context for a common-equity risk view."
+      ],
+      "routing_triggers": [
+        "position sizing",
+        "size this position",
+        "hedge this long",
+        "hedge this short",
+        "thesis-preserving hedge",
+        "risk budget",
+        "add trim exit",
+        "portfolio risk",
+        "factor hedge",
+        "pair hedge"
+      ],
+      "do_not_route_when": [
+        "The risk workflow is for bonds, loans, CDS, spread DV01, covenant risk, or recovery.",
+        "The task is generic portfolio reporting with no listed-equity position decision."
+      ],
+      "escalation_paths": [
+        {"to": "Credit Markets", "when": "The hedge or risk question is credit-instrument-first."},
+        {"to": "Corporate Finance", "when": "The risk work is internal company forecasting or treasury exposure management."}
+      ],
+      "clarifying_questions": [
+        "Is the requested mode position sizing, hedge design, or integrated risk plan?"
+      ],
+      "stop_or_escalate_when": [
+        "Position size, direction, or instrument constraints are missing and would change the risk recommendation."
+      ]
+    },
+    {
+      "workflow_id": "scenario_sensitivity",
+      "workflow_name": "Scenario sensitivity",
+      "investor_intent": "Build scenarios, sensitivities, event overlays, breakpoint math, or skew analysis for a listed-equity decision.",
+      "typical_user_prompts": [
+        "Build a scenario sensitivity for this stock around success/delay/break cases.",
+        "Show the valuation and downside breakpoint if guidance misses."
+      ],
+      "lead_skill": "scenario-sensitivity-generator",
+      "supporting_skills": [
+        "dcf-model-builder",
+        "comps-valuation",
+        "event-driven-analyzer",
+        "portfolio-risk-management",
+        "financial-source-of-truth",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Standalone HTML scenario report or sensitivity workbook when model-first.",
+      "companion_deliverables": [
+        "scenario_sensitivity_pack.xlsx",
+        "event_tree_support.json"
+      ],
+      "support_artifacts": [
+        "support/scenario_inputs.csv",
+        "support/breakpoint_math.json",
+        "logs/scenario_manifest.json"
+      ],
+      "source_gates": [
+        "Tie case definitions, valuation drivers, event probabilities, and market prices to sources or explicit assumptions.",
+        "Do not hide assumptions that drive the answer."
+      ],
+      "quality_gates": [
+        "Scenarios must show what changes the investment action, not only a mechanical sensitivity table.",
+        "Cases should be mutually intelligible and not mix event probability with valuation multiple unless stated."
+      ],
+      "routing_triggers": [
+        "scenario sensitivity",
+        "sensitivity analysis",
+        "breakpoint",
+        "success delay break",
+        "event tree",
+        "downside case",
+        "upside downside skew",
+        "valuation sensitivity"
+      ],
+      "do_not_route_when": [
+        "The user asks for a full DCF/model build rather than a scenario overlay.",
+        "The scenario is for a transaction, financing, or credit committee package."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The sensitivity is for a deal, financing, board, or committee package."},
+        {"to": "Credit Markets", "when": "The sensitivity is for credit spread, recovery, covenant, or debt security outcomes."}
+      ],
+      "clarifying_questions": [
+        "Should the scenario output be standalone HTML, workbook, or a support layer for another workflow?"
+      ],
+      "stop_or_escalate_when": [
+        "The cases or base price/valuation anchor are too ambiguous to define a useful sensitivity."
+      ]
+    },
+    {
+      "workflow_id": "economic_impact",
+      "workflow_name": "Economic impact report",
+      "investor_intent": "Translate macro, policy, commodity, geopolitical, or cross-asset developments into public issuer, sector, valuation, earnings, positioning, or portfolio implications.",
+      "typical_user_prompts": [
+        "Analyze the public-equity impact of this policy change across exposed issuers.",
+        "Show which listed stocks are most affected by this commodity or macro shock."
+      ],
+      "lead_skill": "economic-impact-report",
+      "supporting_skills": [
+        "idea-generation",
+        "company-tearsheet",
+        "sector-context-overlay",
+        "portfolio-risk-management",
+        "financial-source-of-truth",
+        "dashboard-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML economic impact report.",
+      "companion_deliverables": [
+        "issuer_exposure_table.csv",
+        "watchlist.xlsx"
+      ],
+      "support_artifacts": [
+        "support/source_register.csv",
+        "support/exposure_logic.csv",
+        "logs/economic_impact_manifest.json"
+      ],
+      "source_gates": [
+        "Tie macro/policy/commodity facts to reliable sources and explain issuer exposure logic.",
+        "Separate directional equity read-through from unsupported macro forecasting."
+      ],
+      "quality_gates": [
+        "Output must state issuer, sector, earnings, valuation, positioning, or portfolio implications.",
+        "Do not produce standalone macro/rates/fixed-income workbench output."
+      ],
+      "routing_triggers": [
+        "public-equity impact",
+        "listed equity impact",
+        "issuer exposure",
+        "policy impact on stocks",
+        "commodity shock",
+        "macro shock",
+        "sector read-through",
+        "portfolio implication"
+      ],
+      "do_not_route_when": [
+        "The task is pure macro, rates, commodities, or fixed-income analysis with no listed-equity implication.",
+        "The request is internal company planning or treasury impact."
+      ],
+      "escalation_paths": [
+        {"to": "Credit Markets", "when": "The impact is on bonds, credit spreads, loans, or creditworthiness."},
+        {"to": "Corporate Finance", "when": "The impact is internal company budget, treasury, or operating forecast work."}
+      ],
+      "clarifying_questions": [
+        "Is the output for a portfolio, watchlist, sector map, or single issuer?"
+      ],
+      "stop_or_escalate_when": [
+        "No public-equity issuer, sector, portfolio, or valuation implication is present."
+      ]
+    },
+    {
+      "workflow_id": "investment_memo",
+      "workflow_name": "Investment memo",
+      "investor_intent": "Draft or review formal public-equity memos, IC notes, committee notes, PM updates, client notes, and research notes.",
+      "typical_user_prompts": [
+        "Draft an investment memo for this public-equity idea.",
+        "Turn this research into a PM update with thesis, catalysts, risks, and next action."
+      ],
+      "lead_skill": "memo-builder",
+      "supporting_skills": [
+        "long-short-pitch",
+        "earnings-deep-dive",
+        "comps-valuation",
+        "dcf-model-builder",
+        "thesis-tracker",
+        "financial-source-of-truth",
+        "style-guide-adapter",
+        "deck-report-qc"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML investment memo or PM update.",
+      "companion_deliverables": [
+        "valuation_support.xlsx",
+        "source_ledger.csv"
+      ],
+      "support_artifacts": [
+        "support/memo_claims.csv",
+        "support/source_register.csv",
+        "logs/memo_manifest.json"
+      ],
+      "source_gates": [
+        "Import analysis from owning skills rather than inventing valuation, earnings, event, or risk facts in the memo layer.",
+        "Preserve citations, assumptions, and caveats from upstream artifacts."
+      ],
+      "quality_gates": [
+        "Memo must state thesis, evidence, risks, valuation/action implications, and what would change the view.",
+        "Credit-first memos route to Credit Markets."
+      ],
+      "routing_triggers": [
+        "investment memo",
+        "IC memo",
+        "committee note",
+        "PM update",
+        "research note",
+        "client note",
+        "event note",
+        "formal memo"
+      ],
+      "do_not_route_when": [
+        "The memo is for a sale process, board transaction, deal committee, financing, or banker client workflow.",
+        "The memo is credit-first or private-company sponsor IC work."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The memo is banker transaction, board, fairness, financing, or deal committee material."},
+        {"to": "Credit Markets", "when": "The memo is about bonds, loans, CDS, recovery, covenants, or credit spreads."}
+      ],
+      "clarifying_questions": [
+        "Should the memo be PM-facing, IC-facing, client-facing, or internal research?"
+      ],
+      "stop_or_escalate_when": [
+        "The requested conclusion lacks enough sourced analysis from owning workflows."
+      ]
+    },
+    {
+      "workflow_id": "meeting_prep",
+      "workflow_name": "Meeting prep",
+      "investor_intent": "Prepare public-equity meeting briefs, question lists, evidence requests, follow-ups, and call prep for management, analysts, experts, or internal PM discussions.",
+      "typical_user_prompts": [
+        "Prepare a public-equity meeting brief and question list for management.",
+        "Turn this thesis into call prep and evidence requests."
+      ],
+      "lead_skill": "meeting-prep",
+      "supporting_skills": [
+        "company-tearsheet",
+        "thesis-tracker",
+        "earnings-preview",
+        "earnings-deep-dive",
+        "financial-source-of-truth"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Meeting brief with agenda, thesis questions, evidence requests, and follow-up tracker.",
+      "companion_deliverables": [
+        "question_list.md",
+        "follow_up_tracker.csv"
+      ],
+      "support_artifacts": [
+        "support/source_register.csv",
+        "logs/meeting_prep_manifest.json"
+      ],
+      "source_gates": [
+        "Anchor questions to thesis variables, missing evidence, prior statements, and decision use.",
+        "Separate management questions, expert questions, analyst questions, and internal PM discussion prompts."
+      ],
+      "quality_gates": [
+        "Questions must be specific enough to elicit decision-relevant evidence.",
+        "Do not default to generic meeting prep unless public-equity investor context is explicit."
+      ],
+      "routing_triggers": [
+        "public-equity meeting prep",
+        "management meeting questions",
+        "investor call prep",
+        "question list",
+        "evidence requests",
+        "PM meeting brief",
+        "follow-up tracker"
+      ],
+      "do_not_route_when": [
+        "The meeting is generic business, sales, recruiting, legal, banker transaction, or private-diligence meeting prep.",
+        "The user only asks to schedule or summarize a calendar item."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The meeting is a management presentation, buyer/lender meeting, VDR diligence call, or banker transaction meeting."},
+        {"to": "Private Markets", "when": "The meeting is private-company sponsor diligence or portfolio monitoring."}
+      ],
+      "clarifying_questions": [
+        "Who is the meeting with and what investment decision should it inform?"
+      ],
+      "stop_or_escalate_when": [
+        "No public-equity thesis, issuer, or decision context is available."
+      ]
+    },
+    {
+      "workflow_id": "financials_normalizer",
+      "workflow_name": "Financials normalizer",
+      "investor_intent": "Normalize messy public-equity financial source data into model-ready long-form tables, source indexes, and QA flags.",
+      "typical_user_prompts": [
+        "Normalize these public-company financials for a model update.",
+        "Turn this messy equity-research source table into model-ready data and QA flags."
+      ],
+      "lead_skill": "financials-normalizer",
+      "supporting_skills": [
+        "excel-data-cleaner",
+        "financial-source-of-truth",
+        "equity-model-update",
+        "model-audit-tieout"
+      ],
+      "default_artifact_mode": "workbook",
+      "hero_deliverable": "Model-ready financials workbook or normalized CSV pack when explicitly requested.",
+      "companion_deliverables": [
+        "normalization_summary.html",
+        "qa_flags.csv"
+      ],
+      "support_artifacts": [
+        "support/normalized_financials.csv",
+        "support/source_index.csv",
+        "logs/normalization_manifest.json"
+      ],
+      "source_gates": [
+        "Preserve source fields, periods, units, dimensions, and source ids before transforming data.",
+        "Classify unsupported, stale, or conflicting rows as QA flags."
+      ],
+      "quality_gates": [
+        "Do not let normalized support data become the investment recommendation.",
+        "Route substantive thesis, valuation, or model-update conclusions to the owning skill."
+      ],
+      "routing_triggers": [
+        "normalize financials",
+        "model-ready financials",
+        "clean financial source data",
+        "long-form financials",
+        "source index",
+        "QA flags",
+        "spread financials"
+      ],
+      "do_not_route_when": [
+        "The user asks only for generic spreadsheet cleanup with no public-equity model or research use.",
+        "The user asks for a substantive investment conclusion."
+      ],
+      "escalation_paths": [
+        {"to": "Corporate Finance", "when": "The data is internal FP&A, budget, close, or operating finance data."},
+        {"to": "Investment Banking", "when": "The data is for a banker transaction model, CIM, VDR, or financing process."}
+      ],
+      "clarifying_questions": [
+        "Is this standalone normalization or a support step for model update, comps, DCF, or earnings work?"
+      ],
+      "stop_or_escalate_when": [
+        "Source periods, units, or metric definitions cannot be reconciled enough for model-ready output."
+      ]
+    },
+    {
+      "workflow_id": "model_audit",
+      "workflow_name": "Model audit and tie-out",
+      "investor_intent": "Audit existing public-equity models for formulas, tie-outs, assumptions, sensitivities, source support, and IC-ready QA.",
+      "typical_user_prompts": [
+        "Audit this public-equity model and tell me whether it is review-ready.",
+        "Tie out the model to sources, formulas, assumptions, and sensitivities."
+      ],
+      "lead_skill": "model-audit-tieout",
+      "supporting_skills": [
+        "financial-source-of-truth",
+        "excel-data-cleaner",
+        "scenario-sensitivity-generator",
+        "equity-model-update",
+        "dcf-model-builder"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Polished standalone HTML model-audit report or audit workbook when workbook-first.",
+      "companion_deliverables": [
+        "model_audit_pack.xlsx",
+        "source_to_cell_map.csv"
+      ],
+      "support_artifacts": [
+        "support/formula_findings.csv",
+        "support/source_tieouts.csv",
+        "logs/model_audit_manifest.json"
+      ],
+      "source_gates": [
+        "Inspect workbook tabs, formulas, links, checks, source labels, and material assumptions before drawing conclusions.",
+        "Preserve existing workbook content unless the user explicitly asks for remediation."
+      ],
+      "quality_gates": [
+        "State permitted decision use, critical blockers, source tie-outs, illustrative sensitivities, and remediation sequence.",
+        "Do not silently repair or overwrite the model during audit-only work."
+      ],
+      "routing_triggers": [
+        "model audit",
+        "tie out model",
+        "formula audit",
+        "source-to-cell audit",
+        "assumption audit",
+        "model QA",
+        "review-ready model",
+        "IC-ready QA"
+      ],
+      "do_not_route_when": [
+        "The user asks to build a new model rather than audit an existing one.",
+        "The model is a deal, LBO, merger, financing, budget, or close model."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The model is a transaction, LBO, merger, or financing model."},
+        {"to": "Corporate Finance", "when": "The model is an internal FP&A, budget, close, or operating forecast model."}
+      ],
+      "clarifying_questions": [
+        "Is this audit-only, remediation, or audit plus update?"
+      ],
+      "stop_or_escalate_when": [
+        "The workbook cannot be read or contains protected/external links that prevent meaningful audit."
+      ]
+    },
+    {
+      "workflow_id": "deck_report_qc",
+      "workflow_name": "Deck and report QC",
+      "investor_intent": "Review public-equity decks, reports, memos, model outputs, and client/PM materials before senior review or circulation.",
+      "typical_user_prompts": [
+        "QC this public-equity report before PM review.",
+        "Review this deck for source, claim, model, and circulation issues."
+      ],
+      "lead_skill": "deck-report-qc",
+      "supporting_skills": [
+        "financial-source-of-truth",
+        "style-guide-adapter",
+        "model-audit-tieout"
+      ],
+      "default_artifact_mode": "html_report",
+      "hero_deliverable": "Standalone HTML QC report with issue severity, fixes, and circulation readiness.",
+      "companion_deliverables": [
+        "annotated_issue_log.csv",
+        "remediation_checklist.md"
+      ],
+      "support_artifacts": [
+        "support/claim_ledger.csv",
+        "support/source_issues.csv",
+        "logs/qc_manifest.json"
+      ],
+      "source_gates": [
+        "Identify controlling artifact, support artifacts, audience, and circulation posture before QC.",
+        "Trace material figures and claims to sources, model cells, or explicit assumptions."
+      ],
+      "quality_gates": [
+        "Do not rewrite or rebuild the artifact unless the user asks for remediation.",
+        "Final-circulation posture requires visible source/model/caveat readiness."
+      ],
+      "routing_triggers": [
+        "deck QC",
+        "report QC",
+        "circulation review",
+        "PM review",
+        "client-ready equity report",
+        "source check this deck",
+        "claim check",
+        "senior review"
+      ],
+      "do_not_route_when": [
+        "The user wants creation of the underlying memo, model, pitch, or report rather than QC.",
+        "The artifact is banker transaction material, legal material, or internal corporate finance reporting."
+      ],
+      "escalation_paths": [
+        {"to": "Investment Banking", "when": "The deck/report is banker transaction, CIM, pitch, board, or deal-process material."},
+        {"to": "Legal", "when": "The review requires legal, compliance, or regulatory advice."}
+      ],
+      "clarifying_questions": [
+        "What circulation posture should control: analyst fixes, PM review, client-ready, or final?"
+      ],
+      "stop_or_escalate_when": [
+        "The controlling artifact or source package is missing and QC cannot distinguish final from support materials."
+      ]
+    }
+  ]
+}

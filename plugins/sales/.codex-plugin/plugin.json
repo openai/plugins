@@ -1,0 +1,68 @@
+{
+  "name": "sales",
+  "version": "1.1.1",
+  "description": "Practical seller and sales-leadership dashboards and sales workflows. Understand customer context, prepare for meetings, follow up after calls, manage pipeline, plan deals, build business cases and customer decision decks, review forecasts, find customer evidence, coach reps, and work from CRM context.",
+  "author": {
+    "name": "OpenAI"
+  },
+  "homepage": "https://github.com/openai/openai/tree/master/chatgpt/oai-maintained-plugins/plugins/sales",
+  "repository": "https://github.com/openai/openai/tree/master/chatgpt/oai-maintained-plugins/plugins/sales",
+  "license": "Proprietary",
+  "keywords": [
+    "sales",
+    "crm",
+    "hubspot",
+    "zoominfo",
+    "outreach",
+    "gmail",
+    "outlook",
+    "microsoft teams",
+    "sales intelligence",
+    "account-intelligence",
+    "account-home",
+    "seller-dashboard",
+    "leadership-dashboard",
+    "revenue-leadership",
+    "meeting-preparation",
+    "call-follow-up",
+    "competitive-brief",
+    "deal-strategy",
+    "business-case",
+    "customer-presentations",
+    "decision-deck",
+    "forecasting",
+    "customer-quotes",
+    "sales-coaching",
+    "pipeline",
+    "account-prioritization",
+    "company-enrichment",
+    "salesforce",
+    "guided-flow"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Sales",
+    "shortDescription": "Practical workflows for sales",
+    "longDescription": "The Sales plugin helps you level up your Codex usage as a sales person or account director, keeping you focused on what's important and taking simple tasks off your plate. You'll find skills to help with meeting preparation and follow-up, forecasting and account preparation, and more.\n\nTo get the most from this plugin, you should have CRM access enabled, but it will also be valuable if you have meeting transcripts, internal messaging, email, and calendar plugins installed.",
+    "developerName": "OpenAI",
+    "category": "Business & Operations",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": [
+      "What can you do?",
+      "Help me prepare for my upcoming customer meeting",
+      "Build the first version of my seller dashboard"
+    ],
+    "brandColor": "#FB6A22",
+    "composerIcon": "./assets/codex-sales-plugin-composer-icon.svg",
+    "logo": "./assets/codex-sales-plugin-icon.png",
+    "screenshots": []
+  }
+}

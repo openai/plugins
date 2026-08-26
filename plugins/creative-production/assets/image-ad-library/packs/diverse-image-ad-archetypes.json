@@ -1,0 +1,1115 @@
+{
+  "version": 1,
+  "packs": [
+    {
+      "id": "diverse-image-ad-archetypes",
+      "title": "Diverse Image Ad Archetypes",
+      "summary": "Twenty-five reusable image-ad families for broad commercial exploration across UGC, surreal 3D, premium still life, demo, comparison, retail, ecommerce, OOH, proof, launch, editorial, and social-native formats.",
+      "whenToUse": "Use when the user wants a wide range of very different ad directions for a supplied subject before narrowing to scenes, style routes, or final production assets.",
+      "requiredInputs": [
+        "subject image or description",
+        "product, service, venue, or offer facts to preserve",
+        "target audience",
+        "approved claims and copy",
+        "brand palette or taste references",
+        "channel or aspect ratio if known",
+        "CTA or contact detail if text is requested",
+        "avoid list"
+      ],
+      "riskGates": [
+        "readable text fidelity",
+        "logo and packaging distortion",
+        "unsupported claims",
+        "invented endorsements or reviews",
+        "wrong product category",
+        "unsafe or unrealistic product use",
+        "demographic stereotyping",
+        "competitor mimicry",
+        "overcrowded layout"
+      ],
+      "placeholders": [
+        {
+          "name": "SUBJECT_REFERENCE",
+          "description": "Uploaded or supplied subject to preserve exactly."
+        },
+        {
+          "name": "SUBJECT_KIND",
+          "description": "Product, service, venue, experience, app, offer, or business asset."
+        },
+        {
+          "name": "AUDIENCE",
+          "description": "Primary audience or buyer type."
+        },
+        {
+          "name": "PRIMARY_BENEFIT",
+          "description": "The main approved benefit or buying cue."
+        },
+        {
+          "name": "BRAND_PALETTE",
+          "description": "Core colors and material cues to echo without overmatching."
+        },
+        {
+          "name": "HEADLINE",
+          "description": "Exact supplied headline, or no headline when not supplied."
+        },
+        {
+          "name": "CTA_OR_CONTACT",
+          "description": "Exact supplied CTA or contact detail, or no CTA when not supplied."
+        },
+        {
+          "name": "CHANNEL",
+          "description": "Intended channel, crop, or placement."
+        },
+        {
+          "name": "AVOID",
+          "description": "Subject-specific risks, unsupported claims, brand drift, and fidelity issues."
+        }
+      ],
+      "families": [
+        {
+          "id": "ugc-offering-pose-thumbnail",
+          "title": "UGC Offering Pose Thumbnail",
+          "category": "Social Native / UGC",
+          "format": "lifestyle creator thumbnail",
+          "humanPresence": "one expressive creator or customer",
+          "renderingMode": "photorealistic lifestyle commercial",
+          "channelFit": [
+            "TikTok thumbnail",
+            "Reels cover",
+            "Meta static ad",
+            "influencer whitelisting"
+          ],
+          "summary": "A high-energy creator-style image where a person offers the subject close to the camera while copy and marker-like accents make the ad feel native to short-form social.",
+          "businessGoal": "test whether the subject can feel human, direct, and recommendation-led without losing product fidelity",
+          "scene": "a real-life interior or street-fashion environment with side light, tactile shadows, a wide-angle foreground subject, and the creator mid-ground with a vivid expression",
+          "focus": "personal recommendation, immediacy, and product visibility",
+          "decision": "whether a social-native human thumbnail should lead the first paid or creator test",
+          "elements": [
+            "foreground subject held toward lens",
+            "expressive human face",
+            "wide-angle perspective",
+            "large integrated headline zone",
+            "small handwritten benefit tags",
+            "minimal CTA or contact capsule"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline only; place behind the person or subject for depth.",
+            "supportingText": "Use up to three short exact benefit tags.",
+            "cta": "Use exact supplied CTA or contact detail only."
+          },
+          "promptTemplate": "Create a photorealistic UGC-style lifestyle ad thumbnail for [SUBJECT_REFERENCE]. Show one expressive [AUDIENCE] creator in a plausible real-life setting, holding the subject close to the camera in an offering pose. Use [BRAND_PALETTE] accents in wardrobe and decor. Integrate [HEADLINE] as large clean type with depth behind the person, add short handwritten tags only if supplied, and place [CTA_OR_CONTACT] in a small clean footer capsule. Preserve subject shape, label, logo, proportions, and claims exactly. Avoid [AVOID].",
+          "constraints": [
+            "preserve product label and orientation",
+            "keep hands and fingers anatomically natural",
+            "do not invent demographics beyond the brief",
+            "do not add fake creator handles",
+            "keep benefit tags short and exact",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "extra hands, warped limbs, flipped labels, plastic skin, fake endorsements, illegible headline, product hidden by text",
+          "size": "1024x1536"
+        },
+        {
+          "id": "surreal-y2k-floating-product-sculpture",
+          "title": "Surreal Y2K Floating Product Sculpture",
+          "category": "Surreal 3D / Product Hero",
+          "format": "glossy inflated 3D poster",
+          "humanPresence": "none",
+          "renderingMode": "stylized commercial 3D render",
+          "channelFit": [
+            "drop announcement",
+            "fashion ecommerce",
+            "Gen Z social",
+            "digital billboard"
+          ],
+          "summary": "A glossy Y2K-inspired product cluster with inflated objects, floating type, saturated sky or studio depth, and playful category symbols.",
+          "businessGoal": "test whether the subject can become an iconic sculptural hero with strong recall and playful social appeal",
+          "scene": "a bright saturated world with floating product duplicates, glossy balloon-like support objects, puffy ribbons, bloom, rim light, and atmospheric depth",
+          "focus": "product silhouette, playful abundance, and memorable visual identity",
+          "decision": "whether a surreal render system should carry a drop, fashion, novelty, or youth-facing campaign",
+          "elements": [
+            "floating subject cluster",
+            "inflated category symbols",
+            "giant 3D headline",
+            "glossy highlights",
+            "soft bloom",
+            "single footer contact line when supplied"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline as giant 3D inflated or chrome lettering.",
+            "supportingText": "Avoid extra labels unless supplied.",
+            "cta": "No button unless the brief explicitly asks for one."
+          },
+          "promptTemplate": "Create a surreal Y2K-inspired commercial 3D poster for [SUBJECT_REFERENCE]. Float multiple readable versions of the subject as hero sculptures with glossy inflated supporting symbols tied to [PRIMARY_BENEFIT] and [BRAND_PALETTE]. Use radiant backlight, soft bloom, high-gloss reflections, and crisp product edges. Add [HEADLINE] as clean 3D inflated or chrome type. Add [CTA_OR_CONTACT] only if supplied. Preserve the subject exactly. Avoid [AVOID].",
+          "constraints": [
+            "keep product readable and not mirrored",
+            "separate product material from balloon material",
+            "use support symbols that fit the category",
+            "do not add faces unless requested",
+            "keep text sparse",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "scorched texture, damaged product, melted logo, chaotic overlap, unreadable 3D type, duplicate unsupplied logos",
+          "size": "1024x1024"
+        },
+        {
+          "id": "luxury-editorial-still-life",
+          "title": "Luxury Editorial Still Life",
+          "category": "Premium / Editorial",
+          "format": "magazine-style product spread",
+          "humanPresence": "none or cropped hand only",
+          "renderingMode": "photorealistic editorial photography",
+          "channelFit": [
+            "print ad",
+            "luxury social",
+            "landing hero",
+            "press kit"
+          ],
+          "summary": "A restrained high-end still life using premium surfaces, negative space, material contrast, and exacting light control.",
+          "businessGoal": "make the subject feel expensive, considered, and visually ownable without overexplaining the offer",
+          "scene": "a precise studio or architectural still-life setup with marble, lacquer, brushed metal, linen, glass, or other category-appropriate materials",
+          "focus": "craft, finish, taste, and premium recognition",
+          "decision": "whether a premium editorial route fits the category and audience",
+          "elements": [
+            "hero subject on refined surface",
+            "controlled reflection",
+            "single prop family",
+            "large negative space",
+            "small editorial caption zone"
+          ],
+          "copyRules": {
+            "headline": "Use either no headline or a small exact editorial headline.",
+            "supportingText": "Keep body text as placeholder lines unless supplied.",
+            "cta": "Usually omit CTA."
+          },
+          "promptTemplate": "Create a luxury editorial still-life advertisement for [SUBJECT_REFERENCE]. Place the subject on a refined [BRAND_PALETTE]-compatible surface with disciplined negative space, controlled reflections, and one restrained prop family that supports [PRIMARY_BENEFIT]. Use magazine-quality lighting and exact product preservation. Add only exact supplied text. Avoid [AVOID].",
+          "constraints": [
+            "preserve label, shape, material, and scale",
+            "avoid stock-photo generic props",
+            "keep composition quiet",
+            "do not invent awards or premium claims",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "busy prop styling, fake luxury logos, unreadable microtext, distorted reflections, unrelated jewelry or fragrance cues",
+          "size": "1536x1024"
+        },
+        {
+          "id": "hard-sell-direct-response-card",
+          "title": "Hard Sell Direct Response Card",
+          "category": "Performance / Direct Response",
+          "format": "benefit-led static conversion ad",
+          "humanPresence": "optional customer or product-only",
+          "renderingMode": "polished performance composite",
+          "channelFit": [
+            "Meta feed",
+            "display ad",
+            "landing page module",
+            "retargeting"
+          ],
+          "summary": "A clear conversion ad with product, headline, proof slot, benefit stack, CTA, and urgency space when approved.",
+          "businessGoal": "test whether a straightforward conversion layout communicates the offer quickly and reviewably",
+          "scene": "a clean high-contrast ad card with product hero, benefit hierarchy, proof or rating placeholder, CTA block, and channel-safe margins",
+          "focus": "offer clarity and fast comprehension",
+          "decision": "whether the subject should be sold through a direct response angle",
+          "elements": [
+            "product hero",
+            "large headline",
+            "three benefit bullets",
+            "proof or rating slot",
+            "CTA button",
+            "safe-zone margins"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline only.",
+            "supportingText": "Use exact approved benefits or abstract placeholder lines.",
+            "cta": "Use exact supplied CTA only."
+          },
+          "promptTemplate": "Create a polished direct-response image ad for [SUBJECT_REFERENCE]. Build a clear conversion card with product hero, [HEADLINE], up to three exact approved benefit bullets, proof placeholder only if supplied, and [CTA_OR_CONTACT] as a clean button or footer. Use [BRAND_PALETTE] for hierarchy and contrast. Preserve all subject facts. Avoid [AVOID].",
+          "constraints": [
+            "do not invent discounts, reviews, prices, or ratings",
+            "keep the layout readable at feed size",
+            "use deterministic-looking text zones",
+            "preserve product exactly",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake countdowns, fake star ratings, too many claims, noisy badges, broken text hierarchy",
+          "size": "1024x1536"
+        },
+        {
+          "id": "problem-solution-split-screen",
+          "title": "Problem Solution Split Screen",
+          "category": "Performance / Comparison",
+          "format": "two-panel before-and-after ad",
+          "humanPresence": "optional lifestyle or object scenes",
+          "renderingMode": "photorealistic or polished composite",
+          "channelFit": [
+            "paid social",
+            "landing page",
+            "email hero",
+            "sales enablement"
+          ],
+          "summary": "A two-panel ad that contrasts a problem context with the improved state enabled by the subject while avoiding exaggerated claims.",
+          "businessGoal": "make the need-state and the product role understandable without relying on long copy",
+          "scene": "a clean split image with left-side friction, right-side resolved moment, and the subject clearly bridging or anchoring the improvement",
+          "focus": "what changes for the buyer or user",
+          "decision": "whether contrast-based messaging is appropriate for the offer",
+          "elements": [
+            "left problem panel",
+            "right solution panel",
+            "center product or transition device",
+            "short labels",
+            "visual consistency across panels"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline or no headline.",
+            "supportingText": "Use neutral labels such as Before and After only when supplied or appropriate.",
+            "cta": "Optional small CTA."
+          },
+          "promptTemplate": "Create a problem-solution split-screen advertisement for [SUBJECT_REFERENCE]. Show the problem state on the left and the improved state on the right, with the subject clearly preserved and central to the change. Use neutral, believable visual contrast and [BRAND_PALETTE]. Add exact supplied labels only. Avoid exaggerated outcomes and [AVOID].",
+          "constraints": [
+            "avoid medical, financial, or performance claims unless approved",
+            "make both sides plausible",
+            "do not shame users",
+            "keep the subject visible",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fearmongering, unrealistic transformation, fake metrics, aggressive red-green cliches, unreadable labels",
+          "size": "1536x1024"
+        },
+        {
+          "id": "cinematic-outdoor-action-hero",
+          "title": "Cinematic Outdoor Action Hero",
+          "category": "Lifestyle / Action",
+          "format": "motion-rich hero ad",
+          "humanPresence": "one or more users when relevant",
+          "renderingMode": "cinematic photorealistic commercial",
+          "channelFit": [
+            "sports social",
+            "outdoor OOH",
+            "brand film key art",
+            "launch hero"
+          ],
+          "summary": "A dramatic action scene where the subject is used in motion with environmental energy, scale, and premium cinematography.",
+          "businessGoal": "test whether the subject can credibly own an active performance or adventure moment",
+          "scene": "a real outdoor or urban environment with directional light, motion cues, environmental texture, and the subject clearly visible in use",
+          "focus": "capability, momentum, and aspiration",
+          "decision": "whether active-use storytelling should lead the campaign",
+          "elements": [
+            "subject in use",
+            "motion trails or natural action cues",
+            "strong environmental scale",
+            "cinematic backlight",
+            "headline-safe sky or wall space"
+          ],
+          "copyRules": {
+            "headline": "Use no headline or one exact short headline in open space.",
+            "supportingText": "Avoid benefit tags unless supplied.",
+            "cta": "Usually omit CTA."
+          },
+          "promptTemplate": "Create a cinematic outdoor action advertisement for [SUBJECT_REFERENCE]. Show the subject credibly in use by [AUDIENCE] or staged as the hero in an active environment. Use strong natural light, movement cues, atmospheric depth, and [BRAND_PALETTE] accents. Preserve the subject exactly and add only exact supplied text. Avoid [AVOID].",
+          "constraints": [
+            "keep action physically plausible",
+            "do not obscure the subject",
+            "avoid unsafe usage",
+            "respect real-world scale",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "extreme stunt fantasy, product motion blur, impossible body positions, generic adventure stock look",
+          "size": "1536x1024"
+        },
+        {
+          "id": "app-ui-holographic-overlay",
+          "title": "App UI Holographic Overlay",
+          "category": "Technology / UI",
+          "format": "product plus interface visualization",
+          "humanPresence": "optional hand or user silhouette",
+          "renderingMode": "photorealistic technology composite",
+          "channelFit": [
+            "SaaS launch",
+            "mobile app ad",
+            "feature announcement",
+            "B2B social"
+          ],
+          "summary": "A technology ad that shows the subject with clean floating UI layers, workflow indicators, or feature modules without inventing product screens.",
+          "businessGoal": "make a digital or connected product feel tangible while keeping UI claims controlled",
+          "scene": "a dark or bright technical environment with the subject foregrounded and translucent interface cards arranged in perspective",
+          "focus": "feature clarity, control, and modern utility",
+          "decision": "whether UI-led visual explanation should be used before a deterministic product mockup is built",
+          "elements": [
+            "device or product hero",
+            "floating UI cards",
+            "workflow arrows",
+            "feature module placeholders",
+            "clean light grid"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline only.",
+            "supportingText": "Use placeholder UI blocks unless real UI copy is supplied.",
+            "cta": "Optional exact CTA."
+          },
+          "promptTemplate": "Create a premium technology image ad for [SUBJECT_REFERENCE] with holographic UI overlays. Preserve the actual product, app, or device boundaries exactly. Show translucent feature cards and workflow indicators that imply [PRIMARY_BENEFIT] without inventing real UI copy. Use [BRAND_PALETTE], controlled glow, and clean composition. Avoid [AVOID].",
+          "constraints": [
+            "do not invent product interface claims",
+            "keep UI text abstract unless supplied",
+            "do not distort screens",
+            "avoid cybersecurity or AI claims unless approved",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake dashboards, random code, unreadable neon clutter, overdone sci-fi effects, wrong device OS",
+          "size": "1536x1024"
+        },
+        {
+          "id": "exploded-view-benefit-diagram",
+          "title": "Exploded View Benefit Diagram",
+          "category": "Explainer / Product Demo",
+          "format": "technical product breakdown ad",
+          "humanPresence": "none",
+          "renderingMode": "premium 3D or clean vector-like composite",
+          "channelFit": [
+            "PDP module",
+            "launch explainer",
+            "sales deck",
+            "email feature block"
+          ],
+          "summary": "An exploded or cutaway ad that visualizes components, ingredients, layers, or service parts as a clear benefit story.",
+          "businessGoal": "turn product construction or service logic into a concise visual proof system",
+          "scene": "a clean studio or technical diagram space where subject layers float apart with callout lines and disciplined labels",
+          "focus": "how the subject works or why it is different",
+          "decision": "whether the offer needs a demo-led ad rather than a lifestyle ad",
+          "elements": [
+            "exploded subject layers",
+            "callout lines",
+            "numbered benefit markers",
+            "material or feature details",
+            "clean caption rail"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline or no headline.",
+            "supportingText": "Use numbered placeholders unless real feature names are supplied.",
+            "cta": "Omit CTA unless requested."
+          },
+          "promptTemplate": "Create an exploded-view benefit diagram ad for [SUBJECT_REFERENCE]. Separate the subject into plausible layers, components, ingredients, or service steps only when supported by the brief. Use clean callouts, numbered markers, and [BRAND_PALETTE]. Preserve the product form and avoid inventing internal mechanisms. Add exact supplied text only. Avoid [AVOID].",
+          "constraints": [
+            "do not show false internal parts",
+            "label assumptions as placeholders",
+            "keep callouts sparse",
+            "preserve outer product recognition",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake engineering claims, excessive labels, impossible cross-sections, medical diagrams for nonmedical products",
+          "size": "1536x1024"
+        },
+        {
+          "id": "retail-shelf-battle-card",
+          "title": "Retail Shelf Battle Card",
+          "category": "Retail / Shopper",
+          "format": "shelf-impact static ad",
+          "humanPresence": "optional shopper hand",
+          "renderingMode": "photorealistic retail composite",
+          "channelFit": [
+            "shopper marketing",
+            "retail pitch",
+            "Amazon module",
+            "trade deck"
+          ],
+          "summary": "A shelf or marketplace-style image that tests whether the subject stands out in a buying environment while avoiding fake competitor brands.",
+          "businessGoal": "evaluate shelf clarity, category fit, and shopper recognition",
+          "scene": "a clean retail shelf, endcap, marketplace grid, or display context with the subject repeated or heroed at realistic scale",
+          "focus": "visibility, pack read, and purchase readiness",
+          "decision": "whether retail or ecommerce context should be prioritized for the campaign",
+          "elements": [
+            "subject on shelf or grid",
+            "generic category neighbors",
+            "price-tag placeholder",
+            "shelf talker zone",
+            "shopper decision cue"
+          ],
+          "copyRules": {
+            "headline": "Use no headline or exact retail message.",
+            "supportingText": "Use generic shelf tags unless supplied.",
+            "cta": "Usually omit CTA."
+          },
+          "promptTemplate": "Create a retail shelf-impact ad for [SUBJECT_REFERENCE]. Place the subject in a plausible shelf, endcap, or ecommerce grid context with generic category neighbors and clean purchase cues. Preserve packaging, scale, and label hierarchy. Use [BRAND_PALETTE] for display accents. Add exact supplied text only. Avoid [AVOID].",
+          "constraints": [
+            "do not invent retailer names",
+            "do not create competitor lookalikes",
+            "keep price and promo tags generic unless supplied",
+            "preserve product hierarchy",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake retailer branding, chaotic shelf clutter, wrong product category, unreadable repeated facings",
+          "size": "1536x1024"
+        },
+        {
+          "id": "minimal-premium-whitespace",
+          "title": "Minimal Premium Whitespace",
+          "category": "Brand / Minimal",
+          "format": "clean product poster",
+          "humanPresence": "none",
+          "renderingMode": "premium studio photography or render",
+          "channelFit": [
+            "brand launch",
+            "website hero",
+            "print insert",
+            "premium social"
+          ],
+          "summary": "A spare, high-control image where the subject and a single line of exact copy carry the ad.",
+          "businessGoal": "test whether the brand can communicate confidence through restraint",
+          "scene": "a clean white, off-white, or muted color field with the subject precisely placed, elegant shadow, and generous negative space",
+          "focus": "clarity, restraint, and product confidence",
+          "decision": "whether a minimal premium system is strong enough for the category",
+          "elements": [
+            "single subject hero",
+            "subtle floor shadow",
+            "large negative space",
+            "one-line headline",
+            "small brand or CTA zone"
+          ],
+          "copyRules": {
+            "headline": "Use one exact short line only.",
+            "supportingText": "Avoid supporting copy.",
+            "cta": "Use a small exact CTA only if supplied."
+          },
+          "promptTemplate": "Create a minimal premium image ad for [SUBJECT_REFERENCE]. Use a clean field, precise product placement, refined shadow, and generous negative space. Add [HEADLINE] only if supplied, set with quiet premium typography. Preserve the subject exactly and avoid decorative clutter. Avoid [AVOID].",
+          "constraints": [
+            "do not fill the space with props",
+            "keep product scale deliberate",
+            "use exact text only",
+            "avoid generic tech gradients",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "floating orbs, random abstract shapes, tiny product, over-styled typography, missing subject detail",
+          "size": "1024x1024"
+        },
+        {
+          "id": "maximalist-collage-scrapbook",
+          "title": "Maximalist Collage Scrapbook",
+          "category": "Social Native / Collage",
+          "format": "scrapbook-style ad poster",
+          "humanPresence": "optional cutout people or hands",
+          "renderingMode": "mixed-media photoreal collage",
+          "channelFit": [
+            "Instagram feed",
+            "Pinterest",
+            "youth campaign",
+            "festival launch"
+          ],
+          "summary": "A layered collage ad with cutouts, stickers, tape, snapshots, scribbles, swatches, and product repeats arranged with intentional energy.",
+          "businessGoal": "test a playful high-information route for audiences that respond to taste cues and social proof texture",
+          "scene": "a tabletop, wall, or digital scrapbook composition layered with product cutouts, lifestyle fragments, stickers, notes, and palette cues",
+          "focus": "abundance, personality, and shareable campaign texture",
+          "decision": "whether the campaign should lean social, expressive, and collected rather than polished and minimal",
+          "elements": [
+            "product cutouts",
+            "photo fragments",
+            "sticker labels",
+            "tape edges",
+            "palette swatches",
+            "handwritten notes"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline as one dominant cutout or sticker.",
+            "supportingText": "Use only supplied short notes or placeholder marks.",
+            "cta": "Small exact CTA sticker if supplied."
+          },
+          "promptTemplate": "Create a maximalist collage scrapbook image ad for [SUBJECT_REFERENCE]. Build layered product cutouts, lifestyle fragments, stickers, tape, texture, and [BRAND_PALETTE] swatches around [PRIMARY_BENEFIT]. Keep the subject recognizable in every repeat. Use exact supplied copy only and preserve product details. Avoid [AVOID].",
+          "constraints": [
+            "keep at least one clean product hero",
+            "do not hide labels under stickers",
+            "avoid copyrighted character-like stickers",
+            "control visual hierarchy",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "messy moodboard filler, illegible sticker text, too many product duplicates, unrelated pop-culture references",
+          "size": "1024x1024"
+        },
+        {
+          "id": "cinematic-noir-spotlight",
+          "title": "Cinematic Noir Spotlight",
+          "category": "Entertainment / Dramatic",
+          "format": "dark poster-lit ad",
+          "humanPresence": "optional silhouette",
+          "renderingMode": "cinematic photorealistic poster",
+          "channelFit": [
+            "premium launch",
+            "teaser campaign",
+            "film-style social",
+            "OOH"
+          ],
+          "summary": "A dramatic low-key ad using spotlight, haze, shadow, and controlled color to make the subject feel consequential.",
+          "businessGoal": "test whether mystery, tension, and premium drama can elevate the subject",
+          "scene": "a dark stage, alley, studio, or architectural set with one precise beam of light, haze, reflective surfaces, and a restrained headline zone",
+          "focus": "intrigue, focus, and premium tension",
+          "decision": "whether a cinematic teaser route fits the brand and category",
+          "elements": [
+            "spotlit subject",
+            "deep shadow",
+            "light beam or haze",
+            "single accent color",
+            "small teaser headline"
+          ],
+          "copyRules": {
+            "headline": "Use one exact teaser line or no text.",
+            "supportingText": "Avoid explanatory copy.",
+            "cta": "Omit or use very small exact CTA."
+          },
+          "promptTemplate": "Create a cinematic noir spotlight ad for [SUBJECT_REFERENCE]. Place the subject in a dark dramatic environment with one controlled light source, deep shadow, haze, and [BRAND_PALETTE] accent highlights. Use sparse exact copy only. Preserve the subject shape, material, and label. Avoid [AVOID].",
+          "constraints": [
+            "keep subject readable despite darkness",
+            "avoid horror cues unless requested",
+            "do not invent film titles or awards",
+            "control reflections",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "muddy underexposure, fake movie billing blocks, unreadable product, excessive smoke, dangerous usage",
+          "size": "1536x1024"
+        },
+        {
+          "id": "cold-splash-refreshment",
+          "title": "Cold Splash Flavor Word Backdrop",
+          "category": "Food Beverage / Motion",
+          "format": "splash and condensation ad",
+          "humanPresence": "none",
+          "renderingMode": "high-speed commercial photography",
+          "channelFit": [
+            "beverage launch",
+            "summer campaign",
+            "retail display",
+            "paid social"
+          ],
+          "summary": "A high-speed refreshment ad built around a centered cold product, visible condensation, giant flavor-word typography, citrus or ingredient cues, and clean cool color.",
+          "businessGoal": "make refreshment or freshness instantly legible",
+          "scene": "a clean studio setup with the product centered over bold capital flavor text, surrounded by truthful fruit, herb, ice, droplets, splash arcs, condensation, and blue-toned coolness cues",
+          "focus": "coldness, flavor, immediacy, and crisp refreshment",
+          "decision": "whether a high-sensory motion route fits the product and season",
+          "elements": [
+            "sharp centered product hero",
+            "bold flavor word backdrop",
+            "ice or water splash",
+            "condensation and droplets",
+            "truthful fruit or herb cues",
+            "cool blue accent lighting"
+          ],
+          "copyRules": {
+            "headline": "Use one exact short headline if supplied.",
+            "supportingText": "Avoid body copy.",
+            "cta": "Optional exact retail CTA."
+          },
+          "promptTemplate": "Create a cold splash flavor-word image ad for [SUBJECT_REFERENCE]. Center the product sharply over a huge bold capital flavor word or headline from [HEADLINE], with condensation, water droplets, crushed ice, splash motion, and truthful fruit or herb cues that support [PRIMARY_BENEFIT]. Use [BRAND_PALETTE] plus cool blue freshness accents as appropriate. Preserve label, form, and orientation exactly. Do not copy another beverage brand's identity unless that brand is the supplied subject. Add exact supplied text only. Avoid [AVOID].",
+          "constraints": [
+            "use only plausible flavor or ingredient cues",
+            "keep label readable",
+            "do not mimic Sprite or another beverage brand unless supplied",
+            "avoid unsafe glass or liquid chaos",
+            "do not invent health claims",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "label covered by water, fake fruit flavors, over-saturated color, product crushed or damaged",
+          "size": "1024x1024"
+        },
+        {
+          "id": "cozy-home-ritual",
+          "title": "Cozy Home Ritual",
+          "category": "Lifestyle / Home",
+          "format": "warm everyday routine ad",
+          "humanPresence": "optional hands or household user",
+          "renderingMode": "photoreal lifestyle commercial",
+          "channelFit": [
+            "CPG social",
+            "home goods",
+            "email hero",
+            "brand content"
+          ],
+          "summary": "A warm domestic ad where the subject appears in a believable routine with tactile comfort, daylight, and household trust.",
+          "businessGoal": "connect the subject to habit, comfort, repeat use, and familiarity",
+          "scene": "a kitchen, bedroom, living room, bathroom, or entryway routine with warm natural light, useful props, and the subject placed in active context",
+          "focus": "habit, care, warmth, and practical desirability",
+          "decision": "whether a home-use moment should anchor the campaign",
+          "elements": [
+            "subject in routine context",
+            "warm daylight",
+            "useful household props",
+            "human hand or activity cue",
+            "quiet headline space"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline if it fits the scene.",
+            "supportingText": "Avoid dense text.",
+            "cta": "Small exact CTA if supplied."
+          },
+          "promptTemplate": "Create a cozy home ritual image ad for [SUBJECT_REFERENCE]. Place the subject in a believable household routine for [AUDIENCE], using warm daylight, tactile surfaces, and useful props that support [PRIMARY_BENEFIT]. Preserve the subject exactly and use [BRAND_PALETTE] accents naturally. Add exact supplied text only. Avoid [AVOID].",
+          "constraints": [
+            "make the routine plausible",
+            "avoid staged stock-photo smiles",
+            "do not add unsupported family or health claims",
+            "keep product visible",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "generic beige lifestyle scene, cluttered home, unsafe product use, unapproved children or pets",
+          "size": "1536x1024"
+        },
+        {
+          "id": "streetwear-drop-poster",
+          "title": "Streetwear Drop Poster",
+          "category": "Fashion / Hype",
+          "format": "limited-drop announcement",
+          "humanPresence": "optional model or product-only",
+          "renderingMode": "gritty fashion editorial composite",
+          "channelFit": [
+            "drop announcement",
+            "street poster",
+            "Instagram feed",
+            "retail launch"
+          ],
+          "summary": "A high-contrast fashion or youth-culture ad with street textures, product scale, bold type, and limited-release energy.",
+          "businessGoal": "test scarcity, attitude, and street-level desirability without inventing false availability claims",
+          "scene": "an urban wall, studio floor, alley, skate spot, or backstage setup with gritty texture, fashion lighting, and product-forward composition",
+          "focus": "identity, drop energy, and visual memorability",
+          "decision": "whether the campaign should use street-fashion codes",
+          "elements": [
+            "oversized product or model",
+            "street texture",
+            "bold condensed typography",
+            "date or drop placeholder",
+            "sticker or wheatpaste accents"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied drop name or headline only.",
+            "supportingText": "Use dates or scarcity language only if supplied.",
+            "cta": "Optional exact drop CTA."
+          },
+          "promptTemplate": "Create a streetwear drop poster image ad for [SUBJECT_REFERENCE]. Use gritty urban texture, fashion lighting, bold type, and [BRAND_PALETTE] accents to communicate [PRIMARY_BENEFIT] or drop energy. Add only exact supplied drop copy, dates, or CTA. Preserve product form and graphics exactly. Avoid [AVOID].",
+          "constraints": [
+            "do not invent limited quantities or dates",
+            "avoid direct brand mimicry",
+            "keep product graphics readable",
+            "make typography intentional",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake collaboration logos, counterfeit luxury cues, unreadable graffiti, product covered by stickers",
+          "size": "1024x1536"
+        },
+        {
+          "id": "out-of-home-city-takeover",
+          "title": "Out Of Home City Takeover",
+          "category": "OOH / Environmental",
+          "format": "billboard and street placement mockup",
+          "humanPresence": "public scale context only",
+          "renderingMode": "photoreal environmental mockup",
+          "channelFit": [
+            "OOH pitch",
+            "launch recap",
+            "brand film still",
+            "sales deck"
+          ],
+          "summary": "A public-space ad visualization showing the campaign on billboards, transit shelters, kiosks, or building wraps with realistic scale.",
+          "businessGoal": "test whether the ad idea has enough simplicity and scale for out-of-home placement",
+          "scene": "a city street, transit station, airport corridor, or retail district with one or more large ad placements integrated into real architecture",
+          "focus": "public readability, brand scale, and campaign presence",
+          "decision": "whether the concept can graduate to OOH planning",
+          "elements": [
+            "large billboard or transit placement",
+            "street scale cues",
+            "simple campaign visual",
+            "safe margins",
+            "ambient pedestrians or cars"
+          ],
+          "copyRules": {
+            "headline": "Use one exact short headline only.",
+            "supportingText": "Avoid long copy.",
+            "cta": "Use URL or CTA only if supplied."
+          },
+          "promptTemplate": "Create a photoreal out-of-home city takeover mockup for [SUBJECT_REFERENCE]. Integrate the campaign image into billboards, transit shelters, kiosks, or building wraps in a plausible public environment. Keep the ad simple, readable, and aligned to [BRAND_PALETTE]. Use exact supplied copy only. Avoid [AVOID].",
+          "constraints": [
+            "do not imply real media placement",
+            "avoid real city landmarks unless supplied",
+            "keep text readable at distance",
+            "do not invent permits or partner logos",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "busy tiny text, impossible billboard geometry, fake event sponsorship, distorted ad panels",
+          "size": "1536x1024"
+        },
+        {
+          "id": "ecommerce-bundle-hero",
+          "title": "Ecommerce Bundle Hero",
+          "category": "Ecommerce / Merchandising",
+          "format": "PDP and marketplace hero image",
+          "humanPresence": "none",
+          "renderingMode": "clean commercial product photography",
+          "channelFit": [
+            "Amazon module",
+            "Shopify PDP",
+            "retail marketplace",
+            "email commerce"
+          ],
+          "summary": "A clean ecommerce ad showing the subject, bundle contents, scale, variants, or included items with high shopping clarity.",
+          "businessGoal": "make the offer easy to understand at purchase point",
+          "scene": "a bright product layout with hero item, optional bundle components, variant cues, included accessories, and clean benefit icons or placeholders",
+          "focus": "what is included, what it looks like, and why it is worth buying",
+          "decision": "whether ecommerce clarity should be prioritized over lifestyle storytelling",
+          "elements": [
+            "main product hero",
+            "bundle or variant layout",
+            "scale cue",
+            "simple icon placeholders",
+            "clean shadow",
+            "offer label zone"
+          ],
+          "copyRules": {
+            "headline": "Use exact product or offer name only.",
+            "supportingText": "Use exact included-item labels only.",
+            "cta": "Usually omit CTA."
+          },
+          "promptTemplate": "Create an ecommerce bundle hero ad for [SUBJECT_REFERENCE]. Arrange the product, included items, variants, or accessories in a clean shoppable layout with [BRAND_PALETTE], realistic shadows, and high product clarity. Use exact supplied item labels only. Preserve package, logo, and proportions exactly. Avoid [AVOID].",
+          "constraints": [
+            "do not invent bundle contents",
+            "keep product count accurate",
+            "avoid lifestyle clutter",
+            "make all items legible",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake accessories, impossible scale, marketplace badges, distorted packaging, made-up discounts",
+          "size": "1536x1024"
+        },
+        {
+          "id": "testimonial-proof-wall",
+          "title": "Testimonial Proof Wall",
+          "category": "Proof / Social",
+          "format": "review and quote visualization",
+          "humanPresence": "optional real customer portrait only if supplied",
+          "renderingMode": "polished editorial composite",
+          "channelFit": [
+            "B2B social",
+            "landing social proof",
+            "retargeting",
+            "sales follow-up"
+          ],
+          "summary": "A proof-led ad that visualizes reviews, quotes, customer logos, or outcome snippets as a structured wall without inventing evidence.",
+          "businessGoal": "show credibility and momentum using approved proof assets",
+          "scene": "a clean wall, dashboard, board, or editorial layout with subject hero and proof cards arranged around it",
+          "focus": "trust, validation, and repeated positive signal",
+          "decision": "whether proof should lead the ad instead of product beauty or lifestyle",
+          "elements": [
+            "subject hero",
+            "quote cards",
+            "review placeholders",
+            "logo-safe zones",
+            "source labels",
+            "small CTA"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied proof headline only.",
+            "supportingText": "Use only real supplied quotes, names, logos, or abstract placeholders.",
+            "cta": "Use exact supplied CTA only."
+          },
+          "promptTemplate": "Create a testimonial proof wall image ad for [SUBJECT_REFERENCE]. Arrange approved quote cards, review snippets, customer proof, or placeholder proof modules around the subject. Use [BRAND_PALETTE] and clear hierarchy. Do not invent customers, ratings, logos, or metrics. Use exact supplied proof only. Avoid [AVOID].",
+          "constraints": [
+            "never invent endorsements",
+            "use placeholders when proof is missing",
+            "avoid fake profile photos",
+            "keep claims reviewable",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake five-star reviews, made-up customer logos, fabricated metrics, dense unreadable quote walls",
+          "size": "1536x1024"
+        },
+        {
+          "id": "founder-operator-desk-ad",
+          "title": "Founder Operator Desk Ad",
+          "category": "B2B / Human Trust",
+          "format": "operator-led editorial ad",
+          "humanPresence": "one founder, operator, clinician, expert, or employee when appropriate",
+          "renderingMode": "photoreal editorial portrait",
+          "channelFit": [
+            "LinkedIn",
+            "B2B launch",
+            "newsletter",
+            "trust campaign"
+          ],
+          "summary": "An expert or operator-led ad where a credible person works with the subject in a real workspace, counter, lab, studio, or field context.",
+          "businessGoal": "make the offer feel expert-backed, operational, and grounded in real use",
+          "scene": "a desk, workshop, clinic, kitchen, studio, lab, or field workspace with the person mid-task and the subject clearly placed as the tool or offer",
+          "focus": "credibility, craft, and hands-on use",
+          "decision": "whether human expertise should anchor the campaign",
+          "elements": [
+            "credible operator",
+            "work surface",
+            "subject in use",
+            "real tools or notes",
+            "small headline or quote zone"
+          ],
+          "copyRules": {
+            "headline": "Use exact quote or headline only.",
+            "supportingText": "Do not name a person unless supplied.",
+            "cta": "Optional exact CTA."
+          },
+          "promptTemplate": "Create an operator-led editorial image ad for [SUBJECT_REFERENCE]. Show a credible [AUDIENCE] expert or operator using or presenting the subject in a real workspace. Use natural light, honest texture, and [BRAND_PALETTE] accents. Add exact supplied quote or headline only. Preserve the subject exactly. Avoid [AVOID].",
+          "constraints": [
+            "do not invent names, credentials, or employers",
+            "avoid fake lab or medical authority",
+            "keep workspace relevant",
+            "show the subject clearly",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "stock handshake energy, staged corporate cliches, false expertise, over-polished office scenes",
+          "size": "1536x1024"
+        },
+        {
+          "id": "retro-print-classified",
+          "title": "Retro Print Classified",
+          "category": "Retro / Print",
+          "format": "vintage newspaper or catalog ad",
+          "humanPresence": "optional illustration-like figure",
+          "renderingMode": "print-inspired mixed media",
+          "channelFit": [
+            "nostalgia campaign",
+            "poster",
+            "social static",
+            "editorial insert"
+          ],
+          "summary": "A vintage print ad route using halftone, catalog layouts, coupons, serif type, linework, and aged paper texture while preserving modern product truth.",
+          "businessGoal": "test whether nostalgia and print credibility can make the offer feel familiar and memorable",
+          "scene": "a newspaper, catalog page, coupon card, or magazine spread with the subject rendered or photographed cleanly and surrounded by period-inspired layout",
+          "focus": "nostalgia, clarity, and distinctive print texture",
+          "decision": "whether a retro route offers enough differentiation for the audience",
+          "elements": [
+            "halftone texture",
+            "catalog frame",
+            "coupon or offer box",
+            "serif headline",
+            "product engraving or photo"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied headline in period-style type.",
+            "supportingText": "Use placeholder body copy unless supplied.",
+            "cta": "Use coupon or URL only if supplied."
+          },
+          "promptTemplate": "Create a retro print classified image ad for [SUBJECT_REFERENCE]. Use vintage newspaper, catalog, or coupon layout cues with halftone texture, serif typography, and [BRAND_PALETTE] adapted to aged print. Preserve the product exactly and use exact supplied copy only. Avoid [AVOID].",
+          "constraints": [
+            "avoid offensive or exclusionary vintage stereotypes",
+            "do not add fake prices or coupon codes",
+            "keep product modern and accurate",
+            "make text intentionally sparse",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "unreadable tiny newspaper copy, fake legal terms, caricatured people, distressed product",
+          "size": "1024x1536"
+        },
+        {
+          "id": "sticker-badge-social-native",
+          "title": "Sticker Badge Social Native",
+          "category": "Social Native / Sticker",
+          "format": "feed-native sticker composition",
+          "humanPresence": "optional cropped user",
+          "renderingMode": "photoreal plus graphic sticker overlay",
+          "channelFit": [
+            "Instagram feed",
+            "Snap",
+            "TikTok static",
+            "creator ad"
+          ],
+          "summary": "A social-native layout with the subject surrounded by crisp stickers, badges, emoji-like marks, and short callouts that feel casual but controlled.",
+          "businessGoal": "test a playful platform-native route while preserving approved copy and product fidelity",
+          "scene": "a clean product or lifestyle image overlaid with sticker badges, reaction marks, arrows, and short labels in brand colors",
+          "focus": "platform-native attention and quick benefit cues",
+          "decision": "whether the ad should look like native creator content rather than a formal brand asset",
+          "elements": [
+            "subject hero",
+            "sticker badges",
+            "arrow marks",
+            "short exact callouts",
+            "casual background",
+            "small CTA"
+          ],
+          "copyRules": {
+            "headline": "Use exact supplied short headline or sticker callout.",
+            "supportingText": "Use no more than four short exact callouts.",
+            "cta": "Optional exact CTA sticker."
+          },
+          "promptTemplate": "Create a sticker-badge social-native image ad for [SUBJECT_REFERENCE]. Keep the subject clear, then add crisp sticker badges, arrows, reaction marks, and short exact callouts in [BRAND_PALETTE]. Make it casual and platform-native without adding fake handles, reviews, or claims. Preserve the subject exactly. Avoid [AVOID].",
+          "constraints": [
+            "do not use copyrighted emoji or platform UI",
+            "keep stickers off product labels",
+            "limit callouts",
+            "avoid fake social metrics",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "cluttered sticker spam, unreadable labels, fake likes or comments, childish tone for serious categories",
+          "size": "1024x1024"
+        },
+        {
+          "id": "ai-generated-world-extension",
+          "title": "World Extension Product Fantasy",
+          "category": "Surreal / World Building",
+          "format": "immersive product world",
+          "humanPresence": "none or tiny scale figures",
+          "renderingMode": "photoreal surreal commercial",
+          "channelFit": [
+            "hero campaign",
+            "landing page",
+            "OOH",
+            "brand world exploration"
+          ],
+          "summary": "A surreal world where the subject's material, pattern, flavor, ingredient, or feature becomes a landscape or architecture.",
+          "businessGoal": "test whether the product can support a distinctive campaign world",
+          "scene": "an immersive landscape, room, city, terrain, or miniature world generated from the subject's colors, material, texture, or benefit metaphor",
+          "focus": "brand world, memorability, and ownable metaphor",
+          "decision": "whether to build a larger visual system around the subject",
+          "elements": [
+            "subject as hero or landscape source",
+            "material-scale world",
+            "tiny environmental details",
+            "atmospheric lighting",
+            "copy-safe space"
+          ],
+          "copyRules": {
+            "headline": "Use no text or one exact campaign line.",
+            "supportingText": "Avoid labels.",
+            "cta": "Omit CTA unless requested."
+          },
+          "promptTemplate": "Create an immersive product-world image ad for [SUBJECT_REFERENCE]. Transform the subject's truthful material, color, texture, ingredient, or benefit metaphor into a surreal environment while keeping the actual subject visible and accurate. Use [BRAND_PALETTE], atmospheric depth, and copy-safe space. Add exact supplied text only. Avoid [AVOID].",
+          "constraints": [
+            "keep the metaphor tied to real subject cues",
+            "do not replace the product with a different object",
+            "avoid impossible claims",
+            "make the world inspectable",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "abstract blob landscapes, product lost in scene, unrelated fantasy creatures, generic AI dream texture",
+          "size": "1536x1024"
+        },
+        {
+          "id": "sustainability-material-proof",
+          "title": "Sustainability Material Proof",
+          "category": "Proof / Materials",
+          "format": "source and material story ad",
+          "humanPresence": "optional hands or field worker if supplied",
+          "renderingMode": "photoreal editorial proof layout",
+          "channelFit": [
+            "brand trust",
+            "packaging story",
+            "retail education",
+            "B2B sales"
+          ],
+          "summary": "A proof-oriented ad showing materials, sourcing, packaging, repairability, refill, or lifecycle cues without inventing environmental claims.",
+          "businessGoal": "make responsible design or material choices tangible and reviewable",
+          "scene": "a clean material board, sourcing table, workshop, farm, lab, or refill station with the subject and documented material cues",
+          "focus": "trust, material detail, and responsible choice",
+          "decision": "whether sustainability or material proof should be part of the campaign",
+          "elements": [
+            "subject hero",
+            "material samples",
+            "source or lifecycle markers",
+            "certification placeholder",
+            "documentation-style caption"
+          ],
+          "copyRules": {
+            "headline": "Use exact approved claim only.",
+            "supportingText": "Use placeholders for certifications unless supplied.",
+            "cta": "Optional exact learn-more CTA."
+          },
+          "promptTemplate": "Create a sustainability material proof image ad for [SUBJECT_REFERENCE]. Show the subject with truthful material, sourcing, refill, repair, packaging, or lifecycle cues from the brief. Use documentation-style composition, [BRAND_PALETTE], and exact approved claims only. Do not invent certifications. Avoid [AVOID].",
+          "constraints": [
+            "do not imply carbon, recycled, organic, or ethical claims unless supplied",
+            "label unknown proof as placeholder",
+            "keep materials relevant",
+            "avoid greenwashing imagery",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "fake leaves and badges, unsupported eco claims, invented certifications, vague planet-saving slogans",
+          "size": "1536x1024"
+        },
+        {
+          "id": "event-launch-countdown",
+          "title": "Event Launch Countdown",
+          "category": "Launch / Event",
+          "format": "announcement and countdown ad",
+          "humanPresence": "optional speaker or audience if supplied",
+          "renderingMode": "polished event key visual",
+          "channelFit": [
+            "webinar promo",
+            "launch event",
+            "conference social",
+            "email header"
+          ],
+          "summary": "A launch or event ad with the subject, date zone, agenda cue, countdown energy, and clean registration CTA.",
+          "businessGoal": "turn a release, webinar, demo, or event into a clear visual invitation",
+          "scene": "a stage, digital backdrop, calendar-like graphic, product reveal setup, or event card with clear date and CTA zones",
+          "focus": "what is happening, when, and why to act",
+          "decision": "whether the subject needs an event-led campaign wrapper",
+          "elements": [
+            "subject or event hero",
+            "date and time zone",
+            "countdown or agenda cue",
+            "speaker placeholder",
+            "registration CTA"
+          ],
+          "copyRules": {
+            "headline": "Use exact event name only.",
+            "supportingText": "Use date, time, speaker, and agenda only if supplied.",
+            "cta": "Use exact registration CTA."
+          },
+          "promptTemplate": "Create an event launch countdown image ad for [SUBJECT_REFERENCE]. Build a polished event key visual with exact supplied event name, date, time, agenda, and [CTA_OR_CONTACT]. Use [BRAND_PALETTE], clear hierarchy, and a credible reveal or stage environment. Preserve the subject exactly. Avoid [AVOID].",
+          "constraints": [
+            "do not invent event date, speaker, or venue",
+            "keep date text large and exact",
+            "avoid fake conference logos",
+            "preserve product or event identity",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "wrong calendar info, generic webinar stock art, fake speaker portraits, unreadable agenda text",
+          "size": "1024x1536"
+        },
+        {
+          "id": "cinematic-hands-demo",
+          "title": "Cinematic Hands Demo",
+          "category": "Demo / Use Moment",
+          "format": "hands-in-use product demo",
+          "humanPresence": "hands only or partial user",
+          "renderingMode": "photoreal cinematic close-up",
+          "channelFit": [
+            "how-it-works ad",
+            "PDP module",
+            "social demo",
+            "email feature"
+          ],
+          "summary": "A close-up image showing hands using, opening, applying, assembling, scanning, pouring, or demonstrating the subject.",
+          "businessGoal": "make use and interaction concrete before video or full demo production",
+          "scene": "a close working surface, counter, desk, bathroom, kitchen, retail counter, or field setup with hands naturally interacting with the subject",
+          "focus": "how it is used and why it feels easy or satisfying",
+          "decision": "whether a use-moment demo should anchor the ad",
+          "elements": [
+            "natural hands",
+            "subject interaction",
+            "working surface",
+            "micro-detail",
+            "step cue or arrow",
+            "small benefit label"
+          ],
+          "copyRules": {
+            "headline": "Use exact short headline if supplied.",
+            "supportingText": "Use step labels only when supplied.",
+            "cta": "Optional exact CTA."
+          },
+          "promptTemplate": "Create a cinematic hands-demo image ad for [SUBJECT_REFERENCE]. Show natural hands using, opening, applying, assembling, or demonstrating the subject in a plausible setting for [AUDIENCE]. Use close-up lighting, tactile detail, and [BRAND_PALETTE] accents. Preserve subject shape, labels, and usage truth. Avoid [AVOID].",
+          "constraints": [
+            "hands must be anatomically natural",
+            "use only safe and accurate interactions",
+            "do not invent use steps",
+            "keep product label visible when relevant",
+            "do not add subtitles, body-copy captions, explanatory footer text, or small descriptive text unless the user supplied exact copy for it"
+          ],
+          "avoid": "extra fingers, wrong usage, messy workspace, product obscured by hands, fake app screens",
+          "size": "1536x1024"
+        }
+      ],
+      "review": {
+        "title": "Ads Explorer",
+        "layout": "wall",
+        "showCaptions": false,
+        "note": "Image-led review wall. Captions and prompt details stay in the manifest, not under the tiles."
+      }
+    }
+  ]
+}

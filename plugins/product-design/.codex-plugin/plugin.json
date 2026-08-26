@@ -1,0 +1,55 @@
+{
+  "name": "product-design",
+  "version": "0.1.52",
+  "description": "The Product Design plugin is built for turning early ideas into prototypes teams can review. It starts design and build work by confirming the brief, then helps teams explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive.",
+  "author": {
+    "name": "OpenAI",
+    "email": "support@openai.com",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "https://github.com/openai/openai/tree/master/chatgpt/oai-maintained-plugins/plugins/product-design",
+  "license": "Proprietary",
+  "keywords": [
+    "prototype",
+    "product design",
+    "prototyping",
+    "user experience",
+    "wireframes",
+    "design systems",
+    "figma",
+    "frontend",
+    "ux-research",
+    "ux-audit",
+    "accessibility-audit",
+    "research",
+    "context-gathering",
+    "ideation",
+    "image-generation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Product Design",
+    "shortDescription": "Explore and prototype ideas",
+    "longDescription": "Turn early ideas into prototypes teams can review. Explore product directions, audit user flows, research user friction, prototype from a live URL, and make static screenshots interactive. Start with a written brief, URL, screenshot, or existing design, then compare visual directions before building.\n\nUse available browser, Figma, Canva, image generation, and hosting tools to gather references, create concepts, review the result, and carry the work forward with your team.",
+    "developerName": "OpenAI",
+    "category": "Creativity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Help me get started",
+      "Turn this product idea into three visual directions",
+      "Design a landing page for my business"
+    ],
+    "composerIcon": "./assets/composerIcon.svg",
+    "logo": "./assets/logo.png",
+    "brandColor": "#FF66AD",
+    "screenshots": []
+  }
+}

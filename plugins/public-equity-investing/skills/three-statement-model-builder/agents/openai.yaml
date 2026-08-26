@@ -1,0 +1,5 @@
+interface:
+  display_name: Three Statement Model Builder
+  short_description: Builds formula-first public-equity 3-statement operating model workbooks with IS/BS/CF, working capital, PP&E, debt, cash sweep, checks, scenarios, and QA logs.
+policy:
+  allow_implicit_invocation: false

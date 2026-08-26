@@ -1,0 +1,5 @@
+interface:
+  display_name: "Scenario & Sensitivity Generator"
+  short_description: "Build Public Equity Investing scenario skew, valuation sensitivities, event trees, equity-liquidity downside read-throughs, and PM action thresholds."
+policy:
+  allow_implicit_invocation: false

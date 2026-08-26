@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="meeting prep icon">
+  <rect width="64" height="64" rx="14" fill="#153B50"/>
+  <rect x="14" y="14" width="36" height="42" rx="4" fill="#F7F2E8"/>
+  <path d="M22 24h20M22 32h20M22 40h14" stroke="#153B50" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="46" cy="18" r="8" fill="#63C7B2"/>
+  <path d="M42.5 18.5l2.5 2.5 5-6" fill="none" stroke="#153B50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

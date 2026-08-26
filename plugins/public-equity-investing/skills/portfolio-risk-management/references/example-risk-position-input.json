@@ -1,0 +1,50 @@
+{
+  "analysis_date": "2026-05-07",
+  "portfolio": {
+    "nav": 1000000000,
+    "currency": "USD",
+    "current_gross_exposure_pct": 145.0,
+    "current_net_exposure_pct": 48.0,
+    "max_single_name_pct_nav": 5.0,
+    "max_sector_exposure_pct_nav": 25.0,
+    "max_loss_bps_nav": 50,
+    "target_position_vol_contribution_bps": 35
+  },
+  "position": {
+    "security": "ExampleCo",
+    "ticker": "EXMPL",
+    "instrument_type": "equity",
+    "direction": "long",
+    "entry_price": 50.0,
+    "current_size_pct_nav": 0.0,
+    "proposed_size_pct_nav": 3.0,
+    "target_price": 70.0,
+    "base_price": 60.0,
+    "downside_price": 40.0,
+    "stress_price": 32.0,
+    "beta": 1.2,
+    "annualized_volatility_pct": 38.0,
+    "sector": "Software",
+    "current_sector_exposure_pct_nav": 18.0,
+    "sector_limit_pct_nav": 25.0,
+    "confidence": "medium"
+  },
+  "liquidity": {
+    "adv_shares": 2500000,
+    "price": 50.0,
+    "normal_participation_rate": 0.10,
+    "stress_participation_rate": 0.05,
+    "required_exit_days": 5
+  },
+  "scenarios": [
+    {"name": "upside", "price": 70.0, "probability": 0.30, "notes": "target reached on estimate revisions"},
+    {"name": "base", "price": 60.0, "probability": 0.40, "notes": "thesis progresses but multiple unchanged"},
+    {"name": "downside", "price": 40.0, "probability": 0.20, "notes": "growth disappoints"},
+    {"name": "stress", "price": 32.0, "probability": 0.10, "notes": "miss plus sector derating"}
+  ],
+  "monitoring_triggers": [
+    {"trigger_type": "trim", "metric": "position_size_pct_nav", "threshold": ">= 4.0", "action": "trim to target range unless new thesis evidence emerges"},
+    {"trigger_type": "review", "metric": "revenue_growth", "threshold": "below plan for two quarters", "action": "re-underwrite thesis and downside"},
+    {"trigger_type": "exit", "metric": "downside_price", "threshold": "<= 40", "action": "exit or reduce unless thesis-break refuted"}
+  ]
+}

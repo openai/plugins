@@ -1,0 +1,5 @@
+interface:
+  display_name: "Create social variations"
+  short_description: "Resize and export images into platform-ready social media sets."
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"

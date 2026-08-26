@@ -1,0 +1,166 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "deck_report_qc",
+  "layout": "single_page",
+  "title": "Research Deck QC Dashboard",
+  "subtitle": "Synthetic strict-mode example for deck/report quality control.",
+  "issuer": {
+    "name": "Public Equity Investing QC Pack",
+    "sector": "Cross-sector",
+    "brand_dark_color": "#4b5563"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic deck extraction plus model and source support examples",
+    "citation_policy": "strict",
+    "decision_context": "Whether the deck can move to senior review.",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Deck/report QC",
+    "headline": "The deck needs targeted fixes before circulation",
+    "dek": "The dashboard prioritizes issue severity, tie-out gaps, and remediation sequence.",
+    "callout_label": "QC Verdict",
+    "callout": "Source coverage and repeated-number tie-out need work before senior review.",
+    "citations": [
+      "S1",
+      "S2"
+    ]
+  },
+  "snapshot": [
+    {
+      "label": "Posture",
+      "value": "Needs targeted fixes",
+      "detail": "Synthetic extraction found source and tie-out issues.",
+      "status": "risk",
+      "citations": [
+        "S1"
+      ]
+    },
+    {
+      "label": "Top Blocker",
+      "value": "Source coverage",
+      "detail": "Several data-heavy pages need source/date support.",
+      "status": "risk",
+      "citations": [
+        "S1",
+        "S2"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "qc-verdict",
+      "label": "Verdict",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "label": "QC posture",
+            "stance": "Risk",
+            "summary": "The deck is not ready for circulation until source coverage and repeated-number tie-out are resolved.",
+            "next_catalyst": "Run targeted remediation and review updated pages.",
+            "citations": [
+              "S1",
+              "S2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "issue-log",
+      "label": "Issue Log",
+      "modules": [
+        {
+          "type": "table",
+          "data": {
+            "columns": [
+              "Section",
+              "Severity",
+              "Issue",
+              "Suggested fix",
+              "Evidence"
+            ],
+            "rows": [
+              {
+                "Section": "Executive summary",
+                "Severity": "High",
+                "Issue": "Repeated metric lacks consistent source support",
+                "Suggested fix": "Tie summary metric to model output and source footnote",
+                "Evidence": "Synthetic extraction and model support disagree",
+                "citations": [
+                  "S1",
+                  "S2"
+                ]
+              },
+              {
+                "Section": "Valuation page",
+                "Severity": "Medium",
+                "Issue": "Axis unit is ambiguous",
+                "Suggested fix": "Add unit and period label to chart",
+                "Evidence": "Synthetic visual QC note",
+                "citations": [
+                  "S1"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "remediation",
+      "label": "Remediation",
+      "modules": [
+        {
+          "type": "timeline",
+          "data": {
+            "events": [
+              {
+                "date": "First pass",
+                "event": "Resolve source footnotes and repeated-number tie-out",
+                "impact": "Unlocks senior-review readiness",
+                "citations": [
+                  "S1",
+                  "S2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "missing_evidence",
+          "data": {
+            "items": [
+              "Underlying chart data, source footnotes, and model support files are required for full circulation review.",
+              "Visual review is still required for image-only pages."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Synthetic deck extraction output",
+      "url": "https://example.com/qc-extraction",
+      "as_of": "2026-05-18",
+      "type": "extraction",
+      "status": "synthetic example",
+      "excerpt": "First-pass deck text, chart, and issue extraction."
+    },
+    {
+      "id": "S2",
+      "title": "Synthetic model support file",
+      "url": "https://example.com/model-support",
+      "as_of": "2026-05-18",
+      "type": "model support",
+      "status": "synthetic example",
+      "excerpt": "Repeated metric and valuation support fields."
+    }
+  ]
+}

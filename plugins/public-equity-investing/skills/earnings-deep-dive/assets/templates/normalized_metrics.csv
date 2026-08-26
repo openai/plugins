@@ -1,0 +1,6 @@
+MetricName,Period,Value,Units,GAAP_Flag,Segment,IsTearSheet,DisplayOrder,SourceTag,ComparableGAAPMetricName,ReconciliationSourceTag,Notes
+Revenue,MISSING,MISSING,USDm,GAAP,Total,Y,1,MISSING,,,
+GAAP EPS (Diluted),MISSING,MISSING,USD,GAAP,Total,Y,2,MISSING,,,
+Operating Income,MISSING,MISSING,USDm,GAAP,Total,Y,3,MISSING,,,
+Adjusted EBITDA,MISSING,MISSING,USDm,Non-GAAP,Total,Y,4,MISSING,Operating Income,MISSING,MISSING
+Key KPI (example),MISSING,MISSING,MISSING,NA,Total,Y,5,MISSING,,,

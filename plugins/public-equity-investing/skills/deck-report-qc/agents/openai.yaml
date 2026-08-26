@@ -1,0 +1,5 @@
+interface:
+  display_name: "Deck & Report QC"
+  short_description: "First-pass QC for public-equity-investing decks, reports, memos, and model outputs before senior review."
+policy:
+  allow_implicit_invocation: false

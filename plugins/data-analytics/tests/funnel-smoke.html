@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Funnel smoke</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe
+      id="chart"
+      title="Funnel smoke chart"
+      src="./funnel-smoke-widget.html?displayMode=fullscreen&widgetInstanceId=funnel-smoke"
+    ></iframe>
+    <script>
+      const payload = {
+        ok: true,
+        widget_type: "chart",
+        title: "Funnel smoke",
+        table: {
+          columns: [
+            { key: "stage", label: "Stage", type: "text" },
+            { key: "value", label: "Value", type: "number", unit: "USD millions" },
+          ],
+          rows: [
+            { stage: "Oct", value: 24.03 },
+            { stage: "Nov", value: 24.92 },
+            { stage: "Dec", value: 25.88 },
+            { stage: "Jan", value: 26.75 },
+            { stage: "Feb", value: 27.9 },
+            { stage: "Mar", value: 29.18 },
+          ],
+          row_count: 6,
+          truncated: false,
+        },
+        chart: {
+          type: "funnel",
+          fields: {
+            x: { field: "stage", type: "ordinal" },
+            y: { field: "value", type: "quantitative", aggregate: "sum", unit: "USD millions" },
+          },
+        },
+        display: {
+          controls: true,
+          unit: "USD millions",
+        },
+      };
+
+
+      function toolOutput(targetWidgetId) {
+        return {
+          content: [{ type: "text", text: JSON.stringify(payload) }],
+          structuredContent: payload,
+          isError: false,
+          _meta: {
+            ["openai/outputTemplate"]: "ui://widget/datascience-chart.html",
+            "ui/resourceUri": "ui://widget/datascience-chart.html",
+            targetWidgetId,
+          },
+        };
+      }
+
+      function sendPayload() {
+        const frame = document.getElementById("chart");
+        const win = frame && frame.contentWindow;
+        if (!win) return;
+        const output = toolOutput("funnel-smoke");
+        win.openai = {
+          availableDisplayModes: ["inline", "fullscreen"],
+          displayMode: "fullscreen",
+          toolOutput: output,
+          widgetInstanceId: "funnel-smoke",
+          async requestDisplayMode({ mode }) {
+            this.displayMode = mode;
+            return { mode };
+          },
+        };
+        win.dispatchEvent(
+          new win.CustomEvent("openai:set_globals", {
+            detail: { globals: { targetWidgetId: "funnel-smoke", toolOutput: output } },
+          }),
+        );
+        win.postMessage(output, "*");
+      }
+
+      document.getElementById("chart").addEventListener("load", () => {
+        sendPayload();
+        window.setTimeout(sendPayload, 100);
+      });
+      window.setTimeout(sendPayload, 100);
+    </script>
+  </body>
+</html>
