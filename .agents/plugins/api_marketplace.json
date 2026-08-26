@@ -68,18 +68,6 @@
       "category": "Productivity"
     },
     {
-      "name": "github",
-      "source": {
-        "source": "local",
-        "path": "./plugins/github"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Developer Tools"
-    },
-    {
       "name": "slack",
       "source": {
         "source": "local",
@@ -90,42 +78,6 @@
         "authentication": "ON_USE"
       },
       "category": "Communication"
-    },
-    {
-      "name": "google-drive",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-drive"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
-    {
-      "name": "gmail",
-      "source": {
-        "source": "local",
-        "path": "./plugins/gmail"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Communication"
-    },
-    {
-      "name": "google-calendar",
-      "source": {
-        "source": "local",
-        "path": "./plugins/google-calendar"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
     },
     {
       "name": "atlassian-rovo",
@@ -188,18 +140,6 @@
       "category": "Developer Tools"
     },
     {
-      "name": "zoom",
-      "source": {
-        "source": "local",
-        "path": "./plugins/zoom"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Communication"
-    },
-    {
       "name": "canva",
       "source": {
         "source": "local",
@@ -210,18 +150,6 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Creativity"
-    },
-    {
-      "name": "airtable",
-      "source": {
-        "source": "local",
-        "path": "./plugins/airtable"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
     },
     {
       "name": "cloudflare",
