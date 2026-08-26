@@ -23,7 +23,6 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Outlook Email",
     "shortDescription": "Triage Outlook inboxes and draft replies",

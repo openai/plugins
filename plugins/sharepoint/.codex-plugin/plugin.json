@@ -23,7 +23,6 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "SharePoint",
     "shortDescription": "Summarize SharePoint sites and files",

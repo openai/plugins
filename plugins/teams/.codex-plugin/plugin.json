@@ -24,7 +24,6 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Teams",
     "shortDescription": "Summarize Microsoft Teams and draft follow-ups",

@@ -2,7 +2,7 @@
   "mcpServers": {
     "zoom": {
       "type": "http",
-      "url": "https://zoom.us/mcp/meeting/streamable",
+      "url": "https://mcp.zoom.us/mcp/meeting/streamable",
       "oauth": {
         "client_id": "<ZOOM_PUBLIC_CLIENT_ID>"
       }

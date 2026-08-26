@@ -28,7 +28,6 @@
   ],
   "skills": "./skills/",
   "apps": "./.app.json",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Outlook Calendar",
     "shortDescription": "Manage Outlook schedules and meeting changes",
