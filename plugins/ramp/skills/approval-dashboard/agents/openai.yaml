@@ -1,0 +1,14 @@
+interface:
+  display_name: "Ramp Approval Dashboard"
+  short_description: "Review pending Ramp approvals"
+  icon_small: "./assets/app-icon.png"
+  icon_large: "./assets/app-icon.png"
+  default_prompt: "Use $approval-dashboard to review pending Ramp approvals and prepare approve or reject actions."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "ramp"
+      description: "Ramp MCP server"
+      transport: "streamable_http"
+      url: "https://mcp.ramp.com/mcp"
