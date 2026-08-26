@@ -9,7 +9,8 @@
 - 429
 - Webhook verification failures
 - Search quality problems
-- Missing text representation
+- MCP server not connected
+- MCP tool missing
 - CLI auth problems
 - Codex sandbox network access
 
@@ -69,14 +70,24 @@ When using Box CLI, run `box <command> --help` before the first invocation of an
 - Expecting search to return content the current identity cannot see
 - Downloading too early instead of returning IDs and metadata first
 
-## Missing text representation
+## MCP server not connected
 
-`get_file_content` and Deep Research `fetch` read markdown or extracted text. They can fail when Box has neither representation for the selected file.
+Box MCP tools are not appearing in the session, or MCP calls fail with auth errors.
 
-- Do not retry the same `get_file_content` or Deep Research `fetch` text read after `Markdown or text representation is not available for this file`.
-- Prefer preview or page-image tools for previewable visual content.
-- Use metadata when it can answer the question without a body read.
-- If document content is still required, choose the smallest fallback allowed by the task and actor permissions.
+- `CLIENT_ID` or `CLIENT_SECRET` is missing or incorrect in the platform's MCP config. Verify the config has a `box` server entry with both values set. Never ask the user to paste credentials into the conversation.
+- The Box OAuth 2.0 app is missing the platform's redirect URI
+- The MCP config file has stale or malformed credentials — re-copy the Client ID and Client Secret from the Box Developer Console
+- Third-party plugins are not enabled in the platform settings
+- The editor was not restarted after making auth changes — MCP connections are established at startup
+- The Box admin has not enabled the MCP server integration in the [Admin Console](https://developer.box.com/guides/authorization/)
+
+**Quick diagnostic:** If other MCP servers work but Box does not, the issue is Box-specific auth. If no MCP servers work, the issue is platform configuration.
+
+**Workaround:** Fall back to Box CLI while the user resolves MCP auth. See `references/box-cli.md` for CLI auth setup. If CLI is not available, request explicit user confirmation before using REST fallback and follow `references/rest-calls.md`.
+
+## MCP tool missing
+
+If the user asks to use a Box MCP tool that seems like it should work but it is not visible in the current client, check the updated/maintained tool list at https://docs.box.com/en/box-mcp/tools. If the tool appears there but is not discoverable or callable, it may be disabled in the Box Admin Console or by the MCP client. Refer the user to https://docs.box.com/en/box-mcp/admin-controls to enable tools in the Box Admin Console, then close and reopen the MCP client, reconnect their Box account, or start a new chat if the tool list appears cached.
 
 ## CLI auth problems
 

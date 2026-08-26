@@ -2,13 +2,27 @@
 
 ## Table of Contents
 
+- Box MCP tool usage
 - Box CLI local verification
+- Direct REST fallback
 - Content workflows
-- Webhooks and events
+- Collaboration and sharing
+- Search
 - AI and retrieval
+- Hubs
+- Doc Gen
+- Bulk operations
+- Webhooks and events
 - Troubleshooting
 
 Use this file when the task is ambiguous and you need to decide which targeted reference to open next.
+
+## Box MCP tool usage
+
+See the MCP section in `SKILL.md` for:
+
+- General MCP guidelines (who_am_i, pagination, least-privilege)
+- MCP category routing table (which reference to open for each tool category)
 
 ## Box CLI local verification
 
@@ -19,6 +33,15 @@ Open `references/box-cli.md` for:
 - `--as-user` verification
 - Quick local reads and writes without changing app code
 
+## Direct REST fallback
+
+Open `references/rest-calls.md` for:
+
+- Last-resort REST usage after MCP and CLI setup paths fail
+- Required explicit user confirmation before REST calls
+- `BOX_ACCESS_TOKEN` setup and safe token handling
+- Canonical `curl` templates and error/backoff guidance
+
 ## Content workflows
 
 Open `references/content-workflows.md` for:
@@ -27,9 +50,54 @@ Open `references/content-workflows.md` for:
 - Creating folders
 - Listing folder items
 - Downloading or previewing files
-- Creating shared links
-- Inviting collaborators
+- Moving files or folders
 - Reading or writing metadata
+
+## Collaboration and sharing
+
+Open `references/collaboration.md` for:
+
+- Inviting collaborators (users or groups)
+- Collaborator role matrix and least-privilege selection
+- Creating and updating shared links
+- External-sharing confirmation rules
+
+## Search
+
+Open `references/mcp-search.md` for:
+
+- Keyword and natural-language file search
+- Folder-name search
+- Metadata-based search (contract value, status, dates)
+- Search scoping and disambiguation
+
+## AI and retrieval
+
+Open `references/ai-and-retrieval.md` for:
+
+- Search-first retrieval strategy
+- Box AI Q&A, extraction, and agents (MCP tools)
+- Box AI via CLI commands
+- Content understanding preference order
+- External AI pipelines over Box content
+- Traceability and citation requirements
+
+## Hubs
+
+Open `references/mcp-hubs.md` for:
+
+- Creating, copying, and updating hubs
+- Adding items to a hub
+- Hub-level Q&A with Box AI
+- Hub naming and description best practices
+
+## Doc Gen
+
+Open `references/mcp-doc-gen.md` for:
+
+- Registering Doc Gen templates
+- Single-document and batch generation
+- Template tag requirements and limitations
 
 ## Bulk operations
 
@@ -49,15 +117,6 @@ Open `references/webhooks-and-events.md` for:
 - Catch-up syncs with the events APIs
 - Signature verification
 - Idempotent event consumers
-
-## AI and retrieval
-
-Open `references/ai-and-retrieval.md` for:
-
-- Search-first retrieval
-- Box AI questions and summaries
-- External AI pipelines over Box content
-- Traceability and citation requirements
 
 ## Troubleshooting
 

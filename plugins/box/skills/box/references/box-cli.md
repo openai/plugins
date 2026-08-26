@@ -9,19 +9,25 @@
 - Actor controls
 - Guardrails
 
-## When to use CLI-first mode
+## When to use the CLI
 
-Use Box CLI first when:
+Tool selection between MCP and CLI is handled in the main skill workflow — see the tool selection table in `SKILL.md`. The CLI is particularly strong for:
 
-- Codex needs a quick local smoke test without changing application code
-- The operator already has a working Box CLI environment
-- You want to verify behavior as the current CLI actor or with `--as-user`
+- **Full API coverage** — if a Box MCP tool isn't available for the task, the CLI can likely handle it.
+- **Compact, controllable output** — `--fields` and `--json` flags let you request exactly the data you need.
+- **Local verification and smoke tests** — quick inspection without changing application code.
+- **Actor testing** — verify behavior as the current CLI actor or impersonate with `--as-user`.
+- **Debugging** — reproduce failures with exact actor, object ID, and endpoint.
 
-Use `scripts/box_rest.py` instead when:
+The CLI should be run strictly one command at a time (concurrent CLI invocations cause auth conflicts).
 
-- The repository already uses token-based REST verification
-- The task requires a raw bearer token from the surrounding platform
-- Box CLI is not installed or not authenticated
+Use direct REST calls instead when:
+
+- MCP remains unavailable after setup attempts
+- Box CLI is not installed, cannot be authenticated, or is not an option for the user
+- The user explicitly confirms they want REST fallback
+
+For REST fallback request patterns and auth guidance, read `references/rest-calls.md`.
 
 ## Safe auth checks
 
@@ -33,15 +39,11 @@ box --version
 box users:get me --json
 ```
 
-Prefer the bundled wrapper:
-
-```bash
-python3 scripts/box_cli_smoke.py check-auth
-```
-
 Do not use `box configure:environments:get --current` as a routine check because it can print sensitive environment details.
 
 ## Authentication paths
+
+These commands are interactive — they open a browser or prompt for input. Tell the user to run them in their own terminal rather than executing them as the agent.
 
 - Fastest OAuth flow with the official Box CLI app:
   - `box login -d`
@@ -49,6 +51,8 @@ Do not use `box configure:environments:get --current` as a routine check because
   - `box login --platform-app`
 - Add an environment from an app config file:
   - `box configure:environments:add PATH`
+
+Never ask the user to paste credentials, tokens, or secrets into the conversation. If credentials are needed, guide the user to set them as environment variables or in the appropriate config file.
 
 After login or environment setup, re-run `box users:get me --json` to confirm the CLI can make authenticated calls.
 
@@ -69,15 +73,6 @@ Write checks:
 box folders:create 0 "codex-smoke-test" --json
 box files:upload ./artifact.pdf --parent-id 0 --json
 box shared-links:create 12345 file --access company --json
-```
-
-Wrapper equivalents:
-
-```bash
-python3 scripts/box_cli_smoke.py get-folder 0 --fields id name item_collection
-python3 scripts/box_cli_smoke.py list-folder-items 0 --max-items 20
-python3 scripts/box_cli_smoke.py search "invoice" --limit 10
-python3 scripts/box_cli_smoke.py create-folder 0 "codex-smoke-test"
 ```
 
 ## Actor controls

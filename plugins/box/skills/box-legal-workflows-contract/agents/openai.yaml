@@ -1,0 +1,4 @@
+interface:
+  display_name: "Box Contract Workflows"
+  short_description: "Review and monitor contracts in Box"
+  default_prompt: "Use $box-legal-workflows-contract to review and monitor these contracts in Box."

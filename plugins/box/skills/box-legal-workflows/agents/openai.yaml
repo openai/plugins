@@ -1,0 +1,4 @@
+interface:
+  display_name: "Box Legal Workflows"
+  short_description: "Apply shared safeguards to Box legal work"
+  default_prompt: "Use $box-legal-workflows to apply shared Box legal safeguards to this workflow."
