@@ -1,8 +1,0 @@
-{
-  "name": "Catch support requests",
-  "prompt": "Review Jira Service Management requests updated in the last 48 hours in queues where I was assigned, participated, or was mentioned during the last 30 days. Find unresolved replies, promised handoffs without an owner or transition, and SLAs with less than four business hours left. Surface newly at-risk requests, new activity since the last run, and approaching SLA breaches; skip unchanged requests. Rank by SLA and customer risk, draft a short response, and make no changes. Mark missing SLA data as unknown.",
-  "schedule": {
-    "type": "hourly",
-    "intervalHours": 2
-  }
-}

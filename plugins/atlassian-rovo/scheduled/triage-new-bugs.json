@@ -1,8 +1,0 @@
-{
-  "name": "Triage new bugs",
-  "prompt": "Review untriaged Jira bugs created in the last 24 hours across projects I have recently worked in. Check open and resolved issues for matching errors, components, versions, or symptoms, then flag likely duplicates, regressions, and genuinely new bugs. Rank them by impact and severity, recommend the next action, and leave uncertain matches clearly marked. Do not change Jira.",
-  "schedule": {
-    "type": "weekdays",
-    "time": "09:00"
-  }
-}

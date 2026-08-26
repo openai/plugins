@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Liquid"
+  short_description: "Build and validate Liquid themes"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-liquid to write, review, or validate Shopify theme code."

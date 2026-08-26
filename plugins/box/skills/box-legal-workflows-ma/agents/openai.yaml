@@ -1,4 +1,0 @@
-interface:
-  display_name: "Box M&A Deal Rooms"
-  short_description: "Build and manage M&A deal rooms in Box"
-  default_prompt: "Use $box-legal-workflows-ma to build or manage this M&A deal room in Box."

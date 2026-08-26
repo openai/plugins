@@ -1,3 +1,0 @@
-interface:
-  display_name: "Vercel Connect"
-  short_description: "Scoped OAuth tokens for third-party services via Vercel OIDC"

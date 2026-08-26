@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Dev"
+  short_description: "Search Shopify developer docs"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-dev to search Shopify developer documentation across APIs."

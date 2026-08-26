@@ -12,19 +12,19 @@ The ticket summary should be a clear, concise action statement that immediately 
 
 ### Good Examples
 
-✅ "Implement user registration API endpoint"
-✅ "Fix pagination bug in search results"
-✅ "Add email validation to signup form"
-✅ "Optimize database query for dashboard load time"
-✅ "Create documentation for payment webhook"
+✅ "Implement user registration API endpoint"  
+✅ "Fix pagination bug in search results"  
+✅ "Add email validation to signup form"  
+✅ "Optimize database query for dashboard load time"  
+✅ "Create documentation for payment webhook"  
 ✅ "Design user preferences data schema"
 
 ### Bad Examples
 
-❌ "Users" - Not actionable
-❌ "Do backend work" - Too vague
-❌ "Fix bug" - Lacks specificity
-❌ "API" - Not a task
+❌ "Users" - Not actionable  
+❌ "Do backend work" - Too vague  
+❌ "Fix bug" - Lacks specificity  
+❌ "API" - Not a task  
 ❌ "There's an issue with the login page that needs to be addressed" - Too wordy
 
 ### Action Verbs by Task Type
@@ -283,16 +283,16 @@ Acceptance criteria should be:
 
 ### Good Acceptance Criteria
 
-✅ "User can submit form and receive confirmation email within 30 seconds"
-✅ "API returns 400 error when email field is empty"
-✅ "Dashboard loads in under 2 seconds on 3G connection"
+✅ "User can submit form and receive confirmation email within 30 seconds"  
+✅ "API returns 400 error when email field is empty"  
+✅ "Dashboard loads in under 2 seconds on 3G connection"  
 ✅ "All text meets WCAG 2.1 AA contrast ratios"
 
 ### Bad Acceptance Criteria
 
-❌ "Feature works well" - Not specific
-❌ "Code is clean" - Subjective, not testable
-❌ "Fast performance" - Not measurable
+❌ "Feature works well" - Not specific  
+❌ "Code is clean" - Subjective, not testable  
+❌ "Fast performance" - Not measurable  
 ❌ "No bugs" - Too broad
 
 ---
@@ -315,30 +315,30 @@ Keep it concise - detailed technical specs belong in Confluence or code comments
 ## Common Mistakes to Avoid
 
 ### 1. Information Overload
-❌ Pages of requirements copied from spec doc
+❌ Pages of requirements copied from spec doc  
 ✅ Summary with link to full spec
 
 ### 2. Assuming Context
-❌ "Fix the bug we discussed"
+❌ "Fix the bug we discussed"  
 ✅ Clear description of the bug with reproduction steps
 
 ### 3. Implementation as Requirement
-❌ "Use React hooks for state management"
+❌ "Use React hooks for state management"  
 ✅ "Component updates in real-time" (let developer choose approach unless there's a specific reason)
 
 ### 4. Vague Acceptance Criteria
-❌ "Everything works correctly"
+❌ "Everything works correctly"  
 ✅ Specific, testable outcomes
 
 ### 5. Missing Links
-❌ No reference to designs, specs, or related work
+❌ No reference to designs, specs, or related work  
 ✅ Links to all relevant documentation
 
 ---
 
 ## Length Guidelines
 
-**Summary:**
+**Summary:** 
 - Target: 3-8 words
 - Max: 12 words
 

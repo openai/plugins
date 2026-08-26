@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify POS UI"
+  short_description: "Build point-of-sale extensions"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-pos-ui to build a Shopify POS UI extension."

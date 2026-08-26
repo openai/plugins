@@ -1,41 +1,33 @@
 {
-  "apps": "./.app.json",
+  "name": "box",
+  "version": "0.0.3",
+  "description": "Search and reference your documents",
   "author": {
-    "name": "Box",
+    "name": "OpenAI",
     "url": "https://www.box.com/home"
   },
-  "description": "Search and reference your documents",
   "homepage": "https://www.box.com/home",
+  "repository": "https://github.com/openai/plugins",
+  "license": "MIT",
+  "keywords": [],
+  "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
-    "brandColor": "#0061D5",
-    "brandColorDark": "#2A8BFF",
-    "capabilities": [],
+    "displayName": "Box",
+    "shortDescription": "Search and reference your documents",
+    "longDescription": "Search and reference your documents in Box and work safely with Box content flows from Codex.",
+    "developerName": "OpenAI",
     "category": "Productivity",
-    "composerIcon": "./assets/composer-icon.png",
+    "capabilities": [],
+    "websiteURL": "https://www.box.com/home",
+    "privacyPolicyURL": "https://www.box.com/legal/privacypolicy",
+    "termsOfServiceURL": "https://www.box.com/legal/terms",
+    "brandColor": "#0061D5",
     "defaultPrompt": [
       "Find a Box file and summarize the key points"
     ],
-    "developerName": "Box",
-    "displayName": "Box",
-    "logo": "./assets/logo.png",
-    "longDescription": "Search and reference your documents in Box and work safely with Box content flows.",
-    "privacyPolicyURL": "https://www.box.com/legal/privacypolicy",
-    "screenshots": [],
-    "shortDescription": "Search and reference your documents",
-    "termsOfServiceURL": "https://www.box.com/legal/terms",
-    "websiteURL": "https://www.box.com/home"
-  },
-  "keywords": [
-    "box",
-    "cloud storage",
-    "file sharing",
-    "documents",
-    "files",
-    "collaboration"
-  ],
-  "license": "MIT",
-  "name": "box",
-  "repository": "https://github.com/openai/plugins",
-  "skills": "./skills/",
-  "version": "0.0.5"
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
+    "screenshots": []
+  }
 }

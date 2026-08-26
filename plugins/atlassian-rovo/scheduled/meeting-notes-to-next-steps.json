@@ -1,8 +1,0 @@
-{
-  "name": "Meeting notes to next steps",
-  "prompt": "Review Confluence meeting notes updated today and pull out action items with a named owner and due date. Check related Jira work before creating a task. Create one only when there is no matching open issue and the source points to one Jira project and task type. Preserve the owner, due date, and source link; put everything else in a review queue.",
-  "schedule": {
-    "type": "weekdays",
-    "time": "17:15"
-  }
-}

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Hydrogen"
+  short_description: "Build Hydrogen storefronts"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-hydrogen to answer or implement a Hydrogen storefront task."

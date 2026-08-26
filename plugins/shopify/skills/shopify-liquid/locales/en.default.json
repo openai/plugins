@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "hero_banner": {
+      "previous_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "pagination": "Slideshow pagination",
+      "slide_label": "Slide {{ number }}"
+    }
+  }
+}

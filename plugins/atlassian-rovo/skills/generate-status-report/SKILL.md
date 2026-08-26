@@ -39,7 +39,7 @@ Clarify these details:
 **Target audience:**
 - If not specified, ask: "Who is this report for? (Executives/Delivery Managers, Team-level, or Daily standup)"
 - **Executives/Delivery Managers**: High-level summary with key metrics and blockers
-- **Team-level**: Detailed breakdown with issue-by-issue status
+- **Team-level**: Detailed breakdown with issue-by-issue status  
 - **Daily standup**: Brief update on yesterday/today/blockers
 
 **Report destination:**

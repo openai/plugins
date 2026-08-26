@@ -16,7 +16,6 @@
     "triage"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Sentry",
     "shortDescription": "Inspect recent Sentry issues and events",

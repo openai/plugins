@@ -1,9 +1,0 @@
-{
-  "name": "Keep my PRs moving",
-  "prompt": "Review my open, non-draft GitHub pull requests for newly failing checks, unresolved review threads, merge conflicts, requested changes, and stalled approvals. Surface only new or actionable items, rank them by urgency and age, and include the PR link, blocker, likely cause, and recommended next step. Prepare proposed review replies or fixes when useful, but do not push, merge, request review, or comment.",
-  "schedule": {
-    "type": "hourly",
-    "intervalHours": 2,
-    "days": ["MO", "TU", "WE", "TH", "FR"]
-  }
-}

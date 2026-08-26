@@ -1,8 +1,0 @@
-{
-  "name": "Find rooms for upcoming meetings",
-  "prompt": "Check my accepted, editable in-office meetings over the next 14 days for missing rooms. Use rooms booked on at least two meetings I organized in the last 90 days. Add the smallest suitable room only when exactly one available room matches the stated building and required capacity. Update only that occurrence, verify the booking, and report meetings that cannot be booked without changing attendees, time, or RSVP.",
-  "schedule": {
-    "type": "weekdays",
-    "time": "08:00"
-  }
-}

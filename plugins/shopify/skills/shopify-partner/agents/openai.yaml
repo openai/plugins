@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Partner"
+  short_description: "Use the Shopify Partner API"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-partner to work with Partner Dashboard API data."

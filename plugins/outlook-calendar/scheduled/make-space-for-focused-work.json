@@ -1,9 +1,0 @@
-{
-  "name": "Make space for focused work",
-  "prompt": "Review the next five workdays for days without two uninterrupted working hours. Add one private 90–120-minute focus block in the longest open window, preferring two hours and then the earliest qualifying time. Never move or overlap meetings or duplicate an existing focus block, and report days with no safe opening.",
-  "schedule": {
-    "type": "weekly",
-    "days": ["MO"],
-    "time": "08:00"
-  }
-}

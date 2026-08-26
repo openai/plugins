@@ -143,20 +143,24 @@ For EACH component (in dependency order: atoms before molecules), run the checkl
 
 ## 4. State Management (Required for Long Workflows)
 
-> Do not store workflow state on Figma objects. Use deterministic names for discovery and exact returned IDs in the state ledger. Put human-readable component purpose and usage guidance in the component or component-set `description`.
+> **`getPluginData()` / `setPluginData()` are NOT supported in `use_figma`.** Use `getSharedPluginData()` / `setSharedPluginData()` instead (these ARE supported), or use name-based lookups and the state ledger (returned IDs).
 
-| Entity type | Stable identity | How to check existence |
+| Entity type | Idempotency key | How to check existence |
 |-------------|----------------|----------------------|
-| Pages and frames | Deterministic name + state-ledger ID | `figma.root.children.find(p => p.name === pageName)` or `await figma.getNodeByIdAsync(id)` |
-| Components and component sets | Variant/set name + state-ledger ID | `page.findOne(n => n.name === name)` or `await figma.getNodeByIdAsync(id)` |
+| Scene nodes (pages, frames, components) | `setSharedPluginData('dsb', 'key', value)` or unique name | `node.getSharedPluginData('dsb', 'key')` or `page.findOne(n => n.name === 'Button')` |
 | Variables | Name within collection | `(await figma.variables.getLocalVariablesAsync()).find(v => v.name === name && v.variableCollectionId === collId)` |
 | Styles | Name | `getLocalTextStyles().find(s => s.name === name)` |
 
-Record every returned ID in the state ledger immediately after creation. Never use a fuzzy lookup to authorize deletion.
+Tag every created **scene node** immediately after creation:
+```javascript
+node.setSharedPluginData('dsb', 'run_id', RUN_ID);        // identifies this build run
+node.setSharedPluginData('dsb', 'phase', 'phase3');        // which phase created it
+node.setSharedPluginData('dsb', 'key', 'component/button');// unique logical key
+```
 
 **State persistence**: Do NOT rely solely on conversation context for the state ledger. Write it to disk:
 ```
-/tmp/design-system-state-{RUN_ID}.json
+/tmp/dsb-state-{RUN_ID}.json
 ```
 Re-read this file at the start of every turn. In long workflows, conversation context will be truncated — the file is the source of truth.
 
@@ -362,4 +366,5 @@ Reusable Plugin API helper functions. Embed in `use_figma` calls:
 | [bindVariablesToComponent.js](scripts/bindVariablesToComponent.js) | Bind design tokens to all component visual properties |
 | [createDocumentationPage.js](scripts/createDocumentationPage.js) | Create a page with title + description + section structure |
 | [validateCreation.js](scripts/validateCreation.js) | Verify created nodes match expected counts, names, structure |
-| [cleanupOrphans.js](scripts/cleanupOrphans.js) | Remove only the exact node, variable, and collection IDs supplied from the state ledger |
+| [cleanupOrphans.js](scripts/cleanupOrphans.js) | Remove orphaned nodes by name convention or state ledger IDs |
+| [rehydrateState.js](scripts/rehydrateState.js) | Scan file for all pages, components, variables by name; returns full `{key → nodeId}` map for state reconstruction |

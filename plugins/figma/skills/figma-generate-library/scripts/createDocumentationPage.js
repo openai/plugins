@@ -24,6 +24,7 @@
  *   - `description`: Optional subtitle displayed below the heading.
  *   - `sections`: Ordered list of sections. Each section gets its own frame
  *     with a heading and is passed to `contentFn` for population.
+ * @param {string} [runId] - Optional dsb_run_id to tag every created node.
  * @returns {Promise<{
  *   page: PageNode,
  *   titleNode: TextNode,
@@ -31,7 +32,7 @@
  * }>}
  *   `frameIds` is an ordered list of IDs for the root frame and each section frame.
  */
-async function createDocumentationPage(pageName, config) {
+async function createDocumentationPage(pageName, config, runId) {
   // Verify required fonts are available before loading
   const allFonts = await figma.listAvailableFontsAsync()
   const requiredStyles = ['Bold', 'Regular', 'Medium']
@@ -55,6 +56,11 @@ async function createDocumentationPage(pageName, config) {
   page.name = pageName
   await figma.setCurrentPageAsync(page)
 
+  if (runId) {
+    page.setPluginData('dsb_run_id', runId)
+    page.setPluginData('dsb_key', `page/${pageName}`)
+  }
+
   const frameIds = []
 
   // Root scroll container — 1440px wide, auto-height
@@ -73,6 +79,11 @@ async function createDocumentationPage(pageName, config) {
   root.x = 0
   root.y = 0
   page.appendChild(root)
+
+  if (runId) {
+    root.setPluginData('dsb_run_id', runId)
+    root.setPluginData('dsb_key', `frame/root/${pageName}`)
+  }
 
   frameIds.push(root.id)
 
@@ -111,6 +122,11 @@ async function createDocumentationPage(pageName, config) {
     sectionFrame.fills = []
     root.appendChild(sectionFrame)
     sectionFrame.layoutSizingHorizontal = 'FILL'
+
+    if (runId) {
+      sectionFrame.setPluginData('dsb_run_id', runId)
+      sectionFrame.setPluginData('dsb_key', `frame/section/${pageName}/${section.name}`)
+    }
 
     // Section heading
     const sectionHeading = figma.createText()

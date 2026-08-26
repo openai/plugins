@@ -1,0 +1,4 @@
+interface:
+  display_name: "Upgrade Stripe"
+  short_description: "Guide Stripe API and SDK upgrades"
+  default_prompt: "Guide this Stripe API or SDK upgrade to the right target version and call out the concrete code and behavior changes."

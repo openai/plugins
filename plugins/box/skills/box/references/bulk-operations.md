@@ -31,7 +31,7 @@ Use this reference when the task involves more than a handful of files or folder
 
 ### Box CLI must run serially
 
-**Always run CLI commands one at a time, waiting for each to complete before starting the next.** See `references/box-cli.md` for why concurrent CLI invocations fail.
+The Box CLI does not support concurrent invocations against the same environment. Launching multiple CLI processes in parallel causes auth conflicts, dropped operations, and unpredictable errors. **Always run CLI commands one at a time, waiting for each to complete before starting the next.**
 
 ### Box API rate limits
 
@@ -57,10 +57,10 @@ List everything in the source folder(s). Paginate fully — do not assume a sing
 
 ```bash
 # CLI — list up to 1000 items
-box folders:items <FOLDER_ID> --json --max-items 1000 --fields id,name,type
+python3 scripts/box_cli_smoke.py list-folder-items <FOLDER_ID> --max-items 1000 --fields id name type
 
 # REST — paginate with offset
-curl -sS -H "Authorization: Bearer $BOX_ACCESS_TOKEN" -H "Accept: application/json" "https://api.box.com/2.0/folders/<FOLDER_ID>/items?limit=1000&offset=0&fields=id,name,type"
+python3 scripts/box_rest.py get-folder-items --folder-id <FOLDER_ID> --limit 1000 --fields id name type
 ```
 
 For folders with more items than one page returns, increment the offset and repeat until all items are captured.
@@ -71,9 +71,12 @@ Capture each item's `id`, `name`, and `type` into a working list before proceedi
 
 Skip this step if files can be categorized by filename, extension, or existing metadata. Use it when the documents are unstructured and their content determines the category — for example, a folder of mixed invoices, receipts, contracts, and reports that all share the same file type.
 
-### Content understanding and classification tools
+### Preference order for content understanding
 
-For the preference order (Box AI → metadata → previews → local analysis), Box AI CLI command syntax, and error diagnostics, see `references/ai-and-retrieval.md`.
+1. **Box AI Q&A or Extract** (preferred) — ask Box AI to classify or extract structured fields from each file. This keeps content server-side, requires no downloads, and leverages Box's own document understanding.
+2. **Metadata inspection** — check existing Box metadata templates or properties already applied to the files.
+3. **Previews or thumbnails** — use Box preview representations for lightweight visual inspection without downloading the full file.
+4. **Local analysis (OCR, agent-side parsing)** — download the file and process it locally. Use only when Box AI is unavailable, not authorized, or insufficient for the document type.
 
 ### Sample-first strategy
 
@@ -85,8 +88,39 @@ Do not classify every file up front. Box AI calls are slower than metadata reads
 4. **Classify the remainder** — use AI only for files that cannot be sorted by cheaper signals. Pace AI calls at least 1–2 seconds apart.
 5. **Record each classification** (file ID → category) as it completes so an interrupted run can resume without re-classifying finished files.
 
+### Box AI classification via CLI
+
+**Before the first AI call**, run `box ai:ask --help` to confirm the command exists in the installed CLI version and to check for any flag changes.
+
+Use `box ai:ask` to classify a single file by asking a direct question:
+
+```bash
+box ai:ask --items=id=<FILE_ID>,type=file \
+  --prompt "What type of document is this? Reply with exactly one of: invoice, receipt, contract, report, other." \
+  --json --no-color
+```
+
+Use `box ai:extract` when you need key-value extraction via a freeform prompt:
+
+```bash
+box ai:extract --items=id=<FILE_ID>,type=file \
+  --prompt "document_type, vendor_name, date" \
+  --json --no-color
+```
+
+Use `box ai:extract-structured` when you have a metadata template or want typed fields with options:
+
+```bash
+box ai:extract-structured --items=id=<FILE_ID>,type=file \
+  --fields "key=document_type,type=enum,options=invoice;receipt;contract;report;other" \
+  --json --no-color
+```
+
+Reference: https://github.com/box/boxcli/blob/main/docs/ai.md
+
 ### Handling failures during classification
 
+- **Exit code 2 or "Unexpected Error" with no HTTP body** can mean the installed CLI version does not have AI commands, Box AI is not enabled for the account, or the file type is not supported. Run `box ai:ask --help` to verify the command exists. If the command exists but still fails, try a known-supported file type (PDF, DOCX) to distinguish account-level unavailability from file-type incompatibility.
 - If the first AI call returns a 403, feature-not-available, or similar authorization error, stop attempting AI classification for the remaining files and switch to the next method in the preference order immediately.
 - If an individual file fails (unsupported format, empty content, timeout), log it and continue. Classify it manually or by fallback method after the batch finishes.
 - On 429, wait for the `Retry-After` period and retry the same file before moving to the next one.
@@ -119,12 +153,12 @@ Create target folders **one at a time, serially**. After each creation, record t
 
 ```bash
 # CLI
-box folders:create <PARENT_ID> "SEC Filings" --json
+python3 scripts/box_cli_smoke.py create-folder <PARENT_ID> "SEC Filings"
 # then
-box folders:create <SEC_FILINGS_ID> "10-K" --json
+python3 scripts/box_cli_smoke.py create-folder <SEC_FILINGS_ID> "10-K"
 
 # REST
-curl -sS -X POST -H "Authorization: Bearer $BOX_ACCESS_TOKEN" -H "Content-Type: application/json" -H "Accept: application/json" "https://api.box.com/2.0/folders" -d '{"name":"SEC Filings","parent":{"id":"<PARENT_ID>"}}'
+python3 scripts/box_rest.py create-folder --parent-folder-id <PARENT_ID> --name "SEC Filings"
 ```
 
 Handle `409 Conflict` by listing the parent folder to find the existing folder's ID rather than failing the entire operation.
@@ -136,11 +170,11 @@ Create parent folders before child folders. Process the tree top-down.
 Move files into their target folders **one at a time, serially**. Each move is a PUT that updates the file's parent.
 
 ```bash
-# REST (fallback when CLI is unavailable or not an option)
-curl -sS -X PUT -H "Authorization: Bearer $BOX_ACCESS_TOKEN" -H "Content-Type: application/json" -H "Accept: application/json" "https://api.box.com/2.0/files/<FILE_ID>" -d '{"parent":{"id":"<TARGET_FOLDER_ID>"}}'
+# REST (preferred for bulk — more reliable than CLI for high-volume moves)
+python3 scripts/box_rest.py move-item --item-type file --item-id <FILE_ID> --parent-folder-id <TARGET_FOLDER_ID>
 
 # CLI
-box files:move <FILE_ID> <TARGET_FOLDER_ID> --json
+python3 scripts/box_cli_smoke.py move-item <FILE_ID> file --parent-id <TARGET_FOLDER_ID>
 ```
 
 After each successful move, record it. If a move fails, log the file ID and error and continue with the remaining files — do not abort the entire batch.
@@ -149,7 +183,7 @@ After each successful move, record it. If a move fails, log the file ID and erro
 
 Insert a short delay between operations when working with large batches (100+ items). A 200–500ms pause between requests helps stay within rate limits without dramatically increasing total time.
 
-When using REST directly in application code, implement proper 429 backoff instead of fixed delays.
+When using REST directly in application code (not via the scripts), implement proper 429 backoff instead of fixed delays.
 
 ## Step 6 — Verify
 
@@ -160,7 +194,7 @@ After all moves complete:
 3. Report any items that failed to move and the error encountered.
 
 ```bash
-box folders:items <TARGET_FOLDER_ID> --json --max-items 1000 --fields id,name
+python3 scripts/box_cli_smoke.py list-folder-items <TARGET_FOLDER_ID> --max-items 1000 --fields id name
 ```
 
 ## Rate-limit and backoff handling
@@ -172,18 +206,18 @@ When Box returns `429 Too Many Requests`:
 3. Do not retry other requests during the wait — the limit is typically per-user or per-app, so other requests will also be throttled.
 4. After a successful retry, resume normal pacing.
 
-In application code, implement exponential backoff with jitter starting at the `Retry-After` value. In manual CLI operations, a simple sleep-and-retry is sufficient.
+In application code, implement exponential backoff with jitter starting at the `Retry-After` value. In script-based or CLI-based operations, a simple sleep-and-retry is sufficient.
 
 ## REST vs CLI for bulk work
 
-| Factor | REST (direct API or SDK) | CLI (`box` command) |
+| Factor | REST (`box_rest.py` or SDK) | CLI (`box_cli_smoke.py`) |
 | --- | --- | --- |
 | Concurrency safety | Can handle controlled concurrency with proper rate-limit handling | Must run serially — no parallel invocations |
 | Overhead per call | Lower — direct HTTP | Higher — process spawn per command |
 | Error handling | Structured JSON responses, easy to parse and retry | Exit codes and mixed output, harder to automate |
-| Best for | Last-resort fallback, or application code that already uses REST/SDK | Agent-driven operations when CLI is available |
+| Best for | Bulk moves, batch metadata writes, any operation over ~50 items | Quick verification, small batches, interactive debugging |
 
-**Default to CLI for agent-driven bulk operations.** Use REST only after MCP/CLI setup attempts fail or CLI is not an option and the user explicitly confirms REST fallback.
+**Default to REST for bulk operations.** Fall back to CLI when REST auth is unavailable or the operator specifically prefers CLI-based workflows.
 
 ## Partial failure recovery
 

@@ -1,0 +1,12 @@
+{
+  "name": "shopify-polaris-app-home",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "typescript": "5.9.3",
+    "@shopify/polaris-types": "1.0.1",
+    "@shopify/app-bridge-types": "0.7.0",
+    "preact": "10.28.4",
+    "@types/react": "19.2.14"
+  }
+}

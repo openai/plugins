@@ -394,8 +394,8 @@ Regardless of template, ensure every Epic includes:
 
 ## Common Mistakes to Avoid
 
-❌ **Too brief**: "Build notifications" - lacks context
-❌ **Too detailed**: Including implementation details that belong in tickets
-❌ **No success criteria**: How do we know when it's done?
-❌ **Missing source link**: Hard to trace back to requirements
+❌ **Too brief**: "Build notifications" - lacks context  
+❌ **Too detailed**: Including implementation details that belong in tickets  
+❌ **No success criteria**: How do we know when it's done?  
+❌ **Missing source link**: Hard to trace back to requirements  
 ❌ **Vague scope**: Leads to scope creep and confusion

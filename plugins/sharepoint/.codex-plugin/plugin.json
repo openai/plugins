@@ -1,6 +1,6 @@
 {
   "name": "sharepoint",
-  "version": "0.1.6-alpha.1",
+  "version": "0.1.3",
   "description": "Work with SharePoint using the configured Microsoft SharePoint app connector.",
   "author": {
     "name": "OpenAI",
@@ -13,13 +13,7 @@
   "keywords": [
     "sharepoint",
     "documents",
-    "microsoft",
-    "microsoft 365",
-    "office 365",
-    "onedrive",
-    "files",
-    "intranet",
-    "collaboration"
+    "microsoft"
   ],
   "skills": "./skills/",
   "apps": "./.app.json",

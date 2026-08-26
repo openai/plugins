@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Merchant Onboarding"
+  short_description: "Set up and connect a Shopify store"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-onboarding-merchant to set up or connect a Shopify store."

@@ -1,6 +1,6 @@
 # Research & Documentation Skill Evaluations
 
-Evaluation scenarios for testing the Research & Documentation skill across different model configurations.
+Evaluation scenarios for testing the Research & Documentation skill across different Codex models.
 
 ## Purpose
 
@@ -71,7 +71,7 @@ Research & Documentation evaluations should verify:
 - Includes citations for all Notion sources
 - Uses mention-page tags: `<mention-page url="...">`
 - Attributes findings to specific sources
-- Distinguishes between Notion content and supplemental research
+- Distinguishes between Notion content and Codex research
 - Links related documents
 
 ### Document Quality

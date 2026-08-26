@@ -1,6 +1,6 @@
 # Knowledge Capture Skill Evaluations
 
-Evaluation scenarios for testing the Knowledge Capture skill across different model configurations.
+Evaluation scenarios for testing the Knowledge Capture skill across different Codex models.
 
 ## Purpose
 

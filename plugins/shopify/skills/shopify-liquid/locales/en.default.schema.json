@@ -1,0 +1,103 @@
+{
+  "sections": {
+    "hero_banner": {
+      "name": "Hero banner",
+      "presets": {
+        "default": "Hero banner"
+      },
+      "settings": {
+        "layout_header": "Layout",
+        "slideshow_header": "Slideshow",
+        "height": {
+          "label": "Desktop height"
+        },
+        "height_mobile": {
+          "label": "Mobile height"
+        },
+        "animation_type": {
+          "label": "Slide animation",
+          "options": {
+            "slide": "Slide",
+            "fade": "Fade"
+          }
+        },
+        "autoplay": {
+          "label": "Auto-rotate slides"
+        },
+        "autoplay_speed": {
+          "label": "Change slides every"
+        },
+        "show_arrows": {
+          "label": "Show navigation arrows"
+        },
+        "show_dots": {
+          "label": "Show pagination dots"
+        }
+      }
+    }
+  },
+  "blocks": {
+    "hero_slide": {
+      "name": "Slide",
+      "settings": {
+        "media_header": "Media",
+        "image": {
+          "label": "Background image"
+        },
+        "mobile_image": {
+          "label": "Mobile background image"
+        },
+        "overlay_opacity": {
+          "label": "Image overlay opacity"
+        },
+        "content_header": "Content",
+        "subheading": {
+          "label": "Subheading"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "content_alignment": {
+          "label": "Content alignment"
+        },
+        "text_color": {
+          "label": "Text color"
+        },
+        "buttons_header": "Buttons",
+        "button_label": {
+          "label": "Primary button label"
+        },
+        "button_link": {
+          "label": "Primary button link"
+        },
+        "button_style": {
+          "label": "Primary button style"
+        },
+        "button_label_2": {
+          "label": "Secondary button label"
+        },
+        "button_link_2": {
+          "label": "Secondary button link"
+        }
+      }
+    }
+  },
+  "options": {
+    "alignment": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    },
+    "color": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "button_style": {
+      "primary_light": "Primary — light",
+      "primary_dark": "Primary — dark"
+    }
+  }
+}

@@ -170,7 +170,7 @@ What NOT to do — flatten the tree and animate one element:
 </div>
 ```
 
-Why it's wrong: `get_design_context` already gives the correct DOM — keep its hierarchy and `data-node-id`s, and layer the motion *onto* that tree. The `motion.div` wrapper (`1:348`) must survive; the only change is inlining the vector as an `<svg>` (the snippet returns `motion.svg`, so animate the inlined svg, not an `<img>`) and applying only validated `initial`/`animate`/`transition` data, never executable expressions or callbacks.
+Why it's wrong: `get_design_context` already gives the correct DOM — keep its hierarchy and `data-node-id`s, and layer the motion *onto* that tree. The `motion.div` wrapper (`1:348`) must survive; the only change is inlining the vector as an `<svg>` (the snippet returns `motion.svg`, so animate the inlined svg, not an `<img>`) and attaching the snippet's `initial`/`animate`/`transition` verbatim.
 
 ## Anti-example: keep each node's position bound to its id
 

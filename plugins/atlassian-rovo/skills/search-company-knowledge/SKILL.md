@@ -51,7 +51,7 @@ search(
 )
 ```
 
-**When to use:**
+**When to use:** 
 - Default approach for most queries
 - When you don't know which system has the information
 - Fastest way to get results from multiple sources
@@ -208,8 +208,8 @@ Combine information from multiple sources into a coherent answer.
 ```
 Stratus minions are background worker processes that handle async tasks.
 
-According to the Confluence documentation, they process jobs from the queue and
-can be scaled horizontally. This is confirmed by several Jira tickets (PROJ-145,
+According to the Confluence documentation, they process jobs from the queue and 
+can be scaled horizontally. This is confirmed by several Jira tickets (PROJ-145, 
 PROJ-203) which discuss minion configuration and scaling strategies.
 ```
 
@@ -233,7 +233,7 @@ The billing system has two main components:
 There is conflicting information about the authentication timeout:
 
 - **Official Documentation** (Confluence) states: 30-minute session timeout
-- **Implementation Reality** (Jira PROJ-456, filed Oct 2023): Actual timeout is
+- **Implementation Reality** (Jira PROJ-456, filed Oct 2023): Actual timeout is 
   15 minutes due to load balancer configuration
 - **Status:** Engineering team aware, fix planned but no timeline yet
 
@@ -379,7 +379,7 @@ I found documentation about [topic], but note that it's from [date] and may be o
 
 [Provide the information anyway]
 
-You may want to verify this is still current, especially if it's from more than
+You may want to verify this is still current, especially if it's from more than 
 a year ago.
 ```
 
@@ -388,7 +388,7 @@ a year ago.
 If search returns inaccessible content:
 
 ```
-Search results mention [topic] in the following locations, but I don't have
+Search results mention [topic] in the following locations, but I don't have 
 access to view the full content:
 - Confluence page: [title] (Space: [SPACE])
 - Jira issue: PROJ-123
@@ -413,7 +413,7 @@ You may need to access these directly or check your permissions.
 
 **Answer:**
 ```
-Stratus minions are background worker processes that handle asynchronous task
+Stratus minions are background worker processes that handle asynchronous task 
 processing in the Stratus system.
 
 **Key Characteristics:**
@@ -423,7 +423,7 @@ processing in the Stratus system.
 - Handle tasks like email sending, report generation, and data processing
 
 **Architecture:**
-According to the Stratus Architecture documentation, minions follow a
+According to the Stratus Architecture documentation, minions follow a 
 worker-queue pattern where:
 1. Web application enqueues tasks
 2. Minions poll the queue for work
@@ -431,7 +431,7 @@ worker-queue pattern where:
 4. Results are stored in the database
 
 **Implementation Notes:**
-From Jira ticket PROJ-203, the current deployment runs 5 minion instances,
+From Jira ticket PROJ-203, the current deployment runs 5 minion instances, 
 with plans to scale to 10 for handling increased load.
 
 ## Sources
@@ -457,11 +457,11 @@ There is a discrepancy between documented and actual behavior:
 Session timeout is configured for 30 minutes of inactivity.
 
 **Actual Behavior** (PROJ-456, reported Oct 2023):
-Users are being logged out after 15 minutes due to a load balancer configuration
+Users are being logged out after 15 minutes due to a load balancer configuration 
 that overrides the application setting.
 
 **Current Status:**
-The engineering team is aware of this issue. The load balancer timeout needs to
+The engineering team is aware of this issue. The load balancer timeout needs to 
 be adjusted to match the application setting. No fix timeline has been set.
 
 **Recommendation:** Plan for 15-minute timeout until this is resolved.

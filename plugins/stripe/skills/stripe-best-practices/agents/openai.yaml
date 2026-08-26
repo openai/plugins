@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stripe Best Practices"
+  short_description: "Guide Stripe integration choices and implementation"
+  default_prompt: "Use Stripe best practices to choose the right APIs, integration surface, and account model for this Stripe task."

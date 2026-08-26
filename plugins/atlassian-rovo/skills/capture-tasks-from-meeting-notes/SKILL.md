@@ -483,7 +483,7 @@ If the same person is mentioned different ways:
 ```
 Notes mention: @sarah, Sarah, Sarah J.
 
-These likely refer to the same person. I'll look up "Sarah" once and use
+These likely refer to the same person. I'll look up "Sarah" once and use 
 that account ID for all three mentions. Is that correct?
 ```
 
@@ -528,17 +528,17 @@ Which would you prefer?
 ## Tips for High-Quality Results
 
 ### Do:
-✅ Use consistent @mention format in notes
-✅ Include full names when possible
-✅ Be specific in action item descriptions
-✅ Add context (why/what/when)
-✅ Review parsed tasks before confirming
+✅ Use consistent @mention format in notes  
+✅ Include full names when possible  
+✅ Be specific in action item descriptions  
+✅ Add context (why/what/when)  
+✅ Review parsed tasks before confirming  
 
 ### Don't:
-❌ Mix multiple tasks for one person in one bullet
-❌ Use ambiguous names (just "John" if you have 5 Johns)
-❌ Skip action verbs (unclear what to do)
-❌ Forget to specify project
+❌ Mix multiple tasks for one person in one bullet  
+❌ Use ambiguous names (just "John" if you have 5 Johns)  
+❌ Skip action verbs (unclear what to do)  
+❌ Forget to specify project  
 
 ### Best Meeting Notes Format
 
@@ -563,11 +563,11 @@ Attendees: [Names]
 This skill is for **converting meeting action items to Jira tasks only**.
 
 **Don't use for:**
-❌ Summarizing meetings (no task creation)
-❌ Finding meeting notes (use search skill)
-❌ Creating calendar events
-❌ Sending meeting notes via email
-❌ General note-taking
+❌ Summarizing meetings (no task creation)  
+❌ Finding meeting notes (use search skill)  
+❌ Creating calendar events  
+❌ Sending meeting notes via email  
+❌ General note-taking  
 
 **Use only when:** Meeting notes exist and action items need to become Jira tasks.
 
@@ -600,10 +600,10 @@ Action Items:
 
 1. PROJ-100 - Create user stories for chat feature
    Assigned to: Sarah Johnson
-
+   
 2. PROJ-101 - Update the architecture doc
    Assigned to: Mike Chen
-
+   
 3. PROJ-102 - Review design mockups
    Assigned to: Lisa Park
 ```
@@ -655,9 +655,9 @@ Action Items:
 
 ## Quick Reference
 
-**Primary tool:** `getConfluencePage` (if URL) or use pasted text
-**Account lookup:** `lookupJiraAccountId(searchString)`
-**Task creation:** `createJiraIssue` with `assignee_account_id`
+**Primary tool:** `getConfluencePage` (if URL) or use pasted text  
+**Account lookup:** `lookupJiraAccountId(searchString)`  
+**Task creation:** `createJiraIssue` with `assignee_account_id`  
 
 **Action patterns to look for:**
 - `@Name to/will/should X`

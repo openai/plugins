@@ -1,0 +1,5 @@
+interface:
+  display_name: "Shopify Customer"
+  short_description: "Work with the Customer Account API"
+  brand_color: "#008060"
+  default_prompt: "Use $shopify-customer to build Customer Account API queries or mutations."

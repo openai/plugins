@@ -1,3 +1,0 @@
-interface:
-  display_name: "Knowledge Update"
-  short_description: "Corrects outdated LLM knowledge about the Vercel platform"

@@ -1,6 +1,6 @@
 {
   "name": "figma",
-  "version": "2.0.18",
+  "version": "2.0.13",
   "description": "Figma workflows for design implementation, Code Connect templates, and design system rule generation.",
   "author": {
     "name": "Figma",
@@ -11,11 +11,6 @@
   "license": "LicenseRef-Figma-Developer-Terms",
   "keywords": [
     "figma",
-    "design",
-    "prototyping",
-    "collaboration",
-    "developer handoff",
-    "design systems",
     "design-to-code",
     "ui-implementation",
     "code-connect",
@@ -46,7 +41,6 @@
     "brandColor": "#1ABCFE",
     "composerIcon": "./assets/logo-padded.png",
     "logo": "./assets/logo-padded.png",
-    "logoDark": "./assets/logo-padded.png",
     "screenshots": []
   }
 }

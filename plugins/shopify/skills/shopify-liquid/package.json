@@ -1,0 +1,10 @@
+{
+  "name": "shopify-liquid",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@shopify/theme-check-common": "3.24.0",
+    "@shopify/theme-check-docs-updater": "3.24.0",
+    "@shopify/theme-check-node": "3.24.0"
+  }
+}

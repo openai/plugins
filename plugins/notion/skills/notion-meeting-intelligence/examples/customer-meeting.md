@@ -34,7 +34,7 @@ id: "acme-crm-notes-page-id"
 - **Competition**: Evaluating us vs. Competitor A and Competitor B
 
 ### 3. Add Research Context
-Supplemental research added:
+Codex research added:
 - Fintech industry compliance requirements
 - Common integration needs for financial products
 - Typical procurement processes for Series B companies
