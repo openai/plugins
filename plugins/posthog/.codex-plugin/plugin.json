@@ -22,7 +22,7 @@
       "Why are users dropping off in onboarding?"
     ],
     "developerName": "PostHog Inc.",
-    "displayName": "[Testing] PostHog",
+    "displayName": "PostHog",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
     "longDescription": "PostHog gives your AI agent direct access to your product analytics, feature flags, experiments, error tracking, surveys, logs, and LLM analytics. Ask questions about your data, create insights, toggle feature flags, analyze errors, search docs, and more — all from chat.",

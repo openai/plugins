@@ -30,7 +30,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Outlook Calendar",
+    "displayName": "Outlook Calendar",
     "shortDescription": "Manage Outlook schedules and meeting changes",
     "longDescription": "Use Outlook Calendar to summarize a day, compare availability, prepare for meetings, explain Outlook status semantics, and schedule, reschedule, or cancel events through the connected Microsoft Outlook app.",
     "developerName": "OpenAI",

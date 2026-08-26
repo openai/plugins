@@ -13,7 +13,7 @@
       "Which lead sources brought in the most contacts this quarter?"
     ],
     "developerName": "HubSpot",
-    "displayName": "[Testing] HubSpot",
+    "displayName": "HubSpot",
     "longDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations. Read from and write to deals, contacts, companies, tickets, engagements, and other objects you have permission to access. Prepare reports, update deal stages, log calls and emails, create tasks, or review pipeline details before meetings. Use it for quick updates in chat or comprehensive CRM management, all grounded in your actual HubSpot data. Learn more: https://knowledge.hubspot.com/integrations/connect-your-hubspot-account-to-chatgpt",
     "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
     "shortDescription": "Insights to action in HubSpot",

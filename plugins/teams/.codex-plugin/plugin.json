@@ -26,7 +26,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Teams",
+    "displayName": "Teams",
     "shortDescription": "Summarize Microsoft Teams and draft follow-ups",
     "longDescription": "Use Teams to summarize chats, extract actions, and draft channel or meeting follow-ups through the connected Microsoft Teams app.",
     "developerName": "OpenAI",

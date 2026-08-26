@@ -20,7 +20,7 @@
       "Summarize unread activity, draft replies, or prepare updates"
     ],
     "developerName": "OpenAI",
-    "displayName": "[Testing] Slack",
+    "displayName": "Slack",
     "logo": "./assets/logo.png",
     "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
     "privacyPolicyURL": "https://slack.com/privacy-policy",

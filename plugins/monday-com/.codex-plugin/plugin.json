@@ -14,7 +14,7 @@
       "Check the marketing campaign status in monday.com"
     ],
     "developerName": "Monday.com",
-    "displayName": "[Testing] Monday.com",
+    "displayName": "Monday.com",
     "logo": "./assets/logo.png",
     "longDescription": "A powerful MCP connector enabling AI agents to seamlessly interact with monday.com. This connector provides comprehensive access to monday.com features including board management, item operations, dashboards, and more, allowing AI assistants to help manage projects, gain insights, and automate workflows within monday.com.",
     "privacyPolicyURL": "https://monday.com/l/privacy/privacy-policy/",

@@ -21,7 +21,7 @@
       "Search Notion workspace content, update pages, or turn specs, notes, and meeting context into structured outputs"
     ],
     "developerName": "Notion",
-    "displayName": "[Testing] Notion",
+    "displayName": "Notion",
     "logo": "./assets/notion.png",
     "logoDark": "./assets/notion-dark.png",
     "longDescription": "Notion workflows for turning specs into implementation plans, synthesizing research into structured documentation, preparing meeting materials with workspace context, and capturing decisions or conversations into durable knowledge pages.",

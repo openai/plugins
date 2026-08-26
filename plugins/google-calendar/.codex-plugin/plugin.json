@@ -27,7 +27,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Google Calendar",
+    "displayName": "Google Calendar",
     "shortDescription": "Manage Google Calendar events and schedules",
     "longDescription": "Use Google Calendar to summarize a day, check availability, list calendars, and create, update, or delete events directly from task prompts.",
     "developerName": "OpenAI",

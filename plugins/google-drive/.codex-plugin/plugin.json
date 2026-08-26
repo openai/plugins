@@ -28,7 +28,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Google Drive",
+    "displayName": "Google Drive",
     "shortDescription": "Work across Drive, Docs, Sheets, and Slides",
     "longDescription": "Use Google Drive as one unified Google file plugin for search, file organization, sharing, and Google Docs, Google Sheets, and Google Slides workflows.",
     "developerName": "OpenAI",

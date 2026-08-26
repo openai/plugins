@@ -25,7 +25,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Figma",
+    "displayName": "Figma",
     "shortDescription": "Design-to-code workflows powered by the Figma integration",
     "longDescription": "Figma workflows for implementing designs in code, creating Code Connect templates for published Figma components, and generating project-specific design system rules for repeatable Figma-to-code work.",
     "developerName": "Figma",

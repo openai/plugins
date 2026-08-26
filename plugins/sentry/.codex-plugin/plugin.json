@@ -18,7 +18,7 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Sentry",
+    "displayName": "Sentry",
     "shortDescription": "Inspect recent Sentry issues and events",
     "longDescription": "Use Sentry skills to inspect recent issues, review events, and summarize production errors with a read-only workflow.",
     "developerName": "OpenAI",

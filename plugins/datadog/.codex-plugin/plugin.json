@@ -13,7 +13,7 @@
       "Where are my users coming from? Show me a chart by country."
     ],
     "developerName": "Datadog",
-    "displayName": "[Testing] Datadog (Preview)",
+    "displayName": "Datadog (Preview)",
     "longDescription": "Available for US1 customers only. Analyze, investigate, and act on your Datadog telemetry directly from ChatGPT using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture.",
     "privacyPolicyURL": "https://www.datadoghq.com/legal/privacy/",
     "shortDescription": "Search and act on your data",

@@ -24,7 +24,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Gmail",
+    "displayName": "Gmail",
     "shortDescription": "Read and manage Gmail",
     "longDescription": "Use Gmail to summarize inbox activity, draft replies, and organize email threads through the connected Gmail app.",
     "developerName": "OpenAI",

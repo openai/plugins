@@ -25,7 +25,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Outlook Email",
+    "displayName": "Outlook Email",
     "shortDescription": "Triage Outlook inboxes and draft replies",
     "longDescription": "Use Outlook Email to triage inboxes, summarize threads, extract actions, and draft replies or forwards through the connected Microsoft Outlook app.",
     "developerName": "OpenAI",

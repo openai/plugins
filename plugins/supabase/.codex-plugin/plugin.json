@@ -21,7 +21,7 @@
       "Optimize my Postgres queries and indexes using Supabase best practices."
     ],
     "developerName": "Supabase",
-    "displayName": "[Testing] Supabase",
+    "displayName": "Supabase",
     "logo": "./assets/logo.png",
     "longDescription": "Official Supabase plugin for Codex. Includes agent skills for Supabase development and Postgres best practices, plus MCP server integration for managing your Supabase projects directly from Codex.",
     "privacyPolicyURL": "https://supabase.com/privacy",

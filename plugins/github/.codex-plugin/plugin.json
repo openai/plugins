@@ -21,7 +21,7 @@
       "Inspect PRs, triage issues, debug failing checks, and prepare code changes for review"
     ],
     "developerName": "OpenAI",
-    "displayName": "[Testing] GitHub",
+    "displayName": "GitHub",
     "logo": "./assets/github.png",
     "logoDark": "./assets/logo-dark.png",
     "longDescription": "Use GitHub to inspect repositories, review pull requests, address feedback, debug failing Actions checks, and prepare code changes for review through a connector-first workflow with targeted CLI fallbacks.",

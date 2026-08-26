@@ -25,7 +25,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] SharePoint",
+    "displayName": "SharePoint",
     "shortDescription": "Summarize SharePoint sites and files",
     "longDescription": "Use SharePoint to summarize sites, pages, and files, extract owners and status, and plan safe content updates through the connected Microsoft SharePoint app.",
     "developerName": "OpenAI",

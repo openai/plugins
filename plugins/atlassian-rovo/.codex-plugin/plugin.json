@@ -22,7 +22,7 @@
   "apps": "./.app.json",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "[Testing] Atlassian Rovo",
+    "displayName": "Atlassian Rovo",
     "shortDescription": "Manage Jira and Confluence fast",
     "longDescription": "Manage Jira and Confluence fast",
     "developerName": "Atlassian",

@@ -15,7 +15,7 @@
       "Tell me the prices I have created"
     ],
     "developerName": "Stripe",
-    "displayName": "[Testing] Stripe",
+    "displayName": "Stripe",
     "logo": "./assets/logo.png",
     "logoDark": "./assets/logo-dark.png",
     "longDescription": "Develop your payments integration faster with the ability to create products, prices, and payment links directly in ChatGPT. Run your business from ChatGPT with the ability to retrieve and manage payments, subscriptions, invoices, refunds, disputes, and customers. Build and debug your payment integration quicker than ever by searching the Stripe documentation and getting integration recommendations without needing to leave ChatGPT.",
