@@ -3,6 +3,9 @@
     "shopify": {
       "type": "http",
       "url": "https://setup.shopify.com/mcp",
+      "oauth": {
+        "client_id": "<SHOPIFY_PUBLIC_CLIENT_ID>"
+      },
       "oauth_resource": "https://setup.shopify.com/mcp"
     }
   }
