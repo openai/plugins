@@ -42,8 +42,7 @@ If the task will produce outgoing Slack text or perform a Slack write, switch to
 ## Tool Rate Limits
 
 - Slack tools have per-minute RPM quotas by bucket, not by individual tool. Treat `slack_search_*` tools as the search bucket, `slack_read_*`, `slack_list_*`, and lookup-style tools as the read bucket, and message, draft, schedule, or canvas creation tools as the send/write bucket.
-- If a Slack tool returns a 429, do not retry immediately and do not switch to an equivalent tool in the same bucket. If the response includes `Retry-After` or another explicit wait hint, follow it. Otherwise wait about 30 seconds before calling that bucket again.
-- If the same bucket returns another 429 during the task, wait about 1 minute before the next retry, then about 2 minutes after the next 429, continuing with exponential backoff as needed.
+- If a Slack tool returns a 429, do not retry immediately and do not switch to an equivalent tool in the same bucket. If the response includes `Retry-After` or another explicit wait hint, follow it. Otherwise use a bounded retry sequence for that bucket: wait about 30 seconds after the first 429, about 1 minute after the next same-bucket 429, and about 2 minutes after the next same-bucket 429.
 - A 429 in one bucket does not imply the other buckets are exhausted. While waiting on one bucket, continue making useful progress with other buckets when that can advance the task safely.
 - If the task cannot be completed without the exhausted bucket after reasonable backoff, explain the rate limit to the user and return the best partial result or next step.
 
