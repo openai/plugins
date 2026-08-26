@@ -59,6 +59,21 @@
       "category": "Developer Tools"
     },
     {
+      "name": "build-ios-apps",
+      "source": {
+        "source": "local",
+        "path": "./plugins/build-ios-apps"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Developer Tools"
+    },
+    {
       "name": "build-macos-apps",
       "source": {
         "source": "local",
@@ -268,6 +283,21 @@
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "openai-developers",
+      "source": {
+        "source": "local",
+        "path": "./plugins/openai-developers"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": [
+          "CODEX"
+        ]
       },
       "category": "Developer Tools"
     },
