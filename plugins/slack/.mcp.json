@@ -4,7 +4,7 @@
       "type": "http",
       "url": "https://mcp.slack.com/mcp",
       "oauth": {
-        "client_id": "<SLACK_PUBLIC_CLIENT_ID>"
+        "client_id": "11843774967.11905492103734"
       }
     }
   }
