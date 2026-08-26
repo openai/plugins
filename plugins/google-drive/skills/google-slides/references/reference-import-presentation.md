@@ -5,7 +5,7 @@ When to read: local `.ppt`, `.pptx`, or `.odp` input.
 ## Workflow
 
 1. Confirm the input file is a supported presentation file.
-2. Before import, confirm the Google Drive plugin exposes `mcp__codex_apps__google_drive_import_presentation`. If the Google Drive plugin is not installed or unavailable, use the plugin-install/user-elicitation flow to ask the user to install `google-drive@openai-curated`. If the plugin is available but the import action is missing, ask the user to reinstall or refresh the Google Drive plugin.
+2. Before import, confirm the Google Drive plugin exposes `mcp__codex_apps__google_drive_import_presentation`. If the Google Drive plugin is not installed or unavailable, use the plugin-install/user-elicitation flow to ask the user to install `google-drive@openai-curated`. If the plugin is available but the import action is missing, stop file-conversion work and report that native presentation import is unavailable in this runtime. For generated net-new deck tasks, return to the main Google Slides routing and use direct native creation when `_create_file` and `_batch_update_presentation` are available.
 3. Use `mcp__codex_apps__google_drive_import_presentation` with `upload_mode: "native_google_slides"` to create a native Google Slides deck:
    ```json
    {
@@ -21,12 +21,15 @@ When to read: local `.ppt`, `.pptx`, or `.odp` input.
 8. Run thumbnail verification for the imported deck before follow-on edits.
 9. Continue in this skill with the relevant references for summaries, slide planning, content edits, visual cleanup, template following, source adaptation, or structural repair.
 
+If the import action returns a redacted or safety-blocked result without a usable presentation id or URL, do not keep retrying the same import path. For generated deck tasks, switch to direct native creation if supported. For user-provided presentation-file conversion, stop and report that native conversion did not complete.
+
 ## Rules
 
 - Treat import as conversion into a new native Google Slides deck.
 - Preserve source slide order and content by default.
 - Do not use generic `_upload_file` for "upload as Google Slides"; it preserves `.pptx` instead of converting to native Slides.
-- Do not substitute Computer Use, Browser Use, blank-Google-Slides creation followed by Google Slides write APIs, or another direct-to-Slides construction path for net-new Google Slides unless the user explicitly asks for that alternate workflow. If they do, mention first that output quality is expected to be best with this local `.pptx` import path.
+- Use this reference for local presentation-file conversion or explicit PowerPoint-first import requests. For generated net-new decks, do not force a `.pptx` import when native `_create_file` and `_batch_update_presentation` actions are available.
+- Do not substitute Computer Use or Browser Use for native import.
 - Do not promise perfect fidelity for Office-specific animations, transitions, SmartArt, or effects.
 - If import introduces layout drift, fix the native Google Slides deck rather than editing the source file.
 
