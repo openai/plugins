@@ -1,4 +1,0 @@
-interface:
-  display_name: "Monitor Render"
-  short_description: "Check Render service health, deploy status, and logs"
-  default_prompt: "Check this Render service and summarize its current health, latest deploy status, and any risks or anomalies."

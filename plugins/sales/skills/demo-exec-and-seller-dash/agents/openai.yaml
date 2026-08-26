@@ -1,6 +1,0 @@
-interface:
-  display_name: "Executive and Seller Dashboard Demo"
-  short_description: "Preview executive dashboards, seller work, and meeting follow-up"
-  default_prompt: "Run the executive and seller dashboard demo."
-policy:
-  allow_implicit_invocation: false

@@ -1,3 +1,0 @@
-interface:
-  display_name: "Datasets"
-  short_description: "Work with Hugging Face Dataset Viewer API metadata, rows, and filters"

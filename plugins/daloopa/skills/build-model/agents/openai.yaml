@@ -1,6 +1,0 @@
-interface:
-  display_name: Build Model
-  short_description: Build a multi-tab Excel financial model
-  default_prompt: Build an Excel model for AAPL using Daloopa data.
-policy:
-  allow_implicit_invocation: true

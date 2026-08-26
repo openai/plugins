@@ -1,4 +1,0 @@
-interface:
-  display_name: "Migrate from Heroku"
-  short_description: "Map a Heroku app to the right Render services"
-  default_prompt: "Inspect this Heroku-style app, map it to Render services, and produce the smallest correct migration plan."

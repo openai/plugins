@@ -1,7 +1,0 @@
-interface:
-  display_name: "Fund Screener"
-  short_description: "Screen funds with Morningstar"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#E4572E"
-  default_prompt: "Use $fund-screener to find Gold-rated US large-cap ETFs."

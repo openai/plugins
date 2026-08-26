@@ -1,7 +1,0 @@
-interface:
-  display_name: "Fund Summarizer"
-  short_description: "Summarize a fund profile"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#E4572E"
-  default_prompt: "Use $fund-summarizer to analyze VFIAX with Morningstar data."

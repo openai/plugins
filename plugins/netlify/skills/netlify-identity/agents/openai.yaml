@@ -1,6 +1,0 @@
-interface:
-  display_name: "Identity"
-  short_description: "Add user authentication, signups, logins, OAuth, and role-based access"
-  icon_small: "./assets/netlify-small.svg"
-  icon_large: "./assets/netlify.png"
-  default_prompt: "Set up Netlify Identity in this project for user authentication with login, signup, and OAuth support."

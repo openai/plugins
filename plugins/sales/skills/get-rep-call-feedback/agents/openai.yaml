@@ -1,6 +1,0 @@
-interface:
-  display_name: "Get Rep Call Feedback"
-  short_description: "Evidence-backed coaching from peer call examples"
-  default_prompt: "Give feedback on a rep's calls."
-policy:
-  allow_implicit_invocation: false

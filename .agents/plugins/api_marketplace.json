@@ -221,18 +221,6 @@
       "category": "Developer Tools"
     },
     {
-      "name": "render",
-      "source": {
-        "source": "local",
-        "path": "./plugins/render"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Developer Tools"
-    },
-    {
       "name": "temporal",
       "source": {
         "source": "local",

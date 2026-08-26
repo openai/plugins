@@ -1,3 +1,0 @@
-interface:
-  display_name: "Community Evals"
-  short_description: "Run local evaluations for Hugging Face Hub models"

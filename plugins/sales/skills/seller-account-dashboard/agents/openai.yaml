@@ -1,6 +1,0 @@
-interface:
-  display_name: "Seller Account Dashboard"
-  short_description: "Build your real seller account and pipeline dashboard"
-  default_prompt: "Use $seller-account-dashboard to build or update my account home, customer work, and pipeline."
-policy:
-  allow_implicit_invocation: false

@@ -1,3 +1,0 @@
-interface:
-  display_name: "Transformers.js"
-  short_description: "Run Hugging Face models directly in JavaScript and TypeScript"

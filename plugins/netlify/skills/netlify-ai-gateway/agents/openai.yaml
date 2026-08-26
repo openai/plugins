@@ -1,6 +1,0 @@
-interface:
-  display_name: "AI Gateway"
-  short_description: "Access AI models from OpenAI, Anthropic, and Google via Netlify AI Gateway"
-  icon_small: "./assets/netlify-small.svg"
-  icon_large: "./assets/netlify.png"
-  default_prompt: "Set up Netlify AI Gateway in this project to access AI models without managing API keys directly."

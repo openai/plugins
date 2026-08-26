@@ -1,6 +1,0 @@
-interface:
-  display_name: "Forms"
-  short_description: "Collect HTML form submissions with Netlify Forms, spam filtering, and AJAX"
-  icon_small: "./assets/netlify-small.svg"
-  icon_large: "./assets/netlify.png"
-  default_prompt: "Add a Netlify Forms-powered contact form to this project with spam protection and AJAX submission."

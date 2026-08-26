@@ -1,5 +1,0 @@
-interface:
-  display_name: "Create mockups"
-  short_description: "Takes a logo or a design asset and produces a suite of mockups."
-  icon_small: "./assets/icon-small.svg"
-  icon_large: "./assets/icon-large.svg"

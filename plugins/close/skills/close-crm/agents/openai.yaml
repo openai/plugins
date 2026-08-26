@@ -1,7 +1,0 @@
-interface:
-  display_name: "Close CRM"
-  short_description: "Research Close leads, review pipeline, prepare follow-ups, and handle CRM writes safely."
-  brand_color: "#0057FF"
-  default_prompt: "Use Close CRM to answer this sales workflow request with record-backed context."
-policy:
-  allow_implicit_invocation: true

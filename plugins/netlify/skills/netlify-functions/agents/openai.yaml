@@ -1,6 +1,0 @@
-interface:
-  display_name: "Functions"
-  short_description: "Write serverless API endpoints, background tasks, and scheduled functions"
-  icon_small: "./assets/netlify-small.svg"
-  icon_large: "./assets/netlify.png"
-  default_prompt: "Create a Netlify Function for this project with path routing, proper typing, and the modern default export pattern."

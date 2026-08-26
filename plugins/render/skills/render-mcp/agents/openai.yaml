@@ -1,4 +1,0 @@
-interface:
-  display_name: "Render MCP"
-  short_description: "Connect and configure the Render MCP server."
-  default_prompt: "Use $render-mcp to set up the Render MCP server for this coding tool."
