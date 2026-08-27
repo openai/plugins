@@ -7,6 +7,7 @@
   "interface": {
     "capabilities": [],
     "category": "Creativity",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "Create some social media posts based on our October campaign brief",
       "Use these latest investor meeting notes to make a Q1 2026 pitch deck",
@@ -14,6 +15,7 @@
     ],
     "developerName": "Canva Pty Ltd.",
     "displayName": "Canva",
+    "logo": "./assets/logo.png",
     "longDescription": "Bring your Canva design workflow into Codex and create, refine, and review designs through natural conversation.\nAvailable skills:\nResize for social media: Adapt a design for Facebook, Instagram, and LinkedIn in one step.\nBulk create: Generate multiple designs from spreadsheet data using a brand template.\nEdit designs: Update text, media, and formatting, or reposition and resize elements.\nGet design feedback: Receive structured feedback on visual hierarchy, layout, readability, consistency, and accessibility.\nImplement feedback: Review comment threads and apply clear, actionable changes.\nBrand check: Check colors, fonts, logo usage, and copy against your Brand Kit.\nOnce installed, describe what you want in plain language or invoke Canva directly with @Canva.\nTry prompts like:\n- @Canva, resize this design for social media.\n- @Canva, create designs from this spreadsheet using my brand template.\n- @Canva, update the headline in this design.\n- @Canva, review this design\u2019s visual hierarchy and readability.\n- @Canva, implement the feedback in the comment threads.\n- @Canva, check this design against my Brand Kit.\n\nRequirements: Connect your Canva account to use the plugin. Bulk Create requires an eligible Canva Enterprise plan.\n\nWant to take a more hands-on approach? Instantly open your design in Canva\u2019s powerful editor for the final touches.",
     "privacyPolicyURL": "https://www.canva.com/policies/privacy-policy/",
     "shortDescription": "Create, review, edit designs",
