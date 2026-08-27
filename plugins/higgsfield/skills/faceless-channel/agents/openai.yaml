@@ -1,0 +1,9 @@
+interface:
+  display_name: Faceless Channel
+  short_description: Create complete narrator-led channel videos
+  default_prompt: Use $faceless-channel to create a complete faceless video from topic
+    to final stitched result.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true

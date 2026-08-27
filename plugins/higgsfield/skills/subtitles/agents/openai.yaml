@@ -1,0 +1,8 @@
+interface:
+  display_name: Subtitles
+  short_description: Burn accurate, styled video captions
+  default_prompt: Use $subtitles to add clean, Whisper-timed captions to this video.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true

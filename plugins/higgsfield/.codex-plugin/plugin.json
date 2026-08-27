@@ -1,0 +1,27 @@
+{
+  "apps": "./.app.json",
+  "author": {
+    "name": "Higgsfield AI, Inc."
+  },
+  "description": "Generate images and videos from a text prompt or your own photo. Turn a product shot into a video ad, restyle a photo, animate a still, or build a two-minute narrated explainer. Every major image and video model in one place.",
+  "interface": {
+    "capabilities": [],
+    "category": "Creativity",
+    "defaultPrompt": [
+      "Make a 2-minute faceless explainer on how airlines make more money selling points than seats",
+      "Make a cinematic video ad for this chocolate snack bar",
+      "Make a 9:16 ad for my sneaker brand"
+    ],
+    "developerName": "Higgsfield AI, Inc.",
+    "displayName": "Higgsfield",
+    "longDescription": "Generate images and videos from a text prompt or your own photo. Turn a product shot into a video ad, restyle a photo, animate a still, or build a two-minute narrated explainer. Every major image and video model in one place.",
+    "privacyPolicyURL": "https://higgsfield.ai/privacy-policy",
+    "shortDescription": "Every image and video model",
+    "supportURL": "https://discord.com/invite/higgsfield",
+    "termsOfServiceURL": "https://higgsfield.ai/terms-of-use-agreement",
+    "websiteURL": "https://higgsfield.ai"
+  },
+  "name": "higgsfield",
+  "skills": "./skills",
+  "version": "1.2.1"
+}

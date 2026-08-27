@@ -1,0 +1,8 @@
+interface:
+  display_name: Narrator
+  short_description: Create consistent, window-fitted narration
+  default_prompt: Use $narrator to turn these lines into consistent narration takes.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true
