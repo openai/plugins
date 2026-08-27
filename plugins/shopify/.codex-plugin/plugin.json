@@ -7,6 +7,7 @@
   "interface": {
     "capabilities": [],
     "category": "Business & Operations",
+    "composerIcon": "./assets/composer-icon.svg",
     "defaultPrompt": [
       "Upload and add this product to my store.",
       "Show me the products I have in my store.",
@@ -14,6 +15,7 @@
     ],
     "developerName": "Shopify",
     "displayName": "Shopify",
+    "logo": "./assets/logo.png",
     "longDescription": "Shopify for ChatGPT makes store building and management as easy as having a conversation. Effortlessly connect your existing store or create a new online store by describing your business. Simply chat to add products, adjust inventory across locations, create discount codes, browse recent orders, view customer details, or pull analytics on your store\u2019s performance.",
     "privacyPolicyURL": "https://www.shopify.com/legal/privacy",
     "shortDescription": "Build and manage your store",

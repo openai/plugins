@@ -7,12 +7,14 @@
   "interface": {
     "capabilities": [],
     "category": "Productivity",
+    "composerIcon": "./assets/composer-icon.svg",
     "defaultPrompt": [
       "show me a kanban of the product roadmap. What\u2019s at risk? What\u2019s up next?",
       "which roadmap initiatives should I discuss with the enterprise sales team today?"
     ],
     "developerName": "Airtable",
     "displayName": "Airtable",
+    "logo": "./assets/logo.png",
     "longDescription": "Bring operational data and context into the flow of your ChatGPT conversations. You can ask questions, create and update records, and analyze your data\u2014all through conversation. Use the data in Airtable as input to the work you\u2019re doing in ChatGPT, like building a landing page using content you\u2019ve organized in Airtable. Make quick updates to Airtable without leaving the chat. Airtable for ChatGPT is ideal anytime you need quick access to structured internal data to inform your conversation.\n\nAirtable's App connects ChatGPT directly to your Airtable bases, so you can ask questions, create and update records, and analyze your data\u2014all through conversation",
     "privacyPolicyURL": "https://www.airtable.com/company/privacy",
     "shortDescription": "Add structured data to ChatGPT",

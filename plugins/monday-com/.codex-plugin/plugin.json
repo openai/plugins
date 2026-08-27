@@ -7,11 +7,13 @@
   "interface": {
     "capabilities": [],
     "category": "Productivity",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "what can this connector do?"
     ],
     "developerName": "monday.com",
     "displayName": "monday.com",
+    "logo": "./assets/logo.png",
     "longDescription": "The monday.com AI Connector brings core platform capabilities directly to agents and AI assistants. It supports searching boards, creating and updating items and columns, assigning owners, setting timelines, and posting updates \u2014 enabling a wide range of work management and CRM use cases across teams and departments.\n\nTeams of people and agents use monday.com as a task tracker and project tracking hub: planning campaigns and events, tracking milestones, dependencies, and workload, managing approval workflows and request intake, and sharing status updates across projects and portfolios \u2014 as well as a CRM for managing leads, contacts, and deals.\n\nBeyond day-to-day work management, the connector lets agents answer questions using monday.com's official knowledge base, plan and build automations and multi-step workflows, run and save reusable code actions, and configure other monday.com agents .",
     "privacyPolicyURL": "https://monday.com/l/privacy/privacy-policy/",
     "shortDescription": "Manage projects, tasks & CRM",

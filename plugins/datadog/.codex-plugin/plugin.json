@@ -7,6 +7,7 @@
   "interface": {
     "capabilities": [],
     "category": "Developer Tools",
+    "composerIcon": "./assets/composer-icon.png",
     "defaultPrompt": [
       "Show me a breakdown of log volume by service.",
       "Show me average CPU usage for my top 10 services for the past 6 hours.",
@@ -14,6 +15,7 @@
     ],
     "developerName": "Datadog",
     "displayName": "Datadog (Preview)",
+    "logo": "./assets/logo.png",
     "longDescription": "Available for US1 customers only. Analyze, investigate, and act on your Datadog telemetry directly from ChatGPT using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture.",
     "privacyPolicyURL": "https://www.datadoghq.com/legal/privacy/",
     "shortDescription": "Search and act on your data",
