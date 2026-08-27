@@ -60,7 +60,7 @@
       },
       "policy": {
         "installation": "AVAILABLE",
-        "authentication": "ON_USE"
+        "authentication": "ON_INSTALL"
       },
       "category": "Communication"
     },
@@ -659,7 +659,7 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Education & Research"
+      "category": "Scientific Research"
     },
     {
       "name": "dropbox",

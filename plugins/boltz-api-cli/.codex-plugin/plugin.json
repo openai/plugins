@@ -1,15 +1,34 @@
 {
-  "name": "boltz-api-cli",
-  "version": "0.1.1",
-  "description": "Predict structures, screen molecules and proteins, and design binders.",
   "author": {
-    "name": "Boltz",
     "email": "support@boltz.bio",
+    "name": "Boltz",
     "url": "https://boltz.bio"
   },
+  "description": "Predict structures, screen molecules and proteins, and design binders.",
   "homepage": "https://boltz.bio",
-  "repository": "https://github.com/boltz-bio/boltz-api-skills",
-  "license": "MIT",
+  "interface": {
+    "brandColor": "#4E6D53",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Scientific Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Predict EGFR L858R binding to osimertinib",
+      "Design nanobodies for a SARS-CoV-2 RBD epitope",
+      "Design selective JAK2 binders from Enamine REAL"
+    ],
+    "developerName": "Boltz",
+    "displayName": "Boltz",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Use Boltz from Codex for biomolecular modeling workflows: predict structure and binding for protein, RNA, DNA, and ligand complexes; rank small-molecule or protein libraries against targets; and design novel small molecules, peptides, antibodies, nanobodies, or custom protein binders with structures and confidence metrics.",
+    "privacyPolicyURL": "https://boltz.bio/privacy",
+    "screenshots": [],
+    "shortDescription": "Predict structures, screen molecules and proteins, and design binders",
+    "termsOfServiceURL": "https://boltz.bio/terms",
+    "websiteURL": "https://boltz.bio"
+  },
   "keywords": [
     "boltz",
     "boltz-api",
@@ -24,28 +43,9 @@
     "drug-discovery",
     "biotech"
   ],
+  "license": "MIT",
+  "name": "boltz-api-cli",
+  "repository": "https://github.com/boltz-bio/boltz-api-skills",
   "skills": "./skills",
-  "interface": {
-    "displayName": "Boltz",
-    "shortDescription": "Predict structures, screen molecules and proteins, and design binders",
-    "longDescription": "Use Boltz from Codex for biomolecular modeling workflows: predict structure and binding for protein, RNA, DNA, and ligand complexes; rank small-molecule or protein libraries against targets; and design novel small molecules, peptides, antibodies, nanobodies, or custom protein binders with structures and confidence metrics.",
-    "developerName": "Boltz",
-    "category": "Education & Research",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
-    "websiteURL": "https://boltz.bio",
-    "privacyPolicyURL": "https://boltz.bio/privacy",
-    "termsOfServiceURL": "https://boltz.bio/terms",
-    "brandColor": "#4e6d53",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
-    "screenshots": [],
-    "defaultPrompt": [
-      "Predict EGFR L858R binding to osimertinib",
-      "Design nanobodies for a SARS-CoV-2 RBD epitope",
-      "Design selective JAK2 binders from Enamine REAL"
-    ]
-  }
+  "version": "0.1.1"
 }

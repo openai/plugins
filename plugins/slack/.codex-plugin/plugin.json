@@ -1,15 +1,34 @@
 {
-  "name": "slack",
-  "version": "0.1.7",
-  "description": "Work with Slack using the configured Slack integration.",
+  "apps": "./.app.json",
   "author": {
-    "name": "OpenAI",
     "email": "support@openai.com",
+    "name": "Slack",
     "url": "https://openai.com/"
   },
+  "description": "Work with Slack using the configured Slack integration.",
   "homepage": "https://slack.com/",
-  "repository": "https://github.com/openai/plugins",
-  "license": "MIT",
+  "interface": {
+    "brandColor": "#611F69",
+    "brandColorDark": "#D896E0",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Communication",
+    "composerIcon": "./assets/composer-icon.png",
+    "defaultPrompt": [
+      "Summarize unread activity, draft replies, or prepare updates"
+    ],
+    "developerName": "Slack",
+    "displayName": "Slack",
+    "logo": "./assets/logo.png",
+    "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
+    "privacyPolicyURL": "https://slack.com/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Read and manage Slack",
+    "termsOfServiceURL": "https://slack.com/terms-of-service/user",
+    "websiteURL": "https://slack.com/"
+  },
   "keywords": [
     "slack",
     "salesforce",
@@ -20,26 +39,8 @@
     "threads",
     "workplace chat"
   ],
-  "apps": "./.app.json",
-  "interface": {
-    "displayName": "Slack",
-    "shortDescription": "Read and manage Slack",
-    "longDescription": "Use Slack to summarize channels, draft messages, and organize team conversations through the connected Slack integration.",
-    "developerName": "Slack",
-    "category": "Communication",
-    "capabilities": [
-      "Interactive",
-      "Write"
-    ],
-    "websiteURL": "https://slack.com/",
-    "privacyPolicyURL": "https://slack.com/privacy-policy",
-    "termsOfServiceURL": "https://slack.com/terms-of-service/user",
-    "defaultPrompt": [
-      "Summarize unread activity, draft replies, or prepare updates"
-    ],
-    "brandColor": "#611F69",
-    "composerIcon": "./assets/app-icon.png",
-    "logo": "./assets/app-icon.png",
-    "screenshots": []
-  }
+  "license": "MIT",
+  "name": "slack",
+  "repository": "https://github.com/openai/plugins",
+  "version": "0.1.7"
 }
