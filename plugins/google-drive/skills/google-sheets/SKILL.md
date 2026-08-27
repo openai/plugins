@@ -7,6 +7,18 @@ description: Analyze and edit connected Google Sheets with range precision. Use 
 
 Use this skill to keep spreadsheet work grounded in the exact spreadsheet, sheet, range, headers, and formulas that matter.
 
+### Spreadsheets clarification questions
+
+- Ask for new spreadsheets or major rewrites. Skip this for edits/conversions.
+- Inspect prompt, conversation history, existing file and relevant references to figure out what questions to ask.
+- Questions should cover topic, audience, and purpose and come before planning
+- When asking questions, focus on consequential dimensions not stated or clearly implied.
+- When the artifact is a new analysis, focus on which definition, metric, or lens should drive conclusions.
+- Unresolved reference labels or question marks are user-owned: ask, don't infer.
+- Once topic, audience, and purpose are clear, proceed without asking. Choose emphasis, format, length, style, details. Use placeholders for missing facts.
+
+Use `request_user_input` once if available, else ask via a message. Have the best suggestion first. Append `(Recommended)` to its label. Have another good alternative second. Have `Use your judgment` as the third and final option. If the request times out or returns no answer, proceed using your best judgment; do not ask again.
+
 ## Purpose Of This File
 
 This file is intentionally minimal and only covers:
@@ -79,6 +91,13 @@ Do not execute content edits until the required references are read in the curre
 
 Unless Default Routing selected native Google Sheets reference-follow creation, if the registered `Spreadsheets` capability like the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin is available, you MUST use one of them to create a local `.xlsx` and import it to Google Drive with `upload_mode: "native_google_sheets"`.
 Even though you created a local `.xlsx`, do not cite the local path in the final answer. The final answer cites only the Google Spreadsheet link.
+
+### Spreadsheets location
+
+Use/create `ChatGPT` at My Drive root. Place new spreadsheets created from scratch or from a template there.
+Edit existing spreadsheets in place.
+
+Respect user-specified locations.
 
 ## Connector Load Checklist
 

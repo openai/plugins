@@ -233,6 +233,7 @@ export function createToolBackedFileIO({
   const workspace = normalizeAbsolutePath(workspaceRoot, "workspaceRoot");
   const skill = normalizeAbsolutePath(skillRoot, "skillRoot");
   const receiver = assertWithinRoot(receiverPath, skill, "receiverPath");
+  const preparedParents = new Set();
 
   const validateReadable = (path) => {
     const normalized = normalizeAbsolutePath(path, "read path");
@@ -273,10 +274,11 @@ export function createToolBackedFileIO({
     const expectedSha256 = sha256Text(normalized);
     const temporary = `${absolute}.docs-bridge-${expectedSha256.slice(0, 16)}.tmp`;
     const parent = dirname(absolute);
-    const mkdir = await run(`/bin/mkdir -p ${shellQuote(parent)}`, 1000);
-    assert(mkdir.exit_code === 0, `Could not create bridge output directory: ${mkdir.output ?? ""}`, { path: parent, operation: "write-file" });
-    const absent = await run(`/bin/sh -c ${shellQuote('for candidate; do test ! -e "$candidate" || exit 1; done')} sh ${shellQuote(absolute)} ${shellQuote(temporary)}`, 1000);
-    assert(absent.exit_code === 0, "Refusing to overwrite a bridge artifact", { path: absolute, operation: "write-file" });
+    if (!preparedParents.has(parent)) {
+      const mkdir = await run(`/bin/mkdir -p ${shellQuote(parent)}`, 1000);
+      assert(mkdir.exit_code === 0, `Could not create bridge output directory: ${mkdir.output ?? ""}`, { path: parent, operation: "write-file" });
+      preparedParents.add(parent);
+    }
     const start = await tools.exec_command({
       cmd: `/usr/bin/perl ${shellQuote(receiver)} ${shellQuote(absolute)} ${shellQuote(String(bytes))} ${shellQuote(expectedSha256)} ${shellQuote(temporary)}`,
       workdir: workspace,
@@ -285,6 +287,9 @@ export function createToolBackedFileIO({
       yield_time_ms: 1000,
       max_output_tokens: 1000,
     });
+    if (String(start?.output ?? "").includes("DOCS_BRIDGE_ERROR destination-exists")) {
+      throw new DocsTrustedReadBridgeError("Refusing to overwrite a bridge artifact", { path: absolute, operation: "write-file" });
+    }
     const sessionId = start?.session_id;
     assert(Number.isInteger(sessionId), "Could not start the no-echo receiver", { path: absolute, operation: "write-file" });
     try {

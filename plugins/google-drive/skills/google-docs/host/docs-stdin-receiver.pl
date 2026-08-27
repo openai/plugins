@@ -24,15 +24,17 @@ $expected_sha256 =~ /^[a-f0-9]{64}$/ or fail(65, "invalid-expected-sha256");
 for my $path ($output_path, $temporary_path) {
   $path !~ /[\0\r\n]/ or fail(65, "invalid-path");
 }
+my $owns_temporary = 0;
+my $committed = 0;
 (!-e $output_path and !-e $temporary_path) or fail(66, "destination-exists");
 
 umask 0077;
 sysopen(my $output, $temporary_path, O_WRONLY | O_CREAT | O_EXCL, 0600)
   or fail(67, "temporary-create-failed");
+$owns_temporary = 1;
 binmode($output);
 
-my $committed = 0;
-END { unlink $temporary_path unless $committed; }
+END { unlink $temporary_path if $owns_temporary && !$committed; }
 $SIG{HUP} = sub { exit 129 };
 $SIG{TERM} = sub { exit 143 };
 

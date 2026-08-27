@@ -5,6 +5,18 @@ description: Route Google Slides authoring requests and derive a design system f
 
 # Google Slides
 
+### Presentations clarification questions
+
+- Ask for new presentations or major rewrites. Skip this for edits/conversions.
+- Inspect prompt, conversation history, existing file and relevant references to figure out what questions to ask.
+- Questions should cover topic, audience, and purpose and come before planning
+- When asking questions, focus on consequential dimensions not stated or clearly implied.
+- When the artifact is a new analysis, focus on which definition, metric, or lens should drive conclusions.
+- Unresolved reference labels or question marks are user-owned: ask, don't infer.
+- Once topic, audience, and purpose are clear, proceed without asking. Choose emphasis, format, length, style, details. Use placeholders for missing facts.
+
+Use `request_user_input` once if available, else ask via a message. Have the best suggestion first. Append `(Recommended)` to its label. Have another good alternative second. Have `Use your judgment` as the third and final option. If the request times out or returns no answer, proceed using your best judgment; do not ask again.
+
 ## Route the Request
 
 - Use `[@presentations](plugin://presentations@openai-primary-runtime)` to create a net-new presentation when no existing native Google Slides deck is the template or reference.
@@ -89,6 +101,13 @@ text(JSON.stringify(result));
 ```
 
 Use the helper as shown instead of calling Drive `fetch` or `export_file` directly. It automatically handles current reference-backed and legacy inline responses, writes `presentation.pdf`, and returns ordered PNGs mapped to native slide IDs. It fails if the PDF page count differs from the design system. Use a fresh output directory, then inspect every PNG with `view_image`; create a local contact sheet when useful.
+
+### Presentations location
+
+Use/create `ChatGPT` at My Drive root. Place new presentations created from scratch or from a template there.
+Edit existing presentations in place.
+
+Respect user-specified locations.
 
 ## Build From the Template
 

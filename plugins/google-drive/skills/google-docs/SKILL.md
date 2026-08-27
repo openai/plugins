@@ -9,6 +9,18 @@ Use this opt-in skill for Google Docs work in Codex local-plugin sessions. Draft
 
 Code mode is preferred for the checked-in helpers below, but it is not a prerequisite for this workflow. If code mode is unavailable, reproduce the same routing, read and inventory, preservation, mutation, and verification workflow with the available connector or app tools; preserve all checks and adapt any operation without a non-code implementation to the closest supported equivalent, clearly disclosing any unavoidable fidelity difference.
 
+### Documents clarification questions
+
+- Ask for new documents or major rewrites. Skip this for edits/conversions.
+- Inspect prompt, conversation history, existing file and relevant references to figure out what questions to ask.
+- Questions should cover topic, audience, and purpose and come before planning
+- When asking questions, focus on consequential dimensions not stated or clearly implied.
+- When the artifact is a new analysis, focus on which definition, metric, or lens should drive conclusions.
+- Unresolved reference labels or question marks are user-owned: ask, don't infer.
+- Once topic, audience, and purpose are clear, proceed without asking. Choose emphasis, format, length, style, details. Use placeholders for missing facts.
+
+Use `request_user_input` once if available, else ask via a message. Have the best suggestion first. Append `(Recommended)` to its label. Have another good alternative second. Have `Use your judgment` as the third and final option. If the request times out or returns no answer, proceed using your best judgment; do not ask again.
+
 ## Default Routing
 
 Choose the route only after resolving whether a supplied Google Doc is a template, reference, example, or content-only source:
@@ -40,6 +52,13 @@ Before planning content for a supplied Google Doc template/reference:
 Do not flatten paragraphs across tabs until the tab tree is recorded. If a full response is too large or truncated, request `tabs(tabProperties)` first and inspect relevant tabs individually. For exact-template and template-adaptation work, use the Drive copy action exposed by the current runtime, then run the file-backed trusted read on the copied destination before its first write. If native copy is unavailable and tabs, styles, chips, controls, or other native semantics matter, stop rather than silently rebuild through DOCX.
 
 Do not block blank or basic eligible creation on the Documents plugin. For eligible DOCX-first work, keep staging untracked and non-user-visible, clean it after successful native import and readback, and return only the Google Docs link unless the user requested local files.
+
+### Documents location
+
+Use/create `ChatGPT` at My Drive root. Place new documents created from scratch or from a template there.
+Edit existing documents in place.
+
+Respect user-specified locations.
 
 ## Coverage-First Authoring Contract
 
