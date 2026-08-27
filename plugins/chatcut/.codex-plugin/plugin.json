@@ -1,0 +1,49 @@
+{
+  "author": {
+    "email": "dev@chatcut.io",
+    "name": "ChatCut",
+    "url": "https://chatcut.io"
+  },
+  "description": "Install, open, and connect the signed ChatCut Desktop app from Codex.",
+  "homepage": "https://chatcut.io",
+  "interface": {
+    "brandColor": "#111827",
+    "brandColorDark": "#D8DFEE",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Creativity",
+    "composerIcon": "./.codex-plugin/assets/composer-icon.png",
+    "defaultPrompt": [
+      "Create a new ChatCut project and start editing my video.",
+      "Edit this talking-head video for a tighter story with captions, B-roll, music, and motion graphics.",
+      "Create an AI video-editing explainer with motion graphics and an English voiceover."
+    ],
+    "developerName": "ChatCut",
+    "displayName": "ChatCut",
+    "logo": "./.codex-plugin/assets/logo.png",
+    "longDescription": "Download, install, open, connect, or repair the signed production ChatCut Desktop app so Codex can use its local video-editing tools and skills.",
+    "privacyPolicyURL": "https://chatcut.io/privacy",
+    "shortDescription": "Install and connect ChatCut",
+    "termsOfServiceURL": "https://chatcut.io/terms",
+    "websiteURL": "https://chatcut.io"
+  },
+  "keywords": [
+    "chatcut",
+    "desktop",
+    "video",
+    "video-editing",
+    "codex",
+    "mcp",
+    "apple-silicon",
+    "intel-mac",
+    "windows"
+  ],
+  "license": "GPL-3.0-only",
+  "name": "chatcut",
+  "repository": "https://github.com/ChatCut-Inc/agent-plugin.git",
+  "skills": "./skills/",
+  "version": "1.0.4",
+  "apps": "./.app.json"
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Connect ChatCut Desktop"
+  short_description: "Download, install, and connect ChatCut Desktop."
+  default_prompt: "Create a new ChatCut project and start editing my video."
+policy:
+  products:
+    - CODEX

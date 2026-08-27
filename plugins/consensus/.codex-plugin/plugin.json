@@ -1,0 +1,26 @@
+{
+  "name": "consensus",
+  "version": "4.0.0",
+  "description": "Consensus is the go-to MCP for academic research. Connect directly to 220M+ peer-reviewed papers to search, synthesize, and build structured research outputs from within your conversation.\n\nRun literature reviews, build boolean search strategies, generate bibliographies, identify research gaps, and draft cited content — grounded in studies from PubMed, Semantic Scholar, and ArXiv. Pre-built workflows handle complex tasks in minutes: systematic reviews, curriculum reading lists, grant research with novelty analysis, and clinical evidence synthesis.\n\nBuilt for researchers, students, faculty, and clinicians across biomedical, social science, STEM, and all academic disciplines.",
+  "author": {
+    "name": "Consensus"
+  },
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Consensus",
+    "shortDescription": "Explore scientific research",
+    "longDescription": "Consensus is the go-to MCP for academic research. Connect directly to 220M+ peer-reviewed papers to search, synthesize, and build structured research outputs from within your conversation.\n\nRun literature reviews, build boolean search strategies, generate bibliographies, identify research gaps, and draft cited content — grounded in studies from PubMed, Semantic Scholar, and ArXiv. Pre-built workflows handle complex tasks in minutes: systematic reviews, curriculum reading lists, grant research with novelty analysis, and clinical evidence synthesis.\n\nBuilt for researchers, students, faculty, and clinicians across biomedical, social science, STEM, and all academic disciplines.",
+    "developerName": "Consensus",
+    "category": "Education & Research",
+    "capabilities": [],
+    "websiteURL": "https://consensus.app",
+    "supportURL": "https://consensus.app/home/contact/",
+    "privacyPolicyURL": "https://consensus.app/home/privacy-policy/",
+    "termsOfServiceURL": "https://consensus.app/home/terms-of-service/",
+    "defaultPrompt": [
+      "Does bilingual education benefit cognitive development?",
+      "Are there interactions between atorvastatin and grapefruit juice?",
+      "Create a table comparing the environmental benefits, challenges, and costs"
+    ]
+  }
+}
