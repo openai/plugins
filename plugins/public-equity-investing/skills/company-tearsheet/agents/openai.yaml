@@ -1,0 +1,5 @@
+interface:
+  display_name: "Company Tearsheet"
+  short_description: "Create cited public-company, public-issuer, and public sector-peer profiles."
+policy:
+  allow_implicit_invocation: false

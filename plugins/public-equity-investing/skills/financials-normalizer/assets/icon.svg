@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="financials normalizer icon">
+  <rect x="8" y="8" width="48" height="48" rx="12" fill="#0f766e"/>
+  <path d="M18 22h28M18 32h28M18 42h28" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="26" cy="22" r="3" fill="#ccfbf1"/>
+  <circle cx="38" cy="32" r="3" fill="#ccfbf1"/>
+  <circle cx="30" cy="42" r="3" fill="#ccfbf1"/>
+</svg>

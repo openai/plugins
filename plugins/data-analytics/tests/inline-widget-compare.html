@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Analytics inline widget compare</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --background: #f8fafc;
+        --foreground: #111827;
+        --muted: #64748b;
+        --border: #d8dee8;
+        --card: #ffffff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #101318;
+          --foreground: #f8fafc;
+          --muted: #94a3b8;
+          --border: #2f3745;
+          --card: #151a22;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 28px;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      header {
+        margin: 0 0 18px;
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: 24px;
+        line-height: 1.15;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .panel {
+        min-width: 0;
+      }
+
+      .panel h2 {
+        margin: 0 0 10px;
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 520px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--card);
+      }
+
+      #status {
+        margin-top: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Data Analytics inline widgets</h1>
+      <p>Chart and table widgets rendered in inline mode with comparable sample payloads.</p>
+    </header>
+
+    <main class="grid">
+      <section class="panel">
+        <h2>Chart widget</h2>
+        <iframe
+          id="chart-inline"
+          title="Data Analytics chart widget inline"
+          src="../src/datascience-chart-widget.html?displayMode=inline&widgetInstanceId=chart-inline"
+        ></iframe>
+      </section>
+
+      <section class="panel">
+        <h2>Table widget</h2>
+        <iframe
+          id="table-inline"
+          title="Data Analytics table widget inline"
+          src="../src/datascience-table-widget.html?displayMode=inline&widgetInstanceId=table-inline"
+        ></iframe>
+      </section>
+    </main>
+
+    <p id="status" role="status">Loading inline widgets.</p>
+
+    <script>
+      const rows = [
+        { date: "2026-01-01", plan: "Self-serve", region: "North America", revenue_m: 1.8, activation_rate_pct: 42 },
+        { date: "2026-01-01", plan: "Team", region: "North America", revenue_m: 2.6, activation_rate_pct: 57 },
+        { date: "2026-01-01", plan: "Enterprise", region: "North America", revenue_m: 4.1, activation_rate_pct: 69 },
+        { date: "2026-01-08", plan: "Self-serve", region: "EMEA", revenue_m: 2.1, activation_rate_pct: 44 },
+        { date: "2026-01-08", plan: "Team", region: "EMEA", revenue_m: 2.9, activation_rate_pct: 59 },
+        { date: "2026-01-08", plan: "Enterprise", region: "EMEA", revenue_m: 4.8, activation_rate_pct: 71 },
+      ];
+
+      const columns = [
+        { key: "date", label: "Date", type: "date" },
+        { key: "plan", label: "Plan", type: "text" },
+        { key: "region", label: "Region", type: "text" },
+        { key: "revenue_m", label: "Revenue", type: "number", unit: "$M" },
+        { key: "activation_rate_pct", label: "Activation", type: "number", unit: "%" },
+      ];
+
+      const chartPayload = {
+        ok: true,
+        widget_type: "chart",
+        title: "Inline revenue by plan",
+        result_table: {
+          columns,
+          rows,
+          row_count: rows.length,
+          truncated: false,
+        },
+        visualization_spec: {
+          version: "1",
+          visualization_type: "bar",
+          encodings: {
+            x: { field: "date", type: "temporal", time_unit: "week" },
+            y: { field: "revenue_m", type: "quantitative", aggregate: "sum", unit: "$M" },
+            color: { field: "plan", type: "nominal" },
+          },
+          presentation: {
+            unit: "$M",
+            show_controls: true,
+            view_mode: "visualization",
+          },
+        },
+        notes: ["Inline chart comparison payload."],
+      };
+
+      const tablePayload = {
+        ok: true,
+        widget_type: "table",
+        title: "Inline revenue detail",
+        subtitle: "Same rows used by the chart widget",
+        columns,
+        rows,
+        row_count: rows.length,
+        truncated: false,
+        notes: ["Inline table comparison payload."],
+        max_rows: 25,
+      };
+
+
+      function asToolResult(payload, widgetUri, targetWidgetId) {
+        return {
+          content: [{ type: "text", text: JSON.stringify(payload) }],
+          structuredContent: payload,
+          isError: false,
+          _meta: {
+            "ui/resourceUri": widgetUri,
+            ["openai/outputTemplate"]: widgetUri,
+            targetWidgetId,
+          },
+        };
+      }
+
+      function installHost(id, payload, widgetUri) {
+        const frame = document.getElementById(id);
+        const win = frame && frame.contentWindow;
+        if (!win) return;
+        const toolOutput = asToolResult(payload, widgetUri, id);
+        win.openai = {
+          widgetInstanceId: id,
+          displayMode: "inline",
+          availableDisplayModes: ["inline", "fullscreen"],
+          toolOutput,
+          async requestDisplayMode({ mode }) {
+            this.displayMode = mode;
+            win.postMessage({ targetWidgetId: id, displayMode: mode }, "*");
+            return { mode };
+          },
+        };
+        win.dispatchEvent(
+          new win.CustomEvent("openai:set_globals", {
+            detail: { globals: { targetWidgetId: id, toolOutput } },
+          }),
+        );
+        win.postMessage(toolOutput, "*");
+      }
+
+      function wireFrame(id, payload, widgetUri) {
+        const frame = document.getElementById(id);
+        const send = () => installHost(id, payload, widgetUri);
+        frame.addEventListener("load", () => {
+          send();
+          window.setTimeout(send, 100);
+        });
+        window.setTimeout(send, 100);
+      }
+
+      wireFrame("chart-inline", chartPayload, "ui://widget/datascience-chart.html");
+      wireFrame("table-inline", tablePayload, "ui://widget/datascience-table.html");
+
+      window.setTimeout(() => {
+        document.getElementById("status").textContent = "Inline comparison ready.";
+      }, 600);
+    </script>
+  </body>
+</html>

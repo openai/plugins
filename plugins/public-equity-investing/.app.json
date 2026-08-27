@@ -1,0 +1,49 @@
+{
+  "apps": {
+    "slack": {
+      "id": "asdk_app_69a1d78e929881919bba0dbda1f6436d"
+    },
+    "pitchbook": {
+      "id": "asdk_app_693850f6312c8191be5a026bf3538e80"
+    },
+    "factset": {
+      "id": "asdk_app_699727751b1c819193883394649579e2"
+    },
+    "morningstar": {
+      "id": "asdk_app_69248819fa4c81918047c4b42b1f8823"
+    },
+    "lseg": {
+      "id": "asdk_app_698aec3092e48191a4484b43a3fc79b8"
+    },
+    "s-p": {
+      "id": "asdk_app_6980f65d75b881918eaa6d65477d87c6"
+    },
+    "third-bridge": {
+      "id": "asdk_app_6983505f8b9c8191a2e6f104325b1f20"
+    },
+    "daloopa": {
+      "id": "connector_692f6343042c8191b6617e8352444692"
+    },
+    "quartr": {
+      "id": "asdk_app_69b2bc50b4c0819189d86013d62ecc71"
+    },
+    "alpaca": {
+      "id": "connector_691f721a77bc8191be115b65c85075c0"
+    },
+    "google_drive": {
+      "id": "connector_5f3c8c41a1e54ad7a76272c89e2554fa"
+    },
+    "gmail_connector": {
+      "id": "connector_2128aebfecb84f64a069897515042a44"
+    },
+    "outlook_email_connector": {
+      "id": "connector_4aaab2856305417b993eca9a216aaf6e"
+    },
+    "sharepoint_connector": {
+      "id": "connector_1e4f6a44acf14e3ca1d96672f8c945bc"
+    },
+    "teams_connector": {
+      "id": "connector_246af0940da3457da0e751171dc1ce60"
+    }
+  }
+}

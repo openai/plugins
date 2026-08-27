@@ -1,0 +1,28 @@
+line_item_id,line_item_standard,statement,alias
+revenue,Revenue,income_statement,revenue
+revenue,Revenue,income_statement,net sales
+revenue,Revenue,income_statement,net revenue
+cogs,Cost of revenue,income_statement,cost of revenue
+cogs,Cost of revenue,income_statement,cost of sales
+gross_profit,Gross profit,income_statement,gross profit
+operating_income,Operating income,income_statement,operating income
+operating_income,Operating income,income_statement,income from operations
+net_income,Net income,income_statement,net income
+eps_diluted,EPS diluted,income_statement,diluted eps
+cash_equivalents,Cash and equivalents,balance_sheet,cash and cash equivalents
+accounts_receivable,Accounts receivable,balance_sheet,accounts receivable
+inventory,Inventory,balance_sheet,inventory
+total_assets,Total assets,balance_sheet,total assets
+accounts_payable,Accounts payable,balance_sheet,accounts payable
+long_term_debt,Long-term debt,balance_sheet,long-term debt
+total_liabilities,Total liabilities,balance_sheet,total liabilities
+total_equity,Total equity,balance_sheet,stockholders equity
+liabilities_equity,Total liabilities and equity,balance_sheet,total liabilities and stockholders equity
+cfo,Cash flow from operations,cash_flow,net cash provided by operating activities
+capex,Capital expenditures,cash_flow,capital expenditures
+capex,Capital expenditures,cash_flow,purchases of property and equipment
+free_cash_flow,Free cash flow,cash_flow,free cash flow
+ending_cash,Ending cash,cash_flow,cash at end of period
+arr,ARR,kpi_schedule,annual recurring revenue
+nrr,Net revenue retention,kpi_schedule,nrr
+gmv,GMV,kpi_schedule,gross merchandise value

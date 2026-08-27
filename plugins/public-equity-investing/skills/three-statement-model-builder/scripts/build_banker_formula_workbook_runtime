@@ -1,0 +1,967 @@
+#!/usr/bin/env python3
+"""Materialize the bundled banker formula workbook template from plan.json.
+
+This script preserves the template's existing formulas, styles, and workbook
+structure. It only writes plan-derived inputs, source labels, warning posture,
+and scenario controls into the template.
+
+Usage:
+  python3 scripts/build_banker_formula_workbook.py assets/plan_template.json
+  python3 scripts/build_banker_formula_workbook.py plan.json --output-dir output
+"""
+
+from __future__ import annotations
+
+import argparse
+import copy
+import json
+import re
+import sys
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Tuple
+from xml.etree import ElementTree as ET
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+SKILL_ROOT = SCRIPT_DIR.parent
+PLUGIN_ROOT = SKILL_ROOT.parents[1]
+sys.path.insert(0, str(SCRIPT_DIR))
+if str(PLUGIN_ROOT) not in sys.path:
+    sys.path.insert(0, str(PLUGIN_ROOT))
+
+from validate_plan import validate  # noqa: E402
+from shared.model_citations import validate_model_citations  # noqa: E402
+from shared.workbook_inspection import inspect_formula_workbook  # noqa: E402
+
+NS_MAIN = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+NS_REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+ET.register_namespace("", NS_MAIN)
+ET.register_namespace("r", NS_REL)
+
+REQUIRED_SHEETS = [
+    "Cover",
+    "Executive Summary",
+    "Control Panel",
+    "Historical Financials",
+    "Revenue Build",
+    "Expense Build",
+    "Income Statement",
+    "Working Capital",
+    "PP&E D&A",
+    "Debt Interest",
+    "Tax",
+    "Balance Sheet",
+    "Cash Flow Statement",
+    "Scenarios",
+    "Checks",
+    "Source Notes",
+]
+
+DEFAULT_TEMPLATE = SKILL_ROOT / "assets" / "templates" / "banker_formula_workbook_template.xlsx"
+OUTPUT_WORKBOOK = "banker_formula_workbook.xlsx"
+OUTPUT_RUN_LOG = "banker_formula_workbook_run_log.json"
+OUTPUT_MANIFEST = "manifest.json"
+OUTPUT_MODEL_CITATIONS = "model_citations.json"
+PARTIAL_CONTEXT_WARNING = "Screen-grade only; placeholder assumptions used."
+PERIOD_COLS = ["D", "E", "F", "G", "H"]
+CONTROL_HEADER_ROWS = [13, 19, 25, 31, 37, 43, 49, 55, 61, 67, 73, 79, 85, 91, 97, 103, 109, 115, 121, 127, 133, 139]
+SCENARIO_ROWS = {"base": 0, "downside": 1, "upside": 2}
+
+
+def _file_record(path: Path, role: str, description: str) -> Dict[str, Any]:
+    return {
+        "path": str(path),
+        "role": role,
+        "description": description,
+        "exists": True if path.name == OUTPUT_MANIFEST else path.exists(),
+    }
+
+
+def write_output_manifest(output_dir: Path, run_log: Dict[str, Any]) -> Dict[str, Any]:
+    manifest_path = output_dir / OUTPUT_MANIFEST
+    workbook_path = output_dir / OUTPUT_WORKBOOK
+    run_log_path = output_dir / OUTPUT_RUN_LOG
+    model_citations_path = output_dir / OUTPUT_MODEL_CITATIONS
+    hard_failures = run_log.get("hard_failures", [])
+    failed = bool(hard_failures)
+    status = run_log.get("status") or ("failed" if failed else "completed")
+    readiness_reason = (
+        "Formula workbook was written, but inspection gates failed. Treat it as a diagnostic artifact until repaired."
+        if failed
+        else ""
+    )
+    manifest = {
+        "manifest_version": "1.0",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "skill": "three-statement-model-builder",
+        "status": status,
+        "artifact_mode": "banker_formula_workbook",
+        "model_status": run_log.get("model_status"),
+        "output_dir": str(output_dir),
+        "primary_human_deliverable": str(workbook_path),
+        "first_read": {"path": str(workbook_path), "role": "primary_human_deliverable", "why": "Open the formula workbook first; support files are audit/provenance material."},
+        "human_deliverables": [_file_record(workbook_path, "human_deliverable", "banker formula workbook")],
+        "companion_deliverables": [],
+        "support_artifacts": [
+            {"path": str(run_log_path), "role": "support_artifact", "artifact_type": "json", "description": "Formula workbook run log.", "user_visible_default": False, "support_reason": "Run log is audit support for workbook generation."},
+            {"path": str(model_citations_path), "role": "support_artifact", "artifact_type": "json", "description": "Source-to-cell provenance ledger.", "user_visible_default": False, "support_reason": "Citation JSON is renderer/provenance support, not the main deliverable."},
+        ],
+        "support_artifacts_user_visible_default": False,
+        "blocked_or_partial_status": {
+            "status": "not-decision-ready" if failed else "complete",
+            "reason": readiness_reason,
+            "missing_inputs": run_log.get("missing_inputs", []),
+            "hard_failures": hard_failures,
+        },
+        "final_response_guidance": {
+            "lead_with": "workbook_diagnostic_status" if failed else "primary_human_deliverable",
+            "mention_support_artifacts": "include run log and model citations for repair" if failed else "only_briefly_unless_requested",
+        },
+        "agent_artifacts": [
+            _file_record(run_log_path, "agent_artifact", "formula workbook run log"),
+            _file_record(model_citations_path, "agent_artifact", "source-to-cell provenance ledger"),
+            _file_record(manifest_path, "agent_artifact", "agent-facing output manifest"),
+        ],
+        "hard_failure_count": len(hard_failures),
+        "warning_count": len(run_log.get("warnings", [])),
+        "discipline_note": (
+            "Do not use this workbook for target, rating, sizing, or circulation until formula inspection failures are repaired."
+            if failed
+            else "Use the workbook as the main deliverable; manifest/run_log files are agent-facing support artifacts."
+        ),
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    return manifest
+
+
+def qname(tag: str) -> str:
+    return f"{{{NS_MAIN}}}{tag}"
+
+
+def col_to_num(col: str) -> int:
+    value = 0
+    for char in col:
+        value = value * 26 + ord(char.upper()) - 64
+    return value
+
+
+def cell_ref_parts(ref: str) -> Tuple[str, int]:
+    match = re.fullmatch(r"([A-Z]+)([0-9]+)", ref)
+    if not match:
+        raise ValueError(f"Invalid cell reference: {ref}")
+    return match.group(1), int(match.group(2))
+
+
+def cell_sort_key(ref: str) -> Tuple[int, int]:
+    col, row = cell_ref_parts(ref)
+    return row, col_to_num(col)
+
+
+def read_plan(path: Path) -> Dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def deep_merge(base: Any, override: Any) -> Any:
+    if isinstance(base, dict) and isinstance(override, dict):
+        merged = copy.deepcopy(base)
+        for key, value in override.items():
+            merged[key] = deep_merge(merged.get(key), value)
+        return merged
+    return copy.deepcopy(override)
+
+
+def scenario_plan(plan: Dict[str, Any], scenario: str) -> Dict[str, Any]:
+    cfg = plan.get("scenarios", {}).get(scenario, {})
+    return deep_merge(plan, cfg.get("overrides", {}))
+
+
+def period_labels(plan: Dict[str, Any], max_periods: int = 5) -> List[str]:
+    timeline = plan.get("timeline", {})
+    start_year = int(timeline.get("start_year", 2026))
+    horizon = min(int(timeline.get("horizon_periods", max_periods)), max_periods)
+    periodicity = timeline.get("periodicity", "annual")
+    if periodicity == "quarterly":
+        return [f"{start_year}Q{i + 1}E" for i in range(horizon)]
+    return [f"{start_year + i}E" for i in range(horizon)]
+
+
+def period_key_candidates(label: str) -> List[str]:
+    stripped = label.rstrip("E")
+    year_match = re.search(r"(20[0-9]{2}|19[0-9]{2})", label)
+    candidates = [label, stripped]
+    if year_match:
+        year = year_match.group(1)
+        candidates.extend([f"FY{year}", f"FY{year}E", year, f"{year}E"])
+    return list(dict.fromkeys(candidates))
+
+
+def number_for_period(value: Any, label: str, default: Optional[float] = None) -> Optional[float]:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return float(value)
+    if isinstance(value, dict):
+        for key in period_key_candidates(label):
+            if key in value and isinstance(value[key], (int, float)) and not isinstance(value[key], bool):
+                return float(value[key])
+    return default
+
+
+def values_for_periods(value: Any, labels: List[str], default: Optional[float] = None) -> List[Optional[float]]:
+    return [number_for_period(value, label, default) for label in labels]
+
+
+def first_latest_period(rows: Dict[str, Any]) -> Optional[str]:
+    if not rows:
+        return None
+    return sorted(rows.keys())[-1]
+
+
+def source_with_cover(plan: Dict[str, Any], cover_options: Iterable[str]) -> Optional[Dict[str, Any]]:
+    desired = set(cover_options)
+    for source in plan.get("source_basis", []):
+        if desired & set(source.get("covers", [])):
+            return source
+    return None
+
+
+def source_for_id(plan: Dict[str, Any], source_id: Optional[str]) -> Optional[Dict[str, Any]]:
+    if not source_id:
+        return None
+    for source in plan.get("source_basis", []):
+        if isinstance(source, dict) and str(source.get("id")) == str(source_id):
+            return source
+    return None
+
+
+def source_details(plan: Dict[str, Any], *, source_id: Optional[str] = None, covers: Iterable[str] = ()) -> Dict[str, str]:
+    source = source_for_id(plan, source_id) or source_with_cover(plan, covers)
+    if not source:
+        label = str(source_id or next(iter(covers), "model-output"))
+        return {
+            "source_id": label,
+            "evidence_label": "derived",
+            "source_label": "Model output",
+            "source_date": "",
+            "freshness": "derived",
+            "url": "",
+        }
+    return {
+        "source_id": str(source.get("id") or source_id or "source"),
+        "evidence_label": str(source.get("evidence_label") or source.get("label") or ""),
+        "source_label": str(source.get("label") or source.get("title") or source.get("id") or ""),
+        "source_date": str(source.get("as_of_date") or source.get("date") or source.get("accessed_at") or ""),
+        "freshness": str(source.get("confidence") or source.get("freshness") or ""),
+        "url": str(source.get("url") or source.get("source_url") or ""),
+    }
+
+
+def citation_record(
+    plan: Dict[str, Any],
+    workbook_path: Path,
+    *,
+    record_id: str,
+    title: str,
+    sheet: str,
+    cell: str,
+    line_item: str,
+    section: str,
+    formula: str,
+    value: Any = "",
+    source_id: Optional[str] = None,
+    covers: Iterable[str] = (),
+    scenario: str = "base",
+) -> Dict[str, Any]:
+    source = source_details(plan, source_id=source_id, covers=covers)
+    short_label = f"Model: {sheet}!{cell}"
+    return {
+        "id": record_id,
+        "title": title,
+        "short_label": short_label,
+        "type": "model_cell",
+        "quality": "model_output",
+        "citation_id": record_id,
+        "workbook_path": str(workbook_path),
+        "sheet": sheet,
+        "cell_or_range": cell,
+        "cell": cell,
+        "range": cell,
+        "metric_name": title,
+        "value": "" if value is None else str(value),
+        "formula": formula,
+        "source_ids": [source["source_id"]],
+        "assumption_flag": source["evidence_label"] in {"assumption", "internal_estimate", "estimate"},
+        "tie_out_status": "model_generated",
+        "scenario": scenario,
+        "statement": "Three Statement",
+        "section": section,
+        "line_item": line_item,
+        "source_id": source["source_id"],
+        "evidence_label": source["evidence_label"],
+        "source_label": source["source_label"],
+        "source_date": source["source_date"],
+        "freshness": source["freshness"],
+        "url": source["url"],
+        "aliases": [line_item, title, short_label],
+        "notes": "Formula workbook cell provenance generated by Public Equity Investing three-statement formula mode.",
+    }
+
+
+def build_model_citations(plan: Dict[str, Any], workbook_path: Path) -> List[Dict[str, Any]]:
+    revenue_source = plan.get("revenue", {}).get("source_id")
+    cost_source = plan.get("costs", {}).get("source_id")
+    wc_source = plan.get("working_capital", {}).get("source_id")
+    debt_source = plan.get("debt", {}).get("source_id")
+    ppe_source = plan.get("ppe", {}).get("source_id")
+    tax_source = plan.get("tax", {}).get("source_id")
+    return [
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-final-revenue",
+            title="Final Forecast Revenue",
+            sheet="Income Statement",
+            cell="I6",
+            line_item="revenue",
+            section="Income Statement",
+            formula="='Expense Build'!I6",
+            source_id=revenue_source,
+            covers=["revenue"],
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-final-ebitda",
+            title="Final Forecast EBITDA",
+            sheet="Income Statement",
+            cell="I16",
+            line_item="ebitda",
+            section="Income Statement",
+            formula="='Expense Build'!I21",
+            source_id=cost_source,
+            covers=["costs", "margin"],
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-final-net-income",
+            title="Final Forecast Net Income",
+            sheet="Income Statement",
+            cell="I22",
+            line_item="net_income",
+            section="Income Statement",
+            formula="=I20-I21",
+            source_id=tax_source,
+            covers=["tax"],
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-ending-cash",
+            title="Ending Cash",
+            sheet="Balance Sheet",
+            cell="I6",
+            line_item="cash",
+            section="Balance Sheet",
+            formula="='Cash Flow Statement'!I23",
+            source_id=wc_source,
+            covers=["working_capital"],
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-ending-debt",
+            title="Ending Debt",
+            sheet="Balance Sheet",
+            cell="I22",
+            line_item="debt",
+            section="Balance Sheet",
+            formula="='Debt Interest'!I12",
+            source_id=debt_source,
+            covers=["debt", "covenants"],
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-free-cash-flow-conversion",
+            title="Free Cash Flow Conversion",
+            sheet="Cash Flow Statement",
+            cell="I26",
+            line_item="fcf_conversion",
+            section="Cash Flow Statement",
+            formula="=IFERROR(I25/'Income Statement'!I22,0)",
+            source_id=ppe_source,
+            covers=["ppe", "capex"],
+        ),
+        citation_record(
+            plan,
+            workbook_path,
+            record_id="model-output:three-statement-balance-check",
+            title="Balance Sheet Check",
+            sheet="Checks",
+            cell="C6",
+            line_item="balance_sheet_check",
+            section="Checks",
+            formula='=IF(ABS(B6)<0.01,"OK","FAIL")',
+            covers=["historicals", "balance_sheet", "cash_flow"],
+        ),
+    ]
+
+
+def source_row(source: Optional[Dict[str, Any]], default_note: str) -> Tuple[str, str, str, str]:
+    if not source:
+        return ("placeholder", "Low", "Missing source", default_note)
+    return (
+        str(source.get("evidence_label", "placeholder")),
+        str(source.get("confidence", "low")).title(),
+        str(source.get("label", source.get("id", "source_basis"))),
+        str(source.get("notes", default_note)),
+    )
+
+
+def has_placeholder_sources(plan: Dict[str, Any]) -> bool:
+    for source in plan.get("source_basis", []):
+        evidence = str(source.get("evidence_label", "")).lower()
+        confidence = str(source.get("confidence", "")).lower()
+        if evidence in {"placeholder", "assumption"} or confidence == "low":
+            return True
+    for section in ("revenue", "costs", "working_capital", "ppe", "debt", "tax", "equity"):
+        evidence = str(plan.get(section, {}).get("evidence_label", "")).lower()
+        if evidence == "placeholder":
+            return True
+    return False
+
+
+def revenue_growth(plan: Dict[str, Any], labels: List[str]) -> List[Optional[float]]:
+    revenue = plan.get("revenue", {})
+    model = revenue.get("model")
+    if model == "segments":
+        segments = revenue.get("segments", {})
+        total_base = sum(float(cfg.get("base_revenue", 0.0)) for cfg in segments.values() if isinstance(cfg, dict))
+        values: List[Optional[float]] = []
+        for label in labels:
+            weighted = 0.0
+            if total_base <= 0:
+                values.append(None)
+                continue
+            for cfg in segments.values():
+                if not isinstance(cfg, dict):
+                    continue
+                base = float(cfg.get("base_revenue", 0.0))
+                weighted += (base / total_base) * float(number_for_period(cfg.get("growth_rates"), label, 0.0) or 0.0)
+            values.append(weighted)
+        return values
+    if model == "total_growth":
+        return values_for_periods(revenue.get("growth_rates"), labels)
+    if model == "volume_price":
+        unit_growth = values_for_periods(revenue.get("unit_growth_rates"), labels, 0.0)
+        price_growth = values_for_periods(revenue.get("price_growth_rates"), labels, 0.0)
+        return [((1 + (u or 0.0)) * (1 + (p or 0.0)) - 1) for u, p in zip(unit_growth, price_growth)]
+    return [None for _ in labels]
+
+
+def gross_margin(plan: Dict[str, Any], labels: List[str]) -> List[Optional[float]]:
+    cogs = plan.get("costs", {}).get("cogs", {})
+    if cogs.get("method", "gross_margin") == "gross_margin":
+        return values_for_periods(cogs.get("gross_margin"), labels)
+    return [1.0 - (value or 0.0) if value is not None else None for value in values_for_periods(cogs.get("pct_revenue"), labels)]
+
+
+def opex_pct(plan: Dict[str, Any], labels: List[str], key: str) -> List[Optional[float]]:
+    opex = plan.get("costs", {}).get("opex", {})
+    split = opex.get("functional_split", {})
+    aliases = {
+        "sales_marketing": ["sales_marketing_pct_revenue", "sales_and_marketing_pct_revenue", "s&m_pct_revenue"],
+        "rd": ["rd_pct_revenue", "r_and_d_pct_revenue", "research_development_pct_revenue"],
+        "ga": ["ga_pct_revenue", "g_and_a_pct_revenue", "general_admin_pct_revenue"],
+        "other": ["other_opex_pct_revenue", "other_operating_expenses_pct_revenue"],
+    }
+    for alias in aliases[key]:
+        if alias in opex:
+            return values_for_periods(opex.get(alias), labels)
+        if isinstance(split, dict) and alias in split:
+            return values_for_periods(split.get(alias), labels)
+    if key == "ga" and opex.get("method", "pct_revenue") == "pct_revenue":
+        return values_for_periods(opex.get("pct_revenue"), labels)
+    if key in {"sales_marketing", "rd", "other"} and opex.get("method", "pct_revenue") == "pct_revenue":
+        return [0.0 for _ in labels]
+    return [None for _ in labels]
+
+
+def capex_pct(plan: Dict[str, Any], labels: List[str]) -> List[Optional[float]]:
+    ppe = plan.get("ppe", {})
+    if ppe.get("capex_method", "pct_revenue") == "pct_revenue":
+        return values_for_periods(ppe.get("capex_pct_revenue"), labels)
+    return [None for _ in labels]
+
+
+def depreciation_pct(plan: Dict[str, Any], labels: List[str]) -> List[Optional[float]]:
+    ppe = plan.get("ppe", {})
+    if ppe.get("depreciation_method", "pct_beginning_ppe") == "pct_beginning_ppe":
+        return values_for_periods(ppe.get("depreciation_pct_beginning_ppe"), labels)
+    return [None for _ in labels]
+
+
+def mandatory_repayment_pct(plan: Dict[str, Any], labels: List[str]) -> List[Optional[float]]:
+    debt = plan.get("debt", {})
+    beginning_debt = float(debt.get("beginning_debt", 0.0) or 0.0)
+    values = values_for_periods(debt.get("mandatory_amortization"), labels, 0.0)
+    pct_values: List[Optional[float]] = []
+    for value in values:
+        if value is None:
+            pct_values.append(None)
+        elif abs(value) <= 1.0:
+            pct_values.append(value)
+        elif beginning_debt > 0:
+            pct_values.append(value / beginning_debt)
+        else:
+            pct_values.append(None)
+    return pct_values
+
+
+def scalar_repeated(value: Any, labels: List[str]) -> List[Optional[float]]:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return [float(value) for _ in labels]
+    return values_for_periods(value, labels)
+
+
+def segment_mix(plan: Dict[str, Any], labels: List[str]) -> List[Tuple[str, List[Optional[float]]]]:
+    revenue = plan.get("revenue", {})
+    if revenue.get("model") != "segments":
+        return []
+    segments = revenue.get("segments", {})
+    total = sum(float(cfg.get("base_revenue", 0.0)) for cfg in segments.values() if isinstance(cfg, dict))
+    output: List[Tuple[str, List[Optional[float]]]] = []
+    for name, cfg in list(segments.items())[:3]:
+        if not isinstance(cfg, dict) or total <= 0:
+            continue
+        share = float(cfg.get("base_revenue", 0.0)) / total
+        output.append((str(name).replace("_", " ").title(), [share for _ in labels]))
+    return output
+
+
+def historical_periods(plan: Dict[str, Any], max_periods: int = 3) -> List[str]:
+    periods = set()
+    for section in ("income_statement", "balance_sheet", "cash_flow"):
+        rows = plan.get("historicals", {}).get(section, {})
+        periods.update(rows.keys() if isinstance(rows, dict) else [])
+    return sorted(periods)[-max_periods:]
+
+
+def historical_inputs(plan: Dict[str, Any]) -> Dict[str, Any]:
+    periods = historical_periods(plan)
+    is_rows = plan.get("historicals", {}).get("income_statement", {})
+    bs_rows = plan.get("historicals", {}).get("balance_sheet", {})
+    cf_rows = plan.get("historicals", {}).get("cash_flow", {})
+    out: Dict[str, Any] = {"periods": periods, "rows": {}}
+    for period in periods:
+        inc = is_rows.get(period, {}) if isinstance(is_rows, dict) else {}
+        bs = bs_rows.get(period, {}) if isinstance(bs_rows, dict) else {}
+        cf = cf_rows.get(period, {}) if isinstance(cf_rows, dict) else {}
+        revenue = inc.get("revenue")
+        cogs = inc.get("cogs")
+        opex = inc.get("opex")
+        out["rows"].setdefault("revenue", []).append(revenue)
+        out["rows"].setdefault("gross_profit", []).append((revenue - cogs) if isinstance(revenue, (int, float)) and isinstance(cogs, (int, float)) else None)
+        out["rows"].setdefault("sales_marketing", []).append(0.0)
+        out["rows"].setdefault("rd", []).append(0.0)
+        out["rows"].setdefault("ga", []).append(opex if isinstance(opex, (int, float)) else None)
+        out["rows"].setdefault("other_opex", []).append(0.0)
+        out["rows"].setdefault("da", []).append(inc.get("da"))
+        out["rows"].setdefault("interest", []).append(inc.get("interest"))
+        out["rows"].setdefault("taxes", []).append(inc.get("taxes"))
+        out["rows"].setdefault("cash", []).append(bs.get("cash"))
+        out["rows"].setdefault("ar", []).append(bs.get("ar"))
+        out["rows"].setdefault("inventory", []).append(bs.get("inventory"))
+        out["rows"].setdefault("other_current_assets", []).append(bs.get("other_current_assets"))
+        out["rows"].setdefault("ppe_net", []).append(bs.get("ppe_net"))
+        out["rows"].setdefault("other_assets", []).append(bs.get("other_assets"))
+        out["rows"].setdefault("debt", []).append(bs.get("debt"))
+        out["rows"].setdefault("ap", []).append(bs.get("ap"))
+        out["rows"].setdefault("accrued_expenses", []).append(bs.get("accrued_expenses"))
+        out["rows"].setdefault("deferred_revenue", []).append(bs.get("deferred_revenue"))
+        out["rows"].setdefault("other_liabilities", []).append(bs.get("other_liabilities"))
+        common_equity = bs.get("common_equity")
+        retained_earnings = bs.get("retained_earnings")
+        out["rows"].setdefault("equity_retained", []).append(
+            (common_equity + retained_earnings)
+            if isinstance(common_equity, (int, float)) and isinstance(retained_earnings, (int, float))
+            else None
+        )
+        out["rows"].setdefault("capex", []).append(cf.get("capex"))
+        out["rows"].setdefault("change_nwc", []).append(cf.get("change_nwc"))
+    return out
+
+
+def update_series(updates: Dict[str, Any], row: int, labels: List[str], values: List[Optional[float]], cols: List[str] = PERIOD_COLS) -> None:
+    for col, value in zip(cols, values):
+        if value is not None:
+            updates[f"{col}{row}"] = value
+
+
+def build_control_panel_updates(plan: Dict[str, Any], missing_inputs: List[str], warnings: List[str]) -> Dict[str, Any]:
+    labels = period_labels(plan)
+    meta = plan.get("meta", {})
+    placeholder = has_placeholder_sources(plan)
+    status = "screen-grade" if placeholder else "template-ready"
+    updates: Dict[str, Any] = {
+        "B5": meta.get("company_name", "Company"),
+        "B6": meta.get("currency", "USD"),
+        "B7": meta.get("units", "USD_mm"),
+        "B8": "Base",
+        "B9": "banker_formula_workbook",
+        "B10": status,
+        "B11": "Template materializer output; formulas, styles, and tab architecture are preserved from the bundled workbook.",
+        "B146": PARTIAL_CONTEXT_WARNING if placeholder else "Source-backed control panel inputs; review Source Notes before circulation.",
+    }
+    for row in CONTROL_HEADER_ROWS:
+        update_series(updates, row, labels, labels)
+
+    mapping = [
+        ("revenue_growth", 14, revenue_growth),
+        ("gross_margin", 20, gross_margin),
+        ("sales_marketing_pct_revenue", 26, lambda p, l: opex_pct(p, l, "sales_marketing")),
+        ("rd_pct_revenue", 32, lambda p, l: opex_pct(p, l, "rd")),
+        ("ga_pct_revenue", 38, lambda p, l: opex_pct(p, l, "ga")),
+        ("other_opex_pct_revenue", 44, lambda p, l: opex_pct(p, l, "other")),
+        ("depreciation_pct_beginning_ppe", 50, depreciation_pct),
+        ("capex_pct_revenue", 56, capex_pct),
+        ("ar_days", 62, lambda p, l: values_for_periods(p.get("working_capital", {}).get("ar_days"), l)),
+        ("inventory_days", 68, lambda p, l: values_for_periods(p.get("working_capital", {}).get("inventory_days"), l)),
+        ("ap_days", 74, lambda p, l: values_for_periods(p.get("working_capital", {}).get("ap_days"), l)),
+        ("accrued_expenses_pct_revenue", 80, lambda p, l: values_for_periods(p.get("working_capital", {}).get("accrued_expenses_pct_revenue"), l)),
+        ("other_current_assets_pct_revenue", 86, lambda p, l: values_for_periods(p.get("working_capital", {}).get("other_current_assets_pct_revenue"), l)),
+        ("other_current_liabilities_pct_revenue", 92, lambda p, l: values_for_periods(p.get("working_capital", {}).get("deferred_revenue_pct_revenue"), l)),
+        ("book_tax_rate", 98, lambda p, l: scalar_repeated(p.get("tax", {}).get("book_tax_rate"), l)),
+        ("cash_tax_rate", 104, lambda p, l: scalar_repeated(p.get("tax", {}).get("cash_tax_rate"), l)),
+        ("cash_interest_rate", 110, lambda p, l: values_for_periods(p.get("debt", {}).get("interest_rate"), l)),
+        ("mandatory_debt_repayment_pct_beginning_debt", 116, mandatory_repayment_pct),
+        ("cash_sweep_pct_excess_cash", 122, lambda p, l: scalar_repeated(p.get("debt", {}).get("cash_sweep", {}).get("sweep_pct"), l)),
+        ("minimum_cash", 128, lambda p, l: scalar_repeated(p.get("debt", {}).get("cash_sweep", {}).get("min_cash"), l)),
+        ("diluted_shares", 134, lambda p, l: scalar_repeated(p.get("equity", {}).get("diluted_shares"), l)),
+    ]
+    for _name, base_row, extractor in mapping:
+        for scenario, offset in SCENARIO_ROWS.items():
+            values = extractor(scenario_plan(plan, scenario), labels)
+            update_series(updates, base_row + offset, labels, values)
+
+    if not isinstance(plan.get("costs", {}).get("opex", {}).get("functional_split"), dict):
+        missing_inputs.append("functional_opex_split")
+        warnings.append("No functional opex split provided; generic opex % revenue was mapped to G&A with S&M/R&D/Other set to zero.")
+    if "diluted_shares" not in plan.get("equity", {}):
+        missing_inputs.append("diluted_shares")
+    if len(labels) < int(plan.get("timeline", {}).get("horizon_periods", len(labels))):
+        warnings.append("Template supports five forecast periods; only the first five periods were materialized.")
+
+    for idx, (segment_name, values) in enumerate(segment_mix(plan, labels)):
+        row = 140 + idx
+        updates[f"C{row}"] = segment_name
+        update_series(updates, row, labels, values)
+    return updates
+
+
+def build_historical_updates(plan: Dict[str, Any], missing_inputs: List[str], warnings: List[str]) -> Dict[str, Any]:
+    hist = historical_inputs(plan)
+    periods = hist["periods"]
+    cols = ["B", "C", "D"][-len(periods) :] if periods else []
+    updates: Dict[str, Any] = {}
+    if not periods:
+        missing_inputs.append("historical_financials")
+        return updates
+
+    if len(periods) < 3:
+        warnings.append("Historical Financials tab materialized with fewer than three historical periods.")
+
+    row_map = {
+        "revenue": 5,
+        "gross_profit": 8,
+        "sales_marketing": 11,
+        "rd": 12,
+        "ga": 13,
+        "other_opex": 14,
+        "da": 19,
+        "interest": 21,
+        "taxes": 22,
+        "cash": 26,
+        "ar": 27,
+        "inventory": 28,
+        "other_current_assets": 29,
+        "ppe_net": 30,
+        "other_assets": 31,
+        "debt": 34,
+        "ap": 35,
+        "accrued_expenses": 36,
+        "deferred_revenue": 37,
+        "other_liabilities": 38,
+        "equity_retained": 39,
+        "capex": 44,
+        "change_nwc": 45,
+    }
+    for key, row in row_map.items():
+        values = hist["rows"].get(key, [])[-len(cols) :]
+        for col, value in zip(cols, values):
+            if value is not None:
+                updates[f"{col}{row}"] = value
+        updates[f"E{row}"] = "source_reported"
+        updates[f"F{row}"] = "Historical values populated from plan.json; replace template values with normalized source-backed statements before circulation."
+    missing_inputs.append("historical_functional_opex_split")
+    return updates
+
+
+def build_executive_summary_updates(plan: Dict[str, Any]) -> Dict[str, Any]:
+    labels = period_labels(plan)
+    hist = historical_periods(plan)
+    placeholder = has_placeholder_sources(plan)
+    return {
+        "B5": f"{hist[0]} - {hist[-1]}" if hist else "Historical period unavailable",
+        "B6": f"{labels[0]} - {labels[-1]}" if labels else "Forecast period unavailable",
+        "A9": "Posture warning",
+        "B9": PARTIAL_CONTEXT_WARNING if placeholder else "Source-backed template materialization; review Source Notes and Checks before circulation.",
+    }
+
+
+def build_source_notes_updates(plan: Dict[str, Any]) -> Dict[str, Any]:
+    rows = {
+        6: (source_with_cover(plan, ["historicals", "income_statement", "balance_sheet", "cash_flow"]), "Replace with audited financials, filings, management financials, trial balance, or normalized source pack."),
+        7: (source_with_cover(plan, ["revenue", "forecast"]), "Support with backlog, bookings, pipeline, market growth, pricing, retention, and management plan."),
+        8: (source_with_cover(plan, ["costs", "gross_margin", "margin"]), "Validate against gross margin bridge, cost inflation, mix, utilization, and peer benchmarks."),
+        9: (source_with_cover(plan, ["costs", "opex"]), "Tie to headcount plan, department budget, vendor spend, and standalone-cost needs."),
+        10: (source_with_cover(plan, ["working_capital"]), "Confirm DSO/DIO/DPO trends, collections, inventory reserves, supplier terms, and seasonality."),
+        11: (source_with_cover(plan, ["ppe", "capex"]), "Separate maintenance and growth capex; validate D&A/useful lives and capitalized software."),
+        12: (source_with_cover(plan, ["debt", "covenants"]), "Replace rates, amortization, maturity, covenants, liquidity, and sweep terms with credit agreement or lender model."),
+        13: (source_with_cover(plan, ["tax"]), "Validate book vs cash taxes, NOLs, jurisdictions, and interest deductibility constraints."),
+    }
+    updates: Dict[str, Any] = {}
+    for row, (source, default_note) in rows.items():
+        evidence, confidence, label, note = source_row(source, default_note)
+        updates[f"B{row}"] = evidence
+        updates[f"C{row}"] = confidence
+        updates[f"D{row}"] = label
+        updates[f"E{row}"] = note
+    return updates
+
+
+def xml_sheet_paths(xlsx_path: Path) -> Dict[str, str]:
+    with zipfile.ZipFile(xlsx_path) as zf:
+        workbook = ET.fromstring(zf.read("xl/workbook.xml"))
+        rels = ET.fromstring(zf.read("xl/_rels/workbook.xml.rels"))
+        relmap = {rel.attrib["Id"]: rel.attrib["Target"] for rel in rels}
+        paths: Dict[str, str] = {}
+        sheets_el = workbook.find(qname("sheets"))
+        if sheets_el is None:
+            return paths
+        for sheet in sheets_el:
+            rid = sheet.attrib[f"{{{NS_REL}}}id"]
+            target = relmap[rid].lstrip("/")
+            path = target if target.startswith("xl/") else f"xl/{target}"
+            paths[sheet.attrib["name"]] = path
+        return paths
+
+
+def get_or_create_row(sheet_root: ET.Element, row_num: int) -> ET.Element:
+    sheet_data = sheet_root.find(qname("sheetData"))
+    if sheet_data is None:
+        sheet_data = ET.SubElement(sheet_root, qname("sheetData"))
+    for row in sheet_data.findall(qname("row")):
+        if int(row.attrib.get("r", "0")) == row_num:
+            return row
+    row = ET.Element(qname("row"), {"r": str(row_num)})
+    inserted = False
+    for idx, existing in enumerate(list(sheet_data)):
+        if existing.tag == qname("row") and int(existing.attrib.get("r", "0")) > row_num:
+            sheet_data.insert(idx, row)
+            inserted = True
+            break
+    if not inserted:
+        sheet_data.append(row)
+    return row
+
+
+def get_or_create_cell(row: ET.Element, ref: str) -> ET.Element:
+    for cell in row.findall(qname("c")):
+        if cell.attrib.get("r") == ref:
+            return cell
+    cell = ET.Element(qname("c"), {"r": ref})
+    _, new_row = cell_ref_parts(ref)
+    row.attrib["r"] = str(new_row)
+    inserted = False
+    new_col = col_to_num(cell_ref_parts(ref)[0])
+    for idx, existing in enumerate(list(row)):
+        if existing.tag == qname("c"):
+            existing_ref = existing.attrib.get("r", "A1")
+            if col_to_num(cell_ref_parts(existing_ref)[0]) > new_col:
+                row.insert(idx, cell)
+                inserted = True
+                break
+    if not inserted:
+        row.append(cell)
+    return cell
+
+
+def set_cell_value(cell: ET.Element, value: Any) -> None:
+    ref = cell.attrib.get("r", "")
+    style = cell.attrib.get("s")
+    cell.attrib.clear()
+    cell.attrib["r"] = ref
+    if style is not None:
+        cell.attrib["s"] = style
+
+    for child in list(cell):
+        cell.remove(child)
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        v = ET.SubElement(cell, qname("v"))
+        v.text = str(value)
+    else:
+        cell.attrib["t"] = "inlineStr"
+        is_el = ET.SubElement(cell, qname("is"))
+        t = ET.SubElement(is_el, qname("t"))
+        t.text = "" if value is None else str(value)
+
+
+def patch_sheet_xml(xml_bytes: bytes, updates: Dict[str, Any]) -> bytes:
+    root = ET.fromstring(xml_bytes)
+    for ref, value in sorted(updates.items(), key=lambda item: cell_sort_key(item[0])):
+        _, row_num = cell_ref_parts(ref)
+        row = get_or_create_row(root, row_num)
+        cell = get_or_create_cell(row, ref)
+        cell.attrib["r"] = ref
+        set_cell_value(cell, value)
+    return ET.tostring(root, encoding="utf-8", xml_declaration=True)
+
+
+def materialize_workbook(template: Path, output: Path, updates_by_sheet: Dict[str, Dict[str, Any]]) -> None:
+    sheet_paths = xml_sheet_paths(template)
+    missing_sheets = [sheet for sheet in updates_by_sheet if sheet not in sheet_paths]
+    if missing_sheets:
+        raise ValueError(f"Template missing sheets required for updates: {missing_sheets}")
+
+    with zipfile.ZipFile(template, "r") as zin, zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            for sheet_name, updates in updates_by_sheet.items():
+                if item.filename == sheet_paths[sheet_name]:
+                    data = patch_sheet_xml(data, updates)
+                    break
+            zout.writestr(item, data)
+
+
+def inspect_workbook(path: Path) -> Dict[str, Any]:
+    return inspect_formula_workbook(
+        path,
+        required_sheets=REQUIRED_SHEETS,
+        workbook_type="three_statement",
+    )
+
+def build(plan_path: Path, output_dir: Path, template: Path) -> Dict[str, Any]:
+    validation_errors = validate(str(plan_path))
+    if validation_errors:
+        raise ValueError("Plan validation failed before workbook materialization: " + "; ".join(validation_errors))
+
+    plan = read_plan(plan_path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / OUTPUT_WORKBOOK
+    run_log_path = output_dir / OUTPUT_RUN_LOG
+    model_citations_path = output_dir / OUTPUT_MODEL_CITATIONS
+
+    missing_inputs: List[str] = []
+    warnings: List[str] = []
+    updates_by_sheet = {
+        "Executive Summary": build_executive_summary_updates(plan),
+        "Control Panel": build_control_panel_updates(plan, missing_inputs, warnings),
+        "Historical Financials": build_historical_updates(plan, missing_inputs, warnings),
+        "Source Notes": build_source_notes_updates(plan),
+    }
+    materialize_workbook(template, output_path, updates_by_sheet)
+    inspection = inspect_workbook(output_path)
+    model_citations = build_model_citations(plan, output_path)
+    model_citations_path.write_text(
+        json.dumps({"model_citations": model_citations}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    inspection["anchor_map_path"] = str(model_citations_path)
+    inspection["anchor_map_present"] = len(model_citations) >= 5
+    citation_validation_errors = validate_model_citations({"model_citations": model_citations}, strict=True)
+
+    hard_failures = []
+    if not inspection["required_sheets_present"]:
+        hard_failures.append("banker_formula_workbook_missing_required_sheets")
+    if inspection["formula_count"] < inspection["minimum_formula_count"]:
+        hard_failures.append("banker_formula_workbook_formula_count_below_threshold")
+    if not inspection["required_formula_sheets_populated"]:
+        hard_failures.append("banker_formula_workbook_missing_required_formula_sheets")
+    if not inspection["cover_first"]:
+        hard_failures.append("banker_formula_workbook_cover_not_first_visible_sheet")
+    if not inspection.get("has_named_ranges") and not inspection.get("anchor_map_present"):
+        hard_failures.append("banker_formula_workbook_missing_named_ranges_or_anchor_map")
+    if citation_validation_errors:
+        hard_failures.append("banker_formula_workbook_model_citations_invalid")
+    if not inspection["has_styles"]:
+        hard_failures.append("banker_formula_workbook_styles_missing")
+    if not inspection["no_external_links"]:
+        hard_failures.append("banker_formula_workbook_contains_external_links")
+
+    model_status = "not-decision-ready" if hard_failures else ("screen-grade" if has_placeholder_sources(plan) else "senior-review-ready")
+    run_status = "failed" if hard_failures else "completed"
+    run_log = {
+        "status": run_status,
+        "model_status": model_status,
+        "readiness_effect": model_status.replace("-", "_"),
+        "decision_impact": (
+            "Formula inspection failed; workbook is diagnostic only and must not drive target, rating, sizing, or circulation."
+            if hard_failures
+            else "Formula workbook passed integrity gates; Excel or compatible software should recalculate on open before final circulation."
+        ),
+        "workbook_mode": "banker_formula_workbook",
+        "artifact_level": "banker_formula_workbook_template_materializer",
+        "template_path": str(template),
+        "output_paths": {
+            "banker_formula_workbook": str(output_path),
+            "banker_formula_workbook_run_log": str(run_log_path),
+            "model_citations": str(model_citations_path),
+            "manifest": str(output_dir / OUTPUT_MANIFEST),
+        },
+        "partial_context_warning": PARTIAL_CONTEXT_WARNING if has_placeholder_sources(plan) else None,
+        "missing_inputs": sorted(set(missing_inputs)),
+        "warnings": sorted(set(warnings)),
+        "hard_failures": hard_failures,
+        "workbook_inspection": inspection,
+        "model_citations_count": len(model_citations),
+        "model_citation_validation_errors": citation_validation_errors,
+        "formula_mode_limitations": [
+            "Preserves and populates the bundled formula workbook template.",
+            "Does not synthesize new tabs, formulas, or workbook architecture beyond the shipped template.",
+            "Excel or compatible spreadsheet software should recalculate formulas after opening.",
+        ],
+    }
+    run_log_path.write_text(json.dumps(run_log, indent=2), encoding="utf-8")
+    write_output_manifest(output_dir, run_log)
+    return run_log
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Materialize the 3-statement banker formula workbook template from plan.json.")
+    parser.add_argument("plan_json", type=Path)
+    parser.add_argument("--output-dir", type=Path, default=None, help="Output directory for workbook, run log, and manifest. Defaults to ./output.")
+    parser.add_argument("--template", type=Path, default=DEFAULT_TEMPLATE)
+    args = parser.parse_args()
+    output_dir = args.output_dir if args.output_dir else Path.cwd() / "output"
+
+    try:
+        run_log = build(args.plan_json, output_dir, args.template)
+    except Exception as exc:
+        print(f"banker_formula_workbook materialization FAILED: {exc}", file=sys.stderr)
+        return 1
+
+    print(json.dumps({
+        "model_status": run_log["model_status"],
+        "status": run_log["status"],
+        "workbook_mode": run_log["workbook_mode"],
+        "output_paths": run_log["output_paths"],
+        "hard_failures": run_log["hard_failures"],
+        "warnings": run_log["warnings"],
+        "missing_inputs": run_log["missing_inputs"],
+    }, indent=2))
+    return 2 if run_log["hard_failures"] else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

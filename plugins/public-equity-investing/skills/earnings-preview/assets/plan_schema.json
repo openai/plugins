@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Earnings Preview Pack plan.json",
+  "type": "object",
+  "required": [
+    "ticker",
+    "fiscal_period_id",
+    "sector_pack",
+    "input_dir",
+    "output_dir",
+    "freeze_time"
+  ],
+  "properties": {
+    "ticker": {"type": "string"},
+    "company_name": {"type": "string"},
+    "fiscal_period_id": {"type": "string", "description": "Format FYYYYYQ[1-4]"},
+    "sector_pack": {"type": "string"},
+    "input_dir": {"type": "string"},
+    "output_dir": {"type": "string"},
+    "freeze_time": {"type": "string", "description": "ISO8601, ideally UTC"},
+    "consensus_statistic": {"type": "string", "enum": ["median", "mean", "last"], "default": "median"},
+
+    "kpi_overrides": {
+      "type": "object",
+      "properties": {
+        "include": {"type": "array", "items": {"type": "string"}},
+        "exclude": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "company_master": {"type": "string"},
+        "fiscal_period_index": {"type": "string"},
+        "event_calendar": {"type": "string"},
+        "reported_financials": {"type": "string"},
+        "kpi_timeseries": {"type": "string"},
+        "guidance_history": {"type": "string"},
+        "consensus_estimates": {"type": "string"},
+        "whisper_estimates": {"type": "string"},
+        "price_returns": {"type": "string"},
+        "options_snapshot": {"type": "string"},
+        "qual_notes": {"type": "string"},
+        "scenario_assumptions": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+
+    "outputs": {
+      "type": "object",
+      "properties": {
+        "render_note": {"type": "boolean", "default": true},
+        "export_xlsx": {"type": "boolean", "default": true},
+        "export_csv": {"type": "boolean", "default": true},
+        "note_template": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

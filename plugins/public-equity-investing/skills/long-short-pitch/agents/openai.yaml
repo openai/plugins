@@ -1,0 +1,5 @@
+interface:
+  display_name: Long Short Pitch
+  short_description: Build PM-facing trade pitches with variant perception, expression, catalysts, sparse-context stance, and exit rules.
+policy:
+  allow_implicit_invocation: false

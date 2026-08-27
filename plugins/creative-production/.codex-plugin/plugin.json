@@ -1,0 +1,56 @@
+{
+  "name": "creative-production",
+  "version": "0.1.25",
+  "description": "Explore campaign ideas, concept images, mood boards, product placements, ad directions, listing images, social posts, and launch assets.",
+  "author": {
+    "name": "Creative Production",
+    "email": "adrianmasson@openai.com, storus@openai.com"
+  },
+  "homepage": "https://github.com/openai/oai-maintained-plugins/tree/main/plugins/creative-production",
+  "repository": "https://github.com/openai/oai-maintained-plugins/tree/main/plugins/creative-production",
+  "license": "Proprietary",
+  "keywords": [
+    "creative-production",
+    "marketing",
+    "creative",
+    "visuals",
+    "images",
+    "image-generation",
+    "mood-board",
+    "campaigns",
+    "ads",
+    "social-posts",
+    "product-photos",
+    "brand",
+    "design",
+    "marketing-assets",
+    "visual-exploration",
+    "asset-production"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Creative Production",
+    "shortDescription": "Create marketing visuals from a brief or product image.",
+    "longDescription": "Creative Production helps marketers turn a brief, product image, offer, or existing asset into visual options the team can review. Use it to explore campaign ideas, concept images, mood boards, product placements, ad directions, listing images, social posts, and reusable styles. Start with a brief or image, compare the strongest options, then adapt the chosen direction for the channels you need.",
+    "developerName": "OpenAI",
+    "category": "Creativity",
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Start me on a creative production workflow",
+      "Generate concept images for this visual brief",
+      "Create product placements from this image"
+    ],
+    "brandColor": "#924FF7",
+    "composerIcon": "./assets/composerIcon.svg",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

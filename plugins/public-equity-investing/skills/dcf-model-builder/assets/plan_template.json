@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "company": "Northstar Industrial Software, Inc.",
+    "ticker": "NSIS",
+    "industry": "industrial software / vertical SaaS",
+    "currency": "USD",
+    "units": "$mm except per-share data",
+    "valuation_date": "2026-05-11",
+    "as_of_date": "2026-03-31",
+    "accounting_basis": "US GAAP",
+    "valuation_purpose": "public_equity_screen",
+    "model_type": "fcff"
+  },
+  "source_basis": [
+    {
+      "id": "src_hist_001",
+      "topic": "historicals",
+      "label": "reported",
+      "source_name": "FY2025 Form 10-K financial statements (illustrative template source)",
+      "source_type": "company_filing",
+      "as_of_date": "2025-12-31",
+      "confidence": "high",
+      "notes": "Illustrative source entry used for smoke testing; replace with real filing reference for live work."
+    },
+    {
+      "id": "src_forecast_001",
+      "topic": "forecast",
+      "label": "analyst_estimate",
+      "source_name": "Analyst operating case based on reported history and management-style KPIs",
+      "source_type": "analyst_model",
+      "as_of_date": "2026-05-11",
+      "confidence": "medium",
+      "notes": "Replace with management plan, consensus, or sourced operating drivers for decision-grade use."
+    },
+    {
+      "id": "src_wacc_001",
+      "topic": "wacc",
+      "label": "analyst_estimate",
+      "source_name": "Illustrative market-data build for cost of capital",
+      "source_type": "analyst_model",
+      "as_of_date": "2026-05-11",
+      "confidence": "medium",
+      "notes": "Use current risk-free rate, peer beta, ERP, debt yields, and target capital structure for live work."
+    },
+    {
+      "id": "src_terminal_001",
+      "topic": "terminal_value",
+      "label": "analyst_estimate",
+      "source_name": "Analyst terminal-value framework",
+      "source_type": "analyst_model",
+      "as_of_date": "2026-05-11",
+      "confidence": "medium",
+      "notes": "Terminal growth and exit-multiple cross-check are illustrative."
+    },
+    {
+      "id": "src_bridge_001",
+      "topic": "net_debt",
+      "label": "reported",
+      "source_name": "Latest balance sheet and debt schedule (illustrative template source)",
+      "source_type": "company_filing",
+      "as_of_date": "2026-03-31",
+      "confidence": "high",
+      "notes": "Replace with latest cash, debt, leases, pensions, minorities, and non-operating assets."
+    },
+    {
+      "id": "src_shares_001",
+      "topic": "share_count",
+      "label": "reported",
+      "source_name": "Latest diluted share count disclosure (illustrative template source)",
+      "source_type": "company_filing",
+      "as_of_date": "2026-03-31",
+      "confidence": "high",
+      "notes": "Replace with current diluted shares and option/convertible treatment."
+    }
+  ],
+  "timeline": {
+    "start_year": 2025,
+    "horizon_years": 5,
+    "periodicity": "annual"
+  },
+  "historicals": {
+    "latest_year": 2025,
+    "revenue": 1200.0,
+    "ebitda": 300.0,
+    "ebit": 220.0,
+    "cash_taxes": 52.8,
+    "da": 80.0,
+    "capex": 95.0,
+    "change_nwc": 18.0,
+    "net_working_capital": 140.0,
+    "unlevered_fcf": 134.2,
+    "source_id": "src_hist_001"
+  },
+  "forecast": {
+    "cash_flow_basis": "fcff",
+    "mid_year_convention": true,
+    "source_id": "src_forecast_001",
+    "notes": "Forecasts are driver-based using revenue growth, EBIT margin, cash tax, D&A intensity, capex intensity, and NWC intensity."
+  },
+  "wacc": {
+    "risk_free_rate": 0.043,
+    "beta": 1.12,
+    "equity_risk_premium": 0.055,
+    "size_premium": 0.01,
+    "company_specific_premium": 0.0,
+    "country_risk_premium": 0.0,
+    "pre_tax_cost_of_debt": 0.0625,
+    "marginal_tax_rate": 0.24,
+    "target_debt_pct": 0.2,
+    "target_equity_pct": 0.8,
+    "source_id": "src_wacc_001",
+    "preferred_pct": 0.0,
+    "pre_tax_cost_of_preferred": 0.0
+  },
+  "terminal_value": {
+    "method": "perpetual_growth",
+    "perpetual_growth_rate": 0.025,
+    "exit_ebitda_multiple": 13.0,
+    "source_id": "src_terminal_001"
+  },
+  "ev_to_equity_bridge": {
+    "cash": 180.0,
+    "debt": 650.0,
+    "leases": 45.0,
+    "minorities": 0.0,
+    "associates": 0.0,
+    "pensions": 15.0,
+    "preferred_stock": 0.0,
+    "non_operating_assets": 25.0,
+    "options": 0.0,
+    "other_debt_like_items": 0.0,
+    "diluted_shares": 92.5,
+    "net_debt_source_id": "src_bridge_001",
+    "share_count_source_id": "src_shares_001"
+  },
+  "scenarios": {
+    "base": {
+      "description": "Base case assumes durable vertical software growth, modest operating leverage, and steady reinvestment.",
+      "revenue_growth": [
+        0.09,
+        0.08,
+        0.07,
+        0.06,
+        0.05
+      ],
+      "ebit_margin": [
+        0.195,
+        0.205,
+        0.215,
+        0.225,
+        0.235
+      ],
+      "tax_rate": 0.24,
+      "da_percent_revenue": 0.06,
+      "capex_percent_revenue": 0.07,
+      "nwc_percent_revenue": [
+        0.12,
+        0.12,
+        0.115,
+        0.115,
+        0.11
+      ],
+      "terminal_growth_rate": 0.025,
+      "wacc_adjustment": 0.0
+    },
+    "downside": {
+      "description": "Downside case reflects slower new bookings, weaker operating leverage, higher risk premium, and lower terminal growth.",
+      "revenue_growth": [
+        0.03,
+        0.02,
+        0.02,
+        0.025,
+        0.03
+      ],
+      "ebit_margin": [
+        0.175,
+        0.175,
+        0.18,
+        0.185,
+        0.19
+      ],
+      "tax_rate": 0.24,
+      "da_percent_revenue": 0.06,
+      "capex_percent_revenue": 0.075,
+      "nwc_percent_revenue": [
+        0.125,
+        0.125,
+        0.12,
+        0.12,
+        0.115
+      ],
+      "terminal_growth_rate": 0.015,
+      "wacc_adjustment": 0.005
+    },
+    "upside": {
+      "description": "Upside case reflects stronger retention, better pricing, margin expansion, and lower perceived risk.",
+      "revenue_growth": [
+        0.12,
+        0.11,
+        0.1,
+        0.08,
+        0.07
+      ],
+      "ebit_margin": [
+        0.205,
+        0.22,
+        0.235,
+        0.25,
+        0.26
+      ],
+      "tax_rate": 0.24,
+      "da_percent_revenue": 0.058,
+      "capex_percent_revenue": 0.068,
+      "nwc_percent_revenue": [
+        0.12,
+        0.115,
+        0.11,
+        0.105,
+        0.1
+      ],
+      "terminal_growth_rate": 0.03,
+      "wacc_adjustment": -0.0025
+    }
+  },
+  "sensitivities": {
+    "wacc_delta": [
+      -0.01,
+      -0.005,
+      0.0,
+      0.005,
+      0.01
+    ],
+    "terminal_growth_delta": [
+      -0.01,
+      -0.005,
+      0.0,
+      0.005,
+      0.01
+    ],
+    "exit_multiple_delta": [
+      -2.0,
+      -1.0,
+      0.0,
+      1.0,
+      2.0
+    ],
+    "revenue_growth_delta": [
+      -0.02,
+      -0.01,
+      0.0,
+      0.01,
+      0.02
+    ],
+    "ebit_margin_delta": [
+      -0.03,
+      -0.015,
+      0.0,
+      0.015,
+      0.03
+    ]
+  }
+}

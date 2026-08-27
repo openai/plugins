@@ -1,0 +1,5 @@
+interface:
+  display_name: "Retouch portraits"
+  short_description: "Bulk-retouch a folder of portrait photos."
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"

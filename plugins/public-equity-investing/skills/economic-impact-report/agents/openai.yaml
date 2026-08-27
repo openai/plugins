@@ -1,0 +1,5 @@
+interface:
+  display_name: "Economic Impact Report"
+  short_description: "Public-equity impact reports for macro, policy, commodity, geopolitical, and industry shocks."
+policy:
+  allow_implicit_invocation: false

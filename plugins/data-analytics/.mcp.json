@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "dataAnalyticsWidgets": {
+      "title": "Data Analytics",
+      "description": "Render Data Analytics charts, tables, dashboards, and report artifacts.",
+      "icons": [
+        {
+          "src": "./assets/datascience-small.svg",
+          "mimeType": "image/svg+xml",
+          "sizes": [
+            "24x24"
+          ]
+        },
+        {
+          "src": "./assets/datascience.png",
+          "mimeType": "image/png",
+          "sizes": [
+            "360x360"
+          ]
+        }
+      ],
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "./mcp/server.cjs",
+        "--stdio"
+      ]
+    }
+  }
+}

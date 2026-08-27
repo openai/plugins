@@ -1,0 +1,162 @@
+# Simple driver model templates used for scenario translation and sensitivity tables.
+# These are intentionally lightweight and heuristic; replace with your house model as needed.
+
+models:
+  saas_simple:
+    description: "SaaS: revenue/ARR driven; retention and net adds are key debates."
+    required_kpis:
+      - revenue
+      - arr
+      - nrr
+      - gross_margin
+      - operating_margin
+    sensitivity_rules:
+      # Heuristic: 1% ARR difference -> ~1% revenue difference (quarterly near-term)
+      - target_metric_id: revenue
+        driver_metric_id: arr
+        driver_type: pct
+        beta: 1.0
+        units: "pct_to_pct"
+      # Heuristic: 100 bps NRR -> +0.5% revenue over near term (tunable)
+      - target_metric_id: revenue
+        driver_metric_id: nrr
+        driver_type: bps
+        beta: 0.005
+        units: "pct_per_bps"
+
+  consumer_ads_simple:
+    description: "Ads-driven consumer internet: engagement and pricing (CPM) drive revenue."
+    required_kpis:
+      - revenue
+      - dau
+      - mau
+      - arpu
+      - cpm
+    sensitivity_rules:
+      - target_metric_id: revenue
+        driver_metric_id: dau
+        driver_type: pct
+        beta: 0.7
+        units: "pct_to_pct"
+      - target_metric_id: revenue
+        driver_metric_id: cpm
+        driver_type: pct
+        beta: 0.5
+        units: "pct_to_pct"
+
+  payments_simple:
+    description: "Payments: TPV and take rate drive net revenue."
+    required_kpis:
+      - revenue
+      - tpv
+      - take_rate
+    sensitivity_rules:
+      - target_metric_id: revenue
+        driver_metric_id: tpv
+        driver_type: pct
+        beta: 0.8
+        units: "pct_to_pct"
+      - target_metric_id: revenue
+        driver_metric_id: take_rate
+        driver_type: bps
+        beta: 0.01
+        units: "pct_per_bps"
+
+  units_asp_simple:
+    description: "Semis/hardware: units and ASP drive revenue; GM drives EPS."
+    required_kpis:
+      - revenue
+      - units
+      - asp
+      - gross_margin
+    sensitivity_rules:
+      - target_metric_id: revenue
+        driver_metric_id: units
+        driver_type: pct
+        beta: 0.6
+        units: "pct_to_pct"
+      - target_metric_id: revenue
+        driver_metric_id: asp
+        driver_type: pct
+        beta: 0.6
+        units: "pct_to_pct"
+
+  retail_simple:
+    description: "Retail: comps drive revenue; GM and markdowns drive EPS."
+    required_kpis:
+      - revenue
+      - comp_sales
+      - gross_margin
+      - inventory
+    sensitivity_rules:
+      - target_metric_id: revenue
+        driver_metric_id: comp_sales
+        driver_type: pct
+        beta: 0.9
+        units: "pct_to_pct"
+      - target_metric_id: eps_diluted
+        driver_metric_id: gross_margin
+        driver_type: bps
+        beta: 0.02
+        units: "eps_per_bps"
+
+  industrials_simple:
+    description: "Industrials: orders/backlog and margins drive the quarter."
+    required_kpis:
+      - revenue
+      - orders
+      - backlog
+      - operating_margin
+    sensitivity_rules:
+      - target_metric_id: revenue
+        driver_metric_id: orders
+        driver_type: pct
+        beta: 0.5
+        units: "pct_to_pct"
+      - target_metric_id: operating_margin
+        driver_metric_id: price_mix
+        driver_type: pct
+        beta: 0.1
+        units: "pp_per_pct"
+
+  banks_simple:
+    description: "Banks: NIM and balances drive NII; credit drives EPS."
+    required_kpis:
+      - eps_diluted
+      - nii
+      - nim
+      - deposits
+      - loans
+      - net_charge_offs
+    sensitivity_rules:
+      - target_metric_id: nii
+        driver_metric_id: nim
+        driver_type: bps
+        beta: 0.015
+        units: "pct_per_bps"
+      - target_metric_id: eps_diluted
+        driver_metric_id: net_charge_offs
+        driver_type: pct
+        beta: -0.3
+        units: "pct_to_pct"
+
+  energy_simple:
+    description: "Energy: volume and realized price drive revenue/FCF; costs and capex drive leverage."
+    required_kpis:
+      - revenue
+      - production_volume
+      - realized_price
+      - loe
+      - capex
+      - fcf
+    sensitivity_rules:
+      - target_metric_id: revenue
+        driver_metric_id: production_volume
+        driver_type: pct
+        beta: 0.6
+        units: "pct_to_pct"
+      - target_metric_id: revenue
+        driver_metric_id: realized_price
+        driver_type: pct
+        beta: 0.6
+        units: "pct_to_pct"

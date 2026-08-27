@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Thesis Tracker icon">
+  <rect width="64" height="64" rx="14" fill="#0B1F33"/>
+  <path d="M16 45h32" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M18 39l9-10 8 6 11-15" fill="none" stroke="#6EE7B7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="18" cy="39" r="3" fill="#6EE7B7"/>
+  <circle cx="27" cy="29" r="3" fill="#6EE7B7"/>
+  <circle cx="35" cy="35" r="3" fill="#6EE7B7"/>
+  <circle cx="46" cy="20" r="3" fill="#6EE7B7"/>
+</svg>

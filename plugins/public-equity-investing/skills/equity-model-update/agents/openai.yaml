@@ -1,0 +1,5 @@
+interface:
+  display_name: "Equity Model Update"
+  short_description: "Safely update copied public-company Excel models, with source-to-cell maps, change logs, and review packs."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,180 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "idea_generation",
+  "layout": "single_page",
+  "title": "Public Equity Investing idea funnel dashboard",
+  "subtitle": "Synthetic strict-mode example for candidate triage.",
+  "issuer": {
+    "name": "Multi-name screen",
+    "sector": "Cross-sector",
+    "brand_dark_color": "#4b5563"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic screen plus filing/news examples",
+    "citation_policy": "strict",
+    "decision_context": "Which names deserve immediate research follow-up.",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Idea generation",
+    "headline": "The screen surfaces a small number of research-worthy candidates",
+    "dek": "The dashboard separates candidates, watchlist items, and rejected false positives.",
+    "callout_label": "Screen Purpose",
+    "callout": "Prioritize follow-up, not final trade recommendations.",
+    "citations": [
+      "S1"
+    ]
+  },
+  "snapshot": [
+    {
+      "label": "Top Candidate",
+      "value": "ACME Software",
+      "detail": "Best combination of catalyst path and valuation setup in the synthetic screen.",
+      "status": "good",
+      "citations": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "label": "Readiness",
+      "value": "Triage only",
+      "detail": "No candidate is implementation-ready without live market refresh.",
+      "status": "watch",
+      "citations": [
+        "S1"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "screen-summary",
+      "label": "Summary",
+      "modules": [
+        {
+          "type": "decision_box",
+          "data": {
+            "label": "PM triage",
+            "stance": "Watch",
+            "summary": "The screen produces research candidates, not recommendations; ACME Software should move to comps and earnings work first.",
+            "next_catalyst": "Refresh market data and validate the catalyst path.",
+            "citations": [
+              "S1",
+              "S2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "candidate-board",
+      "label": "Candidates",
+      "modules": [
+        {
+          "type": "table",
+          "data": {
+            "columns": [
+              "Candidate",
+              "Bucket",
+              "Why now",
+              "First rejection risk",
+              "Next workflow"
+            ],
+            "rows": [
+              {
+                "Candidate": "ACME Software",
+                "Bucket": "Immediate research candidate",
+                "Why now": "Valuation compression plus near-term product catalyst.",
+                "First rejection risk": "Consensus refresh may already embed the catalyst.",
+                "Next workflow": "Comps analysis and earnings preview",
+                "citations": [
+                  "S1",
+                  "S2"
+                ]
+              },
+              {
+                "Candidate": "Beta Retail",
+                "Bucket": "Watchlist",
+                "Why now": "Margin inflection is possible but evidence is thin.",
+                "First rejection risk": "Consumer demand data may remain weak.",
+                "Next workflow": "Thesis tracker",
+                "citations": [
+                  "S1",
+                  "S3"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "next-actions",
+      "label": "Next Actions",
+      "modules": [
+        {
+          "type": "question_list",
+          "data": {
+            "questions": [
+              {
+                "question": "Does live consensus already price the catalyst?",
+                "why": "It determines whether the idea is variant or merely visible.",
+                "citations": [
+                  "S2"
+                ]
+              },
+              {
+                "question": "Which rejected names failed because of data quality rather than thesis quality?",
+                "why": "It controls what gets parked on the watchlist.",
+                "citations": [
+                  "S1"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "missing_evidence",
+          "data": {
+            "items": [
+              "Live market data, liquidity, borrow, options, and consensus fields need refresh before any trade pitch.",
+              "Rejected candidates need source-backed rejection notes before archival."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Synthetic public equity screen export",
+      "url": "https://example.com/idea-screen",
+      "as_of": "2026-05-18",
+      "type": "screen",
+      "status": "synthetic example",
+      "excerpt": "Candidate scores and triage fields."
+    },
+    {
+      "id": "S2",
+      "title": "Synthetic ACME catalyst note",
+      "url": "https://example.com/acme-catalyst",
+      "as_of": "2026-05-18",
+      "type": "research note",
+      "status": "synthetic example",
+      "excerpt": "Product catalyst and consensus caveat."
+    },
+    {
+      "id": "S3",
+      "title": "Synthetic retail macro note",
+      "url": "https://example.com/retail-macro",
+      "as_of": "2026-05-18",
+      "type": "macro note",
+      "status": "synthetic example",
+      "excerpt": "Consumer demand risk context."
+    }
+  ]
+}

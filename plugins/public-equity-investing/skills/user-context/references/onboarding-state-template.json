@@ -1,0 +1,18 @@
+{
+  "status": null,
+  "orientation": {},
+  "memory_preferences": {},
+  "source_setup": {},
+  "connector_confirmation": {},
+  "automations": {},
+  "hero_prompt_choice": {
+    "status": null,
+    "options": [
+      "earnings-deep-dive",
+      "long-short-pitch",
+      "idea-generation"
+    ],
+    "selected_skill": null,
+    "selected_anchor": null
+  }
+}

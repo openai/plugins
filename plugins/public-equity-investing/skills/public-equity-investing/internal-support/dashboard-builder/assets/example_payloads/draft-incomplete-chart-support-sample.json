@@ -1,0 +1,38 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "earnings_preview",
+  "layout": "single_page",
+  "title": "ExampleCo: Draft Incomplete Chart",
+  "issuer": {
+    "ticker": "EXCO"
+  },
+  "metadata": {
+    "payload_stage": "draft",
+    "citation_policy": "warn",
+    "readiness_label": "Draft support only",
+    "readiness_posture": "working_draft"
+  },
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "modules": [
+        {
+          "type": "financial_trend_chart",
+          "data": {
+            "periods": [
+              {
+                "period": "Q1 FY2026",
+                "revenue": "100",
+                "gross_profit": "",
+                "net_income": "20",
+                "net_margin": "20%"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": []
+}

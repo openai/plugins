@@ -1,0 +1,78 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "chart_readiness_test",
+  "layout": "single_page",
+  "title": "Incomplete Financial Trend Fixture",
+  "subtitle": "Synthetic strict-mode fixture that should fail chart-readiness validation.",
+  "issuer": {
+    "ticker": "MISS",
+    "name": "Missing Series Co.",
+    "sector": "Testing",
+    "brand_dark_color": "#7f1d1d"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic incomplete chart data",
+    "citation_policy": "strict",
+    "decision_context": "Incomplete chart modules should not render silently.",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Chart QA",
+    "headline": "Incomplete chart fixture",
+    "dek": "This fixture intentionally has incomplete chart rows.",
+    "callout_label": "Expected Validation",
+    "callout": "Strict validation should fail.",
+    "citations": [
+      "S1"
+    ]
+  },
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "modules": [
+        {
+          "type": "financial_trend_chart",
+          "data": {
+            "periods": [
+              {
+                "period": "Q1 FY2026",
+                "revenue": "100",
+                "gross_profit": "60",
+                "net_income": "20",
+                "net_margin": "20%",
+                "citations": [
+                  "S1"
+                ]
+              },
+              {
+                "period": "Q2 FY2026",
+                "revenue": "110",
+                "gross_profit": "",
+                "net_income": "22",
+                "net_margin": "20%",
+                "citations": [
+                  "S1"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Synthetic incomplete chart source",
+      "url": "https://example.com/incomplete-chart",
+      "as_of": "2026-05-18",
+      "type": "test source",
+      "status": "synthetic example",
+      "excerpt": "Includes one complete period and one incomplete period."
+    }
+  ]
+}

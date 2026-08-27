@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "libraries": [
+    {
+      "id": "offer-library",
+      "title": "Offer Library",
+      "summary": "JSON-first reusable product and offer archetypes for Creative Production exploration and build/remix workflows."
+    }
+  ],
+  "packs": [
+    {
+      "id": "cross-industry-product-ad-archetypes",
+      "title": "Cross-Industry Product Ad Archetypes",
+      "path": "packs/cross-industry-product-ad-archetypes.json",
+      "familyCount": 25,
+      "status": "active",
+      "sourceMode": "offers"
+    }
+  ]
+}

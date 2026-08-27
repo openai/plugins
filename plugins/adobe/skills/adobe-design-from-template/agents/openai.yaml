@@ -1,0 +1,5 @@
+interface:
+  display_name: "Design from template"
+  short_description: "Create visual designs using Adobe Express templates."
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"

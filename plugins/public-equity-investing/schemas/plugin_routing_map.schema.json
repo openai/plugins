@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openai.local/public-equity-investing/plugin_routing_map.schema.json",
+  "title": "Public Equity Investing Plugin Routing Map",
+  "type": "object",
+  "required": [
+    "version",
+    "plugin",
+    "routing_policy",
+    "workflows"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "plugin": {
+      "const": "public-equity-investing"
+    },
+    "routing_policy": {
+      "type": "object",
+      "required": [
+        "invocation_policy_reference",
+        "playbook_reference",
+        "default_routing_principle",
+        "artifact_hierarchy",
+        "support_artifact_policy",
+        "negative_boundary"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "invocation_policy_reference": {"type": "string"},
+        "playbook_reference": {"type": "string"},
+        "default_routing_principle": {"type": "string"},
+        "artifact_hierarchy": {"type": "string"},
+        "support_artifact_policy": {"type": "string"},
+        "negative_boundary": {"type": "string"},
+        "non_trigger_examples": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "workflows": {
+      "type": "array",
+      "minItems": 21,
+      "items": {"$ref": "#/$defs/workflow"}
+    }
+  },
+  "$defs": {
+    "workflow": {
+      "type": "object",
+      "required": [
+        "workflow_id",
+        "workflow_name",
+        "investor_intent",
+        "typical_user_prompts",
+        "lead_skill",
+        "supporting_skills",
+        "default_artifact_mode",
+        "hero_deliverable",
+        "companion_deliverables",
+        "support_artifacts",
+        "source_gates",
+        "quality_gates",
+        "routing_triggers",
+        "do_not_route_when",
+        "escalation_paths",
+        "clarifying_questions",
+        "stop_or_escalate_when"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "workflow_id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "workflow_name": {"type": "string", "minLength": 1},
+        "investor_intent": {"type": "string", "minLength": 1},
+        "typical_user_prompts": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "lead_skill": {"type": "string", "minLength": 1},
+        "supporting_skills": {"type": "array", "items": {"type": "string"}},
+        "default_artifact_mode": {
+          "type": "string",
+          "enum": [
+            "workbook",
+            "html_report",
+            "html_dashboard",
+            "native_deck",
+            "native_document",
+            "generated_package",
+            "hybrid",
+            "chat_only"
+          ]
+        },
+        "hero_deliverable": {"type": "string", "minLength": 1},
+        "companion_deliverables": {"type": "array", "items": {"type": "string"}},
+        "support_artifacts": {"type": "array", "items": {"type": "string"}},
+        "source_gates": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "quality_gates": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "routing_triggers": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "do_not_route_when": {"type": "array", "items": {"type": "string"}},
+        "escalation_paths": {"type": "array", "items": {"$ref": "#/$defs/escalation_path"}},
+        "clarifying_questions": {"type": "array", "items": {"type": "string"}},
+        "stop_or_escalate_when": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "escalation_path": {
+      "type": "object",
+      "required": ["to", "when"],
+      "additionalProperties": true,
+      "properties": {
+        "to": {"type": "string"},
+        "when": {"type": "string"}
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Produce"
+  short_description: "Create and refine visual creative"
+  default_prompt: "Use $produce to create visual directions for this brief and show them in Creative Production."
+policy:
+  allow_implicit_invocation: true

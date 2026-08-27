@@ -1,0 +1,5 @@
+interface:
+  display_name: "Initiating Coverage"
+  short_description: "Builds public-equity-investing initiation reports with thesis, model, valuation, catalysts, risks, and target price."
+policy:
+  allow_implicit_invocation: false

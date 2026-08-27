@@ -1,0 +1,6 @@
+interface:
+  display_name: "Public Equity Investing"
+  short_description: "Routes public-equity research, earnings, valuation, thesis, catalyst, and portfolio workflows"
+  default_prompt: "Use $public-equity-investing for listed-equity research, earnings, valuation, thesis, catalyst, model update, and portfolio workflows."
+policy:
+  allow_implicit_invocation: true

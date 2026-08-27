@@ -1,0 +1,68 @@
+{
+  "name": "data-analytics",
+  "version": "0.2.8",
+  "description": "Answer product and business questions with data",
+  "author": {
+    "name": "Data Analytics Maintainers"
+  },
+  "homepage": "https://openai.com/",
+  "repository": "",
+  "license": "Proprietary",
+  "keywords": [
+    "data-analytics",
+    "analytics",
+    "business intelligence",
+    "sql",
+    "business-context",
+    "dashboards",
+    "funnel-analysis",
+    "kpi-reporting",
+    "market-sizing",
+    "metric-diagnostics",
+    "post-launch-updates",
+    "product-analysis",
+    "retention",
+    "root-cause-analysis",
+    "scorecards",
+    "validation",
+    "visualization",
+    "jupyter-notebooks",
+    "databricks",
+    "bigquery",
+    "snowflake",
+    "deepnote",
+    "mixpanel",
+    "mixpanel-headless",
+    "metabase",
+    "thoughtspot",
+    "guided-flow",
+    "semantic-layer"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Data Analytics",
+    "shortDescription": "Answer product and business questions with data",
+    "longDescription": "Data Analytics helps you turn questions about your product or business into answers you can trust. Ask why a metric changed, what the data shows about where a team should focus next, how to define KPIs, whether a dataset is reliable, or how large an opportunity might be, and it can help you investigate the data and turn the findings into shareable reports, charts, dashboards, notebooks, and recommendations.\n\nStart with the data you already have: connected warehouses, BI or product analytics tools, docs, chats, spreadsheets, uploaded files, pasted results, or clearly labeled sample data. The plugin guides you through the right workflow, checks sources where possible, and keeps the evidence visible in reviewable tables, charts, dashboards, and report apps you can share.",
+    "developerName": "OpenAI",
+    "category": "Data & Analytics",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Help me get started with my first data task",
+      "Analyze product or business data and recommend where to focus next",
+      "Diagnose why a key metric changed and identify the biggest drivers"
+    ],
+    "brandColor": "#0285FF",
+    "composerIcon": "./assets/datascience-small.svg",
+    "logo": "./assets/datascience.png",
+    "screenshots": []
+  }
+}

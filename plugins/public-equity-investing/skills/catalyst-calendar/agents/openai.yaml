@@ -1,0 +1,5 @@
+interface:
+  display_name: Catalyst Calendar
+  short_description: Build PM-grade public equity markets catalyst calendars.
+policy:
+  allow_implicit_invocation: false

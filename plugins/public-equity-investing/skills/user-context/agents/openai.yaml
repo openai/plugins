@@ -1,0 +1,6 @@
+interface:
+  display_name: "Public Equity Investing User Context"
+  short_description: "Manage local Public Equity Investing context storage"
+  default_prompt: "Use $user-context to initialize, inspect, or explicitly reset local Public Equity Investing context storage."
+policy:
+  allow_implicit_invocation: false

@@ -684,6 +684,78 @@
         "authentication": "ON_USE"
       },
       "category": "Creativity"
+    },
+    {
+      "name": "data-analytics",
+      "source": {
+        "source": "local",
+        "path": "./plugins/data-analytics"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Data & Analytics"
+    },
+    {
+      "name": "creative-production",
+      "source": {
+        "source": "local",
+        "path": "./plugins/creative-production"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Creativity"
+    },
+    {
+      "name": "public-equity-investing",
+      "source": {
+        "source": "local",
+        "path": "./plugins/public-equity-investing"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Finance"
+    },
+    {
+      "name": "adobe",
+      "source": {
+        "source": "local",
+        "path": "./plugins/adobe"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity"
+    },
+    {
+      "name": "lovable",
+      "source": {
+        "source": "local",
+        "path": "./plugins/lovable"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "clickup",
+      "source": {
+        "source": "local",
+        "path": "./plugins/clickup"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ]
 }

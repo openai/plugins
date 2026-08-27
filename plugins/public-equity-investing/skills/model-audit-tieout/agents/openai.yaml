@@ -1,0 +1,5 @@
+interface:
+  display_name: "Model Audit Tie-out"
+  short_description: "Audit financial models for formulas, tie-outs, assumptions, sensitivities, and IC-ready QA."
+policy:
+  allow_implicit_invocation: false

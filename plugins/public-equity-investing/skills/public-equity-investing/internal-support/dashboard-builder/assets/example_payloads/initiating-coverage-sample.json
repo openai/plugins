@@ -1,0 +1,220 @@
+{
+  "kind": "public_equity_investing_dashboard.v1",
+  "mode": "initiating_coverage",
+  "layout": "single_page",
+  "title": "ACME Infrastructure: initiation dashboard",
+  "subtitle": "Synthetic strict-mode example for a thesis-led initiation.",
+  "issuer": {
+    "ticker": "AINF",
+    "name": "ACME Infrastructure",
+    "sector": "Infrastructure",
+    "brand_dark_color": "#335c3b"
+  },
+  "metadata": {
+    "freeze_time": "2026-05-18 09:00 ET",
+    "source_posture": "Synthetic filings, model output, and market-data examples",
+    "citation_policy": "strict",
+    "decision_context": "Whether capacity additions support a new long-only research posture.",
+    "payload_stage": "production",
+    "readiness_label": "Production fixture",
+    "readiness_posture": "pm_ready"
+  },
+  "hero": {
+    "eyebrow": "Initiating coverage",
+    "headline": "Capacity growth can compound if contract renewals stay disciplined",
+    "dek": "The dashboard maps thesis, valuation method, catalysts, and evidence gaps.",
+    "callout_label": "Variant View",
+    "callout": "The market may be underweighting renewal quality relative to headline capacity additions.",
+    "citations": [
+      "S1",
+      "S2"
+    ]
+  },
+  "snapshot": [
+    {
+      "label": "Research Posture",
+      "value": "Constructive watch",
+      "detail": "Needs model refresh before a rating-style conclusion.",
+      "status": "watch",
+      "citations": [
+        "S2"
+      ]
+    },
+    {
+      "label": "Key Catalyst",
+      "value": "Investor day",
+      "detail": "Management should update renewal and capacity commentary.",
+      "status": "good",
+      "citations": [
+        "S3"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "view",
+      "label": "View",
+      "modules": [
+        {
+          "type": "executive_summary",
+          "data": {
+            "headline": "Initiation frame",
+            "body": "The initiation thesis is constructive but not decision-grade until renewal quality, capex cadence, and valuation support are refreshed.",
+            "net_read": "Build the model and track renewal disclosure before upgrading the view.",
+            "citations": [
+              "S1",
+              "S2"
+            ]
+          }
+        },
+        {
+          "type": "decision_box",
+          "data": {
+            "label": "Decision",
+            "stance": "Watch",
+            "summary": "Thesis is plausible; valuation and renewal evidence still gate a publishable recommendation.",
+            "next_catalyst": "Investor day disclosure.",
+            "citations": [
+              "S2",
+              "S3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "thesis",
+      "label": "Thesis",
+      "modules": [
+        {
+          "type": "cards",
+          "data": {
+            "items": [
+              {
+                "title": "Thesis pillar",
+                "body": "Capacity additions matter only if renewal spreads remain disciplined.",
+                "citations": [
+                  "S1"
+                ]
+              },
+              {
+                "title": "Falsifier",
+                "body": "Capex acceleration without renewal improvement would weaken the long-only case.",
+                "citations": [
+                  "S2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "scenario_map",
+          "data": {
+            "cases": [
+              {
+                "label": "Bear",
+                "status": "bear",
+                "summary": "Renewals fade and capacity growth dilutes returns.",
+                "citations": [
+                  "S1",
+                  "S2"
+                ]
+              },
+              {
+                "label": "Base",
+                "status": "base",
+                "summary": "Renewals remain stable while capacity growth supports steady compounding.",
+                "citations": [
+                  "S1"
+                ]
+              },
+              {
+                "label": "Bull",
+                "status": "bull",
+                "summary": "Renewals improve and capacity comes online ahead of plan.",
+                "citations": [
+                  "S3"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "valuation-evidence",
+      "label": "Valuation & Evidence",
+      "modules": [
+        {
+          "type": "table",
+          "data": {
+            "columns": [
+              "Section",
+              "Current support",
+              "Open item",
+              "PM read"
+            ],
+            "rows": [
+              {
+                "Section": "Model",
+                "Current support": "Synthetic operating model output",
+                "Open item": "Refresh capex and renewal inputs",
+                "PM read": "Model support is incomplete",
+                "citations": [
+                  "S2"
+                ]
+              },
+              {
+                "Section": "Catalyst",
+                "Current support": "Investor day date from synthetic event source",
+                "Open item": "Confirm agenda and webcast timing",
+                "PM read": "Useful near-term checkpoint",
+                "citations": [
+                  "S3"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "missing_evidence",
+          "data": {
+            "items": [
+              "Live market data, consensus estimates, and final model sensitivities are required before publication-ready output.",
+              "Source conflicts should be resolved before any rating-style language is used."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "ACME Infrastructure synthetic annual filing",
+      "url": "https://example.com/ainf-filing",
+      "as_of": "2026-03-15",
+      "type": "filing",
+      "status": "synthetic example",
+      "excerpt": "Capacity and renewal discussion."
+    },
+    {
+      "id": "S2",
+      "title": "Synthetic initiation model output",
+      "url": "https://example.com/ainf-model-output",
+      "as_of": "2026-05-18",
+      "type": "model output",
+      "status": "synthetic example",
+      "excerpt": "Forecast and valuation placeholders."
+    },
+    {
+      "id": "S3",
+      "title": "Synthetic investor day calendar item",
+      "url": "https://example.com/ainf-investor-day",
+      "as_of": "2026-05-18",
+      "type": "event source",
+      "status": "synthetic example",
+      "excerpt": "Upcoming investor day reference."
+    }
+  ]
+}

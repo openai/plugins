@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Company tearsheet icon">
+  <rect x="10" y="6" width="44" height="52" rx="6" fill="#0F172A"/>
+  <rect x="16" y="14" width="32" height="5" rx="2" fill="#E2E8F0"/>
+  <rect x="16" y="25" width="18" height="4" rx="2" fill="#38BDF8"/>
+  <rect x="16" y="34" width="32" height="3" rx="1.5" fill="#CBD5E1"/>
+  <rect x="16" y="42" width="26" height="3" rx="1.5" fill="#CBD5E1"/>
+  <circle cx="44" cy="27" r="5" fill="#22C55E"/>
+</svg>

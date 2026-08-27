@@ -1,0 +1,5 @@
+interface:
+  display_name: "Edit quick cut"
+  short_description: "Cut a video into a punchy sizzle reel of highlights."
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"

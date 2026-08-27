@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Analytics widget render harness</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --background: #f8fafc;
+        --foreground: #111827;
+        --muted: #64748b;
+        --border: #d8dee8;
+        --card: #ffffff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #101318;
+          --foreground: #f8fafc;
+          --muted: #94a3b8;
+          --border: #2f3745;
+          --card: #151a22;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 28px;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      header {
+        margin: 0 0 18px;
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: 24px;
+        line-height: 1.15;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 16px 0 18px;
+      }
+
+      button {
+        min-height: 30px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0 10px;
+        background: var(--card);
+        color: var(--foreground);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 520px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: transparent;
+      }
+
+      #status {
+        margin-top: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Data Analytics widget render smoke</h1>
+      <p>Loads two chart widget instances and sends targeted host updates to check that payloads and display modes stay separate.</p>
+    </header>
+
+    <div class="actions" aria-label="Harness actions">
+      <button type="button" data-expand="chart-a">Expand first chart</button>
+      <button type="button" data-expand="chart-b">Expand second chart</button>
+      <button type="button" id="reset">Reset inline</button>
+      <button type="button" id="cross-talk">Send cross-talk probe</button>
+    </div>
+
+    <main class="grid">
+      <iframe
+        id="chart-a"
+        title="Data Analytics chart widget A"
+        src="../src/datascience-chart-widget.html?widgetInstanceId=chart-a"
+      ></iframe>
+      <iframe
+        id="chart-b"
+        title="Data Analytics chart widget B"
+        src="../src/datascience-chart-widget.html?widgetInstanceId=chart-b"
+      ></iframe>
+    </main>
+
+    <p id="status" role="status">Loading widgets.</p>
+
+    <script>
+      const widgetUri = "ui://widget/datascience-chart.html";
+      const payloads = {
+        "chart-a": {
+          ok: true,
+          widget_type: "chart",
+          title: "Activation by Segment",
+          source: {
+            query: {
+              engine: "databricks",
+              id: "activation-query",
+              executed_at: "2026-05-01T03:30:00Z",
+              text: "SELECT segment, activation_rate FROM harness.activation_by_segment",
+            },
+          },
+          table: {
+            columns: [
+              { key: "segment", label: "Segment", type: "text" },
+              { key: "activation_rate", label: "Activation", type: "number", unit: "%" },
+            ],
+            rows: [
+              { segment: "Free", activation_rate: 19 },
+              { segment: "Team", activation_rate: 33 },
+              { segment: "Enterprise", activation_rate: 48 },
+            ],
+            row_count: 3,
+            truncated: false,
+          },
+          chart: {
+            type: "bar",
+            fields: {
+              x: { field: "segment", type: "nominal" },
+              y: { field: "activation_rate", type: "quantitative", aggregate: "sum", unit: "%" },
+            },
+          },
+          display: {
+            unit: "%",
+            controls: true,
+          },
+        },
+        "chart-b": {
+          ok: true,
+          widget_type: "chart",
+          title: "Revenue by Region",
+          source: {
+            query: {
+              engine: "trino",
+              id: "revenue-query",
+              text: "SELECT region, motion, revenue_m FROM harness.revenue_by_region",
+            },
+          },
+          table: {
+            columns: [
+              { key: "region", label: "Region", type: "text" },
+              { key: "motion", label: "Motion", type: "text" },
+              { key: "revenue_m", label: "Revenue", type: "number", unit: "$M" },
+            ],
+            rows: [
+              { region: "North America", motion: "Self-serve", revenue_m: 62 },
+              { region: "North America", motion: "Sales-led", revenue_m: 38 },
+              { region: "EMEA", motion: "Self-serve", revenue_m: 46 },
+              { region: "EMEA", motion: "Sales-led", revenue_m: 54 },
+              { region: "APAC", motion: "Self-serve", revenue_m: 57 },
+              { region: "APAC", motion: "Sales-led", revenue_m: 43 },
+            ],
+            row_count: 6,
+            truncated: false,
+          },
+          chart: {
+            type: "bar",
+            fields: {
+              x: { field: "region", type: "nominal" },
+              y: { field: "revenue_m", type: "quantitative", aggregate: "sum", unit: "$M" },
+              color: { field: "motion", type: "nominal" },
+            },
+            options: {
+              orientation: "horizontal",
+              grouping: "stacked100",
+            },
+          },
+          display: {
+            unit: "$M",
+            controls: true,
+          },
+          notes: ["Harness payload B."],
+        },
+      };
+
+
+      function asToolResult(payload, targetWidgetId) {
+        return {
+          content: [{ type: "text", text: JSON.stringify(payload) }],
+          structuredContent: payload,
+          isError: false,
+          _meta: {
+            "ui/resourceUri": widgetUri,
+            ["openai/outputTemplate"]: widgetUri,
+            targetWidgetId,
+          },
+        };
+      }
+
+      function frameWindow(id) {
+        return document.getElementById(id).contentWindow;
+      }
+
+      function installHost(id) {
+        const win = frameWindow(id);
+        if (!win) return;
+        win.openai = {
+          widgetInstanceId: id,
+          displayMode: "inline",
+          availableDisplayModes: ["inline", "fullscreen"],
+          toolOutput: asToolResult(payloads[id], id),
+          async requestDisplayMode({ mode }) {
+            this.displayMode = mode;
+            win.postMessage({ targetWidgetId: id, displayMode: mode }, "*");
+            return { mode };
+          },
+        };
+      }
+
+      function sendPayload(id) {
+        const win = frameWindow(id);
+        if (!win) return;
+        const toolResult = asToolResult(payloads[id], id);
+        if (win.openai) win.openai.toolOutput = toolResult;
+        win.dispatchEvent(
+          new win.CustomEvent("openai:set_globals", {
+            detail: { globals: { targetWidgetId: id, toolOutput: toolResult } },
+          }),
+        );
+        win.postMessage(toolResult, "*");
+      }
+
+      function sendDisplayMode(id, mode) {
+        const win = frameWindow(id);
+        if (!win) return;
+        if (win.openai) win.openai.displayMode = mode;
+        win.postMessage({ targetWidgetId: id, displayMode: mode }, "*");
+      }
+
+      function loadFrame(id) {
+        const frame = document.getElementById(id);
+        const send = () => {
+          installHost(id);
+          sendPayload(id);
+        };
+        frame.addEventListener("load", () => {
+          send();
+          window.setTimeout(send, 100);
+        });
+        window.setTimeout(send, 100);
+      }
+
+      function sendCrossTalkProbe() {
+        for (const id of Object.keys(payloads)) {
+          const win = frameWindow(id);
+          if (!win) continue;
+          const otherId = id === "chart-a" ? "chart-b" : "chart-a";
+          const wrongTargetResult = asToolResult({ ...payloads[otherId], title: "Wrong target" }, otherId);
+          if (win.openai) win.openai.toolOutput = wrongTargetResult;
+          win.postMessage(wrongTargetResult, "*");
+          win.postMessage(
+            asToolResult({ ...payloads[id], subtitle: "Accepted targeted payload." }, id),
+            "*",
+          );
+          win.postMessage({ targetWidgetId: otherId, displayMode: "fullscreen" }, "*");
+        }
+        document.getElementById("status").textContent =
+          "Cross-talk probe sent. Each frame should reject the wrong target and accept its own targeted payload.";
+      }
+
+      loadFrame("chart-a");
+      loadFrame("chart-b");
+
+      document.querySelectorAll("[data-expand]").forEach((button) => {
+        button.addEventListener("click", () => {
+          sendDisplayMode(button.dataset.expand, "fullscreen");
+          document.getElementById("status").textContent = `${button.dataset.expand} requested fullscreen.`;
+        });
+      });
+      document.getElementById("reset").addEventListener("click", () => {
+        sendDisplayMode("chart-a", "inline");
+        sendDisplayMode("chart-b", "inline");
+        document.getElementById("status").textContent = "Both charts reset inline.";
+      });
+      document.getElementById("cross-talk").addEventListener("click", sendCrossTalkProbe);
+      window.setTimeout(() => {
+        document.getElementById("status").textContent = "Harness ready.";
+      }, 600);
+    </script>
+  </body>
+</html>

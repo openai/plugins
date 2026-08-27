@@ -1,0 +1,327 @@
+.shared-table-shell {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  width: 100%;
+}
+
+.table-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: clip;
+  padding: 0 0 10px;
+  scrollbar-gutter: stable;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  color: var(--ds-text);
+  font-size: 14px;
+  table-layout: auto;
+}
+
+.data-table-resizable {
+  table-layout: fixed;
+}
+
+.data-table-resizable.is-column-resizing {
+  cursor: col-resize;
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: 1px solid var(--ds-border-subtle);
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+
+.data-table th {
+  position: relative;
+  height: 30px;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  color: var(--ds-text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0;
+}
+
+.data-table th.numeric,
+.data-table td.table-cell-number {
+  text-align: right;
+}
+
+.data-table th.center,
+.data-table td.center {
+  text-align: center;
+}
+
+.table-sort-button {
+  display: flex;
+  max-width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+  min-height: 30px;
+  border: 0;
+  padding: 0 16px 0 0;
+  border-radius: 0;
+  background: transparent;
+  box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  white-space: normal;
+}
+
+.data-table th:last-child .table-sort-button {
+  padding-right: 0;
+}
+
+.data-table th.numeric .table-sort-button {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.data-table th.left .table-sort-button {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.data-table th.numeric .table-sort-button span {
+  text-align: right;
+}
+
+.data-table th.center .table-sort-button {
+  justify-content: center;
+  text-align: center;
+}
+
+.table-sort-button span {
+  min-width: 0;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.table-sort-button:hover,
+.table-sort-button:focus-visible {
+  border-radius: 0;
+  background: var(--ds-menu-hover-bg);
+}
+
+.table-column-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -9px;
+  bottom: 0;
+  z-index: 2;
+  width: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.table-column-resize-handle:hover {
+  cursor: col-resize;
+}
+
+.report-stack-item .table-column-resize-handle,
+.table-column-resize-handle:hover {
+  cursor: col-resize;
+}
+
+.table-column-resize-handle::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  border-radius: 999px;
+  background: var(--ds-border-subtle);
+  content: "";
+  cursor: col-resize;
+  pointer-events: none;
+  opacity: 0;
+  transition: background 120ms ease, opacity 120ms ease, width 120ms ease;
+}
+
+.data-table-resizable th:hover .table-column-resize-handle::after {
+  opacity: 0.65;
+}
+
+.table-column-resize-handle:hover::after,
+.table-column-resize-handle:focus-visible::after,
+.data-table-resizable.is-column-resizing .table-column-resize-handle::after {
+  background: var(--ds-border-strong);
+  opacity: 1;
+  width: 2px;
+}
+
+.table-column-resize-handle:focus-visible {
+  outline: 2px solid var(--ds-blue-bright);
+  outline-offset: -3px;
+}
+
+.table-sort-icon {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.table-sort-button svg {
+  color: var(--ds-text-secondary);
+}
+
+.table-arrow-button svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.data-table td {
+  padding: 8px 16px 8px 0;
+  color: var(--ds-text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.14px;
+  white-space: normal;
+}
+
+.data-table td:first-child {
+  color: var(--ds-text-primary);
+}
+
+.table-wrap.table-density-dense .data-table td {
+  height: 40px;
+  padding: 0 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table-wrap.table-density-dense .data-table th {
+  height: 30px;
+}
+
+.table-wrap.table-density-dense .data-table .table-sort-button {
+  padding: 0 8px;
+}
+
+.table-wrap.table-density-dense .data-table th:first-child .table-sort-button {
+  padding-left: 0;
+}
+
+.table-wrap.table-density-dense .data-table th:last-child .table-sort-button {
+  padding-right: 0;
+}
+
+.table-wrap.table-density-dense .data-table td:first-child {
+  padding-left: 0;
+}
+
+.table-wrap.table-density-dense .data-table td:last-child {
+  padding-right: 0;
+}
+
+.data-table tbody tr:hover td {
+  background: var(--ds-menu-hover-bg);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-table td.table-cell-movement {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.data-table td.table-cell-movement-positive {
+  color: var(--ds-green);
+}
+
+.data-table td.table-cell-movement-negative {
+  color: var(--ds-red);
+}
+
+.shared-table-footer,
+.table-page-control,
+.table-page-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.shared-table-footer {
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 38px;
+  padding: 0;
+  border-top: 1px solid var(--ds-border-subtle);
+  color: var(--ds-text-muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.table-result-count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  color: var(--ds-text-tertiary);
+}
+
+.table-page-control,
+.table-page-buttons {
+  gap: 8px;
+}
+
+.shared-table-footer > .table-page-control:first-child {
+  margin-left: auto;
+}
+
+.table-arrow-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-pill);
+  background: transparent;
+  color: var(--ds-text);
+  cursor: pointer;
+}
+
+.table-arrow-button:hover:not(:disabled),
+.table-arrow-button:focus-visible:not(:disabled) {
+  background: var(--ds-menu-hover-bg);
+}
+
+.table-arrow-button:disabled {
+  color: var(--ds-text-tertiary);
+  cursor: default;
+  opacity: 0.55;
+}

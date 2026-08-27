@@ -1,0 +1,7 @@
+interface:
+  display_name: Thesis Tracker
+  short_description: PM-grade public-equity-investing thesis tracking across evidence, KPIs, catalysts, estimates, valuation, and thesis status
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: false

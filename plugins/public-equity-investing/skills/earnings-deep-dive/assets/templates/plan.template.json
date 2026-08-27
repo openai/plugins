@@ -1,0 +1,53 @@
+{
+  "event": {
+    "ticker": "MISSING",
+    "company_name": "MISSING",
+    "fiscal_period": "MISSING",
+    "event_date": "MISSING",
+    "timezone": "America/New_York",
+    "base_currency": "USD",
+    "base_scale": "m"
+  },
+  "inputs": {
+    "artifact_index_csv": "output/audit/ArtifactIndex.csv",
+    "artifacts": {
+      "press_release": "MISSING",
+      "sec_filing_10q_or_10k": "MISSING",
+      "sec_filing_8k": "MISSING",
+      "deck": "MISSING",
+      "transcript": "MISSING"
+    },
+    "normalized": {
+      "metrics_csv": "normalized/metrics.csv",
+      "estimates_csv": "normalized/estimates.csv",
+      "guidance_csv": "normalized/guidance.csv",
+      "quotes_csv": "normalized/quotes.csv",
+      "driver_updates_csv": "normalized/driver_updates.csv"
+    },
+    "model": {
+      "prior_model_xlsx": "MISSING",
+      "driver_registry_csv": "MISSING",
+      "output_registry_csv": "MISSING"
+    }
+  },
+  "outputs": {
+    "output_dir": "/tmp/public_equity_investing_earnings_deep_dive_output",
+    "render": {
+      "executive_overview": true,
+      "tear_sheet": true,
+      "deep_dive": true
+    },
+    "model_update": {
+      "enabled": false,
+      "mode": "packet",
+      "version_tag_timezone": "America/New_York",
+      "write_diff": false
+    }
+  },
+  "controls": {
+    "allow_call_only_guidance": true,
+    "require_gaap_for_non_gaap": true,
+    "require_source_tags": true,
+    "dry_run": true
+  }
+}

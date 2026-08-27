@@ -1,0 +1,1121 @@
+{
+  "version": 1,
+  "packs": [
+    {
+      "id": "cross-industry-product-ad-archetypes",
+      "title": "Cross-Industry Product Ad Archetypes",
+      "summary": "Reusable product and offer advertisement archetypes with placeholder-driven prompts. These adapt environment, surface, lighting, benefit signal, and supporting cues to the supplied product without bundling rendered example images.",
+      "whenToUse": "Use when a supplied product image or product reference needs a high-fidelity commercial advertisement environment that should be inferred from the product category, benefit, channel, and brand constraints rather than forced into a fixed product/background pairing.",
+      "requiredInputs": [
+        "product image or exact product reference",
+        "product category",
+        "primary benefit or buying cue",
+        "brand and label fidelity constraints",
+        "approved claims",
+        "target channel or crop"
+      ],
+      "riskGates": [
+        "product shape and label fidelity",
+        "unsupported performance or health claims",
+        "fake logos or certification badges",
+        "category mismatch",
+        "overly literal reuse of example imagery",
+        "external publishing rights review"
+      ],
+      "placeholders": [
+        {
+          "name": "PRODUCT_REFERENCE",
+          "description": "Uploaded or supplied product image to preserve exactly."
+        },
+        {
+          "name": "PRODUCT_CATEGORY",
+          "description": "The product category, used to infer conventional ad context."
+        },
+        {
+          "name": "PRIMARY_BENEFIT",
+          "description": "The category-relevant benefit or buying cue to communicate visually."
+        },
+        {
+          "name": "PRIMARY_ENVIRONMENT",
+          "description": "The setting around the product; infer when not supplied."
+        },
+        {
+          "name": "SURFACE_OR_BASE",
+          "description": "The physical surface that anchors scale, reflection, or usage."
+        },
+        {
+          "name": "LIGHTING_STYLE",
+          "description": "Directional, soft, studio, natural, or atmospheric light treatment."
+        },
+        {
+          "name": "SUPPORTING_CUES",
+          "description": "Secondary props, usage signals, or environment details."
+        },
+        {
+          "name": "MOOD",
+          "description": "The desired emotional register, such as precise, warm, energetic, calm, premium, or rugged."
+        },
+        {
+          "name": "COPY_SPACE",
+          "description": "Whether the image should leave clean negative space for later layout."
+        },
+        {
+          "name": "AVOID",
+          "description": "Category-specific risks, unsupported claims, brand drift, and fidelity issues."
+        }
+      ],
+      "families": [
+        {
+          "id": "performance-motion-hero",
+          "title": "Performance Motion Hero",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A high-energy product hero that uses surface tension, motion cues, and directional light to make performance feel tangible.",
+          "businessGoal": "create a premium performance key visual that can adapt from footwear to gear, devices, equipment, or other active-use products",
+          "scene": "Use the supplied product as the hero object in a category-appropriate active environment. Choose a surface that can show grip, speed, resilience, precision, or movement without forcing a specific street, trail, court, or gym setting. Add realistic atmospheric detail such as mist, water beads, dust, light streaks, or motion-adjacent cues only when they support the product category. Keep the product sharp, centered or slightly forward, and visually dominant, with a rim light or reflected edge that clarifies its silhouette.",
+          "templatePrompt": "A premium performance advertisement featuring [PRODUCT_REFERENCE] as the hero object in [PRIMARY_ENVIRONMENT], anchored on [SURFACE_OR_BASE]. Use [LIGHTING_STYLE] to emphasize [PRIMARY_BENEFIT], with subtle [SUPPORTING_CUES] suggesting motion, endurance, grip, resilience, or speed. Preserve the product exactly. Leave [COPY_SPACE] if needed. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "performance material, product silhouette, surface interaction, and kinetic tension",
+          "decision": "whether the product should lead with active performance and motion",
+          "elements": [
+            "hero product",
+            "active environment",
+            "surface interaction",
+            "atmospheric detail",
+            "directional rim light",
+            "realistic shadow or reflection"
+          ],
+          "constraints": [
+            "adapt the environment to the actual product category",
+            "do not force footwear or urban cues when the product calls for a different use case",
+            "avoid unsupported performance claims"
+          ],
+          "avoid": "generic ecommerce product shot, fake race signage, exaggerated speed effects, distorted product geometry",
+          "defaultInstantiation": {
+            "productCategory": "running shoe",
+            "environment": "wet blue-hour city pavement",
+            "benefitSignal": "speed, grip, and urban endurance"
+          }
+        },
+        {
+          "id": "precision-craft-studio",
+          "title": "Precision Craft Studio",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A controlled premium studio archetype for products where finish, machining, material, and status need to carry the image.",
+          "businessGoal": "make craftsmanship, precision, and premium value visible through restrained lighting and tactile surfaces",
+          "scene": "Place the supplied product in a minimal premium studio composition using a category-appropriate luxury surface. Choose props only if they reinforce craft, precision, ritual, or ownership. Use narrow directional light, controlled reflections, and deep background falloff to reveal material finish, edge quality, and construction details. The environment should feel expensive and quiet without making the props more important than the product.",
+          "templatePrompt": "A refined studio advertisement featuring [PRODUCT_REFERENCE] on [SURFACE_OR_BASE] in [PRIMARY_ENVIRONMENT]. Use [LIGHTING_STYLE] and controlled reflections to reveal [PRIMARY_BENEFIT], material finish, edge detail, and craftsmanship. Add restrained [SUPPORTING_CUES] only if they reinforce the category. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "material finish, detail fidelity, reflection control, and premium restraint",
+          "decision": "whether the product should lead with craft, precision, status, or permanence",
+          "elements": [
+            "premium surface",
+            "controlled reflection",
+            "directional light",
+            "minimal props",
+            "dark or neutral background",
+            "sharp product detail"
+          ],
+          "constraints": [
+            "preserve fine product details",
+            "avoid adding fake premium marks or invented features",
+            "keep the composition quiet and precise"
+          ],
+          "avoid": "busy luxury styling, fake logos, warped product face, excessive props, nightclub lighting",
+          "defaultInstantiation": {
+            "productCategory": "luxury watch",
+            "environment": "black marble studio",
+            "benefitSignal": "precision, machining, and status"
+          }
+        },
+        {
+          "id": "clean-hydration-ritual",
+          "title": "Clean Hydration Ritual",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A soft clean-care archetype built around moisture, freshness, transparency, and gentle trust.",
+          "businessGoal": "make care, purity, hydration, or freshness feel concrete without overclaiming clinical outcomes",
+          "scene": "Set the supplied product in a clean, light-filled care environment. Choose surfaces, water detail, translucent materials, botanical or textile cues, and soft background forms based on the product category. The scene should communicate freshness, care, purity, and daily ritual while keeping label and packaging fidelity central. Use diffused light, delicate reflections, and restrained negative space.",
+          "templatePrompt": "A luminous clean-care advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], placed on [SURFACE_OR_BASE] with [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT]. Use [LIGHTING_STYLE], soft reflections, and restrained negative space. Preserve packaging, label, shape, and material exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "freshness cues, label clarity, soft reflections, and calm ritual",
+          "decision": "whether the product should lead with clean care, hydration, purity, or daily routine",
+          "elements": [
+            "light-toned surface",
+            "moisture or freshness cue",
+            "soft natural props",
+            "diffused light",
+            "clean negative space",
+            "gentle reflection"
+          ],
+          "constraints": [
+            "adapt props to the real product category",
+            "avoid unsupported clinical, health, or ingredient claims",
+            "keep the product readable and central"
+          ],
+          "avoid": "fake certification badges, medical overclaiming, overstuffed botanicals, distorted label text",
+          "defaultInstantiation": {
+            "productCategory": "skincare serum",
+            "environment": "spa-like limestone surface",
+            "benefitSignal": "hydration and purity"
+          }
+        },
+        {
+          "id": "immersive-focus-technology",
+          "title": "Immersive Focus Technology",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A dark controlled technology archetype for products that sell immersion, focus, audio, control, or personal systems.",
+          "businessGoal": "signal premium technology, comfort, focus, and engineered experience without fake UI or claims",
+          "scene": "Place the supplied product in a dark, controlled technology environment with category-relevant spatial cues. Use rim light, soft glow, matte surfaces, and background depth to suggest immersion, focus, control, or high fidelity. Secondary forms may imply sound, signal, data, interface, or workspace context, but they should remain abstract and non-textual unless approved product UI is supplied.",
+          "templatePrompt": "A premium technology advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Use [LIGHTING_STYLE], rim highlights, and abstract [SUPPORTING_CUES] to suggest [PRIMARY_BENEFIT]. Preserve the product exactly and keep any UI or text minimal unless supplied. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "product edges, engineered materials, controlled glow, and immersive context",
+          "decision": "whether the product should lead with focus, immersion, control, or personal technology",
+          "elements": [
+            "dark matte surface",
+            "rim lighting",
+            "abstract signal or sound cue",
+            "background depth",
+            "subtle reflection",
+            "precise product detail"
+          ],
+          "constraints": [
+            "avoid fake interfaces or unsupported technical claims",
+            "keep product details crisp",
+            "adapt the abstract cue to the category"
+          ],
+          "avoid": "generic neon tunnel, unreadable fake UI, distorted controls, other-brand ecosystem cues",
+          "defaultInstantiation": {
+            "productCategory": "wireless headphones",
+            "environment": "dark acoustic studio",
+            "benefitSignal": "immersive sound and focused listening"
+          }
+        },
+        {
+          "id": "warm-morning-ritual",
+          "title": "Warm Morning Ritual",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A warm sensory routine archetype for products tied to breakfast, craft, comfort, or everyday rituals.",
+          "businessGoal": "make aroma, comfort, freshness, or habit feel tactile and desirable",
+          "scene": "Frame the supplied product within a believable warm morning or daily ritual setting. Choose a surface, cup, vessel, textile, ingredient, or household cue that belongs to the product category. Use low warm light, steam, soft shadows, and tactile materials to make the product feel crafted and habit-forming. Keep the product front-facing and legible when packaging matters.",
+          "templatePrompt": "A warm ritual advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], placed on [SURFACE_OR_BASE] with [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT]. Use [LIGHTING_STYLE], tactile shadows, and natural warmth. Preserve product shape, label, and material exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "sensory warmth, daily ritual, tactile surface, and packaging clarity",
+          "decision": "whether the product should lead with comfort, craft, aroma, or habitual use",
+          "elements": [
+            "warm surface",
+            "ritual prop",
+            "soft steam or glow",
+            "textile detail",
+            "morning light",
+            "natural shadows"
+          ],
+          "constraints": [
+            "use category-truthful props",
+            "avoid invented origin or quality claims",
+            "keep styling believable and uncluttered"
+          ],
+          "avoid": "generic stock lifestyle scene, fake awards, unreadable packaging, messy spills",
+          "defaultInstantiation": {
+            "productCategory": "coffee bag",
+            "environment": "sunlit cafe table",
+            "benefitSignal": "aroma, freshness, and morning routine"
+          }
+        },
+        {
+          "id": "portable-outdoor-fuel",
+          "title": "Portable Outdoor Fuel",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A compact active-use archetype for products meant to travel, support effort, or fit into outdoor routines.",
+          "businessGoal": "connect a product to readiness, portability, and active moments without unsupported performance claims",
+          "scene": "Place the supplied product in a natural or active environment where portability matters. Choose a surface and surrounding objects that clarify scale, packability, use moment, and product purpose. The background may imply trail, commute, training, field work, travel, or outdoor recreation depending on the actual category. Keep the product clean, readable, and primary, with practical supporting cues nearby.",
+          "templatePrompt": "A rugged portable-use advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add [SUPPORTING_CUES] to show scale, readiness, and [PRIMARY_BENEFIT]. Use [LIGHTING_STYLE] and realistic shadows. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "portability, practical context, scale, and readiness",
+          "decision": "whether the product should lead with active use, outdoor readiness, or portable utility",
+          "elements": [
+            "natural or active surface",
+            "packable-use cues",
+            "scale object",
+            "sunlight or field light",
+            "background depth",
+            "clean hero placement"
+          ],
+          "constraints": [
+            "do not invent nutrition, durability, or performance claims",
+            "adapt environment to the product's real use case",
+            "keep the product dominant"
+          ],
+          "avoid": "extreme-sport exaggeration, fake certifications, impossible placement, category mismatch",
+          "defaultInstantiation": {
+            "productCategory": "protein bar",
+            "environment": "mountain trail rock",
+            "benefitSignal": "portable outdoor fuel"
+          }
+        },
+        {
+          "id": "training-data-moment",
+          "title": "Training Data Moment",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A disciplined use-moment archetype for wearables, tools, health devices, and products tied to tracking or progress.",
+          "businessGoal": "make use, measurement, control, or progress feel grounded in a real routine",
+          "scene": "Show the supplied product immediately after or before a real use moment. Choose surrounding objects that imply discipline, preparation, measurement, or progress without making unsupported claims. Use controlled light, a clean surface, and a small amount of wear or moisture only if it fits the category. If a screen or data surface is visible, keep it abstract unless approved UI is supplied.",
+          "templatePrompt": "A disciplined use-moment advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], resting on [SURFACE_OR_BASE] with [SUPPORTING_CUES] that imply [PRIMARY_BENEFIT]. Use [LIGHTING_STYLE] and realistic use traces. Preserve product shape, screen, interface boundaries, and material exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "use context, routine, product interface or control surface, and grounded realism",
+          "decision": "whether the product should lead with progress, tracking, discipline, or control",
+          "elements": [
+            "routine surface",
+            "use-trace detail",
+            "supporting tool",
+            "controlled light",
+            "abstract data or status cue",
+            "clean shadow"
+          ],
+          "constraints": [
+            "avoid fake health, medical, or quantified claims",
+            "keep any UI minimal or supplied",
+            "do not overstate automation or tracking"
+          ],
+          "avoid": "fake metrics, medical overclaiming, cluttered setup, distorted screen or controls",
+          "defaultInstantiation": {
+            "productCategory": "smartwatch",
+            "environment": "gym bench after training",
+            "benefitSignal": "fitness tracking and daily consistency"
+          }
+        },
+        {
+          "id": "flagship-urban-reflection",
+          "title": "Flagship Urban Reflection",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A polished reflective technology archetype for sleek objects that need premium form, connectivity, and clarity.",
+          "businessGoal": "make a product feel modern, connected, and high-end through reflection and urban depth",
+          "scene": "Place the supplied product upright or at a category-appropriate presentation angle on a clean reflective surface. Use a deep background with abstract urban, architectural, or connected-life cues. Cool highlights and controlled reflections should reveal edges, glass, finish, camera, ports, or other product-defining details. Keep the environment minimal and avoid fake UI unless a real interface is supplied.",
+          "templatePrompt": "A polished flagship advertisement featuring [PRODUCT_REFERENCE] on [SURFACE_OR_BASE] in [PRIMARY_ENVIRONMENT]. Use [LIGHTING_STYLE], controlled reflections, and [SUPPORTING_CUES] to suggest [PRIMARY_BENEFIT], connectivity, clarity, or premium design. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "reflective surface, product edges, premium finish, and modern background depth",
+          "decision": "whether the product should lead with modern design, connectivity, or flagship capability",
+          "elements": [
+            "reflective surface",
+            "cool highlights",
+            "urban or architectural bokeh",
+            "minimal background",
+            "clean silhouette",
+            "soft mirror reflection"
+          ],
+          "constraints": [
+            "avoid fake apps, fake specs, and unreadable UI",
+            "preserve exact product geometry",
+            "keep reflections realistic"
+          ],
+          "avoid": "floating render, distorted cameras or ports, generic sci-fi tunnel, fake benchmark claims",
+          "defaultInstantiation": {
+            "productCategory": "smartphone",
+            "environment": "night city skyline on glossy glass",
+            "benefitSignal": "flagship technology and connectivity"
+          }
+        },
+        {
+          "id": "calm-productivity-workspace",
+          "title": "Calm Productivity Workspace",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A bright workspace archetype for products that support focus, creation, organization, or professional output.",
+          "businessGoal": "position a product as reliable, useful, and part of a calm productive workflow",
+          "scene": "Place the supplied product in a clean, modern work or creation environment. Choose a desk, bench, table, studio surface, or workspace context that fits the actual product. Surrounding objects should be restrained and functional, suggesting focus and readiness rather than decoration. Use soft natural light, orderly composition, and enough negative space to support later layout if needed.",
+          "templatePrompt": "A calm productivity advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add restrained [SUPPORTING_CUES] that clarify [PRIMARY_BENEFIT] and everyday workflow. Use [LIGHTING_STYLE], clean shadows, and optional [COPY_SPACE]. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "workflow clarity, orderly surface, natural light, and product utility",
+          "decision": "whether the product should lead with focus, productivity, creation, or professional use",
+          "elements": [
+            "clean workspace",
+            "functional props",
+            "soft daylight",
+            "orderly composition",
+            "negative space",
+            "professional background"
+          ],
+          "constraints": [
+            "avoid fake UI or sensitive data",
+            "do not let props overpower the product",
+            "adapt workspace to product category"
+          ],
+          "avoid": "messy desk, startup stock cliches, fake dashboards, distorted controls or screen",
+          "defaultInstantiation": {
+            "productCategory": "laptop",
+            "environment": "modern architectural desk",
+            "benefitSignal": "executive productivity and creative work"
+          }
+        },
+        {
+          "id": "creative-fieldcraft-hero",
+          "title": "Creative Fieldcraft Hero",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A field-ready craft archetype for products linked to exploration, making, documentation, or creative practice.",
+          "businessGoal": "make a product feel capable, intentional, and tied to meaningful creation or field use",
+          "scene": "Set the supplied product in a natural, field, studio-travel, or making environment that supports its craft purpose. Use worn but tasteful surfaces, small tools or notes, and background depth to imply preparation and experience. The product should remain cleanly visible and tactile, with warm or atmospheric light revealing controls, edges, texture, and material finish.",
+          "templatePrompt": "A cinematic fieldcraft advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], preparation, craft, or exploration. Use [LIGHTING_STYLE] and atmospheric depth. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "craft cues, tactile controls or materials, field context, and atmospheric depth",
+          "decision": "whether the product should lead with exploration, craft, and intentional use",
+          "elements": [
+            "field surface",
+            "small tool or note",
+            "background landscape or studio depth",
+            "warm highlight",
+            "tactile product detail",
+            "controlled atmosphere"
+          ],
+          "constraints": [
+            "avoid fake model names or endorsements",
+            "keep field cues secondary",
+            "adapt exploration level to the product category"
+          ],
+          "avoid": "tourist postcard framing, generic travel stock, impossible reflections, unrelated adventure props",
+          "defaultInstantiation": {
+            "productCategory": "camera",
+            "environment": "golden-hour scenic overlook",
+            "benefitSignal": "creative exploration and image craft"
+          }
+        },
+        {
+          "id": "future-mobility-home-base",
+          "title": "Future Mobility Home Base",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A clean home-base archetype for mobility, energy, charging, storage, and modern ownership products.",
+          "businessGoal": "make ownership feel designed, practical, and premium in everyday infrastructure",
+          "scene": "Place the supplied product within a modern home-base or infrastructure context that supports daily use. The environment can be a driveway, garage, charging area, entryway, dock, storage wall, or service bay depending on the product. Use clean architecture, wet or reflective surfaces when useful, warm interior cues, and blue-hour or early-evening light to suggest practical future-facing ownership.",
+          "templatePrompt": "A premium home-base advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], connected to or positioned near [SUPPORTING_CUES] that explain [PRIMARY_BENEFIT]. Use [LIGHTING_STYLE], clean architecture, and realistic reflections on [SURFACE_OR_BASE]. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "ownership context, infrastructure cue, reflective surface, and practical premium design",
+          "decision": "whether the product should lead with designed ownership, mobility, efficiency, or modern infrastructure",
+          "elements": [
+            "modern architecture",
+            "home-base cue",
+            "reflective surface",
+            "warm interior light",
+            "clean utility detail",
+            "blue-hour atmosphere"
+          ],
+          "constraints": [
+            "avoid fake technical claims or badges",
+            "keep infrastructure plausible",
+            "preserve product geometry and scale"
+          ],
+          "avoid": "sci-fi infrastructure, fake range or performance claims, distorted wheels or hardware, cluttered service setting",
+          "defaultInstantiation": {
+            "productCategory": "electric vehicle",
+            "environment": "modern home driveway with charger",
+            "benefitSignal": "quiet electric ownership and everyday efficiency"
+          }
+        },
+        {
+          "id": "everyday-urban-mobility",
+          "title": "Everyday Urban Mobility",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A practical city-life archetype for products that help people move through daily routines.",
+          "businessGoal": "make a product feel approachable, sustainable, convenient, and easy to adopt",
+          "scene": "Place the supplied product in a quiet everyday urban context. Choose a wall, path, curb, entryway, transit-adjacent surface, or street detail that fits the product's actual use. Natural light, leaf shadows, neighborhood cues, and a few practical accessories can signal habit and convenience. The scene should feel real and uncluttered, with full product form visible when shape matters.",
+          "templatePrompt": "An everyday mobility advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], grounded on or beside [SURFACE_OR_BASE]. Add practical [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], convenience, and daily use. Use [LIGHTING_STYLE]. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "full product form, practical city context, natural light, and daily convenience",
+          "decision": "whether the product should lead with everyday mobility, adoption, and ease",
+          "elements": [
+            "urban surface",
+            "natural light",
+            "neighborhood cue",
+            "practical accessory",
+            "soft background",
+            "clear full product view"
+          ],
+          "constraints": [
+            "avoid fake street signage or brand stickers",
+            "adapt urban context to the product",
+            "keep scale realistic"
+          ],
+          "avoid": "crowded street clutter, generic showroom shot, tourist cliches, warped product structure",
+          "defaultInstantiation": {
+            "productCategory": "bicycle",
+            "environment": "tree-lined city street",
+            "benefitSignal": "sustainable daily movement"
+          }
+        },
+        {
+          "id": "premium-travel-readiness",
+          "title": "Premium Travel Readiness",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A composed readiness archetype for products tied to travel, organization, protection, or smooth movement.",
+          "businessGoal": "signal preparedness, durability, premium movement, and organized transition",
+          "scene": "Place the supplied product in a travel, transition, or departure context that fits its category. Use reflective floors, clean architecture, soft background cues, and small personal or organizational props only when they clarify readiness. The product should feel centered, prepared, and easy to move or carry, with important handles, wheels, closures, compartments, or protective details visible.",
+          "templatePrompt": "A premium readiness advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add restrained [SUPPORTING_CUES] that imply [PRIMARY_BENEFIT], organization, protection, or movement. Use [LIGHTING_STYLE] and soft reflections. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "prepared state, movement features, reflective floor or surface, and travel-ready context",
+          "decision": "whether the product should lead with organization, readiness, durability, or transition",
+          "elements": [
+            "travel or transition setting",
+            "reflective surface",
+            "personal cue",
+            "soft background architecture",
+            "movement hardware detail",
+            "calm lighting"
+          ],
+          "constraints": [
+            "avoid readable personal info or fake airline/venue branding",
+            "keep product structure and closures clear",
+            "adapt setting beyond airports when needed"
+          ],
+          "avoid": "chaotic crowds, fake destination text, distorted wheels or handles, overpacked clutter",
+          "defaultInstantiation": {
+            "productCategory": "suitcase",
+            "environment": "airport lounge",
+            "benefitSignal": "smooth premium travel"
+          }
+        },
+        {
+          "id": "sunlit-leisure-style",
+          "title": "Sunlit Leisure Style",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A bright leisure archetype for products connected to style, protection, seasonality, or relaxation.",
+          "businessGoal": "make the product feel desirable in a clear lifestyle moment without hiding its design details",
+          "scene": "Place the supplied product in a bright leisure or seasonal environment. Use sunlight, clean surfaces, reflections, water, textile, architecture, or outdoor cues as appropriate to the product category. The product should be angled to reveal its form, material, and finish. Supporting lifestyle details should feel premium but remain secondary.",
+          "templatePrompt": "A sunlit lifestyle advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Use [LIGHTING_STYLE], reflections, and [SUPPORTING_CUES] to suggest [PRIMARY_BENEFIT], leisure, style, or protection. Preserve product form and material exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "sunlight, product geometry, reflections, seasonal mood, and premium leisure context",
+          "decision": "whether the product should lead with style, clarity, relaxation, or seasonal appeal",
+          "elements": [
+            "sunlit surface",
+            "reflection or water cue",
+            "soft lifestyle prop",
+            "clean architecture or outdoor detail",
+            "crisp shadow",
+            "bright palette"
+          ],
+          "constraints": [
+            "avoid hiding key product features with glare",
+            "adapt leisure setting to the product",
+            "do not add fake designer marks"
+          ],
+          "avoid": "generic tropical stock, overexposed glare, warped product shape, cluttered vacation props",
+          "defaultInstantiation": {
+            "productCategory": "sunglasses",
+            "environment": "poolside resort ledge",
+            "benefitSignal": "style, clarity, and relaxed luxury"
+          }
+        },
+        {
+          "id": "bold-color-studio",
+          "title": "Bold Color Studio",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A controlled color-and-texture studio archetype for products where shade, finish, or expressive detail matters.",
+          "businessGoal": "make color, finish, texture, and premium packaging feel precise and emotionally clear",
+          "scene": "Place the supplied product in a controlled studio environment built around its color, finish, or material. Use textiles, mirrors, gradients, soft reflection, or category-appropriate props to guide attention toward the product. The lighting should reveal texture and sheen without distorting color. The background palette should complement the product instead of overwhelming it.",
+          "templatePrompt": "A bold studio advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], placed on [SURFACE_OR_BASE] with [SUPPORTING_CUES] that reinforce [PRIMARY_BENEFIT], color, texture, or finish. Use [LIGHTING_STYLE] and controlled reflections. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "color fidelity, finish, texture, reflection, and premium studio composition",
+          "decision": "whether the product should lead with expressive color, finish, and detail",
+          "elements": [
+            "controlled studio surface",
+            "color-matched background",
+            "textile or reflective cue",
+            "precise highlight",
+            "soft fill",
+            "clean product silhouette"
+          ],
+          "constraints": [
+            "preserve true product color",
+            "avoid fake shade names or labels",
+            "do not let styling overpower the product"
+          ],
+          "avoid": "overdone glitter, smeared product, fake luxury branding, distorted packaging or applicator",
+          "defaultInstantiation": {
+            "productCategory": "lipstick",
+            "environment": "velvet studio setup",
+            "benefitSignal": "color confidence and refined beauty"
+          }
+        },
+        {
+          "id": "precision-preparation-tool",
+          "title": "Precision Preparation Tool",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A tactile tool archetype for products where control, sharpness, preparation, or making quality matters.",
+          "businessGoal": "make a tool feel precise, crafted, and useful through believable preparation context",
+          "scene": "Place the supplied product in a preparation or craft setting with category-appropriate materials and partially completed work. Use a directional highlight to clarify edge, handle, grip, controls, or working surface. Surrounding materials should show what the product helps prepare or make, but the product must remain the hero. Keep safety and realism visible.",
+          "templatePrompt": "A premium preparation advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add [SUPPORTING_CUES] that show [PRIMARY_BENEFIT], control, craft, or readiness. Use [LIGHTING_STYLE] to define edge, grip, or working detail. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "tool edge or control surface, material interaction, preparation detail, and safe static composition",
+          "decision": "whether the product should lead with precision, control, and craft",
+          "elements": [
+            "working surface",
+            "prepared materials",
+            "directional highlight",
+            "texture detail",
+            "small tool-adjacent props",
+            "realistic shadow"
+          ],
+          "constraints": [
+            "keep safe use implied",
+            "avoid unsupported technical claims",
+            "adapt preparation materials to category truth"
+          ],
+          "avoid": "unsafe action framing, fake material pattern, messy work surface, distorted tool geometry",
+          "defaultInstantiation": {
+            "productCategory": "chef's knife",
+            "environment": "cutting board in refined kitchen",
+            "benefitSignal": "sharpness and professional control"
+          }
+        },
+        {
+          "id": "warm-home-use-moment",
+          "title": "Warm Home Use Moment",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A lived-in home-use archetype for durable products that need to feel trusted, warm, and practical.",
+          "businessGoal": "show reliability, everyday usefulness, and pleasure of use without turning the scene into generic lifestyle filler",
+          "scene": "Place the supplied product in a warm home or daily-use environment where it plausibly belongs. Show enough activity, ingredients, tools, textiles, or context to communicate use, but keep the product cleanly visible. Soft daylight, steam, warmth, or natural shadows can create an active moment when category-appropriate. The scene should feel premium but lived-in.",
+          "templatePrompt": "A warm home-use advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on or near [SURFACE_OR_BASE]. Add [SUPPORTING_CUES] that show [PRIMARY_BENEFIT], reliability, comfort, or everyday use. Use [LIGHTING_STYLE] and realistic activity cues. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "everyday use, warm light, product reliability, and believable activity",
+          "decision": "whether the product should lead with home utility, warmth, durability, or family routine",
+          "elements": [
+            "home-use setting",
+            "active-use cue",
+            "warm daylight",
+            "category props",
+            "textile detail",
+            "soft background"
+          ],
+          "constraints": [
+            "avoid unsupported durability or health claims",
+            "keep props truthful",
+            "do not obscure functional product details"
+          ],
+          "avoid": "chaotic mess, fake technical badges, impossible steam or action, generic home stock scene",
+          "defaultInstantiation": {
+            "productCategory": "cookware",
+            "environment": "sunlit kitchen stovetop",
+            "benefitSignal": "trusted cooking performance"
+          }
+        },
+        {
+          "id": "fresh-wellness-preparation",
+          "title": "Fresh Wellness Preparation",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A bright preparation archetype for products tied to freshness, wellness, convenience, or daily health routines.",
+          "businessGoal": "signal fresh preparation, convenience, and positive routine while avoiding health overclaims",
+          "scene": "Place the supplied product in a bright preparation environment with category-appropriate fresh ingredients, materials, or result cues. Use natural light, clean counters, controlled splashes or fragments, and transparent or reflective surfaces only when they help communicate freshness. The final-use outcome may appear nearby but should not steal focus from the product.",
+          "templatePrompt": "A fresh preparation advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], freshness, convenience, or daily wellness. Use [LIGHTING_STYLE] and clean composition. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "fresh materials, clean preparation, product function, and appetizing or wellness cues",
+          "decision": "whether the product should lead with freshness, ease, and daily routine",
+          "elements": [
+            "clean preparation surface",
+            "fresh materials",
+            "result cue",
+            "natural light",
+            "controlled splash or texture",
+            "airy background"
+          ],
+          "constraints": [
+            "avoid fake health claims",
+            "use category-truthful ingredients or materials",
+            "keep product function visible"
+          ],
+          "avoid": "messy spill, impossible physics, medicalized wellness, distorted transparent parts",
+          "defaultInstantiation": {
+            "productCategory": "blender",
+            "environment": "bright kitchen counter",
+            "benefitSignal": "fresh daily nutrition"
+          }
+        },
+        {
+          "id": "immersive-control-setup",
+          "title": "Immersive Control Setup",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A dramatic control archetype for products that promise responsiveness, command, precision, or immersive operation.",
+          "businessGoal": "make control and intensity feel tactile without relying on fake software, game, or platform branding",
+          "scene": "Place the supplied product in a controlled command, gaming, creator, operator, or technical setup based on the category. Use dark surfaces, colored reflections, background screens or hardware shapes, and strong rim light to create immersion. Any displayed content should remain abstract unless approved. Product controls, buttons, grip, ports, or tactile surfaces should be sharply visible.",
+          "templatePrompt": "An immersive control advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Use [LIGHTING_STYLE], controlled color, and [SUPPORTING_CUES] to suggest [PRIMARY_BENEFIT], responsiveness, command, or precision. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "controls, grip, colored reflections, and immersive technical context",
+          "decision": "whether the product should lead with responsiveness, control, and intensity",
+          "elements": [
+            "dark control surface",
+            "colored rim light",
+            "abstract screen glow",
+            "secondary hardware",
+            "tactile detail",
+            "controlled reflection"
+          ],
+          "constraints": [
+            "avoid fake platform logos or UI",
+            "keep controls and product form accurate",
+            "adapt setup beyond gaming when appropriate"
+          ],
+          "avoid": "over-neon clutter, fake esports branding, distorted buttons, unreadable game screens",
+          "defaultInstantiation": {
+            "productCategory": "gaming controller",
+            "environment": "RGB-lit gaming desk",
+            "benefitSignal": "responsive control and immersive play"
+          }
+        },
+        {
+          "id": "trusted-everyday-care",
+          "title": "Trusted Everyday Care",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A gentle everyday-care archetype for products where safety, comfort, trust, and daily confidence matter.",
+          "businessGoal": "make product reliability and care feel visible in a warm, grounded setting",
+          "scene": "Place the supplied product in a calm everyday-care environment. Choose paths, rooms, surfaces, textiles, or practical accessories based on the category. Use warm natural light, soft shadows, and uncluttered background cues to communicate comfort, stability, ease, or trust. The product's safety, support, storage, fit, or comfort details should remain visible without unsupported claims.",
+          "templatePrompt": "A trusted everyday-care advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], grounded on [SURFACE_OR_BASE] with [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], comfort, stability, or confidence. Use [LIGHTING_STYLE]. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "comfort details, stability, warm light, and believable daily context",
+          "decision": "whether the product should lead with trust, safety, comfort, and daily confidence",
+          "elements": [
+            "calm daily setting",
+            "soft natural light",
+            "practical accessory",
+            "comfort cue",
+            "stable grounding",
+            "warm background"
+          ],
+          "constraints": [
+            "avoid fake safety certifications",
+            "show safe static product use",
+            "adapt care context to the product category"
+          ],
+          "avoid": "overstaged family cliches, unsupported safety claims, distorted structure, chaotic background",
+          "defaultInstantiation": {
+            "productCategory": "baby stroller",
+            "environment": "warm park path",
+            "benefitSignal": "parental confidence and everyday safety"
+          }
+        },
+        {
+          "id": "daily-nourishment-routine",
+          "title": "Daily Nourishment Routine",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A home routine archetype for products tied to feeding, replenishment, care, ingredients, or household trust.",
+          "businessGoal": "make nourishment, routine, and care feel trustworthy and repeatable",
+          "scene": "Place the supplied product in a clean home or daily replenishment setting. Use bowls, vessels, containers, mats, storage, or practical household props only when they match the product category. Natural light and simple domestic surfaces should make the product feel part of a trusted daily routine. Packaging must stay readable when relevant.",
+          "templatePrompt": "A daily nourishment advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT] on [SURFACE_OR_BASE]. Add [SUPPORTING_CUES] that communicate [PRIMARY_BENEFIT], routine, care, or replenishment. Use [LIGHTING_STYLE] and a warm clean composition. Preserve packaging and product details exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "packaging clarity, routine props, clean domestic surface, and trust",
+          "decision": "whether the product should lead with nourishment, care, routine, and household trust",
+          "elements": [
+            "clean home surface",
+            "serving or storage cue",
+            "daily-use prop",
+            "natural light",
+            "warm background",
+            "front-facing packaging"
+          ],
+          "constraints": [
+            "avoid unsupported ingredient or health claims",
+            "do not invent endorsements",
+            "keep domestic context uncluttered"
+          ],
+          "avoid": "fake certification badges, messy floor, invented ingredients, competitor packaging",
+          "defaultInstantiation": {
+            "productCategory": "pet food",
+            "environment": "bright kitchen feeding area",
+            "benefitSignal": "daily nourishment and trusted care"
+          }
+        },
+        {
+          "id": "soft-rest-environment",
+          "title": "Soft Rest Environment",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A quiet tactile archetype for products that promise rest, softness, calm, recovery, or comfort.",
+          "businessGoal": "make softness and relaxation visible without medical or exaggerated wellness claims",
+          "scene": "Place the supplied product in a calm rest, recovery, or comfort environment. Use natural light, layered materials, soft shadows, and minimal background objects that support quiet use. Product texture, folds, seams, loft, support, or tactile details should remain the center of the image. The scene should be inviting and clean without looking sterile.",
+          "templatePrompt": "A soft rest advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], arranged on or within [SURFACE_OR_BASE] with [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], calm, recovery, or comfort. Use [LIGHTING_STYLE]. Preserve textile, shape, color, and material details exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "texture, softness, natural light, folds, and quiet negative space",
+          "decision": "whether the product should lead with rest, comfort, calm, or recovery",
+          "elements": [
+            "calm room",
+            "soft natural light",
+            "layered material",
+            "minimal prop",
+            "tactile fold detail",
+            "neutral palette"
+          ],
+          "constraints": [
+            "avoid medical sleep claims",
+            "preserve textile details and scale",
+            "keep environment calm and uncluttered"
+          ],
+          "avoid": "sterile hotel stock, fake certifications, distorted fabric pattern, excessive decor",
+          "defaultInstantiation": {
+            "productCategory": "bedding",
+            "environment": "sunlit bedroom",
+            "benefitSignal": "premium sleep comfort"
+          }
+        },
+        {
+          "id": "designed-living-space",
+          "title": "Designed Living Space",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "An interior-context archetype for products where form, comfort, material, and taste need to be understood in space.",
+          "businessGoal": "make design value and everyday livability clear through a restrained environment",
+          "scene": "Place the supplied product as the hero object in a designed interior or architectural setting. Choose surrounding materials, furniture, light, art, or spatial cues that support the product's form and lifestyle role without crowding it. The product should cast a realistic shadow, sit at plausible scale, and show silhouette, material, stitching, legs, hardware, or finish as relevant.",
+          "templatePrompt": "A designed-space advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], grounded on [SURFACE_OR_BASE] with restrained [SUPPORTING_CUES] that reinforce [PRIMARY_BENEFIT], taste, comfort, or craftsmanship. Use [LIGHTING_STYLE] and realistic shadow. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "product silhouette, material texture, grounded scale, and designed context",
+          "decision": "whether the product should lead with taste, craftsmanship, comfort, and place in the home",
+          "elements": [
+            "designed interior",
+            "supporting furniture or object",
+            "natural light",
+            "textured surface",
+            "realistic shadow",
+            "clear product silhouette"
+          ],
+          "constraints": [
+            "avoid fake designer marks",
+            "keep scale plausible",
+            "do not let surrounding decor dominate"
+          ],
+          "avoid": "catalog blandness, cluttered room, warped legs or frame, unrelated hero furniture",
+          "defaultInstantiation": {
+            "productCategory": "designer chair",
+            "environment": "refined living room",
+            "benefitSignal": "taste, comfort, and interior craftsmanship"
+          }
+        },
+        {
+          "id": "cold-sensory-refreshment",
+          "title": "Cold Sensory Refreshment",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "A direct sensory archetype for products that should feel cold, fresh, crisp, flavorful, or instantly desirable.",
+          "businessGoal": "create a high-impact appetite or sensory image with clear product readability",
+          "scene": "Place the supplied product in a controlled sensory environment that amplifies coldness, freshness, flavor, crispness, or immediate appeal. Use ice, condensation, mist, splash, powder, fruit, texture, or color only if category-appropriate. The label or product-defining face should remain front-facing and unobscured. Studio lighting should make the surface feel tactile and immediate.",
+          "templatePrompt": "A crisp sensory advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], anchored in [SURFACE_OR_BASE] with [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], coldness, flavor, freshness, or immediacy. Use [LIGHTING_STYLE]. Preserve label and product details exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "front-facing product detail, condensation or sensory texture, studio highlights, and immediate appeal",
+          "decision": "whether the product should lead with refreshment, flavor, coldness, or sensory impact",
+          "elements": [
+            "sensory base",
+            "condensation or texture",
+            "mist or splash",
+            "bold backdrop",
+            "studio highlight",
+            "clear front-facing product"
+          ],
+          "constraints": [
+            "avoid obscuring label or product identity",
+            "do not invent nutrition or energy claims",
+            "adapt sensory cue to category"
+          ],
+          "avoid": "excessive splash, unreadable label, fake brand text, generic stock beverage treatment",
+          "defaultInstantiation": {
+            "productCategory": "beverage can",
+            "environment": "crushed ice studio setup",
+            "benefitSignal": "maximum cold refreshment"
+          }
+        },
+        {
+          "id": "outdoor-shelter-escape",
+          "title": "Outdoor Shelter Escape",
+          "category": "Cross-Industry Product Advertising",
+          "summary": "An expansive outdoor-use archetype for products tied to protection, resilience, escape, or remote confidence.",
+          "businessGoal": "make capability and emotional escape visible in a credible natural environment",
+          "scene": "Place the supplied product in an outdoor or remote-use environment that fits its true purpose. Use landscape, weather, morning or evening light, terrain, and practical accessories to show protection, preparedness, escape, or resilience. The product should be fully readable, structurally plausible, and integrated into the setting rather than swallowed by scenery.",
+          "templatePrompt": "An outdoor capability advertisement featuring [PRODUCT_REFERENCE] in [PRIMARY_ENVIRONMENT], grounded on [SURFACE_OR_BASE] with [SUPPORTING_CUES] that suggest [PRIMARY_BENEFIT], protection, escape, resilience, or preparedness. Use [LIGHTING_STYLE] and atmospheric depth. Preserve the product exactly. Avoid [AVOID].",
+          "placeholders": [
+            "PRODUCT_REFERENCE",
+            "PRODUCT_CATEGORY",
+            "PRIMARY_BENEFIT",
+            "PRIMARY_ENVIRONMENT",
+            "SURFACE_OR_BASE",
+            "LIGHTING_STYLE",
+            "SUPPORTING_CUES",
+            "MOOD",
+            "COPY_SPACE",
+            "AVOID"
+          ],
+          "focus": "product structure, environmental integration, atmospheric depth, and practical outdoor cues",
+          "decision": "whether the product should lead with protection, durability, escape, or outdoor confidence",
+          "elements": [
+            "outdoor environment",
+            "terrain surface",
+            "weather or atmosphere",
+            "practical accessory",
+            "distant background",
+            "clear product structure"
+          ],
+          "constraints": [
+            "avoid unsupported weatherproof or durability claims",
+            "keep setup plausible",
+            "adapt landscape to product category and use case"
+          ],
+          "avoid": "fantasy wilderness, impossible setup, product hidden by scenery, fake expedition badges",
+          "defaultInstantiation": {
+            "productCategory": "camping tent",
+            "environment": "alpine lake at sunrise",
+            "benefitSignal": "shelter, escape, and durability"
+          }
+        }
+      ]
+    }
+  ]
+}

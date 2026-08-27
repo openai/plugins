@@ -1,0 +1,5 @@
+interface:
+  display_name: "Batch edit photos"
+  short_description: "Apply a consistent look across a set of photos."
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"

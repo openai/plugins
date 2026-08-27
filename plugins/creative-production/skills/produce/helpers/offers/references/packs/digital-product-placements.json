@@ -1,0 +1,264 @@
+{
+  "id": "digital-product-placements",
+  "title": "Digital Product Placements",
+  "summary": "App, SaaS, and UI-first offer placements where the product interface is the proof.",
+  "whenToUse": "Use when the offer is a digital product, app, SaaS workflow, dashboard, internal tool, or AI feature and the visual needs to prove value through the interface rather than generic software metaphors.",
+  "requiredInputs": [
+    "product name or offer anchor",
+    "workflow or job to be shown",
+    "audience or operator",
+    "proof cues that are allowed",
+    "UI, data, privacy, and brand constraints"
+  ],
+  "riskGates": [
+    "Do not invent real customer names, private data, or unsupported metrics.",
+    "Keep text sparse and directional unless exact UI copy is supplied.",
+    "Avoid generic abstract SaaS glow when the brief needs product proof."
+  ],
+  "review": {
+    "preset": "image-wall",
+    "suppressCaptions": true
+  },
+  "families": [
+    {
+      "id": "app-home-proof",
+      "title": "App Home Proof",
+      "category": "Product UI Proof",
+      "summary": "A hero-style placement where the app home screen proves the main value.",
+      "businessGoal": "Show what the product is and why the user should believe the offer",
+      "scene": "A clean product hero composition with one large app screen, sparse supporting context, and a clear workflow state.",
+      "subjectSlot": {
+        "slotType": "digital product UI",
+        "placement": "large central screen",
+        "scale": "primary proof object",
+        "interaction": "ready-to-use workflow state",
+        "preserve": ["product surface", "core workflow", "approved proof cues"]
+      },
+      "focus": "Product UI as proof, not decoration",
+      "decision": "Choose whether the app screen can carry the first impression",
+      "elements": ["large product UI", "workflow state", "supporting proof cue", "clean background"],
+      "constraints": ["make the UI the visual evidence", "use sparse placeholder labels", "preserve supplied product facts"],
+      "avoid": "generic laptop mockup, abstract gradient dashboard, invented metrics, fake customer logos"
+    },
+    {
+      "id": "operator-workbench",
+      "title": "Operator Workbench",
+      "category": "Product UI Proof",
+      "summary": "The product shown as a working command center for an operator.",
+      "businessGoal": "Make the user workflow feel concrete and usable",
+      "scene": "A focused workbench with one operator-facing interface, relevant panels, and a visible next action.",
+      "subjectSlot": {
+        "slotType": "workspace UI",
+        "placement": "desktop or browser workbench",
+        "scale": "dominant screen area",
+        "interaction": "operator reviewing and acting",
+        "preserve": ["task flow", "decision state", "product role"]
+      },
+      "focus": "The product reducing work in a recognizable operator flow",
+      "decision": "Choose whether the workflow reads as useful and credible",
+      "elements": ["operator UI", "task queue", "decision panel", "next action cue"],
+      "constraints": ["show a plausible workflow state", "keep UI text minimal", "avoid unsupported automation claims"],
+      "avoid": "busy fake dashboard, sci-fi control room, unreadable microtext, real private data"
+    },
+    {
+      "id": "before-after-workflow",
+      "title": "Before And After Workflow",
+      "category": "Product UI Proof",
+      "summary": "A split workflow image that shows the product improving a visible process.",
+      "businessGoal": "Clarify the change the product creates",
+      "scene": "A clean before-and-after or old-way/new-way comparison with the product interface as the improved state.",
+      "subjectSlot": {
+        "slotType": "workflow comparison UI",
+        "placement": "right-side improved state",
+        "scale": "balanced split composition",
+        "interaction": "workflow simplified through the product",
+        "preserve": ["before state", "after state", "proof logic"]
+      },
+      "focus": "Visible workflow improvement anchored by the product UI",
+      "decision": "Choose whether the improvement is legible without overclaiming",
+      "elements": ["split composition", "old workflow cue", "product UI", "simplified outcome cue"],
+      "constraints": ["show contrast through structure, not aggressive claims", "use generic labels only", "preserve the product category"],
+      "avoid": "fake ROI numbers, competitor logos, dense comparison tables, abstract transformation swirls"
+    },
+    {
+      "id": "analytics-dashboard-proof",
+      "title": "Analytics Dashboard Proof",
+      "category": "Product UI Proof",
+      "summary": "A dashboard placement where structured data and decision cues prove the product value.",
+      "businessGoal": "Show insight, visibility, or measurement as the offer proof",
+      "scene": "A polished analytics dashboard with a few readable sections, simple placeholder charts, and a clear decision cue.",
+      "subjectSlot": {
+        "slotType": "analytics UI",
+        "placement": "single dashboard screen",
+        "scale": "full-frame product surface",
+        "interaction": "user evaluating insight",
+        "preserve": ["dashboard hierarchy", "approved metric themes", "decision cue"]
+      },
+      "focus": "Insight and product evidence through a believable dashboard",
+      "decision": "Choose whether the dashboard communicates proof without invented data",
+      "elements": ["dashboard UI", "placeholder charts", "status indicators", "decision module"],
+      "constraints": ["use illustrative data only", "avoid exact numeric claims unless supplied", "keep labels sparse"],
+      "avoid": "fabricated customer results, dense unreadable charts, stock finance dashboard, fake certifications"
+    },
+    {
+      "id": "integration-handoff",
+      "title": "Integration Handoff",
+      "category": "Product UI Proof",
+      "summary": "The product shown connecting systems or handing work between tools.",
+      "businessGoal": "Make interoperability and workflow continuity visible",
+      "scene": "A product interface with connected system blocks, handoff states, and a clear integration path.",
+      "subjectSlot": {
+        "slotType": "integration UI",
+        "placement": "center screen with connected modules",
+        "scale": "primary system map",
+        "interaction": "handoff or sync in progress",
+        "preserve": ["integration role", "workflow continuity", "system boundaries"]
+      },
+      "focus": "The product as the connective layer",
+      "decision": "Choose whether the integration story is clear without relying on partner marks",
+      "elements": ["product UI", "system blocks", "handoff status", "connection lines"],
+      "constraints": ["use generic system labels unless official marks are supplied", "show continuity instead of complexity", "preserve the product role"],
+      "avoid": "unauthorized partner logos, tangled diagrams, fake compliance badges, abstract network background"
+    },
+    {
+      "id": "mobile-companion-flow",
+      "title": "Mobile Companion Flow",
+      "category": "Product UI Proof",
+      "summary": "A mobile-first placement that shows the app helping in the moment.",
+      "businessGoal": "Show portability, immediacy, or field use",
+      "scene": "A realistic mobile app screen in context, with one clear action and restrained environment cues.",
+      "subjectSlot": {
+        "slotType": "mobile app UI",
+        "placement": "phone screen in hand or on surface",
+        "scale": "large enough to read structure",
+        "interaction": "in-the-moment action",
+        "preserve": ["mobile UI", "primary action", "use context"]
+      },
+      "focus": "Mobile UI proving the use case",
+      "decision": "Choose whether the product works as a mobile moment",
+      "elements": ["mobile screen", "primary action", "context cue", "status confirmation"],
+      "constraints": ["keep the screen prominent", "use sparse readable labels", "avoid unsupported location or user data"],
+      "avoid": "generic phone wallpaper, illegible tiny UI, staged lifestyle shot with no product proof, fake notifications"
+    },
+    {
+      "id": "ai-copilot-panel",
+      "title": "AI Copilot Panel",
+      "category": "Product UI Proof",
+      "summary": "An AI-assist product panel shown inside a real workflow.",
+      "businessGoal": "Make AI assistance concrete through an interface state",
+      "scene": "A product workflow with a side panel, suggested next steps, and user-controlled approval cues.",
+      "subjectSlot": {
+        "slotType": "AI assistance UI",
+        "placement": "side panel within product workspace",
+        "scale": "clearly visible but not magical",
+        "interaction": "assistant suggests, user reviews",
+        "preserve": ["workflow context", "human control", "suggestion state"]
+      },
+      "focus": "AI as an assistive product feature inside the workflow",
+      "decision": "Choose whether the AI value reads as useful and operator-controlled",
+      "elements": ["workflow UI", "assistant panel", "suggested action", "approval control"],
+      "constraints": ["show user control", "avoid magic automation claims", "keep suggestions generic unless supplied"],
+      "avoid": "sentient robot imagery, glowing orb assistant, fake legal or financial advice, unsupported autonomy claims"
+    },
+    {
+      "id": "team-collaboration-canvas",
+      "title": "Team Collaboration Canvas",
+      "category": "Product UI Proof",
+      "summary": "A shared workspace view where multiple roles align around the product.",
+      "businessGoal": "Show collaboration and shared context",
+      "scene": "A collaborative product canvas with comments, assignments, and a visible decision state.",
+      "subjectSlot": {
+        "slotType": "collaboration UI",
+        "placement": "shared canvas or review board",
+        "scale": "dominant product surface",
+        "interaction": "team reviewing and choosing",
+        "preserve": ["shared context", "role handoff", "decision state"]
+      },
+      "focus": "The product making team alignment visible",
+      "decision": "Choose whether collaboration is credible without looking like a generic project board",
+      "elements": ["shared canvas", "comments", "assigned actions", "selected item"],
+      "constraints": ["use invented initials only", "avoid real names", "show product-specific collaboration"],
+      "avoid": "generic sticky-note wall, fake employee photos, unreadable dense comments, brand-inconsistent social UI"
+    },
+    {
+      "id": "admin-governance-console",
+      "title": "Admin Governance Console",
+      "category": "Product UI Proof",
+      "summary": "An admin or governance screen that proves control, security, or readiness.",
+      "businessGoal": "Show trust and operational control",
+      "scene": "A calm admin console with settings, policy status, audit cues, and clear guardrails.",
+      "subjectSlot": {
+        "slotType": "admin console UI",
+        "placement": "desktop screen with governance panels",
+        "scale": "full-screen control surface",
+        "interaction": "admin reviewing policy status",
+        "preserve": ["control model", "guardrail state", "trust cues"]
+      },
+      "focus": "Control and trust through product UI",
+      "decision": "Choose whether enterprise readiness is visible without overclaiming",
+      "elements": ["settings panel", "policy status", "audit cue", "permission controls"],
+      "constraints": ["use generic compliance labels only", "avoid real regulatory claims unless supplied", "keep the interface calm"],
+      "avoid": "fake security seals, fear-based warning screens, real user data, excessive lock icons"
+    },
+    {
+      "id": "onboarding-activation-flow",
+      "title": "Onboarding Activation Flow",
+      "category": "Product UI Proof",
+      "summary": "A first-run product flow that shows how quickly value appears.",
+      "businessGoal": "Show ease of activation and early product value",
+      "scene": "A short onboarding sequence or checklist with a meaningful first success state.",
+      "subjectSlot": {
+        "slotType": "onboarding UI",
+        "placement": "sequence of two or three app panels",
+        "scale": "readable flow overview",
+        "interaction": "new user completing setup",
+        "preserve": ["activation steps", "success state", "product promise"]
+      },
+      "focus": "Product activation as visible progress",
+      "decision": "Choose whether the first-use story feels simple and credible",
+      "elements": ["setup checklist", "completed state", "first result cue", "primary action"],
+      "constraints": ["keep steps generic unless supplied", "do not invent integrations", "show the UI flow as proof"],
+      "avoid": "confetti-heavy onboarding, fake testimonials, unsupported time-to-value claims, tiny unreadable steps"
+    },
+    {
+      "id": "customer-proof-module",
+      "title": "Customer Proof Module",
+      "category": "Product UI Proof",
+      "summary": "A product-led proof section that pairs interface evidence with customer-safe proof cues.",
+      "businessGoal": "Support trust with product evidence and approved proof scaffolding",
+      "scene": "A web or sales-page module with product UI, abstract proof blocks, and a restrained customer-story area.",
+      "subjectSlot": {
+        "slotType": "product proof module",
+        "placement": "web module with UI and proof blocks",
+        "scale": "product surface first, proof second",
+        "interaction": "viewer evaluating credibility",
+        "preserve": ["product UI", "proof hierarchy", "approved evidence constraints"]
+      },
+      "focus": "Product proof supported by safe evidence framing",
+      "decision": "Choose whether proof feels credible without invented endorsements",
+      "elements": ["product UI", "proof blocks", "quote placeholder", "outcome cue"],
+      "constraints": ["use placeholders for customer proof unless supplied", "do not invent logos or quotes", "keep UI evidence central"],
+      "avoid": "fake named customer, fake analyst badge, overlarge quote, generic testimonial card with no product"
+    },
+    {
+      "id": "usage-context-split",
+      "title": "Usage Context Split",
+      "category": "Product UI Proof",
+      "summary": "A split composition that shows the product UI next to the real work context it improves.",
+      "businessGoal": "Connect product interface to the buyer's operating reality",
+      "scene": "A balanced composition with product UI on one side and a realistic business context on the other.",
+      "subjectSlot": {
+        "slotType": "context plus UI",
+        "placement": "split-screen UI and real-world context",
+        "scale": "UI remains the proof anchor",
+        "interaction": "context drives product use",
+        "preserve": ["business context", "product workflow", "proof relationship"]
+      },
+      "focus": "The interface tied to a concrete customer situation",
+      "decision": "Choose whether context helps the product proof rather than distracting from it",
+      "elements": ["product UI", "business context", "workflow link", "outcome cue"],
+      "constraints": ["keep product UI dominant", "avoid generic lifestyle filler", "preserve audience and use case"],
+      "avoid": "stock office scene with tiny app screen, unrelated industry context, invented field data, decorative split panel"
+    }
+  ]
+}

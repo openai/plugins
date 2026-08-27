@@ -1,0 +1,5 @@
+DriverID,DriverName,Definition,Units,Cadence,Owner,MappingType,Worksheet,Cell,NamedRange,SourceOfTruth,Notes
+REV_GROWTH,Revenue growth %,MISSING,%,Quarterly,MISSING,NamedRange,MISSING,,REV_GROWTH,Model,MISSING
+GM_PCT,Gross margin %,MISSING,%,Quarterly,MISSING,NamedRange,MISSING,,GM_PCT,Model,MISSING
+OPEX_SBC,Stock-based comp,MISSING,USDm,Quarterly,MISSING,NamedRange,MISSING,,OPEX_SBC,Model,MISSING
+CAPEX,Capex,MISSING,USDm,Quarterly,MISSING,NamedRange,MISSING,,CAPEX,Model,MISSING

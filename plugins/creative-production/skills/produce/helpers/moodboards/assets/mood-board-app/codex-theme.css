@@ -1,0 +1,133 @@
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --codex-gray-0: #ffffff;
+  --codex-gray-25: #fcfcfc;
+  --codex-gray-50: #f9f9f9;
+  --codex-gray-75: #f3f3f3;
+  --codex-gray-100: #ededed;
+  --codex-gray-150: #dfdfdf;
+  --codex-gray-200: #cdcdcd;
+  --codex-gray-300: #afafaf;
+  --codex-gray-500: #5d5d5d;
+  --codex-gray-800: #212121;
+  --codex-gray-900: #181818;
+  --codex-gray-1000: #0d0d0d;
+
+  --codex-accent: var(--color-ring-primary, #339cff);
+  --codex-font-sans:
+    var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+
+  --codex-bg: var(--color-background-primary, var(--codex-gray-0));
+  --codex-bg-under: var(--color-background-secondary, var(--codex-gray-50));
+  --codex-panel: var(--color-background-secondary, rgba(255, 255, 255, 0.96));
+  --codex-raised: var(--color-background-tertiary, rgba(255, 255, 255, 0.98));
+  --codex-main-surface-secondary: var(
+    --color-token-main-surface-secondary,
+    var(--codex-gray-50)
+  );
+  --codex-control: var(--color-background-ghost, rgba(26, 28, 31, 0.05));
+  --codex-control-hover: rgba(26, 28, 31, 0.08);
+  --codex-list-hover: var(--color-token-list-hover-background, var(--codex-control));
+  --codex-text: var(--color-text-primary, #1a1c1f);
+  --codex-text-secondary: var(--color-text-secondary, rgba(26, 28, 31, 0.7));
+  --codex-text-tertiary: var(--color-text-tertiary, rgba(26, 28, 31, 0.5));
+  --codex-border: var(--color-border-primary, rgba(26, 28, 31, 0.08));
+  --codex-border-heavy: var(--color-border-secondary, rgba(26, 28, 31, 0.12));
+  --codex-border-light: var(--color-border-tertiary, rgba(26, 28, 31, 0.05));
+  --codex-input-background: var(--color-token-input-background, var(--codex-panel));
+  --codex-input-foreground: var(--color-token-input-foreground, var(--codex-text));
+  --codex-input-border: var(--color-token-input-border, var(--codex-border));
+  --codex-input-placeholder: var(
+    --color-token-input-placeholder-foreground,
+    var(--codex-text-tertiary)
+  );
+  --codex-focus-border: var(
+    --color-token-focus-border,
+    color-mix(in srgb, var(--codex-accent) 55%, var(--codex-border))
+  );
+
+  --codex-radius-xs: var(--border-radius-xs, 4px);
+  --codex-radius-sm: var(--border-radius-sm, 6px);
+  --codex-radius-md: var(--border-radius-md, 8px);
+  --codex-radius-lg: var(--border-radius-lg, 10px);
+  --codex-radius-xl: var(--border-radius-xl, 12px);
+  --codex-radius-2xl: 16px;
+  --codex-radius-3xl: 20px;
+  --codex-radius-pill: var(--border-radius-full, 9999px);
+
+  --codex-font-size-xs: var(--font-text-xs-size, 11px);
+  --codex-font-size-sm: var(--font-text-sm-size, 12px);
+  --codex-font-size-base: var(--font-text-md-size, 14px);
+  --codex-font-size-lg: var(--font-text-lg-size, 16px);
+  --codex-heading-sm: var(--font-heading-sm-size, 18px);
+  --codex-heading-md: var(--font-heading-md-size, 20px);
+  --codex-heading-lg: var(--font-heading-lg-size, 24px);
+
+  --codex-space-1: 4px;
+  --codex-space-2: 8px;
+  --codex-space-3: 12px;
+  --codex-space-4: 16px;
+  --codex-space-5: 20px;
+  --codex-space-6: 24px;
+  --codex-space-8: 32px;
+
+  --codex-button-height-sm: 28px;
+  --codex-button-height: 32px;
+  --codex-button-height-lg: 40px;
+
+  --codex-shadow-hairline: var(--shadow-hairline, 0 0 0 0.5px rgba(0, 0, 0, 0.1));
+  --codex-shadow-sm: var(--shadow-sm, 0 1px 2px -1px rgba(0, 0, 0, 0.08));
+  --codex-shadow-md: var(--shadow-md, 0 2px 4px -1px rgba(0, 0, 0, 0.08));
+  --codex-shadow-lg: var(--shadow-lg, 0 4px 8px -2px rgba(0, 0, 0, 0.1));
+  --codex-shadow-xl: var(--shadow-xl, 0 8px 16px -4px rgba(0, 0, 0, 0.12));
+
+  --codex-transition: 150ms ease;
+  --codex-transition-relaxed: 300ms ease;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --codex-bg: var(--color-background-primary, var(--codex-gray-900));
+  --codex-bg-under: var(--color-background-secondary, #000000);
+  --codex-panel: var(--color-background-secondary, rgba(24, 24, 24, 0.96));
+  --codex-raised: var(--color-background-tertiary, rgba(33, 33, 33, 0.98));
+  --codex-main-surface-secondary: var(
+    --color-token-main-surface-secondary,
+    var(--codex-gray-800)
+  );
+  --codex-control: var(--color-background-ghost, rgba(255, 255, 255, 0.05));
+  --codex-control-hover: rgba(255, 255, 255, 0.08);
+  --codex-text: var(--color-text-primary, var(--codex-gray-0));
+  --codex-text-secondary: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+  --codex-text-tertiary: var(--color-text-tertiary, rgba(255, 255, 255, 0.5));
+  --codex-border: var(--color-border-primary, rgba(255, 255, 255, 0.08));
+  --codex-border-heavy: var(--color-border-secondary, rgba(255, 255, 255, 0.16));
+  --codex-border-light: var(--color-border-tertiary, rgba(255, 255, 255, 0.04));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--codex-bg);
+  color: var(--codex-text);
+  font-family: var(--codex-font-sans);
+  font-size: var(--codex-font-size-base);
+  letter-spacing: 0;
+}
+
+button {
+  font: inherit;
+  letter-spacing: 0;
+}
+
+.codex-app {
+  min-height: 100vh;
+  background: var(--codex-bg);
+  color: var(--codex-text);
+}

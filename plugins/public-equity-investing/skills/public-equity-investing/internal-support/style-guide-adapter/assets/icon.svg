@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="style guide adapter icon">
+  <rect width="64" height="64" rx="14" fill="#111827"/>
+  <rect x="13" y="14" width="38" height="36" rx="4" fill="#F9FAFB"/>
+  <rect x="18" y="20" width="20" height="4" rx="2" fill="#2563EB"/>
+  <rect x="18" y="29" width="28" height="3" rx="1.5" fill="#9CA3AF"/>
+  <rect x="18" y="36" width="22" height="3" rx="1.5" fill="#9CA3AF"/>
+  <circle cx="44" cy="43" r="7" fill="#F59E0B"/>
+  <path d="M42 43.5l2.1 2.1 4-5" fill="none" stroke="#111827" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
