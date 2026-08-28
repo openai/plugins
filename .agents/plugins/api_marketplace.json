@@ -606,6 +606,36 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Creativity"
+    },
+    {
+      "name": "crowdstrike-falcon-foundry",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/CrowdStrike/foundry-skills.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "CrowdStrike Falcon Foundry"
+      }
+    },
+    {
+      "name": "crowdstrike-falcon-fusion",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/CrowdStrike/fusion-skills.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "CrowdStrike Falcon Fusion"
+      }
     }
   ]
 }
