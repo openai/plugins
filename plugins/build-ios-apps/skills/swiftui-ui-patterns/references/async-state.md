@@ -11,6 +11,7 @@ Use this pattern when a view loads data, reacts to changing input, or coordinate
 - Treat cancellation as a normal path for view-driven tasks. Check `Task.isCancelled` in longer flows and avoid surfacing cancellation as a user-facing error.
 - Debounce or coalesce user-driven async work such as search before it fans out into repeated requests.
 - Keep UI-facing models and mutations main-actor-safe; do background work in services, then publish the result back to UI state.
+- Do not assume `.task` or `async` moves CPU-heavy synchronous work off the main actor. Put expensive parsing, decoding, formatting, or database work in a service/helper that does not touch actor-isolated UI state; in Swift 6.2+ use `@concurrent` when an async helper must explicitly hop off the caller's actor.
 
 ## Example: load on appear
 
