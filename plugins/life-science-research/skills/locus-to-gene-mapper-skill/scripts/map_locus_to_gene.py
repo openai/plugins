@@ -20,6 +20,19 @@ OT_BASE = "https://api.platform.opentargets.org/api/v4/graphql"
 GNOMAD_BASE = "https://gnomad.broadinstitute.org/api"
 REFSNP_BASE = "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp"
 
+PROVENANCE_SOURCE_CATALOG = {
+    "efo-ontology-skill": (
+        "Experimental Factor Ontology via OLS",
+        "https://www.ebi.ac.uk/ols4/ontologies/efo",
+    ),
+    "gwas-catalog-skill": ("NHGRI-EBI GWAS Catalog", "https://www.ebi.ac.uk/gwas/"),
+    "ncbi-refsnp": ("NCBI RefSNP", "https://www.ncbi.nlm.nih.gov/snp/"),
+    "opentargets-skill": ("Open Targets Platform", "https://platform.opentargets.org/"),
+    "gtex-eqtl-skill": ("GTEx Portal", "https://gtexportal.org/"),
+    "genebass-gene-burden-skill": ("Genebass", "https://app.genebass.org/"),
+    "gnomad-graphql-skill": ("gnomAD", "https://gnomad.broadinstitute.org/"),
+}
+
 DEFAULT_LOCUS_PADDING_BP = 1_000_000
 REFSEQ_CHROMOSOMES = {f"NC_{i:06d}": str(i) for i in range(1, 23)}
 REFSEQ_CHROMOSOMES.update({"NC_000023": "X", "NC_000024": "Y", "NC_012920": "MT"})
@@ -29,6 +42,35 @@ GTEX_EQTL_SCRIPT = REPO_ROOT / "gtex-eqtl-skill" / "scripts" / "gtex_eqtl.py"
 GENEBASS_GENE_BURDEN_SCRIPT = (
     REPO_ROOT / "genebass-gene-burden-skill" / "scripts" / "genebass_gene_burden.py"
 )
+
+
+def record_provenance(
+    statuses: dict[str, str], source_key: str, *, contributed: bool
+) -> None:
+    """Record one source lane, retaining the strongest observed status."""
+    if source_key not in PROVENANCE_SOURCE_CATALOG:
+        raise ValueError(f"Unknown provenance source: {source_key}")
+    if contributed or source_key not in statuses:
+        statuses[source_key] = "contributed" if contributed else "queried_no_evidence"
+
+
+def build_provenance_sources(
+    statuses: dict[str, str], retrieved_at: str
+) -> list[dict[str, str]]:
+    sources: list[dict[str, str]] = []
+    for source_key, (name, url) in PROVENANCE_SOURCE_CATALOG.items():
+        status = statuses.get(source_key)
+        if status is None:
+            continue
+        sources.append(
+            {
+                "name": name,
+                "url": url,
+                "status": status,
+                "retrieved_at": retrieved_at,
+            }
+        )
+    return sources
 
 TOKEN_STOPWORDS = {
     "disease",
@@ -1686,6 +1728,7 @@ def group_anchors_by_locus(anchors: list[dict[str, Any]]) -> list[dict[str, Any]
 def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
     warnings: list[str] = []
     limitations: list[str] = []
+    provenance_statuses: dict[str, str] = {}
 
     normalized_input: dict[str, Any] = dict(input_json)
 
@@ -1731,12 +1774,34 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
     figure_output_dir = Path(str(normalized_input.get("figure_output_dir") or "./output/figures"))
 
     efo_payload = resolve_efo(trait_query, warnings, limitations)
+    if trait_query:
+        record_provenance(
+            provenance_statuses,
+            "efo-ontology-skill",
+            contributed=bool(efo_payload.get("efo_id")),
+        )
     if efo_id_input:
         efo_payload["efo_id"] = efo_id_input
 
+    phenotype_terms_input = as_string_list(normalized_input.get("phenotype_terms"))
+    gwas_queried = bool(trait_query or efo_id_input or phenotype_terms_input)
     anchors = build_anchors(normalized_input, efo_payload, warnings, limitations)
     if not anchors:
         raise ValueError("No anchors remained after normalization.")
+    if gwas_queried:
+        record_provenance(
+            provenance_statuses,
+            "gwas-catalog-skill",
+            contributed=any(
+                anchor.get("accession_id") or safe_float(anchor.get("p_value")) is not None
+                for anchor in anchors
+            ),
+        )
+    record_provenance(
+        provenance_statuses,
+        "ncbi-refsnp",
+        contributed=any(anchor.get("grch38") or anchor.get("grch37") for anchor in anchors),
+    )
 
     unresolved_coord_rsids = [
         str(anchor.get("rsid"))
@@ -1773,10 +1838,29 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
         limitations=limitations,
         warnings=warnings,
     )
+    gtex_queried = any(
+        coerce_dict(anchor.get("grch38")).get("chr") is not None
+        and coerce_dict(anchor.get("grch38")).get("pos") is not None
+        and coerce_dict(anchor.get("grch38")).get("ref")
+        and coerce_dict(anchor.get("grch38")).get("alt")
+        for anchor in anchors
+    )
+    if gtex_queried:
+        record_provenance(
+            provenance_statuses,
+            "gtex-eqtl-skill",
+            contributed=any(bool(gene_support) for gene_support in gtex_support.values()),
+        )
 
     refsnp_annotations = (
         fetch_refsnp_annotations(anchor_rsids, limitations) if include_clinvar else {}
     )
+    if include_clinvar and anchor_rsids:
+        record_provenance(
+            provenance_statuses,
+            "ncbi-refsnp",
+            contributed=bool(refsnp_annotations),
+        )
 
     grouped_loci = group_anchors_by_locus(anchors)
 
@@ -1809,6 +1893,20 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
 
     unique_symbols = dedupe_keep_order(all_candidate_symbols)
     symbol_to_ensembl = resolve_ensembl_ids_for_symbols(unique_symbols, limitations)
+    ot_queried = bool((anchor_rsids and trait_terms) or unique_symbols)
+    if ot_queried:
+        ot_evidence = bool(symbol_to_ensembl) or bool(ot_support.get("matched_study_loci"))
+        if not ot_evidence:
+            for support in coerce_dict(ot_support.get("per_anchor")).values():
+                support_dict = coerce_dict(support)
+                if support_dict.get("l2g") or support_dict.get("coloc"):
+                    ot_evidence = True
+                    break
+        record_provenance(
+            provenance_statuses,
+            "opentargets-skill",
+            contributed=ot_evidence,
+        )
     genebass_support = fetch_genebass_support(
         symbol_to_ensembl=symbol_to_ensembl,
         burden_sets=burden_sets,
@@ -1816,10 +1914,27 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
         max_results=int(normalized_input.get("genebass_max_results") or 300),
         limitations=limitations,
     )
+    if symbol_to_ensembl:
+        genebass_evidence = any(
+            safe_float(support.get("best_p")) is not None
+            or int(support.get("supporting_rows") or 0) > 0
+            for support in genebass_support.values()
+        )
+        record_provenance(
+            provenance_statuses,
+            "genebass-gene-burden-skill",
+            contributed=genebass_evidence,
+        )
 
     gnomad_constraints = (
         fetch_gnomad_gene_constraints(unique_symbols, limitations) if include_gnomad_context else {}
     )
+    if include_gnomad_context and unique_symbols:
+        record_provenance(
+            provenance_statuses,
+            "gnomad-graphql-skill",
+            contributed=bool(gnomad_constraints),
+        )
 
     hpa_support: dict[str, list[str]] = {}
     if include_hpa_tissue_context:
@@ -2044,32 +2159,28 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
                     f"overall_score outside [0,1] for gene {gene.get('symbol')} in locus {locus.get('locus_id')}"
                 )
 
+    retrieved_at = now_iso()
+    provenance_sources = build_provenance_sources(provenance_statuses, retrieved_at)
+
     mapping_payload: dict[str, Any] = {
         "meta": {
             "trait_query": trait_query,
             "efo_id": efo_payload.get("efo_id"),
             "generated_at": now_iso(),
-            "sources_queried": [
-                "efo-ontology-skill",
-                "gwas-catalog-skill",
-                "ncbi-refsnp-coordinate-resolution",
-                "opentargets-skill",
-                "gtex-eqtl-skill",
-                "genebass-gene-burden-skill",
-                "clinvar-variation-skill"
-                if include_clinvar
-                else "clinvar-variation-skill(skipped)",
-                "gnomad-graphql-skill"
-                if include_gnomad_context
-                else "gnomad-graphql-skill(skipped)",
-                "human-protein-atlas-skill"
-                if include_hpa_tissue_context
-                else "human-protein-atlas-skill(skipped)",
+            "sources_queried": list(provenance_statuses),
+            "sources_contributing": [
+                key for key, status in provenance_statuses.items() if status == "contributed"
+            ],
+            "sources_without_evidence": [
+                key
+                for key, status in provenance_statuses.items()
+                if status == "queried_no_evidence"
             ],
         },
         "anchors": anchors,
         "loci": loci_output,
         "cross_locus_ranked_genes": cross_locus_ranked_genes,
+        "sources": provenance_sources,
         "warnings": dedupe_keep_order(warnings),
         "limitations": dedupe_keep_order(limitations),
     }
@@ -2118,6 +2229,7 @@ def map_locus_to_gene(input_json: dict[str, Any]) -> dict[str, Any]:
             "Paste `inline_image_markdown` lines directly in the chat as plain markdown. "
             "Do not wrap them in code fences."
         ),
+        "sources": provenance_sources,
         "warnings": dedupe_keep_order(warnings),
         "limitations": dedupe_keep_order(limitations),
     }

@@ -12,6 +12,7 @@ Output JSON on stdout.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 import sys
 from typing import Any
@@ -58,16 +59,20 @@ def build_variant_id(parsed: dict[str, Any]) -> str:
     return f"chr{parsed['chr']}_{parsed['pos']}_{parsed['ref']}_{parsed['alt']}_b38"
 
 
-def fetch_eqtls(variant_id: str) -> Any:
+def build_request_url(variant_id: str) -> str:
     encoded = requests.utils.quote(variant_id, safe="")
-    url = f"{GTEX_API}/association/singleTissueEqtl?variantId={encoded}"
+    return f"{GTEX_API}/association/singleTissueEqtl?variantId={encoded}"
+
+
+def fetch_eqtls(variant_id: str) -> tuple[Any, str]:
+    url = build_request_url(variant_id)
     headers = {
         "Accept": "application/json",
         "User-Agent": USER_AGENT,
     }
     resp = requests.get(url, headers=headers, timeout=DEFAULT_TIMEOUT_S)
     resp.raise_for_status()
-    return resp.json()
+    return resp.json(), str(resp.url)
 
 
 def extract_rows(data: Any) -> list[Any]:
@@ -76,6 +81,22 @@ def extract_rows(data: Any) -> list[Any]:
     if isinstance(data, list):
         return data
     return []
+
+
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "request_url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
 
 
 def main() -> int:
@@ -110,7 +131,7 @@ def main() -> int:
         return 1
 
     try:
-        data = fetch_eqtls(parsed["variant_id"])
+        data, request_url = fetch_eqtls(parsed["variant_id"])
     except requests.RequestException as exc:
         sys.stdout.write(json.dumps(error("network_error", f"GTEx request failed: {exc}")))
         return 1
@@ -138,7 +159,7 @@ def main() -> int:
         "paging_info": paging_info,
         "warnings": warnings,
     }
-    sys.stdout.write(json.dumps(output))
+    sys.stdout.write(json.dumps(_attach_sources(output, "GTEx Portal", request_url)))
     return 0
 
 

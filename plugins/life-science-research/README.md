@@ -23,6 +23,19 @@ When a user invokes this plugin, treat it as a general research copilot for life
 6. Synthesize for the user.
    Return a concise research answer with the key evidence, important caveats, and clear next steps. Save raw payloads only when the user asks for them.
 
+## Source Presentation
+
+Every skill follows a shared, output-aware source-presentation contract:
+
+- put source links next to substantive externally sourced claims rather than relying on a trailing list of databases checked;
+- render stable publication IDs, accessions, trial IDs, variant IDs, pathway IDs, structure IDs, and dataset IDs as links to authoritative records when a canonical URL is available;
+- fall back to sanitized request URLs when a source has no stable human-readable record page;
+- retain provenance without forcing evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or queried sources that returned no supporting evidence;
+- never invent a deep link or imply that a source supports information absent from its response; and
+- preserve explicitly requested raw or machine-readable output without injecting Markdown.
+
+The full runtime policy is in `references/source-presentation.md`, and source-specific display names and URL templates are in `references/source-links.json`. Script-backed skills expose additive `sources` metadata so the selected skill and `research-router-skill` can use consistent provenance in user-facing summaries.
+
 ## Research Patterns
 
 This plugin is meant to support workflows like:
@@ -173,3 +186,5 @@ Each subagent should receive a bounded objective and return concise findings, ca
 The plugin does not require plugin-local app connectors or MCP servers. The bundled skills are self-contained under `plugins/life-science-research/skills/` and generally call their own scripts or public APIs directly.
 
 This plugin should be treated as a routing and synthesis layer over those skills. A focused question may require only one skill. A broader research question may require a short multi-skill chain, and when the work splits naturally into independent lanes, optional subagent-assisted parallel analysis before final synthesis.
+
+Run `python scripts/validate_source_presentation.py` from the plugin directory to verify that all skills are covered by the source registry, load the runtime contract, and expose provenance from script-backed workflows.

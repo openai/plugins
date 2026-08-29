@@ -3,6 +3,15 @@ name: clinvar-variation-skill
 description: Submit compact ClinVar Clinical Tables and NCBI Variation requests for search, VCV, RCV, SCV, and RefSNP lookups. Use when a user wants variant-level summaries or identifier mapping
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `clinvar-variation-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/clinvar_variation.py` for all ClinVar and NCBI Variation work.
 - The script accepts `max_items`; for `action=search`, start around `max_items=10`.
@@ -40,4 +49,4 @@ echo '{"action":"search","terms":"VCV000013080","max_items":10}' | python script
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/clinvar_variation.py`.
+- Keep runtime imports limited to this file, `scripts/clinvar_variation.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

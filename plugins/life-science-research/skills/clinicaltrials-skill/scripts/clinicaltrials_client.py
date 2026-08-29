@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 import sys
 from pathlib import Path
@@ -53,6 +54,28 @@ def _compact(value: Any, max_items: int, max_depth: int) -> Any:
             out["_truncated_keys"] = len(items) - max_items
         return out
     return value
+
+
+def _compact_study(study: Any) -> Any:
+    """Keep the stable trial identifier and core display fields linkable."""
+    if not isinstance(study, dict):
+        return study
+    protocol = study.get("protocolSection")
+    protocol = protocol if isinstance(protocol, dict) else {}
+    identification = protocol.get("identificationModule")
+    identification = identification if isinstance(identification, dict) else {}
+    status = protocol.get("statusModule")
+    status = status if isinstance(status, dict) else {}
+    design = protocol.get("designModule")
+    design = design if isinstance(design, dict) else {}
+    return {
+        "nctId": identification.get("nctId"),
+        "briefTitle": identification.get("briefTitle"),
+        "officialTitle": identification.get("officialTitle"),
+        "overallStatus": status.get("overallStatus"),
+        "studyType": design.get("studyType"),
+        "hasResults": study.get("hasResults"),
+    }
 
 
 def _require_int(name: str, value: Any, default: int) -> int:
@@ -121,6 +144,7 @@ def execute(payload: Any) -> dict[str, Any]:
             pages: list[dict[str, Any]] = []
             total_count: int | None = None
             pages_fetched = 0
+            request_url: str | None = None
             for _ in range(config["max_pages"]):
                 params = dict(config["params"])
                 if next_page_token:
@@ -129,6 +153,8 @@ def execute(payload: Any) -> dict[str, Any]:
                     BASE_URL + config["path"], params=params, timeout=config["timeout_sec"]
                 )
                 response.raise_for_status()
+                if request_url is None:
+                    request_url = str(response.url)
                 page = response.json()
                 pages.append(page)
                 pages_fetched += 1
@@ -158,9 +184,10 @@ def execute(payload: Any) -> dict[str, Any]:
                 "record_count_returned": min(len(studies), config["max_items"]),
                 "record_count_available": available,
                 "truncated": len(studies) > config["max_items"] or next_page_token is not None,
-                "records": _compact(
-                    studies[: config["max_items"]], config["max_items"], config["max_depth"]
-                ),
+                "records": [
+                    _compact_study(study) for study in studies[: config["max_items"]]
+                ],
+                "request_url": request_url,
                 "raw_output_path": raw_output_path,
                 "warnings": [],
             }
@@ -183,6 +210,7 @@ def execute(payload: Any) -> dict[str, Any]:
             "ok": True,
             "source": "clinicaltrials-v2",
             "action": config["action"],
+            "request_url": str(response.url),
             "raw_output_path": raw_output_path,
             "warnings": [],
         }
@@ -209,6 +237,22 @@ def execute(payload: Any) -> dict[str, Any]:
         session.close()
 
 
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "request_url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
+
+
 def main() -> int:
     try:
         payload = json.load(sys.stdin)
@@ -222,7 +266,8 @@ def main() -> int:
         code = 2
     else:
         code = 0 if output.get("ok") else 1
-    sys.stdout.write(json.dumps(output))
+    source_url = str(output.get("request_url") or BASE_URL)
+    sys.stdout.write(json.dumps(_attach_sources(output, "ClinicalTrials.gov", source_url)))
     return code
 
 

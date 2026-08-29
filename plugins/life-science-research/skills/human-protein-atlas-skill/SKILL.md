@@ -3,6 +3,15 @@ name: human-protein-atlas-skill
 description: Submit compact Human Protein Atlas requests for gene JSON, search downloads, and page-level tissue or cell-line lookups. Use when a user wants concise Human Protein Atlas summaries; save raw JSON or HTML only on request.
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `human-protein-atlas-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/rest_request.py` for all Human Protein Atlas calls.
 - Use `base_url=https://www.proteinatlas.org`.
@@ -37,4 +46,4 @@ echo '{"base_url":"https://www.proteinatlas.org","path":"ENSG00000141510.json"}'
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/rest_request.py`.
+- Keep runtime imports limited to this file, `scripts/rest_request.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.
