@@ -68,6 +68,8 @@ Choose the smallest set of skills that can answer the question well.
 
 Examples:
 
+- bounded target biology, program, and safety review:
+  `research-target-evidence-skill`
 - target or disease evidence review:
   `opentargets-skill`, `gwas-catalog-skill`, `gtex-eqtl-skill`, `human-protein-atlas-skill`
 - variant interpretation:
@@ -79,7 +81,7 @@ Examples:
 - chemistry and pharmacology:
   `chembl-skill`, `bindingdb-skill`, `pubchem-pug-skill`, `pharmgkb-skill`
 - clinical and translational:
-  `clinicaltrials-skill`, `cbioportal-skill`, `civic-skill`
+  `research-target-evidence-skill`, `clinicaltrials-skill`, `cbioportal-skill`, `civic-skill`
 - literature and dataset discovery:
   `ncbi-entrez-skill`, `ncbi-pmc-skill`, `biorxiv-skill`, `biostudies-arrayexpress-skill`, `ncbi-datasets-skill`
 
