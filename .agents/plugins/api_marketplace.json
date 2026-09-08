@@ -636,6 +636,22 @@
       "interface": {
         "displayName": "CrowdStrike Falcon Fusion"
       }
+    },
+    {
+      "name": "qodo",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/qodo-ai/qodo-skills.git",
+        "path": "codex-packages/qodo"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Qodo"
+      }
     }
   ]
 }
