@@ -83,7 +83,17 @@ def resolve_output(value: str) -> Path:
 
 def generate_in_scope_files(repository: Path, scope: str, output: Path) -> int:
     """Atomically write the exact ripgrep inventory sorted as ``LC_ALL=C``."""
-    command = ["rg", "--files", "--hidden", "--glob", "!.git/**", "--path-separator=/", "--", scope]
+    command = [
+        "rg",
+        "--files",
+        "--hidden",
+        "--path-separator",
+        "/",
+        "--glob",
+        "!.git/**",
+        "--",
+        scope,
+    ]
     with tempfile.TemporaryFile(mode="w+b") as inventory:
         try:
             result = subprocess.run(
@@ -103,10 +113,69 @@ def generate_in_scope_files(repository: Path, scope: str, output: Path) -> int:
                 message = f"{message}: {detail}"
             raise InventoryError(message)
 
+        if (repository / ".git").exists():
+            try:
+                tracked = subprocess.run(
+                    [
+                        "git",
+                        "ls-files",
+                        "--cached",
+                        "--ignored",
+                        "--exclude-standard",
+                        "-z",
+                        "--",
+                        scope,
+                    ],
+                    cwd=repository,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.DEVNULL,
+                    check=False,
+                )
+            except OSError:
+                tracked = None
+            if tracked is not None and tracked.returncode == 0:
+                prefix = b"./" if scope == "." or scope.startswith("./") else b""
+                for path in tracked.stdout.split(b"\0"):
+                    candidate = repository / os.fsdecode(path)
+                    if path and candidate.is_file() and not candidate.is_symlink():
+                        inventory.write(prefix + path + b"\n")
+
         inventory.seek(0)
         rows = sorted(inventory)
 
     return write_inventory(output, rows)
+
+
+def committed_changed_paths(repository: Path, base: str, head: str) -> list[tuple[Path, str]]:
+    result = subprocess.run(
+        [
+            "git",
+            "-C",
+            str(repository),
+            "diff",
+            "--raw",
+            "-z",
+            "--diff-filter=ACMRD",
+            f"{base}..{head}",
+        ],
+        capture_output=True,
+        check=True,
+    )
+    fields = result.stdout.split(b"\0")
+    changed: list[tuple[Path, str]] = []
+    index = 0
+    while index < len(fields) - 1:
+        metadata = fields[index].split()
+        status = chr(metadata[-1][0])
+        index += 1
+        if status in {"C", "R"}:
+            index += 1
+        path = os.fsdecode(fields[index])
+        index += 1
+        selected_mode = metadata[0].removeprefix(b":") if status == "D" else metadata[1]
+        if selected_mode != b"120000":
+            changed.append((repository / path, status))
+    return changed
 
 
 def generate_diff_in_scope_files(
@@ -118,50 +187,52 @@ def generate_diff_in_scope_files(
 ) -> int:
     """Reuse the existing diff selection without generating previews or duplicate worklists."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from generate_rank_input import git_changed_paths, path_is_excluded, run_git_changed_paths
+    from generate_rank_input import git_changed_paths, path_is_excluded
     from rank_preview import (
         DEFAULT_PREVIEW_BYTES,
         TEXT_CODE_EXTENSIONS,
         is_binary_sample,
         preview_for,
     )
+    from workbench_target import git_blob_bytes
 
     rows: list[bytes] = []
     try:
-        if mode == "local-patch":
-            changed = run_git_changed_paths(repository, [base])
-            untracked = subprocess.run(
-                ["git", "-C", str(repository), "ls-files", "--others", "--exclude-standard", "-z"],
-                capture_output=True,
-                text=True,
-                check=True,
+        changed = (
+            committed_changed_paths(repository, base, head)
+            if mode == "revisions"
+            else git_changed_paths(repository, base, head, mode)
+        )
+        eligible = [
+            (path, status)
+            for path, status in changed
+            if not path_is_excluded(path.relative_to(repository))
+            and path.suffix.lower() in TEXT_CODE_EXTENSIONS
+        ]
+        revision_paths = [
+            path.relative_to(repository)
+            for path, status in eligible
+            if mode == "revisions" and status != "D"
+        ]
+        revision_blobs = dict(
+            zip(
+                revision_paths,
+                git_blob_bytes(
+                    repository,
+                    [f"{head}:{path.as_posix()}" for path in revision_paths],
+                ),
             )
-            changed.extend(
-                (repository / relative, "A")
-                for relative in untracked.stdout.split("\0")
-                if relative
-            )
-        else:
-            changed = git_changed_paths(repository, base, head, mode)
+        )
 
-        for path, status in changed:
+        for path, status in eligible:
             relative = path.relative_to(repository)
-            if path_is_excluded(relative) or path.suffix.lower() not in TEXT_CODE_EXTENSIONS:
-                continue
             if status != "D":
                 if mode == "revisions":
-                    contents = subprocess.run(
-                        [
-                            "git",
-                            "-C",
-                            str(repository),
-                            "cat-file",
-                            "blob",
-                            f"{head}:{relative.as_posix()}",
-                        ],
-                        capture_output=True,
-                        check=True,
-                    ).stdout
+                    contents = revision_blobs[relative]
+                    if contents is None:
+                        raise InventoryError(
+                            f"could not read committed diff blob: {head}:{relative.as_posix()}"
+                        )
                     if is_binary_sample(contents):
                         continue
                 elif (

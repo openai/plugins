@@ -18,7 +18,9 @@ Use the shared scan artifact path conventions in `../../references/scan-artifact
 
 Standard scans and Deep Scan workers assess attack paths within their ordinary Standard scan workflow; neither invokes this separate phase skill.
 
-For a durable diff scan, read the validated candidates with `list_codex_security_candidates({ scanId, cursor?, limit? })`. Analyze every `reportable` or `deferred` candidate, preserve candidate order and existing records, and submit all decisions together with one `record_candidate_attack_paths({ scanId, attackPaths: [{ candidateId, attackPath }] })` call. The existing tool updates the stored candidates; do not create per-finding reports, receipts, or manual candidate ledgers in this compact diff mode. Other scan and standalone workflows retain their existing artifact behavior.
+### Compact Workbench-Backed Diff Mode
+
+When a workbench-backed `$security-diff-scan` has a `scanId`, load the per-scan threat model and read the validated candidates with `list_codex_security_candidates({ scanId, cursor?, limit? })`. Analyze every `reportable` or `deferred` candidate, preserve every discovery and validation field and the original candidate order, and submit all decisions together with one `record_candidate_attack_paths({ scanId, attackPaths: [{ candidateId, attackPath }] })` call. Submit `attackPaths: []` when no candidate enters this phase. The existing tool atomically updates the stored candidates; do not create per-finding reports, receipts, or manual candidate ledgers in this compact diff mode. Keep attack-path facts, counterevidence, severity calibration, and policy adjustment as separate reasoning steps. Other scan and standalone workflows retain their existing artifact behavior.
 
 ## Workflow
 
@@ -79,7 +81,7 @@ Apply severity and policy calibration using `references/severity-policy.md`.
 
 ## Output Contract
 
-In compact diff mode, the recorded nested attack-path decisions are the complete phase output; do not also create narrative reports or receipts. Otherwise, use the following report contract.
+In compact diff mode, every candidate with validation disposition `reportable` or `deferred` must receive exactly one nested attack-path decision. The recorded decisions are the complete phase output; do not also create narrative reports or receipts. Otherwise, use the following report contract.
 
 For each surviving finding include:
 
@@ -99,7 +101,7 @@ Render attack-path facts using `references/attack-path-facts.md`.
 
 - Use repository evidence and explicitly supplied context. Access the network only when the user has expressly authorized that access; an offline scan never accesses the network.
 - Do not invent attack chains that the code does not support.
-- Do not leave candidate coverage implicit. In compact diff mode, record a nested attack-path decision for every eligible candidate. Otherwise, every candidate that reaches attack-path analysis must leave an attack-path receipt in its candidate-ledger path from `../../references/scan-artifacts.md`.
+- Do not leave candidate coverage implicit. In compact diff mode, record a nested attack-path decision for every eligible candidate, even when the final policy decision is `ignore` or `deferred`. Otherwise, every candidate that reaches attack-path analysis must leave an attack-path receipt in its candidate-ledger path from `../../references/scan-artifacts.md`.
 - Do not drop exact affected locations while converting validated findings into attack paths. Repository-wide seeded/root-control rows that survive validation must keep their root-control file:line even when a wrapper, route, or transport is easier to explain.
 - Do not skip a reportable validation row because a neighboring same-family finding has a cleaner story. Either produce attack-path facts for that exact row or make an explicit final policy decision with repository counterevidence.
 - Missing public-ingress evidence is not by itself dispositive counterevidence.

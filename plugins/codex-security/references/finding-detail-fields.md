@@ -4,6 +4,9 @@ For every reportable finding in `findings.json`, preserve the validated reasonin
 
 ## Writing Rules
 
+- Lead the title and `summary` with the user action and product impact.
+- Use `attackPath.summary` to briefly explain how to reproduce the issue.
+- Explain how the code causes that product behavior in `rootCause.summary`. Use plain language and avoid repetition.
 - Wrap RPC names, functions, types, fields, parameters, configuration keys, literal identifiers, and short expressions in single backticks. For example: `environment/add`, `environmentId`, `execServerUrl`, and `EnvironmentManager::upsert_environment()`.
 - Keep code out of prose. Put source snippets in `codeEvidence[].code`, then reference them from the section that explains why the snippet matters. The workspace consolidates those referenced snippets under **Root cause** so the violated invariant and its source proof stay together.
 - Root cause must be a source-backed walkthrough, not a verdict paragraph. Start with the code where user-controlled data is declared, decoded, or read; follow each meaningful call, transformation, or state transition; then show the missing control, dangerous operation, and later consumer when it affects impact.
@@ -23,7 +26,7 @@ The finding detail view is a decision-focused projection of the canonical findin
 - dataflow source, meaningful transformations, dangerous sink, and concrete outcome;
 - realistic attacker, entry point, access requirements, preconditions, and attacker outcome;
 - severity rationale plus the specific evidence that would raise or lower the rating;
-- the minimal remediation invariant, regression tests, and preventive controls.
+- the minimal remediation invariant (`remediation`, a single string), plus `remediationTests` and `preventiveControls`, each an array of short strings with one regression test or preventive control per entry.
 
 Keep background exposition, alternate exploit research, full PoC instructions, representative command output, and long source walkthroughs in the detailed write-up. Do not copy them into canonical fields merely to make the workspace report longer. The workspace should stay self-contained enough to support triage while avoiding duplicated or speculative prose.
 
@@ -106,11 +109,7 @@ The following shape shows how to encode the `environment/add` reserved-environme
   "validation": {
     "method": "static source trace",
     "summary": "The source trace confirms that an `environment/add` caller controls both inputs, the RPC forwards them unchanged, and runtime insertion accepts `local`.",
-    "evidenceRefs": [
-      "rpc-input",
-      "rpc-forward",
-      "runtime-upsert"
-    ],
+    "evidenceRefs": ["rpc-input", "rpc-forward", "runtime-upsert"],
     "assertions": [
       "The runtime path lacks the reserved-ID check present during startup.",
       "Inserting `local` replaces the existing `HashMap` entry."
@@ -139,11 +138,7 @@ The following shape shows how to encode the `environment/add` reserved-environme
       "entrypoint": "experimental `environment/add` RPC",
       "outcome": "future operations selected for `local` are routed to the remote executor"
     },
-    "evidenceRefs": [
-      "rpc-forward",
-      "runtime-upsert",
-      "default-lookup"
-    ],
+    "evidenceRefs": ["rpc-forward", "runtime-upsert", "default-lookup"],
     "impact": {
       "level": "medium",
       "why": "Later commands and filesystem requests selected for `local` can be routed to the attacker-controlled remote executor."
@@ -155,7 +150,15 @@ The following shape shows how to encode the `environment/add` reserved-environme
     "limitations": [
       "This overwrite does not directly execute code on the victim host."
     ]
-  }
+  },
+  "remediation": "Reuse the startup reserved-ID check inside `EnvironmentManager::upsert_environment()` so the runtime mutation path rejects the reserved `local` identifier.",
+  "remediationTests": [
+    "Assert that `environment/add` with `environmentId: \"local\"` returns a protocol error.",
+    "Assert that `default_environment()` still resolves the manager-owned local runtime after a rejected upsert."
+  ],
+  "preventiveControls": [
+    "Centralize reserved-identifier validation so every environment mutation path shares one guard."
+  ]
 }
 ```
 

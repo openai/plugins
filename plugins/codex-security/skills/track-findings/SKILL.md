@@ -45,7 +45,7 @@ Do not substitute browser automation, Computer Use, copied search results, anoth
 
 Before provider calls, memory, rendered reports, browser use, or destination discovery, run:
 
-Resolve `<python_command>` to the configured Python interpreter (`$PYTHON` when one is provided), otherwise use `python` on Windows and `python3` on Unix-like hosts. The command is written on one line so it works in PowerShell, Command Prompt, and POSIX shells:
+Resolve `<python_command>` to the configured Python interpreter (`"$PYTHON"` in POSIX shells or `& "$env:PYTHON"` in PowerShell), otherwise use `python` on Windows and `python3` on Unix-like hosts. The command is written on one line so it works in PowerShell, Command Prompt, and POSIX shells:
 
 ```text
 <python_command> <plugin-root>/scripts/validate_tracking_source.py <user-supplied-scan-dir> [--finding-id <id> | --fingerprint <fingerprint>]
@@ -131,6 +131,8 @@ Treat failed requests, incomplete exact-identifier searches, unread plausible ma
 - `blocked`: routing, visibility, capability, or duplicate ambiguity remains
 
 ### 4. Preview The Exact Writes
+
+Follow the Writing Rules in `../../references/finding-detail-fields.md`. Explain the problem, how to reproduce it, the cause, the proposed fix, and validation. Put source locations and scan identifiers last.
 
 Present a compact review before any mutation. For every finding show:
 

@@ -501,19 +501,20 @@ def _is_owned_task_start(
     turn_id = payload.get("turn_id")
     if not isinstance(turn_id, str) or not turn_id:
         return False
-    thread_timestamp = _uuid7_timestamp(thread_id)
-    turn_timestamp = _uuid7_timestamp(turn_id)
-    if thread_timestamp is None:
+    # Fresh Codex worker thread/turn IDs use a same-process monotonic UUIDv7 generator.
+    thread_order = _uuid7_order(thread_id)
+    turn_order = _uuid7_order(turn_id)
+    if thread_order is None:
         return True
-    return turn_timestamp is not None and turn_timestamp >= thread_timestamp
+    return turn_order is not None and turn_order >= thread_order
 
 
-def _uuid7_timestamp(value: str) -> int | None:
+def _uuid7_order(value: str) -> int | None:
     try:
         parsed = uuid.UUID(value)
     except ValueError:
         return None
-    return parsed.int >> 80 if parsed.version == 7 else None
+    return parsed.int if parsed.version == 7 else None
 
 
 def _token_snapshot(payload: Mapping[str, Any]) -> dict[str, int] | None:
@@ -523,12 +524,23 @@ def _token_snapshot(payload: Mapping[str, Any]) -> dict[str, int] | None:
     usage = info.get("total_token_usage")
     if not isinstance(usage, dict):
         return None
+    cache_write = usage.get("cache_write_input_tokens", usage.get("cache_write_tokens", 0))
+    legacy_cache_write = usage.get("cache_write_tokens")
+    input_tokens = usage.get("input_tokens")
+    cached_input_tokens = usage.get("cached_input_tokens", 0)
+    if (
+        cache_write == 0
+        and type(legacy_cache_write) is int
+        and legacy_cache_write > 0
+        and type(input_tokens) is int
+        and type(cached_input_tokens) is int
+        and cached_input_tokens + legacy_cache_write <= input_tokens
+    ):
+        cache_write = legacy_cache_write
     result: dict[str, int] = {}
     for source_key, result_key in TOKEN_FIELDS.items():
         value = (
-            usage.get(source_key, usage.get("cache_write_tokens", 0))
-            if source_key == "cache_write_input_tokens"
-            else usage.get(source_key, 0)
+            cache_write if source_key == "cache_write_input_tokens" else usage.get(source_key, 0)
         )
         if type(value) is not int or value < 0:
             return None

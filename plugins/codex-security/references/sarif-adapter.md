@@ -20,6 +20,8 @@ The adapter:
 
 Lifecycle, rich validation evidence, attack-path context, and coverage are lossy or omitted in SARIF. Preserve them in semantic JSON.
 
+SARIF `executionSuccessful` reflects whether the scan reached a successful terminal status, not whether coverage is complete. Incomplete scans retain findings, set `codexSecurityCoverageCompleteness`, and include warnings. Integrations must read the coverage file referenced by `scan.coverageRef` before treating the results as exhaustive.
+
 Automatic SARIF export during finalization is best-effort so projection errors cannot invalidate a canonical seal. Use the strict adapter entry point when a consumer requires SARIF and should surface export errors.
 
 References:

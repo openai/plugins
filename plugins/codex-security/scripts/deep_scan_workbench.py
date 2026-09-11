@@ -27,7 +27,7 @@ from workbench_target import (
     git_revision,
     worktree_content_digest,
 )
-from workbench_validation import optional_text, require_uuid, user_text
+from workbench_validation import optional_text, require_uuid, user_context_argument
 
 DEEP_SCAN_WORKER_KINDS = ("setup", "discovery", "dedup")
 DEEP_SCAN_WORKER_STATUSES = ("queued", "running", "succeeded", "failed", "canceled")
@@ -51,7 +51,9 @@ def register_subcommands(subparsers: Any, positive_int: Callable[[str], int]) ->
     begin_target.add_argument("--scan-id")
     begin_target.add_argument("--target-path")
     begin_deep_scan.add_argument("--scope", default=".")
-    begin_deep_scan.add_argument("--user-context")
+    begin_user_context = begin_deep_scan.add_mutually_exclusive_group()
+    begin_user_context.add_argument("--user-context")
+    begin_user_context.add_argument("--user-context-stdin", action="store_true")
     begin_deep_scan.add_argument("--scan-root")
     begin_deep_scan.add_argument("--claim-token")
     begin_deep_scan.add_argument("--model")
@@ -494,7 +496,11 @@ def independent_review_progress(
     connection: sqlite3.Connection, scan_id: str
 ) -> dict[str, int | str] | None:
     run = connection.execute(
-        "SELECT completion_sequence, phase, updated_at FROM deep_scan_runs WHERE scan_id = ?",
+        """
+        SELECT completion_sequence, phase, updated_at, max_discovery_runs
+        FROM deep_scan_runs
+        WHERE scan_id = ?
+        """,
         (scan_id,),
     ).fetchone()
     if run is None:
@@ -512,6 +518,7 @@ def independent_review_progress(
     return {
         "active": int(active),
         "completed": int(run["completion_sequence"]),
+        "maximum": int(run["max_discovery_runs"]),
         "consolidating": run["phase"] == "reducing",
         "updatedAt": str(run["updated_at"]),
     }
@@ -832,7 +839,7 @@ def begin_deep_scan_for_target(
         if target_root == target or target in target_root.parents:
             raise SystemExit("The scan artifact directory must be outside the selected target.")
         target_root.mkdir(parents=True, exist_ok=True)
-        user_context = user_text(args.user_context)
+        user_context = user_context_argument(args)
         model = optional_text(args.model, maximum=200)
         reasoning_effort = optional_text(args.reasoning_effort, maximum=32)
         workspace_id = str(uuid.uuid4())
@@ -921,7 +928,7 @@ def begin_deep_scan(connection: sqlite3.Connection, args: argparse.Namespace) ->
     if thread_id is None:
         raise SystemExit("thread-id is required.")
     if args.scan_id:
-        if args.user_context is not None or args.scope != ".":
+        if args.user_context is not None or args.user_context_stdin or args.scope != ".":
             raise SystemExit("scan-id cannot be combined with target setup fields.")
         return begin_deep_scan_for_scan(connection, args.scan_id, thread_id, args)
     if args.claim_token is not None:
@@ -1870,6 +1877,7 @@ def finish_deep_scan_locked(
             """
             SELECT 1 FROM deep_scan_workers AS failed
             WHERE failed.scan_id = ? AND failed.status = 'failed'
+                AND (? != 'saturated' OR failed.kind != 'discovery')
                 AND (
                     failed.kind != 'dedup'
                     OR NOT EXISTS (
@@ -1895,10 +1903,14 @@ def finish_deep_scan_locked(
                 )
             LIMIT 1
             """,
-            (scan_id,),
+            (scan_id, args.terminal_reason),
         ).fetchone()
         if failed_worker is not None and not failure_capped:
             raise SystemExit("Deep Scan cannot finish after a worker has failed.")
+        if args.terminal_reason == "saturated":
+            # Mark any remaining workers canceled, including those whose own
+            # cancellation writes failed, so they cannot block completion.
+            cancel_active_workers(connection, scan_id, now())
         active_worker = connection.execute(
             """
             SELECT 1 FROM deep_scan_workers

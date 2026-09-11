@@ -110,11 +110,6 @@ def _read_json(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(_json_bytes(payload))
-
-
 def _generate_report_projection(
     manifest: dict[str, Any],
     findings: dict[str, Any],
@@ -320,7 +315,7 @@ _WINDOWS_SCAN_LOCAL_FILES: Any | None = None
 
 
 def _windows_scan_local_files() -> Any:
-    """Load the Win32 backend only on runtimes that need it."""
+    """Load the Win32 backend and shared stream comparison lazily."""
 
     global _WINDOWS_SCAN_LOCAL_FILES
     if _WINDOWS_SCAN_LOCAL_FILES is None:
@@ -334,10 +329,15 @@ def _windows_scan_local_files() -> Any:
     return _WINDOWS_SCAN_LOCAL_FILES
 
 
-def _open_verified_scan_directory(scan_dir: Path) -> int:
+def _open_verified_scan_directory(
+    scan_dir: Path, expected_root_identity: tuple[int, int] | None = None
+) -> int:
     scan_dir = scan_dir.absolute()
     try:
         expected = scan_dir.lstat()
+        observed_identity = (expected.st_dev, expected.st_ino)
+        if expected_root_identity is not None and observed_identity != expected_root_identity:
+            raise ContractError("scan directory: changed after artifact restoration setup")
         canonical = _require_scan_directory(scan_dir)
         descriptor = os.open(
             canonical,
@@ -346,10 +346,29 @@ def _open_verified_scan_directory(scan_dir: Path) -> int:
     except OSError as exc:
         raise ContractError("scan directory: expected an existing non-symlink directory") from exc
     opened = os.fstat(descriptor)
-    if (opened.st_dev, opened.st_ino) != (expected.st_dev, expected.st_ino):
+    opened_identity = (opened.st_dev, opened.st_ino)
+    if opened_identity != observed_identity or (
+        expected_root_identity is not None and opened_identity != expected_root_identity
+    ):
         os.close(descriptor)
         raise ContractError("scan directory: changed while it was being opened")
     return descriptor
+
+
+def scan_root_identity(scan_dir: Path) -> tuple[Path, tuple[int, int]]:
+    """Return a canonical scan root and its identity from a held handle."""
+
+    scan_dir = _require_scan_directory(scan_dir)
+    if not _descriptor_relative_writes_available():
+        if not _is_windows():
+            raise ContractError("scan-local output requires descriptor-relative file operations")
+        return _windows_scan_local_files().scan_root_identity(scan_dir)
+    descriptor = _open_verified_scan_directory(scan_dir)
+    try:
+        metadata = os.fstat(descriptor)
+        return scan_dir, (metadata.st_dev, metadata.st_ino)
+    finally:
+        os.close(descriptor)
 
 
 def _open_scan_local_directory(root_fd: int, parts: tuple[str, ...], *, create: bool) -> int:
@@ -500,7 +519,12 @@ def _sha256_scan_local_file(scan_dir: Path, relative_path: str, context: str) ->
 
 
 def write_scan_local_bytes(
-    scan_dir: Path, relative_path: str, payload: bytes, *, external_name: bool = False
+    scan_dir: Path,
+    relative_path: str,
+    payload: bytes,
+    *,
+    external_name: bool = False,
+    expected_root_identity: tuple[int, int] | None = None,
 ) -> None:
     scan_dir = _require_scan_directory(scan_dir)
     if external_name:
@@ -513,7 +537,12 @@ def write_scan_local_bytes(
         if not _is_windows():
             raise ContractError("scan-local output requires descriptor-relative file operations")
         try:
-            _windows_scan_local_files().atomic_write(scan_dir, relative_path, payload)
+            _windows_scan_local_files().atomic_write(
+                scan_dir,
+                relative_path,
+                payload,
+                expected_root_identity=expected_root_identity,
+            )
         except OSError as exc:
             raise ContractError(f"{relative_path}: {exc}") from exc
         return
@@ -521,7 +550,7 @@ def write_scan_local_bytes(
     parent_fd: int | None = None
     temp_name: str | None = None
     try:
-        root_fd = _open_verified_scan_directory(scan_dir)
+        root_fd = _open_verified_scan_directory(scan_dir, expected_root_identity)
         parts = PurePosixPath(relative_path).parts
         try:
             parent_fd = _open_scan_local_directory(root_fd, parts[:-1], create=True)
@@ -529,6 +558,9 @@ def write_scan_local_bytes(
             raise ContractError(
                 f"{relative_path}: expected a path inside the scan directory"
             ) from exc
+        # The held descriptor is the authority for the validated parent. A
+        # concurrent rename cannot redirect later operations through a
+        # replacement path or link.
         try:
             metadata = os.stat(parts[-1], dir_fd=parent_fd, follow_symlinks=False)
         except FileNotFoundError:
@@ -536,6 +568,38 @@ def write_scan_local_bytes(
         else:
             if not stat.S_ISREG(metadata.st_mode):
                 raise ContractError(f"{relative_path}: expected a regular non-symlink file")
+            try:
+                existing_fd = os.open(
+                    parts[-1],
+                    os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0),
+                    dir_fd=parent_fd,
+                )
+            except OSError as exc:
+                if exc.errno not in {errno.ENOENT, errno.EACCES, errno.EPERM}:
+                    raise
+            else:
+                try:
+                    opened = os.fstat(existing_fd)
+                    if not stat.S_ISREG(opened.st_mode):
+                        raise ContractError(f"{relative_path}: expected a regular non-symlink file")
+                    if (opened.st_dev, opened.st_ino) != (
+                        metadata.st_dev,
+                        metadata.st_ino,
+                    ):
+                        raise ContractError(f"{relative_path}: changed while it was being opened")
+                    if expected_root_identity is not None and opened.st_size == len(payload):
+                        try:
+                            with os.fdopen(existing_fd, "rb") as handle:
+                                existing_fd = -1
+                                if _windows_scan_local_files().stream_matches_payload(
+                                    handle, payload
+                                ):
+                                    return
+                        except OSError:
+                            pass
+                finally:
+                    if existing_fd >= 0:
+                        os.close(existing_fd)
         temp_name = f".{path.name}.{secrets.token_hex(8)}.tmp"
         temp_fd = os.open(temp_name, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600, dir_fd=parent_fd)
         with os.fdopen(temp_fd, "wb") as handle:
@@ -810,7 +874,8 @@ def _recover_unsealed_findings(
                 ):
                     for condition_index, condition in enumerate(change_conditions):
                         _require_safe_json_string(
-                            condition, f"{context}.severity.changeConditions[{condition_index}]"
+                            condition,
+                            f"{context}.severity.changeConditions[{condition_index}]",
                         )
                     severity["changeConditions"] = " ".join(
                         condition.strip() for condition in change_conditions
@@ -1187,12 +1252,9 @@ def _normalize_unsealed_deep_repository_inventory_strategy(
     *,
     expected_coverage_mode: str | None,
 ) -> None:
-    """Normalize the old Deep workflow label to the ordinary repository inventory."""
+    """Label whole-repository Deep scans as using the repository inventory."""
 
-    if (
-        expected_coverage_mode == "deep_repository"
-        and coverage.get("inventoryStrategy") == "deep_repository_repeated_discovery"
-    ):
+    if expected_coverage_mode == "deep_repository":
         coverage["inventoryStrategy"] = "repository"
 
 
@@ -1472,16 +1534,74 @@ def _schema_type_matches(value: Any, expected: str) -> bool:
     }[expected]
 
 
-def _validate_schema_node(value: Any, schema: dict[str, Any], context: str) -> None:
+def _schema_values_equal(left: Any, right: Any) -> bool:
+    if (
+        isinstance(left, (int, float))
+        and not isinstance(left, bool)
+        and isinstance(right, (int, float))
+        and not isinstance(right, bool)
+    ):
+        return left == right
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(
+            _schema_values_equal(left[key], right[key]) for key in left
+        )
+    if isinstance(left, list):
+        return len(left) == len(right) and all(
+            _schema_values_equal(left_item, right_item)
+            for left_item, right_item in zip(left, right, strict=True)
+        )
+    return left == right
+
+
+def _resolve_schema_reference(
+    root_schema: dict[str, Any], reference: str, context: str
+) -> dict[str, Any]:
+    if reference == "#":
+        return root_schema
+    if not reference.startswith("#/"):
+        raise ContractError(f"{context}: unsupported schema reference {reference!r}")
+    target: Any = root_schema
+    for raw_part in reference[2:].split("/"):
+        part = raw_part.replace("~1", "/").replace("~0", "~")
+        if not isinstance(target, dict) or part not in target:
+            raise ContractError(f"{context}: unresolved schema reference {reference!r}")
+        target = target[part]
+    if not isinstance(target, dict):
+        raise ContractError(f"{context}: schema reference {reference!r} is not an object")
+    return target
+
+
+def _validate_schema_node(
+    value: Any,
+    schema: dict[str, Any],
+    context: str,
+    root_schema: dict[str, Any] | None = None,
+) -> None:
+    root_schema = schema if root_schema is None else root_schema
+    reference = schema.get("$ref")
+    if reference is not None:
+        if not isinstance(reference, str):
+            raise ContractError(f"{context}: schema reference must be a string")
+        _validate_schema_node(
+            value,
+            _resolve_schema_reference(root_schema, reference, context),
+            context,
+            root_schema,
+        )
     expected = schema.get("type")
     if isinstance(expected, list):
         if not any(_schema_type_matches(value, item) for item in expected):
             raise ContractError(f"{context}: does not match schema type {expected}")
     elif isinstance(expected, str) and not _schema_type_matches(value, expected):
         raise ContractError(f"{context}: expected schema type {expected}")
-    if "const" in schema and value != schema["const"]:
+    if "const" in schema and not _schema_values_equal(value, schema["const"]):
         raise ContractError(f"{context}: expected {schema['const']!r}")
-    if "enum" in schema and value not in schema["enum"]:
+    if "enum" in schema and not any(
+        _schema_values_equal(value, candidate) for candidate in schema["enum"]
+    ):
         raise ContractError(f"{context}: unsupported value {value!r}")
     if isinstance(value, str):
         if schema.get("minLength", 0) and len(value) < schema["minLength"]:
@@ -1498,12 +1618,18 @@ def _validate_schema_node(value: Any, schema: dict[str, Any], context: str) -> N
     if isinstance(value, list):
         if "minItems" in schema and len(value) < schema["minItems"]:
             raise ContractError(f"{context}: array has too few items")
+        if "maxItems" in schema and len(value) > schema["maxItems"]:
+            raise ContractError(f"{context}: array has too many items")
+        if schema.get("uniqueItems") is True:
+            for index, item in enumerate(value):
+                if any(_schema_values_equal(item, candidate) for candidate in value[:index]):
+                    raise ContractError(f"{context}: array items must be unique")
         contains = schema.get("contains")
         if isinstance(contains, dict):
             matches = 0
             for item in value:
                 try:
-                    _validate_schema_node(item, contains, context)
+                    _validate_schema_node(item, contains, context, root_schema)
                 except ContractError:
                     pass
                 else:
@@ -1515,35 +1641,45 @@ def _validate_schema_node(value: Any, schema: dict[str, Any], context: str) -> N
         item_schema = schema.get("items")
         if isinstance(item_schema, dict):
             for index, item in enumerate(value):
-                _validate_schema_node(item, item_schema, f"{context}[{index}]")
+                _validate_schema_node(item, item_schema, f"{context}[{index}]", root_schema)
     if isinstance(value, dict):
         for item_schema in schema.get("allOf", []):
-            _validate_schema_node(value, item_schema, context)
+            _validate_schema_node(value, item_schema, context, root_schema)
         condition = schema.get("if")
         if isinstance(condition, dict):
             try:
-                _validate_schema_node(value, condition, context)
+                _validate_schema_node(value, condition, context, root_schema)
             except ContractError:
                 pass
             else:
                 then_schema = schema.get("then")
                 if isinstance(then_schema, dict):
-                    _validate_schema_node(value, then_schema, context)
+                    _validate_schema_node(value, then_schema, context, root_schema)
         for key in schema.get("required", []):
             if key not in value:
                 raise ContractError(f"{context}.{key}: missing required schema property")
+        if "minProperties" in schema and len(value) < schema["minProperties"]:
+            raise ContractError(f"{context}: object has too few properties")
         properties = schema.get("properties", {})
+        additional_properties = schema.get("additionalProperties", True)
         for key, item in value.items():
             item_schema = properties.get(key)
             if isinstance(item_schema, dict):
-                _validate_schema_node(item, item_schema, f"{context}.{key}")
-            elif schema.get("additionalProperties") is False:
+                _validate_schema_node(item, item_schema, f"{context}.{key}", root_schema)
+            elif additional_properties is False:
                 raise ContractError(f"{context}.{key}: unexpected schema property")
+            elif isinstance(additional_properties, dict):
+                _validate_schema_node(
+                    item,
+                    additional_properties,
+                    f"{context}.{key}",
+                    root_schema,
+                )
 
 
 def validate_against_schema(payload: dict[str, Any], schema_path: Path) -> None:
     schema = _read_json(schema_path)
-    _validate_schema_node(payload, schema, schema_path.stem)
+    _validate_schema_node(payload, schema, schema_path.stem, schema)
 
 
 def _filter_unknown_legacy_evidence_refs(section: dict[str, Any], evidence_ids: set[str]) -> None:

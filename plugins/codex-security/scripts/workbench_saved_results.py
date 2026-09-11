@@ -98,6 +98,250 @@ def _children(scan_dir: Path, relative: str) -> list[str]:
     return sorted(child.name for child in cursor.iterdir())
 
 
+def _latest_successful_reducer(workers: list[Any]) -> Any | None:
+    return max(
+        (
+            worker
+            for worker in workers
+            if worker["kind"] == "dedup"
+            and worker["status"] == "succeeded"
+            and worker["result_manifest_path"]
+        ),
+        key=lambda worker: (worker["completed_at"] or "", worker["id"]),
+        default=None,
+    )
+
+
+def _saved_result_paths(scan_dir: Path, workers: list[Any]) -> Iterator[tuple[str, str | None]]:
+    latest_reducer = _latest_successful_reducer(workers)
+
+    def checkpoints(directory: str, kind: str | None = None) -> Iterator[tuple[str, str | None]]:
+        for name in _children(scan_dir, directory):
+            if re.fullmatch(r"[0-9a-f]{64}\.json", name):
+                yield f"{directory}/{name}", kind
+
+    yield from checkpoints("checkpoints")
+    for worker in workers:
+        if worker["kind"] not in {"dedup", "discovery"}:
+            continue
+        try:
+            output = Path(worker["artifact_dir"]).relative_to(scan_dir).as_posix()
+        except (TypeError, ValueError):
+            continue
+        attempts = (Path(output).parent if Path(output).name == "output" else Path(output)) / (
+            "attempts"
+        )
+        directories = [output] + [
+            (attempts / name).as_posix()
+            for name in _children(scan_dir, attempts.as_posix())
+            if re.fullmatch(r"attempt-\d+", name)
+        ]
+        for directory in directories:
+            checkpoint_paths = list(checkpoints(f"{directory}/checkpoints", worker["kind"]))
+            if worker["kind"] == "discovery" or checkpoint_paths:
+                yield f"{directory}/result.json", worker["kind"]
+                yield from checkpoint_paths
+        if worker["result_manifest_path"] and (
+            worker["kind"] == "discovery"
+            or (latest_reducer is not None and worker["id"] == latest_reducer["id"])
+        ):
+            try:
+                yield (
+                    Path(worker["result_manifest_path"]).relative_to(scan_dir).as_posix(),
+                    worker["kind"],
+                )
+            except ValueError:
+                continue
+
+
+def _read_saved_result(
+    scan_dir: Path, relative: str, scan_id: str, *, kind: str | None = None
+) -> tuple[dict[str, Any], str]:
+    draft = _read_scan_local_json(scan_dir, relative, "Saved scan checkpoint")
+    if draft.get("scanId") != scan_id:
+        raise ContractError("checkpoint belongs to a different scan")
+    if not isinstance(draft.get("findings"), list) or not isinstance(
+        draft.get("coverage", {} if kind == "dedup" else None), dict
+    ):
+        raise ContractError("checkpoint has no semantic findings or coverage")
+    return draft, _digest(draft)
+
+
+def _read_saved_parent_result(
+    scan_dir: Path, scan_id: str
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    manifest = _read_scan_local_json(scan_dir, "scan-manifest.json", "Saved parent manifest")
+    findings = _read_scan_local_json(scan_dir, "findings.json", "Saved parent findings")
+    coverage = _read_scan_local_json(scan_dir, "coverage.json", "Saved parent coverage")
+    parent_scan = manifest.get("scan")
+    if not isinstance(parent_scan, dict):
+        raise ContractError("Saved parent manifest has no scan object")
+    if (parent_scan.get("sealedAt") or parent_scan.get("artifacts")) and (
+        parent_scan.get("id", scan_id) != scan_id
+        or findings.get("scanId", scan_id) != scan_id
+        or coverage.get("scanId", scan_id) != scan_id
+    ):
+        raise ContractError("Saved parent documents belong to a different scan")
+    parent = {
+        "scanId": scan_id,
+        "findings": findings.get("findings"),
+        "coverage": coverage,
+        **{
+            key: parent_scan[key]
+            for key in ("scope", "threatModel", "complete")
+            if key in parent_scan
+        },
+    }
+    if not isinstance(parent["findings"], list):
+        raise ContractError("Saved parent draft has no findings array")
+    return manifest, parent
+
+
+def _source_digests(value: Any, label: str) -> dict[str, str]:
+    if not isinstance(value, dict) or not all(
+        isinstance(relative, str) and isinstance(digest, str) for relative, digest in value.items()
+    ):
+        raise ContractError(f"{label} source digests are malformed.")
+    return value
+
+
+def _saved_results_changed(db: Any, connection: Any, scan: Any) -> bool:
+    try:
+        scan_dir = db.require_canonical_scan_directory(Path(scan["scan_dir"]))
+        manifest_path = db.artifact_path(scan_dir, db.ARTIFACTS["manifest"], required=False)
+        workers = connection.execute(
+            "SELECT id, kind, status, completed_at, artifact_dir, result_manifest_path "
+            "FROM deep_scan_workers WHERE scan_id = ?",
+            (scan["id"],),
+        ).fetchall()
+        paths = dict(_saved_result_paths(scan_dir, workers))
+        frozen_sources = scan["retained_source_digests_json"]
+
+        def has_saved_source() -> bool:
+            for path in paths:
+                try:
+                    _read_saved_result(scan_dir, path, scan["id"], kind=paths[path])
+                    return True
+                except (ContractError, OSError, ValueError):
+                    continue
+            return False
+
+        if manifest_path is None:
+            if frozen_sources is not None:
+                return bool(_source_digests(json.loads(frozen_sources), "Frozen stopped-scan"))
+            return has_saved_source()
+        if scan["seal_manifest_digest"] is None:
+            try:
+                _read_saved_parent_result(scan_dir, scan["id"])
+                return True
+            except (ContractError, OSError, ValueError):
+                pass
+            return has_saved_source()
+        manifest = _read_scan_local_json(
+            scan_dir,
+            manifest_path.relative_to(scan_dir).as_posix(),
+            "Saved scan manifest",
+        )
+        manifest_scan = manifest.get("scan")
+        if not isinstance(manifest_scan, dict):
+            return True
+        published_sources = _source_digests(
+            manifest_scan.get("preservedSources", {}), "Published scan"
+        )
+        current_sources = dict(published_sources)
+        for path in paths:
+            try:
+                _, current_sources[path] = _read_saved_result(
+                    scan_dir, path, scan["id"], kind=paths[path]
+                )
+            except (ContractError, OSError, ValueError):
+                continue
+        return current_sources != published_sources
+    except (ContractError, OSError, SystemExit, ValueError):
+        return False
+
+
+def _recovery_source_digests(db: Any, connection: Any, scan: Any) -> tuple[dict[str, str], bool]:
+    scan_dir = db.require_canonical_scan_directory(Path(scan["scan_dir"]))
+    frozen_sources: dict[str, str] | None = None
+    include_parent = True
+    raw_frozen_sources = scan["retained_source_digests_json"]
+    if raw_frozen_sources is not None:
+        frozen_sources = _source_digests(json.loads(raw_frozen_sources), "Saved stopped-scan")
+        include_parent = False
+
+    manifest_path = db.artifact_path(scan_dir, db.ARTIFACTS["manifest"], required=False)
+    if manifest_path is not None:
+        manifest = _read_scan_local_json(
+            scan_dir,
+            manifest_path.relative_to(scan_dir).as_posix(),
+            "Saved scan manifest",
+        )
+        manifest_scan = manifest.get("scan")
+        if not isinstance(manifest_scan, dict):
+            raise ContractError("Saved scan manifest has no scan object")
+        if scan["seal_manifest_digest"] is not None or (
+            manifest_scan.get("sealedAt") is not None or manifest_scan.get("artifacts") is not None
+        ):
+            if "preservedSources" in manifest_scan:
+                published_sources = _source_digests(
+                    manifest_scan["preservedSources"], "Published scan"
+                )
+                include_parent = not published_sources
+                if published_sources:
+                    if frozen_sources is not None and frozen_sources != published_sources:
+                        raise ContractError(
+                            "Stopped scan sources changed after terminal publication."
+                        )
+                    frozen_sources = published_sources
+                elif frozen_sources is None:
+                    frozen_sources = {}
+            else:
+                include_parent = True
+
+    workers = connection.execute(
+        "SELECT id, kind, status, completed_at, artifact_dir, result_manifest_path "
+        "FROM deep_scan_workers WHERE scan_id = ?",
+        (scan["id"],),
+    ).fetchall()
+    paths = dict(_saved_result_paths(scan_dir, workers))
+    recovery_sources = dict(frozen_sources or {})
+    for relative, expected_digest in recovery_sources.items():
+        try:
+            _, digest = _read_saved_result(scan_dir, relative, scan["id"], kind=paths.get(relative))
+        except (ContractError, OSError, ValueError) as exc:
+            raise ContractError("Frozen stopped-scan checkpoint set is incomplete.") from exc
+        if digest != expected_digest:
+            raise ContractError("checkpoint changed after the scan stopped")
+
+    for relative in paths.keys() - recovery_sources.keys():
+        try:
+            _, recovery_sources[relative] = _read_saved_result(
+                scan_dir, relative, scan["id"], kind=paths[relative]
+            )
+        except (ContractError, OSError, ValueError):
+            continue
+    return recovery_sources, include_parent
+
+
+def scan_results_recovery_needed(db: Any, connection: Any, scan: Any) -> bool:
+    if scan["status"] != "failed" or scan["canceled_at"] is not None:
+        return False
+    warnings = json.loads(scan["completion_warnings_json"])
+    if any(
+        isinstance(warning, str) and warning.startswith(_PUBLICATION_FOLLOW_UP_WARNING)
+        for warning in warnings
+    ):
+        return True
+    publication_error = connection.execute(
+        "SELECT publication_error_message FROM deep_scan_runs WHERE scan_id = ?",
+        (scan["id"],),
+    ).fetchone()
+    if publication_error is not None and publication_error["publication_error_message"]:
+        return True
+    return _saved_results_changed(db, connection, scan)
+
+
 def _finding_key(finding: dict[str, Any]) -> str:
     # Wording and evidence may improve between checkpoints; distinct source locations
     # must not collide merely because two workers chose the same semantic identity.
@@ -138,6 +382,25 @@ def _finding_key(finding: dict[str, Any]) -> str:
             ),
         ]
     )
+
+
+def _worker_candidate_key(
+    worker_id: str, candidate_id: str, finding: dict[str, Any]
+) -> tuple[str, str, Any, Any, Any]:
+    """Identify one worker-local candidate without merging unrelated locations."""
+    provenance = finding.get("provenance")
+    identity = (
+        provenance.get("preservedIdentity", finding.get("identity"))
+        if isinstance(provenance, dict)
+        else finding.get("identity")
+    )
+    if not isinstance(identity, dict):
+        normalized = dict(finding)
+        _ensure_finding_identity(normalized)
+        identity = normalized.get("identity")
+    anchor = identity.get("anchor") if isinstance(identity, dict) else None
+    instance = identity.get("instance") if isinstance(identity, dict) else None
+    return worker_id, candidate_id, finding.get("ruleId"), anchor, instance
 
 
 def _finding_content(finding: dict[str, Any]) -> dict[str, Any]:
@@ -200,50 +463,15 @@ def merge_saved_results(
     stopped: bool,
     reason: str,
     frozen_source_digests: dict[str, str] | None = None,
+    allow_frozen_legacy_parent: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]] | None:
     """Read only bound parent/worker files; return an unsealed loss-preserving union."""
     initial_warnings = set(warnings)
     parent: dict[str, Any] | None = None
     parent_manifest: dict[str, Any] | None = None
-    if frozen_source_digests is None:
+    if frozen_source_digests is None or allow_frozen_legacy_parent:
         try:
-            parent_manifest = _read_scan_local_json(
-                scan_dir, "scan-manifest.json", "Saved parent manifest"
-            )
-            parent_findings = _read_scan_local_json(
-                scan_dir, "findings.json", "Saved parent findings"
-            )
-            parent_coverage = _read_scan_local_json(
-                scan_dir, "coverage.json", "Saved parent coverage"
-            )
-            parent_scan = parent_manifest.get("scan")
-            if not isinstance(parent_scan, dict):
-                raise ContractError("Saved parent manifest has no scan object")
-            if (parent_scan.get("sealedAt") or parent_scan.get("artifacts")) and (
-                parent_scan.get("id", scan_id) != scan_id
-                or parent_findings.get("scanId", scan_id) != scan_id
-                or parent_coverage.get("scanId", scan_id) != scan_id
-            ):
-                raise ContractError("Saved parent documents belong to a different scan")
-            parent = {
-                "scanId": scan_id,
-                "findings": parent_findings.get("findings"),
-                "coverage": parent_coverage,
-                **{
-                    key: parent_scan[key]
-                    for key in ("scope", "threatModel", "complete")
-                    if key in parent_scan
-                },
-            }
-            if not isinstance(parent["findings"], list):
-                raise ContractError("Saved parent draft has no findings array")
-            if not parent_scan.get("sealedAt"):
-                payload = _encoded(parent)
-                write_scan_local_bytes(
-                    scan_dir,
-                    f"checkpoints/{hashlib.sha256(payload).hexdigest()}.json",
-                    payload,
-                )
+            parent_manifest, parent = _read_saved_parent_result(scan_dir, scan_id)
         except (ContractError, OSError, ValueError) as exc:
             if not stopped:
                 raise
@@ -251,6 +479,18 @@ def merge_saved_results(
                 warnings.append(f"Could not read the saved parent draft: {exc}")
             parent_manifest = None
             parent = None
+        if parent_manifest is not None and parent is not None:
+            parent_scan = parent_manifest["scan"]
+            if not parent_scan.get("sealedAt") or allow_frozen_legacy_parent:
+                payload = _encoded(parent)
+                parent_digest = hashlib.sha256(payload).hexdigest()
+                parent_checkpoint = f"checkpoints/{parent_digest}.json"
+                write_scan_local_bytes(scan_dir, parent_checkpoint, payload)
+                if frozen_source_digests is not None:
+                    frozen_source_digests = {
+                        **frozen_source_digests,
+                        parent_checkpoint: parent_digest,
+                    }
 
     sources: list[tuple[str, dict[str, Any], str | None]] = []
     parent_preserved_sources: dict[str, str] = {}
@@ -261,23 +501,16 @@ def merge_saved_results(
             parent_preserved_sources = recorded
             source_digests.update(parent_preserved_sources)
     paths: dict[str, str | None] = {}
+    reducer_paths: set[str] = set()
     current_results: set[str] = set()
     reducer_outputs: list[tuple[Any, str, list[str], int]] = []
-    accepted_reducers = [
-        worker
-        for worker in workers
-        if worker["kind"] == "dedup"
-        and worker["status"] == "succeeded"
-        and worker["result_manifest_path"]
-    ]
+    reducer = _latest_successful_reducer(workers)
     latest_reducer: str | None = None
-    if accepted_reducers:
-        reducer = max(
-            accepted_reducers, key=lambda worker: (worker["completed_at"] or "", worker["id"])
-        )
+    if reducer is not None:
         try:
             latest_reducer = Path(reducer["result_manifest_path"]).relative_to(scan_dir).as_posix()
             paths[latest_reducer] = None
+            reducer_paths.add(latest_reducer)
         except ValueError:
             warnings.append("Skipped a reducer result outside the scan directory.")
 
@@ -307,6 +540,7 @@ def merge_saved_results(
                 paths[result_path] = None
                 for checkpoint_path in checkpoint_paths:
                     paths[checkpoint_path] = None
+                reducer_paths.update([result_path, *checkpoint_paths])
                 reducer_outputs.append((reducer_worker, result_path, checkpoint_paths, attempt))
 
             reducer_output(output, int(worker["attempt"] or 0), worker)
@@ -351,18 +585,15 @@ def merge_saved_results(
 
     for relative, worker_id in paths.items():
         try:
-            draft = _read_scan_local_json(scan_dir, relative, "Saved scan checkpoint")
-            if draft.get("scanId") != scan_id:
-                raise ContractError("checkpoint belongs to a different scan")
-            if not isinstance(draft.get("findings"), list) or not isinstance(
-                draft.get("coverage"), dict
-            ):
-                raise ContractError("checkpoint has no semantic findings or coverage")
-            digest = _digest(draft)
+            draft, digest = _read_saved_result(
+                scan_dir, relative, scan_id, kind="dedup" if relative in reducer_paths else None
+            )
             if frozen_source_digests is not None and frozen_source_digests[relative] != digest:
                 raise ContractError("checkpoint changed after the scan stopped")
             source_digests[relative] = digest
-            sources.append((relative, draft, worker_id))
+            # Recovery expects coverage, but reducer results only contain findings
+            # and context. Add an empty value after hashing the original result.
+            sources.append((relative, {"coverage": {}, **draft}, worker_id))
         except (ContractError, OSError, ValueError) as exc:
             if (scan_dir / relative).exists():
                 warnings.append(f"Preserved unreadable checkpoint {relative}: {exc}")
@@ -373,7 +604,7 @@ def merge_saved_results(
     drafts_by_path = {relative: draft for relative, draft, _ in sources}
     latest_reducer_key = (
         (reducer["completed_at"] or "", reducer["id"], int(reducer["attempt"] or 0))
-        if accepted_reducers and latest_reducer in drafts_by_path
+        if reducer is not None and latest_reducer in drafts_by_path
         else None
     )
     if latest_reducer_key is None:
@@ -433,7 +664,7 @@ def merge_saved_results(
     manifest["scan"]["preservedSources"] = source_digests
     coverage = (
         copy.deepcopy(parent["coverage"])
-        if parent
+        if parent and parent["coverage"]
         else {
             "completeness": "partial",
             "mode": binding["coverageMode"],
@@ -460,9 +691,9 @@ def merge_saved_results(
     findings: list[dict[str, Any]] = []
     finding_positions: dict[str, int] = {}
     represented: dict[str, str | None] = {}
-    represented_candidates: dict[tuple[str, str], str | None] = {}
+    represented_candidates: dict[tuple[str, str, Any, Any, Any], str | None] = {}
     represented_history: dict[str, set[str]] = {}
-    represented_candidate_history: dict[tuple[str, str], set[str]] = {}
+    represented_candidate_history: dict[tuple[str, str, Any, Any, Any], set[str]] = {}
     rejected_history: dict[tuple[str, str], list[dict[str, Any]]] = {}
     stopped_parent_seal = bool(
         stopped and parent_manifest and parent_manifest["scan"].get("sealedAt")
@@ -529,7 +760,11 @@ def merge_saved_results(
                         source_id = original.get("id")
                         candidate_id = finding_candidate_id(original["finding"])
                         if isinstance(source_id, str) and ":" in source_id and candidate_id:
-                            candidate_key = (source_id.rsplit(":", 1)[0], candidate_id)
+                            candidate_key = _worker_candidate_key(
+                                source_id.rsplit(":", 1)[0],
+                                candidate_id,
+                                original["finding"],
+                            )
                             previous_key = represented_candidates.get(candidate_key)
                             if candidate_key not in represented_candidates:
                                 represented_candidates[candidate_key] = canonical_key
@@ -568,6 +803,12 @@ def merge_saved_results(
             and coverage.get("completeness") in {"complete", "unknown"}
         ):
             coverage["completeness"] = "partial"
+        if (
+            superseded
+            and not stopped
+            and all(valid_finding(finding) for finding in (parent["findings"] if parent else []))
+        ):
+            continue
         if "threatModel" not in manifest["scan"] and isinstance(draft.get("threatModel"), dict):
             manifest["scan"]["threatModel"] = copy.deepcopy(draft["threatModel"])
         for value in draft["findings"]:
@@ -647,8 +888,10 @@ def merge_saved_results(
                     mapped_key = represented[key]
                     historical_contents = represented_history.get(key, set())
                 elif worker_id and candidate_id:
-                    candidate_key = (worker_id, candidate_id)
-                    mapped_key = represented_candidates.get(candidate_key)
+                    candidate_key = _worker_candidate_key(worker_id, candidate_id, finding)
+                    if candidate_key not in represented_candidates:
+                        represented_candidates[candidate_key] = key
+                    mapped_key = represented_candidates[candidate_key]
                     historical_contents = represented_candidate_history.get(candidate_key, set())
                 else:
                     mapped_key = None
@@ -846,25 +1089,25 @@ def _restore_published_outputs(scan_dir: Path, snapshots: dict[str, bytes | None
 
 
 def preserve_scan_results_locked(
-    db: Any, connection: Any, scan_id: str, *, during_transition: bool = False
+    db: Any,
+    connection: Any,
+    scan_id: str,
+    *,
+    recovery_source_digests: dict[str, str] | None = None,
+    include_parent_with_recovery: bool = False,
 ) -> bool:
     """Publish or verify retained terminal results through the workbench host."""
     scan = db.require_scan(connection, scan_id)
     if scan["status"] != "failed":
         return False
     frozen_source_digests: dict[str, str] | None = None
-    if scan["canceled_at"] is not None:
-        raw_frozen_sources = scan["retained_source_digests_json"]
-        if raw_frozen_sources is None and not during_transition:
-            return False
-        if raw_frozen_sources is not None:
-            parsed_frozen_sources = json.loads(raw_frozen_sources)
-            if not isinstance(parsed_frozen_sources, dict) or not all(
-                isinstance(relative, str) and isinstance(digest, str)
-                for relative, digest in parsed_frozen_sources.items()
-            ):
-                raise ContractError("Saved stopped-scan source digests are malformed.")
-            frozen_source_digests = parsed_frozen_sources
+    raw_frozen_sources = scan["retained_source_digests_json"]
+    if recovery_source_digests is not None:
+        frozen_source_digests = recovery_source_digests
+    elif raw_frozen_sources is not None:
+        frozen_source_digests = _source_digests(
+            json.loads(raw_frozen_sources), "Saved stopped-scan"
+        )
     scan_dir = db.require_canonical_scan_directory(Path(scan["scan_dir"]))
     deep_run = connection.execute(
         "SELECT status FROM deep_scan_runs WHERE scan_id = ?", (scan_id,)
@@ -887,6 +1130,12 @@ def preserve_scan_results_locked(
     ]
 
     def record_publication(manifest: dict[str, Any], findings: dict[str, Any]) -> None:
+        retained_sources = manifest.get("scan", {}).get("preservedSources")
+        if not isinstance(retained_sources, dict) or not all(
+            isinstance(relative, str) and isinstance(source_digest, str)
+            for relative, source_digest in retained_sources.items()
+        ):
+            raise ContractError("Stopped scan source digests could not be frozen.")
         digest = db.published_manifest_digest(scan_dir, manifest)
         timestamp = db.now()
         with connection:
@@ -911,9 +1160,16 @@ def preserve_scan_results_locked(
             )
             db.index_findings(connection, scan_id, findings, scan["completed_at"])
             connection.execute(
-                "UPDATE scans SET seal_manifest_digest = ?, completion_warnings_json = ?, "
+                "UPDATE scans SET seal_manifest_digest = ?, retained_source_digests_json = ?, "
+                "completion_warnings_json = ?, "
                 "updated_at = ? WHERE id = ? AND status = 'failed'",
-                (digest, json.dumps(list(dict.fromkeys(warnings))), timestamp, scan_id),
+                (
+                    digest,
+                    json.dumps(retained_sources, sort_keys=True),
+                    json.dumps(list(dict.fromkeys(warnings))),
+                    timestamp,
+                    scan_id,
+                ),
             )
             connection.execute(
                 "UPDATE scan_progress SET reportable_findings_count = ?, updated_at = ? "
@@ -921,7 +1177,6 @@ def preserve_scan_results_locked(
                 (len(findings["findings"]), timestamp, scan_id),
             )
 
-    verified_existing_output: tuple[dict[str, Any], dict[str, Any]] | None = None
     existing_path = db.artifact_path(scan_dir, db.ARTIFACTS["manifest"], required=False)
     existing_scan = db.read_json_object(existing_path).get("scan", {}) if existing_path else {}
     if scan["seal_manifest_digest"] is not None or (
@@ -936,16 +1191,25 @@ def preserve_scan_results_locked(
         )
         db.verify_manifest_binding(scan, existing)
         if existing_scan.get("status") == outcome:
-            if outcome == "canceled" and (
-                frozen_source_digests is not None
-                and existing_scan.get("preservedSources") == frozen_source_digests
-            ):
-                if scan["seal_manifest_digest"] is not None and not publication_follow_up_warnings:
+            existing_sources = existing_scan.get("preservedSources")
+            if frozen_source_digests is None:
+                if not isinstance(existing_sources, dict) or not all(
+                    isinstance(relative, str) and isinstance(digest, str)
+                    for relative, digest in existing_sources.items()
+                ):
+                    raise ContractError("Stopped scan source digests could not be frozen.")
+                frozen_source_digests = existing_sources
+            if existing_sources == frozen_source_digests:
+                if (
+                    raw_frozen_sources is not None
+                    and scan["seal_manifest_digest"] is not None
+                    and not publication_follow_up_warnings
+                ):
                     return True
                 record_publication(existing, existing_findings)
                 return True
-            if outcome != "canceled":
-                verified_existing_output = (existing, existing_findings)
+            if recovery_source_digests is None:
+                raise ContractError("Stopped scan sources changed after terminal publication.")
     binding = {**db.workbench_completion_binding(scan, scan["completed_at"]), "status": outcome}
     documents = merge_saved_results(
         scan_dir,
@@ -962,13 +1226,18 @@ def preserve_scan_results_locked(
             f"{scan['failure_message'] or ''}"
         ).strip(),
         frozen_source_digests=frozen_source_digests,
+        allow_frozen_legacy_parent=(
+            include_parent_with_recovery
+            or (
+                recovery_source_digests is None
+                and frozen_source_digests == {}
+                and isinstance(existing_scan, dict)
+                and existing_scan.get("sealedAt") is not None
+                and "preservedSources" not in existing_scan
+            )
+        ),
     )
     if documents is None:
-        if verified_existing_output is not None:
-            if scan["seal_manifest_digest"] is not None and not publication_follow_up_warnings:
-                return True
-            record_publication(*verified_existing_output)
-            return True
         unpublished_warnings = list(dict.fromkeys([*warnings, *publication_follow_up_warnings]))
         if unpublished_warnings != stored_warnings:
             with connection:
@@ -978,13 +1247,14 @@ def preserve_scan_results_locked(
                     (json.dumps(unpublished_warnings), db.now(), scan_id),
                 )
         return False
-    if scan["canceled_at"] is not None and frozen_source_digests is None:
+    if frozen_source_digests is None:
         retained_sources = documents[0].get("scan", {}).get("preservedSources")
         if not isinstance(retained_sources, dict) or not all(
             isinstance(relative, str) and isinstance(digest, str)
             for relative, digest in retained_sources.items()
         ):
-            raise ContractError("Canceled scan source digests could not be frozen.")
+            raise ContractError("Stopped scan source digests could not be frozen.")
+        frozen_source_digests = retained_sources
         with connection:
             connection.execute(
                 "UPDATE scans SET retained_source_digests_json = ? "
@@ -1009,21 +1279,25 @@ def preserve_scan_results_locked(
     return True
 
 
-def refresh_stopped_scan_results(
-    db: Any, connection: Any, scan_id: str, *, strict: bool = False
-) -> None:
-    scan = db.require_scan(connection, scan_id)
-    if scan["status"] != "failed":
-        return
-    scan_id = scan["id"]
+def recover_scan_results(db: Any, connection: Any, args: Any) -> dict[str, Any]:
+    scan_id = db.require_uuid(args.scan_id, "scan-id")
     with db.scan_completion_lock(scan_id):
-        if strict:
-            if preserve_scan_results_locked(db, connection, scan_id):
-                db.deep_scan.clear_deep_scan_publication_failure(connection, scan_id)
-        else:
-            preserve_stopped_results_after_transition(
-                db, connection, scan_id, during_transition=False
-            )
+        scan = db.require_scan(connection, scan_id)
+        if scan["status"] != "failed":
+            raise SystemExit("Only a stopped scan can recover terminal results.")
+        if scan["canceled_at"] is not None:
+            raise SystemExit("Canceled scans cannot recover terminal results.")
+        recovery_source_digests, include_parent = _recovery_source_digests(db, connection, scan)
+        if not preserve_scan_results_locked(
+            db,
+            connection,
+            scan_id,
+            recovery_source_digests=recovery_source_digests,
+            include_parent_with_recovery=include_parent,
+        ):
+            raise SystemExit("No saved stopped-scan results were available to recover.")
+        db.deep_scan.clear_deep_scan_publication_failure(connection, scan_id)
+    return db.scan_context(connection, scan_id)
 
 
 def preserve_scan_results(db: Any, connection: Any, args: Any) -> dict[str, Any]:
@@ -1246,13 +1520,9 @@ def cancel_scan_locked(db: Any, connection: Any, args: Any) -> dict[str, Any]:
     return db.workspace_state(connection, scan["workspace_id"])
 
 
-def preserve_stopped_results_after_transition(
-    db: Any, connection: Any, scan_id: str, *, during_transition: bool = True
-) -> None:
+def preserve_stopped_results_after_transition(db: Any, connection: Any, scan_id: str) -> None:
     try:
-        published = preserve_scan_results_locked(
-            db, connection, scan_id, during_transition=during_transition
-        )
+        published = preserve_scan_results_locked(db, connection, scan_id)
     except (ContractError, OSError, SystemExit, ValueError) as exc:
         scan = db.require_scan(connection, scan_id)
         warnings = json.loads(scan["completion_warnings_json"])
