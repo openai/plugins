@@ -3,6 +3,15 @@ name: gnomad-graphql-skill
 description: Submit compact gnomAD GraphQL requests for frequency, gene constraint, and variant context queries. Use when a user wants concise gnomAD summaries
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `gnomad-graphql-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/gnomad_graphql.py` for all gnomAD GraphQL work.
 - For nested GraphQL results, start with `max_items=3` to `5`.
@@ -35,4 +44,4 @@ echo '{"query":"query { meta { clinvar_release_date } }"}' | python scripts/gnom
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/gnomad_graphql.py`.
+- Keep runtime imports limited to this file, `scripts/gnomad_graphql.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

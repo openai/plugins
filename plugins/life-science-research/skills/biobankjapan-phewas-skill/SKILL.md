@@ -3,6 +3,15 @@ name: biobankjapan-phewas-skill
 description: Fetch compact BioBank Japan PheWAS summaries for single variants by accepting rsID, GRCh38, or GRCh37 input and resolving to the required GRCh37 query. Use when a user wants concise BBJ association results for one variant
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `biobankjapan-phewas-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/biobankjapan_phewas.py` for all BioBank Japan PheWAS lookups.
 - Accept exactly one of `rsid`, `grch37`, `grch38`, or `variant`; resolve to the canonical GRCh37 `chr:pos-ref-alt` query before calling BioBank Japan.
@@ -38,4 +47,4 @@ echo '{"grch37":"10:114758349-C-T","max_results":10}' | python scripts/biobankja
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/biobankjapan_phewas.py`.
+- Keep runtime imports limited to this file, `scripts/biobankjapan_phewas.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

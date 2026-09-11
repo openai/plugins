@@ -3,6 +3,15 @@ name: locus-to-gene-mapper-skill
 description: Map GWAS loci to ranked candidate genes using a deterministic multi-skill chain (EFO -> GWAS -> coordinates -> Open Targets L2G/coloc -> eQTL -> burden/coding context), with reproducible tables and optional figures. Use when a user provides a trait/EFO term and/or lead variants and needs locus-to-gene prioritization for downstream biology decisions.
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `locus-to-gene-mapper-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Locus-to-Gene Mapper
 
 Generate a reproducible locus-to-gene mapping for one trait (or a seed set of lead variants), with explicit evidence attribution and conservative confidence labels.
@@ -345,6 +354,9 @@ Return:
 - Never silently impute missing evidence as positive support.
 - When evidence is missing, record it as a limitation and reduce confidence.
 - Keep evidence provenance explicit (`source skill` + endpoint family) in rationale lines.
+- Distinguish evidence-contributing sources from queried sources that returned no
+  mapping evidence. Attach links only to claims supported by the contributing
+  inputs; keep queried-but-empty sources in methods, provenance, or limitations.
 
 ## Non-Goals
 

@@ -3,6 +3,15 @@ name: biostudies-arrayexpress-skill
 description: Submit compact BioStudies and ArrayExpress API requests for free-text search and accession-based study retrieval. Use when a user wants concise BioStudies summaries
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `biostudies-arrayexpress-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/rest_request.py` for all BioStudies and ArrayExpress calls.
 - Use `base_url=https://www.ebi.ac.uk/biostudies/api/v1`.
@@ -35,4 +44,4 @@ echo '{"base_url":"https://www.ebi.ac.uk/biostudies/api/v1","path":"search","par
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/rest_request.py`.
+- Keep runtime imports limited to this file, `scripts/rest_request.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

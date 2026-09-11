@@ -3,6 +3,15 @@ name: ncbi-entrez-skill
 description: Submit compact NCBI Entrez E-Utilities requests for PubMed, Gene, Protein, Nucleotide, PMC metadata, and GEO metadata workflows. Use when a user wants concise Entrez search, fetch, summary, or link results; save raw JSON or XML only on request.
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `ncbi-entrez-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/ncbi_entrez.py` for all Entrez calls in this package.
 - Use explicit `endpoint` values such as `esearch`, `esummary`, `efetch`, `elink`, or `einfo`.
@@ -14,7 +23,7 @@ description: Submit compact NCBI Entrez E-Utilities requests for PubMed, Gene, P
 
 ## Execution behavior
 - Return concise markdown summaries from the script output by default.
-- In final user-facing summaries, never display a bare PMID or DOI. Render every PMID as a Markdown link in the form `[PMID <PMID>](https://pubmed.ncbi.nlm.nih.gov/<PMID>/)` and every DOI as `[<DOI>](https://doi.org/<DOI>)`, including in tables, bullets, parentheticals, and source lists.
+- Apply the source registry templates to every PMID, DOI, NCBI Gene ID, or GEO accession that appears in the summary, including in tables, bullets, parentheticals, and source lists.
 - Return raw JSON or XML only if the user explicitly asks for machine-readable output.
 - Prefer targeted endpoint calls instead of broad unfiltered dumps.
 - If the user needs the full raw response, set `save_raw=true` and report the saved file path.
@@ -41,4 +50,4 @@ echo '{"endpoint":"esearch","params":{"db":"gene","term":"TP53[gene] AND human[o
 
 ## References
 - Load `references/geo.md` only when the user specifically needs GEO query patterns.
-- Keep the import package limited to this file, `references/geo.md`, and `scripts/ncbi_entrez.py`.
+- Keep runtime imports limited to this file, `references/geo.md`, `scripts/ncbi_entrez.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

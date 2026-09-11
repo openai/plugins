@@ -146,5 +146,41 @@ class RefSnpResolutionTests(unittest.TestCase):
         self.assertIn("intron_variant", annotations["rs7903146"]["consequence_terms"])
 
 
+class ProvenanceTests(unittest.TestCase):
+    def test_provenance_only_contains_recorded_lanes(self) -> None:
+        statuses: dict[str, str] = {}
+        map_locus_to_gene.record_provenance(
+            statuses, "ncbi-refsnp", contributed=True
+        )
+        map_locus_to_gene.record_provenance(
+            statuses, "gtex-eqtl-skill", contributed=False
+        )
+
+        sources = map_locus_to_gene.build_provenance_sources(
+            statuses, "2026-06-23T00:00:00+00:00"
+        )
+
+        self.assertEqual(
+            [source["name"] for source in sources], ["NCBI RefSNP", "GTEx Portal"]
+        )
+        self.assertEqual(
+            [source["status"] for source in sources],
+            ["contributed", "queried_no_evidence"],
+        )
+        self.assertNotIn("Experimental Factor Ontology via OLS", {s["name"] for s in sources})
+        self.assertNotIn("Human Protein Atlas", {s["name"] for s in sources})
+
+    def test_contribution_promotes_a_queried_lane(self) -> None:
+        statuses: dict[str, str] = {}
+        map_locus_to_gene.record_provenance(
+            statuses, "opentargets-skill", contributed=False
+        )
+        map_locus_to_gene.record_provenance(
+            statuses, "opentargets-skill", contributed=True
+        )
+
+        self.assertEqual(statuses["opentargets-skill"], "contributed")
+
+
 if __name__ == "__main__":
     unittest.main()
