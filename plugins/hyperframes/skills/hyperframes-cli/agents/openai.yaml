@@ -1,3 +1,0 @@
-interface:
-  display_name: "HyperFrames CLI"
-  short_description: "HyperFrames CLI tool — hyperframes init, lint, preview, render, transcribe, tts, doctor, browser, info, upgrade, compositions, docs, benchmark."
