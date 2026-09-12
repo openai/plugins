@@ -329,7 +329,11 @@ test("skill asks before building API-backed apps when any usable key exists", ()
   );
   assert.match(
     description,
-    /Treat this as the credential gate: inspect safely, ask reuse-vs-new before API work/,
+    /Do not gate model or prompt migrations that can proceed with source edits and offline validation/,
+  );
+  assert.match(
+    description,
+    /Otherwise treat this as the credential gate: inspect safely, ask reuse-vs-new before API work/,
   );
   assert.match(
     skill,
@@ -432,7 +436,7 @@ test("skill makes the key-choice gate impossible to miss", () => {
   assert.match(skill, /## Mandatory First Step/);
   assert.match(
     skill,
-    /Before editing, testing, running, debugging, or configuring any code that calls\s+the OpenAI API:\s+1\. Inspect for a usable `OPENAI_API_KEY` without printing it\.\s+2\. Unless the user explicitly asked for a new key, ask whether to reuse an\s+existing key or create a new one\. If none exists, ask whether to create one\.\s+3\. Stop until the user answers\./,
+    /Before editing, testing, running, debugging, or configuring any code that calls\s+the OpenAI API, except for the model\/prompt migration source edits and offline\s+validation explicitly allowed above:\s+1\. Inspect for a usable `OPENAI_API_KEY` without printing it\.\s+2\. Unless the user explicitly asked for a new key, ask whether to reuse an\s+existing key or create a new one\. If none exists, ask whether to create one\.\s+3\. Stop until the user answers\./,
   );
   assert.match(
     skill,
@@ -444,7 +448,7 @@ test("skill makes the key-choice gate impossible to miss", () => {
   );
   assert.match(
     skill,
-    /The credential decision is a hard stop\. Before the user answers, do not create\s+directories, scaffold files, draft implementation plans, wire API-dependent\s+code, run smoke tests, or give placeholder\/manual key setup instructions\./,
+    /The credential decision is a hard stop outside the model\/prompt migration\s+exception above\. Before the user answers, do not create directories, scaffold\s+files, draft implementation plans, wire API-dependent code, run smoke tests, or\s+give placeholder\/manual key setup instructions\./,
   );
   assert.match(
     skill,
@@ -572,6 +576,10 @@ test("eval matrix includes local picker boundary and two-field joke app use case
   assert.match(
     evals,
     /if the rollout proceeds after a confirmed key decision, the app plan or implementation\s+should collect two user input fields and send both fields into the AI joke-generation request/,
+  );
+  assert.match(
+    evals,
+    /Migrate this existing app to the latest OpenAI model and update its prompts\./,
   );
 });
 
