@@ -12,7 +12,7 @@ Use this skill to diagnose SwiftUI performance issues from code first, then requ
 ## Workflow
 
 1. Classify the symptom: slow rendering, janky scrolling, high CPU, memory growth, hangs, or excessive view updates.
-2. If code is available, start with a code-first review using `references/code-smells.md`.
+2. If code is available, first read any repo-local SwiftUI performance guide that exists, then start the code-first review using `references/review-guide.md` and `references/code-smells.md`.
 3. If code is not available, ask for the smallest useful slice: target view, data flow, reproduction steps, and deployment target.
 4. If code review is inconclusive or runtime evidence is required, guide the user through profiling with `references/profiling-intake.md`.
 5. Summarize likely causes, evidence, remediation, and validation steps using `references/report-template.md`.
@@ -43,8 +43,9 @@ Focus on:
 - Layout thrash from complex hierarchies, `GeometryReader`, or preference chains.
 - Large image decode or resize work on the main thread.
 - Animation or transition work applied too broadly.
+- Stored builder closures, broad action captures, and manual bindings that force avoidable recomputation.
 
-Use `references/code-smells.md` for the detailed smell catalog and fix guidance.
+Use `references/review-guide.md` for the full decision model and `references/code-smells.md` for a fast scan of common smells and fix guidance.
 
 Provide:
 - Likely root causes with code references.
@@ -74,11 +75,14 @@ Apply targeted fixes:
 - Narrow state scope and reduce broad observation fan-out.
 - Stabilize identities for `ForEach` and lists.
 - Move heavy work out of `body` into derived state updated from inputs, model-layer precomputation, memoized helpers, or background preprocessing. Use `@State` only for view-owned state, not as an ad hoc cache for arbitrary computation.
+- Prefer value-based modifiers over view-tree-breaking branches when only style or behavior changes.
+- Keep one stable root view per `ForEach` element, and avoid `.id(...)` resets unless identity is the real feature.
+- Avoid stored builder closures and manual `Binding(get:set:)` in hot paths when a stored child view or key-path binding would do.
 - Use `equatable()` only when equality is cheaper than recomputing the subtree and the inputs are truly value-semantic.
 - Downsample images before rendering.
 - Reduce layout complexity or use fixed sizing where possible.
 
-Use `references/code-smells.md` for examples, Observation-specific fan-out guidance, and remediation patterns.
+Use `references/review-guide.md` for the full rule set and `references/code-smells.md` for examples, Observation-specific fan-out guidance, and remediation patterns.
 
 ## 6. Verify
 
@@ -96,6 +100,7 @@ Use `references/report-template.md` when formatting the final audit.
 
 ## References
 
+- Full SwiftUI performance review guide: `references/review-guide.md`
 - Profiling intake and collection checklist: `references/profiling-intake.md`
 - Common code smells and remediation patterns: `references/code-smells.md`
 - Audit output template: `references/report-template.md`

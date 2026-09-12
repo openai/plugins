@@ -17,6 +17,7 @@ Use this checklist when code review alone cannot explain the SwiftUI performance
 
 Ask the user to:
 - Run the app in a Release build when possible.
+- Prefer a real-device capture for final performance decisions; treat Simulator traces as exploratory.
 - Use the SwiftUI Instruments template.
 - Reproduce the exact problematic interaction only long enough to capture the issue.
 - Capture the SwiftUI timeline and Time Profiler together.
@@ -39,6 +40,6 @@ Ask the user to:
 ## Common traps
 
 - Debug builds can distort SwiftUI timing and allocation behavior.
-- Simulator traces can miss device-only rendering or memory issues.
+- Simulator traces can miss device-only rendering, memory, thermal, and scrolling behavior.
 - Mixed interactions in one capture make attribution harder.
 - Screenshots without the reproduction note are much harder to interpret.
