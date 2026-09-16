@@ -45,7 +45,7 @@ This plugin is meant to support workflows like:
 
 ## Skill Families
 
-The plugin currently bundles 50 skills. The most useful way to think about them is by research area rather than as a flat list.
+The plugin currently bundles 51 skills. The most useful way to think about them is by research area rather than as a flat list.
 
 ### Human Genetics And Variant Evidence
 
@@ -94,6 +94,7 @@ The plugin currently bundles 50 skills. The most useful way to think about them 
 
 ### Clinical, Translational, And Disease Evidence
 
+- `research-target-evidence-skill`
 - `clinicaltrials-skill`
 - `cbioportal-skill`
 - `civic-skill`
@@ -165,6 +166,7 @@ Each subagent should receive a bounded objective and return concise findings, ca
 - `Map the most plausible causal genes at this inflammatory bowel disease locus and explain why.`
 - `Summarize known structure, ligand, and pathway information for EGFR.`
 - `Pull ClinicalTrials.gov, ChEMBL, and PharmGKB context for JAK inhibitors in alopecia areata.`
+- `Use $research-target-evidence-skill to separate human and preclinical evidence for ROR1 biology, therapeutic programs, and safety.`
 - `Find metabolomics and proteomics resources relevant to MASLD and PPARG.`
 - `Interpret this variant using ClinVar, gnomAD, Ensembl, and cohort association evidence.`
 
