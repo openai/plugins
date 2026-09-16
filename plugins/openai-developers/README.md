@@ -13,10 +13,12 @@ This plugin is the Codex-facing bundle for OpenAI developer workflows. It pairs 
 - `skills/agents-sdk/` builds, runs, deploys and evaluates Agents SDK apps.
 - `skills/build-chatgpt-app/` scaffolds, refactors, and troubleshoots ChatGPT Apps SDK projects.
 - `skills/chatgpt-app-submission/` generates `chatgpt-app-submission.json` for ChatGPT Apps submissions.
+- `skills/devday-guide/` answers explicit OpenAI DevDay questions from public sources and can render a compact personal agenda. It needs no account connection or additional packages; after the event it helps people find published recordings and continue with the existing developer workflows.
 
 ## Local Validation
 
 ```bash
 node --test plugins/openai-developers/tests/openai-platform-api-key.test.mjs
+python3 -m unittest discover -s plugins/openai-developers/tests -p 'test_devday_agenda.py'
 python plugins/internal-distribution/scripts/validate_distribution.py
 ```
