@@ -29,9 +29,9 @@ If live access fails, state that you cannot verify the current program and link 
 
 ## Visualize a day only when useful
 
-For an overview or personal plan that benefits from comparison, use the compact agenda in `assets/agenda.html`. It borrows the official site's black canvas, large plain type, green DevDay lettering, violet year, and square brackets. Keep the schedule first. Avoid decorative charts, generic feature cards, stock imagery, or a replica of the whole website.
+For an overview or personal plan that benefits from comparison, discover and call the OpenAI Developers `open_devday_agenda` tool with a verified `agenda` object in the shape below. The tool opens an MCP App beside the conversation where supported. It reuses `assets/agenda.html`, with the official site's black canvas, green DevDay lettering, violet year, and square brackets. Keep the schedule first. Avoid decorative charts, generic feature cards, stock imagery, or a replica of the whole website.
 
-After verifying the program, write a temporary JSON file in the task workspace. Do not update installed skill files. The renderer takes this shape; replace all sample values with verified facts:
+Verify the program first and replace all sample values with published facts. Do not update installed skill files or bundle a cached schedule:
 
 ```json
 {
@@ -47,8 +47,10 @@ After verifying the program, write a temporary JSON file in the task workspace. 
 }
 ```
 
-Run `python3 scripts/render_agenda.py --data /absolute/path/day.json --output /absolute/path/devday.html` from this skill's directory. Set `selected` only for the attendee's requested or clearly suggested choices. Use null for unknown ends. Include only verified public data and links; no ticket data. The self-contained output needs no packages, server, external font, analytics, or network calls. Selection and timezone controls run locally; the attendee can download a plain-text plan. It does not book, register, send, or modify a calendar.
+Set `selected` only for the attendee's requested or clearly suggested choices. Use null for unknown ends. Include only verified public data and links; no ticket data. An empty tool call opens a view asking for a schedule; it does not retrieve event facts. Pass the verified agenda on the first model call so the attendee gets a useful view immediately. Do not claim the side panel opened unless the host confirms it.
 
-Present it through the host's supported interactive-artifact or file surface. If that surface or Python is unavailable, use the normal schedule table. Do not install another plugin or build an MCP server for the visual, and do not call the HTML a native ChatGPT widget. Show the source and verification date alongside it. After the event date, the renderer labels it as an archive; do not offer the old agenda as today's program.
+The attendee can choose activities and click **Use plan in chat** to attach the current plan to their next message. Attaching does not send a message or reserve a place. Use that supplied selection when they ask about overlaps, changes, or departure time. Preserve unknown end times and distinguish broad programming windows from sessions. A changed selection needs a new attachment; do not imply you can see unsubmitted changes. Selections stay in the view; do not promise durable storage across devices or conversations.
+
+If the tool or MCP App surface is unavailable, write the verified JSON to the task workspace and run `python3 scripts/render_agenda.py --data /absolute/path/day.json --output /absolute/path/devday.html` from this skill's directory. Present this as a downloadable agenda, not as an installed extension. If Python or file output is unavailable, use the normal schedule table. Do not install another plugin or create another server. Show the source and verification date alongside the visual. Past agendas are labelled as archives; never offer one as today's program. Neither surface books, registers, sends messages, or modifies a calendar.
 
 Write like a helpful person at the event: short, specific, and natural. Say “Breakfast starts at 8 a.m.” Skip sales language, forced excitement, emoji headings, and claims of insider access.

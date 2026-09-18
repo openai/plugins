@@ -14,7 +14,7 @@
   --line: #303030;
   --green: #00c763;
   --violet: #b388ff;
-  font-family: Arial,Helvetica,sans-serif;
+  font-family: var(--font-sans, Arial),Helvetica,sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -48,7 +48,7 @@ button,select {
   min-height: 44px;
 }
 button {
-  cursor: pointer;
+  cursor: var(--cursor-interaction, pointer);
 }
 button:disabled {
   opacity: .45;
@@ -282,6 +282,10 @@ h3 {
   border: 0;
   white-space: nowrap;
 }
+.plan-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.plan { flex-wrap: wrap; }
+#attach { background: var(--green); }
+#connection { margin-top: 12px; }
 footer {
   display: flex;
   justify-content: space-between;
@@ -449,14 +453,15 @@ noscript p {
 <p class="empty" id="empty" hidden>Your plan is empty. Choose activities from the full agenda.</p>
 <p class="note">@@NOTE@@</p>
 <noscript><p>The full agenda is shown above. Use a browser with JavaScript to choose activities or download a plan.</p></noscript>
-<div class="plan"><div><strong id="count" role="status" aria-live="polite">Choose what you want to attend</strong><p>Selections stay in this view. Download a copy to keep them.</p></div><button type="button" id="download" disabled>Download plan ↓</button></div>
+<div class="plan"><div><strong id="count" role="status" aria-live="polite">Choose what you want to attend</strong><p id="plan-help">Selections stay in this view. Download a copy to keep them.</p></div><div class="plan-actions"><button type="button" id="attach" hidden disabled>Use plan in chat</button><button type="button" id="download" disabled>Download plan ↓</button></div></div>
+<p id="connection" class="note" role="status" aria-live="polite" hidden></p>
 </section>
 <footer><span>Public program · Checked @@CHECKED@@</span><a href="@@SOURCE@@" id="source" target="_blank" rel="noopener noreferrer">Check the latest schedule ↗</a></footer>
 </main>
 <script>
 (() => {
   const main = document.querySelector('main');
-  const rows = [...document.querySelectorAll('.event')];
+  let rows = [...document.querySelectorAll('.event')];
   const zone = document.querySelector('#timezone');
   const all = document.querySelector('#all'), mine = document.querySelector('#mine');
   const download = document.querySelector('#download');
@@ -476,6 +481,7 @@ noscript p {
     download.disabled = count === 0;
     all.setAttribute('aria-pressed', String(!onlyMine));
     mine.setAttribute('aria-pressed', String(onlyMine));
+    document.dispatchEvent(new Event('devday:change'));
   }
   function changeZone() {
     const fmt = new Intl.DateTimeFormat('en-US', {timeZone:zone.value, hour:'numeric', minute:'2-digit'});
@@ -490,16 +496,68 @@ noscript p {
     }
     document.querySelector('#zone-note').textContent = `Times in ${zoneName(zone.value)}`;
   }
-  for (const row of rows) row.querySelector('input').addEventListener('change', update);
+  document.querySelector('#agenda').addEventListener('change', update);
   all.addEventListener('click', () => { onlyMine = false; update(); });
   mine.addEventListener('click', () => { onlyMine = true; update(); });
-  zone.addEventListener('change', changeZone);
+  zone.addEventListener('change', () => { changeZone(); document.dispatchEvent(new Event('devday:change')); });
+  function planText() {
+    return [`OpenAI DevDay · ${main.dataset.date}`, `Times in ${zone.value}`, '', ...rows.filter(row => row.querySelector('input').checked).map(row => `${row.querySelector('time').textContent}${row.dataset.end ? '' : ' (start time)'} | ${row.querySelector('h3').textContent}`), '', 'Personal plan; no reservations made.', document.querySelector('footer span').textContent, document.querySelector('#source').href].join('\n');
+  }
   download.addEventListener('click', () => {
-    const lines = [`OpenAI DevDay · ${main.dataset.date}`, `Times in ${zone.value}`, '', ...rows.filter(row => row.querySelector('input').checked).map(row => `${row.querySelector('time').textContent}${row.dataset.end ? '' : ' (start time)'} | ${row.querySelector('h3').textContent}`), '', 'Personal plan; no reservations made.', document.querySelector('footer span').textContent, document.querySelector('#source').href];
-    const url = URL.createObjectURL(new Blob([lines.join('\n')], {type:'text/plain;charset=utf-8'}));
+    const url = URL.createObjectURL(new Blob([planText()], {type:'text/plain;charset=utf-8'}));
     const link = document.createElement('a'); link.href = url; link.download = 'devday-plan.txt'; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
+  // Shared by the offline renderer and the MCP App. Published text is always
+  // assigned through textContent, never interpreted as markup.
+  window.DevDayAgenda = {
+    planText,
+    getPlan: () => ({
+      date: main.dataset.date, timezone: zone.value, source_url: document.querySelector('#source').href,
+      events: rows.filter(row => row.querySelector('input').checked).map(row => ({
+        id: row.dataset.id, title: row.querySelector('h3').textContent,
+        start: row.dataset.start, end: row.dataset.end || null,
+      })),
+    }),
+    restore(plan) {
+      if (plan?.date !== main.dataset.date || plan?.source_url !== document.querySelector('#source').href || !Array.isArray(plan.events)) return;
+      const ids = new Set(plan.events.map(event => event.id));
+      for (const row of rows) row.querySelector('input').checked = ids.has(row.dataset.id);
+      if ([...zone.options].some(option => option.value === plan.timezone)) zone.value = plan.timezone;
+      changeZone(); update();
+    },
+    render(data) {
+      if (!data) return;
+      main.dataset.zone = data.timezone; main.dataset.date = data.date;
+      document.querySelector('.eyebrow span').textContent = new Intl.DateTimeFormat('en-US', {dateStyle:'full', timeZone:'UTC'}).format(new Date(data.date + 'T12:00:00Z'));
+      document.querySelector('.eyebrow span:last-child').textContent = data.location;
+      document.querySelector('.year').textContent = data.date.slice(0,4);
+      const today = new Intl.DateTimeFormat('en-CA', {timeZone:data.timezone, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date());
+      document.querySelector('#agenda-title').textContent = today > data.date ? 'Past event · published agenda' : 'Your day at DevDay';
+      document.querySelector('.note').textContent = data.note || '';
+      document.querySelector('footer span').textContent = `Public program · Checked ${data.checked_on}`;
+      document.querySelectorAll('a').forEach(link => { link.href = data.source_url; });
+      zone.replaceChildren(new Option(zoneName(data.timezone), data.timezone));
+      if (localZone && localZone !== data.timezone) zone.add(new Option(`Your time · ${zoneName(localZone)}`, localZone));
+      rows = [...data.events].sort((a,b) => Date.parse(a.start) - Date.parse(b.start)).map((event,index) => {
+        const row = document.createElement('li'); row.className = 'event';
+        row.dataset.id = event.id; row.dataset.start = event.start; row.dataset.end = event.end || '';
+        const when = document.createElement('div'); when.className = 'when';
+        const time = document.createElement('time'); time.dateTime = event.start; when.append(time);
+        if (!event.end) { const label = document.createElement('span'); label.className = 'start-only'; label.textContent = 'Start time'; when.append(label); }
+        const activity = document.createElement('div'); activity.className = 'activity';
+        const title = document.createElement('h3'); title.id = `event-${index}`; title.textContent = event.title; activity.append(title);
+        if (event.detail) { const detail = document.createElement('p'); detail.textContent = event.detail; activity.append(detail); }
+        const pick = document.createElement('label'); pick.className = 'pick';
+        const input = document.createElement('input'); input.type = 'checkbox'; input.checked = event.selected === true;
+        input.setAttribute('aria-labelledby', `pick-label event-${index}`);
+        const plus = document.createElement('span'); plus.setAttribute('aria-hidden','true'); plus.textContent = '+';
+        pick.append(input,plus); row.append(when,activity,pick); return row;
+      });
+      document.querySelector('#agenda').replaceChildren(...rows);
+      onlyMine = false; changeZone(); update();
+    },
+  };
   update();
   document.documentElement.classList.add('js');
 })();

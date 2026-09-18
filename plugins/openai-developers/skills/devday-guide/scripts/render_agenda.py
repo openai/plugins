@@ -80,7 +80,7 @@ def render(data, today=None):
         detail = f'<p>{esc(event["detail"])}</p>' if event.get("detail") else ""
         checked = " checked" if event.get("selected", False) else ""
         rows.append(
-            f'<li class="event" data-start="{esc(start)}" data-end="{esc(end or "")}">'
+            f'<li class="event" data-id="{esc(event["id"])}" data-start="{esc(start)}" data-end="{esc(end or "")}">'
             f'<div class="when">{when}</div><div class="activity">'
             f'<h3 id="event-{index}">{esc(event["title"])}</h3>{detail}</div>'
             f'<label class="pick"><input type="checkbox" aria-labelledby="pick-label event-{index}"{checked}>'
