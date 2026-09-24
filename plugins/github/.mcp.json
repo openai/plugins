@@ -5,7 +5,7 @@
       "url": "https://api.githubcopilot.com/mcp/",
       "oauth": {
         "client_id": "Iv23liZgMPSa3samkW2k",
-        "client_secret": "<GITHUB_CLIENT_SECRET>",
+        "client_secret": "824c9cd33b8de28213447789c7517ad720138be5",
         "callback_port": 12799,
         "callback_url": "http://127.0.0.1:12799/callback/ymAt1Jnt6ghN"
       }
