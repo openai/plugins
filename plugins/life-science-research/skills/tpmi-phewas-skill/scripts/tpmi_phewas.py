@@ -12,6 +12,7 @@ Output JSON on stdout.
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 import re
 import sys
@@ -114,6 +115,21 @@ def write_raw_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data), encoding="utf-8")
 
 
+def _attach_sources(
+    output: dict[str, Any], source_name: str, source_url: str
+) -> dict[str, Any]:
+    """Add stable user-facing provenance without changing error payloads."""
+    if output.get("ok") and "sources" not in output:
+        output["sources"] = [
+            {
+                "name": source_name,
+                "url": source_url,
+                "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            }
+        ]
+    return output
+
+
 def main() -> int:
     warnings: list[str] = []
 
@@ -184,7 +200,7 @@ def main() -> int:
             "raw_output_path": None,
             "warnings": warnings,
         }
-        sys.stdout.write(json.dumps(output))
+        sys.stdout.write(json.dumps(_attach_sources(output, "Taiwan Precision Medicine Initiative PheWeb", "https://pheweb.ibms.sinica.edu.tw/")))
         return 0
 
     associations = extract_associations(data)
@@ -220,7 +236,7 @@ def main() -> int:
         "raw_output_path": saved_raw_output_path,
         "warnings": warnings,
     }
-    sys.stdout.write(json.dumps(output))
+    sys.stdout.write(json.dumps(_attach_sources(output, "Taiwan Precision Medicine Initiative PheWeb", "https://pheweb.ibms.sinica.edu.tw/")))
     return 0
 
 

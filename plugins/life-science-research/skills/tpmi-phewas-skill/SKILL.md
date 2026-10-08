@@ -3,6 +3,15 @@ name: tpmi-phewas-skill
 description: Fetch compact TPMI PheWAS summaries for single variants by accepting rsID, GRCh37, or GRCh38 input and resolving to the required GRCh38 query. Use when a user wants concise TPMI association results for one variant
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `tpmi-phewas-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/tpmi_phewas.py` for all TPMI PheWAS lookups.
 - Accept exactly one of `rsid`, `grch37`, `grch38`, or `variant`; resolve to the canonical GRCh38 `chr:pos-ref-alt` query before calling TPMI.
@@ -38,4 +47,4 @@ echo '{"grch38":"6:160540105-T-C","max_results":10}' | python scripts/tpmi_phewa
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/tpmi_phewas.py`.
+- Keep runtime imports limited to this file, `scripts/tpmi_phewas.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

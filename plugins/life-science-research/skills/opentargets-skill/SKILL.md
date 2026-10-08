@@ -3,6 +3,15 @@ name: opentargets-skill
 description: Submit compact Open Targets Platform GraphQL requests for target, disease, drug, variant, study, and search data, including associated-disease datasource heatmap matrices. Use when a user wants concise Open Targets summaries or per-datasource evidence context
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `opentargets-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/opentargets_graphql.py` for all Open Targets GraphQL work.
 - Use `scripts/opentargets_disease_heatmap.py` when the user wants the associated-disease bubble grid or a disease-by-datasource evidence matrix.
@@ -56,4 +65,4 @@ The helper paginates `associatedDiseases`, collects `datasourceScores`, and retu
 Use the disease-name filter as a client-side substring filter similar to the UI. If you later need the overall association score column, inspect the GraphQL row type first before adding candidate fields such as `score` or `associationScore`.
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and the bundled scripts in `scripts/`.
+- Keep runtime imports limited to this file, the bundled scripts in `scripts/`, `../../references/source-presentation.md`, and `../../references/source-links.json`.

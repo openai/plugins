@@ -3,6 +3,15 @@ name: research-router-skill
 description: Route broad or ambiguous life-sciences research requests to the right skills, normalize core entities, optionally parallelize independent evidence gathering with subagents when available, and synthesize a concise evidence-backed answer. Use when a user asks a general life-sciences question that could span multiple sources or analysis types.
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `research-router-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Research Router
 
 Use this skill as the default orchestration layer for broad life-sciences research requests.
@@ -115,6 +124,7 @@ When delegating, give each subagent a bounded read-only objective such as one ev
 - the key findings
 - the main caveats
 - which skills or sources it used
+- the structured `sources` entries returned by those skills
 - any artifact paths it produced
 
 The coordinating agent is responsible for reconciling overlaps, contradictions, and evidence gaps.
@@ -129,6 +139,17 @@ Unless the user asks for a different format, include:
 2. key evidence by lane
 3. main caveats or unresolved questions
 4. recommended next analyses or follow-up lookups
+
+For every lane that returns substantive evidence, retain the downstream skill's
+`sources` entries and place the most specific available link next to the claim
+it supports. Do not seed the router with example citations or cite the routing
+decision itself. When a lane only performs a connectivity or schema check,
+returns no evidence, or fails, keep its attempted source in an optional methods,
+limitations, or `Sources checked` note without presenting it as supporting
+evidence. When several claims use the same record, reuse the same link; when
+sources disagree, keep each link attached to its corresponding finding. A
+deduplicated final `Sources` list is optional and supplements rather than
+replaces applicable claim-adjacent links.
 
 If the task is exploratory, explicitly distinguish:
 

@@ -3,6 +3,15 @@ name: ncbi-blast-skill
 description: Submit, poll, and summarize NCBI BLAST Common URL API jobs (Blast.cgi) for nucleotide or protein sequences. Use when a user wants RID status, BLAST results, or compact top-hit summaries; fetch raw Text/JSON2 only on request.
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `ncbi-blast-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 
 - Use `scripts/ncbi_blast.py` for all concrete BLAST work.

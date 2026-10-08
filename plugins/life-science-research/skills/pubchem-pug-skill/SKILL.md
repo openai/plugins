@@ -3,6 +3,15 @@ name: pubchem-pug-skill
 description: Submit compact PubChem PUG REST requests for compound properties, descriptions, assay summaries, and substance metadata. Use when a user wants concise PubChem summaries
 ---
 
+## Source presentation
+<!-- source-presentation-contract:v2 -->
+- Follow `../../references/source-presentation.md` for every final user-facing answer.
+- Use the `pubchem-pug-skill` entry in `../../references/source-links.json` for authoritative source names and canonical record URL templates.
+- Preserve structured `sources` metadata for provenance, but add claim-adjacent Markdown links only for substantive external claims supported by the response.
+- Do not force evidence links for connectivity or schema checks, source metadata, empty results, failures, routing-only answers, or sources that returned no supporting evidence.
+- Prefer canonical record pages, fall back to sanitized `sources[].request_url` or authoritative `sources[].url` values, and never invent unsupported deep links.
+- Preserve explicitly requested raw or machine-readable output without injecting Markdown links.
+
 ## Operating rules
 - Use `scripts/rest_request.py` for all PubChem PUG calls.
 - Use `base_url=https://pubchem.ncbi.nlm.nih.gov/rest/pug`.
@@ -35,4 +44,4 @@ echo '{"base_url":"https://pubchem.ncbi.nlm.nih.gov/rest/pug","path":"compound/n
 ```
 
 ## References
-- No additional runtime references are required; keep the import package limited to this file and `scripts/rest_request.py`.
+- Keep runtime imports limited to this file, `scripts/rest_request.py`, `../../references/source-presentation.md`, and `../../references/source-links.json`.
