@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 
 DEFAULT_PREVIEW_BYTES = 1024
+DEFAULT_PREVIEW_READ_BYTES = 64 * 1024
 PREVIEW_HEAD_LINES = 12
 PREVIEW_SAMPLE_LINES = 10
 _UTF16_BOMS = (b"\xff\xfe", b"\xfe\xff")
@@ -17,21 +18,27 @@ TEXT_CODE_EXTENSIONS = {
     ".c",
     ".cc",
     ".cfg",
+    ".cjs",
     ".clj",
     ".cpp",
     ".cs",
     ".css",
+    ".cts",
     ".cue",
     ".cxx",
     ".dart",
+    ".ejs",
+    ".erb",
     ".ex",
     ".exs",
     ".go",
     ".graphql",
     ".h",
+    ".hh",
     ".hpp",
     ".hs",
     ".html",
+    ".hxx",
     ".java",
     ".js",
     ".json",
@@ -39,9 +46,12 @@ TEXT_CODE_EXTENSIONS = {
     ".kt",
     ".kts",
     ".lua",
+    ".m",
     ".mjs",
     ".mm",
+    ".mts",
     ".php",
+    ".phtml",
     ".proto",
     ".ps1",
     ".psd1",
@@ -51,19 +61,35 @@ TEXT_CODE_EXTENSIONS = {
     ".rs",
     ".scala",
     ".sh",
+    ".sol",
     ".sql",
+    ".svelte",
     ".swift",
+    ".tf",
     ".toml",
     ".ts",
     ".tsx",
     ".vue",
+    ".vy",
     ".xml",
     ".yaml",
     ".yml",
 }
 
-JAVASCRIPT_EXTENSIONS = {".js", ".jsx", ".mjs", ".ts", ".tsx", ".vue"}
-JAVA_LIKE_EXTENSIONS = {".c", ".cc", ".cpp", ".cs", ".cxx", ".h", ".hpp", ".java", ".mm"}
+JAVASCRIPT_EXTENSIONS = {".cjs", ".cts", ".js", ".jsx", ".mjs", ".mts", ".ts", ".tsx", ".vue"}
+JAVA_LIKE_EXTENSIONS = {
+    ".c",
+    ".cc",
+    ".cpp",
+    ".cs",
+    ".cxx",
+    ".h",
+    ".hh",
+    ".hpp",
+    ".hxx",
+    ".java",
+    ".mm",
+}
 BRACE_LANGUAGE_EXTENSIONS = {
     *JAVASCRIPT_EXTENSIONS,
     *JAVA_LIKE_EXTENSIONS,
@@ -77,13 +103,14 @@ BRACE_LANGUAGE_EXTENSIONS = {
     ".swift",
 }
 NESTED_BLOCK_COMMENT_EXTENSIONS = {".kt", ".kts", ".rs", ".scala", ".swift"}
+CPP_RAW_STRING_RE = re.compile(r'(?<![\w\x80-\U0010ffff])(?:u8|u|U|L)?R"([^\s()\\]{0,16})\(')
 RUST_RAW_STRING_RE = re.compile(r'(?:br|r)(#{0,16})"')
 RUST_LIFETIME_RE = re.compile(r"'[A-Za-z_][A-Za-z0-9_]*")
 PHP_HEREDOC_RE = re.compile(r"<<<\s*['\"]?([A-Za-z_]\w*)['\"]?")
 
 
 def _decode_source(data: bytes) -> str:
-    encoding = "utf-16" if data.startswith(_UTF16_BOMS) else "utf-8"
+    encoding = "utf-16" if data.startswith(_UTF16_BOMS) else "utf-8-sig"
     return data.decode(encoding, errors="ignore")
 
 
@@ -91,6 +118,14 @@ def is_binary_sample(data: bytes) -> bool:
     if data.startswith(_UTF16_BOMS):
         return "\0" in _decode_source(data)
     return b"\0" in data
+
+
+def is_binary_file(path: Path) -> bool:
+    try:
+        with path.open("rb") as source:
+            return is_binary_sample(source.read(DEFAULT_PREVIEW_READ_BYTES))
+    except OSError:
+        return True
 
 
 def compact_preview_line(line: str) -> str:
@@ -178,7 +213,7 @@ def python_arguments(node: ast.FunctionDef | ast.AsyncFunctionDef) -> str:
 def python_outline(text: str) -> list[str]:
     try:
         tree = ast.parse(text)
-    except (SyntaxError, ValueError, TypeError, MemoryError):
+    except (SyntaxError, ValueError, TypeError, MemoryError, RecursionError):
         return []
 
     outline: list[str] = []
@@ -208,40 +243,7 @@ def python_outline(text: str) -> list[str]:
     return outline
 
 
-def javascript_regex_end(text: str, start: int) -> int | None:
-    if start + 1 >= len(text) or text[start + 1] in {"/", "*"}:
-        return None
-    previous = start - 1
-    while previous >= 0 and text[previous] in " \t\r":
-        previous -= 1
-    if previous >= 0 and text[previous] not in "=(:,[!&|?{};\n":
-        prefix = text[max(0, previous - 8) : previous + 1]
-        if not re.search(r"\b(?:case|return|throw)$", prefix):
-            return None
-
-    index = start + 1
-    in_character_class = False
-    while index < len(text):
-        char = text[index]
-        if char == "\n":
-            return None
-        if char == "\\" and index + 1 < len(text):
-            index += 2
-            continue
-        if char == "[":
-            in_character_class = True
-        elif char == "]":
-            in_character_class = False
-        elif char == "/" and not in_character_class:
-            index += 1
-            while index < len(text) and text[index].isalpha():
-                index += 1
-            return index
-        index += 1
-    return None
-
-
-def mask_c_style_source(text: str, suffix: str) -> str:
+def mask_c_style_source(text: str, suffix: str) -> str | None:
     masked: list[str] = []
     index = 0
     block_comment_depth = 0
@@ -278,13 +280,13 @@ def mask_c_style_source(text: str, suffix: str) -> str:
             continue
         if heredoc_terminator:
             if index == 0 or text[index - 1] == "\n":
-                line_end = text.find("\n", index)
-                if line_end < 0:
-                    line_end = len(text)
-                candidate = text[index:line_end].strip().removesuffix(";")
-                if candidate == heredoc_terminator:
-                    masked.extend(" " * (line_end - index))
-                    index = line_end
+                # PHP identifiers allow every non-ASCII byte, including non-word characters.
+                terminator_match = re.compile(
+                    rf"[ \t]*{heredoc_terminator}(?![A-Za-z0-9_\x80-\U0010ffff])"
+                ).match(text, index)
+                if terminator_match:
+                    masked.extend(" " * (terminator_match.end() - index))
+                    index = terminator_match.end()
                     heredoc_terminator = ""
                     continue
             masked.append(" ")
@@ -332,6 +334,14 @@ def mask_c_style_source(text: str, suffix: str) -> str:
                     quote = ""
                 index += 1
             continue
+        if suffix in {".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".mm"}:
+            raw_match = CPP_RAW_STRING_RE.match(text, index)
+            if raw_match:
+                token = raw_match.group(0)
+                masked.extend(" " * len(token))
+                raw_terminator = f'){raw_match.group(1)}"'
+                index += len(token)
+                continue
         if suffix == ".rs":
             raw_match = RUST_RAW_STRING_RE.match(text, index)
             if raw_match:
@@ -354,6 +364,11 @@ def mask_c_style_source(text: str, suffix: str) -> str:
             quote = '@"'
             index += 2
             continue
+        if suffix == ".go" and char == "`":
+            masked.append(" ")
+            raw_terminator = "`"
+            index += 1
+            continue
         triple_quote = text[index : index + 3]
         if triple_quote in {'"""', "'''"}:
             masked.extend((" ", " ", " "))
@@ -367,12 +382,6 @@ def mask_c_style_source(text: str, suffix: str) -> str:
                 masked.extend(" " * len(token))
                 heredoc_terminator = heredoc_match.group(1)
                 index += len(token)
-                continue
-        if suffix in JAVASCRIPT_EXTENSIONS and char == "/":
-            regex_end = javascript_regex_end(text, index)
-            if regex_end is not None:
-                masked.extend(" " * (regex_end - index))
-                index = regex_end
                 continue
         if char == "/" and next_char == "/":
             masked.extend((" ", " "))
@@ -389,6 +398,9 @@ def mask_c_style_source(text: str, suffix: str) -> str:
             in_line_comment = True
             index += 1
             continue
+        if suffix in JAVASCRIPT_EXTENSIONS and char == "/":
+            # Regex literals and division need grammar context; sample the original source.
+            return None
         if char in {'"', "'", "`"}:
             quote = char
             masked.append(" ")
@@ -451,7 +463,7 @@ def match_type_declaration(line: str, suffix: str) -> tuple[str, str] | None:
         match = re.search(r"\b(class|struct|enum|protocol|actor|extension)\s+([A-Za-z_]\w*)", line)
     elif suffix == ".dart":
         match = re.search(r"\b(class|mixin|enum|extension)\s+([A-Za-z_]\w*)", line)
-    elif suffix in {".c", ".cc", ".cpp", ".cxx", ".h", ".hpp", ".mm"}:
+    elif suffix in {".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".mm"}:
         match = re.search(
             r"\b(class|struct|union|enum(?:\s+class)?)\s+([A-Za-z_]\w*)",
             line,
@@ -503,12 +515,20 @@ def match_java_like_function(
     prefix = before[: name_match.start()].strip()
     if not prefix and name != (type_name or ""):
         return None
-    if suffix in {".c", ".cc", ".cpp", ".cxx", ".h", ".hpp", ".mm"} and prefix.startswith(
-        ("typedef", "using")
-    ):
+    if suffix in {
+        ".c",
+        ".cc",
+        ".cpp",
+        ".cxx",
+        ".h",
+        ".hh",
+        ".hpp",
+        ".hxx",
+        ".mm",
+    } and prefix.startswith(("typedef", "using")):
         return None
     if (
-        suffix in {".c", ".cc", ".cpp", ".cxx", ".h", ".hpp", ".mm"}
+        suffix in {".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".mm"}
         and type_name is None
         and line.endswith(";")
         and not re.search(
@@ -645,9 +665,11 @@ def strip_leading_annotations(original: str, masked: str) -> tuple[str, str, lis
 
 def brace_language_outline(text: str, suffix: str) -> list[str]:
     original_lines = text.splitlines()
-    masked_lines = mask_c_style_source(text, suffix).splitlines()
-    outline: list[str] = []
-    seen: set[str] = set()
+    masked = mask_c_style_source(text, suffix)
+    if masked is None:
+        return []
+    masked_lines = masked.splitlines()
+    outline: dict[str, None] = {}
     type_stack: list[tuple[str, int]] = []
     function_depths: list[int] = []
     blocked_depths: list[int] = []
@@ -658,9 +680,7 @@ def brace_language_outline(text: str, suffix: str) -> list[str]:
 
     def add(value: str) -> None:
         decorated = f"{' '.join(pending_annotations[-2:])} {value}".strip()
-        if decorated not in seen:
-            seen.add(decorated)
-            outline.append(decorated)
+        outline[decorated] = None
 
     def next_lines_open_body(line_index: int) -> bool:
         inspected = 0
@@ -772,19 +792,13 @@ def brace_language_outline(text: str, suffix: str) -> list[str]:
             type_stack.pop()
         while blocked_depths and depth < blocked_depths[-1]:
             blocked_depths.pop()
-    return outline
+    return list(outline)
 
 
 def ruby_outline(text: str) -> list[str]:
-    outline: list[str] = []
-    seen: set[str] = set()
+    outline: dict[str, None] = {}
     type_stack: list[tuple[int, str]] = []
     function_indents: list[int] = []
-
-    def add(value: str) -> None:
-        if value not in seen:
-            seen.add(value)
-            outline.append(value)
 
     for raw_line in text.splitlines():
         stripped = raw_line.strip()
@@ -799,7 +813,7 @@ def ruby_outline(text: str) -> list[str]:
         type_match = re.match(r"^(class|module)\s+([A-Z]\w*(?:::[A-Z]\w*)*)", stripped)
         if type_match and not function_indents:
             kind, name = type_match.groups()
-            add(f"{kind} {name}")
+            outline[f"{kind} {name}"] = None
             type_stack.append((indent, name))
             continue
 
@@ -807,21 +821,15 @@ def ruby_outline(text: str) -> list[str]:
         if function_match and not function_indents:
             name = function_match.group(1)
             if type_stack:
-                add(f"method {type_stack[-1][1]}.{name}")
+                outline[f"method {type_stack[-1][1]}.{name}"] = None
             else:
-                add(f"function {name}")
+                outline[f"function {name}"] = None
             function_indents.append(indent)
-    return outline
+    return list(outline)
 
 
 def simple_language_outline(text: str, suffix: str) -> list[str]:
-    outline: list[str] = []
-    seen: set[str] = set()
-
-    def add(value: str) -> None:
-        if value not in seen:
-            seen.add(value)
-            outline.append(value)
+    outline: dict[str, None] = {}
 
     for raw_line in text.splitlines():
         line = compact_preview_line(raw_line)
@@ -831,69 +839,63 @@ def simple_language_outline(text: str, suffix: str) -> list[str]:
         if suffix == ".py":
             match = re.match(r"^(async\s+)?def\s+([A-Za-z_]\w*)\s*\(", line)
             if match:
-                add(f"{'async function' if match.group(1) else 'function'} {match.group(2)}")
+                outline[
+                    f"{'async function' if match.group(1) else 'function'} {match.group(2)}"
+                ] = None
                 continue
             match = re.match(r"^class\s+([A-Za-z_]\w*)", line)
             if match:
-                add(f"class {match.group(1)}")
-        elif suffix == ".rb":
-            match = re.match(r"^(class|module)\s+([A-Z]\w*(?:::[A-Z]\w*)*)", line)
-            if match:
-                add(f"{match.group(1)} {match.group(2)}")
-                continue
-            match = re.match(r"^def\s+(?:self\.)?([^\s(]+)", line)
-            if match:
-                add(f"function {match.group(1)}")
+                outline[f"class {match.group(1)}"] = None
         elif suffix in {".ex", ".exs"}:
             match = re.match(r"^defmodule\s+([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)", line)
             if match:
-                add(f"module {match.group(1)}")
+                outline[f"module {match.group(1)}"] = None
                 continue
             match = re.match(r"^(?:def|defp|defmacro)\s+([A-Za-z_]\w*[!?]?)", line)
             if match:
-                add(f"function {match.group(1)}")
+                outline[f"function {match.group(1)}"] = None
         elif suffix == ".clj":
             match = re.match(
                 r"^\((defn|defmacro|defprotocol|defrecord|deftype|defmulti|defmethod)\s+([^\s)]+)",
                 line,
             )
             if match:
-                add(f"{match.group(1)} {match.group(2)}")
+                outline[f"{match.group(1)} {match.group(2)}"] = None
         elif suffix == ".lua":
             match = re.match(r"^(?:local\s+)?function\s+([A-Za-z_]\w*(?:[.:][A-Za-z_]\w*)*)", line)
             if match:
-                add(f"function {match.group(1)}")
+                outline[f"function {match.group(1)}"] = None
         elif suffix == ".sh":
             match = re.match(r"^(?:function\s+)?([A-Za-z_]\w*)\s*\(\s*\)\s*\{?", line)
             if match:
-                add(f"function {match.group(1)}")
+                outline[f"function {match.group(1)}"] = None
         elif suffix == ".hs":
             match = re.match(r"^(data|newtype|type|class)\s+([A-Z]\w*)", line)
             if match:
-                add(f"{match.group(1)} {match.group(2)}")
+                outline[f"{match.group(1)} {match.group(2)}"] = None
                 continue
             match = re.match(r"^([a-z_]\w*)\s*::", line)
             if match:
-                add(f"function {match.group(1)}")
+                outline[f"function {match.group(1)}"] = None
         elif suffix == ".proto":
             match = re.match(r"^(message|service|enum)\s+([A-Za-z_]\w*)", line)
             if match:
-                add(f"{match.group(1)} {match.group(2)}")
+                outline[f"{match.group(1)} {match.group(2)}"] = None
                 continue
             match = re.match(r"^rpc\s+([A-Za-z_]\w*)\s*\(", line)
             if match:
-                add(f"rpc {match.group(1)}")
+                outline[f"rpc {match.group(1)}"] = None
         elif suffix == ".graphql":
             match = re.match(
                 r"^(type|interface|input|enum|union|scalar|directive)\s+([A-Za-z_]\w*)",
                 line,
             )
             if match:
-                add(f"{match.group(1)} {match.group(2)}")
+                outline[f"{match.group(1)} {match.group(2)}"] = None
                 continue
             match = re.match(r"^(query|mutation|subscription)\s+([A-Za-z_]\w*)", line)
             if match:
-                add(f"{match.group(1)} {match.group(2)}")
+                outline[f"{match.group(1)} {match.group(2)}"] = None
         elif suffix == ".sql":
             match = re.match(
                 r"^CREATE\s+(?:OR\s+REPLACE\s+)?(FUNCTION|PROCEDURE|TABLE|VIEW|TRIGGER)\s+"
@@ -902,22 +904,22 @@ def simple_language_outline(text: str, suffix: str) -> list[str]:
                 flags=re.IGNORECASE,
             )
             if match:
-                add(f"{match.group(1).lower()} {match.group(2)}")
+                outline[f"{match.group(1).lower()} {match.group(2)}"] = None
         elif suffix in {".yaml", ".yml"}:
             match = re.match(r"^([A-Za-z0-9_.-]+):(?:\s|$)", raw_line)
             if match:
-                add(f"key {match.group(1)}")
+                outline[f"key {match.group(1)}"] = None
         elif suffix in {".toml", ".cfg"}:
             match = re.match(r"^\[([^]]+)]$", line)
             if match:
-                add(f"section {match.group(1)}")
-    return outline
+                outline[f"section {match.group(1)}"] = None
+    return list(outline)
 
 
 def json_outline(text: str) -> list[str]:
     try:
         parsed = json.loads(text)
-    except (json.JSONDecodeError, RecursionError, MemoryError):
+    except (ValueError, RecursionError, MemoryError):
         return []
     if not isinstance(parsed, dict):
         return []
@@ -945,18 +947,17 @@ def structural_outline(path: Path, text: str) -> list[str]:
 
 
 def preview_for(
-    path: Path, preview_bytes: int, *, max_read_bytes: int | None = None
+    path: Path, preview_bytes: int, *, max_read_bytes: int = DEFAULT_PREVIEW_READ_BYTES
 ) -> tuple[str, bool]:
+    """Preview the first 64 KiB by default, including the binary-detection sample."""
+    if max_read_bytes <= 0:
+        raise ValueError("max_read_bytes must be positive")
     try:
         with path.open("rb") as source:
-            sample = source.read(4096)
+            sample = source.read(min(4096, max_read_bytes))
             if is_binary_sample(sample):
                 return "", True
-            remaining = (
-                source.read()
-                if max_read_bytes is None
-                else source.read(max(0, max_read_bytes - len(sample)))
-            )
+            remaining = source.read(max_read_bytes - len(sample))
             data = sample + remaining
     except OSError:
         return "", True
@@ -969,15 +970,15 @@ def preview_for_bytes(path: Path, data: bytes, preview_bytes: int) -> tuple[str,
     text = _decode_source(data)
     outline = structural_outline(path, text)
     preview_lines = select_preview_lines(outline or text.splitlines())
-    return fit_preview_lines(preview_lines, preview_bytes), False
+    try:
+        preview = fit_preview_lines(preview_lines, preview_bytes)
+    except UnicodeEncodeError:
+        preview = fit_preview_lines(select_preview_lines(text.splitlines()), preview_bytes)
+    return preview, False
 
 
-def main() -> None:
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Build structural or sampled previews for Codex Security rank inputs."
     )
     parser.parse_args()
-
-
-if __name__ == "__main__":
-    main()

@@ -9,7 +9,7 @@ from pathlib import Path
 # Some plugin hosts launch Python with safe-path isolation enabled.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import deep_scan_workbench as deep_scan
-import workbench_remediation as remediation
+from deep_scan_workbench import non_negative_int
 from workbench_constants import (
     DIFF_TARGET_KINDS,
     EXPORT_FORMATS,
@@ -21,6 +21,7 @@ from workbench_constants import (
     PHASE_PROGRESS_UNITS,
     PHASES,
     REMEDIATION_UPDATE_STATES,
+    positive_int,
 )
 
 
@@ -33,6 +34,9 @@ def add_user_context(parser: argparse.ArgumentParser, *, required: bool = False)
 def parse_args(description: str) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=description)
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    resolve_scan_root = subparsers.add_parser("resolve-scan-root")
+    resolve_scan_root.add_argument("--scan-root")
 
     create_workspace = subparsers.add_parser("create-workspace")
     create_workspace.add_argument("--workspace-id", required=True)
@@ -167,6 +171,10 @@ def parse_args(description: str) -> argparse.Namespace:
     get_scan_recipe = subparsers.add_parser("get-scan-recipe")
     get_scan_recipe.add_argument("--scan-id", required=True)
 
+    get_cli_scan_resume = subparsers.add_parser("get-cli-scan-resume")
+    get_cli_scan_resume.add_argument("--scan-id", required=True)
+    get_cli_scan_resume.add_argument("--allow-unavailable", action="store_true")
+
     compare_scans = subparsers.add_parser("compare-scans")
     compare_scans.add_argument("--before-scan-id", required=True)
     compare_scans.add_argument("--after-scan-id", required=True)
@@ -267,6 +275,16 @@ def parse_args(description: str) -> argparse.Namespace:
     write_scan_draft.add_argument("--expected-draft-digest")
     write_scan_draft.add_argument("--claim-token")
 
+    save_scan_artifact = subparsers.add_parser("save-scan-artifact")
+    save_scan_artifact.add_argument("--scan-id", required=True)
+    save_scan_artifact.add_argument("--artifact-path", required=True)
+    save_scan_artifact.add_argument("--claim-token")
+
+    for command in ("save-artifact", "read-artifact"):
+        artifact = subparsers.add_parser(command)
+        artifact.add_argument("--artifact-root", required=True)
+        artifact.add_argument("--artifact-path", required=True)
+
     mark_handoff_delivered = subparsers.add_parser("mark-handoff-delivered")
     mark_handoff_delivered.add_argument("--scan-id", required=True)
     mark_handoff_delivered.add_argument("--claim-token", required=True)
@@ -323,7 +341,10 @@ def parse_args(description: str) -> argparse.Namespace:
     release_finding_remediation_claim.add_argument("--request-id", required=True)
     release_finding_remediation_claim.add_argument("--action-token", required=True)
 
-    remediation.register_cancel_finding_remediation_request(subparsers)
+    cancel_remediation = subparsers.add_parser("cancel-finding-remediation-request")
+    cancel_remediation.add_argument("--occurrence-id", required=True)
+    cancel_remediation.add_argument("--request-id", required=True)
+    cancel_remediation.add_argument("--action-token", required=True)
 
     set_finding_remediation = subparsers.add_parser("set-finding-remediation")
     set_finding_remediation.add_argument("--occurrence-id", required=True)
@@ -341,7 +362,11 @@ def parse_args(description: str) -> argparse.Namespace:
 
     export_findings = subparsers.add_parser("export-findings")
     export_findings.add_argument("--scan-id", required=True)
-    export_findings.add_argument("--format", choices=EXPORT_FORMATS, required=True)
+    export_findings.add_argument(
+        "--artifact", choices=("findings", "threat-model"), default="findings"
+    )
+    export_findings.add_argument("--format", choices=(*EXPORT_FORMATS, "md"))
+    export_findings.add_argument("--validate-only", action="store_true")
 
     for command in (
         "inspect-linear-publication",
@@ -376,20 +401,6 @@ def parse_args(description: str) -> argparse.Namespace:
         index = arguments.index("--user-context-stdin")
         arguments[index] = "--user-context=" + sys.stdin.buffer.read().decode("utf-8")
     return parser.parse_args(arguments)
-
-
-def non_negative_int(value: str) -> int:
-    parsed = int(value)
-    if parsed < 0:
-        raise argparse.ArgumentTypeError("expected a non-negative integer")
-    return parsed
-
-
-def positive_int(value: str) -> int:
-    parsed = int(value)
-    if parsed < 1:
-        raise argparse.ArgumentTypeError("expected a positive integer")
-    return parsed
 
 
 if __name__ == "__main__":
