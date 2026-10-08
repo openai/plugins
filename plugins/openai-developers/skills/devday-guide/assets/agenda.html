@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>OpenAI DevDay [@@YEAR@@] · Your day</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #000;
+  --ink: #f5f5f3;
+  --muted: #a6a6a6;
+  --line: #303030;
+  --green: #00c763;
+  --violet: #b388ff;
+  font-family: var(--font-sans, Arial),Helvetica,sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 32px 40px 40px;
+}
+a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+a:hover {
+  color: var(--green);
+}
+button,select,input {
+  font: inherit;
+}
+button,select {
+  color: inherit;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 16px;
+  min-height: 44px;
+}
+button {
+  cursor: var(--cursor-interaction, pointer);
+}
+button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 4px;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 14px;
+}
+.wordmark {
+  font-weight: 600;
+  letter-spacing: -.4px;
+}
+header a {
+  color: var(--muted);
+}
+.eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 50px 0 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+h1 {
+  font-weight: 400;
+  letter-spacing: -.055em;
+  line-height: 1.03;
+  font-size: clamp(42px,7vw,86px);
+  margin: 0 0 38px;
+}
+h1 .green {
+  color: var(--green);
+}
+h1 .year {
+  color: var(--violet);
+}
+.heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 18px;
+}
+h2 {
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: -.5px;
+  margin: 0;
+}
+.date {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+.controls {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 20px 0;
+}
+.js .controls {
+  display: flex;
+}
+.filters {
+  display: flex;
+  gap: 7px;
+}
+.filters button {
+  border-color: transparent;
+  padding-inline: 16px;
+}
+.filters button[aria-pressed=true] {
+  border-color: var(--ink);
+}
+select {
+  max-width: 100%;
+  font-size: 14px;
+}
+.timezone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.timezone select {
+  color: var(--ink);
+}
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.event {
+  display: grid;
+  grid-template-columns: 210px minmax(0,1fr);
+  align-items: start;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+  padding: 24px 0;
+}
+.js .event {
+  grid-template-columns: 210px minmax(0,1fr) 44px;
+}
+.when {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+.when time {
+  display: block;
+}
+.start-only {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 3px;
+}
+h3 {
+  font-size: 21px;
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: -.3px;
+  margin: 0;
+}
+.activity p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 6px 0 0;
+  max-width: 48em;
+}
+.pick {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.js .pick {
+  display: flex;
+}
+.pick input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.pick span {
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1;
+}
+.pick:has(input:checked) {
+  color: #000;
+  background: var(--green);
+  border-color: var(--green);
+}
+.pick:has(input:checked) span {
+  font-size: 0;
+}
+.pick:has(input:checked) span:after {
+  content: "✓";
+  font-size: 20px;
+}
+.pick:has(input:focus-visible) {
+  outline: 2px solid var(--violet);
+  outline-offset: 4px;
+}
+.event:has(input:checked) h3 {
+  color: var(--green);
+}
+.note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 20px 0 0;
+  max-width: 760px;
+}
+.note:empty {
+  display: none;
+}
+.empty {
+  color: var(--muted);
+  padding: 28px 0;
+  line-height: 1.6;
+}
+.plan {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-top: 28px;
+}
+.js .plan {
+  display: flex;
+}
+.plan strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+.plan p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+.plan button {
+  background: var(--ink);
+  color: #000;
+  border: 0;
+  white-space: nowrap;
+}
+.plan-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.plan { flex-wrap: wrap; }
+#attach { background: var(--green); }
+#connection { margin-top: 12px; }
+footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+[hidden] {
+  display: none !important;
+}
+noscript p {
+  color: var(--muted);
+  font-size: 14px;
+}
+@media (max-width:650px) {
+  main {
+    padding: 24px 20px 28px;
+  }
+  .eyebrow {
+    margin-top: 38px;
+    display: block;
+    line-height: 1.6;
+  }
+  .eyebrow span {
+    display: block;
+  }
+  h1 {
+    font-size: clamp(38px,9vw,58px);
+    margin-bottom: 30px;
+  }
+  .heading {
+    display: block;
+  }
+  h2 {
+    font-size: 21px;
+  }
+  .event,.js .event {
+    grid-template-columns: 104px minmax(0,1fr) 40px;
+    gap: 12px;
+    padding: 22px 0;
+  }
+  .when {
+    font-size: 14px;
+  }
+  .when time {
+    max-width: 104px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  .activity p {
+    font-size: 13px;
+  }
+  .pick {
+    width: 40px;
+    height: 44px;
+  }
+  .controls {
+    gap: 14px;
+  }
+  .timezone {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .timezone select {
+    max-width: 70%;
+  }
+  .plan {
+    align-items: start;
+    gap: 12px;
+  }
+  .plan button {
+    font-size: 13px;
+    padding-inline: 14px;
+  }
+  header {
+    font-size: 13px;
+  }
+}
+@media (max-width:360px) {
+  main {
+    padding-inline: 16px;
+  }
+  .event,.js .event {
+    grid-template-columns: 84px minmax(0,1fr) 36px;
+    gap: 8px;
+  }
+  .pick {
+    width: 36px;
+  }
+  .plan {
+    display: block;
+  }
+  .js .plan {
+    display: block;
+  }
+  .plan button {
+    margin-top: 16px;
+  }
+}
+.wordmark {
+  white-space: nowrap;
+}
+.filters {
+  flex: none;
+}
+.filters button {
+  flex: none;
+  width: 120px;
+  white-space: nowrap;
+}
+.filters #mine {
+  width: 94px;
+}
+.when time span {
+  white-space: nowrap;
+}
+.pick {
+  justify-self: end;
+}
+@media (max-width:650px) {
+  .when time .time-end {
+    display: block;
+  }
+  .when time span {
+    white-space: normal;
+  }
+  .filters button {
+    width: 116px;
+  }
+  .filters #mine {
+    width: 90px;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  * {
+    scroll-behavior: auto;
+  }
+}
+</style>
+</head>
+<body>
+<main data-zone="@@ZONE@@" data-date="@@ISO_DATE@@">
+<header><span class="wordmark">OpenAI Developers</span><a href="@@SOURCE@@" target="_blank" rel="noopener noreferrer">Official event site ↗</a></header>
+<div class="eyebrow"><span>@@DATE@@</span><span>@@LOCATION@@</span></div>
+<h1>OpenAI <span class="green">DevDay</span> [<span class="year">@@YEAR@@</span>]</h1>
+<section aria-labelledby="agenda-title">
+<div class="heading"><h2 id="agenda-title">@@STATUS@@</h2><p class="date" id="zone-note">Times in @@ZONE_LABEL@@</p></div>
+<div class="controls"><div class="filters" role="group" aria-label="Show activities"><button type="button" id="all" aria-pressed="true">Full agenda</button><button type="button" id="mine" aria-pressed="false">My plan</button></div><label class="timezone">Timezone<select id="timezone"><option value="@@ZONE@@">@@ZONE_LABEL@@</option></select></label></div>
+<span id="pick-label" class="sr">Include in my plan:</span>
+<ol id="agenda">@@ROWS@@</ol>
+<p class="empty" id="empty" hidden>Your plan is empty. Choose activities from the full agenda.</p>
+<p class="note">@@NOTE@@</p>
+<noscript><p>The full agenda is shown above. Use a browser with JavaScript to choose activities or download a plan.</p></noscript>
+<div class="plan"><div><strong id="count" role="status" aria-live="polite">Choose what you want to attend</strong><p id="plan-help">Selections stay in this view. Download a copy to keep them.</p></div><div class="plan-actions"><button type="button" id="attach" hidden disabled>Use plan in chat</button><button type="button" id="download" disabled>Download plan ↓</button></div></div>
+<p id="connection" class="note" role="status" aria-live="polite" hidden></p>
+</section>
+<footer><span>Public program · Checked @@CHECKED@@</span><a href="@@SOURCE@@" id="source" target="_blank" rel="noopener noreferrer">Check the latest schedule ↗</a></footer>
+</main>
+<script>
+(() => {
+  const main = document.querySelector('main');
+  let rows = [...document.querySelectorAll('.event')];
+  const zone = document.querySelector('#timezone');
+  const all = document.querySelector('#all'), mine = document.querySelector('#mine');
+  const download = document.querySelector('#download');
+  let onlyMine = false;
+  const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const zoneName = value => value === 'America/Los_Angeles' ? 'Pacific Time' : value.split('/').pop().replaceAll('_', ' ');
+  if (localZone && localZone !== main.dataset.zone) zone.add(new Option(`Your time · ${zoneName(localZone)}`, localZone));
+  function update() {
+    let count = 0;
+    for (const row of rows) {
+      const chosen = row.querySelector('input').checked;
+      if (chosen) count++;
+      row.hidden = onlyMine && !chosen;
+    }
+    document.querySelector('#count').textContent = count ? `${count} ${count === 1 ? 'activity' : 'activities'} in your plan` : 'Choose what you want to attend';
+    document.querySelector('#empty').hidden = !onlyMine || count > 0;
+    download.disabled = count === 0;
+    all.setAttribute('aria-pressed', String(!onlyMine));
+    mine.setAttribute('aria-pressed', String(onlyMine));
+    document.dispatchEvent(new Event('devday:change'));
+  }
+  function changeZone() {
+    const fmt = new Intl.DateTimeFormat('en-US', {timeZone:zone.value, hour:'numeric', minute:'2-digit'});
+    const day = new Intl.DateTimeFormat('en-US', {timeZone:zone.value, month:'short', day:'numeric'});
+    for (const row of rows) {
+      const start = new Date(row.dataset.start), end = row.dataset.end ? new Date(row.dataset.end) : null;
+      const abroad = zone.value !== main.dataset.zone;
+      const label = date => `${abroad ? day.format(date) + ', ' : ''}${fmt.format(date)}`;
+      const startLabel = document.createElement('span'); startLabel.textContent = label(start);
+      const time = row.querySelector('time'); time.replaceChildren(startLabel);
+      if (end) { const endLabel = document.createElement('span'); endLabel.className = 'time-end'; endLabel.textContent = ' – ' + label(end); time.append(endLabel); }
+    }
+    document.querySelector('#zone-note').textContent = `Times in ${zoneName(zone.value)}`;
+  }
+  document.querySelector('#agenda').addEventListener('change', update);
+  all.addEventListener('click', () => { onlyMine = false; update(); });
+  mine.addEventListener('click', () => { onlyMine = true; update(); });
+  zone.addEventListener('change', () => { changeZone(); document.dispatchEvent(new Event('devday:change')); });
+  function planText() {
+    return [`OpenAI DevDay · ${main.dataset.date}`, `Times in ${zone.value}`, '', ...rows.filter(row => row.querySelector('input').checked).map(row => `${row.querySelector('time').textContent}${row.dataset.end ? '' : ' (start time)'} | ${row.querySelector('h3').textContent}`), '', 'Personal plan; no reservations made.', document.querySelector('footer span').textContent, document.querySelector('#source').href].join('\n');
+  }
+  download.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([planText()], {type:'text/plain;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = 'devday-plan.txt'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  // Shared by the offline renderer and the MCP App. Published text is always
+  // assigned through textContent, never interpreted as markup.
+  window.DevDayAgenda = {
+    planText,
+    getPlan: () => ({
+      date: main.dataset.date, timezone: zone.value, source_url: document.querySelector('#source').href,
+      events: rows.filter(row => row.querySelector('input').checked).map(row => ({
+        id: row.dataset.id, title: row.querySelector('h3').textContent,
+        start: row.dataset.start, end: row.dataset.end || null,
+      })),
+    }),
+    restore(plan) {
+      if (plan?.date !== main.dataset.date || plan?.source_url !== document.querySelector('#source').href || !Array.isArray(plan.events)) return;
+      const ids = new Set(plan.events.map(event => event.id));
+      for (const row of rows) row.querySelector('input').checked = ids.has(row.dataset.id);
+      if ([...zone.options].some(option => option.value === plan.timezone)) zone.value = plan.timezone;
+      changeZone(); update();
+    },
+    render(data) {
+      if (!data) return;
+      main.dataset.zone = data.timezone; main.dataset.date = data.date;
+      document.querySelector('.eyebrow span').textContent = new Intl.DateTimeFormat('en-US', {dateStyle:'full', timeZone:'UTC'}).format(new Date(data.date + 'T12:00:00Z'));
+      document.querySelector('.eyebrow span:last-child').textContent = data.location;
+      document.querySelector('.year').textContent = data.date.slice(0,4);
+      const today = new Intl.DateTimeFormat('en-CA', {timeZone:data.timezone, year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date());
+      document.querySelector('#agenda-title').textContent = today > data.date ? 'Past event · published agenda' : 'Your day at DevDay';
+      document.querySelector('.note').textContent = data.note || '';
+      document.querySelector('footer span').textContent = `Public program · Checked ${data.checked_on}`;
+      document.querySelectorAll('a').forEach(link => { link.href = data.source_url; });
+      zone.replaceChildren(new Option(zoneName(data.timezone), data.timezone));
+      if (localZone && localZone !== data.timezone) zone.add(new Option(`Your time · ${zoneName(localZone)}`, localZone));
+      rows = [...data.events].sort((a,b) => Date.parse(a.start) - Date.parse(b.start)).map((event,index) => {
+        const row = document.createElement('li'); row.className = 'event';
+        row.dataset.id = event.id; row.dataset.start = event.start; row.dataset.end = event.end || '';
+        const when = document.createElement('div'); when.className = 'when';
+        const time = document.createElement('time'); time.dateTime = event.start; when.append(time);
+        if (!event.end) { const label = document.createElement('span'); label.className = 'start-only'; label.textContent = 'Start time'; when.append(label); }
+        const activity = document.createElement('div'); activity.className = 'activity';
+        const title = document.createElement('h3'); title.id = `event-${index}`; title.textContent = event.title; activity.append(title);
+        if (event.detail) { const detail = document.createElement('p'); detail.textContent = event.detail; activity.append(detail); }
+        const pick = document.createElement('label'); pick.className = 'pick';
+        const input = document.createElement('input'); input.type = 'checkbox'; input.checked = event.selected === true;
+        input.setAttribute('aria-labelledby', `pick-label event-${index}`);
+        const plus = document.createElement('span'); plus.setAttribute('aria-hidden','true'); plus.textContent = '+';
+        pick.append(input,plus); row.append(when,activity,pick); return row;
+      });
+      document.querySelector('#agenda').replaceChildren(...rows);
+      onlyMine = false; changeZone(); update();
+    },
+  };
+  update();
+  document.documentElement.classList.add('js');
+})();
+</script>
+</body>
+</html>
