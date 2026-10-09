@@ -4,19 +4,18 @@ OpenAI Codex plugin for [HyperFrames](https://hyperframes.heygen.com) — an ope
 
 ## What's included
 
-Five skills for authoring and rendering video:
+Imported from `heygen-com/hyperframes` `0.7.25`:
 
-- **hyperframes** — composition authoring (HTML + CSS + GSAP), visual styles, palettes, house style, motion principles, transitions, captions, audio-reactive visuals
-- **hyperframes-cli** — `hyperframes init / lint / preview / render / transcribe / tts / doctor / browser`
-- **hyperframes-registry** — `hyperframes add` to install reusable blocks and components (social overlays, shader transitions, data viz, effects)
-- **gsap** — tweens, timelines, easing, stagger, performance
-- **website-to-hyperframes** — 7-step pipeline that captures a URL and produces a finished video
+- **hyperframes** - router and capability map for video, animation, and motion-graphics requests
+- **product-launch-video**, **website-to-video**, **faceless-explainer**, **pr-to-video**, **general-video** - end-to-end video creation workflows
+- **embedded-captions**, **talking-head-recut**, **motion-graphics**, **music-to-video**, **slideshow**, **remotion-to-hyperframes** - specialized production workflows
+- **hyperframes-core**, **hyperframes-animation**, **hyperframes-keyframes**, **hyperframes-creative**, **hyperframes-media**, **media-use**, **hyperframes-cli**, **hyperframes-registry** - domain skills for composition, animation, media, CLI usage, and registry components
 
 ## Requirements
 
 The skills invoke the `hyperframes` CLI via `npx hyperframes`, which needs:
 
-- Node.js ≥ 22
+- Node.js >= 22
 - FFmpeg on `PATH`
 
 See [hyperframes.heygen.com/quickstart](https://hyperframes.heygen.com/quickstart) for full setup.
