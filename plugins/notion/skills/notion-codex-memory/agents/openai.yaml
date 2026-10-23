@@ -1,0 +1,6 @@
+interface:
+  display_name: "Codex Memory"
+  short_description: "Mirror Codex memories into Notion Memories"
+  icon_small: "./assets/notion-small.svg"
+  icon_large: "./assets/notion.png"
+  default_prompt: "Sync my Codex memories to Notion."

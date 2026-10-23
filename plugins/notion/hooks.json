@@ -1,0 +1,29 @@
+{
+  "description": "Mirror Codex memories into Notion Memories after Codex updates them.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$PLUGIN_ROOT/scripts/codex-memory/main.ts\" hook session-start >/dev/null 2>&1 || true",
+            "timeout": 10,
+            "statusMessage": "Checking Codex memories for Notion"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$PLUGIN_ROOT/scripts/codex-memory/main.ts\" hook stop >/dev/null 2>&1 || true",
+            "timeout": 10,
+            "statusMessage": "Checking Codex memories for Notion"
+          }
+        ]
+      }
+    ]
+  }
+}
