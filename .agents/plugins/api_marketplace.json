@@ -664,6 +664,22 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "aws-core",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aws/agent-toolkit-for-aws.git",
+        "path": "plugins/aws-core"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "AWS Core"
+      }
     }
   ]
 }
