@@ -22,6 +22,7 @@ Use this matrix to test implicit activation and the key-flow handoff for
 - "Write a poem about New York City." (no API access required)
 - "Build a script that uses Claude to summarize files." (different provider)
 - "Build a Gemini-powered UI for image prompts." (different provider)
+- "Migrate this existing app to the latest OpenAI model and update its prompts." (`openai-docs`; source edits and offline validation do not require credentials)
 
 ## 2. Routing tests
 
