@@ -838,6 +838,18 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "ctxd",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ctxd"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
     }
   ]
 }
