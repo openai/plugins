@@ -1,0 +1,44 @@
+# Merge these fields into existing entries; do not duplicate TOML table headers.
+# Replace example names with stable names for the intended workspaces.
+# OAuth credentials belong to Codex's credential store, never this file.
+# Authenticate each connection, verify its workspace, then set enabled = true.
+
+[mcp_servers.slack-acme]
+url = "https://mcp.slack.com/mcp"
+enabled = false
+
+[mcp_servers.slack-acme.oauth]
+client_id = "11843774967.11905492103734"
+
+[mcp_servers.slack-acme.tools.slack_send_message]
+approval_mode = "prompt"
+[mcp_servers.slack-acme.tools.slack_schedule_message]
+approval_mode = "prompt"
+[mcp_servers.slack-acme.tools.slack_edit_message]
+approval_mode = "prompt"
+[mcp_servers.slack-acme.tools.slack_complete_file_upload]
+approval_mode = "prompt"
+[mcp_servers.slack-acme.tools.slack_send_message_draft]
+approval_mode = "approve"
+[mcp_servers.slack-acme.tools.slack_get_file_upload_url]
+approval_mode = "approve"
+
+[mcp_servers.slack-beta]
+url = "https://mcp.slack.com/mcp"
+enabled = false
+
+[mcp_servers.slack-beta.oauth]
+client_id = "11843774967.11905492103734"
+
+[mcp_servers.slack-beta.tools.slack_send_message]
+approval_mode = "prompt"
+[mcp_servers.slack-beta.tools.slack_schedule_message]
+approval_mode = "prompt"
+[mcp_servers.slack-beta.tools.slack_edit_message]
+approval_mode = "prompt"
+[mcp_servers.slack-beta.tools.slack_complete_file_upload]
+approval_mode = "prompt"
+[mcp_servers.slack-beta.tools.slack_send_message_draft]
+approval_mode = "approve"
+[mcp_servers.slack-beta.tools.slack_get_file_upload_url]
+approval_mode = "approve"

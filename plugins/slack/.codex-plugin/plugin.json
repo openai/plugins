@@ -42,5 +42,6 @@
   "license": "MIT",
   "name": "slack",
   "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
   "version": "0.1.7"
 }
