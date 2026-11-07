@@ -3,6 +3,8 @@ import path from "node:path";
 import { formatCommandPath, pathExists, relativePath } from "../lib/files.js";
 import { createWorkflowGuideNextAction } from "./presentation.js";
 import { resolveTarget } from "./target.js";
+import { normalizeDistribution, distributionFlag } from "./distribution.js";
+import { additionalContextFlags } from "./context-options.js";
 
 function shellQuote(value) {
   return `'${String(value).replaceAll("'", "'\\''")}'`;
@@ -324,10 +326,12 @@ function inferRecommendedGoal(status, explicitGoal) {
   return "evaluate";
 }
 
-function createEntry(goal, target, status) {
+function createEntry(goal, target, status, additionalContextPaths, distribution) {
   const commandTargetPath = formatCommandPath(target.path);
   const chatPrompt = chatPromptForGoal(goal, target);
-  const commands = commandsForGoal(goal, target, status);
+  const flags = additionalContextFlags(additionalContextPaths) + distributionFlag(distribution);
+  const commands = commandsForGoal(goal, target, status).map((command) =>
+    /^plugin-eval (analyze|measurement-plan|explain-budget) /.test(command) ? command + flags : command);
   return {
     id: goal,
     label: workflowLabel(goal, target),
@@ -335,11 +339,12 @@ function createEntry(goal, target, status) {
     summary: summaryForGoal(goal, target, status),
     firstCommand: commands[0],
     commands,
-    startCommand: `plugin-eval start ${commandTargetPath} --request ${shellQuote(chatPrompt)} --format markdown`,
+    startCommand: `plugin-eval start ${commandTargetPath} --request ${shellQuote(chatPrompt)} --format markdown${flags}`,
   };
 }
 
 export async function buildWorkflowGuide(targetPath, options = {}) {
+  const distribution = normalizeDistribution(options.distribution);
   const target = await resolveTarget(targetPath);
   const status = {
     hasBenchmarkConfig: await pathExists(benchmarkConfigPath(target)),
@@ -348,12 +353,12 @@ export async function buildWorkflowGuide(targetPath, options = {}) {
   const requestMatch = inferGoalFromRequest(options.request || "");
 
   const entries = [
-    createEntry("analysis", target, status),
-    createEntry("evaluate", target, status),
-    createEntry("budget", target, status),
-    createEntry("measure", target, status),
-    createEntry("benchmark", target, status),
-    createEntry("next", target, status),
+    createEntry("analysis", target, status, options.additionalContextPaths, distribution),
+    createEntry("evaluate", target, status, options.additionalContextPaths, distribution),
+    createEntry("budget", target, status, options.additionalContextPaths, distribution),
+    createEntry("measure", target, status, options.additionalContextPaths, distribution),
+    createEntry("benchmark", target, status, options.additionalContextPaths, distribution),
+    createEntry("next", target, status, options.additionalContextPaths, distribution),
   ];
 
   const requestedGoal = options.goal || requestMatch?.goal || null;
@@ -367,6 +372,7 @@ export async function buildWorkflowGuide(targetPath, options = {}) {
 
   const payload = {
     kind: "workflow-guide",
+    distribution,
     createdAt: new Date().toISOString(),
     target: {
       ...target,
@@ -385,7 +391,7 @@ export async function buildWorkflowGuide(targetPath, options = {}) {
       label: recommendedWorkflow.label,
       summary: recommendedWorkflow.summary,
       routingExplanation,
-      startCommand: `plugin-eval start ${commandTargetPath} --request ${shellQuote(routedRequest)} --format markdown`,
+      startCommand: `plugin-eval start ${commandTargetPath} --request ${shellQuote(routedRequest)} --format markdown${additionalContextFlags(options.additionalContextPaths)}${distributionFlag(distribution)}`,
       firstCommand: recommendedWorkflow.firstCommand,
       commands: recommendedWorkflow.commands,
     },

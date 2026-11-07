@@ -1,71 +1,9 @@
 import { createArtifact, createCheck, createMetric } from "../core/schema.js";
 import { readText, relativePath } from "../lib/files.js";
+import { measurePythonFunctions } from "../lib/code-measurements.js";
 
 function countMatches(text, expression) {
   return (text.match(expression) || []).length;
-}
-
-function countDecisionPoints(text) {
-  return (
-    countMatches(text, /\bif\b/g) +
-    countMatches(text, /\belif\b/g) +
-    countMatches(text, /\bfor\b/g) +
-    countMatches(text, /\bwhile\b/g) +
-    countMatches(text, /\bexcept\b/g) +
-    countMatches(text, /\band\b/g) +
-    countMatches(text, /\bor\b/g)
-  );
-}
-
-function detectFunctions(lines) {
-  const functions = [];
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    const match = /^(\s*)(?:async\s+def|def)\s+([A-Za-z0-9_]+)\s*\(([^)]*)\)\s*:/.exec(line);
-    if (!match) {
-      continue;
-    }
-
-    const indent = match[1].length;
-    let endIndex = index;
-    for (let cursor = index + 1; cursor < lines.length; cursor += 1) {
-      const cursorLine = lines[cursor];
-      const trimmed = cursorLine.trim();
-      if (!trimmed) {
-        continue;
-      }
-      const cursorIndent = cursorLine.length - cursorLine.trimStart().length;
-      if (cursorIndent <= indent && !trimmed.startsWith("#")) {
-        break;
-      }
-      endIndex = cursor;
-    }
-
-    const slice = lines.slice(index, endIndex + 1);
-    const source = slice.join("\n");
-    const maxIndent = slice.reduce((max, sliceLine) => {
-      if (!sliceLine.trim()) {
-        return max;
-      }
-      const currentIndent = sliceLine.length - sliceLine.trimStart().length;
-      return Math.max(max, currentIndent);
-    }, indent);
-    const params = match[3]
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean).length;
-
-    functions.push({
-      name: match[2],
-      startLine: index + 1,
-      endLine: endIndex + 1,
-      length: slice.length,
-      params,
-      complexity: 1 + countDecisionPoints(source),
-      nesting: Math.max(0, Math.round((maxIndent - indent) / 4)),
-    });
-  }
-  return functions;
 }
 
 export async function analyzePythonFiles(filePaths, rootPath) {
@@ -93,13 +31,12 @@ export async function analyzePythonFiles(filePaths, rootPath) {
   for (const filePath of filePaths) {
     const source = await readText(filePath);
     const lines = source.replace(/\r\n/g, "\n").split("\n");
-    const functions = detectFunctions(lines);
+    const functions = measurePythonFunctions(source.replace(/\r\n/g, "\n"));
     const commentLines = lines.filter((line) => line.trim().startsWith("#")).length;
     const longLines = lines.filter((line) => line.length > 120).length;
     const imports = lines.filter((line) => /^(\s*)(import|from)\b/.test(line)).length;
     const classes = countMatches(source, /^\s*class\s+[A-Za-z0-9_]+/gm);
-    const complexity = 1 + countDecisionPoints(source);
-    const fileMaxComplexity = functions.reduce((max, fn) => Math.max(max, fn.complexity), complexity);
+    const fileMaxComplexity = functions.reduce((max, fn) => Math.max(max, fn.complexity), 0);
     const fileMaxFunctionLength = functions.reduce((max, fn) => Math.max(max, fn.length), 0);
     const fileMaxNesting = functions.reduce((max, fn) => Math.max(max, fn.nesting), 0);
 
@@ -113,7 +50,7 @@ export async function analyzePythonFiles(filePaths, rootPath) {
     maxNesting = Math.max(maxNesting, fileMaxNesting);
     functionCount += functions.length;
     totalFunctionLength += functions.reduce((sum, fn) => sum + fn.length, 0);
-    if (/(^|\/)(tests?|__tests__)\/|(^|\/)test_[^/]+\.py$/.test(filePath)) {
+    if (/(^|\/)(tests?|__tests__)\/|(^|\/)test_[^/]+\.py$/.test(filePath.replace(/\\/g, "/"))) {
       testFileCount += 1;
     }
 

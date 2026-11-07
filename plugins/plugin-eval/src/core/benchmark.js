@@ -250,12 +250,14 @@ async function runProcessCapture({
   env,
   stdoutPath,
   stderrPath,
+  windowsVerbatimArguments = false,
 }) {
   const startedAt = Date.now();
   const child = spawn(command, args, {
     cwd,
     env,
     stdio: ["ignore", "pipe", "pipe"],
+    windowsVerbatimArguments,
   });
 
   const stdoutChunks = [];
@@ -381,10 +383,12 @@ async function runVerifierCommands({ commands, cwd, processRunner, basePath }) {
     const command = commands[index];
     const stdoutPath = path.join(basePath, `verifier-${index + 1}.stdout.log`);
     const stderrPath = path.join(basePath, `verifier-${index + 1}.stderr.log`);
+    const windows = process.platform === "win32";
     const outcome = await processRunner({
       kind: "verifier",
-      command: "/bin/zsh",
-      args: ["-lc", command],
+      command: windows ? (process.env.ComSpec || "cmd.exe") : (process.platform === "darwin" ? "/bin/zsh" : "/bin/sh"),
+      args: windows ? ["/d", "/s", "/c", `"${command}"`] : ["-c", command],
+      windowsVerbatimArguments: windows,
       cwd,
       env: process.env,
       stdoutPath,
@@ -403,6 +407,19 @@ async function runVerifierCommands({ commands, cwd, processRunner, basePath }) {
   }
 
   return results;
+}
+
+function resolveCodexCommand(options) {
+  const executable = options.codexExecutable || process.env.PLUGIN_EVAL_CODEX_EXECUTABLE || "codex";
+  const command = Array.isArray(executable) ? executable : [executable];
+  const extraArgs = options.codexExecutable === undefined && process.env.PLUGIN_EVAL_CODEX_ARGUMENTS
+    ? JSON.parse(process.env.PLUGIN_EVAL_CODEX_ARGUMENTS)
+    : [];
+  if (!Array.isArray(extraArgs) || !extraArgs.every((part) => typeof part === "string") ||
+      command.length === 0 || !command.every((part) => typeof part === "string") || !command[0]) {
+    throw new Error("Codex executable must be a command string or array of strings; PLUGIN_EVAL_CODEX_ARGUMENTS must be a JSON array of strings.");
+  }
+  return { command: command[0], args: [...command.slice(1), ...extraArgs] };
 }
 
 function summarizeRunScenarios(runScenarios) {
@@ -499,7 +516,7 @@ export async function runBenchmark(targetPath, options = {}) {
   }
 
   const processRunner = options.processRunner || runProcessCapture;
-  const codexExecutable = options.codexExecutable || process.env.PLUGIN_EVAL_CODEX_EXECUTABLE || "codex";
+  const codexCommand = resolveCodexCommand(options);
   const runId = createRunId();
   const runDirectory = path.join(benchmarkRunsDirectoryForTarget(target), runId);
   await fs.mkdir(runDirectory, { recursive: true });
@@ -508,8 +525,8 @@ export async function runBenchmark(targetPath, options = {}) {
   try {
     const versionResult = await processRunner({
       kind: "codex-version",
-      command: codexExecutable,
-      args: ["--version"],
+      command: codexCommand.command,
+      args: [...codexCommand.args, "--version"],
       cwd: process.cwd(),
       env: process.env,
       stdoutPath: path.join(runDirectory, "codex-version.stdout.log"),
@@ -548,8 +565,8 @@ export async function runBenchmark(targetPath, options = {}) {
 
     const codexRun = await processRunner({
       kind: "codex",
-      command: codexExecutable,
-      args,
+      command: codexCommand.command,
+      args: [...codexCommand.args, ...args],
       cwd: provisioned.workspacePath,
       env: {
         ...process.env,

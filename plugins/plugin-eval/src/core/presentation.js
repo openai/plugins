@@ -1,5 +1,7 @@
 import { formatCommandPath, relativePath } from "../lib/files.js";
 import { enrichSummary } from "./scoring.js";
+import { distributionFlag } from "./distribution.js";
+import { additionalContextFlags } from "./context-options.js";
 
 function shellQuote(value) {
   return `'${String(value).replaceAll("'", "'\\''")}'`;
@@ -25,8 +27,8 @@ function targetTypeLabel(target) {
   return "item";
 }
 
-function buildStartCommand(target, chatPrompt) {
-  return `plugin-eval start ${formatCommandPath(target.path)} --request ${shellQuote(chatPrompt)} --format markdown`;
+function buildStartCommand(target, chatPrompt, additionalContextPaths, distribution) {
+  return `plugin-eval start ${formatCommandPath(target.path)} --request ${shellQuote(chatPrompt)} --format markdown${additionalContextFlags(additionalContextPaths)}${distributionFlag(distribution)}`;
 }
 
 function hasStructuralFailures(result) {
@@ -53,7 +55,7 @@ export function createEvaluationNextAction(result) {
     return {
       label: "Fix structural issues first",
       why: "Failing manifest or skill structure issues reduce trust and can invalidate later measurements.",
-      command: buildStartCommand(result.target, "What should I fix first?"),
+      command: buildStartCommand(result.target, "What should I fix first?", result.additionalContextPaths, result.distribution),
       chatPrompt: "What should I fix first?",
     };
   }
@@ -62,7 +64,7 @@ export function createEvaluationNextAction(result) {
     return {
       label: "Measure real token usage next",
       why: "The static budget looks heavy, so live usage is the fastest way to confirm whether the cost is acceptable.",
-      command: buildStartCommand(result.target, `Measure the real token usage of this ${labelName}.`),
+      command: buildStartCommand(result.target, `Measure the real token usage of this ${labelName}.`, result.additionalContextPaths, result.distribution),
       chatPrompt: `Measure the real token usage of this ${labelName}.`,
     };
   }
@@ -71,7 +73,7 @@ export function createEvaluationNextAction(result) {
     return {
       label: "Review the measurement plan",
       why: "You already have observed usage, so the highest-value next step is deciding what to instrument or improve.",
-      command: buildStartCommand(result.target, "What should I run next?"),
+      command: buildStartCommand(result.target, "What should I run next?", result.additionalContextPaths, result.distribution),
       chatPrompt: "What should I run next?",
     };
   }
@@ -80,7 +82,7 @@ export function createEvaluationNextAction(result) {
     return {
       label: "Fix the top findings and rerun the report",
       why: "A short pass on the highest-value findings will improve trust, readability, and the signal quality of future benchmarks.",
-      command: buildStartCommand(result.target, "What should I fix first?"),
+      command: buildStartCommand(result.target, "What should I fix first?", result.additionalContextPaths, result.distribution),
       chatPrompt: "What should I fix first?",
     };
   }
@@ -88,7 +90,7 @@ export function createEvaluationNextAction(result) {
   return {
     label: "Choose the next workflow from chat",
     why: "The report is clean enough that the best next step depends on whether you want budgets, benchmarks, or comparisons.",
-    command: buildStartCommand(result.target, "What should I run next?"),
+    command: buildStartCommand(result.target, "What should I run next?", result.additionalContextPaths, result.distribution),
     chatPrompt: "What should I run next?",
   };
 }
@@ -120,7 +122,7 @@ export function createMeasurementPlanNextAction(plan) {
     why: toolset
       ? toolset.goal
       : "A small measurement pass will turn the current report into a more trustworthy workflow decision.",
-    command: buildStartCommand(plan.target, `What should I run next?`),
+    command: buildStartCommand(plan.target, `What should I run next?`, plan.additionalContextPaths, plan.distribution),
     chatPrompt: `What should I run next?`,
     ...(toolset ? { toolsetId: toolset.id } : {}),
     ...(toolset
@@ -140,7 +142,7 @@ export function createBudgetNextAction(payload) {
     return {
       label: "Validate the budget with real usage",
       why: "The estimate looks heavy enough that measured usage is worth collecting before you rewrite the skill or plugin.",
-      command: buildStartCommand(payload.target, `Measure the real token usage of this ${labelName}.`),
+      command: buildStartCommand(payload.target, `Measure the real token usage of this ${labelName}.`, payload.additionalContextPaths, payload.distribution),
       chatPrompt: `Measure the real token usage of this ${labelName}.`,
     };
   }
@@ -148,7 +150,7 @@ export function createBudgetNextAction(payload) {
   return {
     label: "Review the full evaluation",
     why: "The budget does not look alarming on its own, so the next useful step is the full structural and quality report.",
-    command: buildStartCommand(payload.target, `Evaluate this ${labelName}.`),
+    command: buildStartCommand(payload.target, `Evaluate this ${labelName}.`, payload.additionalContextPaths, payload.distribution),
     chatPrompt: `Evaluate this ${labelName}.`,
   };
 }
@@ -181,11 +183,11 @@ export function createBenchmarkRunNextAction(payload) {
 export function createComparisonNextAction(diff) {
   const chatPrompt = diff.newFailures.length > 0 ? "What should I fix first?" : "What should I run next?";
   return {
-    label: diff.newFailures.length > 0 ? "Address the new failures first" : "Continue from the improved baseline",
+    label: diff.newFailures.length > 0 ? "Address the new failures first" : "Review the comparison evidence",
     why: diff.newFailures.length > 0
       ? "New failures block trust in the comparison, even if the score improved elsewhere."
-      : "The comparison is trending in the right direction, so the next move is to keep the workflow tight and repeatable.",
-    command: buildStartCommand(diff.target, chatPrompt),
+      : "No new failing check IDs were found. Review method comparability and outcome evidence before claiming an improvement.",
+    command: buildStartCommand(diff.target, chatPrompt, diff.additionalContextPaths, diff.distribution),
     chatPrompt,
   };
 }

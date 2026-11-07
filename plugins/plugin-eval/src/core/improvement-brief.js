@@ -10,7 +10,7 @@ export function buildImprovementBrief(result) {
   return {
     title: `Improve ${result.target.name}`,
     target: result.target,
-    summary: `Raise the evaluation from grade ${result.summary.grade} (${result.summary.score}/100) with a focus on the highest-signal structural and budget issues first.`,
+    summary: `Review actionable static findings and collect outcome evidence. The heuristic index ${result.summary.score}/100 (${result.summary.grade}) is not a calibrated quality grade; budget estimates and evidence gaps are reported separately.`,
     goals: result.summary.topRecommendations,
     measurementGoals,
     requiredFixes: failingChecks.slice(0, 5).map((check) => ({
@@ -25,7 +25,7 @@ export function buildImprovementBrief(result) {
     })),
     suggestedPrompt: [
       `Use the skill-creator guidance to improve ${result.target.name}.`,
-      `Keep the structure compact and move bulky details into references or scripts.`,
+      `Preserve working behavior and use measured outcomes to justify changes; do not optimize solely for the static index.`,
       ...(measurementGoals.length > 0
         ? [`Define success measures with these toolsets: ${measurementGoals.join(", ")}.`]
         : []),

@@ -40,7 +40,7 @@ function renderBudgets(budgets) {
   const lines = [
     `- trigger_cost_tokens: ${budgets.trigger_cost_tokens.value} (${budgets.trigger_cost_tokens.band})`,
     `- invoke_cost_tokens: ${budgets.invoke_cost_tokens.value} (${budgets.invoke_cost_tokens.band})`,
-    `- deferred_cost_tokens: ${budgets.deferred_cost_tokens.value} (${budgets.deferred_cost_tokens.band})`,
+    `- deferred_cost_tokens (optional instruction inventory): ${budgets.deferred_cost_tokens.value} (${budgets.deferred_cost_tokens.band})`,
   ];
 
   if (budgets.explicit_only_invoke_cost_tokens) {
@@ -49,7 +49,10 @@ function renderBudgets(budgets) {
     );
   }
 
-  lines.push(`- total_tokens: ${budgets.total_tokens.value} (${budgets.total_tokens.band})`);
+  lines.push(`- total_tokens (static scenario estimate): ${budgets.total_tokens.value} (${budgets.total_tokens.band})`);
+  if (budgets.package_text_tokens) lines.push(`- Package text inventory: ${budgets.package_text_tokens.value} estimated tokens; not loaded context.`);
+  if (budgets.external_context) lines.push(`- External context coverage: ${budgets.external_context.coverage}; dependencies may be missing.`);
+  if (budgets.total_tokens.note) lines.push(`- Estimate limits: ${budgets.total_tokens.note}`);
 
   if (budgets.invocation_policy?.explicit_only_skill_count > 0) {
     lines.push(
@@ -76,6 +79,7 @@ function renderObservedUsage(observedUsage) {
       : []),
     ...(comparison
       ? [
+          ...(comparison.note ? [`- Comparison scope: ${comparison.note}`] : []),
           `- estimated_active_tokens: ${comparison.estimatedActiveTokens}`,
           `- estimate_vs_observed_input_delta: ${comparison.deltaTokens}`,
           `- estimate_vs_observed_input_ratio: ${comparison.deltaRatio} (${comparison.band})`,
@@ -257,12 +261,18 @@ function renderEvaluation(payload) {
     `# Plugin Eval Report: ${result.target.name}`,
     "",
     section("At a Glance", [
-      `- Score: ${result.summary.score}/100`,
-      `- Grade: ${result.summary.grade}`,
-      `- Risk: ${result.summary.riskLevel}`,
+      `- Static check index: ${result.summary.score}/100`,
+      `- Heuristic grade: ${result.summary.grade}`,
+      `- Operational static risk: ${result.summary.riskLevel}`,
+      `- Calibration: ${result.summary.assessment ? "not calibrated against real-world outcomes" : "legacy method; calibration unknown"}`,
       `- Checks: ${result.summary.checkCounts.fail} fail, ${result.summary.checkCounts.warn} warn, ${result.summary.checkCounts.info} info`,
-      `- Active budget: ${result.budgets.trigger_cost_tokens.value + result.budgets.invoke_cost_tokens.value} tokens (${result.budgets.invoke_cost_tokens.band})`,
+      `- Static instruction estimate: ${result.budgets.trigger_cost_tokens.value + result.budgets.invoke_cost_tokens.value} tokens (${result.budgets.invoke_cost_tokens.band})`,
       `- Observed usage: ${result.observedUsage?.sampleCount ? `${result.observedUsage.sampleCount} sample${result.observedUsage.sampleCount === 1 ? "" : "s"}` : "not supplied"}`,
+    ]),
+    "",
+    section("Assessment Areas", [
+      ...Object.values(result.summary.dimensions || {}).map((area) => `- ${area.label}: ${area.status}`),
+      ...(result.summary.assessment?.limitations || []).map((item) => `- ${item}`),
     ]),
     "",
     section("Why It Matters", result.summary.whyBullets.map((item) => `- ${item}`)),
@@ -600,8 +610,10 @@ function renderBenchmarkRun(payload) {
 
 function renderComparison(payload) {
   const diff = ensureComparisonPayload(payload);
+  const delta = diff.scoreComparable === false ? `not comparable. ${diff.comparisonNote}`
+    : `${diff.scoreDelta >= 0 ? "+" : ""}${diff.scoreDelta}`;
   const whyBullets = [
-    `- Score delta: ${diff.scoreDelta >= 0 ? "+" : ""}${diff.scoreDelta}.`,
+    `- Score delta: ${delta}.`,
     `- Grade moved from ${diff.gradeBefore} to ${diff.gradeAfter}.`,
     `- Risk moved from ${diff.riskBefore} to ${diff.riskAfter}.`,
   ];
@@ -617,10 +629,11 @@ function renderComparison(payload) {
     `# Plugin Eval Comparison: ${diff.target.name}`,
     "",
     section("At a Glance", [
-      `- Score delta: ${diff.scoreDelta >= 0 ? "+" : ""}${diff.scoreDelta}`,
+      `- Score delta: ${delta}`,
       `- Grade: ${diff.gradeBefore} -> ${diff.gradeAfter}`,
       `- Risk: ${diff.riskBefore} -> ${diff.riskAfter}`,
-      `- Budget delta (trigger/invoke/deferred): ${diff.budgetDelta.trigger_cost_tokens >= 0 ? "+" : ""}${diff.budgetDelta.trigger_cost_tokens} / ${diff.budgetDelta.invoke_cost_tokens >= 0 ? "+" : ""}${diff.budgetDelta.invoke_cost_tokens} / ${diff.budgetDelta.deferred_cost_tokens >= 0 ? "+" : ""}${diff.budgetDelta.deferred_cost_tokens}`,
+      diff.budgetComparable === false ? `- ${diff.budgetComparisonNote}`
+        : `- Budget delta (trigger/invoke/deferred): ${diff.budgetDelta.trigger_cost_tokens >= 0 ? "+" : ""}${diff.budgetDelta.trigger_cost_tokens} / ${diff.budgetDelta.invoke_cost_tokens >= 0 ? "+" : ""}${diff.budgetDelta.invoke_cost_tokens} / ${diff.budgetDelta.deferred_cost_tokens >= 0 ? "+" : ""}${diff.budgetDelta.deferred_cost_tokens}`,
     ]),
     "",
     section("Why It Matters", whyBullets),

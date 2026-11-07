@@ -7,6 +7,29 @@
 
 It helps engineers evaluate a local skill or plugin, understand why it scored that way, see what to fix first, explain token budgets, measure real usage, and decide what to do next without having to memorize a command sequence first.
 
+## Interpreting Results
+
+The numeric score and letter grade are a **static check index**, not a calibrated prediction of product quality, runtime correctness, security, or user outcomes. `summary.assessment` identifies method `static-check-heuristic-v2` and its limitations. The historical weights (error 14, warning 6; fail 1, warn 0.75) and grade thresholds remain heuristic. Informational findings, context estimates, and evidence gaps no longer deduct points.
+
+Reports separate four areas: operational correctness (static checks), maintainability, context efficiency (estimates), and evidence coverage. `riskLevel` depends on operational findings, never on package size or the aggregate score. `unknown` means the available checks did not establish operational risk; even `low` refers only to the checks performed. Test-file presence is evidence of files, not proof that tests passed. Missing coverage artifacts do not mean measured zero coverage.
+
+Token counts use a character-based approximation. Trigger metadata and invocation text form a static scenario estimate. `deferred_cost_tokens` inventories potential supporting instructions, while `package_text_tokens` inventories recognized package text including source and tests. Neither inventory establishes what entered model context. `total_tokens` now excludes both inventories; the output labels its basis and reports budget measurement version 2. Deferred and total bands are `unrated`; historical all-text thresholds cannot grade runtime efficiency.
+
+External dependencies and host context remain unknown. Include known additional instruction files explicitly, without copying or updating them:
+
+```bash
+plugin-eval analyze ./my-plugin --additional-context ./other-skill/SKILL.md --format markdown
+plugin-eval explain-budget ./my-plugin --additional-context ./other-skill/SKILL.md --format json
+```
+
+`--additional-context` is repeatable and supported by `analyze`, `explain-budget`, `measurement-plan`, and `start`. The API equivalent is `additionalContextPaths: [absoluteOrRelativePath]`. Selected readable instruction files are canonically deduplicated and attributed; missing or unsupported paths fail explicitly. No dependency is inferred from arbitrary instruction prose, and supplying some dependencies does not establish completeness. Reports and generated follow-up commands retain selected paths.
+
+Whole-session input telemetry includes conversation history, other instructions, and tool output. Its difference from a package-only estimate is descriptive, not evidence that the package caused excess cost. Use matched runs or attributed context traces for causal claims. Comparisons suppress score and budget deltas when method versions differ.
+
+Python and TypeScript complexity values are function-body lexical estimates, excluding comments, literal text, and nested-function decisions from enclosing bodies. They are not AST-based cyclomatic complexity. Python lambdas, JavaScript expression arrows, JSX, interpolation branches, and unusual language syntax can be unmeasured; use a language-native analyzer for definitive measurements. A value of zero means no supported function body was detected, not proof of zero program complexity.
+
+For embedded or test command hosts, `runBenchmark` accepts `codexExecutable: [executable, ...prefixArgs]` as well as the existing string form. CLI integrations can pair `PLUGIN_EVAL_CODEX_EXECUTABLE` with `PLUGIN_EVAL_CODEX_ARGUMENTS` (a JSON array of strings). Arguments are passed without shell interpolation. Verifier commands use the native Windows command host on Windows and a supported POSIX shell elsewhere.
+
 ## What This Plugin Contains
 
 - `scripts/plugin-eval.js`: the CLI entrypoint exposed as `plugin-eval`
@@ -86,6 +109,15 @@ plugin-eval start . --request "Help me benchmark this plugin." --format markdown
 - it highlights one recommended next step for skimming engineers
 
 ### Core Commands
+
+Plugin grading separates operational checks from public distribution requirements:
+
+```bash
+plugin-eval analyze <path> --distribution private-local --format markdown
+plugin-eval analyze <path> --distribution public --format markdown
+```
+
+Only explicit `public` scope grades missing website, privacy-policy, and terms-of-service URLs. Private local plugins receive no deductions for those fields. The default `unspecified` scope also leaves public listing metadata ungraded and records that scope in the result artifacts; it does not claim the plugin is private. A local source path, repository URL, or npm `private` flag does not establish distribution scope. Other manifest, path, skill, budget, and code checks remain active. `start` and `measurement-plan` accept the same option, and generated analysis commands preserve it.
 
 ```bash
 plugin-eval analyze <path> --format markdown

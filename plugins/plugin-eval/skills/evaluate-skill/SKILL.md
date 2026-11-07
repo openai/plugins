@@ -22,6 +22,8 @@ Use this skill when the target is a local skill directory or `SKILL.md` file.
 
 ## Skill-Specific Priorities
 
+Explain that grades summarize uncalibrated static checks. Report operational findings, maintainability, estimated context, and evidence coverage separately. Optional supporting text and package inventory are not loaded context; external dependencies remain unknown unless supplied explicitly with `--additional-context <file>`. Test discovery is not a test run, missing coverage is not measured zero, and session-wide token input cannot be attributed to a skill without matched evidence.
+
 - frontmatter validity
 - `name` and `description` quality
 - progressive disclosure and reference usage

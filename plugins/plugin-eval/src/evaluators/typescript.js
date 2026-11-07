@@ -1,72 +1,9 @@
 import { createArtifact, createCheck, createMetric } from "../core/schema.js";
 import { readText, relativePath } from "../lib/files.js";
+import { measureTypeScriptFunctions } from "../lib/code-measurements.js";
 
 function countMatches(text, expression) {
   return (text.match(expression) || []).length;
-}
-
-function countDecisionPoints(text) {
-  return (
-    countMatches(text, /\bif\b/g) +
-    countMatches(text, /\bfor\b/g) +
-    countMatches(text, /\bwhile\b/g) +
-    countMatches(text, /\bcase\b/g) +
-    countMatches(text, /\bcatch\b/g) +
-    countMatches(text, /&&/g) +
-    countMatches(text, /\|\|/g) +
-    countMatches(text, /\?/g)
-  );
-}
-
-function detectFunctions(lines) {
-  const functions = [];
-  const startMatchers = [
-    /\b(?:async\s+)?function\s+([A-Za-z0-9_$]+)\s*\(([^)]*)\)\s*\{/,
-    /\b(?:const|let|var)\s+([A-Za-z0-9_$]+)\s*=\s*(?:async\s*)?\(([^)]*)\)\s*=>\s*\{/,
-    /^\s*(?:public|private|protected|static|readonly|\s)*(?!if\b|for\b|while\b|switch\b|catch\b)([A-Za-z0-9_$]+)\s*\(([^)]*)\)\s*\{/,
-  ];
-
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    const match = startMatchers.map((matcher) => matcher.exec(line)).find(Boolean);
-    if (!match) {
-      continue;
-    }
-
-    let braceBalance = countMatches(line, /\{/g) - countMatches(line, /\}/g);
-    let endIndex = index;
-    while (braceBalance > 0 && endIndex + 1 < lines.length) {
-      endIndex += 1;
-      braceBalance += countMatches(lines[endIndex], /\{/g) - countMatches(lines[endIndex], /\}/g);
-    }
-
-    const slice = lines.slice(index, endIndex + 1);
-    const source = slice.join("\n");
-    const params = match[2]
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean).length;
-
-    let braceDepth = 0;
-    let maxDepth = 0;
-    for (const sliceLine of slice) {
-      braceDepth += countMatches(sliceLine, /\{/g);
-      maxDepth = Math.max(maxDepth, braceDepth);
-      braceDepth -= countMatches(sliceLine, /\}/g);
-    }
-
-    functions.push({
-      name: match[1],
-      startLine: index + 1,
-      endLine: endIndex + 1,
-      length: slice.length,
-      params,
-      complexity: 1 + countDecisionPoints(source),
-      nesting: Math.max(0, maxDepth - 1),
-    });
-  }
-
-  return functions;
 }
 
 export async function analyzeTypeScriptFiles(filePaths, rootPath) {
@@ -94,13 +31,12 @@ export async function analyzeTypeScriptFiles(filePaths, rootPath) {
   for (const filePath of filePaths) {
     const source = await readText(filePath);
     const lines = source.replace(/\r\n/g, "\n").split("\n");
-    const functions = detectFunctions(lines);
+    const functions = measureTypeScriptFunctions(source.replace(/\r\n/g, "\n"));
     const commentLines = lines.filter((line) => line.trim().startsWith("//") || line.trim().startsWith("*") || line.trim().startsWith("/*")).length;
     const longLines = lines.filter((line) => line.length > 120).length;
     const imports = lines.filter((line) => line.trim().startsWith("import ")).length;
     const classes = countMatches(source, /\bclass\s+[A-Za-z0-9_$]+/g);
-    const complexity = 1 + countDecisionPoints(source);
-    const fileMaxComplexity = functions.reduce((max, fn) => Math.max(max, fn.complexity), complexity);
+    const fileMaxComplexity = functions.reduce((max, fn) => Math.max(max, fn.complexity), 0);
     const fileMaxFunctionLength = functions.reduce((max, fn) => Math.max(max, fn.length), 0);
     const fileMaxNesting = functions.reduce((max, fn) => Math.max(max, fn.nesting), 0);
 
@@ -114,7 +50,7 @@ export async function analyzeTypeScriptFiles(filePaths, rootPath) {
     maxNesting = Math.max(maxNesting, fileMaxNesting);
     functionCount += functions.length;
     totalFunctionLength += functions.reduce((sum, fn) => sum + fn.length, 0);
-    if (/(^|\/)(tests?|__tests__)\/|(\.test|\.spec)\./.test(filePath)) {
+    if (/(^|\/)(tests?|__tests__)\/|(\.test|\.spec)\./.test(filePath.replace(/\\/g, "/"))) {
       testFileCount += 1;
     }
 

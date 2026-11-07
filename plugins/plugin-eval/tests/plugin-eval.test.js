@@ -3,8 +3,9 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { execFile } from "node:child_process";
-import test from "node:test";
+import test, { after, before } from "node:test";
 import { promisify } from "node:util";
+import { fileURLToPath } from "node:url";
 
 import { analyzePath, explainBudget } from "../src/core/analyze.js";
 import { initializeBenchmark, runBenchmark } from "../src/core/benchmark.js";
@@ -16,14 +17,35 @@ import { parseFrontmatter } from "../src/lib/frontmatter.js";
 import { formatCommandPath } from "../src/lib/files.js";
 import { renderPayload } from "../src/renderers/index.js";
 
-const execFileAsync = promisify(execFile);
-const repoRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const executeFile = promisify(execFile);
+const execFileAsync = (command, args, options) => executeFile(command, args, { timeout: 30_000, ...options });
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const fixturesRoot = path.join(repoRoot, "fixtures");
 const cliPath = path.join(repoRoot, "scripts", "plugin-eval.js");
 const nodeBin = process.execPath;
+const temporaryDirectories = [];
+let originalHome;
+
+before(async () => {
+  const home = await makeTempDir("plugin-eval-test-home");
+  originalHome = { HOME: process.env.HOME, USERPROFILE: process.env.USERPROFILE };
+  // Isolate this test process and its CLI children from the account's installed skill catalog and auth.
+  process.env.HOME = home;
+  process.env.USERPROFILE = home;
+});
+
+after(async () => {
+  for (const [key, value] of Object.entries(originalHome || {})) {
+    if (value === undefined) delete process.env[key];
+    else process.env[key] = value;
+  }
+  await Promise.all(temporaryDirectories.map((directory) => fs.rm(directory, { recursive: true, force: true })));
+});
 
 async function makeTempDir(prefix) {
-  return fs.mkdtemp(path.join(os.tmpdir(), `${prefix}-`));
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), `${prefix}-`));
+  temporaryDirectories.push(directory);
+  return directory;
 }
 
 async function writeSkillFixture(rootPath, { description, bodyLines }) {
@@ -112,48 +134,36 @@ async function copyDirectory(source, destination) {
 
 async function createFakeCodexExecutable(rootPath) {
   const binDir = path.join(rootPath, "bin");
-  const executablePath = path.join(binDir, "codex");
+  const executablePath = path.join(binDir, "fake codex.cjs");
   await fs.mkdir(binDir, { recursive: true });
   await fs.writeFile(
     executablePath,
-    `#!/bin/sh
-if [ "$1" = "--version" ]; then
-  echo "codex-cli fake-test"
-  exit 0
-fi
-
-if [ "$1" = "exec" ]; then
-  final=""
-  workspace=""
-  while [ "$#" -gt 0 ]; do
-    if [ "$1" = "--output-last-message" ]; then
-      shift
-      final="$1"
-    elif [ "$1" = "--cd" ]; then
-      shift
-      workspace="$1"
-    fi
-    shift
-  done
-
-  mkdir -p "$(dirname "$final")"
-  printf "Implemented benchmark fixture.\\n" > "$final"
-  printf 'export const generated = 1;\\n' > "$workspace/generated.ts"
-  printf 'import { generated } from "./generated";\\nexport default generated;\\n' > "$workspace/generated.test.ts"
-  printf '{"type":"thread.started","thread_id":"thread-test"}\\n'
-  printf '{"type":"tool.called","tool_name":"functions.exec_command"}\\n'
-  printf '{"type":"shell.command","command":"npm test"}\\n'
-  printf '{"type":"turn.completed","usage":{"input_tokens":120,"output_tokens":45,"total_tokens":165}}\\n'
-  exit 0
-fi
-
-echo "unsupported invocation" >&2
-exit 1
+    String.raw`const fs = require("node:fs");
+const path = require("node:path");
+const args = process.argv.slice(2);
+if (args[0] === "--version") {
+  console.log("codex-cli fake-test");
+} else if (args[0] === "exec") {
+  const final = args[args.indexOf("--output-last-message") + 1];
+  const workspace = args[args.indexOf("--cd") + 1];
+  fs.mkdirSync(path.dirname(final), { recursive: true });
+  fs.writeFileSync(final, "Implemented benchmark fixture.\n");
+  fs.writeFileSync(path.join(workspace, "generated.ts"), "export const generated = 1;\n");
+  fs.writeFileSync(path.join(workspace, "generated.test.ts"), 'import { generated } from "./generated";\nexport default generated;\n');
+  for (const event of [
+    { type: "thread.started", thread_id: "thread-test" },
+    { type: "tool.called", tool_name: "functions.exec_command" },
+    { type: "shell.command", command: "npm test" },
+    { type: "turn.completed", usage: { input_tokens: 120, output_tokens: 45, total_tokens: 165 } },
+  ]) console.log(JSON.stringify(event));
+} else {
+  console.error("unsupported invocation");
+  process.exitCode = 1;
+}
 `,
     "utf8",
   );
-  await fs.chmod(executablePath, 0o755);
-  return executablePath;
+  return [nodeBin, executablePath];
 }
 
 test("analyze minimal skill and render markdown/html", async () => {
@@ -465,7 +475,7 @@ test("benchmark run writes usage logs and generated-code analysis from a codex-c
   const skillPath = path.join(tempDir, "minimal-skill");
   await copyDirectory(sourcePath, skillPath);
 
-  await initializeBenchmark(skillPath);
+  await initializeBenchmark(skillPath, { sourcePath: skillPath });
   const payload = await runBenchmark(skillPath, {
     configPath: path.join(skillPath, ".plugin-eval", "benchmark.json"),
     processRunner: async ({ kind, args }) => {
@@ -527,7 +537,7 @@ test("benchmark run uses config-based approval policy syntax for codex exec", as
   const skillPath = path.join(tempDir, "minimal-skill");
   await copyDirectory(sourcePath, skillPath);
 
-  await initializeBenchmark(skillPath);
+  await initializeBenchmark(skillPath, { sourcePath: skillPath });
   const seenArgs = [];
 
   await runBenchmark(skillPath, {
@@ -717,7 +727,7 @@ test("CLI init-benchmark and benchmark commands work together with a fake codex 
   const sourcePath = path.join(fixturesRoot, "minimal-skill");
   const tempDir = await makeTempDir("plugin-eval-cli-benchmark");
   const skillPath = path.join(tempDir, "minimal-skill");
-  const fakeCodexPath = await createFakeCodexExecutable(tempDir);
+  const [fakeCodexExecutable, ...fakeCodexArgs] = await createFakeCodexExecutable(tempDir);
   const initPath = path.join(tempDir, "init.md");
   const runPath = path.join(tempDir, "run.md");
   await copyDirectory(sourcePath, skillPath);
@@ -741,6 +751,13 @@ test("CLI init-benchmark and benchmark commands work together with a fake codex 
   assert.match(await fs.readFile(initPath, "utf8"), /Benchmark Template Ready/);
   assert.match(await fs.readFile(initPath, "utf8"), /Use From Codex Chat/);
 
+  const configPath = path.join(skillPath, ".plugin-eval", "benchmark.json");
+  const config = JSON.parse(await fs.readFile(configPath, "utf8"));
+  config.workspace.sourcePath = skillPath;
+  // Execute real verifier subprocesses as well as the controlled Codex fixture.
+  config.verifiers.commands = [`"${nodeBin}" -e "process.exit(0)"`];
+  await fs.writeFile(configPath, JSON.stringify(config), "utf8");
+
   const run = await execFileAsync(
     nodeBin,
     [cliPath, "benchmark", skillPath, "--format", "markdown"],
@@ -748,8 +765,8 @@ test("CLI init-benchmark and benchmark commands work together with a fake codex 
       cwd: repoRoot,
       env: {
         ...process.env,
-        PATH: `${path.dirname(fakeCodexPath)}:${process.env.PATH}`,
-        PLUGIN_EVAL_CODEX_EXECUTABLE: fakeCodexPath,
+        PLUGIN_EVAL_CODEX_EXECUTABLE: fakeCodexExecutable,
+        PLUGIN_EVAL_CODEX_ARGUMENTS: JSON.stringify(fakeCodexArgs),
       },
     },
   );
@@ -758,6 +775,13 @@ test("CLI init-benchmark and benchmark commands work together with a fake codex 
   assert.match(await fs.readFile(runPath, "utf8"), /Recommended Next Step/);
   assert.match(await fs.readFile(runPath, "utf8"), /Scenarios/);
   assert.match(await fs.readFile(runPath, "utf8"), /Codex version: codex-cli fake-test/);
+
+  const runDirectories = await fs.readdir(path.join(skillPath, ".plugin-eval", "runs"));
+  const result = JSON.parse(await fs.readFile(path.join(skillPath, ".plugin-eval", "runs", runDirectories[0], "benchmark-run.json"), "utf8"));
+  assert.equal(result.summary.completedScenarios, 3);
+  assert.equal(result.summary.sampleCount, 3);
+  assert.equal(result.summary.verifierPassCount, 3);
+  assert.equal(result.summary.verifierFailCount, 0);
 });
 
 test("explainBudget returns a budget-only payload", async () => {
@@ -767,6 +791,31 @@ test("explainBudget returns a budget-only payload", async () => {
   assert.equal(payload.budgets.method, "estimated-static");
   assert.ok(payload.budgets.trigger_cost_tokens.value > 0);
   assert.ok(payload.workflowGuide);
+});
+
+test("benchmark executable arrays preserve arguments and failing verifier exit codes", async () => {
+  const tempDir = await makeTempDir("plugin-eval-verifier");
+  const skillPath = path.join(tempDir, "minimal-skill");
+  await copyDirectory(path.join(fixturesRoot, "minimal-skill"), skillPath);
+  const executable = await createFakeCodexExecutable(tempDir);
+  const initialized = await initializeBenchmark(skillPath, { sourcePath: skillPath });
+  const config = JSON.parse(await fs.readFile(initialized.configPath, "utf8"));
+  config.scenarios = config.scenarios.slice(0, 1);
+  config.workspace.preserve = "never";
+  config.verifiers.commands = [`"${nodeBin}" -e "process.exit(7)"`];
+  await fs.writeFile(initialized.configPath, JSON.stringify(config), "utf8");
+
+  const result = await runBenchmark(skillPath, { codexExecutable: executable });
+
+  assert.equal(result.codexVersion, "codex-cli fake-test");
+  assert.equal(result.summary.sampleCount, 1);
+  assert.equal(result.summary.completedScenarios, 0);
+  assert.equal(result.summary.failedScenarios, 1);
+  assert.equal(result.summary.verifierPassCount, 0);
+  assert.equal(result.summary.verifierFailCount, 1);
+  assert.equal(result.scenarios[0].verifierResults[0].exitCode, 7);
+  assert.equal(result.scenarios[0].status, "failed");
+  assert.equal(result.scenarios[0].workspacePath, null);
 });
 
 test("workflow guide routes natural chat requests into the beginner-friendly path", async () => {
