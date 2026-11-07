@@ -158,7 +158,7 @@ test("plugin registers the editable local destination confirmation MCP tool", ()
   assert.equal(responses[0].result.serverInfo.name, "OpenAI Developers MCP");
   assert.deepEqual(
     responses[1].result.tools.map((tool) => tool.name),
-    ["confirm_openai_api_key_local_destination"],
+    ["open_devday_agenda", "confirm_openai_api_key_local_destination"],
   );
 });
 
