@@ -1,7 +1,49 @@
 ---
 name: ncbi-entrez-skill
-description: Submit compact NCBI Entrez E-Utilities requests for PubMed, Gene, Protein, Nucleotide, PMC metadata, and GEO metadata workflows. Use when a user wants concise Entrez search, fetch, summary, or link results; save raw JSON or XML only on request.
+description: Submit compact NCBI Entrez E-Utilities requests for PubMed, Gene, Protein, Nucleotide, PMC metadata, and GEO metadata workflows. Use for concise Entrez search, fetch, summary, or link results and for bounded target-evidence research paired with ClinicalTrials.gov.
 ---
+
+## Target-evidence workflow
+When asked for target biology, prior programs, and safety, especially when this
+skill is paired with `clinicaltrials-skill`:
+
+1. Plan the complete cross-source retrieval before invoking either wrapper.
+2. Create these evidence slots for each target:
+   - human biology or pharmacodynamic target validation;
+   - normal adult-tissue expression or translational safety;
+   - the most mature positive clinical program;
+   - one negative, terminated, or inconclusive program with outcome evidence
+     when available;
+   - observed human safety;
+   - preclinical mechanism, efficacy, or safety.
+3. Run the bounded ClinicalTrials.gov search first and reuse its intervention
+   names and aliases in the PubMed clinical-program query.
+4. Run at most two PubMed `esearch` calls per target: one for biology,
+   expression, normal tissue, and preclinical safety; one for named clinical
+   programs, efficacy, pharmacodynamics, and observed safety.
+5. Prefer primary studies with outcomes. Exclude editorials and comments from
+   the clinical query when possible.
+6. Select at most six papers per target. Across all targets, fetch selected
+   PMIDs in one batched `efetch`; do not add `esummary` when `efetch` supplies
+   the needed citation metadata.
+7. Keep NCBI calls sequential. Use compact `retmax`, `max_items`, and
+   `max_depth` values and avoid returning full objects or large abstract sets.
+8. Stop when every available evidence slot is filled. State unavailable slots
+   explicitly instead of expanding into open-ended searches.
+
+For one target, budget one ClinicalTrials.gov wrapper call, two PubMed
+`esearch` calls, and one batched `efetch`. For multiple targets, add one
+registry call and two searches per target but keep one shared `efetch`. Do not
+rerun an identical request to change formatting or selected fields. If fuller
+local inspection is needed, set `save_raw=true` on the first call and inspect
+the saved response without calling the network wrapper again. Wrapper failure
+is the only exception.
+
+For PubMed XML fetches, pair `retmode=xml` with `response_format=xml`, set
+`save_raw=true`, and parse the saved XML in one local pass. Do not inspect
+wrapper source, probe Python environments, or use web search to re-verify
+PubMed results unless the documented invocation fails, records conflict, or
+the user explicitly requests current regulatory status.
 
 ## Operating rules
 - Use `scripts/ncbi_entrez.py` for all Entrez calls in this package.
