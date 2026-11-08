@@ -129,6 +129,17 @@ Explains what Airtable is and how data is structured — bases, tables, fields, 
 
 8 skill(s)
 
+### What is Boltz?
+
+**Boltz** ([boltz.bio](https://boltz.bio) / [boltz.com](https://boltz.com/api)) is an AI biomolecular modeling platform for drug discovery and computational biology. Through the **Boltz API** and `boltz-api` CLI, agents can:
+
+- **Predict** 3D structures and binding for proteins, RNA, DNA, and ligand complexes (models such as Boltz-2.1)
+- **Screen** existing small-molecule or protein/peptide/antibody libraries against a target
+- **Design** novel binders — small molecules, peptides, antibodies, nanobodies, or custom proteins
+- **Score ADME/ADMET** properties (solubility, permeability, lipophilicity/logD) for small molecules
+
+This plugin wires those workflows into coding agents: install/auth (`boltz-cli-setup`), run predictions/screens/designs, then recover job status and results (`boltz-check-status`). Typical use cases in the plugin include EGFR–drug binding prediction, nanobody design for a viral epitope, and selective kinase binder design from compound libraries.
+
 ### `boltz-check-status`
 
 Boltz job status and result recovery. Use when listing jobs, checking progress, resuming downloads, recovering results, or downloading an existing job ID. Not for starting new jobs.
