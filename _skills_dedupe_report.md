@@ -1,0 +1,174 @@
+# Skills dedupe report
+
+Mode: **APPLY**
+
+## Actions
+
+- [skills-cursor wins] remove agents copy of `automate` (also in C:\Users\Admin\.cursor\skills-cursor\automate)
+- MOVED C:\Users\Admin\.agents\skills\automate -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-automate
+- [skills-cursor wins] remove agents copy of `autopilot` (also in C:\Users\Admin\.cursor\skills-cursor\autopilot)
+- MOVED C:\Users\Admin\.agents\skills\autopilot -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-autopilot
+- [skills-cursor wins] remove agents copy of `canvas` (also in C:\Users\Admin\.cursor\skills-cursor\canvas)
+- MOVED C:\Users\Admin\.agents\skills\canvas -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-canvas
+- [skills-cursor wins] remove agents copy of `create-hook` (also in C:\Users\Admin\.cursor\skills-cursor\create-hook)
+- MOVED C:\Users\Admin\.agents\skills\create-hook -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-create-hook
+- [skills-cursor wins] remove agents copy of `create-rule` (also in C:\Users\Admin\.cursor\skills-cursor\create-rule)
+- MOVED C:\Users\Admin\.agents\skills\create-rule -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-create-rule
+- [skills-cursor wins] remove agents copy of `create-skill` (also in C:\Users\Admin\.cursor\skills-cursor\create-skill)
+- MOVED C:\Users\Admin\.agents\skills\create-skill -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-create-skill
+- [skills-cursor wins] remove agents copy of `create-subagent` (also in C:\Users\Admin\.cursor\skills-cursor\create-subagent)
+- MOVED C:\Users\Admin\.agents\skills\create-subagent -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-create-subagent
+- [skills-cursor wins] remove agents copy of `deploy-with-vercel` (also in C:\Users\Admin\.cursor\skills-cursor\deploy-with-vercel)
+- MOVED C:\Users\Admin\.agents\skills\deploy-with-vercel -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-deploy-with-vercel
+- [skills-cursor wins] remove agents copy of `goal` (also in C:\Users\Admin\.cursor\skills-cursor\goal)
+- MOVED C:\Users\Admin\.agents\skills\goal -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-goal
+- [skills-cursor wins] remove agents copy of `loop` (also in C:\Users\Admin\.cursor\skills-cursor\loop)
+- MOVED C:\Users\Admin\.agents\skills\loop -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-loop
+- [skills-cursor wins] remove agents copy of `migrate-to-skills` (also in C:\Users\Admin\.cursor\skills-cursor\migrate-to-skills)
+- MOVED C:\Users\Admin\.agents\skills\migrate-to-skills -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-migrate-to-skills
+- [skills-cursor wins] remove agents copy of `new-repo` (also in C:\Users\Admin\.cursor\skills-cursor\new-repo)
+- MOVED C:\Users\Admin\.agents\skills\new-repo -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-new-repo
+- [skills-cursor wins] remove agents copy of `onboard` (also in C:\Users\Admin\.cursor\skills-cursor\onboard)
+- MOVED C:\Users\Admin\.agents\skills\onboard -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-onboard
+- [skills-cursor wins] remove agents copy of `origin` (also in C:\Users\Admin\.cursor\skills-cursor\origin)
+- MOVED C:\Users\Admin\.agents\skills\origin -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-origin
+- [skills-cursor wins] remove agents copy of `rename-chat` (also in C:\Users\Admin\.cursor\skills-cursor\rename-chat)
+- MOVED C:\Users\Admin\.agents\skills\rename-chat -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-rename-chat
+- [skills-cursor wins] remove agents copy of `review` (also in C:\Users\Admin\.cursor\skills-cursor\review)
+- MOVED C:\Users\Admin\.agents\skills\review -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-review
+- [skills-cursor wins] remove agents copy of `review-bugbot` (also in C:\Users\Admin\.cursor\skills-cursor\review-bugbot)
+- MOVED C:\Users\Admin\.agents\skills\review-bugbot -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-review-bugbot
+- [skills-cursor wins] remove agents copy of `review-security` (also in C:\Users\Admin\.cursor\skills-cursor\review-security)
+- MOVED C:\Users\Admin\.agents\skills\review-security -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-review-security
+- [skills-cursor wins] remove agents copy of `sdk` (also in C:\Users\Admin\.cursor\skills-cursor\sdk)
+- MOVED C:\Users\Admin\.agents\skills\sdk -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-sdk
+- [skills-cursor wins] remove agents copy of `share` (also in C:\Users\Admin\.cursor\skills-cursor\share)
+- MOVED C:\Users\Admin\.agents\skills\share -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-share
+- [skills-cursor wins] remove agents copy of `shell` (also in C:\Users\Admin\.cursor\skills-cursor\shell)
+- MOVED C:\Users\Admin\.agents\skills\shell -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-shell
+- [skills-cursor wins] remove agents copy of `split-to-prs` (also in C:\Users\Admin\.cursor\skills-cursor\split-to-prs)
+- MOVED C:\Users\Admin\.agents\skills\split-to-prs -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-split-to-prs
+- [skills-cursor wins] remove agents copy of `statusline` (also in C:\Users\Admin\.cursor\skills-cursor\statusline)
+- MOVED C:\Users\Admin\.agents\skills\statusline -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-statusline
+- [skills-cursor wins] remove agents copy of `update-cli-config` (also in C:\Users\Admin\.cursor\skills-cursor\update-cli-config)
+- MOVED C:\Users\Admin\.agents\skills\update-cli-config -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-update-cli-config
+- [skills-cursor wins] remove agents copy of `update-cursor-settings` (also in C:\Users\Admin\.cursor\skills-cursor\update-cursor-settings)
+- MOVED C:\Users\Admin\.agents\skills\update-cursor-settings -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-update-cursor-settings
+- [skills-cursor wins] remove agents copy of `visualize` (also in C:\Users\Admin\.cursor\skills-cursor\visualize)
+- MOVED C:\Users\Admin\.agents\skills\visualize -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-visualize
+- [cursor/skills wins] remove agents copy of `plan-first` (also in C:\Users\Admin\.cursor\skills\plan-first)
+- MOVED C:\Users\Admin\.agents\skills\plan-first -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-plan-first
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `ax-motion-tiax-library`
+- MOVED C:\Users\Admin\.agents\skills\ax-motion-tiax-library -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-ax-motion-tiax-library
+- [claude canonical; differ; agents_desc=True claude_desc=True] remove agents `industrial-video-monitor-eval`
+- MOVED C:\Users\Admin\.agents\skills\industrial-video-monitor-eval -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-industrial-video-monitor-eval
+- [claude canonical; differ; agents_desc=True claude_desc=True] remove agents `nx2506-open-authoring`
+- MOVED C:\Users\Admin\.agents\skills\nx2506-open-authoring -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-nx2506-open-authoring
+- [claude canonical; differ; agents_desc=True claude_desc=True] remove agents `plc-hmi-handoff-cycle`
+- MOVED C:\Users\Admin\.agents\skills\plc-hmi-handoff-cycle -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-plc-hmi-handoff-cycle
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `plcsim-adv`
+- MOVED C:\Users\Admin\.agents\skills\plcsim-adv -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-plcsim-adv
+- [claude canonical; differ; agents_desc=True claude_desc=True] remove agents `siemens-customer-consult`
+- MOVED C:\Users\Admin\.agents\skills\siemens-customer-consult -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-siemens-customer-consult
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `small-hmi-screen-design`
+- MOVED C:\Users\Admin\.agents\skills\small-hmi-screen-design -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-small-hmi-screen-design
+- [claude canonical; differ; agents_desc=True claude_desc=True] remove agents `tia-openness`
+- MOVED C:\Users\Admin\.agents\skills\tia-openness -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-tia-openness
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `unified-elements-hmi`
+- MOVED C:\Users\Admin\.agents\skills\unified-elements-hmi -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-unified-elements-hmi
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `wincc-classic-openness`
+- MOVED C:\Users\Admin\.agents\skills\wincc-classic-openness -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-wincc-classic-openness
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `wincc-unified-export`
+- MOVED C:\Users\Admin\.agents\skills\wincc-unified-export -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-wincc-unified-export
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `wincc-unified-export-tool`
+- MOVED C:\Users\Admin\.agents\skills\wincc-unified-export-tool -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-wincc-unified-export-tool
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `wincc-unified-openness`
+- MOVED C:\Users\Admin\.agents\skills\wincc-unified-openness -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-wincc-unified-openness
+- [claude canonical; identical; agents_desc=True claude_desc=True] remove agents `wincc-unified-runtime`
+- MOVED C:\Users\Admin\.agents\skills\wincc-unified-runtime -> C:\Users\Admin\.agents\skills\.trash-dups\20261108-093143-wincc-unified-runtime
+- [plugin provides `brainstorming`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\superpowers\d884ae04edebef577e82ff7c4e143debd0bbec99\skills\brainstorming)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\brainstorming
+- [plugin provides `dispatching-parallel-agents`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\superpowers\d884ae04edebef577e82ff7c4e143debd0bbec99\skills\dispatching-parallel-agents)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\dispatching-parallel-agents
+- [plugin provides `executing-plans`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\superpowers\d884ae04edebef577e82ff7c4e143debd0bbec99\skills\executing-plans)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\executing-plans
+- [plugin provides `figma-code-connect`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-code-connect)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-code-connect
+- [plugin provides `figma-create-new-file`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-create-new-file)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-create-new-file
+- [plugin provides `figma-design-to-code`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-design-to-code)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-design-to-code
+- [plugin provides `figma-generate-design`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-generate-design)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-generate-design
+- [plugin provides `figma-generate-diagram`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-generate-diagram)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-generate-diagram
+- [plugin provides `figma-generate-library`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-generate-library)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-generate-library
+- [plugin provides `figma-implement-motion`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-implement-motion)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-implement-motion
+- [plugin provides `figma-use`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-use)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-use
+- [plugin provides `figma-use-motion`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-use-motion)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\figma-use-motion
+- [plugin provides `google-drive`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\google-drive\ae5650febf4320793844c12c4adaa937f417f8da\skills\google-drive)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\google-drive
+- [plugin provides `google-slides`] remove agents copy (plugin e.g. C:\Users\Admin\.cursor\plugins\cache\cursor-public\google-slides\ae5650febf4320793844c12c4adaa937f417f8da\skills\google-slides)
+- UNLINKED_JUNCTION C:\Users\Admin\.agents\skills\google-slides
+
+## Kept
+
+- keep C:\Users\Admin\.cursor\skills-cursor\automate
+- keep C:\Users\Admin\.cursor\skills-cursor\autopilot
+- keep C:\Users\Admin\.cursor\skills-cursor\canvas
+- keep C:\Users\Admin\.cursor\skills-cursor\create-hook
+- keep C:\Users\Admin\.cursor\skills-cursor\create-rule
+- keep C:\Users\Admin\.cursor\skills-cursor\create-skill
+- keep C:\Users\Admin\.cursor\skills-cursor\create-subagent
+- keep C:\Users\Admin\.cursor\skills-cursor\deploy-with-vercel
+- keep C:\Users\Admin\.cursor\skills-cursor\goal
+- keep C:\Users\Admin\.cursor\skills-cursor\loop
+- keep C:\Users\Admin\.cursor\skills-cursor\migrate-to-skills
+- keep C:\Users\Admin\.cursor\skills-cursor\new-repo
+- keep C:\Users\Admin\.cursor\skills-cursor\onboard
+- keep C:\Users\Admin\.cursor\skills-cursor\origin
+- keep C:\Users\Admin\.cursor\skills-cursor\rename-chat
+- keep C:\Users\Admin\.cursor\skills-cursor\review
+- keep C:\Users\Admin\.cursor\skills-cursor\review-bugbot
+- keep C:\Users\Admin\.cursor\skills-cursor\review-security
+- keep C:\Users\Admin\.cursor\skills-cursor\sdk
+- keep C:\Users\Admin\.cursor\skills-cursor\share
+- keep C:\Users\Admin\.cursor\skills-cursor\shell
+- keep C:\Users\Admin\.cursor\skills-cursor\split-to-prs
+- keep C:\Users\Admin\.cursor\skills-cursor\statusline
+- keep C:\Users\Admin\.cursor\skills-cursor\update-cli-config
+- keep C:\Users\Admin\.cursor\skills-cursor\update-cursor-settings
+- keep C:\Users\Admin\.cursor\skills-cursor\visualize
+- keep C:\Users\Admin\.cursor\skills\plan-first
+- keep C:\Users\Admin\.claude\skills\ax-motion-tiax-library
+- keep C:\Users\Admin\.claude\skills\industrial-video-monitor-eval
+- keep C:\Users\Admin\.claude\skills\nx2506-open-authoring
+- keep C:\Users\Admin\.claude\skills\plc-hmi-handoff-cycle
+- keep C:\Users\Admin\.claude\skills\plcsim-adv
+- keep C:\Users\Admin\.claude\skills\siemens-customer-consult
+- keep C:\Users\Admin\.claude\skills\small-hmi-screen-design
+- keep C:\Users\Admin\.claude\skills\tia-openness
+- keep C:\Users\Admin\.claude\skills\unified-elements-hmi
+- keep C:\Users\Admin\.claude\skills\wincc-classic-openness
+- keep C:\Users\Admin\.claude\skills\wincc-unified-export
+- keep C:\Users\Admin\.claude\skills\wincc-unified-export-tool
+- keep C:\Users\Admin\.claude\skills\wincc-unified-openness
+- keep C:\Users\Admin\.claude\skills\wincc-unified-runtime
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\superpowers\d884ae04edebef577e82ff7c4e143debd0bbec99\skills\brainstorming
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\superpowers\d884ae04edebef577e82ff7c4e143debd0bbec99\skills\dispatching-parallel-agents
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\superpowers\d884ae04edebef577e82ff7c4e143debd0bbec99\skills\executing-plans
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-code-connect
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-create-new-file
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-design-to-code
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-generate-design
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-generate-diagram
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-generate-library
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-implement-motion
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-use
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\figma\f0493295acf5f7cbdebcbcc483c06de814420cb1\skills-figquery\figma-use-motion
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\google-drive\ae5650febf4320793844c12c4adaa937f417f8da\skills\google-drive
+- keep plugin C:\Users\Admin\.cursor\plugins\cache\cursor-public\google-slides\ae5650febf4320793844c12c4adaa937f417f8da\skills\google-slides
