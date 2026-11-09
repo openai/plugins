@@ -838,6 +838,21 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "elevenlabs",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/elevenlabs/plugin.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "ElevenLabs"
+      }
     }
   ]
 }
