@@ -838,6 +838,23 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "dsh-plugin-harness-cli",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/gouqingping/dsh-plugin-harness-cli.git",
+        "sha": "91cf3883be589cc13d94f84c8732ca00b088b814",
+        "ref": "v0.1.5"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Harness CLI"
+      }
     }
   ]
 }
