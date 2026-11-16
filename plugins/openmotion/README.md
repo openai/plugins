@@ -62,7 +62,7 @@ chat. Installation does not authorize project creation, export or paid model cal
 The maintained source is [nexu-io/openmotion](https://github.com/nexu-io/openmotion).
 This directory mirrors the five creative workflows and their media support from
 `main` at commit
-[`4fdf2c32905d2e3cb2f579d16dfbcf6fdf010845`](https://github.com/nexu-io/openmotion/tree/4fdf2c32905d2e3cb2f579d16dfbcf6fdf010845).
+[`48e50be66682bd182c9e3e910c88e7742ee04b1c`](https://github.com/nexu-io/openmotion/tree/48e50be66682bd182c9e3e910c88e7742ee04b1c).
 All 51 files under `skills/` are byte-for-byte copies of that snapshot;
 [source.json](source.json) records their SHA-256 hashes. The directory-specific
 manifest and this README describe the skills-companion distribution.
