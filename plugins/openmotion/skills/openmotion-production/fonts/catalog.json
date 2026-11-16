@@ -1,0 +1,4078 @@
+{
+  "schemaVersion": 1,
+  "curation": "Editorial suitability and pairing tags are suggestions. File hashes, names, weights and sample coverage were measured from the pinned upstream binaries; no aesthetic improvement has been claimed.",
+  "fonts": [
+    {
+      "id": "notosanssc",
+      "family": "Noto Sans SC",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/notosanssc"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/notosanssc/OFL.txt",
+        "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+        "size": 4388
+      },
+      "files": [
+        {
+          "name": "NotoSansSC[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+          "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+          "size": 17772300,
+          "family": "Noto Sans SC",
+          "weight": "100 900",
+          "style": "normal",
+          "postscriptName": "NotoSansSC-Thin",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 100,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 30890,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "cyrillic",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "sans",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle",
+        "data"
+      ],
+      "moods": [
+        "neutral",
+        "clear",
+        "modern"
+      ],
+      "bestFor": [
+        "Chinese product films",
+        "explanations",
+        "subtitles"
+      ],
+      "limitations": [
+        "Neutral voice needs composition and hierarchy to carry identity.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "A dedicated Latin run only when the reference needs Inter rather than the family's own Latin.",
+          "when": "Chinese and Latin share a neutral sans direction and need an optical weight/scale match.",
+          "avoidWhen": "The existing family already handles the Latin well or the brand prescribes another face."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry titles and essential supporting copy in one family; establish hierarchy before adding a partner.",
+        "spacing": "Match Latin and Han weight optically; use stable subtitle line spacing.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "balanced sans proportions",
+          "open text forms",
+          "even strokes"
+        ],
+        "useWhen": [
+          "Neutral Chinese product copy, explanations and subtitles with an open brand role."
+        ],
+        "mismatchRisks": [
+          "A distinctive supplied calligraphic, serif or rounded display identity still takes priority."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Dense Han lines and light weights can lose separation when reduced."
+        ],
+        "adjustment": "Compare a real medium weight, line breaks and contrast at the phone display size."
+      }
+    },
+    {
+      "id": "notoserifsc",
+      "family": "Noto Serif SC",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/notoserifsc"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/notoserifsc/OFL.txt",
+        "sha256": "5e0da210fb04058a8c0087985d2d456b931c2579811a49655721d3cf0c36b6d6",
+        "size": 4350
+      },
+      "files": [
+        {
+          "name": "NotoSerifSC[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/notoserifsc/NotoSerifSC%5Bwght%5D.ttf",
+          "sha256": "050080d9255a86808f2945bffac582b31ef32bc36411ce29563b4961670c66f9",
+          "size": 25125512,
+          "family": "Noto Serif SC",
+          "weight": "200 900",
+          "style": "normal",
+          "postscriptName": "NotoSerifSC-ExtraLight",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 200,
+              "default": 200,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 30928,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "cyrillic",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "serif",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "visual-type"
+      ],
+      "moods": [
+        "editorial",
+        "literary",
+        "formal"
+      ],
+      "bestFor": [
+        "Chinese editorial",
+        "history",
+        "literary narration"
+      ],
+      "limitations": [
+        "Fine strokes need sufficient size and contrast during motion.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "ebgaramond",
+          "reason": "A classical Latin editorial run alongside Chinese serif text.",
+          "when": "Both scripts intentionally use classical modulated forms and their baseline/weight can be reconciled.",
+          "avoidWhen": "The brief calls for neutral sans text or the pair adds needless contrast/fragile small strokes."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Titles and body passages can share this family when their actual size and reading window work.",
+        "spacing": "Use a heavier real weight when small reversed text loses thin strokes.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "modulated strokes",
+          "serif construction",
+          "traditional editorial rhythm"
+        ],
+        "useWhen": [
+          "Editorial or restrained product copy where modulated strokes match the subject."
+        ],
+        "mismatchRisks": [
+          "A supplied monoline or rounded identity does not become compatible merely through an elegant mood tag."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Hairlines and small reversed text may weaken during reduction or motion."
+        ],
+        "adjustment": "Test real medium weights and the full phrase; enlarge or simplify the background before introducing another family."
+      }
+    },
+    {
+      "id": "lxgwwenkai",
+      "family": "LXGW WenKai",
+      "source": {
+        "repository": "https://github.com/lxgw/LxgwWenKai",
+        "commit": "d20c88d9ed1570a54ef09b46f37724712bbe0203",
+        "directory": "fonts/TTF"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/lxgw/LxgwWenKai/d20c88d9ed1570a54ef09b46f37724712bbe0203/OFL.txt",
+        "sha256": "1a25e35da1031c6c3436fde545bb9cb5aca954e9873afe510c834b8b79bd21a0",
+        "size": 5171
+      },
+      "files": [
+        {
+          "name": "LXGWWenKai-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/lxgw/LxgwWenKai/d20c88d9ed1570a54ef09b46f37724712bbe0203/fonts/TTF/LXGWWenKai-Regular.ttf",
+          "sha256": "2d73eea94ad808999d90c0000c239a84a33b09d4bc6ab6c5b8bbf1eda8a7fc8b",
+          "size": 25928940,
+          "family": "LXGW WenKai",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "LXGWWenKai-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 46926,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        },
+        {
+          "name": "LXGWWenKai-Medium.ttf",
+          "url": "https://raw.githubusercontent.com/lxgw/LxgwWenKai/d20c88d9ed1570a54ef09b46f37724712bbe0203/fonts/TTF/LXGWWenKai-Medium.ttf",
+          "sha256": "f4b8a34d1f838fe411540cb7c97b1c384ac9738a876c4104500bc42508b2312a",
+          "size": 25800076,
+          "family": "LXGW WenKai",
+          "weight": "500",
+          "style": "normal",
+          "postscriptName": "LXGWWenKai-Medium",
+          "axes": {},
+          "coverage": {
+            "codepoints": 46926,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin"
+      ],
+      "category": "handwritten",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "visual-type"
+      ],
+      "moods": [
+        "human",
+        "warm",
+        "informal"
+      ],
+      "bestFor": [
+        "Personal essays",
+        "human stories",
+        "readable handwritten notes"
+      ],
+      "limitations": [
+        "It is a contemporary handwriting voice, not authentic period calligraphy.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "caveat",
+          "reason": "A short Latin handwritten annotation beside Chinese handwritten notes.",
+          "when": "Both scripts need a handwritten voice and their looseness/scale work together.",
+          "avoidWhen": "Long captions need sustained reading or the task needs only one script/family."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can serve readable notes or body copy at adequate scale; a second family is optional.",
+        "spacing": "Keep Han text comfortably sized; avoid tight tracking that closes handwritten counters.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "handwritten construction",
+          "open counters",
+          "relaxed rhythm"
+        ],
+        "useWhen": [
+          "Personal notes, warm narration or an identity that explicitly uses handwriting."
+        ],
+        "mismatchRisks": [
+          "Informal handwriting changes a strict geometric or formal brand voice."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Small dense handwriting and long captions may become tiring on a phone."
+        ],
+        "adjustment": "Use shorter phrases and clear spacing; compare a reading-oriented face if sustained copy remains weak."
+      }
+    },
+    {
+      "id": "zcoolxiaowei",
+      "family": "ZCOOL XiaoWei",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/zcoolxiaowei"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/zcoolxiaowei/OFL.txt",
+        "sha256": "a094514ca57cf8f9c5e8d8d1adab5d8cd3a377297ff016f9df2c05b3ecd77f0a",
+        "size": 4400
+      },
+      "files": [
+        {
+          "name": "ZCOOLXiaoWei-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/zcoolxiaowei/ZCOOLXiaoWei-Regular.ttf",
+          "sha256": "a42b620140f493db42f741351dfbf343c0936d58588ee8004b8b2a218d997ff1",
+          "size": 6313808,
+          "family": "站酷小薇体",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ZCOOLXiaoWei-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7017,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin",
+        "menu"
+      ],
+      "category": "serif",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "expressive",
+        "cultural",
+        "display"
+      ],
+      "bestFor": [
+        "Chinese cultural titles",
+        "short editorial phrases"
+      ],
+      "limitations": [
+        "Single weight; subtitle paragraphs need a quieter partner.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "ebgaramond",
+          "reason": "A Latin editorial display counterpart, not automatic body text.",
+          "when": "The composition intentionally uses serif display in both scripts.",
+          "avoidWhen": "The Latin reading role needs a neutral voice or small high-contrast serif details weaken reading."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for intentional short display roles; hierarchy is not a requirement to add decorative labels.",
+        "spacing": "Keep short display phrases intact; verify strokes at the final viewing size.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "expressive serifs",
+          "compact forms",
+          "display rhythm"
+        ],
+        "useWhen": [
+          "Short cultural or editorial titles that benefit from a visibly shaped serif voice."
+        ],
+        "mismatchRisks": [
+          "Its display construction is a visible substitution for a neutral or prescribed text face."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Dense small Han copy can make the expressive shapes compete."
+        ],
+        "adjustment": "Keep the phrase short and inspect counters/strokes at phone size; let another treatment carry long explanations."
+      }
+    },
+    {
+      "id": "zcoolqingkehuangyou",
+      "family": "ZCOOL QingKe HuangYou",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/zcoolqingkehuangyou"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/zcoolqingkehuangyou/OFL.txt",
+        "sha256": "f1bce31b817dee01c1e4ef8bc45d8ecb95f01f4abbf0a985007cb3cd0fd8123d",
+        "size": 4419
+      },
+      "files": [
+        {
+          "name": "ZCOOLQingKeHuangYou-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/zcoolqingkehuangyou/ZCOOLQingKeHuangYou-Regular.ttf",
+          "sha256": "54f0c0df4308cd74cd0f2fd3494ae054dbc4a1fd6fa7d71f4807eb4cdd8b4136",
+          "size": 8328684,
+          "family": "ZCOOL QingKe HuangYou",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ZCOOLQingKeHuangYou-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 9430,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin",
+        "menu"
+      ],
+      "category": "display",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "data",
+        "visual-type"
+      ],
+      "moods": [
+        "condensed",
+        "mechanical",
+        "poster"
+      ],
+      "bestFor": [
+        "Industrial titles",
+        "compact warning labels",
+        "poster motion"
+      ],
+      "limitations": [
+        "Condensed forms can crowd long explanations; use sparingly for required reading.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "barlowcondensed",
+          "reason": "A Latin condensed display counterpart for bilingual titles.",
+          "when": "Both scripts intentionally use compact poster-like proportions.",
+          "avoidWhen": "The brand is broad/rounded or required small text becomes compressed."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Best assessed as a short title or large numeric/display role, not a default small data font.",
+        "spacing": "Let the narrow Han construction guide spacing; do not horizontally scale a body font.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "narrow Han proportions",
+          "rounded rectangular forms",
+          "even strokes"
+        ],
+        "useWhen": [
+          "Compact poster-like Chinese titles when narrow construction is part of the desired voice."
+        ],
+        "mismatchRisks": [
+          "Narrow forms can conflict with a supplied broad, soft or open identity even when both use rounded corners."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Narrow counters and small technical labels can merge when reduced."
+        ],
+        "adjustment": "Give required labels enough width and size; use a less condensed face when compression hurts reading."
+      }
+    },
+    {
+      "id": "mashanzheng",
+      "family": "Ma Shan Zheng",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/mashanzheng"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/mashanzheng/OFL.txt",
+        "sha256": "d7bdb1cee215b689e23c2f95672a6084c790542170648267a55114103d756a08",
+        "size": 4397
+      },
+      "files": [
+        {
+          "name": "MaShanZheng-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/mashanzheng/MaShanZheng-Regular.ttf",
+          "sha256": "6d2546bb189c732a8ca29af9e22457b152387d158aa459e4ac2ce1e51788b7fb",
+          "size": 5857936,
+          "family": "Ma Shan Zheng",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "MaShanZheng-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7016,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin",
+        "menu"
+      ],
+      "category": "brush",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "calligraphic",
+        "energetic",
+        "cultural"
+      ],
+      "bestFor": [
+        "Brush-lettered titles",
+        "cultural campaigns",
+        "short expressive words"
+      ],
+      "limitations": [
+        "Single weight and brush detail make small dense subtitles unsuitable.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Clear Chinese supporting information beside a brush title.",
+          "when": "The title needs calligraphy while factual copy needs a calmer readable role.",
+          "avoidWhen": "One short brush title is the only text or the brand prescribes different supporting typography."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Treat it as a deliberate short display performer; essential messages still need a readable settled state.",
+        "spacing": "Inspect real words as a whole brush composition; pair with neutral subtitles.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "brush construction",
+          "strong stroke variation",
+          "calligraphic gesture"
+        ],
+        "useWhen": [
+          "Short brush-led titles where the gesture belongs to the film or brand."
+        ],
+        "mismatchRisks": [
+          "Brush energy is a strong identity change for restrained monoline branding."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Fine brush strokes and complex characters are vulnerable in small or moving copy."
+        ],
+        "adjustment": "Inspect the exact title at its settled phone size; use an appropriate reading face for long information."
+      }
+    },
+    {
+      "id": "zcoolkuaile",
+      "family": "ZCOOL KuaiLe",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/zcoolkuaile"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/zcoolkuaile/OFL.txt",
+        "sha256": "538078469839b4a2e7ad22bef4ebe41681a4e53749bb2a072144024f1d6d703d",
+        "size": 4398
+      },
+      "files": [
+        {
+          "name": "ZCOOLKuaiLe-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/zcoolkuaile/ZCOOLKuaiLe-Regular.ttf",
+          "sha256": "812a6fc1fe54b6d73a419245c32dfeba8aa33104d5be90d1cf6af082007cb71d",
+          "size": 1514968,
+          "family": "ZCOOL KuaiLe",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ZCOOLKuaiLe-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7054,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin",
+        "menu"
+      ],
+      "category": "display",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "playful",
+        "rounded",
+        "friendly"
+      ],
+      "bestFor": [
+        "Playful explainers",
+        "family content",
+        "informal announcements"
+      ],
+      "limitations": [
+        "Playfulness can undermine serious technical or solemn material.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "Neutral Latin supporting copy beside a playful Chinese title.",
+          "when": "The reference permits a playful display/neutral reading contrast.",
+          "avoidWhen": "The brand requires a consistent rounded text system or the second family serves no language/role need."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use playful short titles; supporting copy need not copy the display weight.",
+        "spacing": "Preserve open spacing and distinguish display from necessary explanations.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "chunky rounded forms",
+          "playful construction",
+          "irregular display rhythm"
+        ],
+        "useWhen": [
+          "Friendly or playful titles when chunky forms match the actual identity."
+        ],
+        "mismatchRisks": [
+          "Rounded alone does not make it a substitute for any rounded brand; compare width, weight and rhythm."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Heavy shapes can close small counters and crowd long lines."
+        ],
+        "adjustment": "Use short phrases with space around them and inspect actual Han characters after reduction."
+      }
+    },
+    {
+      "id": "longcang",
+      "family": "Long Cang",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/longcang"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/longcang/OFL.txt",
+        "sha256": "603546b7219a94bb59bf8294458194a5010119486354092b66a09a3fd61aeacc",
+        "size": 4390
+      },
+      "files": [
+        {
+          "name": "LongCang-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/longcang/LongCang-Regular.ttf",
+          "sha256": "e5bf2c3f24ef2327c6f136d8f73e2f9dfdf44896fdbeb35a9515f44777bb91bc",
+          "size": 5162508,
+          "family": "Long Cang",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "LongCang-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7016,
+            "sample": "春日山河，初号机觉醒。OpenMotion 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin",
+        "menu"
+      ],
+      "category": "handwritten",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "casual",
+        "sketched",
+        "personal"
+      ],
+      "bestFor": [
+        "Notebook passages",
+        "informal handwritten overlays"
+      ],
+      "limitations": [
+        "Loose strokes need scale; long subtitles should use a readable supporting face.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "caveat",
+          "reason": "A short Latin handwritten annotation matching the informal role.",
+          "when": "A multilingual note-like layer is intentional and the two gestures do not compete.",
+          "avoidWhen": "Required prose needs sustained reading or the mix weakens the established identity."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use as a purposeful annotation/display layer, not a default subtitle face.",
+        "spacing": "Use genuine handwritten texture with restrained size changes, then check readability in motion.",
+        "locale": "Curated for Simplified Chinese. Do not infer Japanese/Traditional regional glyph fidelity from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "loose handwriting",
+          "connected gesture",
+          "irregular rhythm"
+        ],
+        "useWhen": [
+          "Brief handwritten annotations or personal expressive overlays."
+        ],
+        "mismatchRisks": [
+          "Casual handwriting changes a precise or highly structured identity."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Small uneven strokes and longer phrases can lose word separation."
+        ],
+        "adjustment": "Keep annotations brief and check their reading window; move essential explanations to a clearer treatment."
+      }
+    },
+    {
+      "id": "inter",
+      "family": "Inter",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/inter"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/inter/OFL.txt",
+        "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+        "size": 4377
+      },
+      "files": [
+        {
+          "name": "Inter[opsz,wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+          "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+          "size": 876576,
+          "family": "Inter",
+          "weight": "100 900",
+          "style": "normal",
+          "postscriptName": "Inter-Regular",
+          "axes": {
+            "opsz": {
+              "name": "Optical size",
+              "min": 14,
+              "default": 14,
+              "max": 32
+            },
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 400,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 2849,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "greek",
+        "greek-ext",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "sans",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle",
+        "data"
+      ],
+      "moods": [
+        "neutral",
+        "functional",
+        "contemporary"
+      ],
+      "bestFor": [
+        "Product interfaces",
+        "clear explanations",
+        "restrained brands"
+      ],
+      "limitations": [
+        "A familiar face needs subject-specific content and deliberate hierarchy.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Chinese reading support for mixed-script neutral product text.",
+          "when": "Simplified Chinese is needed and its visual weight/baseline matches the Latin.",
+          "avoidWhen": "The copy is Latin-only or an established Chinese brand face is available."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can cover the whole title/body/label system; a second family needs a distinct useful role.",
+        "spacing": "Use real weight contrast; one family can cover the film without a decorative second face.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "neutral neo-grotesque",
+          "open counters",
+          "balanced proportions"
+        ],
+        "useWhen": [
+          "Clear product text or a brief explicitly asking for a neo-grotesque sans."
+        ],
+        "mismatchRisks": [
+          "A familiar neutral face still differs from a supplied rounded, condensed or serif brand."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Small support copy can be unreadable despite the family being readable at larger sizes."
+        ],
+        "adjustment": "Check required labels, tagline and URL at phone size; preserve their legibility while tuning hierarchy."
+      }
+    },
+    {
+      "id": "ibmplexsans",
+      "family": "IBM Plex Sans",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/ibmplexsans"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/ibmplexsans/OFL.txt",
+        "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "size": 4456
+      },
+      "files": [
+        {
+          "name": "IBMPlexSans[wdth,wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/ibmplexsans/IBMPlexSans%5Bwdth%2Cwght%5D.ttf",
+          "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
+          "size": 537244,
+          "family": "IBM Plex Sans",
+          "weight": "100 700",
+          "style": "normal",
+          "postscriptName": "IBMPlexSans-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 400,
+              "max": 700
+            },
+            "wdth": {
+              "name": "Width",
+              "min": 75,
+              "default": 100,
+              "max": 100
+            }
+          },
+          "coverage": {
+            "codepoints": 892,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "greek",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "sans",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle",
+        "data"
+      ],
+      "moods": [
+        "humanist",
+        "technical",
+        "precise"
+      ],
+      "bestFor": [
+        "Engineering stories",
+        "educational text",
+        "product explanations"
+      ],
+      "limitations": [
+        "Its technical character is a direction, not evidence of a brand association.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Chinese explanations alongside Latin technical text.",
+          "when": "A neutral Chinese reading role is needed and cross-script scale is inspected.",
+          "avoidWhen": "The brief prescribes another Chinese identity or this adds an unnecessary family."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry both technical titles and sustained supporting text where the brand voice permits.",
+        "spacing": "Keep labels readable and reserve contrast for the actual hierarchy.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "humanist sans forms",
+          "technical character",
+          "open reading rhythm"
+        ],
+        "useWhen": [
+          "Technical explanations with a humanist reading voice."
+        ],
+        "mismatchRisks": [
+          "Its particular forms are not a neutral replacement for every geometric brand."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Tight technical abbreviations and tiny annotation text can become dense."
+        ],
+        "adjustment": "Inspect the longest labels and numerals at display size; adjust width, weight and line breaks together."
+      }
+    },
+    {
+      "id": "barlowcondensed",
+      "family": "Barlow Condensed",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/barlowcondensed"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/barlowcondensed/OFL.txt",
+        "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+        "size": 4377
+      },
+      "files": [
+        {
+          "name": "BarlowCondensed-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/barlowcondensed/BarlowCondensed-Regular.ttf",
+          "sha256": "583cec5da3b84bc4dc7c9c72e2a565c94d34e431518b19d7e250b7830ad5f996",
+          "size": 102480,
+          "family": "Barlow Condensed",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "BarlowCondensed-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 526,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        },
+        {
+          "name": "BarlowCondensed-Bold.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/barlowcondensed/BarlowCondensed-Bold.ttf",
+          "sha256": "e476562ec9c1e16cf16475895b511f08c804f438cc9a9f80a44ea50a0eeb5b65",
+          "size": 109912,
+          "family": "Barlow Condensed",
+          "weight": "700",
+          "style": "normal",
+          "postscriptName": "BarlowCondensed-Bold",
+          "axes": {},
+          "coverage": {
+            "codepoints": 526,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "condensed",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "data",
+        "visual-type"
+      ],
+      "moods": [
+        "industrial",
+        "urgent",
+        "compact"
+      ],
+      "bestFor": [
+        "Warnings",
+        "motorsport",
+        "industrial and mecha titles"
+      ],
+      "limitations": [
+        "Condensed Latin is poor for long, small subtitle lines.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "zcoolqingkehuangyou",
+          "reason": "Chinese condensed title support, not a general reading partner.",
+          "when": "A bilingual compact-title direction is explicit and survives phone-scale review.",
+          "avoidWhen": "The brand favors broad soft forms or either title becomes cramped."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for short titles or large values; additional text may use the same family only when actually readable.",
+        "spacing": "Match the apparent height to Han text; use an explicit narrow face instead of stretching.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "narrow proportions",
+          "straightforward sans construction",
+          "compact rhythm"
+        ],
+        "useWhen": [
+          "Short compact titles when narrow proportions support the selected identity."
+        ],
+        "mismatchRisks": [
+          "A broad rounded identity can lose its character through condensation; saving space alone is insufficient reason."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Narrow counters, small labels and long condensed sentences can weaken phone reading."
+        ],
+        "adjustment": "Compare at equal perceived size with the brand/reference; use an open reading face or reflow before shrinking."
+      }
+    },
+    {
+      "id": "archivoblack",
+      "family": "Archivo Black",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/archivoblack"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/archivoblack/OFL.txt",
+        "sha256": "3173acd82f8c6159b5b1037b539fcbd4edff68e65c2ea8b9412b5a5ca97b08ff",
+        "size": 4492
+      },
+      "files": [
+        {
+          "name": "ArchivoBlack-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/archivoblack/ArchivoBlack-Regular.ttf",
+          "sha256": "dd9a89a019b4849f66ab75455fe7bdf931311042cbb0f0f97acc061539703180",
+          "size": 90988,
+          "family": "Archivo Black",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ArchivoBlack-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 424,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "display",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "heavy",
+        "bold",
+        "graphic"
+      ],
+      "bestFor": [
+        "Short poster headlines",
+        "strong typographic beats"
+      ],
+      "limitations": [
+        "Single heavy weight; avoid dense explanations or simulated lighter styles.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Simpler Chinese supporting reading beside a heavy Latin headline.",
+          "when": "Chinese support is needed and its contrast to the headline has a clear hierarchy.",
+          "avoidWhen": "The film is Latin-only or the brand already provides a complete text system."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use weight and wording economically; a bold face does not require multiple loud text layers.",
+        "spacing": "Use scale and negative space to separate heavy shapes; check counters after compression.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "broad heavy forms",
+          "low stroke contrast",
+          "poster density"
+        ],
+        "useWhen": [
+          "Brief emphatic graphic headlines with a heavy voice."
+        ],
+        "mismatchRisks": [
+          "Heavy broad forms may overpower a delicate or restrained supplied identity."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Heavy small letters can close counters and overwhelm nearby information."
+        ],
+        "adjustment": "Compare a larger short headline with simpler supporting text, keeping required copy readable."
+      }
+    },
+    {
+      "id": "bebasneue",
+      "family": "Bebas Neue",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/bebasneue"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/bebasneue/OFL.txt",
+        "sha256": "72082f6cb4d04be2ecf7cc7d9e1e7d73787f0af8a5a278a47cade70c16b78341",
+        "size": 4337
+      },
+      "files": [
+        {
+          "name": "BebasNeue-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/bebasneue/BebasNeue-Regular.ttf",
+          "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73",
+          "size": 61400,
+          "family": "Bebas Neue",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "BebasNeue-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 462,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "condensed",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "data",
+        "visual-type"
+      ],
+      "moods": [
+        "tall",
+        "poster",
+        "athletic"
+      ],
+      "bestFor": [
+        "Sports",
+        "dramatic numbers",
+        "compact English display"
+      ],
+      "limitations": [
+        "Tall display voice and limited case distinction require checking exact copy.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Chinese supporting copy beside a tall Latin display title.",
+          "when": "The title is intentionally condensed and Chinese support must remain open and readable.",
+          "avoidWhen": "The identity calls for matching broad/rounded titles or no Chinese text is needed."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Treat as a display voice; do not compress necessary explanations into a narrow headline style.",
+        "spacing": "Check case behavior and narrow letter spacing with actual words; pair with quiet reading text.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "tall narrow forms",
+          "uppercase-led display",
+          "poster rhythm"
+        ],
+        "useWhen": [
+          "Short uppercase-led poster or sports-like headlines when the brief supports them."
+        ],
+        "mismatchRisks": [
+          "Tall condensation changes the proportions of a broad or rounded brand."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Small all-cap lines and long strings lose quick word recognition."
+        ],
+        "adjustment": "Keep display phrases short; inspect actual case, spacing and the phone-scale reading window."
+      }
+    },
+    {
+      "id": "ebgaramond",
+      "family": "EB Garamond",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/ebgaramond"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/ebgaramond/OFL.txt",
+        "sha256": "0985066662eb755ed3683ae5482a81a9195b49ce3f7e165cc2388b3dbece7dd7",
+        "size": 4398
+      },
+      "files": [
+        {
+          "name": "EBGaramond[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/ebgaramond/EBGaramond%5Bwght%5D.ttf",
+          "sha256": "ef9512f92f6d579e5dc75af59a5a4b1b8b47d2eda89e00b954d44520e5369027",
+          "size": 851176,
+          "family": "EB Garamond",
+          "weight": "400 800",
+          "style": "normal",
+          "postscriptName": "EBGaramond-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 400,
+              "default": 400,
+              "max": 800
+            }
+          },
+          "coverage": {
+            "codepoints": 2091,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "greek",
+        "greek-ext",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "serif",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "visual-type"
+      ],
+      "moods": [
+        "classic",
+        "literary",
+        "editorial"
+      ],
+      "bestFor": [
+        "Essays",
+        "historical atmosphere",
+        "publishing titles"
+      ],
+      "limitations": [
+        "Classical letterforms do not make a film historically authentic.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notoserifsc",
+          "reason": "Chinese serif editorial counterpart.",
+          "when": "Both scripts use an editorial serif voice and remain legible at actual display size.",
+          "avoidWhen": "Small mixed-script reading loses stroke clarity or a brand face is already prescribed."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Titles and reading text can use the same family when the chosen scale and timing support them.",
+        "spacing": "Allow room for serifs and longer forms; match Han optical density rather than nominal size.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "classical serifs",
+          "modulated strokes",
+          "editorial proportions"
+        ],
+        "useWhen": [
+          "Editorial reading or titles where classical forms fit the content."
+        ],
+        "mismatchRisks": [
+          "Classical serifs are not automatically compatible with a modern geometric brand."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Fine strokes and small optical details can weaken in reversed or moving copy."
+        ],
+        "adjustment": "Choose an appropriate real weight and size; inspect long words and punctuation against the actual background."
+      }
+    },
+    {
+      "id": "fraunces",
+      "family": "Fraunces",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/fraunces"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/fraunces/OFL.txt",
+        "sha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+        "size": 4391
+      },
+      "files": [
+        {
+          "name": "Fraunces[SOFT,WONK,opsz,wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/fraunces/Fraunces%5BSOFT%2CWONK%2Copsz%2Cwght%5D.ttf",
+          "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb",
+          "size": 360440,
+          "family": "Fraunces",
+          "weight": "100 900",
+          "style": "normal",
+          "postscriptName": "Fraunces-9ptBlack",
+          "axes": {
+            "opsz": {
+              "name": "Optical Size",
+              "min": 9,
+              "default": 9,
+              "max": 144
+            },
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 900,
+              "max": 900
+            },
+            "SOFT": {
+              "name": "Softness",
+              "min": 0,
+              "default": 0,
+              "max": 100
+            },
+            "WONK": {
+              "name": "Wonky",
+              "min": 0,
+              "default": 1,
+              "max": 1
+            }
+          },
+          "coverage": {
+            "codepoints": 625,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "serif",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "expressive",
+        "warm",
+        "retro"
+      ],
+      "bestFor": [
+        "Food",
+        "lifestyle",
+        "expressive editorial motion"
+      ],
+      "limitations": [
+        "Strong personality and optical axes need real-size inspection; not a universal premium face.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notoserifsc",
+          "reason": "Chinese serif support alongside an expressive Latin headline.",
+          "when": "The reference supports this serif relationship and optical contrast is deliberate.",
+          "avoidWhen": "The additional serif voice competes with the brand or a neutral reading role is needed."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use expressive hierarchy intentionally; short reading can work without forcing another family.",
+        "spacing": "Test the selected weight and optical treatment in actual words before animating.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "soft expressive serifs",
+          "variable optical character",
+          "warm display rhythm"
+        ],
+        "useWhen": [
+          "Expressive editorial or retro-leaning titles supported by the actual identity."
+        ],
+        "mismatchRisks": [
+          "Soft serifs can conflict with a precise neo-grotesque or sharply mechanical reference."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Expressive shapes and optical-size choices can become dense in small supporting copy."
+        ],
+        "adjustment": "Inspect the selected axes and full words at phone size; choose a simpler treatment when detail is lost."
+      }
+    },
+    {
+      "id": "bodonimoda",
+      "family": "Bodoni Moda",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/bodonimoda"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/bodonimoda/OFL.txt",
+        "sha256": "931dfe2e0cd3c9443295f5c1d754b8a8403bf060df50c1d5900267ade83d0046",
+        "size": 4400
+      },
+      "files": [
+        {
+          "name": "BodoniModa[opsz,wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/bodonimoda/BodoniModa%5Bopsz%2Cwght%5D.ttf",
+          "sha256": "550f5e34ee0a828d7941b1fe9bc58b34e5260d3f33a61532e6d0a0114e79a5cf",
+          "size": 162104,
+          "family": "Bodoni Moda",
+          "weight": "400 900",
+          "style": "normal",
+          "postscriptName": "BodoniModa-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 400,
+              "default": 400,
+              "max": 900
+            },
+            "opsz": {
+              "name": "Optical size",
+              "min": 6,
+              "default": 11,
+              "max": 96
+            }
+          },
+          "coverage": {
+            "codepoints": 429,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "math",
+        "menu",
+        "symbols"
+      ],
+      "category": "serif",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "high-contrast",
+        "fashion",
+        "elegant"
+      ],
+      "bestFor": [
+        "Fashion titles",
+        "luxury editorial",
+        "large restrained type"
+      ],
+      "limitations": [
+        "Hairlines can disappear at small sizes or over detailed backgrounds.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notoserifsc",
+          "reason": "Chinese editorial display support for a high-contrast Latin title.",
+          "when": "Both scripts have sufficient size/contrast and this matches the accepted identity.",
+          "avoidWhen": "Hairline detail weakens reading or the brand needs sturdy monoline forms."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Best assessed as large short display; avoid making necessary fine copy a hairline texture.",
+        "spacing": "Use large high-contrast compositions; keep fine strokes out of busy subtitle backgrounds.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "high stroke contrast",
+          "vertical stress",
+          "fine serifs"
+        ],
+        "useWhen": [
+          "Short fashion/editorial display where high contrast matches the intended identity."
+        ],
+        "mismatchRisks": [
+          "Fashion associations alone do not justify replacing a supplied sturdy or monoline face."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Hairlines can disappear on reduction, bright motion or a low-contrast background."
+        ],
+        "adjustment": "Test actual weight and settled size; enlarge and stabilize the text or choose a sturdier face if hairlines fail."
+      }
+    },
+    {
+      "id": "spacemono",
+      "family": "Space Mono",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/spacemono"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/spacemono/OFL.txt",
+        "sha256": "8e4ee42b2553e1e01504e61cb0d46d148cd8c9e5eacaa3622a7df2d4f2955b9f",
+        "size": 4392
+      },
+      "files": [
+        {
+          "name": "SpaceMono-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/spacemono/SpaceMono-Regular.ttf",
+          "sha256": "95837e182baeeada83368f7748db28357f0a1b75c6b84ff7065b5edf933c8e18",
+          "size": 99356,
+          "family": "Space Mono",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "SpaceMono-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 625,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        },
+        {
+          "name": "SpaceMono-Bold.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/spacemono/SpaceMono-Bold.ttf",
+          "sha256": "405e73d41afb7e5906efce206a326af5c956f38e255f35421c260e861e599c59",
+          "size": 98232,
+          "family": "Space Mono",
+          "weight": "700",
+          "style": "normal",
+          "postscriptName": "SpaceMono-Bold",
+          "axes": {},
+          "coverage": {
+            "codepoints": 625,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "mono",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "data",
+        "labels",
+        "visual-type"
+      ],
+      "moods": [
+        "retro",
+        "mechanical",
+        "experimental"
+      ],
+      "bestFor": [
+        "Retro computing",
+        "short telemetry",
+        "typographic experiments"
+      ],
+      "limitations": [
+        "Wide mono rhythm is inefficient for long prose and not automatically a technology identity.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Chinese reading support around a specific Latin mono/data role.",
+          "when": "The film actually needs Chinese explanations and a distinct code/data or retro role.",
+          "avoidWhen": "Mono is only ornamental metadata or the brand calls for a proportional text voice."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Useful for a specific code/data or expressive role; not a default partner for every condensed title.",
+        "spacing": "Use tabular alignment when needed; add tracked capitals only when they serve the treatment.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "monospaced rhythm",
+          "distinctive retro forms",
+          "even character advance"
+        ],
+        "useWhen": [
+          "Short aligned data/code or an explicitly retro/monospaced expressive direction."
+        ],
+        "mismatchRisks": [
+          "Monospacing changes a soft proportional brand voice; metadata labels alone do not justify it."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Wide advances consume line width; small decorative mono labels can become illegible clutter."
+        ],
+        "adjustment": "Check the full phrase and numerals at phone size; keep necessary support readable and remove redundant labels."
+      }
+    },
+    {
+      "id": "jetbrainsmono",
+      "family": "JetBrains Mono",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/jetbrainsmono"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/jetbrainsmono/OFL.txt",
+        "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d",
+        "size": 4399
+      },
+      "files": [
+        {
+          "name": "JetBrainsMono[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf",
+          "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+          "size": 187208,
+          "family": "JetBrains Mono",
+          "weight": "100 800",
+          "style": "normal",
+          "postscriptName": "JetBrainsMono-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 400,
+              "max": 800
+            }
+          },
+          "coverage": {
+            "codepoints": 977,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "greek",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "mono",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "data",
+        "labels",
+        "body"
+      ],
+      "moods": [
+        "code",
+        "precise",
+        "technical"
+      ],
+      "bestFor": [
+        "Readable code",
+        "terminal evidence",
+        "aligned technical values"
+      ],
+      "limitations": [
+        "The font has no Han design; Chinese needs a separately selected face.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Chinese explanation alongside code or aligned Latin values.",
+          "when": "Code/data and explanation have distinct roles, checked at phone display size.",
+          "avoidWhen": "Ordinary branding/prose is being made technical without a brief-based reason."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry code-body text; ordinary prose does not need to inherit code styling.",
+        "spacing": "Keep code alignment and actual values intact; avoid filling unused space with fake telemetry.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "monospaced construction",
+          "code-oriented forms",
+          "regular advance"
+        ],
+        "useWhen": [
+          "Readable code, aligned values or an identity that explicitly calls for technical monospacing."
+        ],
+        "mismatchRisks": [
+          "Code associations are a visible voice change for an unrelated brand."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Long prose takes more horizontal space; small symbol-heavy lines need careful inspection."
+        ],
+        "adjustment": "Inspect code punctuation and the longest line at phone size; reflow or shorten presentation while retaining required values."
+      }
+    },
+    {
+      "id": "caveat",
+      "family": "Caveat",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/caveat"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/caveat/OFL.txt",
+        "sha256": "1f9d81d094273d82f3898a1ee8b598a717d050ecbf5ff7bede105b704880157b",
+        "size": 4385
+      },
+      "files": [
+        {
+          "name": "Caveat[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/caveat/Caveat%5Bwght%5D.ttf",
+          "sha256": "0bdb6b660482d31531b3945849fba5916b3ef8695da7024a9e6b9ee3c4157988",
+          "size": 403648,
+          "family": "Caveat",
+          "weight": "400 700",
+          "style": "normal",
+          "postscriptName": "Caveat-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 400,
+              "default": 400,
+              "max": 700
+            }
+          },
+          "coverage": {
+            "codepoints": 754,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "handwritten",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "personal",
+        "light",
+        "informal"
+      ],
+      "bestFor": [
+        "Personal notes",
+        "annotations",
+        "expressive handwritten words"
+      ],
+      "limitations": [
+        "Handwriting becomes fragile when small or densely animated.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "lxgwwenkai",
+          "reason": "A Chinese handwritten note counterpart.",
+          "when": "The script calls for brief handwritten notes in both languages and their scale is balanced.",
+          "avoidWhen": "The task needs long reading, a precise brand voice or only a single script."
+        }
+      ],
+      "usage": {
+        "hierarchy": "A handwritten accent needs a visible narrative role, not a mandatory decorative side note.",
+        "spacing": "Match the handwritten rhythm across scripts while checking baseline and stroke density.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "handwritten forms",
+          "informal slant",
+          "loose rhythm"
+        ],
+        "useWhen": [
+          "Short personal notes where handwriting is part of the intended expression."
+        ],
+        "mismatchRisks": [
+          "Its casual gesture changes a precise, formal or prescribed brand voice."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Fine strokes and variable letter spacing can weaken small moving phrases."
+        ],
+        "adjustment": "Use short high-contrast phrases and check their settled reading state; choose clearer support for long information."
+      }
+    },
+    {
+      "id": "orbitron",
+      "family": "Orbitron",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "3e5667764ccfea32ce0c3d58a3a4756de890adc1",
+        "directory": "ofl/orbitron"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/orbitron/OFL.txt",
+        "sha256": "ab609b0e110d622435ff337cdf233288556e011bbf9bd0550be98846c0630819",
+        "size": 4426
+      },
+      "files": [
+        {
+          "name": "Orbitron[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/3e5667764ccfea32ce0c3d58a3a4756de890adc1/ofl/orbitron/Orbitron%5Bwght%5D.ttf",
+          "sha256": "f42db2dd16e642258e35782916eceb1dcdbea06fb958d77ad71dc5963587e8fd",
+          "size": 38576,
+          "family": "Orbitron",
+          "weight": "400 900",
+          "style": "normal",
+          "postscriptName": "Orbitron-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 400,
+              "default": 400,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 208,
+            "sample": "OpenMotion Ag 0123456789 !?",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "menu"
+      ],
+      "category": "display",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "data",
+        "visual-type"
+      ],
+      "moods": [
+        "geometric",
+        "science-fiction",
+        "mechanical"
+      ],
+      "bestFor": [
+        "Science-fiction headings",
+        "digital numerals",
+        "short technical identities"
+      ],
+      "limitations": [
+        "A recognizable sci-fi convention; use only when its voice fits the subject.",
+        "Language labels describe intended coverage, not guaranteed support for every character; inspect actual copy."
+      ],
+      "pairings": [
+        {
+          "id": "zcoolqingkehuangyou",
+          "reason": "Chinese mechanical display counterpart.",
+          "when": "The brief explicitly supports squared/compact futuristic typography in both scripts.",
+          "avoidWhen": "A generic technology subject is the only reason, or the brand uses warm/open forms."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use as an intentional display or large-value voice; conventional reading roles may need a different treatment.",
+        "spacing": "Geometric counters and broad forms need space; keep subtitles in a reading face.",
+        "locale": "Latin design; select a separate CJK face for Han text."
+      },
+      "brandFit": {
+        "traits": [
+          "geometric construction",
+          "squared forms",
+          "mechanical display rhythm"
+        ],
+        "useWhen": [
+          "Short futuristic or mechanical display when the brief actually calls for that construction."
+        ],
+        "mismatchRisks": [
+          "A technology subject alone does not justify replacing a neutral, warm or rounded identity."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Squared counters and tightly spaced capitals become dense in small text."
+        ],
+        "adjustment": "Compare exact words and numerals at phone size; reserve enough width and avoid shrinking explanatory copy."
+      }
+    },
+    {
+      "id": "liujianmaocao",
+      "family": "Liu Jian Mao Cao",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/liujianmaocao"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/liujianmaocao/OFL.txt",
+        "sha256": "ff56684b0212481e7c3886c26d5a655de9b211c8119e5ccc756138a97b066acc",
+        "size": 4406
+      },
+      "files": [
+        {
+          "name": "LiuJianMaoCao-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/liujianmaocao/LiuJianMaoCao-Regular.ttf",
+          "sha256": "cab396b91a5b7c0b4005a35891180d06e6751f5ac261fe680aec65c1ae209033",
+          "size": 4951804,
+          "family": "Liu Jian Mao Cao",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "LiuJianMaoCao-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7016,
+            "sample": "春日山河，字里行间。0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-simplified",
+        "latin",
+        "menu"
+      ],
+      "category": "brush",
+      "languages": [
+        "zh-Hans",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "cursive",
+        "gestural",
+        "energetic"
+      ],
+      "bestFor": [
+        "Short expressive Chinese words",
+        "gestural chapter accents"
+      ],
+      "limitations": [
+        "Formal brush lettering or legible long narration is required.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Chinese reading copy accompanies a short cursive accent.",
+          "avoidWhen": "Cursive text is the only required explanation."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Compare whole real words at large size; use a quieter face for required explanations.",
+        "locale": "Simplified Chinese use; inspect actual words and regional forms."
+      },
+      "brandFit": {
+        "traits": [
+          "Connected, cursive Han brush gestures"
+        ],
+        "useWhen": [
+          "Short expressive Chinese words",
+          "gestural chapter accents"
+        ],
+        "mismatchRisks": [
+          "Formal brush lettering or legible long narration is required."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Rapid joined strokes need room and can lose character identity when reduced."
+        ],
+        "adjustment": "Compare whole real words at large size; use a quieter face for required explanations."
+      }
+    },
+    {
+      "id": "chirongoroundtc",
+      "family": "Chiron GoRound TC",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/chirongoroundtc"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/chirongoroundtc/OFL.txt",
+        "sha256": "7b9cc84fe1935d1418de4af57b4106038fb836b3a162e1b86507c7fc8543a759",
+        "size": 4451
+      },
+      "files": [
+        {
+          "name": "ChironGoRoundTC[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/chirongoroundtc/ChironGoRoundTC%5Bwght%5D.ttf",
+          "sha256": "47cd5ff5153799d4c0d05bcc64da849e13b8eb842e46728a66bf2d52c480231f",
+          "size": 51170304,
+          "family": "Chiron GoRound TC",
+          "weight": "200 900",
+          "style": "normal",
+          "postscriptName": "ChironGoRoundTC-ExtraLight",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 200,
+              "default": 200,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 46265,
+            "sample": "圓潤字形，閱讀故事。0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "chinese-traditional",
+        "cyrillic",
+        "cyrillic-ext",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "rounded",
+      "languages": [
+        "zh-Hant",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle"
+      ],
+      "moods": [
+        "rounded",
+        "warm",
+        "soft"
+      ],
+      "bestFor": [
+        "Traditional Chinese soft identities",
+        "warm reading and display"
+      ],
+      "limitations": [
+        "The brief requires Simplified Chinese or Japanese regional forms.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "nunito",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A separate rounded Latin role is needed by the identity.",
+          "avoidWhen": "The family’s own Latin already works."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Compare a medium weight and useful line breaks; the complete variable file is large, so reuse its verified cache.",
+        "locale": "Traditional Chinese construction; do not infer Simplified Chinese or Japanese regional fidelity."
+      },
+      "brandFit": {
+        "traits": [
+          "Rounded Traditional Chinese sans with a broad weight range"
+        ],
+        "useWhen": [
+          "Traditional Chinese soft identities",
+          "warm reading and display"
+        ],
+        "mismatchRisks": [
+          "The brief requires Simplified Chinese or Japanese regional forms."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Dense Han text and small rounded counters need a real weight/size check."
+        ],
+        "adjustment": "Compare a medium weight and useful line breaks; the complete variable file is large, so reuse its verified cache."
+      }
+    },
+    {
+      "id": "zenmarugothic",
+      "family": "Zen Maru Gothic",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/zenmarugothic"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/zenmarugothic/OFL.txt",
+        "sha256": "2a20cf7ce1909d8ee1e949095d340f7d7656705f7c810a2d6faf56800ad0cb3d",
+        "size": 4402
+      },
+      "files": [
+        {
+          "name": "ZenMaruGothic-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/zenmarugothic/ZenMaruGothic-Regular.ttf",
+          "sha256": "a0c0b53543e0993ae2225e629c833f3d51495ad31720694ff112ce4ce11111ef",
+          "size": 3832756,
+          "family": "Zen Maru Gothic",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ZenMaruGothic-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7813,
+            "sample": "春の物語、ひらがな カタカナ。0123456789",
+            "missing": []
+          }
+        },
+        {
+          "name": "ZenMaruGothic-Bold.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/zenmarugothic/ZenMaruGothic-Bold.ttf",
+          "sha256": "fe24426b9c8b5523a0146a8235c8674eccf0493af354a53ec895c3596d9eb745",
+          "size": 3779008,
+          "family": "Zen Maru Gothic",
+          "weight": "700",
+          "style": "normal",
+          "postscriptName": "ZenMaruGothic-Bold",
+          "axes": {},
+          "coverage": {
+            "codepoints": 7813,
+            "sample": "春の物語、ひらがな カタカナ。0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "greek",
+        "japanese",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "rounded",
+      "languages": [
+        "ja",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle"
+      ],
+      "moods": [
+        "gentle",
+        "rounded",
+        "quiet"
+      ],
+      "bestFor": [
+        "Japanese everyday stories",
+        "gentle character dialogue",
+        "warm titles"
+      ],
+      "limitations": [
+        "A hard mechanical identity or Chinese regional forms are required.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "nunito",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "The design explicitly needs a separate rounded Latin heading.",
+          "avoidWhen": "Japanese and Latin already work in one family."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Compare actual kana and kanji with the real regular or bold face; give reading a stable window.",
+        "locale": "Japanese kana and kanji forms; inspect names and rare kanji. Do not infer Simplified Chinese forms from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "Soft rounded Japanese gothic forms"
+        ],
+        "useWhen": [
+          "Japanese everyday stories",
+          "gentle character dialogue",
+          "warm titles"
+        ],
+        "mismatchRisks": [
+          "A hard mechanical identity or Chinese regional forms are required."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Fine regular strokes and small kana can merge on reduced video."
+        ],
+        "adjustment": "Compare actual kana and kanji with the real regular or bold face; give reading a stable window."
+      }
+    },
+    {
+      "id": "shipporimincho",
+      "family": "Shippori Mincho",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/shipporimincho"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/shipporimincho/OFL.txt",
+        "sha256": "41fba056279be5f45ff9a99e44b7b53897b42732f5806d8e666e0ab49ac6bd38",
+        "size": 4399
+      },
+      "files": [
+        {
+          "name": "ShipporiMincho-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/shipporimincho/ShipporiMincho-Regular.ttf",
+          "sha256": "769b5269f0f9bc6534b352c0e6bd856a566e03ff788f107191c2d835863570b2",
+          "size": 8677284,
+          "family": "Shippori Mincho",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ShipporiMincho-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 15363,
+            "sample": "春の物語、ひらがな カタカナ。0123456789",
+            "missing": []
+          }
+        },
+        {
+          "name": "ShipporiMincho-Bold.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/shipporimincho/ShipporiMincho-Bold.ttf",
+          "sha256": "63bc4eddc74793f671c3ab827c5175e773ffbe569d0bf50ee65375ea9e3bc286",
+          "size": 8563788,
+          "family": "Shippori Mincho",
+          "weight": "700",
+          "style": "normal",
+          "postscriptName": "ShipporiMincho-Bold",
+          "axes": {},
+          "coverage": {
+            "codepoints": 15363,
+            "sample": "春の物語、ひらがな カタカナ。0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "japanese",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "serif",
+      "languages": [
+        "ja",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "visual-type"
+      ],
+      "moods": [
+        "literary",
+        "expressive",
+        "traditional"
+      ],
+      "bestFor": [
+        "Japanese narrative titles",
+        "literary or period-flavored passages"
+      ],
+      "limitations": [
+        "A neutral interface or Simplified Chinese identity is prescribed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Quiet Latin information needs a separate supporting role.",
+          "avoidWhen": "A prescribed Latin brand face should be retained."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Use an available heavier face for reversed short titles, then check actual words; historical mood is not authenticity.",
+        "locale": "Japanese kana and kanji forms; inspect names and rare kanji. Do not infer Simplified Chinese forms from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "Japanese Mincho contrast and expressive terminals"
+        ],
+        "useWhen": [
+          "Japanese narrative titles",
+          "literary or period-flavored passages"
+        ],
+        "mismatchRisks": [
+          "A neutral interface or Simplified Chinese identity is prescribed."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Fine horizontal strokes and complex kanji can disappear when reduced."
+        ],
+        "adjustment": "Use an available heavier face for reversed short titles, then check actual words; historical mood is not authenticity."
+      }
+    },
+    {
+      "id": "yomogi",
+      "family": "Yomogi",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/yomogi"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/yomogi/OFL.txt",
+        "sha256": "bc0330d5973ab1f200553f51b4cb4ef11b81187fdcd0249f7f83992726c02a48",
+        "size": 4409
+      },
+      "files": [
+        {
+          "name": "Yomogi-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/yomogi/Yomogi-Regular.ttf",
+          "sha256": "ec280f473a03187292905618f24fdb08a6dcbf8620b52637e3b589fe745259b9",
+          "size": 4045904,
+          "family": "Yomogi",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "Yomogi-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 8039,
+            "sample": "春の物語、ひらがな カタカナ。0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "japanese",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "handwritten",
+      "languages": [
+        "ja",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "personal",
+        "gentle",
+        "handmade"
+      ],
+      "bestFor": [
+        "Japanese notes",
+        "diary inserts",
+        "conversational character annotations"
+      ],
+      "limitations": [
+        "Formal documentation or a strong mechanical identity is needed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "zenmarugothic",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Longer Japanese explanations accompany handwritten notes.",
+          "avoidWhen": "The whole composition is intentionally handwritten and still readable."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Keep phrases short and comfortably sized; check kana and punctuation in the final frame.",
+        "locale": "Japanese kana and kanji forms; inspect names and rare kanji. Do not infer Simplified Chinese forms from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "Loose Japanese pen handwriting with kana"
+        ],
+        "useWhen": [
+          "Japanese notes",
+          "diary inserts",
+          "conversational character annotations"
+        ],
+        "mismatchRisks": [
+          "Formal documentation or a strong mechanical identity is needed."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Single-weight loose strokes weaken in small fast captions."
+        ],
+        "adjustment": "Keep phrases short and comfortably sized; check kana and punctuation in the final frame."
+      }
+    },
+    {
+      "id": "dotgothic16",
+      "family": "DotGothic16",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/dotgothic16"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/dotgothic16/OFL.txt",
+        "sha256": "b6630c61ea078cacd7fabe37d14ffe557a0b45b06683374a9aa9e24262993e33",
+        "size": 4492
+      },
+      "files": [
+        {
+          "name": "DotGothic16-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/dotgothic16/DotGothic16-Regular.ttf",
+          "sha256": "3ad9af88726d42b40f7f365f0dcac785af73cf20ea6f1d5b44e57cc21150b8f1",
+          "size": 2069236,
+          "family": "DotGothic16",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "DotGothic16-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 8231,
+            "sample": "春の物語、ひらがな カタカナ。0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "japanese",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "pixel",
+      "languages": [
+        "ja",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "labels",
+        "visual-type"
+      ],
+      "moods": [
+        "pixel",
+        "retro",
+        "digital"
+      ],
+      "bestFor": [
+        "Japanese retro-game labels",
+        "pixel interfaces",
+        "short digital titles"
+      ],
+      "limitations": [
+        "Smooth contemporary reading or arbitrary futuristic decoration is expected.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "pressstart2p",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A distinct Latin pixel title is useful alongside Japanese dot-grid copy.",
+          "avoidWhen": "The native Latin already fits or readability worsens."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Preserve a crisp pixel rhythm; compare integer-like display scales and actual kana/kanji after export.",
+        "locale": "Japanese kana and kanji forms; inspect names and rare kanji. Do not infer Simplified Chinese forms from shared Han coverage."
+      },
+      "brandFit": {
+        "traits": [
+          "Japanese dot-grid Gothic construction"
+        ],
+        "useWhen": [
+          "Japanese retro-game labels",
+          "pixel interfaces",
+          "short digital titles"
+        ],
+        "mismatchRisks": [
+          "Smooth contemporary reading or arbitrary futuristic decoration is expected."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Scaled dots can blur and dense kanji need sufficient size."
+        ],
+        "adjustment": "Preserve a crisp pixel rhythm; compare integer-like display scales and actual kana/kanji after export."
+      }
+    },
+    {
+      "id": "gowundodum",
+      "family": "Gowun Dodum",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/gowundodum"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/gowundodum/OFL.txt",
+        "sha256": "a7c73f9521cd646bbdfb6684c99a62311bbd7bce11898dc11ef0b3c69eda1aca",
+        "size": 4395
+      },
+      "files": [
+        {
+          "name": "GowunDodum-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/gowundodum/GowunDodum-Regular.ttf",
+          "sha256": "a6e457933227483a11758fd0947bc74422a106d46f0bf057fdaa5af94a30067d",
+          "size": 7229088,
+          "family": "Gowun Dodum",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "GowunDodum-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 12494,
+            "sample": "한글 이야기, 읽기와 소리. 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "korean",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "sans",
+      "languages": [
+        "ko",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle"
+      ],
+      "moods": [
+        "gentle",
+        "human",
+        "quiet"
+      ],
+      "bestFor": [
+        "Korean everyday narration",
+        "quiet editorial and explanatory copy"
+      ],
+      "limitations": [
+        "A forceful condensed title or another script’s regional forms are needed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "nunito",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A separate soft Latin identity is necessary.",
+          "avoidWhen": "The native Latin already matches or another brand face is locked."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Use actual Korean words and stable line spacing; single weight means hierarchy must also use size and placement.",
+        "locale": "Korean Hangul reading; check syllable density and mixed Latin scale."
+      },
+      "brandFit": {
+        "traits": [
+          "Soft Korean Hangul sans proportions"
+        ],
+        "useWhen": [
+          "Korean everyday narration",
+          "quiet editorial and explanatory copy"
+        ],
+        "mismatchRisks": [
+          "A forceful condensed title or another script’s regional forms are needed."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Dense Hangul syllables need separation at small video sizes."
+        ],
+        "adjustment": "Use actual Korean words and stable line spacing; single weight means hierarchy must also use size and placement."
+      }
+    },
+    {
+      "id": "notonaskharabic",
+      "family": "Noto Naskh Arabic",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/notonaskharabic"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/notonaskharabic/OFL.txt",
+        "sha256": "a7a5a25eb188bf1cd96982030d53e23c33485c69b1044a562254226857ee13af",
+        "size": 4382
+      },
+      "files": [
+        {
+          "name": "NotoNaskhArabic[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/notonaskharabic/NotoNaskhArabic%5Bwght%5D.ttf",
+          "sha256": "67b5a525a661b607971fbd3f96a81b89d3a768e74534fca84f18ac97e6fab72f",
+          "size": 307592,
+          "family": "Noto Naskh Arabic",
+          "weight": "400 700",
+          "style": "normal",
+          "postscriptName": "NotoNaskhArabic-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 400,
+              "default": 400,
+              "max": 700
+            }
+          },
+          "coverage": {
+            "codepoints": 1551,
+            "sample": "العربية والفارسية، پژوهش و گفتگو ۱۲۳۴۵",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "arabic",
+        "latin",
+        "latin-ext",
+        "math",
+        "menu",
+        "symbols"
+      ],
+      "category": "serif",
+      "languages": [
+        "ar",
+        "fa",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle"
+      ],
+      "moods": [
+        "flowing",
+        "traditional",
+        "textual"
+      ],
+      "bestFor": [
+        "Arabic or Persian reading",
+        "cultural narration",
+        "mixed-direction text"
+      ],
+      "limitations": [
+        "The brief calls for a specific Arabic brand style or Latin-only technical labels.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A deliberate Latin run or number label is needed in mixed-direction content.",
+          "avoidWhen": "The Arabic face’s native Latin is already appropriate."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Set lang=ar/fa and dir=rtl, retain joining and normal tracking; inspect actual shaped words, numerals and punctuation.",
+        "locale": "Arabic/Persian shaping and RTL order are required; set the actual lang and direction."
+      },
+      "brandFit": {
+        "traits": [
+          "Naskh Arabic construction with joining and mark positioning"
+        ],
+        "useWhen": [
+          "Arabic or Persian reading",
+          "cultural narration",
+          "mixed-direction text"
+        ],
+        "mismatchRisks": [
+          "The brief calls for a specific Arabic brand style or Latin-only technical labels."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Joining, marks, bidirectional punctuation and baseline spacing need inspection beyond codepoints."
+        ],
+        "adjustment": "Set lang=ar/fa and dir=rtl, retain joining and normal tracking; inspect actual shaped words, numerals and punctuation."
+      }
+    },
+    {
+      "id": "notosansdevanagari",
+      "family": "Noto Sans Devanagari",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/notosansdevanagari"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/notosansdevanagari/OFL.txt",
+        "sha256": "a216f6f8d85c7228093e0ee5e258d9d377e6671f68acb4db1930b29583d0f331",
+        "size": 4386
+      },
+      "files": [
+        {
+          "name": "NotoSansDevanagari[wdth,wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/notosansdevanagari/NotoSansDevanagari%5Bwdth%2Cwght%5D.ttf",
+          "sha256": "14ec4af41f27482216d1c2229f417ff9b1425e1babb014e57d1d40d03229853e",
+          "size": 641944,
+          "family": "Noto Sans Devanagari",
+          "weight": "100 900",
+          "style": "normal",
+          "postscriptName": "NotoSansDevanagari-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 400,
+              "max": 900
+            },
+            "wdth": {
+              "name": "Width",
+              "min": 62.5,
+              "default": 100,
+              "max": 100
+            }
+          },
+          "coverage": {
+            "codepoints": 551,
+            "sample": "कहानी और जानकारी १२३४५",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "devanagari",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "sans",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle"
+      ],
+      "moods": [
+        "neutral",
+        "clear",
+        "functional"
+      ],
+      "bestFor": [
+        "Hindi explanations",
+        "captions",
+        "mixed-script information"
+      ],
+      "limitations": [
+        "A different Indic script or highly calligraphic identity is required.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "An explicit Latin brand or numeric role needs a separately chosen face.",
+          "avoidWhen": "A second family adds no useful role."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Use lang=hi and sufficient line spacing; inspect real conjuncts and marks instead of splitting characters for animation.",
+        "locale": "Devanagari shaping, conjuncts and combining marks require lang=hi and actual-copy review."
+      },
+      "brandFit": {
+        "traits": [
+          "Devanagari headline and combining-mark structure"
+        ],
+        "useWhen": [
+          "Hindi explanations",
+          "captions",
+          "mixed-script information"
+        ],
+        "mismatchRisks": [
+          "A different Indic script or highly calligraphic identity is required."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Matras, conjuncts and line collisions need shaping and vertical-space checks."
+        ],
+        "adjustment": "Use lang=hi and sufficient line spacing; inspect real conjuncts and marks instead of splitting characters for animation."
+      }
+    },
+    {
+      "id": "nunito",
+      "family": "Nunito",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/nunito"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/nunito/OFL.txt",
+        "sha256": "580df76c95a1ec5ab878ceb25bb3d85c6a076804e9c970c8c6972aea775fdf65",
+        "size": 4385
+      },
+      "files": [
+        {
+          "name": "Nunito[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/nunito/Nunito%5Bwght%5D.ttf",
+          "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207",
+          "size": 276932,
+          "family": "Nunito",
+          "weight": "200 1000",
+          "style": "normal",
+          "postscriptName": "Nunito-ExtraLight",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 200,
+              "default": 200,
+              "max": 1000
+            }
+          },
+          "coverage": {
+            "codepoints": 939,
+            "sample": "OpenMotion Ag 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "rounded",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "subtitle"
+      ],
+      "moods": [
+        "soft",
+        "friendly",
+        "rounded"
+      ],
+      "bestFor": [
+        "Friendly products",
+        "warm explanations",
+        "soft short headings"
+      ],
+      "limitations": [
+        "An angular industrial, high-contrast serif or prescribed brand identity dominates.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "chirongoroundtc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Traditional Chinese and Latin share a soft rounded direction.",
+          "avoidWhen": "Simplified Chinese is required or either face already covers the intended role."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Compare a real medium weight and normal tracking before adding decorative spacing.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Rounded Latin terminals and open sans rhythm"
+        ],
+        "useWhen": [
+          "Friendly products",
+          "warm explanations",
+          "soft short headings"
+        ],
+        "mismatchRisks": [
+          "An angular industrial, high-contrast serif or prescribed brand identity dominates."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Very light weights lose contrast; rounded forms alone do not make a brand childlike."
+        ],
+        "adjustment": "Compare a real medium weight and normal tracking before adding decorative spacing."
+      }
+    },
+    {
+      "id": "atkinsonhyperlegiblenext",
+      "family": "Atkinson Hyperlegible Next",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/atkinsonhyperlegiblenext"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/atkinsonhyperlegiblenext/OFL.txt",
+        "sha256": "aca6a428580965d2297d1b718042dd427c2a9443ece3b0d02d758e161e0c4030",
+        "size": 4431
+      },
+      "files": [
+        {
+          "name": "AtkinsonHyperlegibleNext[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/atkinsonhyperlegiblenext/AtkinsonHyperlegibleNext%5Bwght%5D.ttf",
+          "sha256": "5a455d1cfa099b601ab70751bb9673e8fe1854dc4500c80e1a220d0d75e31745",
+          "size": 114552,
+          "family": "Atkinson Hyperlegible Next",
+          "weight": "200 800",
+          "style": "normal",
+          "postscriptName": "AtkinsonHyperlegibleNext-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 200,
+              "default": 400,
+              "max": 800
+            }
+          },
+          "coverage": {
+            "codepoints": 363,
+            "sample": "OpenMotion Il1 O0 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "sans",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "body",
+        "subtitle",
+        "labels",
+        "data"
+      ],
+      "moods": [
+        "functional",
+        "open",
+        "distinct-forms"
+      ],
+      "bestFor": [
+        "Information-heavy labels",
+        "numbers",
+        "captions needing letter differentiation"
+      ],
+      "limitations": [
+        "The identity demands a decorative display face; the font is being treated as a universal accessibility guarantee.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Simplified Chinese explanations need a deliberately matched reading partner.",
+          "avoidWhen": "The task is Latin-only or a Chinese brand face is prescribed."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Can carry required reading when actual weight, size, script shaping and timing support it.",
+        "spacing": "Compare I/l/1 and O/0 with real copy at the intended size; check reading time and background.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Distinctive letter and numeral construction for identification"
+        ],
+        "useWhen": [
+          "Information-heavy labels",
+          "numbers",
+          "captions needing letter differentiation"
+        ],
+        "mismatchRisks": [
+          "The identity demands a decorative display face; the font is being treated as a universal accessibility guarantee."
+        ]
+      },
+      "readability": {
+        "readingUse": "reading",
+        "risks": [
+          "Small or low-contrast text still fails; intended letter distinction does not prove reading outcomes."
+        ],
+        "adjustment": "Compare I/l/1 and O/0 with real copy at the intended size; check reading time and background."
+      }
+    },
+    {
+      "id": "jost",
+      "family": "Jost",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/jost"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/jost/OFL.txt",
+        "sha256": "1af3438a4d5f0ed2bdbc5751a5a67ebf6d537334161184b7fbb68503ef0ea0c5",
+        "size": 4384
+      },
+      "files": [
+        {
+          "name": "Jost[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/jost/Jost%5Bwght%5D.ttf",
+          "sha256": "6343b70971000b04c5d401c96ae08ce371086135e999d5e1e1413039c0213076",
+          "size": 134996,
+          "family": "Jost",
+          "weight": "100 900",
+          "style": "normal",
+          "postscriptName": "Jost-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 100,
+              "default": 400,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 525,
+            "sample": "OpenMotion Ag 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "sans",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "visual-type"
+      ],
+      "moods": [
+        "geometric",
+        "structured",
+        "restrained"
+      ],
+      "bestFor": [
+        "Geometric brand titles",
+        "architectural or editorial layouts"
+      ],
+      "limitations": [
+        "A rounded handwriting voice or exact existing brand is required.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Simplified Chinese support is needed for a geometric Latin role.",
+          "avoidWhen": "The Han and Latin constructions conflict with the reference."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Compare distinctive real words, lowercase and numerals; tune weight and spacing without stretching.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Geometric Latin bowls with a structured display rhythm"
+        ],
+        "useWhen": [
+          "Geometric brand titles",
+          "architectural or editorial layouts"
+        ],
+        "mismatchRisks": [
+          "A rounded handwriting voice or exact existing brand is required."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Geometric repetition and light weights can flatten word recognition at small sizes."
+        ],
+        "adjustment": "Compare distinctive real words, lowercase and numerals; tune weight and spacing without stretching."
+      }
+    },
+    {
+      "id": "zillaslab",
+      "family": "Zilla Slab",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/zillaslab"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/zillaslab/OFL.txt",
+        "sha256": "240b385d3ec8c8d5c1d4af2bbba6ac72bac0309a80c1a8ff112c168643cc6811",
+        "size": 4342
+      },
+      "files": [
+        {
+          "name": "ZillaSlab-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/zillaslab/ZillaSlab-Regular.ttf",
+          "sha256": "41a4626844da9216b031308d4423045c765fe4231d99862d85d7d74509d37703",
+          "size": 270104,
+          "family": "Zilla Slab",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "ZillaSlab-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 514,
+            "sample": "OpenMotion Ag 0123456789",
+            "missing": []
+          }
+        },
+        {
+          "name": "ZillaSlab-Bold.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/zillaslab/ZillaSlab-Bold.ttf",
+          "sha256": "4ec3a04a4eef37074b42ef542e4d874e13646668cfe65256e0bf100441cf8719",
+          "size": 273044,
+          "family": "Zilla Slab",
+          "weight": "700",
+          "style": "normal",
+          "postscriptName": "ZillaSlab-Bold",
+          "axes": {},
+          "coverage": {
+            "codepoints": 514,
+            "sample": "OpenMotion Ag 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "slab-serif",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "body",
+        "visual-type"
+      ],
+      "moods": [
+        "sturdy",
+        "editorial",
+        "approachable"
+      ],
+      "bestFor": [
+        "Editorial stories",
+        "practical product narration",
+        "slab-serif headlines"
+      ],
+      "limitations": [
+        "A delicate hairline serif or neutral sans identity is fixed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notoserifsc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A separately chosen Simplified Chinese serif role is necessary.",
+          "avoidWhen": "The mixed-script serif relationship looks forced."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Compare regular and bold in actual phrases; preserve counters and reading line spacing.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Substantial slab serifs and sturdy text shapes"
+        ],
+        "useWhen": [
+          "Editorial stories",
+          "practical product narration",
+          "slab-serif headlines"
+        ],
+        "mismatchRisks": [
+          "A delicate hairline serif or neutral sans identity is fixed."
+        ]
+      },
+      "readability": {
+        "readingUse": "conditional",
+        "risks": [
+          "Serif joins can fill at small sizes and heavy weights."
+        ],
+        "adjustment": "Compare regular and bold in actual phrases; preserve counters and reading line spacing."
+      }
+    },
+    {
+      "id": "unbounded",
+      "family": "Unbounded",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/unbounded"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/unbounded/OFL.txt",
+        "sha256": "31e5d4e83955e7103c34570dd49b0570ef490800bd65b42923c0dd02445263b3",
+        "size": 4392
+      },
+      "files": [
+        {
+          "name": "Unbounded[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/unbounded/Unbounded%5Bwght%5D.ttf",
+          "sha256": "323b511be380c8d474ef030686b71aedde501f8d9cd46da558b7c40454372c3f",
+          "size": 778272,
+          "family": "Unbounded",
+          "weight": "200 900",
+          "style": "normal",
+          "postscriptName": "Unbounded-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 200,
+              "default": 400,
+              "max": 900
+            }
+          },
+          "coverage": {
+            "codepoints": 1139,
+            "sample": "MAKE IT MOVE 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "wide-sans",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "wide",
+        "assertive",
+        "geometric"
+      ],
+      "bestFor": [
+        "Wide identity titles",
+        "spatial poster lettering",
+        "short prominent words"
+      ],
+      "limitations": [
+        "Long narrow captions or a condensed brand are required.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Chinese information accompanies a wide Latin display role.",
+          "avoidWhen": "Both scripts become over-wide or the reference is compact."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Use short copy and a purposeful wide composition; reflow before reducing essential reading size.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Broad geometric Latin forms and counters"
+        ],
+        "useWhen": [
+          "Wide identity titles",
+          "spatial poster lettering",
+          "short prominent words"
+        ],
+        "mismatchRisks": [
+          "Long narrow captions or a condensed brand are required."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Wide glyphs consume line width and invite unnecessary shrinking."
+        ],
+        "adjustment": "Use short copy and a purposeful wide composition; reflow before reducing essential reading size."
+      }
+    },
+    {
+      "id": "blackopsone",
+      "family": "Black Ops One",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/blackopsone"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/blackopsone/OFL.txt",
+        "sha256": "f67ca4a200424868ee8fcd5464d7b35ac1cbf7723f6bfdbd19a8524689fab9a8",
+        "size": 4411
+      },
+      "files": [
+        {
+          "name": "BlackOpsOne-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/blackopsone/BlackOpsOne-Regular.ttf",
+          "sha256": "282a825b5f294377387e3969f765408157dbea8da0f5d0aae68c6bc704b145b3",
+          "size": 166532,
+          "family": "Black Ops One",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "BlackOpsOne-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 694,
+            "sample": "FIELD / UNIT 01",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic-ext",
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "stencil",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "labels",
+        "visual-type"
+      ],
+      "moods": [
+        "cutout",
+        "industrial",
+        "heavy"
+      ],
+      "bestFor": [
+        "Cutout or equipment markings",
+        "industrial short titles"
+      ],
+      "limitations": [
+        "Stencil lettering is being added only to make unrelated content look technical.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Chinese explanations need a quiet reading role beside stencil markings.",
+          "avoidWhen": "All text would become decorative equipment labels."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Keep short markings readable; inspect the actual breaks rather than simulating them with overlays.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Stencil breaks in heavy Latin forms"
+        ],
+        "useWhen": [
+          "Cutout or equipment markings",
+          "industrial short titles"
+        ],
+        "mismatchRisks": [
+          "Stencil lettering is being added only to make unrelated content look technical."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Cutouts and dense shapes can close under reduction and compression."
+        ],
+        "adjustment": "Keep short markings readable; inspect the actual breaks rather than simulating them with overlays."
+      }
+    },
+    {
+      "id": "unifrakturcook",
+      "family": "UnifrakturCook",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/unifrakturcook"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/unifrakturcook/OFL.txt",
+        "sha256": "99d2f30e282d6174af8ff68597f58bb53c0dcb2b104a4c1b8d19da49021d00d3",
+        "size": 4413
+      },
+      "files": [
+        {
+          "name": "UnifrakturCook-Bold.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/unifrakturcook/UnifrakturCook-Bold.ttf",
+          "sha256": "ea002fa9c65f1a612af100e00d87ab65f16381f450020ec3d021f3dbf79a6dcd",
+          "size": 42688,
+          "family": "UnifrakturCook",
+          "weight": "700",
+          "style": "normal",
+          "postscriptName": "UnifrakturCook-Bold",
+          "axes": {},
+          "coverage": {
+            "codepoints": 247,
+            "sample": "Night & Chronicle 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "menu",
+        "latin"
+      ],
+      "category": "blackletter",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "blackletter",
+        "historic",
+        "ornate"
+      ],
+      "bestFor": [
+        "Deliberate blackletter identities",
+        "short music or historical-display titles"
+      ],
+      "limitations": [
+        "Neutral reading, period authenticity or unfamiliar-language comprehension is assumed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A plain supporting role improves navigation around blackletter display.",
+          "avoidWhen": "The reference prescribes another companion or ornament spreads to all copy."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Compare the real word silhouette at generous size; pair necessary explanations with a reading face.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Dense blackletter shapes and sharp ornamental rhythm"
+        ],
+        "useWhen": [
+          "Deliberate blackletter identities",
+          "short music or historical-display titles"
+        ],
+        "mismatchRisks": [
+          "Neutral reading, period authenticity or unfamiliar-language comprehension is assumed."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Only a bold face is supplied; unfamiliar shapes can impede names and long titles."
+        ],
+        "adjustment": "Compare the real word silhouette at generous size; pair necessary explanations with a reading face."
+      }
+    },
+    {
+      "id": "bangers",
+      "family": "Bangers",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/bangers"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/bangers/OFL.txt",
+        "sha256": "630dd5a307c0657b094d324e069b390edf90182fe5003639e06c02a0e5769af7",
+        "size": 4479
+      },
+      "files": [
+        {
+          "name": "Bangers-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/bangers/Bangers-Regular.ttf",
+          "sha256": "4160a7311de9342674cce9160cde9fcbb30f48190397d86ff1b70b455af65824",
+          "size": 93148,
+          "family": "Bangers",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "Bangers-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 558,
+            "sample": "POW! MAKE IT MOVE 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "comic",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "comic",
+        "energetic",
+        "drawn"
+      ],
+      "bestFor": [
+        "Comic exclamations",
+        "playful action words",
+        "character reaction cards"
+      ],
+      "limitations": [
+        "Sober product explanations or sustained reading are needed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "zcoolkuaile",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A Chinese playful display role fits the same character voice.",
+          "avoidWhen": "The two scripts fight for emphasis or the scene needs quiet reading."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Use the actual exclamation or phrase at a strong readable scale; let the lettering supply energy before adding effects.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Hand-drawn comic display with an emphatic slant"
+        ],
+        "useWhen": [
+          "Comic exclamations",
+          "playful action words",
+          "character reaction cards"
+        ],
+        "mismatchRisks": [
+          "Sober product explanations or sustained reading are needed."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Emphatic display shapes and case treatment need checking with names and punctuation."
+        ],
+        "adjustment": "Use the actual exclamation or phrase at a strong readable scale; let the lettering supply energy before adding effects."
+      }
+    },
+    {
+      "id": "pressstart2p",
+      "family": "Press Start 2P",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/pressstart2p"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/pressstart2p/OFL.txt",
+        "sha256": "705960c3281a5765ecc0b59bd4ed7ca59eed165748076bc2fc3e8fdbfeb944b0",
+        "size": 4413
+      },
+      "files": [
+        {
+          "name": "PressStart2P-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/pressstart2p/PressStart2P-Regular.ttf",
+          "sha256": "034c77f1f05ec89421e4a63f0e3a4ca1ecf852cc6d2bf611f126f275728e017d",
+          "size": 118204,
+          "family": "Press Start 2P",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "PressStart2P-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 657,
+            "sample": "LEVEL 01 / START",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "cyrillic",
+        "cyrillic-ext",
+        "greek",
+        "latin",
+        "latin-ext",
+        "menu"
+      ],
+      "category": "pixel",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "labels",
+        "visual-type"
+      ],
+      "moods": [
+        "pixel",
+        "game",
+        "retro"
+      ],
+      "bestFor": [
+        "Latin retro-game titles",
+        "short menu labels",
+        "score cards"
+      ],
+      "limitations": [
+        "Long explanations or generic technology decoration are needed.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "dotgothic16",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Japanese dot-grid text is needed alongside the Latin pixel role.",
+          "avoidWhen": "The differing grids are visually incompatible or one family already suffices."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Compare crisp display scales, short actual labels and export compression; use a quieter face for required prose.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Blocky Latin pixel-grid construction"
+        ],
+        "useWhen": [
+          "Latin retro-game titles",
+          "short menu labels",
+          "score cards"
+        ],
+        "mismatchRisks": [
+          "Long explanations or generic technology decoration are needed."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Coarse pixels and wide spacing can make small or long lines hard to read."
+        ],
+        "adjustment": "Compare crisp display scales, short actual labels and export compression; use a quieter face for required prose."
+      }
+    },
+    {
+      "id": "dancingscript",
+      "family": "Dancing Script",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/dancingscript"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/dancingscript/OFL.txt",
+        "sha256": "6f090277c00af96651ce6dbcc38ff1591047a3bffef486e80b6a32e8276a8201",
+        "size": 4443
+      },
+      "files": [
+        {
+          "name": "DancingScript[wght].ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/dancingscript/DancingScript%5Bwght%5D.ttf",
+          "sha256": "21808625578fe8d8cd10cb684be546dca077b27cd03a53a2f1ec11dc743c924c",
+          "size": 133636,
+          "family": "Dancing Script",
+          "weight": "400 700",
+          "style": "normal",
+          "postscriptName": "DancingScript-Regular",
+          "axes": {
+            "wght": {
+              "name": "Weight",
+              "min": 400,
+              "default": 400,
+              "max": 700
+            }
+          },
+          "coverage": {
+            "codepoints": 560,
+            "sample": "Made with care 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "latin",
+        "latin-ext",
+        "menu",
+        "vietnamese"
+      ],
+      "category": "script",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "connected",
+        "personal",
+        "flowing"
+      ],
+      "bestFor": [
+        "Personal greetings",
+        "signature-like phrases",
+        "flowing short headings"
+      ],
+      "limitations": [
+        "The user requests an actual signature, formal transcription or dense subtitles.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "notosanssc",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "Chinese reading information accompanies an open Latin script role.",
+          "avoidWhen": "A handwritten Chinese face is being added only to double the decoration."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Compare whole real words and their joins; use a stable reading partner for important details.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Connected Latin script strokes and lively joins"
+        ],
+        "useWhen": [
+          "Personal greetings",
+          "signature-like phrases",
+          "flowing short headings"
+        ],
+        "mismatchRisks": [
+          "The user requests an actual signature, formal transcription or dense subtitles."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Joins and fine strokes need scale; per-letter animation can break the written relationship."
+        ],
+        "adjustment": "Compare whole real words and their joins; use a stable reading partner for important details."
+      }
+    },
+    {
+      "id": "monoton",
+      "family": "Monoton",
+      "source": {
+        "repository": "https://github.com/google/fonts",
+        "commit": "cc39c4c2c304bc368c9b7c311ea2bcc6013299fe",
+        "directory": "ofl/monoton"
+      },
+      "license": {
+        "spdx": "OFL-1.1",
+        "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/monoton/OFL.txt",
+        "sha256": "585c6d2da8bcd8ffa651e0016f2e992a6891b625143a46a1dacf00699a817d9a",
+        "size": 4401
+      },
+      "files": [
+        {
+          "name": "Monoton-Regular.ttf",
+          "url": "https://raw.githubusercontent.com/google/fonts/cc39c4c2c304bc368c9b7c311ea2bcc6013299fe/ofl/monoton/Monoton-Regular.ttf",
+          "sha256": "951c4cea65ffede784a7c9672feec5d329a7e1e12216c42d53ecf36c90d04dea",
+          "size": 51604,
+          "family": "Monoton",
+          "weight": "400",
+          "style": "normal",
+          "postscriptName": "Monoton-Regular",
+          "axes": {},
+          "coverage": {
+            "codepoints": 372,
+            "sample": "NIGHT SHOW 0123456789",
+            "missing": []
+          }
+        }
+      ],
+      "declaredSubsets": [
+        "menu",
+        "latin"
+      ],
+      "category": "decorative",
+      "languages": [
+        "en"
+      ],
+      "roles": [
+        "title",
+        "visual-type"
+      ],
+      "moods": [
+        "multiline",
+        "marquee",
+        "retro"
+      ],
+      "bestFor": [
+        "Explicit marquee or retro-display identities",
+        "short drawn title words"
+      ],
+      "limitations": [
+        "Fine multiline lettering is being used as generic premium or technology decoration.",
+        "Language labels and a passing sample do not guarantee every glyph, regional form or shaping behavior."
+      ],
+      "pairings": [
+        {
+          "id": "inter",
+          "reason": "Conditional companion for a different required text role; compare actual copy and identity.",
+          "when": "A neutral information role is required beside the decorative title.",
+          "avoidWhen": "The title already lacks a clear viewing window or decoration would dominate."
+        }
+      ],
+      "usage": {
+        "hierarchy": "Use for a deliberate display role; keep required explanation readable in a supporting role.",
+        "spacing": "Use short large words, restrained backgrounds and actual export inspection; keep essential small reading in another face.",
+        "locale": "Latin construction; use a deliberately selected face for unsupported scripts."
+      },
+      "brandFit": {
+        "traits": [
+          "Repeated-line decorative Latin construction"
+        ],
+        "useWhen": [
+          "Explicit marquee or retro-display identities",
+          "short drawn title words"
+        ],
+        "mismatchRisks": [
+          "Fine multiline lettering is being used as generic premium or technology decoration."
+        ]
+      },
+      "readability": {
+        "readingUse": "display",
+        "risks": [
+          "Repeated strokes can shimmer, merge or disappear in compressed small video."
+        ],
+        "adjustment": "Use short large words, restrained backgrounds and actual export inspection; keep essential small reading in another face."
+      }
+    }
+  ]
+}

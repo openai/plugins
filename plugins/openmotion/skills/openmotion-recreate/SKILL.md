@@ -1,0 +1,89 @@
+---
+name: openmotion-recreate
+description: >-
+  Recreate a reference video (a link or file) as the user's own film with OpenMotion: rebuild it as an
+  editable OpenMotion project and hand it over open in the editor, keeping the original content or
+  swapping in the user's copy, brand and assets. This includes small edits to
+  the user's own finished video when no editable project for it exists. "Make one like this" and "I
+  want this feel" both count as recreation. In a workspace with the user's product material, a bare
+  link alone means "make one like this for us". Not for only analysing or discussing a video. Use
+  openmotion-director when the reference is only inspiration for an original film,
+  openmotion-template-to-video for an existing template, openmotion-production for edits to an existing
+  editable OpenMotion project, and openmotion-video-to-template for a reusable template package.
+---
+
+# OpenMotion Recreate — reference video → the user's own film
+
+## Role and goal
+
+The user supplies a video and wants a version of it for themselves. Deliver the editable OpenMotion project, open in the editor, where the user reviews it and keeps editing. Before handing it over, export it and check the exported film against the reference by numeric measurement and by inspecting extracted frames; the export is for this check, not a file to send. This Skill carries the recreation rules and the measuring script; shared engineering rules still come from the documents in §0. [rebuild](references/rebuild.md) covers reading, measuring and rebuilding the reference; [reconstruction](references/reconstruction.md) covers difficult visual systems and is read only when the reference has one; [check and deliver](references/verify.md) covers export and numeric measurement. Use only the Tools actually returned by tools/list.
+
+This workflow currently covers motion graphics only. For live action, talking heads or AI footage, say that this workflow does not support them yet. Do not suggest that footage or other material would make such a recreation possible: material the user provides can only go into a motion-graphics adaptation, which you may offer. State the limit as a fact about this workflow; never mention, quote or link this Skill or its files in the reply.
+
+## 0. Shared context
+
+For an accepted onboarding recommendation, follow [accepted template selection](../openmotion-production/references/templates.md#accepted-template-selection). Retrieve the accepted ID through `openmotion_get_template` and use that reference's instructions and motionDocument. An accepted sample experience retains the reference's content and motion unless the user requests adaptation; incidental workspace branding does not restart intake or change the template. Preserve the ID and source in project working notes and recovery.
+
+Read the [shared context](../openmotion-production/references/context.md) before working; it lists the references a recreation needs and how to reuse documents already read. When the work changes an existing draft or project, also apply the [shared edit workflow](../openmotion-production/references/edit.md). If the reference turns out to be only loose inspiration for an original film, switch to [openmotion-director](../openmotion-director/SKILL.md).
+
+## 1. Read the user's context before anything else
+
+Before asking anything, look in the current workspace for the user's own material: README and docs, product or marketing copy, brand files, logos, screenshots, colour or font definitions, package or site metadata. Read what is there. This is the user's brand, product and latest features; use it as the content of the film.
+
+Then read the reference as [rebuild](references/rebuild.md) describes: a local decodable copy, its URL and checksum, the whole video and consecutive frames around important changes. Links and local files take the same route. A cover image or an unreachable link is not a viewed video; never claim to have watched it.
+
+## 2. Decide what the user wants
+
+Work out the film the user wants from everything available: their words, whose film the reference is, what the workspace holds and the conversation so far. Short requests often mean more than they say. A bare link in a workspace with product material usually asks for a film like this about that product; "do this for our new feature" or "I want this feel" usually asks for the reference's craft carrying the user's story; an explicit list of changes asks for exactly those changes.
+
+Whether the reference's brand stays or becomes the user's is your judgement from the request and context, not a fixed rule. When a wrong guess would change the whole film, such as "make one identical" while the workspace holds the user's own brand, put it in the single question below; otherwise decide and state the assumption at delivery.
+
+Parts the request does not cover keep the original. Requested changes are in scope without restriction: wording, brand, images, colours, typography, pacing, duration, adding or removing scenes.
+
+## 3. Ask at most once
+
+Ask only when the workspace and the request together still lack something only the user can supply (brand, product, claims, numbers, prices, logos, images), or when an ambiguity would materially change the result. With usable material in the workspace, do not ask who the film is for. Offer "you decide" where it fits. When selecting, obtaining or replacing an image, clip or sound, apply the [shared material policy](../openmotion-production/references/materials.md) within this workflow's supported media scope. Ask for a material gap only when it cannot be resolved within the current scope, available sources and authorization. For configured BYOK generation, follow [openmotion-media](../openmotion-media/SKILL.md); this does not expand the creative scope of the request.
+
+Ask all of it in one batch through the host's question interface, in the user's language. If nothing is missing, do not ask. Do not ask about technical choices, intermediate approval or storyboards. After the answers, work through to the finished film without stopping.
+
+## 4. Create the project
+
+Follow the [runtime adapter](../openmotion-production/references/production.md) and [Native authoring](../openmotion-production/references/native.md). A continued recreation reuses its projectId. Otherwise create one project with `openmotion_create_project` and a stable requestId: `projectType: "reference_video"` with `referenceUrl` for a link, or `projectType: "natural_language"` for a local file, with the file path and the agreed brief in `requirements`. Creation makes an empty carrier, not a film, and never overwrites another project.
+
+Read `openmotion_get_project({projectId})` for the directory, revision, current version, `hyperframesCli` and `authoringGuide`; read the pinned engine guide before writing source. Commands you run yourself (`node <hyperframesCli>`, the measurer, `ffmpeg`) use `node` and `ffmpeg` from `PATH`. The self-contained package does not put them on `PATH`: its directory is the one holding `node_modules/hyperframes` in the `hyperframesCli` path, with Node at `runtime/node/bin/node` (Windows `runtime\node\node.exe`) and FFmpeg/ffprobe in `runtime/media/bin`. For an npm installation there is no bundled `runtime/` directory: the application root is the directory containing `node_modules/hyperframes`, and `scripts/npm-runtime.mjs` exports `ensureNativeRuntime(appRoot)` and `nativeConfiguration(appRoot)`. Prepare through the former when needed; the latter returns `paths.HYPERFRAMES_FFMPEG_PATH` and `paths.HYPERFRAMES_FFPROBE_PATH` for the verified cache. Pass these as environment variables to the measurer or direct media commands. When neither is available, record the affected check as blocked with the reason; never as passed.
+
+## 5. Rebuild, then change
+
+Follow [rebuild](references/rebuild.md) for understanding the video, choosing an editable representation, measuring and rebuilding. Build the user's version directly: rebuild the parts that stay faithfully and put the user's content into the rebuilt structure. Do not build a complete copy of the reference first only to change it again. For dense multi-shot work, use the [segment reconstruction process](references/reconstruction.md) to prepare concrete shot/action briefs, assign independent units when delegation is available and authorized, and integrate their inspected source. Retain each unit's representation decision, comparison and next repair in its existing working notes, and reread them when resuming work. For unfamiliar or inaccurate movement, follow the same reconstruction reference: turn reference observations into timed controls consumed by the renderer, then compare actual intermediate states before extending that implementation. Carry local comparison evidence and unresolved differences into whole-film review.
+
+Import real media with `openmotion_import_assets` and use the returned paths; save text files (HTML, CSS, JS, SVG, JSON) with `openmotion_edit_project` using the latest `expectedRevision` and `expectedVersionId`. Re-read the project after a conflict instead of replaying an old batch.
+
+Before grouping reference regions into materials, inspect each proposed material region through time and inventory its independently changing contents, including small changes within stationary boundaries. Follow [rebuild](references/rebuild.md#choose-an-editable-representation) to connect those changes to source controls and check each in the actual output.
+
+When the reference is the user's own finished film and the request changes only a few details (a year, a line of copy, a logo) while everything else stays, the project may keep the original video as its base layer: import it, cover only the changed areas with clean patches and set the new text or logo as editable native elements that follow the original's timing and motion. Check that each patch leaves no smudge or seam against its surroundings. This is still the editor project and delivery below; never deliver an MP4 edited outside the project. Otherwise, placing the whole original video on the timeline is not a recreation, and an unrelated built-in template is not a substitute.
+
+New content must keep the reference's craft, not just its palette. Match its visual density (a screen full of tiles stays full), camera and 3D motion (a tilted orbit stays tilted), type scale and type character (the closest available face of the same kind, such as a pixel, mono or wide display face, instead of a generic system font), and its background layers (line drawings, grids, textures). A line, label or headline that is clearly visible in the reference must be equally visible in the remix, and the remix must not be darker or lower-contrast than the reference. Simplifying a dense or 3D passage into a few flat cards is a defect to fix, not an acceptable approximation.
+
+Apply the changes with care: fit longer text with related layout and reading-time changes, update every relevant appearance of a replaced brand or object, keep unrelated content and motion, never invent facts, and check audio timing when changes shift pictures.
+
+Sound: when the reference has sound, the remix has sound. Keep the reference soundtrack by default (extract it as AAC `.m4a` and import it) and re-time it to the new cut; remove a voiceover that names the reference's brand or product. Deliver a silent film only when the user asks or the reference is silent.
+
+Once this turn's final video HTML and assets are complete and ready for preview, complete the [editable preview handoff](../openmotion-production/references/native.md#editable-preview-handoff) automatically, before final export or delivery. Keep intermediate authoring silent; present the final chat video only after its verified MP4 export through the shared production workflow.
+
+## 6. Export and check
+
+Apply the [production decisions](../openmotion-director/references/production-decisions.md) and [Motion review](../openmotion-director/references/motion-review.md) to time structure, key actions, joins and state; still frames that look similar do not replace a moving comparison. Do not restart original creative direction.
+
+Then follow [check and deliver](references/verify.md): export the inspected version, read the automatic technical verification, inspect the exported MP4, measure it against the reference with the bundled measurer and fix every failing row before delivery. For dense multi-unit films, use available, authorized delegation for the integrated-export review described there, with a fresh review context or workers reviewing another author's units.
+
+Opening the editor is a preview handoff, not completion of these checks. Keep working after it opens; the shared starter draft default does not replace this recreation workflow. Check small objects whose shape carries meaning with close crops as described in rebuild and verify: numerical similarity does not establish the correct contour. Continue authorized repairs for failed checks, revisiting the affected unit's representation decision and rechecking its actual output. When available material or tools cannot resolve a specific gap after recovery, identify the project as an incomplete draft and state that gap.
+
+## 7. Deliver
+
+The project open in the editor is the deliverable. Do not copy, link or attach the exported MP4 or other files unless the user asks for them.
+
+Reply briefly in the user's language. Give the `previewUrl` returned by `openmotion_open_preview` and say the editor is open only after confirming visible latest content through the shared handoff; otherwise state the display failure or confirmed inactive-chat deferral, even if the MP4 exported successfully. Say in one or two sentences what changed, which assumptions you made from the workspace material, and any limitation the user would notice. When the reference, analysis or tools fall short, name the specific gap and its effect; never claim a faithful result that was not achieved.
+
+## 8. Follow-up requests
+
+Apply follow-ups to the same project with the shared edit workflow and check them again as in §6; never start over. `openmotion_list_versions` and `openmotion_restore_version` bring back an earlier version as a new one. When the user is unhappy without saying why ("not satisfied", "第一版不太满意"), ask at most three multiple-choice questions in one batch, for example: follow the reference's story or tell our own; which feature is the hero; size and duration. Offer "you decide" as an option. Then revise the existing project.
