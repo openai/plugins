@@ -26,7 +26,7 @@ Load this skill whenever a `use_figma` task involves:
 - Reading or writing timeline duration via `node.timelines` / `node.setTimelineDuration(id, seconds)`.
 - Choosing easing for any of the above.
 
-Static design work (creating shapes, components, variables, layout) goes through [figma-use](../figma-use/SKILL.md) alone — this skill is only for the time dimension.
+Static design work (creating shapes, components, variables, layout) goes through [figma-use](../figma-use/SKILL.md) and its required editor-specific companion skills — this skill is only for the time dimension.
 
 ## Exposed motion API surface
 

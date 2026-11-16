@@ -57,7 +57,7 @@ This tool identifies published components in the selection that don't yet have C
 **Handle the response:**
 
 - **"No published components found in this selection"** — the node contains no published components. Inform the user they need to publish the component to a team library in Figma first, then stop.
-- **"All component instances in this selection are already connected to code via Code Connect"** — everything is already mapped. Inform the user and stop.
+- **"All component instances in this selection are already connected to code via Code Connect"** — for an add-only request, report that no new mappings are needed. For an update or maintenance request, inspect the existing local mapping templates, resolve their target component IDs from those mappings or metadata, and continue the requested edit; do not stop solely because mappings exist.
 - **Normal response with component list** — extract the `mainComponentNodeId` for each returned component. Use these resolved node IDs (not the original from the URL) for all subsequent steps. If multiple components are returned (e.g. the user selected a frame containing several different component instances), repeat Steps 3–6 for each one.
 
 ## Step 3: Fetch Component Properties

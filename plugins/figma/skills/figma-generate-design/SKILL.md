@@ -123,7 +123,7 @@ get_libraries({ fileKey })
 // }
 
 // Step 2: Search within a specific library using its libraryKey
-search_design_system({ query: "button", fileKey, includeLibraryKeys: ["lk-abc123..."] })
+search_design_system({ queries: [{ entity: "component", query: "button" }], fileKey, includeLibraryKeys: ["lk-abc123..."] })
 ```
 
 Org libraries in `libraries_available_to_add` are paginated (20 per page). When `libraries_available_to_add_next_offset` is non-null, more org libraries are available — call `get_libraries` again with `offset` set to that value to fetch the next page. Community UI kits only appear on the first page. If the user names a specific library you don't see in the current page, page further before giving up.

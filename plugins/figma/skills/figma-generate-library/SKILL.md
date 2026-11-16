@@ -194,8 +194,8 @@ Before calling `search_design_system` for a target file, you MUST call `get_libr
 
 An empty `get_libraries` result does NOT excuse skipping the search — it only means you have no library keys to scope with. `get_libraries` paginates (community UI kits appear only on the first page, org libraries page in batches of 20), so empty lists are not proof that no library exists. How to act on the result:
 
-- **Libraries returned** — run `search_design_system` scoped with `includeLibraryKeys`. Libraries in `libraries_available_to_add` are NOT searched by default; pass their `libraryKey`s to reach them.
-- **No libraries returned** — still run `search_design_system`, but omit `includeLibraryKeys`. Omitting it scopes the search to the file itself, which is exactly what you want when discovery returned nothing to scope by.
+- **Libraries returned** — run `search_design_system` scoped with `includeLibraryKeys`. Pass the relevant returned `libraryKey` values when restricting the search; verify the active tool contract rather than inferring unsearched library visibility from the list name.
+- **No libraries returned** — still run `search_design_system`, but omit `includeLibraryKeys`. Do not assume omission means file-only scope; inspect the returned assets and their source libraries according to the active tool schema.
 
 Only once the search itself comes back empty may you record "no design system assets available" in the Phase 0f gap analysis and build from code tokens. Never infer "no libraries" from a failed or unattempted `get_libraries` call.
 
@@ -213,11 +213,11 @@ Use the returned `libraryKey` values to scope searches to specific libraries via
 If `libraries_available_to_add_next_offset` is non-null, more org libraries are available — call `get_libraries` again with `offset` set to that value. Org libraries page in batches of 20; community UI kits only appear on the first page.
 
 ```
-// Search across all libraries (default)
-search_design_system({ query, fileKey, includeComponents: true, includeVariables: true, includeStyles: true })
+// Search the task's already identified required assets using the active tool scope
+search_design_system({ queries: [{ entity: "component", query }], fileKey })
 
 // Search within a specific library only
-search_design_system({ query, fileKey, includeLibraryKeys: ["lk-abc123..."], includeComponents: true })
+search_design_system({ queries: [{ entity: "component", query }], fileKey, includeLibraryKeys: ["lk-abc123..."] })
 ```
 
 **Reuse if** all of these are true:
