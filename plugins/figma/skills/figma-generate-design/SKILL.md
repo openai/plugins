@@ -130,7 +130,7 @@ Org libraries in `libraries_available_to_add` are paginated (20 per page). When 
 
 This is especially useful when the file has many libraries and you want targeted results (e.g. searching only within "iOS 26" or "Material 3" instead of getting matches from every library).
 
-**Search broadly, but one intent per query** — `search_design_system` does NOT apply OR semantics, so never pack alternatives or synonyms into a single string ("Button IconButton icon" matches nothing useful). Issue a separate call per term and run them in parallel: "button", "input", "nav", "card", "accordion", "header", "footer", "tag", "avatar", "toggle", "icon", etc. Multi-word names and phrases are fine when they name one thing ("Material Design Icons"). Use `includeComponents: true` to focus on components.
+**Search the assets already identified as necessary, one intent per query.** Use the active `search_design_system` input schema: one `queries` array of `{ entity, query }` objects, with `entity: "component"` for components. Batch the required assets in one call; do not add speculative synonyms, variants, or checklist terms. Inspect the result before deciding on a justified follow-up.
 
 **Include component properties** in your map — you need to know which TEXT properties each component exposes for text overrides. Create a temporary instance, read its `componentProperties` (and those of nested instances), then remove the temp instance.
 
@@ -439,6 +439,9 @@ if (existingButton && existingButton.type === "INSTANCE") {
   ) || buttonSet.defaultVariant;
   existingButton.swapComponent(newVariant);
 }
+if (!existingButton || existingButton.type !== "INSTANCE") {
+  throw new Error("Expected the target button instance; no swap was performed");
+}
 return { success: true, mutatedNodeIds: [existingButton.id] };
 ```
 
@@ -467,7 +470,7 @@ Because this skill works incrementally (one section per call), errors are natura
 ## Best Practices
 
 - **Always search before building.** The design system likely has the component, variable, or style you need. Manual construction and hardcoded values should be the exception, not the rule.
-- **Search broadly, one intent per query.** Try synonyms and partial terms as *separate* parallel searches, never combined into one string — a "NavigationPill" might be found under "pill", "nav", "tab", or "chip", so run those as four queries. For variables, search "color", "spacing", "radius", etc.
+- **Search identified construction gaps, one intent per query.** Batch only necessary assets as `{ entity, query }` objects. Follow the active tool contract: do not add speculative synonyms or generic token checklists, and do not turn an empty result into automatic alternate-term searches.
 - **Prefer design system tokens over hardcoded values.** Use variable bindings for colors, spacing, and radii. Use text styles for typography. Use effect styles for shadows. This keeps the screen linked to the design system.
 - **Prefer component instances over manual builds.** Instances stay linked to the source component and update automatically when the design system evolves.
 - **Componentize by default.** Build repeated or reusable elements as a component once, then place instances. Do not ship a flat tree of one-off frames that needs a second "make it componentized" pass.

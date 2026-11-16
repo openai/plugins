@@ -27,7 +27,7 @@ The tool cannot:
 - Move individual shapes
 - Edit a diagram node-by-node after generation
 
-If the user asks for any of those on an existing diagram, recommend they open the diagram in Figma and edit there. For content-level changes, it's usually faster to regenerate.
+For those changes on an existing diagram, load `figma-use-figjam` and inspect whether `use_figma` supports the requested node edit. Use that supported editing path within the requested scope. Recommend manual editing only when the active tools cannot perform it. For content-level changes, regeneration may be appropriate.
 
 ## Step 2: Pick the diagram type
 
@@ -107,6 +107,6 @@ Every call to `generate_diagram` without a `fileKey` creates a new FigJam file i
 How to reuse:
 
 1. **Pass `fileKey`** on subsequent `generate_diagram` calls. Extract from a `figma.com/board/{fileKey}/...` URL. The diagram is added to the existing file rather than creating a new one.
-2. If you want to replace the previous diagram rather than adding next to it, use the `use_figma` tool (see the `figma-use-figjam` skill) to delete the old diagram's nodes first, then call `generate_diagram` with the same `fileKey`. Or leave the old diagram and place the new one beside it — readers often benefit from seeing the history of attempts.
+2. If you want to replace the previous diagram rather than adding next to it, use the `use_figma` tool (see the `figma-use-figjam` skill) to remove only the superseded diagram's nodes after `generate_diagram` has successfully created and validated its replacement in the same `fileKey`. Keep the original if replacement generation fails. Or leave the old diagram and place the new one beside it — readers often benefit from seeing the history of attempts.
 
 Ask the user which they prefer the first time you iterate — "regenerate over the old one, or keep both side-by-side?" — and remember their answer for subsequent iterations in the session.

@@ -92,7 +92,7 @@ export class Counter extends Agent<Env, State> {
 }
 
 export default {
-  fetch: (req, env) => routeAgentRequest(req, env) ?? new Response("Not found", { status: 404 })
+  fetch: async (req, env) => (await routeAgentRequest(req, env)) ?? new Response("Not found", { status: 404 })
 };
 ```
 

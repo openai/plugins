@@ -10,7 +10,7 @@ Use the `use_figma` tool to execute JavaScript in Figma files via the Plugin API
 
 **Always include `figma-use` in the comma-separated `skillNames` parameter when calling `use_figma`. If this skill was loaded via an MCP resource, you MUST prefix the name with `resource:` (e.g. `resource:figma-use`).** This is a logging parameter used to track skill usage — it does not affect execution.
 
-**If Figma MCP tools appear as deferred tools, batch-load all their schemas in a single `ToolSearch` call** using the `select:` syntax — e.g. `ToolSearch query="select:use_figma,get_screenshot,get_metadata,create_new_file"`. One round trip beats six.
+**If Figma MCP tools are deferred, discover the needed schemas through the active host's tool-discovery mechanism and batch independent discovery requests where supported.** On hosts that expose `ToolSearch`, use its `select:` syntax; do not assume that tool exists in every host. Use already available schemas directly.
 
 **If the task involves building or updating a full page, screen, or multi-section layout in Figma from code**, also load [figma-generate-design](../figma-generate-design/SKILL.md). It provides the workflow for discovering design system components via `search_design_system`, importing them, and assembling screens incrementally. Both skills work together: this one for the API rules, that one for the screen-building workflow.
 
@@ -60,13 +60,13 @@ await figma.setCurrentPageAsync(targetPage);
 // targetPage.children is now populated
 ```
 
-### Call `setCurrentPageAsync` at most once per `use_figma` invocation — fan multi-page work out in parallel
+### Call `setCurrentPageAsync` at most once per `use_figma` invocation — separate calls per page
 
 **One script must switch pages at most once.** Never loop over `figma.root.children` and switch pages inside the loop.
 
-If the work spans multiple pages, **split it into N `use_figma` calls (one per target page) and emit them in parallel** — a single assistant message containing N `use_figma` tool-use blocks. The harness runs them concurrently; each script sets `currentPage` exactly once.
+If the work spans multiple pages, **split it into N `use_figma` calls (one per target page)**. Run mutations sequentially, inspecting each result before dependent work. Independent read-only calls may run in parallel only when the active host supports that safely; each script sets `currentPage` exactly once.
 
-> **Explicit instruction:** when fanning out, you MUST issue the N tool calls in **one message**. Do not send them across multiple turns. Do not await one before issuing the next. Sequential per-page calls are slower than the in-loop pattern this rule replaces and waste the entire benefit of splitting.
+> **Execution order:** serialize mutations and inspect their results before dependent operations. Independent read-only calls may run in parallel if the host supports it. Keep the one-page-per-call boundary in either case.
 
 ```js
 // AVOID — switches pages N times in one script, reloads the file each time
@@ -76,10 +76,10 @@ for (const page of figma.root.children) {
 }
 
 // PREFER — read-only discovery call to get page IDs, then in the NEXT message
-// emit N parallel use_figma tool calls (one per page), each setting currentPage once.
+// Issue one use_figma call per page, each setting currentPage once; serialize mutations.
 ```
 
-Default to parallel fan-out for any multi-page work — reads and writes alike. See [gotchas.md → Set current page once per `use_figma` call](references/gotchas.md#set-current-page-once-per-use_figma-call--split-multi-page-work-into-parallel-calls) for the full rationale.
+Keep multi-page mutations sequential, consistent with `figma-generate-library`; only independent read-only calls are candidates for parallel execution. See [gotchas.md → Set current page once per `use_figma` call](references/gotchas.md#set-current-page-once-per-use_figma-call--split-multi-page-work-into-parallel-calls) for the full rationale.
 
 ### Across script runs
 
@@ -391,7 +391,7 @@ Step 1: one read-only `use_figma` to get page IDs:
 return figma.root.children.map(p => ({ id: p.id, name: p.name }));
 ```
 
-Step 2: in the **next assistant turn, emit one `use_figma` per page in parallel** (a single message containing N tool-use blocks). Each runs:
+Step 2: issue one `use_figma` call per page. This inventory is read-only, so independent calls may run in parallel if the host supports it; otherwise run them sequentially. Each runs:
 ```js
 const page = await figma.getNodeByIdAsync(PAGE_ID);
 await figma.setCurrentPageAsync(page);

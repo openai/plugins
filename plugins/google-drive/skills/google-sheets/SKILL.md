@@ -39,7 +39,7 @@ If the user has not provided explicit style direction, read `references/style-pr
    - If neither skill is installed, create the spreadsheet directly with Google Sheets MCP.
 3. Existing Google Sheets edits: use Google Sheets MCP directly.
 
-Do not reference the local `.xlsx` in the final answer. Your final answer includes the Google Spreadsheet link only.
+For a Google Sheets destination, return the verified Google Spreadsheet link. Include a local workbook only when the user also requests that file.
 
 ## File Safety
 
@@ -83,14 +83,14 @@ If Default Routing uses connector edit workflow:
 2. Before any direct live range read, cell read, or `search_spreadsheet_rows`, read `references/reference-live-read-search-safety.md`.
 3. Read every task-specific file from the matrix below.
 4. If the task spans multiple categories, read all matching files.
-5. If uncertain, read every file in `references/`.
+5. If uncertain, use the table below to locate the relevant reference and inspect the current tool schema. Read additional files only when they resolve a specific gap.
 
 Do not execute content edits until the required references are read in the current turn.
 
 ## Final Answer Requirement
 
-Unless Default Routing selected native Google Sheets reference-follow creation, if the registered `Spreadsheets` capability like the `[@spreadsheets](plugin://spreadsheets@openai-primary-runtime)` plugin is available, you MUST use one of them to create a local `.xlsx` and import it to Google Drive with `upload_mode: "native_google_sheets"`.
-Even though you created a local `.xlsx`, do not cite the local path in the final answer. The final answer cites only the Google Spreadsheet link.
+For new Google Sheets creation, follow Default Routing: copy native references, otherwise use the available Spreadsheets authoring/import route or direct MCP fallback. Existing-sheet edits stay in the existing spreadsheet. Read-only analysis does not require creating or importing a workbook.
+For a Google Sheets deliverable, cite its verified link; include the intermediate `.xlsx` only if the user requested a local copy. For read-only work, return the requested analysis with the source link.
 
 ### Spreadsheets location
 

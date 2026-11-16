@@ -65,8 +65,9 @@ This tool identifies published components in the selection that don't yet have C
 Call the MCP tool `get_context_for_code_connect` with:
 - `fileKey` — from Step 1
 - `nodeId` — the resolved `mainComponentNodeId` from Step 2
-- `clientFrameworks` — determine from `figma.config.json` `parser` field (e.g. `"react"` → `["react"]`)
-- `clientLanguages` — infer from project file extensions (e.g. TypeScript project → `["typescript"]`, JavaScript → `["javascript"]`)
+- `sessionId` — the UUID returned by `create_session`, when required by the active tool contract
+
+Infer framework and language from the project for authoring the template, but do not pass `clientFrameworks` or `clientLanguages` to this tool; its input schema does not expose those fields.
 
 For multiple components, call the tool once per node ID.
 
@@ -434,7 +435,7 @@ export default {
    export default { example: figma.code`${child1}${child2}` }
    ```
 
-7. **Never hardcode slot or children content.** Always resolve child instances dynamically — use `getInstanceSwap()` for INSTANCE_SWAP properties, `findInstance()`/`findConnectedInstance()` for direct children — and render them via `executeTemplate()`. Never construct JSX from a layer name (e.g., `<StarIcon />`) or guess import paths. If an instance has no Code Connect, omit it — do not add a hardcoded fallback.
+7. **Never hardcode slot or children content.** Always resolve child instances dynamically — use `getInstanceSwap()` for INSTANCE_SWAP properties, `findInstance()`/`findConnectedInstance()` for direct children — and render them via `executeTemplate()`. Never construct JSX from a layer name (e.g., `<StarIcon />`) or guess import paths. For instances without Code Connect, let `executeTemplate()` handle the runtime fallback as described above; do not add hardcoded JSX or a `hasCodeConnect()` guard.
 
    ```ts
    // WRONG — hardcodes the icon from its layer name
@@ -462,7 +463,7 @@ Given URL: `https://figma.com/design/abc123/MyFile?node-id=42-100`
 **Step 2:** Call `get_code_connect_suggestions` with `fileKey: "abc123"`, `nodeId: "42:100"`, `excludeMappingPrompt: true`.
 Response returns one component with `mainComponentNodeId: "42:100"`. If the response were empty, stop and inform the user. If multiple components were returned, repeat Steps 3–6 for each.
 
-**Step 3:** Call `get_context_for_code_connect` with `fileKey: "abc123"`, `nodeId: "42:100"` (from Step 2), `clientFrameworks: ["react"]`, `clientLanguages: ["typescript"]`.
+**Step 3:** Call `get_context_for_code_connect` with `fileKey: "abc123"`, `nodeId: "42:100"` (from Step 2), and the active `sessionId` when required. Use the project's React/TypeScript context when writing the template.
 
 Response includes properties:
 - Label (TEXT)

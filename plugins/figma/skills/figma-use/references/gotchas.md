@@ -192,9 +192,9 @@ const page = figma.currentPage  // works
 
 **A `use_figma` script must call `setCurrentPageAsync` at most once.** Never loop over `figma.root.children` and switch pages inside one script.
 
-**The rule is the same for reads and writes:** if work spans multiple pages, split it into **multiple `use_figma` tool calls, one per target page, and YOU MUST issue them in parallel**.
+**Use one `use_figma` call per target page.** Run mutations sequentially. Independent read-only calls may run in parallel only when the host supports this safely.
 
-> **Explicit instruction to the agent:** emit all N `use_figma` calls in a **single assistant message**, as N parallel tool-use blocks. Do not send them in separate turns. Do not await one before issuing the next. Each call sets `currentPage` exactly once; the harness runs them concurrently. Sequential per-page calls defeat the entire point of splitting and are slower than the in-loop pattern this rule replaces.
+> **Execution order:** each call sets `currentPage` exactly once. Serialize writes, inspect results, and then issue dependent work. Parallel execution is an option for independent reads, not a requirement that overrides mutation safety or the host contract.
 
 ```js
 // WRONG — one script switches pages on every iteration; reloads the file N times sequentially
@@ -206,25 +206,25 @@ for (const page of figma.root.children) {
 return componentsByPage
 ```
 
-Instead, do it in two steps and parallelize step 2:
+Instead, do this read-only inventory in two steps; step 2 can be parallel when supported:
 
 ```js
 // CORRECT — step 1: cheap, no page switch. Return the page IDs you'll fan out over.
 return figma.root.children.map(p => ({ id: p.id, name: p.name }))
 ```
 
-Then in the **next assistant turn**, emit **N parallel `use_figma` tool-use blocks in one message** — one per page. Each script runs this:
+Then issue one read-only `use_figma` call per page, optionally in parallel when supported. Each script runs this:
 
 ```js
 // CORRECT — step 2: one call per page, currentPage set exactly once.
-// The assistant issues N of these in parallel — do NOT loop pages inside the script.
+// Issue one call per page; this read-only example may run in parallel when supported.
 const page = await figma.getNodeByIdAsync(PAGE_ID)  // PAGE_ID supplied by caller
 await figma.setCurrentPageAsync(page)
-// ... read or mutate this page ...
+// ... read this page ...
 return { pageId: page.id, components: page.findAllWithCriteria({ types: ['COMPONENT'] }).map(n => n.id) }
 ```
 
-This applies to discovery, mutation, component-set creation, and audits — reads and writes alike. **The only acceptable reason to switch pages multiple times in one script is when splitting would break a transactional/atomicity guarantee** (i.e., the operation must succeed across all pages or none, and a partial failure between calls would corrupt state). "It's read-only" and "I want a consistent snapshot" are *not* exceptions — fan out in parallel.
+Use the same one-page-per-call boundary for discovery, mutations, component creation, and audits, but serialize calls that write. Splitting calls does not provide a cross-page transaction or a consistent snapshot. If the task needs either guarantee, check the available API support and plan recovery rather than assuming parallel execution provides atomicity.
 
 The same rule generalizes to *any* traversal: scope it to the smallest known ancestor — see [Scope traversal to the smallest known ancestor](#scope-traversal-to-the-smallest-known-ancestor).
 

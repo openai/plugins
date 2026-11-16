@@ -48,7 +48,7 @@ Apply the hints in this order — earlier sources override later ones:
 
 Images and icons come back as `<img>` elements whose `src` is a remote asset URL (`https://.../api/mcp/asset/...`). Apply these rules as you write the code:
 
-- **Render every icon/image from its exported asset.** Never hand-write or inline `<svg>`/`<path>`, never author your own icon file, never drop an icon or leave a placeholder — you don't have the real vector data, so anything you draw is wrong.
+- **Render every icon/image from its exported asset.** Never hand-write replacement SVG paths, author substitute icon files, or leave placeholders. Preserve static assets unchanged. If the requested motion requires animating internal SVG paths, follow `figma-implement-motion` and inline only the exact exported source needed for that animation, preserving its geometry, IDs, and appearance.
 - **Sourcing:** the asset URL works directly as `src` for an immediate render, but it **expires in ~7 days** — so for code you'll commit, download-and-commit the exact asset bytes, or wire a dynamic content image to the project's data source (API, CDN, or props). Never a file whose contents you authored.
 - **Reuse a project icon component only if its glyph clearly matches** (a name match is not enough); otherwise use the exported asset.
 - **Size explicitly:** a fixed-size container (icons are usually square, e.g. `size-[24px]`, `overflow-clip`) with BOTH width and height set, and size the leaf `<img>` to fill it (`100%` or fixed px) — never `auto`, which blows the image up to its intrinsic size.

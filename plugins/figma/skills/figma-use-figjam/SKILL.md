@@ -27,7 +27,7 @@ Load only the references your task needs — but when you do need to load multip
 
 ## Deferred Tools — Batch-Load Schemas
 
-The Figma MCP tools (`use_figma`, `get_figjam`, `get_screenshot`, `get_metadata`, `create_new_file`, `whoami`) often appear as deferred tools that require `ToolSearch` to load their schemas before they can be called. **Load all schemas in a single `ToolSearch` call** using the `select:` syntax instead of one call per tool:
+Discover the needed Figma MCP schemas through the active host's tool-discovery mechanism. Use available schemas directly and batch independent discovery where supported. If the host exposes `ToolSearch`, its batched syntax is:
 
 ```
 ToolSearch query="select:use_figma,get_figjam,get_screenshot,get_metadata,create_new_file"
@@ -41,7 +41,7 @@ Every FigJam text mutation (sticky/shape/label/table cell/connector text, standa
 
 ## Adding Images to a FigJam Board
 
-**`upload_assets` is the ONLY supported way to add images to a FigJam file.** Do NOT use `figma.createImage()` or `figma.createImageAsync()` from inside `use_figma` — they are unsupported as image-upload entry points in FigJam. Call `upload_assets` with the FigJam `fileKey`; the tool returns single-use upload URLs that you POST raw image bytes to, and the image is committed and placed automatically. Pass `nodeId` (with `count: 1`) to attach the upload to an existing FigJam node as a fill; omit `nodeId` to drop the image onto the board as a new layer.
+**Use `upload_assets` to import existing image files into FigJam.** When the user asks for a new generated image and the active tool schema supports FigJam, `generate_image` can generate and place it directly; observe its plan and credit requirements. Do NOT use `figma.createImage()` or `figma.createImageAsync()` from inside `use_figma` — they are unsupported as image-upload entry points in FigJam. Call `upload_assets` with the FigJam `fileKey`; the tool returns single-use upload URLs that you POST raw image bytes to, and the image is committed and placed automatically. Pass `nodeId` (with `count: 1`) to attach the upload to an existing FigJam node as a fill; omit `nodeId` to drop the image onto the board as a new layer.
 
 For the full request/response shape, see [figma-use → api-reference.md → Images](../figma-use/references/api-reference.md#images).
 

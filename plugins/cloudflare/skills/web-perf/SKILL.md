@@ -123,7 +123,7 @@ list_network_requests(resourceTypes: ["Script", "Stylesheet", "Document", "Font"
 3. **Missing preloads**: Critical resources (fonts, hero images, key scripts) not preloaded
 4. **Caching issues**: Missing or weak `Cache-Control`, `ETag`, or `Last-Modified` headers
 5. **Large payloads**: Uncompressed or oversized JS/CSS bundles
-6. **Unused preconnects**: If flagged, verify by checking if ANY requests went to that origin. If zero requests, it's definitively unused—recommend removal. If requests exist but loaded late, the preconnect may still be valuable.
+6. **Unused preconnects**: If flagged, verify by checking if ANY requests went to that origin. If zero requests, it was unused in this trace. Check the relevant routes, interactions, and conditional requests before recommending removal; one trace does not establish that the hint is globally unused. If requests exist but loaded late, the preconnect may still be valuable.
 
 For detailed request info:
 ```
@@ -137,7 +137,9 @@ Take an accessibility tree snapshot:
 take_snapshot(verbose: true)
 ```
 
-**Flag high-level gaps:**
+**Flag high-level gaps supported by the evidence:**
+
+The accessibility tree can establish names and semantics, but does not by itself establish contrast, focus visibility, or focus traps. Check computed foreground/background styles and rendered states for contrast, and exercise keyboard navigation for focus behavior. Mark those checks unverified if the required browser capabilities are unavailable.
 - Missing or duplicate ARIA IDs
 - Elements with poor contrast ratios (check against WCAG AA: 4.5:1 for normal text, 3:1 for large text)
 - Focus traps or missing focus indicators
