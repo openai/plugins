@@ -1,0 +1,40 @@
+{
+  "name": "ctxd",
+  "version": "0.1.0",
+  "description": "Keep agents connected to changing source content with the local ctxd tracker and MCP bridge.",
+  "author": {
+    "name": "Team CTXD",
+    "email": "hi@ctxd.dev",
+    "url": "https://ctxd.dev"
+  },
+  "homepage": "https://ctxd.dev",
+  "repository": "https://github.com/ctxd-dev/ctxd",
+  "license": "MIT",
+  "keywords": [
+    "ctxd",
+    "context",
+    "source",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ctxd",
+    "shortDescription": "Read synchronized source context",
+    "longDescription": "Use ctxd to synchronize source changes, inspect paths and read the current source through a local MCP bridge. Includes a setup and verification workflow for the released Python package.",
+    "developerName": "Team CTXD",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://ctxd.dev/_ucf/",
+    "privacyPolicyURL": "https://github.com/ctxddev/ctxd-agent-plugin/blob/main/PRIVACY.md",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "defaultPrompt": [
+      "Set up ctxd for a source folder I choose.",
+      "Read the current project guide through ctxd.",
+      "Verify that ctxd sees a source edit and removal."
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "ctxd": {
+      "command": "uvx",
+      "args": [
+        "--python",
+        "3.12",
+        "--from",
+        "ctxd",
+        "ctxd-mcp"
+      ]
+    }
+  }
+}
