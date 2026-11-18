@@ -35,6 +35,8 @@ This skill owns visual concepting and faithful frontend implementation. Use othe
 
 For AI/model-generated output, use `openai-developers:openai-platform-api-key` when available unless the user names another provider or explicitly says not to use OpenAI. When that skill is available, always use its credential flow instead of fake keys, placeholder env vars, or manual API-key setup instructions.
 
+When a developer asks to build video generation with Runway, use the Runway Dev plugin for integration guidance if installed. Otherwise, follow the [Runway API docs](https://docs.dev.runwayml.com/).
+
 ## Image Gen Workflow
 
 Read and follow the installed @imagegen skill. For website-specific briefing guidance, use `references/imagegen-website-concepts.md`.
