@@ -1,10 +1,10 @@
 ---
 name: remotion-saas
 description: Build an app with Remotion
-version: 4.0.506
+version: 4.0.545
 ---
 
-One can build apps with Remotion.
+One can build apps with Remotion.  
 It is possible to have a simple form and hook it up to a render, or have a complex video editor.
 
 ## Choosing a template or a framework
