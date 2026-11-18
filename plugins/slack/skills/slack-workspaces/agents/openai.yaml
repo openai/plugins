@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slack workspaces"
+  short_description: "Connect and select the correct Slack workspace"
+  default_prompt: "Use $slack-workspaces to verify my Slack connections and select the correct workspace."
