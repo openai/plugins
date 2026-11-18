@@ -1,0 +1,38 @@
+{
+  "name": "buzzy",
+  "version": "0.1.0",
+  "description": "Create images, videos, product ads, and short films with Buzzy.",
+  "author": {
+    "name": "Buzzy AI, Inc.",
+    "url": "https://www.buzzy.now"
+  },
+  "homepage": "https://www.buzzy.now",
+  "repository": "https://github.com/zmoai2025/buzzy-agent-mcp",
+  "keywords": ["buzzy", "image", "video", "ads", "mcp", "codex"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Buzzy",
+    "shortDescription": "Create images, videos, and ads",
+    "longDescription": "Create images, videos, branded ads, and short films with Buzzy. Start with an idea, a product link, or a reference image, choose a creative workflow, and refine the result through conversation.",
+    "developerName": "Buzzy AI, Inc.",
+    "category": "Creativity",
+    "capabilities": [
+      "Generate images and videos",
+      "Make product and brand ads",
+      "Create cinematic and 3D clips",
+      "Produce stories"
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "websiteURL": "https://www.buzzy.now",
+    "supportURL": "https://www.buzzy.now/terms-and-conditions",
+    "privacyPolicyURL": "https://www.buzzy.now/privacy-policy",
+    "termsOfServiceURL": "https://www.buzzy.now/terms-and-conditions",
+    "defaultPrompt": [
+      "Generate an image from this brief.",
+      "Turn this product into a short UGC ad.",
+      "Make a cinematic clip from this idea."
+    ]
+  }
+}

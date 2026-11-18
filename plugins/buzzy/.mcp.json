@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "buzzy": {
+      "type": "http",
+      "url": "https://mcp.buzzy.now/mcp",
+      "oauth_resource": "https://mcp.buzzy.now/mcp"
+    }
+  }
+}

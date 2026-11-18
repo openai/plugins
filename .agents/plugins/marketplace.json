@@ -794,6 +794,18 @@
       "category": "Creativity"
     },
     {
+      "name": "buzzy",
+      "source": {
+        "source": "local",
+        "path": "./plugins/buzzy"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity"
+    },
+    {
       "name": "crowdstrike-falcon-foundry",
       "source": {
         "source": "url",
