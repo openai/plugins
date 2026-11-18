@@ -838,6 +838,21 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "amnitex",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Amnibro/amnitex.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "AmniTex (Native Helium LUT)"
+      }
     }
   ]
 }
