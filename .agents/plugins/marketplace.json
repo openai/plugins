@@ -838,6 +838,91 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "suno",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/AceDataCloud/SunoCodex.git",
+        "sha": "091f3b402269d0b7f3aa7caa14422d1a547126f2",
+        "ref": "v0.1.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity",
+      "interface": {
+        "displayName": "Suno by Ace Data Cloud"
+      }
+    },
+    {
+      "name": "seedance",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/AceDataCloud/SeedanceCodex.git",
+        "sha": "ba192be9374a3bbe3d4f43aa9644962d8124410b",
+        "ref": "v0.1.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity",
+      "interface": {
+        "displayName": "Seedance by Ace Data Cloud"
+      }
+    },
+    {
+      "name": "happyhorse",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/AceDataCloud/HappyHorseCodex.git",
+        "sha": "783ff4b2dec23c276fc1bbaa9515678de47661e7",
+        "ref": "v0.1.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity",
+      "interface": {
+        "displayName": "HappyHorse by Ace Data Cloud"
+      }
+    },
+    {
+      "name": "gpt-image",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/AceDataCloud/GPTImageCodex.git",
+        "sha": "1cc889cb63c788065cae5dba50254953cc07fa5a",
+        "ref": "v0.1.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity",
+      "interface": {
+        "displayName": "GPT Image by Ace Data Cloud"
+      }
+    },
+    {
+      "name": "nano-banana",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/AceDataCloud/NanoBananaCodex.git",
+        "sha": "c255a84b9220482dc3351d6c917982e1ab1f9366",
+        "ref": "v0.1.0"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Creativity",
+      "interface": {
+        "displayName": "Nano Banana by Ace Data Cloud"
+      }
     }
   ]
 }
