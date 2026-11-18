@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenMotion Media"
+  short_description: "通过已配置的 BYOK 多模态供应商生成并核验图片、视频、配音与音乐素材"
+  default_prompt: "使用 OpenMotion 的 $openmotion-media 通过 openmotion_media_use 生成并核验所需的图片、视频、配音或音乐素材。"

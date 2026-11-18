@@ -248,6 +248,21 @@
       "category": "Creativity"
     },
     {
+      "name": "openmotion",
+      "source": {
+        "source": "local",
+        "path": "./plugins/openmotion"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "codex-security",
       "source": {
         "source": "local",

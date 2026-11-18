@@ -1,0 +1,46 @@
+{
+  "name": "openmotion",
+  "version": "0.0.1",
+  "description": "Plan, create, recreate and edit motion videos with OpenMotion workflows. Production requires a separately installed and connected OpenMotion runtime.",
+  "author": {
+    "name": "OpenDesign",
+    "url": "https://open-design.ai"
+  },
+  "homepage": "https://github.com/nexu-io/openmotion",
+  "repository": "https://github.com/nexu-io/openmotion",
+  "license": "Apache-2.0",
+  "keywords": [
+    "openmotion",
+    "video",
+    "motion-graphics",
+    "animation",
+    "editing",
+    "templates"
+  ],
+  "skills": "./skills/",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "OpenMotion",
+    "shortDescription": "Create and edit motion videos",
+    "longDescription": "Plan original motion videos, recreate motion-graphics references, adapt editable templates, edit existing projects and produce reusable templates. Includes five creative workflows and a supporting media-generation skill. Project editing, preview and export require a separately installed OpenMotion runtime connected through local MCP; this package contains skills and references, not the application or an MCP server.",
+    "developerName": "OpenDesign",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/nexu-io/openmotion",
+    "privacyPolicyURL": "https://open-design.ai/privacy/",
+    "termsOfServiceURL": "https://open-design.ai/terms/",
+    "supportURL": "https://github.com/nexu-io/openmotion/issues",
+    "defaultPrompt": [
+      "Recreate this motion-graphics reference as an editable OpenMotion project.",
+      "Create a 15-second launch video with bold type and the text \"Turn ideas into motion.\"",
+      "Update the text and music in my existing OpenMotion project."
+    ],
+    "composerIcon": "./assets/opendesign-symbol-auto.svg",
+    "composerIconDark": "./assets/opendesign-symbol-dark.svg",
+    "logo": "./assets/opendesign-symbol-auto.svg",
+    "logoDark": "./assets/opendesign-symbol-dark.svg"
+  }
+}
