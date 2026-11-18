@@ -23,10 +23,10 @@ import {AbsoluteFill, CanvasImage, staticFile} from 'remotion';
 export const StaticMap: React.FC = () => {
 	return (
 	  <>
-		<CanvasImage
-			src={staticFile('locator-map.png')}
-			style={{width: '100%', height: '100%', objectFit: 'cover'}}
-		/>
+  		<CanvasImage
+  			src={staticFile('locator-map.png')}
+  			style={{width: '100%', height: '100%', objectFit: 'cover'}}
+  		/>
 		</>
 	);
 };
@@ -34,4 +34,4 @@ export const StaticMap: React.FC = () => {
 
 ## Overlays and Interactivity
 
-Follow [Remotion Interactivity](../../../../remotion-interactivity/SKILL.md) best practices and [Remotion Markup Best practices](../../../SKILL.md) for elements.
+Follow Remotion Interactivity (`remotion-interactivity` skill) best practices and [Remotion Markup Best practices](../../../SKILL.md) for elements.

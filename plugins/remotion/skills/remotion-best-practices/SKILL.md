@@ -1,8 +1,14 @@
 ---
 name: remotion-best-practices
 description: Router for all Remotion skills
-version: 4.0.506
+version: 4.0.545
 ---
+
+## Preserve user changes
+
+Users may make edits in the code outside of the conversation.
+
+If you detect a surprising change made in the meanwhile, don't overwrite it, assume it was intentional or ask for confirmation.
 
 ## Creating a video
 
@@ -24,17 +30,50 @@ For static maps, animated routes and markers, geographic explainers, Mapbox, Map
 
 For achieving multimedia tasks in the browser, such as trimming, cropping videos, or getting metadata from them, load [Remotion Multimedia](./remotion-multimedia/REFERENCE.md)
 
-## Improving Interactivity
+For video matting, background removal, or placing content behind a subject,
+load [Remotion Markup](./remotion-markup/REFERENCE.md).
 
-By structuring the Remotion markup well, we can allow users to interactively change things in the Studio and write back to code. If relevant: [Interactivity Best Practices](./remotion-interactivity/REFERENCE.md)
+## Interactivity
 
-## Rendering
+New markup is editable in Studio by default. When writing or restructuring markup, load [Interactivity Best Practices](./remotion-interactivity/REFERENCE.md).
 
-For advanced rendering beyond simple `npx remotion render`, see: [Rendering Best Practices](./remotion-render/REFERENCE.md)
+## Open the preview
 
-## Opening Remotion Studio
+When creating or editing a video, you SHOULD open Studio once the project can run, so the user can preview changes and steer.
+
+To start the preview server by default without opening the system browser, pass `--no-open`:
+
+```bash
+npx remotion studio --no-open
+```
+
+This will start a long-running process and print the server URL for the preview.
+If the server is already started, it will print the URL.
+Open the exact URL in the Codex in-app browser. Verify that Studio loads. Once a composition exists, verify that its video preview loads. If the in-app browser is not available, keep the preview server running and provide the URL to the user.
+You can visit a specific composition by navigating to `/[composition-id]`, for example `http://localhost:3000/MapAnimation`.
+
+:::note
+The Studio supports WebMCP tools.
+:::
+
+### More options
 
 To launch a project in Remotion Studio, open its exact local URL, or configure Studio CLI flags, load [Remotion Studio](./remotion-studio/REFERENCE.md).
+
+## Render the video
+
+Only render if the user is very explicit in asking for it.  
+E.g. "Render the video", "Export", "Give me the MP4".
+
+The preview also has a more intuitive rendering interface, so consider using it instead of the command line for rendering.
+
+```
+npx remotion render
+```
+
+For more options, see [Rendering](./remotion-render/REFERENCE.md).
+
+For advanced rendering beyond simple `npx remotion render`, see: [Rendering Best Practices](./remotion-render/REFERENCE.md)
 
 ## Captions
 
@@ -47,6 +86,10 @@ Use the [Remotion SaaS skill](./remotion-saas/REFERENCE.md) for knowledge about 
 ## Looking up Remotion APIs and documentation
 
 To find and read current Remotion documentation, load [Remotion Docs](./remotion-docs/REFERENCE.md).
+
+## Licensing
+
+For Remotion license information, FAQs, terms, or buying a license, load [Remotion License](./remotion-license/REFERENCE.md).
 
 ## Upgrading
 
