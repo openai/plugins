@@ -1,0 +1,20 @@
+{
+  "name": "waypoint",
+  "version": "0.1.0",
+  "description": "Rename and move Drive or local files while preserving identity and checking references.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Waypoint",
+    "shortDescription": "File and folder management with identity checks",
+    "longDescription": "Plan, execute, and verify authorized renames and moves using the existing Drive objects or local filesystem. Includes access-impact checks, collision handling, reference inspection, and rollback mapping. Requires the host to supply authorized tools.",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use Waypoint to audit or organize these files and folders without recreating Drive objects."
+    ]
+  }
+}

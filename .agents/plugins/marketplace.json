@@ -838,6 +838,21 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "waypoint",
+      "source": {
+        "source": "local",
+        "path": "./plugins/waypoint"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Productivity"
     }
   ]
 }
