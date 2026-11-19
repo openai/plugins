@@ -1,5 +1,6 @@
 import path from "node:path";
 import readline from "node:readline";
+import { DEVDAY_TOOL, DEVDAY_URI, openDevDay, devdayResource } from "./devday.mjs";
 
 const SERVER_NAME = "OpenAI Developers MCP";
 const TOOL_NAME = "confirm_openai_api_key_local_destination";
@@ -58,6 +59,10 @@ function resolveTarget(workspacePath, targetPath) {
 }
 
 async function handleToolCall(id, params) {
+  if (params?.name === DEVDAY_TOOL.name) {
+    sendResult(id, openDevDay(params.arguments));
+    return;
+  }
   if (params?.name !== TOOL_NAME) {
     sendError(id, JsonRpcError.INVALID_PARAMS, `Unknown tool: ${params?.name ?? ""}`);
     return;
@@ -129,10 +134,10 @@ async function handleRequest(message) {
   if (method === "initialize") {
     sendResult(id, {
       protocolVersion: params?.protocolVersion ?? "2025-11-25",
-      capabilities: { tools: {} },
+      capabilities: { tools: {}, resources: {} },
       serverInfo: {
         name: SERVER_NAME,
-        version: "0.1.0",
+        version: "0.2.0",
       },
       instructions:
         "Use confirm_openai_api_key_local_destination after the OpenAI Platform picker returns a key name and target ids. It asks the developer to confirm or edit the local env-file destination before a secret is created or written.",
@@ -148,6 +153,7 @@ async function handleRequest(message) {
   if (method === "tools/list") {
     sendResult(id, {
       tools: [
+        DEVDAY_TOOL,
         {
           name: TOOL_NAME,
           title: "Confirm OpenAI API Key Local Destination",
@@ -197,6 +203,16 @@ async function handleRequest(message) {
         error instanceof Error ? error.message : String(error),
       );
     }
+    return;
+  }
+
+  if (method === "resources/list") {
+    sendResult(id, { resources: [{ uri: DEVDAY_URI, name: "DevDay agenda", mimeType: "text/html;profile=mcp-app" }] });
+    return;
+  }
+  if (method === "resources/read") {
+    if (params?.uri === DEVDAY_URI) sendResult(id, devdayResource());
+    else sendError(id, JsonRpcError.INVALID_PARAMS, "Unknown UI resource.");
     return;
   }
 

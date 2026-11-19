@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenAI DevDay"
+  short_description: "Plan your DevDay and explore the public program"
+  default_prompt: "Use $devday-guide to help me plan my day at OpenAI DevDay."
