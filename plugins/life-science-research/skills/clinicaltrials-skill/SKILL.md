@@ -1,7 +1,40 @@
 ---
 name: clinicaltrials-skill
-description: Submit compact ClinicalTrials.gov API v2 requests for study search, metadata, enums, search areas, and field statistics. Use when a user wants concise ClinicalTrials.gov summaries
+description: Submit compact ClinicalTrials.gov API v2 requests for study search, metadata, enums, search areas, and field statistics. Use for concise registry summaries and bounded target-program research paired with PubMed.
 ---
+
+## Target-program workflow
+When asked for target biology, prior programs, and safety, especially when this
+skill is paired with `ncbi-entrez-skill`:
+
+1. Run one `action=studies` wrapper call per target with `max_pages=1` and no
+   more than ten compact records. Set `save_raw=true` with a unique temporary
+   output path on this first call.
+2. Search target names and aliases in interventional studies. Keep completed
+   and terminated programs rather than filtering to currently recruiting
+   studies.
+3. Rank records by evidence value: posted results or mature outcome-bearing
+   programs first, then a negative or inconclusive program, then active
+   no-results programs.
+4. Retain at most five distinct programs per target. Do not treat termination
+   for business, accrual, or reprioritization as evidence of toxicity or target
+   failure.
+5. Extract intervention names, aliases, NCT IDs, phase, enrollment, status,
+   outcome signal, and safety signal. Feed intervention aliases into the
+   companion PubMed clinical-program search.
+6. Do not rerun the same registry query with a larger `max_depth` or a
+   different output projection. When compact output lacks a needed field,
+   reshape the saved response locally in one pass. Project only NCT ID, title,
+   status, stop reason, phase, enrollment, intervention names, `hasResults`,
+   primary outcome values, and compact serious-adverse-event terms or counts.
+7. Do not make direct-study follow-up requests in this bounded pass. Mark a
+   field unavailable when the saved response cannot support it.
+8. Stop when the mature positive, negative or inconclusive, and observed-safety
+   slots are covered or explicitly unavailable.
+
+Do not inspect wrapper source, probe Python environments, or use web search to
+re-verify registry results unless the documented invocation fails, records
+conflict, or the user explicitly requests current regulatory status.
 
 ## Operating rules
 - Use `scripts/clinicaltrials_client.py` for all ClinicalTrials.gov v2 calls.
