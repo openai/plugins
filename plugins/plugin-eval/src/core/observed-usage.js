@@ -203,17 +203,16 @@ function createObservedUsageChecks(summary) {
         createCheck({
           id: "observed-usage-estimate-drift",
           category: "budget",
-          severity: comparison.band === "wide-drift" ? "error" : "warning",
-          status: comparison.band === "wide-drift" ? "fail" : "warn",
-          message: "Static budget estimates differ meaningfully from observed input token usage.",
+          severity: "info",
+          status: "info",
+          message: "Session input differs from the package-only estimate; these have different scopes and do not establish an estimate failure.",
           evidence: [
             `Estimated active tokens: ${comparison.estimatedActiveTokens}`,
             `Observed average input tokens: ${comparison.observedAverageInputTokens}`,
             `Delta ratio: ${round(comparison.deltaRatio * 100)}%`,
           ],
           remediation: [
-            "Trim repeated instructions or supporting text if the observed value is higher than expected.",
-            "If the static estimate is intentionally conservative, record that assumption in the skill or plugin references.",
+            "Use matched runs or attributed context traces to isolate the package's contribution before drawing cost conclusions.",
           ],
         }),
       );
@@ -280,6 +279,8 @@ export async function analyzeObservedUsage(usagePaths = [], rawBudget, target) {
     reasoningTokens,
     estimateComparison: estimatedActiveTokens
       ? {
+          comparable: false,
+          note: "Whole-session input includes other instructions, conversation history and tool results. A package-only static estimate is not an attributed prediction of session input or billing cost.",
           estimatedActiveTokens,
           observedAverageInputTokens,
           deltaTokens,

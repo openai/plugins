@@ -6,6 +6,7 @@ import { initializeBenchmark, runBenchmark } from "./core/benchmark.js";
 import { buildWorkflowGuide } from "./core/workflow-guide.js";
 import { readJson, writeText } from "./lib/files.js";
 import { renderPayload } from "./renderers/index.js";
+import { normalizeDistribution } from "./core/distribution.js";
 
 function usage() {
   return `Plugin Eval helps first-time skill authors start from chat and keep the workflow local-first.
@@ -14,7 +15,7 @@ Start here:
   plugin-eval start <path> [--request "<chat request>"] [--goal evaluate|budget|measure|benchmark|next] [--format json|markdown|html] [--output <file>]
 
 Core workflows:
-  plugin-eval analyze <path> [--format json|markdown|html] [--output <file>] [--metric-pack <manifest.json>] [--observed-usage <file>] [--brief-out <file>]
+  plugin-eval analyze <path> [--distribution unspecified|private-local|public] [--format json|markdown|html] [--output <file>] [--metric-pack <manifest.json>] [--observed-usage <file>] [--brief-out <file>]
   plugin-eval explain-budget <path> [--format json|markdown] [--output <file>]
   plugin-eval measurement-plan <path> [--format json|markdown] [--observed-usage <file>] [--output <file>]
   plugin-eval init-benchmark <path> [--output <benchmark.json>] [--model <model>] [--format json|markdown]
@@ -23,6 +24,13 @@ Core workflows:
 Reports:
   plugin-eval report <result.json> [--format json|markdown|html] [--output <file>]
   plugin-eval compare <before.json> <after.json> [--format json|markdown|html] [--output <file>]
+
+Context estimates:
+  --additional-context <instruction-file>  Include a known additional instruction file; repeatable.
+  Supported by analyze, explain-budget, measurement-plan, and start. External coverage remains incomplete.
+Distribution scope:
+  Use --distribution private-local for private local plugins, or public for public-release checks.
+  The default unspecified scope does not grade public listing URLs. A local path or npm private flag does not establish distribution scope.
 
 Chat-first examples:
   plugin-eval start ./skills/my-skill --request "evaluate this skill" --format markdown
@@ -43,6 +51,7 @@ function parseOptions(argv) {
     output: null,
     metricPackManifests: [],
     observedUsagePaths: [],
+    additionalContextPaths: [],
     configPath: null,
     usageOutPath: null,
     resultOutPath: null,
@@ -51,11 +60,18 @@ function parseOptions(argv) {
     request: null,
     dryRun: false,
     briefOut: null,
+    distribution: "unspecified",
   };
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
-    if (arg === "--format") {
+    if (arg === "--distribution") {
+      if (argv[index + 1] === undefined) {
+        throw new Error("Missing distribution value. Use unspecified, private-local, or public.");
+      }
+      options.distribution = normalizeDistribution(argv[index + 1]);
+      index += 1;
+    } else if (arg === "--format") {
       options.format = argv[index + 1];
       index += 1;
     } else if (arg === "--output") {
@@ -66,6 +82,11 @@ function parseOptions(argv) {
       index += 1;
     } else if (arg === "--observed-usage") {
       options.observedUsagePaths.push(argv[index + 1]);
+      index += 1;
+    } else if (arg === "--additional-context") {
+      const value = argv[index + 1];
+      if (!value || value.startsWith("--")) throw new Error("Missing additional context file path.");
+      options.additionalContextPaths.push(path.resolve(value));
       index += 1;
     } else if (arg === "--config") {
       options.configPath = argv[index + 1];
@@ -127,7 +148,9 @@ export async function runCli(argv) {
       throw new Error("Missing target path.\n\n" + usage());
     }
     const result = await analyzePath(positional[0], {
+      distribution: options.distribution,
       metricPackManifests: options.metricPackManifests,
+      additionalContextPaths: options.additionalContextPaths,
       observedUsagePaths: options.observedUsagePaths,
     });
     if (options.briefOut) {
@@ -161,8 +184,10 @@ export async function runCli(argv) {
       throw new Error("Missing target path.\n\n" + usage());
     }
     const payload = await buildWorkflowGuide(positional[0], {
+      distribution: options.distribution,
       goal: options.goal,
       request: options.request,
+      additionalContextPaths: options.additionalContextPaths,
     });
     await emit(payload, options.format, options.output);
     return;
@@ -172,7 +197,7 @@ export async function runCli(argv) {
     if (positional.length < 1) {
       throw new Error("Missing target path.\n\n" + usage());
     }
-    const payload = await explainBudget(positional[0]);
+    const payload = await explainBudget(positional[0], { additionalContextPaths: options.additionalContextPaths, distribution: options.distribution });
     await emit(payload, options.format, options.output);
     return;
   }
@@ -182,6 +207,8 @@ export async function runCli(argv) {
       throw new Error("Missing target path.\n\n" + usage());
     }
     const payload = await recommendMeasures(positional[0], {
+      additionalContextPaths: options.additionalContextPaths,
+      distribution: options.distribution,
       observedUsagePaths: options.observedUsagePaths,
     });
     await emit(payload, options.format, options.output);

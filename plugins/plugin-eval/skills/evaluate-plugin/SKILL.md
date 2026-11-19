@@ -11,11 +11,15 @@ Use this skill when the target is a plugin root with `.codex-plugin/plugin.json`
 
 1. Treat "Evaluate this plugin." as the default entrypoint.
 2. If the request comes in as natural chat language, use `plugin-eval start <plugin-root> --request "<user request>" --format markdown` first so the user sees the routed local path.
-3. Run `plugin-eval analyze <plugin-root> --format markdown`.
+3. Identify distribution scope from the user's request or verified owning metadata. Run `plugin-eval analyze <plugin-root> --distribution private-local --format markdown` for a private local plugin, or `--distribution public` for public-release checks. If scope is unknown, use the default `unspecified` scope and disclose that public listing metadata was not graded. Do not infer a public audience merely because source is on disk or on GitHub; do not invent listing URLs for private plugins.
 4. Read `Fix First` before drilling into manifest findings, nested skill findings, and code or coverage details.
 5. If the plugin contains multiple skills, summarize the strongest and weakest ones explicitly.
 6. If the user wants measured usage, switch to "Help me benchmark this plugin." and use the starter benchmark flow.
 7. If the user wants trend data, compare two JSON outputs with `plugin-eval compare`.
+
+## Interpret Results
+
+Report the four assessment areas separately. Explain that the numeric index and letter grade use uncalibrated static heuristics; they do not establish runtime correctness or security. Keep optional supporting/package inventories separate from loaded context. Missing tests or coverage artifacts are evidence gaps, not measured failures. Include known external instruction files with repeatable `--additional-context <file>` when relevant, and retain the explicit unknown-coverage notice. Do not attribute whole-session token usage to this plugin without matched or attributed evidence. Do not compare numeric deltas across different method versions.
 
 ## Chat Requests To Recognize
 

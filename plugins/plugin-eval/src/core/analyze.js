@@ -2,6 +2,7 @@ import path from "node:path";
 
 import { loadBudgetBaseline } from "./baseline.js";
 import { applyBudgetBands, computeBudgetProfile } from "./budget.js";
+import { normalizeDistribution } from "./distribution.js";
 import { buildImprovementBrief } from "./improvement-brief.js";
 import { buildMeasurementPlan } from "./measurement-plan.js";
 import { runMetricPacks } from "./metric-packs.js";
@@ -45,7 +46,7 @@ function addBudgetFindings(result, budgets, baselineEvidence) {
           category: "budget",
           severity: bucket.band === "excessive" ? "error" : "warning",
           status: bucket.band === "excessive" ? "fail" : "warn",
-          message: `${bucketName} is ${bucket.band} relative to the current Codex baseline.`,
+          message: `${bucketName} is a ${bucket.band} static size estimate relative to the current baseline; this is not measured runtime cost.`,
           evidence: [
             `Value: ${bucket.value} tokens`,
             `Baseline samples: skills=${baselineEvidence.skillSamples}, plugins=${baselineEvidence.pluginSamples}`,
@@ -94,11 +95,12 @@ function normalizeExtensionPayload(extension) {
 export async function analyzePath(targetPath, options = {}) {
   const target = await resolveTarget(targetPath);
   const result = createEvaluationResult(target);
+  result.distribution = normalizeDistribution(options.distribution);
 
   if (target.kind === "skill") {
     appendFragment(result, await evaluateSkill(target.path));
   } else if (target.kind === "plugin") {
-    appendFragment(result, await evaluatePlugin(target.path));
+    appendFragment(result, await evaluatePlugin(target.path, { distribution: result.distribution }));
   } else {
     result.checks.push(
       createCheck({
@@ -114,7 +116,8 @@ export async function analyzePath(targetPath, options = {}) {
   }
 
   const baseline = await loadBudgetBaseline();
-  const rawBudget = await computeBudgetProfile(target);
+  const rawBudget = await computeBudgetProfile(target, options);
+  result.additionalContextPaths = rawBudget.additional_context?.components.map((item) => item.real_path || item.path) || [];
   addBudgetFindings(result, applyBudgetBands(rawBudget, baseline), baseline.evidence);
 
   const observedUsageFragment = await analyzeObservedUsage(options.observedUsagePaths || [], rawBudget, target);
@@ -135,24 +138,30 @@ export async function analyzePath(targetPath, options = {}) {
   result.improvementBrief = buildImprovementBrief(result);
   result.workflowGuide = await buildWorkflowGuide(target.path, {
     goal: result.observedUsage?.sampleCount ? "measure" : "evaluate",
+    additionalContextPaths: result.additionalContextPaths,
+    distribution: options.distribution,
   });
   result.measurementPlan.nextAction = createMeasurementPlanNextAction(result.measurementPlan);
   applyEvaluationPresentation(result);
   return result;
 }
 
-export async function explainBudget(targetPath) {
+export async function explainBudget(targetPath, options = {}) {
   const target = await resolveTarget(targetPath);
   const baseline = await loadBudgetBaseline();
-  const rawBudget = await computeBudgetProfile(target);
+  const rawBudget = await computeBudgetProfile(target, options);
   const payload = {
     kind: "budget-explanation",
+    distribution: normalizeDistribution(options.distribution),
     createdAt: new Date().toISOString(),
     target,
     budgets: applyBudgetBands(rawBudget, baseline),
+    additionalContextPaths: options.additionalContextPaths || [],
     baselineEvidence: baseline.evidence,
     workflowGuide: await buildWorkflowGuide(target.path, {
       goal: "budget",
+      distribution: options.distribution,
+      additionalContextPaths: options.additionalContextPaths,
     }),
   };
   payload.nextAction = createBudgetNextAction(payload);
@@ -165,6 +174,8 @@ export async function recommendMeasures(targetPath, options = {}) {
     ...result.measurementPlan,
     workflowGuide: await buildWorkflowGuide(result.target.path, {
       goal: "measure",
+      additionalContextPaths: result.additionalContextPaths,
+      distribution: options.distribution,
     }),
   };
   payload.nextAction = payload.nextAction || createMeasurementPlanNextAction(payload);

@@ -86,6 +86,7 @@ function renderObservedUsage(observedUsage) {
   }
 
   if (observedUsage.estimateComparison) {
+    if (observedUsage.estimateComparison.note) items.push(`Comparison scope: ${observedUsage.estimateComparison.note}`);
     items.push(`Estimated active tokens: ${observedUsage.estimateComparison.estimatedActiveTokens}`);
     items.push(`Estimate delta: ${observedUsage.estimateComparison.deltaTokens}`);
     items.push(`Estimate ratio: ${observedUsage.estimateComparison.deltaRatio} (${observedUsage.estimateComparison.band})`);
@@ -292,12 +293,22 @@ export function renderHtml(result) {
     <main>
       <h1>Plugin Eval Report: ${escapeHtml(result.target.name)}</h1>
       <section class="summary">
-        <div class="card"><strong>Score</strong><div>${escapeHtml(result.summary.score)}/100</div></div>
-        <div class="card"><strong>Grade</strong><div>${escapeHtml(result.summary.grade)}</div></div>
-        <div class="card"><strong>Risk</strong><div>${escapeHtml(result.summary.riskLevel)}</div></div>
+        <div class="card"><strong>Static Check Index</strong><div>${escapeHtml(result.summary.score)}/100</div></div>
+        <div class="card"><strong>Heuristic Grade</strong><div>${escapeHtml(result.summary.grade)}</div></div>
+        <div class="card"><strong>Operational Static Risk</strong><div>${escapeHtml(result.summary.riskLevel)}</div></div>
         <div class="card"><strong>Deductions</strong><div>-${escapeHtml(result.summary.scoreBreakdown?.totalDeductions || 0)}</div></div>
-        <div class="card"><strong>Total Tokens</strong><div>${escapeHtml(result.budgets.total_tokens?.value || 0)}</div></div>
+        <div class="card"><strong>Static Scenario Token Estimate</strong><div>${escapeHtml(result.budgets.total_tokens?.value || 0)}</div></div>
       </section>
+      <p>${result.summary.assessment ? "Not calibrated against real-world outcomes." : "Legacy method; calibration unknown."}</p>
+      <h2>Assessment Areas</h2>
+      ${renderList(Object.values(result.summary.dimensions || {}).map((area) => `${area.label}: ${area.status}`))}
+      ${renderList(result.summary.assessment?.limitations || [])}
+      <h2>Context Estimate Boundaries</h2>
+      ${renderList([
+        result.budgets.total_tokens?.note || "Static estimates are not measured runtime context.",
+        ...(result.budgets.package_text_tokens ? [`Package text inventory: ${result.budgets.package_text_tokens.value} estimated tokens; not loaded context.`] : []),
+        ...(result.budgets.external_context ? [`External context coverage: ${result.budgets.external_context.coverage}; dependencies may be missing.`] : []),
+      ])}
       <h2>Why It Matters</h2>
       ${renderList(result.summary.whyBullets || [
         `Started at ${result.summary.scoreBreakdown?.startingScore || 100} and deducted ${result.summary.scoreBreakdown?.totalDeductions || 0} points.`,

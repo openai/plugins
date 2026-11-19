@@ -4,17 +4,28 @@ import { createArtifact, createCheck, createMetric } from "../core/schema.js";
 import { evaluateSkill } from "./skill.js";
 import { discoverPluginSkillDirectories } from "../core/target.js";
 import { pathExists, readJson, relativePath } from "../lib/files.js";
+import { normalizeDistribution } from "../core/distribution.js";
 
 function isHyphenCase(value) {
   return /^[a-z0-9-]+$/.test(value) && !value.startsWith("-") && !value.endsWith("-") && !value.includes("--");
 }
 
-export async function evaluatePlugin(pluginRoot) {
+export async function evaluatePlugin(pluginRoot, options = {}) {
+  const distribution = normalizeDistribution(options.distribution);
   const manifestPath = path.join(pluginRoot, ".codex-plugin", "plugin.json");
   const targetPath = relativePath(process.cwd(), pluginRoot);
   const checks = [];
   const metrics = [];
   const artifacts = [];
+  artifacts.push(createArtifact({
+    id: "plugin-distribution",
+    type: "context",
+    label: "Plugin distribution scope",
+    description: distribution === "public"
+      ? "Public listing metadata is included in this evaluation."
+      : "Public listing metadata is not graded without an explicit public distribution scope.",
+    data: { distribution, publicListingMetadataGraded: distribution === "public" },
+  }));
 
   if (!(await pathExists(manifestPath))) {
     checks.push(
@@ -106,11 +117,11 @@ export async function evaluatePlugin(pluginRoot) {
     "developerName",
     "category",
     "capabilities",
-    "websiteURL",
-    "privacyPolicyURL",
-    "termsOfServiceURL",
     "defaultPrompt",
   ];
+  if (distribution === "public") {
+    interfaceFields.push("websiteURL", "privacyPolicyURL", "termsOfServiceURL");
+  }
   const iface = manifest.interface || {};
   for (const field of interfaceFields) {
     if (!(field in iface)) {

@@ -1,6 +1,12 @@
 import { createComparisonNextAction } from "./presentation.js";
 
 export function compareResults(before, after) {
+  const sameGradingMethod = (before.summary.assessment?.method || "legacy-v1") ===
+    (after.summary.assessment?.method || "legacy-v1");
+  const sameDistribution = (before.distribution || "unspecified") === (after.distribution || "unspecified");
+  const scoreComparable = sameGradingMethod && sameDistribution;
+  const sameContext = JSON.stringify([...(before.additionalContextPaths || [])].sort()) === JSON.stringify([...(after.additionalContextPaths || [])].sort());
+  const budgetComparable = sameContext && (before.budgets.measurement?.version || 1) === (after.budgets.measurement?.version || 1);
   const beforeFailures = new Set(
     before.checks.filter((check) => check.status === "fail").map((check) => check.id),
   );
@@ -15,18 +21,26 @@ export function compareResults(before, after) {
     kind: "comparison",
     createdAt: new Date().toISOString(),
     target: after.target,
-    scoreDelta: after.summary.score - before.summary.score,
+    distribution: after.distribution || "unspecified",
+    additionalContextPaths: after.additionalContextPaths || [],
+    scoreComparable,
+    comparisonNote: scoreComparable ? null : !sameGradingMethod
+      ? "Grading methods differ; score changes cannot be attributed to plugin changes."
+      : "Distribution scopes differ; score changes cannot be attributed to plugin quality changes.",
+    scoreDelta: scoreComparable ? after.summary.score - before.summary.score : null,
+    budgetComparable,
+    budgetComparisonNote: budgetComparable ? null : "Budget measurement definitions or selected context paths differ; inventory deltas are not comparable.",
     gradeBefore: before.summary.grade,
     gradeAfter: after.summary.grade,
     riskBefore: before.summary.riskLevel,
     riskAfter: after.summary.riskLevel,
     budgetDelta: {
       trigger_cost_tokens:
-        (after.budgets.trigger_cost_tokens?.value || 0) - (before.budgets.trigger_cost_tokens?.value || 0),
+        budgetComparable ? (after.budgets.trigger_cost_tokens?.value || 0) - (before.budgets.trigger_cost_tokens?.value || 0) : null,
       invoke_cost_tokens:
-        (after.budgets.invoke_cost_tokens?.value || 0) - (before.budgets.invoke_cost_tokens?.value || 0),
+        budgetComparable ? (after.budgets.invoke_cost_tokens?.value || 0) - (before.budgets.invoke_cost_tokens?.value || 0) : null,
       deferred_cost_tokens:
-        (after.budgets.deferred_cost_tokens?.value || 0) - (before.budgets.deferred_cost_tokens?.value || 0),
+        budgetComparable ? (after.budgets.deferred_cost_tokens?.value || 0) - (before.budgets.deferred_cost_tokens?.value || 0) : null,
     },
     resolvedFailures,
     newFailures,

@@ -7,7 +7,7 @@ const SEVERITY_WEIGHT = {
 const STATUS_MULTIPLIER = {
   fail: 1,
   warn: 0.75,
-  info: 0.25,
+  info: 0,
   pass: 0,
 };
 
@@ -45,7 +45,10 @@ export function summarizeChecks(checks) {
     (summary, check) => {
       summary.total += 1;
       summary[check.status] = (summary[check.status] || 0) + 1;
-      summary[check.severity] = (summary[check.severity] || 0) + 1;
+      summary.severityCounts[check.severity] = (summary.severityCounts[check.severity] || 0) + 1;
+      if (check.severity === "error" || check.severity === "warning") {
+        summary[check.severity] += 1;
+      }
       return summary;
     },
     {
@@ -56,14 +59,51 @@ export function summarizeChecks(checks) {
       info: 0,
       error: 0,
       warning: 0,
+      severityCounts: { error: 0, warning: 0, info: 0 },
     },
   );
 }
 
 function computeCheckPenalty(check) {
+  if (check.severity === "info" || ["contextEfficiency", "evidenceCoverage"].includes(checkDimension(check))) {
+    return 0;
+  }
   const weight = SEVERITY_WEIGHT[check.severity] ?? 0;
   const multiplier = STATUS_MULTIPLIER[check.status] ?? 0;
   return weight * multiplier;
+}
+
+function checkDimension(check) {
+  if (["default-prompt-too-many", "default-prompt-too-long", "brand-color-invalid"].includes(check.id)) return "maintainability";
+  if (check.category === "budget") return "contextEfficiency";
+  if (["coverage", "measurement"].includes(check.category) || /(?:^|-)tests-missing$/.test(check.id)) {
+    return "evidenceCoverage";
+  }
+  if (["complexity", "readability", "code-quality", "best-practice"].includes(check.category)) {
+    return "maintainability";
+  }
+  return "operationalCorrectness";
+}
+
+function summarizeDimensions(checks) {
+  const dimensions = {};
+  for (const [id, label] of Object.entries({
+    operationalCorrectness: "Operational correctness (static checks)",
+    maintainability: "Maintainability",
+    contextEfficiency: "Context efficiency (estimates)",
+    evidenceCoverage: "Evidence coverage",
+  })) {
+    const entries = checks.filter((check) => checkDimension(check) === id);
+    dimensions[id] = {
+      label,
+      status: entries.some((check) => check.status === "fail" || check.status === "warn")
+        ? "attention" : entries.length === 0 ? "not-assessed"
+          : entries.every((check) => check.status === "info") ? "informational" : "no-findings",
+      checkCounts: summarizeChecks(entries),
+      findingIds: entries.map((check) => check.id),
+    };
+  }
+  return dimensions;
 }
 
 function deriveCheckWhy(check) {
@@ -206,7 +246,7 @@ function buildWhyBullets(result, summary, failedErrors, warningSignals) {
     ["heavy", "excessive"].includes(result.budgets?.trigger_cost_tokens?.band) ||
     ["heavy", "excessive"].includes(result.budgets?.invoke_cost_tokens?.band)
   ) {
-    bullets.push("Active budget pressure is high enough that token cost may dominate the user experience.");
+    bullets.push("Static instruction estimates are large relative to the baseline; actual context cost needs measurement.");
   } else {
     bullets.push("Budget pressure is not the dominant issue right now.");
   }
@@ -224,7 +264,7 @@ function buildWhyBullets(result, summary, failedErrors, warningSignals) {
   return bullets.slice(0, 5);
 }
 
-function buildRiskReasons({ score, failedErrors, warningSignals, deductions, checkSummary }) {
+function buildRiskReasons({ failedErrors, warningSignals, deductions, checkSummary }) {
   const reasons = [];
   if (failedErrors > 0) {
     const examples = deductions
@@ -237,19 +277,18 @@ function buildRiskReasons({ score, failedErrors, warningSignals, deductions, che
       }.`,
     );
   }
-  if (score < GRADE_THRESHOLDS.C) {
-    reasons.push(`Overall score is below ${GRADE_THRESHOLDS.C}, which the evaluator treats as high risk.`);
-  } else if (warningSignals > 0) {
+  if (warningSignals > 0) {
     reasons.push(
-      `Contains ${warningSignals} warning signal${warningSignals === 1 ? "" : "s"} that still need attention.`,
+      `Contains ${warningSignals} operational warning or failure signal${warningSignals === 1 ? "" : "s"}.`,
     );
   }
   if (checkSummary.info > 0 && reasons.length === 0) {
     reasons.push("No failing or warning checks were found; remaining items are informational only.");
   }
   if (reasons.length === 0) {
-    reasons.push("No failing error checks and no warning signals were found.");
+    reasons.push("No operational failures were established by the available static checks.");
   }
+  reasons.push("Risk describes operational static findings only; runtime correctness and security are not established by this score.");
   return reasons;
 }
 
@@ -269,18 +308,20 @@ export function computeSummary(result) {
             ? "D"
             : "F";
 
-  const failedErrors = result.checks.filter(
+  const operationalChecks = result.checks.filter((check) => checkDimension(check) === "operationalCorrectness");
+  const failedErrors = operationalChecks.filter(
     (check) => check.status === "fail" && check.severity === "error",
   ).length;
-  const warningSignals = result.checks.filter((check) => check.status === "warn").length;
-  const riskLevel = failedErrors > 0 || score < 70 ? "high" : warningSignals > 0 || score < 85 ? "medium" : "low";
+  const warningSignals = operationalChecks.filter((check) => check.status === "warn" || check.status === "fail").length;
+  const riskLevel = failedErrors > 0 ? "high" : warningSignals > 0 ? "medium"
+    : operationalChecks.some((check) => check.status === "pass") ? "low" : "unknown";
   const checkCounts = summarizeChecks(result.checks);
   const riskReasons = buildRiskReasons({
     score,
     failedErrors,
     warningSignals,
     deductions,
-    checkSummary: checkCounts,
+    checkSummary: summarizeChecks(operationalChecks),
   });
 
   const topRecommendations = unique(
@@ -295,6 +336,17 @@ export function computeSummary(result) {
     grade,
     riskLevel,
     riskReasons,
+    assessment: {
+      method: "static-check-heuristic-v2",
+      calibrated: false,
+      scope: "Actionable operational and maintainability static checks only",
+      limitations: [
+        "Weights and grade thresholds are heuristic, not validated against real-world outcomes.",
+        "Informational, context-budget, and evidence-coverage findings are reported separately and do not deduct points.",
+        "A high index does not establish runtime correctness, security, or complete evidence.",
+      ],
+    },
+    dimensions: summarizeDimensions(result.checks),
     scoreBreakdown: {
       startingScore: 100,
       totalDeductions: penalty,
