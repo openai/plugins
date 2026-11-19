@@ -1,0 +1,1102 @@
+[
+  {
+    "install_name": "brainstorming",
+    "source_rel": "plugins/superpowers/skills/brainstorming",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\superpowers\\skills\\brainstorming",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: bounded",
+      "broken link: bounded",
+      "broken link: bounded",
+      "broken link: spec",
+      "broken link: just-in-time"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 67/100 - Grade: D - Risk: high - Checks: 2 fail, 1 warn, 2 info - Active budget: 3957 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "brainstorming",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\brainstorming",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\brainstorming <<===>> E:\\PyCharmProject\\plugins\\plugins\\superpowers\\skills\\brainstorming"
+    ]
+  },
+  {
+    "install_name": "dispatching-parallel-agents",
+    "source_rel": "plugins/superpowers/skills/dispatching-parallel-agents",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\superpowers\\skills\\dispatching-parallel-agents",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: general-purpose",
+      "broken link: general-purpose",
+      "broken link: general-purpose"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 86/100 - Grade: B - Risk: high - Checks: 1 fail, 0 warn, 2 info - Active budget: 1589 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "dispatching-parallel-agents",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\dispatching-parallel-agents",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\dispatching-parallel-agents <<===>> E:\\PyCharmProject\\plugins\\plugins\\superpowers\\skills\\dispatching-parallel-agents"
+    ]
+  },
+  {
+    "install_name": "executing-plans",
+    "source_rel": "plugins/superpowers/skills/executing-plans",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\superpowers\\skills\\executing-plans",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 86/100 - Grade: B - Risk: high - Checks: 1 fail, 0 warn, 2 info - Active budget: 623 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "executing-plans",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\executing-plans",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\executing-plans <<===>> E:\\PyCharmProject\\plugins\\plugins\\superpowers\\skills\\executing-plans"
+    ]
+  },
+  {
+    "install_name": "frontend-app-builder",
+    "source_rel": "plugins/build-web-apps/skills/frontend-app-builder",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-apps\\skills\\frontend-app-builder",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 67/100 - Grade: D - Risk: high - Checks: 2 fail, 1 warn, 2 info - Active budget: 8090 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "frontend-app-builder",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\frontend-app-builder",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\frontend-app-builder <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-apps\\skills\\frontend-app-builder"
+    ]
+  },
+  {
+    "install_name": "react-best-practices",
+    "source_rel": "plugins/build-web-apps/skills/react-best-practices",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-apps\\skills\\react-best-practices",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: CRITICAL",
+      "broken link: CRITICAL",
+      "broken link: HIGH",
+      "broken link: MEDIUM-HIGH",
+      "broken link: MEDIUM",
+      "broken link: MEDIUM",
+      "broken link: LOW-MEDIUM",
+      "broken link: 1",
+      "broken link: LOW"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 63/100 - Grade: D - Risk: high - Checks: 2 fail, 2 warn, 2 info - Active budget: 1792 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "react-best-practices",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\react-best-practices",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\react-best-practices <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-apps\\skills\\react-best-practices"
+    ]
+  },
+  {
+    "install_name": "dashboards-and-real-time-visualization",
+    "source_rel": "plugins/build-web-data-visualization/skills/dashboards-and-real-time-visualization",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\dashboards-and-real-time-visualization",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 1962 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "dashboards-and-real-time-visualization",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\dashboards-and-real-time-visualization",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\dashboards-and-real-time-visualization <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\dashboards-and-real-time-visualization"
+    ]
+  },
+  {
+    "install_name": "data-visualization",
+    "source_rel": "plugins/build-web-data-visualization/skills/data-visualization",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\data-visualization",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2880 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "data-visualization",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\data-visualization",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\data-visualization <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\data-visualization"
+    ]
+  },
+  {
+    "install_name": "grammar-of-graphics-and-declarative-visualization",
+    "source_rel": "plugins/build-web-data-visualization/skills/grammar-of-graphics-and-declarative-visualization",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\grammar-of-graphics-and-declarative-visualization",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 86/100 - Grade: B - Risk: high - Checks: 1 fail, 0 warn, 2 info - Active budget: 842 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "grammar-of-graphics-and-declarative-visualization",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\grammar-of-graphics-and-declarative-visualization",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\grammar-of-graphics-and-declarative-visualization <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\grammar-of-graphics-and-declarative-visualization"
+    ]
+  },
+  {
+    "install_name": "react-and-nextjs-data-visualization",
+    "source_rel": "plugins/build-web-data-visualization/skills/react-and-nextjs-data-visualization",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\react-and-nextjs-data-visualization",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 3097 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "react-and-nextjs-data-visualization",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\react-and-nextjs-data-visualization",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\react-and-nextjs-data-visualization <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\react-and-nextjs-data-visualization"
+    ]
+  },
+  {
+    "install_name": "reports-pdfs-and-slide-automation",
+    "source_rel": "plugins/build-web-data-visualization/skills/reports-pdfs-and-slide-automation",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\reports-pdfs-and-slide-automation",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2074 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "reports-pdfs-and-slide-automation",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\reports-pdfs-and-slide-automation",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\reports-pdfs-and-slide-automation <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\reports-pdfs-and-slide-automation"
+    ]
+  },
+  {
+    "install_name": "statistical-and-uncertainty-visualization",
+    "source_rel": "plugins/build-web-data-visualization/skills/statistical-and-uncertainty-visualization",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\statistical-and-uncertainty-visualization",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 86/100 - Grade: B - Risk: high - Checks: 1 fail, 0 warn, 2 info - Active budget: 530 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "statistical-and-uncertainty-visualization",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\statistical-and-uncertainty-visualization",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\statistical-and-uncertainty-visualization <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\statistical-and-uncertainty-visualization"
+    ]
+  },
+  {
+    "install_name": "testing-data-visualizations",
+    "source_rel": "plugins/build-web-data-visualization/skills/testing-data-visualizations",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\testing-data-visualizations",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 3491 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "testing-data-visualizations",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\testing-data-visualizations",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\testing-data-visualizations <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\testing-data-visualizations"
+    ]
+  },
+  {
+    "install_name": "typescript-data-visualization-engineering",
+    "source_rel": "plugins/build-web-data-visualization/skills/typescript-data-visualization-engineering",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\typescript-data-visualization-engineering",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2598 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "typescript-data-visualization-engineering",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\typescript-data-visualization-engineering",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\typescript-data-visualization-engineering <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\typescript-data-visualization-engineering"
+    ]
+  },
+  {
+    "install_name": "visualization-strategy-and-critique",
+    "source_rel": "plugins/build-web-data-visualization/skills/visualization-strategy-and-critique",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\visualization-strategy-and-critique",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 5168 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "visualization-strategy-and-critique",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\visualization-strategy-and-critique",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\visualization-strategy-and-critique <<===>> E:\\PyCharmProject\\plugins\\plugins\\build-web-data-visualization\\skills\\visualization-strategy-and-critique"
+    ]
+  },
+  {
+    "install_name": "figma-code-connect",
+    "source_rel": "plugins/figma/skills/figma-code-connect",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-code-connect",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: .figma.ts",
+      "broken link: 'Name'",
+      "broken link: 'Name'",
+      "broken link: 'Name'",
+      "broken link: 'LayerName'",
+      "broken link: 'LayerName'",
+      "broken link: 'Label'",
+      "broken link: 'Disabled'",
+      "broken link: 'Icon'",
+      "broken link: propName",
+      "... +27 more broken links"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 63/100 - Grade: D - Risk: high - Checks: 2 fail, 2 warn, 2 info - Active budget: 6820 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "figma-code-connect",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-code-connect",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-code-connect <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-code-connect"
+    ]
+  },
+  {
+    "install_name": "figma-create-new-file",
+    "source_rel": "plugins/figma/skills/figma-create-new-file",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-create-new-file",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: default"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 81/100 - Grade: C - Risk: high - Checks: 1 fail, 1 warn, 2 info - Active budget: 1123 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] trigger_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded ",
+    "install_name_final": "figma-create-new-file",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-create-new-file",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-create-new-file <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-create-new-file"
+    ]
+  },
+  {
+    "install_name": "figma-design-to-code",
+    "source_rel": "plugins/figma/skills/figma-design-to-code",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-design-to-code",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 81/100 - Grade: C - Risk: high - Checks: 1 fail, 1 warn, 2 info - Active budget: 1386 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] trigger_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded ",
+    "install_name_final": "figma-design-to-code",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-design-to-code",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-design-to-code <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-design-to-code"
+    ]
+  },
+  {
+    "install_name": "figma-generate-design",
+    "source_rel": "plugins/figma/skills/figma-generate-design",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-generate-design",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: parser-based",
+      "broken link: \"609:35535\"",
+      "broken link: key",
+      "broken link: (",
+      "broken link: (",
+      "broken link: b",
+      "broken link: Boolean",
+      "broken link: id",
+      "broken link: Boolean",
+      "broken link: key",
+      "... +32 more broken links"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 39/100 - Grade: F - Risk: high - Checks: 4 fail, 1 warn, 2 info - Active budget: 8718 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "figma-generate-design",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-generate-design",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-generate-design <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-generate-design"
+    ]
+  },
+  {
+    "install_name": "figma-generate-diagram",
+    "source_rel": "plugins/figma/skills/figma-generate-diagram",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-generate-diagram",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: main",
+      "broken link: 1",
+      "broken link: [references/workflow.md](references/workflow.md",
+      "broken link: [references/workflow.md](references/workflow.md"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 53/100 - Grade: F - Risk: high - Checks: 3 fail, 1 warn, 2 info - Active budget: 2782 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "figma-generate-diagram",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-generate-diagram",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-generate-diagram <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-generate-diagram"
+    ]
+  },
+  {
+    "install_name": "figma-generate-library",
+    "source_rel": "plugins/figma/skills/figma-generate-library",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-generate-library",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: shadows",
+      "broken link: typography",
+      "broken link: structure",
+      "broken link: visual",
+      "broken link: auto-serialized",
+      "broken link: page",
+      "broken link: default",
+      "broken link: default",
+      "broken link: hidden",
+      "broken link: --color-bg-primary",
+      "... +8 more broken links"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 39/100 - Grade: F - Risk: high - Checks: 4 fail, 1 warn, 2 info - Active budget: 6158 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "figma-generate-library",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-generate-library",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-generate-library <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-generate-library"
+    ]
+  },
+  {
+    "install_name": "figma-implement-motion",
+    "source_rel": "plugins/figma/skills/figma-implement-motion",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-implement-motion",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: non-`motion`",
+      "broken link: keyframe-bindings-only",
+      "broken link: data:"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 3 fail, 0 warn, 2 info - Active budget: 5929 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "figma-implement-motion",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-implement-motion",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-implement-motion <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-implement-motion"
+    ]
+  },
+  {
+    "install_name": "figma-use",
+    "source_rel": "plugins/figma/skills/figma-use",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-use",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: ['fontName']",
+      "broken link: page",
+      "broken link: 0,0",
+      "broken link: 0,0",
+      "broken link: page",
+      "broken link: Critical",
+      "broken link: page",
+      "broken link: (p",
+      "broken link: targetPage",
+      "broken link: page",
+      "... +34 more broken links"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 21/100 - Grade: F - Risk: high - Checks: 4 fail, 5 warn, 2 info - Active budget: 8999 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "figma-use",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-use",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-use <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-use"
+    ]
+  },
+  {
+    "install_name": "figma-use-motion",
+    "source_rel": "plugins/figma/skills/figma-use-motion",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-use-motion",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: field",
+      "broken link: id",
+      "broken link: 768+"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 3 fail, 0 warn, 2 info - Active budget: 1802 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "figma-use-motion",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\figma-use-motion",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\figma-use-motion <<===>> E:\\PyCharmProject\\plugins\\plugins\\figma\\skills\\figma-use-motion"
+    ]
+  },
+  {
+    "install_name": "google-docs",
+    "source_rel": "plugins/google-drive/skills/google-docs",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-docs",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: Recommended",
+      "broken link: plugin://documents@openai-primary-runtime",
+      "broken link: tabProperties"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 3 fail, 0 warn, 2 info - Active budget: 7341 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "google-docs",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\google-docs",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\google-docs <<===>> E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-docs"
+    ]
+  },
+  {
+    "install_name": "google-drive",
+    "source_rel": "plugins/google-drive/skills/google-drive",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-drive",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: plugin://spreadsheets@openai-primary-runtime"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2188 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "google-drive",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\google-drive",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\google-drive <<===>> E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-drive"
+    ]
+  },
+  {
+    "install_name": "google-drive-comments",
+    "source_rel": "plugins/google-drive/skills/google-drive-comments",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-drive-comments",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 86/100 - Grade: B - Risk: high - Checks: 1 fail, 0 warn, 2 info - Active budget: 1161 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "google-drive-comments",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\google-drive-comments",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\google-drive-comments <<===>> E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-drive-comments"
+    ]
+  },
+  {
+    "install_name": "google-sheets",
+    "source_rel": "plugins/google-drive/skills/google-sheets",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-sheets",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: Recommended",
+      "broken link: plugin://spreadsheets@openai-primary-runtime",
+      "broken link: plugin://spreadsheets@openai-primary-runtime",
+      "broken link: plugin://spreadsheets@openai-primary-runtime"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2379 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "google-sheets",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\google-sheets",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\google-sheets <<===>> E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-sheets"
+    ]
+  },
+  {
+    "install_name": "google-slides",
+    "source_rel": "plugins/google-drive/skills/google-slides",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-slides",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: Recommended",
+      "broken link: plugin://presentations@openai-primary-runtime",
+      "broken link: JSON.stringify(result",
+      "broken link: JSON.stringify(result"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 53/100 - Grade: F - Risk: high - Checks: 3 fail, 1 warn, 2 info - Active budget: 4002 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "google-slides",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\google-slides",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\google-slides <<===>> E:\\PyCharmProject\\plugins\\plugins\\google-drive\\skills\\google-slides"
+    ]
+  },
+  {
+    "install_name": "omniverse-realtime-viewer",
+    "source_rel": "plugins/nvidia/skills/omniverse-realtime-viewer",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\nvidia\\skills\\omniverse-realtime-viewer",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: c"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 2 fail, 3 warn, 2 info - Active budget: 1974 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "omniverse-realtime-viewer",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\omniverse-realtime-viewer",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\omniverse-realtime-viewer <<===>> E:\\PyCharmProject\\plugins\\plugins\\nvidia\\skills\\omniverse-realtime-viewer"
+    ]
+  },
+  {
+    "install_name": "physical-ai-neural-reconstruction",
+    "source_rel": "plugins/nvidia/skills/physical-ai-neural-reconstruction",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\nvidia\\skills\\physical-ai-neural-reconstruction",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: NuRec",
+      "broken link: NuRec",
+      "broken link: Optional",
+      "broken link: upstream",
+      "broken link: project-scoped",
+      "broken link: DiffusionHarmonizer",
+      "broken link: DiffusionHarmonizer"
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 63/100 - Grade: D - Risk: high - Checks: 2 fail, 2 warn, 2 info - Active budget: 4288 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "physical-ai-neural-reconstruction",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\physical-ai-neural-reconstruction",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\physical-ai-neural-reconstruction <<===>> E:\\PyCharmProject\\plugins\\plugins\\nvidia\\skills\\physical-ai-neural-reconstruction"
+    ]
+  },
+  {
+    "install_name": "agents-sdk",
+    "source_rel": "plugins/openai-developers/skills/agents-sdk",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\openai-developers\\skills\\agents-sdk",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2610 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "agents-sdk",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\agents-sdk",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\agents-sdk <<===>> E:\\PyCharmProject\\plugins\\plugins\\openai-developers\\skills\\agents-sdk"
+    ]
+  },
+  {
+    "install_name": "build-chatgpt-app",
+    "source_rel": "plugins/openai-developers/skills/build-chatgpt-app",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\openai-developers\\skills\\build-chatgpt-app",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [
+      "broken link: preferred",
+      "broken link: \"app\""
+    ],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 3 fail, 0 warn, 2 info - Active budget: 5109 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "build-chatgpt-app",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\build-chatgpt-app",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\build-chatgpt-app <<===>> E:\\PyCharmProject\\plugins\\plugins\\openai-developers\\skills\\build-chatgpt-app"
+    ]
+  },
+  {
+    "install_name": "analyze-data-quality",
+    "source_rel": "plugins/data-analytics/skills/analyze-data-quality",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\analyze-data-quality",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2785 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "analyze-data-quality",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\analyze-data-quality",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\analyze-data-quality <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\analyze-data-quality"
+    ]
+  },
+  {
+    "install_name": "build-dashboard",
+    "source_rel": "plugins/data-analytics/skills/build-dashboard",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-dashboard",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 4116 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "build-dashboard",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\build-dashboard",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\build-dashboard <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-dashboard"
+    ]
+  },
+  {
+    "install_name": "build-report",
+    "source_rel": "plugins/data-analytics/skills/build-report",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 2 fail, 3 warn, 2 info - Active budget: 9200 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "build-report",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\build-report",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\build-report <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report"
+    ]
+  },
+  {
+    "install_name": "create-data-context",
+    "source_rel": "plugins/data-analytics/skills/create-data-context",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\create-data-context",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 2 fail, 3 warn, 2 info - Active budget: 1918 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "create-data-context",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\create-data-context",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\create-data-context <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\create-data-context"
+    ]
+  },
+  {
+    "install_name": "gather-business-context",
+    "source_rel": "plugins/data-analytics/skills/gather-business-context",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\gather-business-context",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 58/100 - Grade: D - Risk: high - Checks: 3 fail, 0 warn, 2 info - Active budget: 1986 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "gather-business-context",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\gather-business-context",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\gather-business-context <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\gather-business-context"
+    ]
+  },
+  {
+    "install_name": "design-kpis",
+    "source_rel": "plugins/data-analytics/skills/design-kpis",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\design-kpis",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 2333 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "design-kpis",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\design-kpis",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\design-kpis <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\design-kpis"
+    ]
+  },
+  {
+    "install_name": "index",
+    "source_rel": "plugins/data-analytics/skills/index",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\index",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 67/100 - Grade: D - Risk: high - Checks: 2 fail, 1 warn, 2 info - Active budget: 12763 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "index",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\index",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\index <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\index"
+    ]
+  },
+  {
+    "install_name": "jupyter-notebooks",
+    "source_rel": "plugins/data-analytics/skills/jupyter-notebooks",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\jupyter-notebooks",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 67/100 - Grade: D - Risk: high - Checks: 2 fail, 1 warn, 2 info - Active budget: 2004 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "jupyter-notebooks",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\jupyter-notebooks",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\jupyter-notebooks <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\jupyter-notebooks"
+    ]
+  },
+  {
+    "install_name": "kpi-reporting",
+    "source_rel": "plugins/data-analytics/skills/kpi-reporting",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\kpi-reporting",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 3286 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "kpi-reporting",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\kpi-reporting",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\kpi-reporting <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\kpi-reporting"
+    ]
+  },
+  {
+    "install_name": "publish-artifact-to-sites",
+    "source_rel": "plugins/data-analytics/skills/publish-artifact-to-sites",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\publish-artifact-to-sites",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 95/100 - Grade: A - Risk: medium - Checks: 0 fail, 1 warn, 2 info - Active budget: 1137 tokens (good) - Observed usage: not supplied | Fix First: - [warn/warning] The description does not clearly advertise when the skill should trigger. Why: Best-practice gaps usually do not break the workflow immediately",
+    "install_name_final": "publish-artifact-to-sites",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\publish-artifact-to-sites",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\publish-artifact-to-sites <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\publish-artifact-to-sites"
+    ]
+  },
+  {
+    "install_name": "report-to-google-doc",
+    "source_rel": "plugins/data-analytics/skills/build-report/report-to-google-doc",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report\\report-to-google-doc",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 54/100 - Grade: F - Risk: high - Checks: 2 fail, 4 warn, 2 info - Active budget: 1761 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "report-to-google-doc",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\report-to-google-doc",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\report-to-google-doc <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report\\report-to-google-doc"
+    ]
+  },
+  {
+    "install_name": "report-to-google-slides",
+    "source_rel": "plugins/data-analytics/skills/build-report/report-to-google-slides",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report\\report-to-google-slides",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 1 fail, 3 warn, 2 info - Active budget: 1111 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "report-to-google-slides",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\report-to-google-slides",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\report-to-google-slides <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report\\report-to-google-slides"
+    ]
+  },
+  {
+    "install_name": "report-to-pdf",
+    "source_rel": "plugins/data-analytics/skills/build-report/report-to-pdf",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report\\report-to-pdf",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 67/100 - Grade: D - Risk: high - Checks: 2 fail, 1 warn, 2 info - Active budget: 1954 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "report-to-pdf",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\report-to-pdf",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\report-to-pdf <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\build-report\\report-to-pdf"
+    ]
+  },
+  {
+    "install_name": "validate-data",
+    "source_rel": "plugins/data-analytics/skills/validate-data",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\validate-data",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 3605 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "validate-data",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\validate-data",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\validate-data <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\validate-data"
+    ]
+  },
+  {
+    "install_name": "visualize-data",
+    "source_rel": "plugins/data-analytics/skills/visualize-data",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\visualize-data",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 72/100 - Grade: C - Risk: high - Checks: 2 fail, 0 warn, 2 info - Active budget: 7837 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "visualize-data",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\visualize-data",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\visualize-data <<===>> E:\\PyCharmProject\\plugins\\plugins\\data-analytics\\skills\\visualize-data"
+    ]
+  },
+  {
+    "install_name": "image-to-code",
+    "source_rel": "plugins/product-design/skills/image-to-code",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\image-to-code",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 53/100 - Grade: F - Risk: high - Checks: 3 fail, 1 warn, 2 info - Active budget: 2528 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "image-to-code",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\image-to-code",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\image-to-code <<===>> E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\image-to-code"
+    ]
+  },
+  {
+    "install_name": "research",
+    "source_rel": "plugins/product-design/skills/research",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\research",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 86/100 - Grade: B - Risk: high - Checks: 1 fail, 0 warn, 2 info - Active budget: 872 tokens (good) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "research",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\research",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\research <<===>> E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\research"
+    ]
+  },
+  {
+    "install_name": "url-to-code",
+    "source_rel": "plugins/product-design/skills/url-to-code",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\url-to-code",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 53/100 - Grade: F - Risk: high - Checks: 3 fail, 1 warn, 2 info - Active budget: 1938 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "url-to-code",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\url-to-code",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\url-to-code <<===>> E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\url-to-code"
+    ]
+  },
+  {
+    "install_name": "user-context",
+    "source_rel": "plugins/product-design/skills/user-context",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\user-context",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 77/100 - Grade: C - Risk: high - Checks: 1 fail, 2 warn, 2 info - Active budget: 1560 tokens (moderate) - Observed usage: not supplied | Fix First: - [fail/error] deferred_cost_tokens is excessive relative to the current Codex baseline. Why: Budget pressure matters because always-loaded or frequently-loaded",
+    "install_name_final": "user-context",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\user-context",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\user-context <<===>> E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\user-context"
+    ]
+  },
+  {
+    "install_name": "audit",
+    "source_rel": "plugins/product-design/skills/audit",
+    "source_abs": "E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\audit",
+    "resolved": true,
+    "verify_ok": true,
+    "verify_errors": [],
+    "verify_warnings": [],
+    "smoke_ok": true,
+    "smoke_notes": [],
+    "plugin_eval_ok": true,
+    "plugin_eval_summary": "- Score: 44/100 - Grade: F - Risk: high - Checks: 4 fail, 0 warn, 2 info - Active budget: 2283 tokens (excessive) - Observed usage: not supplied | Fix First: - [fail/error] The skill contains relative links that do not resolve inside the skill directory. Why: Skill structure issues reduce trigger quality and make the",
+    "install_name_final": "audit",
+    "install_path": "C:\\Users\\Admin\\.agents\\skills\\audit",
+    "installed": true,
+    "install_notes": [
+      "Junction created for C:\\Users\\Admin\\.agents\\skills\\audit <<===>> E:\\PyCharmProject\\plugins\\plugins\\product-design\\skills\\audit"
+    ]
+  }
+]
