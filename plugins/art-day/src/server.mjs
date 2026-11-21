@@ -42,4 +42,3 @@ function refreshDiscovery(){const key=JSON.stringify([d.store.brief().currentId,
 await server.connect(new StdioServerTransport());
 refreshDiscovery();
 const timer=setInterval(refreshDiscovery,60000);timer.unref();
-
