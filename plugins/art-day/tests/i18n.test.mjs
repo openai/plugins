@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {systemLanguage,labels} from '../src/i18n.mjs';
+test('host language takes priority over browser and supports regional locales',()=>{assert.equal(systemLanguage('en-GB','ru-RU'),'en');assert.equal(systemLanguage('ru-RU','en-US'),'ru');assert.equal(systemLanguage(undefined,'ru-RU'),'ru');assert.equal(systemLanguage(undefined,'en-US'),'en');assert.equal(systemLanguage('fr-FR'),'en');assert.deepEqual(Object.keys(labels.ru).sort(),Object.keys(labels.en).sort());});
