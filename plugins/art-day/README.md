@@ -22,10 +22,12 @@ From this directory: `npm ci --ignore-scripts`, `npm run build`, `npm test`.
 
 16 automated tests cover storage, partial updates, trait counts, RU/EN translations, selection, source restrictions, redirects, image validation, bundled MCP launch, UI script syntax and gallery metadata. An isolated browser host was used to verify rating, favorites, preference chips and the taste view. Native Codex sidebar access was confirmed by the user, not automated GUI verification. Native-host downloads and a full unattended daily automation cycle remain unverified.
 
-## Cross-client direction and review request
+## Local architecture and review request
 
-This is not a claim of universal compatibility or directory approval. A remote HTTPS MCP transport, user authentication and isolated per-user storage would be needed for web/cloud clients. The current local database must not be shared between remote users. An MCP Apps UI can be reused by compatible hosts, but a sidebar thumbnail is a host-specific enhancement.
+The intended architecture is local execution on each user's computer. We distribute the source and bundled runtime; the user's plugin downloads images directly from Wikimedia Commons and stores artwork data, ratings, favorites and the taste profile locally. No Art Day account, publisher-hosted MCP endpoint, shared database or publisher-operated backend is required or planned for this proposal.
 
-We request maintainer feedback on whether this local plugin belongs in this examples/catalog repository and the appropriate review path. We understand that public local-MCP directory submission requires partner eligibility/organization allowlisting and is separate from a GitHub PR. No hosted endpoint, privacy/terms website or remote service is claimed by this proposal.
+The MCP server is a local stdio process launched by the user's desktop client. Research and story preparation use the user's Codex agent and available tools; this does not mean Codex itself is offline. Daily automation is configured in the user's environment. Web/mobile execution and universal sidebar support are outside this submission's scope.
+
+We request review as a self-contained local desktop plugin and guidance on the appropriate directory submission route. We understand that local-MCP public-directory submission requires partner eligibility/organization allowlisting and is separate from a GitHub PR. No migration to a publisher-hosted service is proposed.
 
 MIT licensed. Source, lockfile, tests and bundled runtime are included. No API keys or personal ratings are included.
