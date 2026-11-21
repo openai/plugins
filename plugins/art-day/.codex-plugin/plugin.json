@@ -1,0 +1,31 @@
+{
+  "name": "art-day",
+  "version": "0.2.0",
+  "description": "Discover museum paintings from Wikimedia Commons, with personal ratings, favorites and multilingual stories.",
+  "author": {
+    "name": "Art Day contributors"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "Art Day",
+    "shortDescription": "Daily art, personal taste",
+    "longDescription": "Discover museum paintings from Wikimedia Commons. Read stories, rate paintings, save favorites and explore your taste. Local desktop plugin requiring Node.js 22.13+. Optional gallery and sidebar depend on host support. Daily automation requires separate setup. No hosted service or account required.",
+    "developerName": "Art Day contributors",
+    "category": "Education",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Interactive"
+    ],
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "defaultPrompt": [
+      "Show my painting of the day",
+      "Show my favorite paintings",
+      "Change the language of Art Day"
+    ]
+  }
+}

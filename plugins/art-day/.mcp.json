@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "art-day": {
+      "command": "node",
+      "args": [
+        "dist/server.mjs"
+      ],
+      "cwd": "."
+    }
+  }
+}
