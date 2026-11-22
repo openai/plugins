@@ -838,6 +838,23 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "knolo",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/HiveForensics-AI/knolo-core.git",
+        "path": "plugins/codex-knolo",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Knolo"
+      }
     }
   ]
 }
