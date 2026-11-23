@@ -1,0 +1,44 @@
+{
+  "name": "fiu-finance",
+  "version": "2.0.0",
+  "description": "Read-only global market and financial data through FIU MCP.",
+  "author": {
+    "name": "Shenzhen Rongjuhui Information Technology Co., Ltd.",
+    "email": "rudy@szfiu.com",
+    "url": "https://github.com/fiu-ai"
+  },
+  "homepage": "https://ai.szfiu.com",
+  "repository": "https://github.com/fiu-ai/mcp-server",
+  "license": "MIT",
+  "keywords": [
+    "finance",
+    "market-data",
+    "mcp",
+    "stocks",
+    "funds",
+    "bonds",
+    "ipo",
+    "financial-news"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "FIU Finance",
+    "shortDescription": "Read-only global market and financial data",
+    "longDescription": "Query global quotes, K-lines, company information, financial statements, holdings, funds, bonds, IPOs, news, calendars and macroeconomic data through the FIU read-only MCP service.",
+    "developerName": "Shenzhen Rongjuhui Information Technology Co., Ltd.",
+    "category": "Finance",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://ai.szfiu.com",
+    "supportURL": "https://github.com/fiu-ai/mcp-server/issues",
+    "privacyPolicyURL": "https://github.com/fiu-ai/mcp-server/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/fiu-ai/mcp-server/blob/main/TERMS.md",
+    "defaultPrompt": [
+      "Use FIU Finance to look up the latest market or financial data for a security.",
+      "Use FIU Finance to retrieve read-only quotes, financials, funds, bonds, IPOs, news or macro data."
+    ]
+  }
+}
