@@ -1,0 +1,112 @@
+<style>
+#trial-SETUP {
+  font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: light dark;
+  --ink: light-dark(#352b28, #f4e8df);
+  --muted: light-dark(#76635b, #bfa99d);
+  --surface: light-dark(#ffffffb8, #342c2ad9);
+  --edge: 1px solid light-dark(#d8c9bd, #5c4f4a);
+  --accent: light-dark(#864c36, #edb499);
+
+  display: grid; gap: 1rem; width: 100%; max-width: 34rem; min-width: 0;
+  margin: 0; padding: 1.25rem 1.35rem; color: var(--ink); border: var(--edge); border-radius: 1.1rem;
+  background: radial-gradient(120% 90% at 0% 0%, #b2705522, transparent 55%),
+    radial-gradient(100% 90% at 100% 100%, #ac97cb2a, transparent 58%), light-dark(#fffaf4, #292322);
+  box-shadow: 0 1px 2px #352b280d, 0 10px 28px -14px #352b2826;
+
+  &, * { box-sizing: border-box; }
+  [hidden], [role="status"]:empty { display: none; }
+  h4 { margin: 0; padding-bottom: .75rem; border-bottom: 1px solid light-dark(#d8c9bd80, #73645f55);
+    font-size: 1rem; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
+  > label, fieldset { display: grid; gap: .4rem; margin: 0; padding: 0; min-width: 0; border: 0; }
+  > label > span, legend { padding: 0; font-size: .8rem; font-weight: 600; color: var(--muted); letter-spacing: .01em; }
+  select, fieldset label { background-color: var(--surface); border: var(--edge); border-radius: .65rem; cursor: pointer; }
+  select { appearance: none; width: 100%; padding: .58rem 2.25rem .58rem .8rem; font: inherit; font-size: .9rem;
+    color: var(--ink); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23864c36' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right .7rem center; background-size: 1rem; }
+  fieldset label { display: flex; align-items: flex-start; gap: .6rem; padding: .62rem .78rem;
+    font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }
+  select:hover, fieldset label:hover { border-color: light-dark(#c4afa0, #7a6861); }
+  fieldset label:hover { background: light-dark(#ffffffeb, #3b3230); }
+  input { flex: none; margin: .2rem 0 0; width: .95rem; height: .95rem; accent-color: #b27055; }
+  label:has(input:checked) { color: var(--accent); font-weight: 500; border-color: var(--accent);
+    background: light-dark(#b270551c, #edb49922); box-shadow: inset 0 0 0 1px light-dark(#864c3620, #edb49926); }
+  footer, button { display: flex; align-items: center; }
+  footer { flex-wrap: wrap; gap: .75rem; padding-top: .25rem; }
+  button { gap: .45rem; padding: .6rem 1.1rem; font: inherit; font-size: .88rem; font-weight: 600;
+    color: light-dark(#fffaf4, #261e1c); background: var(--accent); border: 1px solid transparent; border-radius: .65rem;
+    cursor: pointer; box-shadow: 0 2px 8px -2px light-dark(#864c3659, #0000004d); }
+  button:hover:enabled { background: light-dark(#6f3d2a, #f3c4ad); transform: translateY(-1px); }
+  button:active:enabled { transform: none; }
+  button:disabled { opacity: .6; cursor: not-allowed; }
+  :focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px light-dark(#864c3633, #edb49940); }
+  small { font-size: .8rem; color: var(--muted); line-height: 1.4; }
+}
+</style>
+
+<form id="trial-SETUP">
+  <h4>Choose your experience</h4>
+
+  <label>
+    <span>Experience</span>
+    <select name="experience" class="form-select" required>
+      <option value="">Choose an experience</option>
+      <option value="dabstep">DABstep payment analytics</option>
+      <option value="officeqa">OfficeQA financial document Q&amp;A</option>
+    </select>
+  </label>
+
+  <!-- Repeat a labeled radio for each recommended question in its profile. -->
+  <fieldset data-profile="dabstep" hidden disabled><legend>Choose a question</legend>
+    <label><input type="radio" name="dabstep" required> <span>DABSTEP_QUESTION</span></label>
+  </fieldset>
+  <fieldset data-profile="officeqa" hidden disabled><legend>Choose a question</legend>
+    <label><input type="radio" name="officeqa" required> <span>OFFICEQA_QUESTION</span></label>
+  </fieldset>
+  <label>
+    <span>Space</span>
+    <select name="space" class="form-select" required>
+      <option value="">Choose a Space</option>
+      <option value="PROJECT_ID">SPACE_NAME · ORGANIZATION</option>
+    </select>
+  </label>
+
+  <footer>
+    <button type="submit" class="btn btn-primary">
+      Ask question
+      <span aria-hidden="true">→</span>
+    </button>
+    <small role="status"></small>
+  </footer>
+</form>
+
+<script>
+(() => {
+  const form = document.getElementById("trial-SETUP");
+  const {experience, space} = form.elements;
+  function showQuestions() {
+    for (const group of form.querySelectorAll("fieldset")) {
+      group.hidden = group.disabled = group.dataset.profile !== experience.value;
+    }
+  }
+  experience.addEventListener("change", showQuestions);
+  showQuestions();
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    const question = form.querySelector("fieldset:enabled input:checked + span");
+    const submit = form.querySelector("button");
+    if (submit.disabled || !question || !space.value) return;
+    submit.disabled = true;
+    try {
+      await window.openai.sendFollowUpMessage({prompt: [
+        experience.selectedOptions[0].text, question.textContent,
+        "Space: " + space.selectedOptions[0].text + " (" + space.value + ")"
+      ].join("\n")});
+    } catch {
+      form.querySelector('[role="status"]').textContent = "Try again or send your choices in chat.";
+    } finally {
+      submit.disabled = false;
+    }
+  });
+})();
+</script>

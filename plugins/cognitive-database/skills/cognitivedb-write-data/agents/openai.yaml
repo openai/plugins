@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB Write Data"
+  short_description: "Execute confirmed CognitiveDB data changes safely"
+  default_prompt: "Use $cognitivedb-write-data to prepare, confirm, execute, and verify this data change."

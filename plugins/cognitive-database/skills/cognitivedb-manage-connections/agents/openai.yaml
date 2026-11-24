@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage CognitiveDB Connections"
+  short_description: "Inspect and manage saved ingestion connections"
+  default_prompt: "Use $cognitivedb-manage-connections to inspect, check, or manage this saved CognitiveDB connection."

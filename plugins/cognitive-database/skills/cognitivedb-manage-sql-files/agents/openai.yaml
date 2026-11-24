@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB SQL File Management"
+  short_description: "Manage and execute CognitiveDB SQL files"
+  default_prompt: "Use $cognitivedb-manage-sql-files to manage or execute my CognitiveDB SQL files."

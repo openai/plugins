@@ -1,0 +1,46 @@
+{
+  "name": "cognitive-database",
+  "version": "0.1.9",
+  "description": "Analyze data faster and put your knowledge to work with Cognitive Database. Use GPU-accelerated analytics to explore large datasets, build and search knowledge bases from documents in multiple formats, or analyze data and documents together with your AI assistant.",
+  "author": {
+    "name": "Transwarp",
+    "url": "https://transwarp-cloud.com/"
+  },
+  "homepage": "https://transwarp-cloud.com/chatgpt-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "Cognitive Database",
+    "CognitiveDB",
+    "Transwarp",
+    "GPU SQL",
+    "data analytics",
+    "database",
+    "warehouse"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Cognitive Database",
+    "shortDescription": "GPU-accelerated data analytics",
+    "category": "Data & Analytics",
+    "capabilities": [
+      "Data Analysis",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Let's explore some shared sample data. Help me pick a question I care about, find the answer, and visualize it.",
+      "I'd like to explore [File Name]. Help me upload it and highlight the key insights.",
+      "I want to try OfficeQA. Walk me through asking questions about a financial document."
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/listing-logo.png",
+    "brandColor": "#B27055",
+    "privacyPolicyURL": "https://account.transwarp-cloud.com/legal/privacy",
+    "developerName": "Transwarp Technology (Singapore) Pte. Ltd.",
+    "websiteURL": "https://transwarp-cloud.com/",
+    "longDescription": "Analyze data faster and put your knowledge to work with Cognitive Database. Use GPU-accelerated analytics to explore large datasets, build and search knowledge bases from documents in multiple formats, or analyze data and documents together with your AI assistant.",
+    "termsOfServiceURL": "https://account.transwarp-cloud.com/legal/terms"
+  }
+}

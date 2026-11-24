@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB Load Local Files"
+  short_description: "Load table files and knowledge documents"
+  default_prompt: "Use $cognitivedb-load-local-files to validate this file, choose the table or knowledge workflow, and verify its import."

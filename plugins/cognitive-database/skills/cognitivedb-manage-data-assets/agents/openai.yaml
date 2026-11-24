@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB Data Asset Management"
+  short_description: "Manage CognitiveDB Catalog, Schema, and Table assets"
+  default_prompt: "Use $cognitivedb-manage-data-assets to inspect or manage this CognitiveDB Catalog, Schema, or Table safely."

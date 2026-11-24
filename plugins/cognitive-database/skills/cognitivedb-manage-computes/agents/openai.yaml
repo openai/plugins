@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB Compute Management"
+  short_description: "Select, manage, and monitor CognitiveDB Computes safely"
+  default_prompt: "Use $cognitivedb-manage-computes to select, inspect, monitor, or manage this CognitiveDB Compute safely."

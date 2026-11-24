@@ -1,0 +1,51 @@
+<style>
+  #trial-choices-ROUND {
+    font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN",
+      ui-sans-serif, system-ui, sans-serif;
+    color-scheme: light dark;
+    --ink: light-dark(#352b28, #f4e8df);
+    --paper: light-dark(#fffaf4, #292322);
+    --line: light-dark(#d8c9bd, #73645f);
+    --accent: light-dark(#864c36, #edb499);
+    font-size: .875rem; font-weight: 400; line-height: 1.45;
+    display: grid; gap: .5rem; min-width: 0; margin: 0; padding: 1.125rem;
+    color: var(--ink); border: 1px solid var(--line); border-radius: .9rem;
+    background: linear-gradient(112deg, #b270551a, transparent 52%, #ac97cb24), var(--paper);
+
+    h4 { margin: 0; font: inherit; font-size: .9375rem; font-weight: 550; line-height: 1.4; }
+    button { box-sizing: border-box; max-width: 100%; margin: 0; padding: .4375rem .625rem;
+    font: inherit;
+    color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .5rem; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button:hover { border-color: var(--accent); }
+    [role="status"]:empty { display: none; }
+    button { text-align: start; white-space: normal; overflow-wrap: anywhere; }
+  }
+</style>
+<section id="trial-choices-ROUND" aria-labelledby="trial-heading-ROUND">
+  <h4 id="trial-heading-ROUND">Choose a question</h4>
+  <button type="button" class="btn btn-block">QUESTION_ONE</button>
+  <button type="button" class="btn btn-block">QUESTION_TWO</button>
+  <button type="button" class="btn btn-block">QUESTION_THREE</button>
+  <small role="status"></small>
+</section>
+<script>
+(() => {
+  const group = document.getElementById("trial-choices-ROUND");
+  const buttons = group.querySelectorAll("button");
+  const status = group.querySelector('[role="status"]');
+  group.addEventListener("click", async event => {
+    const button = event.target.closest("button");
+    if (!button || button.disabled) return;
+    buttons.forEach(item => { item.disabled = true; });
+    try {
+      await window.openai.sendFollowUpMessage({ prompt: button.textContent });
+      status.textContent = "";
+    } catch {
+      status.textContent = "Please try again or send your question in chat.";
+    } finally {
+      buttons.forEach(item => { item.disabled = false; });
+    }
+  });
+})();
+</script>
