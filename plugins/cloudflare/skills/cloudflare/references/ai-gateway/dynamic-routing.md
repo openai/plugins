@@ -1,82 +1,15 @@
-# Dynamic Routing
+# AI Gateway Dynamic Routing
 
-Configure complex routing in dashboard without code changes. Use route names instead of model names.
+Use a dynamic route when model selection, traffic splitting, quotas, or fallbacks should be controlled in the gateway. For a simple retry or fallback sequence, check the request-handling and fallback guides before introducing a routing flow.
 
-## Usage
+| Task | Current documentation |
+|------|-----------------------|
+| Design conditional routes, A/B splits, quotas, model fallbacks, and version rollbacks | [Dynamic routing](https://developers.cloudflare.com/ai-gateway/features/dynamic-routing/index.md) |
+| Invoke a route from an SDK, HTTP request, or Worker; inspect route response metadata | [Using a dynamic route](https://developers.cloudflare.com/ai-gateway/features/dynamic-routing/usage/index.md) |
+| Define route elements and connections programmatically | [JSON configuration](https://developers.cloudflare.com/ai-gateway/features/dynamic-routing/json-configuration/index.md) |
+| Provide metadata used by routing conditions | [Custom metadata](https://developers.cloudflare.com/ai-gateway/observability/custom-metadata/index.md) |
+| Configure model/provider fallbacks | [Fallbacks](https://developers.cloudflare.com/ai-gateway/configuration/fallbacks/index.md) |
+| Configure retries, backoff, and timeouts | [Request handling](https://developers.cloudflare.com/ai-gateway/configuration/request-handling/index.md) |
+| Inspect request outcomes, costs, and errors | [Analytics](https://developers.cloudflare.com/ai-gateway/observability/analytics/index.md) and [logging](https://developers.cloudflare.com/ai-gateway/observability/logging/index.md) |
 
-```typescript
-const response = await client.chat.completions.create({
-  model: 'dynamic/smart-chat', // Route name from dashboard
-  messages: [{ role: 'user', content: 'Hello!' }]
-});
-```
-
-## Node Types
-
-| Node | Purpose | Use Case |
-|------|---------|----------|
-| **Conditional** | Branch on metadata | Paid vs free users, geo routing |
-| **Percentage** | A/B split traffic | Model testing, gradual rollouts |
-| **Rate Limit** | Enforce quotas | Per-user/team limits |
-| **Budget Limit** | Cost quotas | Per-user spending caps |
-| **Model** | Call provider | Final destination |
-
-## Metadata
-
-Pass via header (max 5 entries, flat only):
-```typescript
-headers: {
-  'cf-aig-metadata': JSON.stringify({
-    userId: 'user-123',
-    tier: 'pro',
-    region: 'us-east'
-  })
-}
-```
-
-## Common Patterns
-
-**Multi-model fallback:**
-```
-Start → GPT-4 → On error: GPT-5 → On error: Llama
-```
-
-**Tiered access:**
-```
-Conditional: tier == 'enterprise' → GPT-4 (no limit)
-Conditional: tier == 'pro' → Rate Limit 1000/hr → GPT-4o
-Conditional: tier == 'free' → Rate Limit 10/hr → GPT-4o-mini
-```
-
-**Gradual rollout:**
-```
-Percentage: 10% → New model, 90% → Old model
-```
-
-**Cost-based fallback:**
-```
-Budget Limit: $100/day per teamId
-  < 80%: GPT-4
-  >= 80%: GPT-4o-mini
-  >= 100%: Error
-```
-
-## Version Management
-
-- Save changes as new version
-- Test with `model: 'dynamic/route@v2'`
-- Roll back by deploying previous version
-
-## Monitoring
-
-Dashboard → Gateway → Dynamic Routes:
-- Request count per path
-- Success/error rates
-- Latency/cost by path
-
-## Limitations
-
-- Max 5 metadata entries
-- Values: string/number/boolean/null only
-- No nested objects
-- Route names: alphanumeric + hyphens
+Check the usage guide's authentication and stored-key prerequisites. Dynamic routes still use the [Unified API compatibility endpoint](https://developers.cloudflare.com/ai-gateway/usage/chat-completion/index.md); its single-model deprecation does not make the REST inference endpoint a replacement for route invocation.

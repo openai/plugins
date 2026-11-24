@@ -1,143 +1,26 @@
-# API Reference
+# Hyperdrive API and drivers
 
-See [README.md](./README.md) for overview, [configuration.md](./configuration.md) for setup.
+Start with [README.md](./README.md) and [configuration.md](./configuration.md). Fetch the selected guide before writing connection or query code; use its current supported package version and compatibility settings.
 
-## Binding Interface
+## Driver and binding routes
 
-```typescript
-interface Hyperdrive {
-  connectionString: string;  // PostgreSQL
-  // MySQL properties:
-  host: string;
-  port: number;
-  user: string;
-  password: string;
-  database: string;
-}
+| Task | Official documentation |
+|------|------------------------|
+| PostgreSQL with node-postgres (`pg`), including binding connection string and parameterized queries | [node-postgres](https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/node-postgres/index.md) |
+| PostgreSQL with tagged-template queries and Postgres.js driver options | [Postgres.js](https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/postgres-js/index.md) |
+| MySQL with binding connection properties and Worker-specific driver options | [mysql2](https://developers.cloudflare.com/hyperdrive/examples/connect-to-mysql/mysql-drivers-and-libraries/mysql2/index.md) |
+| Check database features, prepared statements, and library compatibility | [Supported databases and features](https://developers.cloudflare.com/hyperdrive/reference/supported-databases-and-features/index.md) |
+| Generate binding and runtime TypeScript types | [Workers TypeScript](https://developers.cloudflare.com/workers/languages/typescript/index.md) |
 
-interface Env {
-  HYPERDRIVE: Hyperdrive;
-}
-```
+Keep an existing supported driver when it fits the application. Choose by database engine and library integration needs; do not infer cache behavior from a driver's prepared-statement setting. Fetch [query caching](https://developers.cloudflare.com/hyperdrive/concepts/query-caching/index.md) for cache eligibility and freshness controls.
 
-**Generate types:** `npx wrangler types` (auto-creates worker-configuration.d.ts from wrangler.jsonc)
+## ORMs and query builders
 
-## PostgreSQL (node-postgres) - RECOMMENDED
+| Task | Official documentation |
+|------|------------------------|
+| Use Drizzle with PostgreSQL | [PostgreSQL Drizzle guide](https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/drizzle-orm/index.md) |
+| Use Drizzle with MySQL | [MySQL Drizzle guide](https://developers.cloudflare.com/hyperdrive/examples/connect-to-mysql/mysql-drivers-and-libraries/drizzle-orm/index.md) |
+| Use Prisma with PostgreSQL | [Prisma guide](https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/prisma-orm/index.md) |
+| Assess another query builder, including Kysely | [Postgres.js integration notes](https://developers.cloudflare.com/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/postgres-js/index.md) and [database compatibility](https://developers.cloudflare.com/hyperdrive/reference/supported-databases-and-features/index.md), then the library's current dialect documentation |
 
-```typescript
-import { Client } from "pg";  // pg@^8.17.2
-
-export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
-    const client = new Client({connectionString: env.HYPERDRIVE.connectionString});
-    try {
-      await client.connect();
-      const result = await client.query("SELECT * FROM users WHERE id = $1", [123]);
-      return Response.json(result.rows);
-    } finally {
-      await client.end();
-    }
-  },
-};
-```
-
-**⚠️ Workers connection limit: 6 per Worker invocation** - use connection pooling wisely.
-
-## PostgreSQL (postgres.js)
-
-```typescript
-import postgres from "postgres";  // postgres@^3.4.8
-
-const sql = postgres(env.HYPERDRIVE.connectionString, {
-  max: 5,             // Limit per Worker (Workers max: 6)
-  prepare: true,      // Enabled by default, required for caching
-  fetch_types: false, // Reduce latency if not using arrays
-});
-
-const users = await sql`SELECT * FROM users WHERE active = ${true} LIMIT 10`;
-```
-
-**⚠️ `prepare: true` is enabled by default and required for Hyperdrive caching.** Setting to `false` disables prepared statements + cache.
-
-## MySQL (mysql2)
-
-```typescript
-import { createConnection } from "mysql2/promise";  // mysql2@^3.16.2
-
-const conn = await createConnection({
-  host: env.HYPERDRIVE.host,
-  user: env.HYPERDRIVE.user,
-  password: env.HYPERDRIVE.password,
-  database: env.HYPERDRIVE.database,
-  port: env.HYPERDRIVE.port,
-  disableEval: true,  // ⚠️ REQUIRED for Workers
-});
-
-const [results] = await conn.query("SELECT * FROM users WHERE active = ? LIMIT ?", [true, 10]);
-ctx.waitUntil(conn.end());
-```
-
-**⚠️ MySQL support is less mature than PostgreSQL** - expect fewer optimizations and potential edge cases.
-
-## Query Caching
-
-**Cacheable:**
-```sql
-SELECT * FROM posts WHERE published = true;
-SELECT COUNT(*) FROM users;
-```
-
-**NOT cacheable:**
-```sql
--- Writes
-INSERT/UPDATE/DELETE
-
--- Volatile functions
-SELECT NOW();
-SELECT random();
-SELECT LASTVAL();  -- PostgreSQL
-SELECT UUID();     -- MySQL
-```
-
-**Cache config:**
-- Default: `max_age=60s`, `swr=15s`
-- Max `max_age`: 3600s
-- Disable: `--caching-disabled=true`
-
-**Multiple configs pattern:**
-```typescript
-// Reads: cached
-const sqlCached = postgres(env.HYPERDRIVE_CACHED.connectionString);
-const posts = await sqlCached`SELECT * FROM posts ORDER BY views DESC LIMIT 10`;
-
-// Writes/time-sensitive: no cache
-const sqlNoCache = postgres(env.HYPERDRIVE_NO_CACHE.connectionString);
-const orders = await sqlNoCache`SELECT * FROM orders WHERE created_at > NOW() - INTERVAL 5 MINUTE`;
-```
-
-## ORMs
-
-**Drizzle:**
-```typescript
-import { drizzle } from "drizzle-orm/postgres-js";  // drizzle-orm@^0.45.1
-import postgres from "postgres";
-
-const client = postgres(env.HYPERDRIVE.connectionString, {max: 5, prepare: true});
-const db = drizzle(client);
-const users = await db.select().from(users).where(eq(users.active, true)).limit(10);
-```
-
-**Kysely:**
-```typescript
-import { Kysely, PostgresDialect } from "kysely";  // kysely@^0.27+
-import postgres from "postgres";
-
-const db = new Kysely({
-  dialect: new PostgresDialect({
-    postgres: postgres(env.HYPERDRIVE.connectionString, {max: 5, prepare: true}),
-  }),
-});
-const users = await db.selectFrom("users").selectAll().where("active", "=", true).execute();
-```
-
-See [patterns.md](./patterns.md) for use cases, [gotchas.md](./gotchas.md) for limits.
+An ORM still uses a database driver and inherits its Worker connection constraints. Keep clients scoped to the invocation using [connection lifecycle](https://developers.cloudflare.com/hyperdrive/concepts/connection-lifecycle/index.md). When a library owns SQL for authentication or other fresh reads, pass a client using a cache-disabled configuration as described in [query caching](https://developers.cloudflare.com/hyperdrive/concepts/query-caching/index.md).

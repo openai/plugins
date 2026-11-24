@@ -1,105 +1,14 @@
 # Observability Patterns
 
-## Usage-Based Billing
+Use these decisions alongside the linked implementation guides. Application event schemas, billing policies, alert thresholds, and delivery behavior still need to be designed for the application.
 
-```typescript
-env.ANALYTICS.writeDataPoint({
-  blobs: [customerId, request.url, request.method],
-  doubles: [1], // request_count
-  indexes: [customerId]
-});
-```
+| Task | Design decision and documentation |
+| --- | --- |
+| Usage-based billing | Define the billable event, tenant identity, time window, and accuracy requirements. Start with the maintained [Analytics Engine billing recipe](https://developers.cloudflare.com/analytics/analytics-engine/recipes/usage-based-billing-for-your-saas-product/index.md) and [sampling guidance](https://developers.cloudflare.com/analytics/analytics-engine/sampling/index.md); assess whether sampled estimates satisfy the billing contract. |
+| Performance monitoring | Use [built-in metrics](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/index.md) for aggregate health and [traces](https://developers.cloudflare.com/workers/observability/traces/index.md) to investigate dependency latency. Custom measurements need consistent units and aggregation semantics; check [runtime timers](https://developers.cloudflare.com/workers/runtime-apis/performance/index.md) before measuring CPU-only work. |
+| Error tracking | Emit structured context without secrets, investigate with [Query Builder](https://developers.cloudflare.com/workers/observability/query-builder/index.md), and choose [Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/index.md) if custom alert processing is needed. Define thresholds and duplicate handling for your alert destination. |
+| Multi-tenant tracking | Choose the tenant dimension and consistent field positions using [Analytics Engine get started](https://developers.cloudflare.com/analytics/analytics-engine/get-started/index.md) and [sampling guidance](https://developers.cloudflare.com/analytics/analytics-engine/sampling/index.md). Enforce tenant authorization in the application that exposes analytics; a dataset index is not an access-control boundary. |
+| Tail Worker filtering | Use the current [Tail handler schema](https://developers.cloudflare.com/workers/runtime-apis/handlers/tail/index.md) for outcomes, exceptions, and timing fields, with [Tail configuration](https://developers.cloudflare.com/workers/observability/logs/tail-workers/index.md) for producer wiring. Define filtering, redaction, and downstream failure handling for the destination. |
+| OpenTelemetry export | Prefer the maintained [OTLP export integration](https://developers.cloudflare.com/observability/export/opentelemetry/index.md) for supported destinations. For Honeycomb, follow [Export to Honeycomb](https://developers.cloudflare.com/observability/export/opentelemetry/honeycomb/index.md) instead of synthesizing spans from Tail events. |
 
-```sql
-SELECT blob1 AS customer_id, SUM(_sample_interval * double1) AS total_calls
-FROM api_usage WHERE timestamp >= DATE_TRUNC('month', NOW())
-GROUP BY customer_id
-```
-
-## Performance Monitoring
-
-```typescript
-const start = Date.now();
-const response = await fetch(url);
-env.ANALYTICS.writeDataPoint({
-  blobs: [url, response.status.toString()],
-  doubles: [Date.now() - start, response.status]
-});
-```
-
-```sql
-SELECT blob1 AS url, AVG(double1) AS avg_ms, percentile(double1, 0.95) AS p95_ms
-FROM fetch_metrics WHERE timestamp >= NOW() - INTERVAL '1' HOUR
-GROUP BY url
-```
-
-## Error Tracking
-
-```typescript
-env.ANALYTICS.writeDataPoint({
-  blobs: [error.name, request.url, request.method],
-  doubles: [1],
-  indexes: [error.name]
-});
-```
-
-## Multi-Tenant Tracking
-
-```typescript
-env.ANALYTICS.writeDataPoint({
-  indexes: [tenantId], // efficient filtering
-  blobs: [tenantId, url.pathname, method, status],
-  doubles: [1, duration, bytesSize]
-});
-```
-
-## Tail Worker Log Filtering
-
-```typescript
-export default {
-  async tail(events, env, ctx) {
-    const critical = events.filter(e =>
-      e.exceptions.length > 0 || e.event.wallTime > 1000000
-    );
-    if (critical.length === 0) return;
-
-    ctx.waitUntil(
-      fetch('https://logging.example.com/ingest', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${env.API_KEY}` },
-        body: JSON.stringify(critical.map(e => ({
-          outcome: e.event.outcome,
-          cpu_ms: e.event.cpuTime / 1000,
-          errors: e.exceptions
-        })))
-      })
-    );
-  }
-};
-```
-
-## OpenTelemetry Export
-
-```typescript
-export default {
-  async tail(events, env, ctx) {
-    const otelSpans = events.map(e => ({
-      traceId: generateId(32),
-      spanId: generateId(16),
-      name: e.scriptName || 'worker.request',
-      attributes: [
-        { key: 'worker.outcome', value: { stringValue: e.event.outcome } },
-        { key: 'worker.cpu_time_us', value: { intValue: String(e.event.cpuTime) } }
-      ]
-    }));
-
-    ctx.waitUntil(
-      fetch('https://api.honeycomb.io/v1/traces', {
-        method: 'POST',
-        headers: { 'X-Honeycomb-Team': env.HONEYCOMB_KEY },
-        body: JSON.stringify({ resourceSpans: [{ scopeSpans: [{ spans: otelSpans }] }] })
-      })
-    );
-  }
-};
-```
+Use [Workers Logpush](https://developers.cloudflare.com/workers/observability/logs/logpush/index.md) when the requirement is Workers Trace Event delivery to a supported log destination. Use a Tail Worker when custom processing is required beyond the configured export integration.

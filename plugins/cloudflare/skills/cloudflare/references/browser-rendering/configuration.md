@@ -1,78 +1,12 @@
-# Configuration & Setup
+# Browser Run Configuration
 
-## Installation
+Check the project's runtime, installed client and Wrangler versions, and compatibility date before adapting setup instructions. Cloudflare's packages for Workers and standard clients connecting over CDP have different setup requirements.
 
-```bash
-npm install @cloudflare/puppeteer  # or @cloudflare/playwright
-```
+| Task | Documentation |
+|------|---------------|
+| Start a project or configure REST authentication | [Get started](https://developers.cloudflare.com/browser-run/get-started/index.md) — Quick Actions and browser session setup |
+| Configure a Worker or choose a development mode | [Wrangler reference](https://developers.cloudflare.com/browser-run/reference/wrangler/index.md) — browser bindings, compatibility requirements, and local/remote development |
+| Install or update a Workers browser client | [Puppeteer](https://developers.cloudflare.com/browser-run/puppeteer/index.md) or [Playwright](https://developers.cloudflare.com/browser-run/playwright/index.md) — package-specific setup and supported versions |
+| Connect from a script, server, or CI outside Workers | [CDP](https://developers.cloudflare.com/browser-run/cdp/index.md) — authentication and client integration guides |
 
-**Use Cloudflare packages** - standard `puppeteer`/`playwright` won't work in Workers.
-
-## wrangler.json
-
-```json
-{
-  "name": "browser-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-01-01",
-  "compatibility_flags": ["nodejs_compat"],
-  "browser": {
-    "binding": "MYBROWSER"
-  }
-}
-```
-
-**Required:** `nodejs_compat` flag and `browser.binding`.
-
-## TypeScript
-
-```typescript
-interface Env {
-  MYBROWSER: Fetcher;
-}
-
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // ...
-  }
-} satisfies ExportedHandler<Env>;
-```
-
-## Development
-
-```bash
-wrangler dev --remote  # --remote required for browser binding
-```
-
-**Local mode does NOT support Browser Rendering** - must use `--remote`.
-
-## REST API
-
-No wrangler config needed. Get API token with "Browser Rendering - Edit" permission.
-
-```bash
-curl -X POST \
-  'https://api.cloudflare.com/client/v4/accounts/{accountId}/browser-rendering/screenshot' \
-  -H 'Authorization: Bearer TOKEN' \
-  -d '{"url": "https://example.com"}' --output screenshot.png
-```
-
-## Requirements
-
-| Requirement | Value |
-|-------------|-------|
-| Node.js compatibility | `nodejs_compat` flag |
-| Compatibility date | 2023-03-01+ |
-| Module format | ES modules only |
-| Browser | Chromium 119+ (no Firefox/Safari) |
-
-**Not supported:** WebGL, WebRTC, extensions, `file://` protocol, Service Worker syntax.
-
-## Troubleshooting
-
-| Error | Solution |
-|-------|----------|
-| `MYBROWSER is undefined` | Use `wrangler dev --remote` |
-| `nodejs_compat not enabled` | Add to `compatibility_flags` |
-| `Module not found` | `npm install @cloudflare/puppeteer` |
-| `Browser Rendering not available` | Enable in dashboard |
+Development support depends on the selected interface. Follow its current guidance rather than applying one remote-mode requirement to all Browser Run workflows.

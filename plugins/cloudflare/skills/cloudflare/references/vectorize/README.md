@@ -1,133 +1,22 @@
 # Cloudflare Vectorize
 
-Globally distributed vector database for AI applications. Store and query vector embeddings for semantic search, recommendations, RAG, and classification.
+Use Vectorize when you need to control embeddings, vector indexing, and retrieval for semantic search, recommendations, or RAG. For a managed retrieval pipeline, see [AI Search](../ai-search/README.md).
 
-**Status:** Generally Available (GA) | **Last Updated:** 2026-01-27
+Fetch current documentation before implementing. Start with the [Vectorize documentation index](https://developers.cloudflare.com/vectorize/llms.txt) to discover pages; load only those relevant to the task. Treat the docs as the source of truth for APIs, configuration, models, limits, and pricing.
 
-## Quick Start
+## Task routing
 
-```typescript
-// 1. Create index
-// npx wrangler vectorize create my-index --dimensions=768 --metric=cosine
+| Task | Read |
+|------|------|
+| Create an index and connect a Worker | [Configuration](configuration.md) and [Introduction to Vectorize](https://developers.cloudflare.com/vectorize/get-started/intro/index.md) |
+| Insert, update, query, retrieve, or delete vectors | [API routes](api.md) |
+| Generate embeddings, build RAG, or partition tenant data | [Patterns](patterns.md) |
+| Diagnose missing matches, metadata, or rejected requests | [Gotchas](gotchas.md) |
 
-// 2. Configure binding (wrangler.jsonc)
-// { "vectorize": [{ "binding": "VECTORIZE", "index_name": "my-index" }] }
+## Decisions to make first
 
-// 3. Query vectors
-const matches = await env.VECTORIZE.query(queryVector, { topK: 5 });
-```
-
-## Key Features
-
-- **10M vectors per index** (V2)
-- Dimensions up to 1536 (32-bit float)
-- Three distance metrics: cosine, euclidean, dot-product
-- Metadata filtering (up to 10 indexes)
-- Namespace support (50K namespaces paid, 1K free)
-- Seamless Workers AI integration
-- Global distribution
-
-## Reading Order
-
-| Task | Files to Read |
-|------|---------------|
-| New to Vectorize | README only |
-| Implement feature | README + api + patterns |
-| Setup/configure | README + configuration |
-| Debug issues | gotchas |
-| Integrate with AI | README + patterns |
-| RAG implementation | README + patterns |
-
-## File Guide
-
-- **README.md** (this file): Overview, quick decisions
-- **api.md**: Runtime API, types, operations (query/insert/upsert)
-- **configuration.md**: Setup, CLI, metadata indexes
-- **patterns.md**: RAG, Workers AI, OpenAI, LangChain, multi-tenant
-- **gotchas.md**: Limits, pitfalls, troubleshooting
-
-## Distance Metric Selection
-
-Choose based on your use case:
-
-```
-What are you building?
-├─ Text/semantic search → cosine (most common)
-├─ Image similarity → euclidean
-├─ Recommendation system → dot-product
-└─ Pre-normalized vectors → dot-product
-```
-
-| Metric | Best For | Score Interpretation |
-|--------|----------|---------------------|
-| `cosine` | Text embeddings, semantic similarity | Higher = closer (1.0 = identical) |
-| `euclidean` | Absolute distance, spatial data | Lower = closer (0.0 = identical) |
-| `dot-product` | Recommendations, normalized vectors | Higher = closer |
-
-**Note:** Index configuration is immutable. Cannot change dimensions or metric after creation.
-
-## Multi-Tenancy Strategy
-
-```
-How many tenants?
-├─ < 50K tenants → Use namespaces (recommended)
-│   ├─ Fastest (filter before vector search)
-│   └─ Strict isolation
-├─ > 50K tenants → Use metadata filtering
-│   ├─ Slower (post-filter after vector search)
-│   └─ Requires metadata index
-└─ Per-tenant indexes → Only if compliance mandated
-    └─ 50K index limit per account (paid plan)
-```
-
-## Common Workflows
-
-### Semantic Search
-
-```typescript
-// 1. Generate embedding
-const result = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] });
-
-// 2. Query Vectorize
-const matches = await env.VECTORIZE.query(result.data[0], {
-  topK: 5,
-  returnMetadata: "indexed"
-});
-```
-
-### RAG Pattern
-
-```typescript
-// 1. Generate query embedding
-const embedding = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] });
-
-// 2. Search Vectorize
-const matches = await env.VECTORIZE.query(embedding.data[0], { topK: 5 });
-
-// 3. Fetch full documents from R2/D1/KV
-const docs = await Promise.all(matches.matches.map(m =>
-  env.R2.get(m.metadata.key).then(obj => obj?.text())
-));
-
-// 4. Generate LLM response with context
-const answer = await env.AI.run("@cf/meta/llama-3-8b-instruct", {
-  prompt: `Context: ${docs.join("\n\n")}\n\nQuestion: ${query}\n\nAnswer:`
-});
-```
-
-## Critical Gotchas
-
-See `gotchas.md` for details. Most important:
-
-1. **Async mutations**: Inserts take 5-10s to be queryable
-2. **500 batch limit**: Workers API enforces 500 vectors per call (undocumented)
-3. **Metadata truncation**: `"indexed"` returns first 64 bytes only
-4. **topK with metadata**: Max 20 (not 100) when using returnValues or returnMetadata: "all"
-5. **Metadata indexes first**: Must create before inserting vectors
-
-## Resources
-
-- [Official Docs](https://developers.cloudflare.com/vectorize/)
-- [Client API Reference](https://developers.cloudflare.com/vectorize/reference/client-api/)
-- [Workers AI Models](https://developers.cloudflare.com/workers-ai/models/#text-embeddings)
-- [Discord: #vectorize](https://discord.cloudflare.com)
+- Use a consistent embedding model and preprocessing for stored vectors and queries. Matching dimensions alone does not make different models' embeddings compatible.
+- Choose dimensions from the embedding output and a distance metric appropriate to that model. Changing either requires a new index; check [index configuration and scoring semantics](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/index.md) before choosing thresholds.
+- Plan filterable metadata before ingestion. Adding an index later requires re-upserting existing vectors to index that metadata; see [metadata filtering](https://developers.cloudflare.com/vectorize/reference/metadata-filtering/index.md).
+- A namespace partitions search; your application must authorize access and derive tenant scope from trusted identity. See [tenant patterns](patterns.md).
+- Design for asynchronous mutation visibility rather than assuming a completed write is already searchable. See [mutation semantics](https://developers.cloudflare.com/vectorize/reference/client-api/index.md).

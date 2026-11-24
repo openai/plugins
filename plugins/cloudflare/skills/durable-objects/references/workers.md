@@ -184,63 +184,26 @@ async function handleSendMessage(request: Request, env: Env): Promise<Response> 
 
 ## Observability & Logging
 
-### Structured Logging
+Use [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md) for structured application logs and pass objects to `console.log()` so their fields can be queried.
 
-```typescript
-function log(level: "info" | "warn" | "error", message: string, data?: Record<string, unknown>) {
-  console.log(JSON.stringify({
-    level,
-    message,
-    timestamp: new Date().toISOString(),
-    ...data,
-  }));
-}
+### Workers Traces
 
-// Usage
-log("info", "Request received", { path: url.pathname, method: request.method });
-log("error", "DO call failed", { roomId, error: String(error) });
-```
+Use [Workers Traces](https://developers.cloudflare.com/workers/observability/traces/index.md) for automatic instrumentation of handlers, binding operations, and RPC calls. Enable `observability.traces.enabled` and choose `observability.traces.head_sampling_rate` explicitly for the workload or investigation. Enabling logs alone does not enable traces.
 
-### Request Tracing
+### Local Debugging
 
-```typescript
-async function handleRequest(request: Request, env: Env): Promise<Response> {
-  const requestId = crypto.randomUUID();
-  const startTime = Date.now();
+Start the project's dev server with `cf dev` where supported, or its Wrangler or Vite command. [Local Explorer](https://developers.cloudflare.com/workers/local-development/local-explorer/index.md) captures local traces and logs. See its docs for supported versions.
 
-  try {
-    const response = await processRequest(request, env);
+Use the Local Explorer API URL printed at startup:
 
-    log("info", "Request completed", {
-      requestId,
-      duration: Date.now() - startTime,
-      status: response.status,
-    });
+- `GET /cdn-cgi/local/explorer/api` returns the OpenAPI spec.
+- `POST /cdn-cgi/local/explorer/api/local/observability/query` queries traces and logs with SQL. Use the spec for request and response formats.
 
-    return response;
-  } catch (error) {
-    log("error", "Request failed", {
-      requestId,
-      duration: Date.now() - startTime,
-      error: String(error),
-    });
-    throw error;
-  }
-}
-```
+### Timing Limits
 
-### Tail Workers (Production)
+In production, `Date.now()` and `performance.now()` only advance after I/O, so they cannot time synchronous SQL or CPU work. Local timers advance during execution. See [performance and timers](https://developers.cloudflare.com/workers/runtime-apis/performance/index.md).
 
-For production logging, use Tail Workers to forward logs:
-
-```jsonc
-// wrangler.jsonc
-{
-  "tail_consumers": [
-    { "service": "log-collector" }
-  ]
-}
-```
+Non-I/O spans can report `0 ms` even when the operation takes longer. See [trace limitations](https://developers.cloudflare.com/workers/observability/traces/known-limitations/index.md) before using span durations.
 
 ## Error Handling
 
@@ -254,7 +217,7 @@ async function callDO(stub: DurableObjectStub<ChatRoom>, method: string): Promis
   } catch (error) {
     if (error instanceof Error) {
       // DO threw an error
-      log("error", "DO operation failed", { error: error.message });
+      console.error({ message: "DO operation failed", error: error.message });
       return Response.json(
         { error: "Service temporarily unavailable" },
         { status: 503 }
@@ -296,7 +259,7 @@ export default {
       return new Response(null, { headers: corsHeaders() });
     }
 
-    const response = await handleRequest(request, env);
+    const response = await handleRooms(request, env);
     
     // Add CORS headers to response
     const newHeaders = new Headers(response.headers);

@@ -1,144 +1,20 @@
 # Queues Configuration
 
-## Create Queue
+Fetch the relevant guide before writing configuration or running CLI commands. Check the project's Wrangler version and compatibility date when adapting examples.
 
-```bash
-wrangler queues create my-queue
-wrangler queues create my-queue --retention-period-hours=336  # 14 days
-wrangler queues create my-queue --delivery-delay-secs=300
-```
+| Task | Documentation |
+|------|---------------|
+| Create a queue and connect producer and consumer Workers | [Getting started](https://developers.cloudflare.com/queues/get-started/index.md) |
+| Configure producer bindings, Worker consumers, retention, and concurrency settings | [Configure Queues](https://developers.cloudflare.com/queues/configuration/configure-queues/index.md) |
+| Configure an external HTTP consumer and its visibility timeout | [Pull consumers](https://developers.cloudflare.com/queues/configuration/pull-consumers/index.md) |
+| Choose batching, retry policy, or delivery delays | [Batching, retries, and delays](https://developers.cloudflare.com/queues/configuration/batching-retries/index.md) |
+| Preserve messages that exhaust retries | [Dead Letter Queues](https://developers.cloudflare.com/queues/configuration/dead-letter-queues/index.md) |
+| Set consumer scaling for downstream capacity | [Consumer concurrency](https://developers.cloudflare.com/queues/configuration/consumer-concurrency/index.md) |
+| Choose content types and type Worker messages | [JavaScript APIs](https://developers.cloudflare.com/queues/configuration/javascript-apis/index.md) |
+| Create, update, attach, remove, or delete queues and consumers | [Wrangler commands](https://developers.cloudflare.com/queues/reference/wrangler-commands/index.md) |
+| Pause delivery, resume it, or purge messages | [Pause and purge](https://developers.cloudflare.com/queues/configuration/pause-purge/index.md) |
+| Develop and test producers and consumers locally | [Local development](https://developers.cloudflare.com/queues/configuration/local-development/index.md) |
 
-## Producer Binding
+Choose push or pull based on where processing runs, then select an encoding supported by that consumer. Tune batching for acceptable latency and downstream write capacity. Decide how failed messages will be inspected and replayed before configuring a dead-letter queue.
 
-**wrangler.jsonc:**
-```jsonc
-{
-  "queues": {
-    "producers": [
-      {
-        "queue": "my-queue-name",
-        "binding": "MY_QUEUE",
-        "delivery_delay": 60  // Optional: default delay in seconds
-      }
-    ]
-  }
-}
-```
-
-## Consumer Configuration (Push-based)
-
-**wrangler.jsonc:**
-```jsonc
-{
-  "queues": {
-    "consumers": [
-      {
-        "queue": "my-queue-name",
-        "max_batch_size": 10,           // 1-100, default 10
-        "max_batch_timeout": 5,         // 0-60s, default 5
-        "max_retries": 3,               // default 3, max 100
-        "dead_letter_queue": "my-dlq",  // optional
-        "retry_delay": 300              // optional: delay retries in seconds
-      }
-    ]
-  }
-}
-```
-
-## Consumer Configuration (Pull-based)
-
-**wrangler.jsonc:**
-```jsonc
-{
-  "queues": {
-    "consumers": [
-      {
-        "queue": "my-queue-name",
-        "type": "http_pull",
-        "visibility_timeout_ms": 5000,  // default 30000, max 12h
-        "max_retries": 5,
-        "dead_letter_queue": "my-dlq"
-      }
-    ]
-  }
-}
-```
-
-## TypeScript Types
-
-```typescript
-interface Env {
-  MY_QUEUE: Queue<MessageBody>;
-  ANALYTICS_QUEUE: Queue<AnalyticsEvent>;
-}
-
-interface MessageBody {
-  id: string;
-  action: 'create' | 'update' | 'delete';
-  data: Record<string, any>;
-}
-
-export default {
-  async queue(batch: MessageBatch<MessageBody>, env: Env): Promise<void> {
-    for (const msg of batch.messages) {
-      console.log(msg.body.action);
-      msg.ack();
-    }
-  }
-} satisfies ExportedHandler<Env>;
-```
-
-## Content Type Selection
-
-Choose content type based on consumer type and data requirements:
-
-| Content Type | Use When | Readable By | Supports | Size |
-|--------------|----------|-------------|----------|------|
-| `json` | Pull consumers, dashboard visibility, simple objects | All (push/pull/dashboard) | JSON-serializable types only | Medium |
-| `v8` | Push consumers only, complex JS objects | Push consumers only | Date, Map, Set, BigInt, typed arrays | Small |
-| `text` | String-only payloads | All | Strings only | Smallest |
-| `bytes` | Binary data (images, files) | All | ArrayBuffer, Uint8Array | Variable |
-
-**Decision tree:**
-1. Need to view in dashboard or use pull consumer? → Use `json`
-2. Need Date, Map, Set, or other V8 types? → Use `v8` (push consumers only)
-3. Just strings? → Use `text`
-4. Binary data? → Use `bytes`
-
-```typescript
-// JSON: Good for simple objects, pull consumers, dashboard visibility
-await env.QUEUE.send({ id: 123, name: 'test' }, { contentType: 'json' });
-
-// V8: Good for Date, Map, Set (push consumers only)
-await env.QUEUE.send({
-  created: new Date(),
-  tags: new Set(['a', 'b'])
-}, { contentType: 'v8' });
-
-// Text: Simple strings
-await env.QUEUE.send('process-user-123', { contentType: 'text' });
-
-// Bytes: Binary data
-await env.QUEUE.send(imageBuffer, { contentType: 'bytes' });
-```
-
-**Default behavior:** If not specified, Cloudflare auto-selects `json` for JSON-serializable objects and `v8` for complex types.
-
-**IMPORTANT:** `v8` messages cannot be read by pull consumers or viewed in the dashboard. Use `json` if you need visibility or pull-based consumption.
-
-## CLI Commands
-
-```bash
-# Consumer management
-wrangler queues consumer add my-queue my-worker --batch-size=50 --max-retries=5
-wrangler queues consumer http add my-queue
-wrangler queues consumer worker remove my-queue my-worker
-wrangler queues consumer http remove my-queue
-
-# Queue operations
-wrangler queues list
-wrangler queues pause my-queue
-wrangler queues resume my-queue
-wrangler queues purge my-queue
-wrangler queues delete my-queue
-```
+Fetch [limits](https://developers.cloudflare.com/queues/platform/limits/index.md) and [pricing](https://developers.cloudflare.com/queues/platform/pricing/index.md) for the account's plan before selecting retention, delays, or capacity. Do not reuse numeric settings from unrelated examples.

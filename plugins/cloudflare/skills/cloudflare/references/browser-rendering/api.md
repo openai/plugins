@@ -1,108 +1,12 @@
-# Browser Rendering API
+# Browser Run APIs
 
-## REST API
+Read the guide for the chosen interface for request schemas, return types, authentication, and supported options. Keep Quick Actions and browser session APIs distinct when adapting examples.
 
-**Base:** `https://api.cloudflare.com/client/v4/accounts/{accountId}/browser-rendering`
-**Auth:** `Authorization: Bearer <token>` (Browser Rendering - Edit permission)
+| Task | Documentation |
+|------|---------------|
+| Screenshots, PDFs, HTML, scraping, or structured extraction | [Quick Actions](https://developers.cloudflare.com/browser-run/quick-actions/index.md) — links to each action's request options and examples for REST or Workers bindings |
+| Automate a browser in Workers with Puppeteer | [Puppeteer](https://developers.cloudflare.com/browser-run/puppeteer/index.md) — Cloudflare package, browser operations, and session APIs |
+| Automate a browser in Workers with Playwright | [Playwright](https://developers.cloudflare.com/browser-run/playwright/index.md) — Cloudflare package, locators, storage state, and tracing |
+| Control a remote browser from an external runtime | [CDP](https://developers.cloudflare.com/browser-run/cdp/index.md) — session endpoints and links to Puppeteer, Playwright, and other clients |
 
-### Endpoints
-
-| Endpoint | Description | Key Options |
-|----------|-------------|-------------|
-| `/content` | Get rendered HTML | `url`, `waitUntil` |
-| `/screenshot` | Capture image | `screenshotOptions: {type, fullPage, clip}` |
-| `/pdf` | Generate PDF | `pdfOptions: {format, landscape, margin}` |
-| `/snapshot` | HTML + inlined resources | `url` |
-| `/scrape` | Extract by selectors | `selectors: ["h1", ".price"]` |
-| `/json` | AI-structured extraction | `schema: {name: "string", price: "number"}` |
-| `/links` | Get all links | `url` |
-| `/markdown` | Convert to markdown | `url` |
-
-```bash
-curl -X POST '.../browser-rendering/screenshot' \
-  -H "Authorization: Bearer $TOKEN" \
-  -d '{"url":"https://example.com","screenshotOptions":{"fullPage":true}}'
-```
-
-## Workers Binding
-
-```jsonc
-// wrangler.jsonc
-{ "browser": { "binding": "MYBROWSER" } }
-```
-
-## Puppeteer
-
-```typescript
-import puppeteer from "@cloudflare/puppeteer";
-
-const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
-const page = await browser.newPage();
-await page.goto('https://example.com', { waitUntil: 'networkidle0' });
-
-// Content
-const html = await page.content();
-const title = await page.title();
-
-// Screenshot/PDF
-await page.screenshot({ fullPage: true, type: 'png' });
-await page.pdf({ format: 'A4', printBackground: true });
-
-// Interaction
-await page.click('#button');
-await page.type('#input', 'text');
-await page.evaluate(() => document.querySelector('h1')?.textContent);
-
-// Session management
-const sessions = await puppeteer.sessions(env.MYBROWSER);
-const limits = await puppeteer.limits(env.MYBROWSER);
-
-await browser.close();
-```
-
-## Playwright
-
-```typescript
-import { launch, connect } from "@cloudflare/playwright";
-
-const browser = await launch(env.MYBROWSER, { keep_alive: 600000 });
-const page = await browser.newPage();
-
-await page.goto('https://example.com', { waitUntil: 'networkidle' });
-
-// Modern selectors
-await page.locator('.button').click();
-await page.getByText('Submit').click();
-await page.getByTestId('search').fill('query');
-
-// Context for isolation
-const context = await browser.newContext({
-  viewport: { width: 1920, height: 1080 },
-  userAgent: 'custom'
-});
-
-await browser.close();
-```
-
-## Session Management
-
-```typescript
-// List sessions
-await puppeteer.sessions(env.MYBROWSER);
-
-// Connect to existing
-await puppeteer.connect(env.MYBROWSER, sessionId);
-
-// Check limits
-await puppeteer.limits(env.MYBROWSER);
-// { remaining: ms, total: ms, concurrent: n }
-```
-
-## Key Options
-
-| Option | Values |
-|--------|--------|
-| `waitUntil` | `load`, `domcontentloaded`, `networkidle0`, `networkidle2` |
-| `keep_alive` | Max 600000ms (10 min) |
-| `screenshot.type` | `png`, `jpeg` |
-| `pdf.format` | `A4`, `Letter`, `Legal` |
+The product rename does not imply a rename of API paths or token permissions. Use the identifiers shown in the selected guide.

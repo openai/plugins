@@ -1,81 +1,13 @@
-# AI Search Gotchas
+# AI Search Troubleshooting Routes
 
-## Type Safety
+| Symptom or question | Documentation |
+|---------------------|---------------|
+| API request fails, including authentication or missing instances | [API error codes](https://developers.cloudflare.com/ai-search/troubleshooting/api-error-codes/index.md) |
+| Upload or sync succeeds but content fails during processing | [Indexing error codes](https://developers.cloudflare.com/ai-search/troubleshooting/indexing-error-codes/index.md) |
+| Content is missing or stale | [Syncing](https://developers.cloudflare.com/ai-search/configuration/indexing/syncing/index.md) and [supported data sources and formats](https://developers.cloudflare.com/ai-search/configuration/data-source/index.md) |
+| Filters return unexpected documents or no matches | [Filtering](https://developers.cloudflare.com/ai-search/configuration/retrieval/filtering/index.md) and [metadata attributes](https://developers.cloudflare.com/ai-search/configuration/indexing/metadata/index.md) |
+| Thresholds exclude results or responses need tuning | [Result controls](https://developers.cloudflare.com/ai-search/configuration/retrieval/result-controls/index.md) |
+| Binding types, response parsing, or streaming fail after an upgrade | [Workers binding migration](https://developers.cloudflare.com/ai-search/api/migration/workers-binding/index.md) |
+| Capacity, file-size, or billing questions | [Limits and pricing](https://developers.cloudflare.com/ai-search/platform/limits-pricing/index.md) |
 
-**Timestamp precision:** Use seconds (10-digit), not milliseconds.
-```typescript
-const nowInSeconds = Math.floor(Date.now() / 1000); // Correct
-```
-
-**Folder prefix matching:** Use `gte` for "starts with" on paths.
-```typescript
-filters: { column: "folder", operator: "gte", value: "docs/api/" } // Matches nested
-```
-
-## Filter Limitations
-
-| Limit | Value |
-|-------|-------|
-| Max nesting depth | 2 levels |
-| Filters per compound | 10 |
-| `or` operator | Same column, `eq` only |
-
-**OR restriction example:**
-```typescript
-// ✅ Valid: same column, eq only
-{ operator: "or", filters: [
-  { column: "folder", operator: "eq", value: "docs/" },
-  { column: "folder", operator: "eq", value: "guides/" }
-]}
-```
-
-## Indexing Issues
-
-| Problem | Cause | Solution |
-|---------|-------|----------|
-| File not indexed | Unsupported format or >4MB | Check format (.md/.txt/.html/.pdf/.doc/.csv/.json) |
-| Index out of sync | 6-hour index cycle | Wait or use "Force Sync" (30s rate limit) |
-| Empty results | Index incomplete | Check dashboard for indexing status |
-
-## Auth Errors
-
-| Error | Cause | Fix |
-|-------|-------|-----|
-| `AutoRAGUnauthorizedError` | Invalid/missing token | Create Service API token with AI Search permissions |
-| `AutoRAGNotFoundError` | Wrong instance name | Verify exact name from dashboard |
-
-## Performance
-
-**Slow responses (>3s):**
-```typescript
-// Add score threshold + limit results
-ranking_options: { score_threshold: 0.5 },
-max_num_results: 10
-```
-
-**Empty results debug:**
-1. Remove filters, test basic query
-2. Lower `score_threshold` to 0.1
-3. Check index is populated
-
-## Limits
-
-| Resource | Limit |
-|----------|-------|
-| Instances per account | 10 |
-| Files per instance | 100,000 |
-| Max file size | 4 MB |
-| Index frequency | 6 hours |
-
-## Anti-Patterns
-
-**Use env vars for instance names:**
-```typescript
-const answer = await env.AI.autorag(env.AI_SEARCH_INSTANCE).aiSearch({...});
-```
-
-**Handle specific error types:**
-```typescript
-if (error instanceof AutoRAGNotFoundError) { /* 404 */ }
-if (error instanceof AutoRAGUnauthorizedError) { /* 401 */ }
-```
+For legacy binding behavior, start with [API routes](api.md). Do not apply current filter syntax or response shapes to legacy calls without following the migration guide.
