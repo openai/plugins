@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB Access Administration"
+  short_description: "Inspect roles and manage data access safely"
+  default_prompt: "Use $cognitivedb-administer-access to inspect or change CognitiveDB access safely."

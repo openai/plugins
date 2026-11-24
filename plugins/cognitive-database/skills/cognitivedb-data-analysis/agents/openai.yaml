@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB Data Analysis"
+  short_description: "Analyze CognitiveDB data with read-only evidence"
+  default_prompt: "Use $cognitivedb-data-analysis to answer this data question with verified read-only evidence."

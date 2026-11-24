@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inspect Usage and Billing"
+  short_description: "Explain usage and billing availability"
+  default_prompt: "Use $cognitivedb-inspect-usage-and-billing to explain which usage and billing data this plugin can access."

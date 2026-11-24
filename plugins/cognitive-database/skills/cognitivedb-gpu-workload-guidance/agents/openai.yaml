@@ -1,0 +1,4 @@
+interface:
+  display_name: "CognitiveDB GPU Workload Guidance"
+  short_description: "Guide GPU-compatible design and SQL construction"
+  default_prompt: "Use $cognitivedb-gpu-workload-guidance to review this CognitiveDB workload and recommend semantics-preserving GPU-compatible design."

@@ -686,6 +686,21 @@
       "category": "Creativity"
     },
     {
+      "name": "cognitive-database",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cognitive-database"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Data & Analytics"
+    },
+    {
       "name": "data-analytics",
       "source": {
         "source": "local",

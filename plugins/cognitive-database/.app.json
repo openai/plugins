@@ -1,0 +1,8 @@
+{
+  "apps": {
+    "cognitive-database": {
+      "id": "asdk_app_6ad9d27560148191afbe19ed3bfb6f76",
+      "required": true
+    }
+  }
+}

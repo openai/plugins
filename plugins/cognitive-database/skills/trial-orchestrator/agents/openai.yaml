@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marketplace Trial Orchestrator"
+  short_description: "Run guided marketplace product trials"
+  default_prompt: "Use $trial-orchestrator to start my guided marketplace product trial."

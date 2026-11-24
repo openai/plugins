@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage CognitiveDB Ingestion"
+  short_description: "Create and run cloud or database ingestion tasks"
+  default_prompt: "Use $cognitivedb-manage-ingestion to create or manage this CognitiveDB ingestion safely."

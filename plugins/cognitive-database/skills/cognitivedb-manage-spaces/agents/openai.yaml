@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage CognitiveDB Spaces"
+  short_description: "Inspect current CognitiveDB Space information"
+  default_prompt: "Use $cognitivedb-manage-spaces to inspect the current CognitiveDB Space."
