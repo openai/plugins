@@ -1,0 +1,47 @@
+{
+  "name": "jubarte",
+  "version": "0.1.0",
+  "description": "Read, edit, redline, compare and render Word documents with real tracked changes, using one local open-source engine.",
+  "author": {
+    "name": "Jandira Technologies",
+    "url": "https://jubarte.pro"
+  },
+  "homepage": "https://jubarte.pro",
+  "repository": "https://github.com/jandira-tech/jubarte",
+  "license": "Apache-2.0",
+  "keywords": [
+    "docx",
+    "word",
+    "tracked-changes",
+    "redline",
+    "pdf",
+    "legal",
+    "documents"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "jubarte",
+    "shortDescription": "Tracked changes, redlines and PDF for Word documents",
+    "longDescription": "Read a .docx with paragraph ids, apply exact edits as Word tracked changes with comments, compare two versions into a redline, accept or reject changes, check that Word will open the result, and render pages to PDF or PNG. One local engine over stdio: no LibreOffice, no account, no upload.",
+    "developerName": "Jandira Technologies",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://jubarte.pro",
+    "privacyPolicyURL": "https://jubarte.pro/privacy",
+    "termsOfServiceURL": "https://jubarte.pro/terms",
+    "brandColor": "#1E5580",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "defaultPrompt": [
+      "Redline this contract as tracked changes with a comment on each change",
+      "Compare these two drafts and show me what changed",
+      "Render this Word document to PDF and check the pages"
+    ],
+    "screenshots": []
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "jubarte": {
+      "command": "uvx",
+      "args": ["--from", "jubarte-docx[mcp]==0.20.0", "jubarte-mcp", "--root", "."]
+    }
+  }
+}

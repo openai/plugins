@@ -838,6 +838,21 @@
       "interface": {
         "displayName": "Qodo"
       }
+    },
+    {
+      "name": "jubarte",
+      "source": {
+        "source": "local",
+        "path": "./plugins/jubarte"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Productivity"
     }
   ]
 }
