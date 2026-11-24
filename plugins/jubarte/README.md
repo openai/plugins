@@ -19,7 +19,7 @@ It includes one skill, `jubarte-documents`, and one local MCP server, `jubarte`.
 ## Requirements
 
 [`uv`](https://docs.astral.sh/uv/). The server starts with
-`uvx --from 'jubarte-docx[mcp]==0.19.0' jubarte-mcp --root .` and downloads the
+`uvx --from 'jubarte-docx[mcp]==0.20.0' jubarte-mcp --root .` and downloads the
 `jubarte-docx` wheel from PyPI on first use. It speaks stdio, opens no network port,
 and reads and writes only under the folder it was started in.
 
