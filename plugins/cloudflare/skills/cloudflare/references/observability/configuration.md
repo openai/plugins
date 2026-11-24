@@ -1,169 +1,23 @@
-## Configuration Patterns
+# Observability Configuration
 
-### Enable Workers Logs
+Fetch the relevant guide before configuring the selected Worker and deployment environment.
 
-```jsonc
-{
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1  // 100% sampling (default)
-  }
-}
-```
+| Task | Maintained documentation |
+| --- | --- |
+| Enable persisted logs, structured JSON logging, and sampling | [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md) |
+| Enable traces and set their sampling independently of logs | [Workers Traces](https://developers.cloudflare.com/workers/observability/traces/index.md) |
+| Configure a named deployment environment | [Wrangler environments](https://developers.cloudflare.com/workers/wrangler/environments/index.md) and the environment example in [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md) |
+| Bind an Analytics Engine dataset and write its first data point | [Analytics Engine get started](https://developers.cloudflare.com/analytics/analytics-engine/get-started/index.md) |
+| Connect a producer to a Tail Worker | [Configure Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/index.md) |
+| Create a Logpush job, configure access, and enable Worker log delivery | [Workers Logpush](https://developers.cloudflare.com/workers/observability/logs/logpush/index.md) |
+| Configure OTLP destinations, authentication, and local persistence | [OpenTelemetry export](https://developers.cloudflare.com/observability/export/opentelemetry/index.md) for destinations and authentication, and [Workers OpenTelemetry export](https://developers.cloudflare.com/workers/observability/opentelemetry-export/index.md) for Wrangler destinations and `persist` |
 
-**Best Practice**: Use structured JSON logging for better indexing
+## Setup decisions
 
-```typescript
-// Good - structured logging
-console.log({
-  user_id: 123,
-  action: "login",
-  status: "success",
-  duration_ms: 45
-});
+- Confirm which account, Worker, and environment will emit telemetry, then deploy that configuration and generate representative traffic.
+- Decide log and trace sampling separately. Increasing sampling during an investigation changes volume and cost; restore the intended operational settings afterwards.
+- For Tail Workers, configure the consumer relationship on the producer Worker; use the guide for deployment order and the handler contract.
+- Choose whether to persist data in Cloudflare as well as exporting it. Verify destination names, supported signal types, and credentials using the export guides above.
+- Use stable structured fields and redact secrets and unnecessary personal data before emission. Configure development and production collection intentionally.
 
-// Avoid - unstructured string
-console.log("user_id: 123 logged in successfully in 45ms");
-```
-
-### Enable Workers Traces
-
-```jsonc
-{
-  "observability": {
-    "traces": {
-      "enabled": true,
-      "head_sampling_rate": 0.05  // 5% sampling
-    }
-  }
-}
-```
-
-**Note**: Default sampling is 100%. For high-traffic Workers, use lower sampling (0.01-0.1).
-
-### Configure Analytics Engine
-
-**Bind to Worker**:
-```toml
-# wrangler.toml
-analytics_engine_datasets = [
-  { binding = "ANALYTICS", dataset = "api_metrics" }
-]
-```
-
-**Write Data Points**:
-```typescript
-export interface Env {
-  ANALYTICS: AnalyticsEngineDataset;
-}
-
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // Track metrics
-    env.ANALYTICS.writeDataPoint({
-      blobs: ['customer_123', 'POST', '/api/v1/users'],
-      doubles: [1, 245.5], // request_count, response_time_ms
-      indexes: ['customer_123'] // for efficient filtering
-    });
-
-    return new Response('OK');
-  }
-}
-```
-
-### Configure Tail Workers
-
-Tail Workers receive logs/traces from other Workers for filtering, transformation, or export.
-
-**Setup**:
-```toml
-# wrangler.toml
-name = "log-processor"
-main = "src/tail.ts"
-
-[[tail_consumers]]
-service = "my-worker" # Worker to tail
-```
-
-**Tail Worker Example**:
-```typescript
-export default {
-  async tail(events: TraceItem[], env: Env, ctx: ExecutionContext) {
-    // Filter errors only
-    const errors = events.filter(event =>
-      event.outcome === 'exception' || event.outcome === 'exceededCpu'
-    );
-
-    if (errors.length > 0) {
-      // Send to external monitoring
-      ctx.waitUntil(
-        fetch('https://monitoring.example.com/errors', {
-          method: 'POST',
-          body: JSON.stringify(errors)
-        })
-      );
-    }
-  }
-}
-```
-
-### Configure Logpush
-
-Send logs to external storage (S3, R2, GCS, Azure, Datadog, etc.). Requires Business/Enterprise plan.
-
-**Via Dashboard**:
-1. Navigate to Analytics → Logs → Logpush
-2. Select destination type
-3. Provide credentials and bucket/endpoint
-4. Choose dataset (e.g., Workers Trace Events)
-5. Configure filters and fields
-
-**Via API**:
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/logpush/jobs" \
-  -H "Authorization: Bearer <API_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "workers-logs-to-s3",
-    "destination_conf": "s3://my-bucket/logs?region=us-east-1",
-    "dataset": "workers_trace_events",
-    "enabled": true,
-    "frequency": "high",
-    "filter": "{\"where\":{\"and\":[{\"key\":\"ScriptName\",\"operator\":\"eq\",\"value\":\"my-worker\"}]}}"
-  }'
-```
-
-### Environment-Specific Configuration
-
-**Development** (verbose logs, full sampling):
-```jsonc
-// wrangler.dev.jsonc
-{
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1.0,
-    "traces": {
-      "enabled": true
-    }
-  }
-}
-```
-
-**Production** (reduced sampling, structured logs):
-```jsonc
-// wrangler.prod.jsonc
-{
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 0.1, // 10% sampling
-    "traces": {
-      "enabled": true
-    }
-  }
-}
-```
-
-Deploy with env-specific config:
-```bash
-wrangler deploy --config wrangler.prod.jsonc --env production
-```
+See [gotchas.md](gotchas.md) when configured telemetry is missing.

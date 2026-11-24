@@ -1,88 +1,18 @@
-# Vectorize API Reference
+# Vectorize API routes
 
-## Types
+Fetch the relevant section of the [Workers binding API](https://developers.cloudflare.com/vectorize/reference/client-api/index.md) before writing calls or types.
 
-```typescript
-interface VectorizeVector {
-  id: string;                    // Max 64 bytes
-  values: number[];              // Must match index dimensions
-  namespace?: string;            // Optional partition (max 64 bytes)
-  metadata?: Record<string, any>; // Max 10 KiB
-}
-```
+| Task | Current documentation |
+|------|-----------------------|
+| Vector shape, binding, and generated TypeScript types | [Vectorize API](https://developers.cloudflare.com/vectorize/reference/client-api/index.md) |
+| Insert, upsert, retrieve by ID, delete, or inspect an index | [Operations](https://developers.cloudflare.com/vectorize/reference/client-api/index.md#operations) |
+| Query by vector or ID; choose returned metadata, values, and scoring precision | [Query vectors](https://developers.cloudflare.com/vectorize/best-practices/query-vectors/index.md) and [query options](https://developers.cloudflare.com/vectorize/reference/client-api/index.md#query-vectors) |
+| Filter by metadata, combine conditions, or use nested properties | [Metadata filtering](https://developers.cloudflare.com/vectorize/reference/metadata-filtering/index.md) |
+| Batch ingestion and select vector formats | [Insert vectors](https://developers.cloudflare.com/vectorize/best-practices/insert-vectors/index.md) and [current limits](https://developers.cloudflare.com/vectorize/platform/limits/index.md) |
+| Manage indexes or vectors outside a Worker | [Wrangler commands](https://developers.cloudflare.com/vectorize/reference/wrangler-commands/index.md) and [REST API](https://developers.cloudflare.com/api/resources/vectorize/subresources/indexes/methods/list/index.md) |
 
-## Query
+## Operation choices
 
-```typescript
-const matches = await env.VECTORIZE.query(queryVector, {
-  topK: 10,                        // Max 100 (or 20 with returnValues/returnMetadata:"all")
-  returnMetadata: "indexed",       // "none" | "indexed" | "all"
-  returnValues: false,
-  namespace: "tenant-123",
-  filter: { category: "docs" }
-});
-// matches.matches[0] = { id, score, metadata? }
-```
-
-**returnMetadata:** `"none"` (fastest) → `"indexed"` (recommended) → `"all"` (topK max 20)
-
-**queryById (V2 only):** Search using existing vector as query.
-```typescript
-await env.VECTORIZE.queryById("doc-123", { topK: 5 });
-```
-
-## Insert/Upsert
-
-```typescript
-// Insert: ignores duplicates (keeps first)
-await env.VECTORIZE.insert([{ id, values, metadata }]);
-
-// Upsert: overwrites duplicates (keeps last)
-await env.VECTORIZE.upsert([{ id, values, metadata }]);
-```
-
-**Max 500 vectors per call.** Queryable after 5-10 seconds.
-
-## Other Operations
-
-```typescript
-// Get by IDs
-const vectors = await env.VECTORIZE.getByIds(["id1", "id2"]);
-
-// Delete (max 1000 IDs per call)
-await env.VECTORIZE.deleteByIds(["id1", "id2"]);
-
-// Index info
-const info = await env.VECTORIZE.describe();
-// { dimensions, metric, vectorCount }
-```
-
-## Filtering
-
-Requires metadata index. Filter operators:
-
-| Operator | Example |
-|----------|---------|
-| `$eq` (implicit) | `{ category: "docs" }` |
-| `$ne` | `{ status: { $ne: "deleted" } }` |
-| `$in` / `$nin` | `{ tag: { $in: ["sale"] } }` |
-| `$lt`, `$lte`, `$gt`, `$gte` | `{ price: { $lt: 100 } }` |
-
-**Constraints:** Max 2048 bytes, no dots/`$` in keys, values: string/number/boolean/null.
-
-## Performance
-
-| Configuration | topK Limit | Speed |
-|--------------|------------|-------|
-| No metadata | 100 | Fastest |
-| `returnMetadata: "indexed"` | 100 | Fast |
-| `returnMetadata: "all"` | 20 | Slower |
-| `returnValues: true` | 20 | Slower |
-
-**Batch operations:** Always batch (500/call) for optimal throughput.
-
-```typescript
-for (let i = 0; i < vectors.length; i += 500) {
-  await env.VECTORIZE.upsert(vectors.slice(i, i + 500));
-}
-```
+- Choose insert when existing IDs should be preserved; choose upsert when they should be replaced. Upsert replaces the whole vector, including metadata, so provide the complete intended record.
+- Request only the values and metadata the caller needs. Indexed metadata can omit fields or truncate strings; full metadata and vector values change query limits and latency. Fetch the current query options before choosing a result count.
+- Treat accepted mutations and query visibility as separate events. Use current mutation guidance when implementing ingestion verification or read-after-write behavior.

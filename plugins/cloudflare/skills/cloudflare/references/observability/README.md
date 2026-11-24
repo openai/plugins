@@ -1,87 +1,27 @@
-# Cloudflare Observability Skill Reference
+# Cloudflare Observability
 
-**Purpose**: Comprehensive guidance for implementing observability in Cloudflare Workers, covering traces, logs, metrics, and analytics.
+Use this reference to choose a telemetry signal and find the maintained implementation guide. Fetch the linked documentation before writing configuration, queries, or export code; it is the source of truth for APIs, availability, retention, limits, and pricing.
 
-**Scope**: Cloudflare Observability features ONLY - Workers Logs, Traces, Analytics Engine, Logpush, Metrics & Analytics, and OpenTelemetry exports.
+## Choose a signal
 
----
+| Need | Start here |
+| --- | --- |
+| Store, search, and investigate historical Worker logs | [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md) |
+| Watch a deployment or reproduce an issue live | [Real-time logs and Wrangler tail](https://developers.cloudflare.com/workers/observability/logs/real-time-logs/index.md) |
+| Understand request flows and dependency latency | [Workers Traces](https://developers.cloudflare.com/workers/observability/traces/index.md) |
+| Monitor built-in request, error, and CPU metrics | [Metrics and analytics](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/index.md) |
+| Record custom events and tenant-level usage for SQL analysis | [Analytics Engine](https://developers.cloudflare.com/analytics/analytics-engine/get-started/index.md) |
+| Export logs and traces to an observability provider | [OpenTelemetry export](https://developers.cloudflare.com/observability/export/opentelemetry/index.md) |
+| Apply custom filtering, transformation, or delivery logic | [Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/index.md) |
+| Deliver Workers Trace Events to a supported log storage destination | [Workers Logpush](https://developers.cloudflare.com/workers/observability/logs/logpush/index.md) |
 
-## Decision Tree: Which File to Load?
+Workers Logs supports retained historical data; live tailing is a separate debugging workflow. Choose persistence, sampling, and export destinations deliberately rather than assuming that every signal is stored or included without usage charges.
 
-Use this to route to the correct file without loading all content:
+## Load only what the task needs
 
-```
-├─ "How do I enable/configure X?"           → configuration.md
-├─ "What's the API/method/binding for X?"   → api.md
-├─ "How do I implement X pattern?"          → patterns.md
-│   ├─ Usage tracking/billing               → patterns.md
-│   ├─ Error tracking                       → patterns.md
-│   ├─ Performance monitoring               → patterns.md
-│   ├─ Multi-tenant tracking                → patterns.md
-│   ├─ Tail Worker filtering                → patterns.md
-│   └─ OpenTelemetry export                 → patterns.md
-└─ "Why isn't X working?" / "Limits?"       → gotchas.md
-```
+- [configuration.md](configuration.md): enable collection, bindings, environments, and exports.
+- [api.md](api.md): logging, telemetry types, SQL, GraphQL, and Logpush APIs.
+- [patterns.md](patterns.md): billing, performance, errors, tenant tracking, and export decisions.
+- [gotchas.md](gotchas.md): missing data, sampling, timing, privacy, and cost checks.
 
-## Reading Order
-
-Load files in this order based on task:
-
-| Task Type | Load Order | Reason |
-|-----------|------------|--------|
-| **Initial setup** | configuration.md → gotchas.md | Setup first, avoid pitfalls |
-| **Implement feature** | patterns.md → api.md → gotchas.md | Pattern → API details → edge cases |
-| **Debug issue** | gotchas.md → configuration.md | Common issues first |
-| **Query data** | api.md → patterns.md | API syntax → query examples |
-
-## Product Overview
-
-### Workers Logs
-- **What:** Console output from Workers (console.log/warn/error)
-- **Access:** Dashboard (Real-time Logs), Logpush, Tail Workers
-- **Cost:** Free (included with all Workers)
-- **Retention:** Real-time only (no historical storage in dashboard)
-
-### Workers Traces
-- **What:** Execution traces with timing, CPU usage, outcome
-- **Access:** Dashboard (Workers Analytics → Traces), Logpush
-- **Cost:** $0.10/1M spans (GA pricing starts March 1, 2026), 10M free/month
-- **Retention:** 14 days included
-
-### Analytics Engine
-- **What:** High-cardinality event storage and SQL queries
-- **Access:** SQL API, Dashboard (Analytics → Analytics Engine)
-- **Cost:** $0.25/1M writes beyond 10M free/month
-- **Retention:** 90 days (configurable up to 1 year)
-
-### Tail Workers
-- **What:** Workers that receive logs/traces from other Workers
-- **Use Cases:** Log filtering, transformation, external export
-- **Cost:** Standard Workers pricing
-
-### Logpush
-- **What:** Stream logs to external storage (S3, R2, Datadog, etc.)
-- **Access:** Dashboard, API
-- **Cost:** Requires Business/Enterprise plan
-
-## Pricing Summary (2026)
-
-| Feature | Free Tier | Cost Beyond Free Tier | Plan Requirement |
-|---------|-----------|----------------------|------------------|
-| Workers Logs | Unlimited | Free | Any |
-| Workers Traces | 10M spans/month | $0.10/1M spans | Paid Workers (GA: March 1, 2026) |
-| Analytics Engine | 10M writes/month | $0.25/1M writes | Paid Workers |
-| Logpush | N/A | Included in plan | Business/Enterprise |
-
-## In This Reference
-
-- **[configuration.md](configuration.md)** - Setup, deployment, configuration (Logs, Traces, Analytics Engine, Tail Workers, Logpush)
-- **[api.md](api.md)** - API endpoints, methods, interfaces (GraphQL, SQL, bindings, types)
-- **[patterns.md](patterns.md)** - Common patterns, use cases, examples (billing, monitoring, error tracking, exports)
-- **[gotchas.md](gotchas.md)** - Troubleshooting, best practices, limitations (common errors, performance gotchas, pricing)
-
-## See Also
-
-- [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
-- [Analytics Engine Docs](https://developers.cloudflare.com/analytics/analytics-engine/)
-- [Workers Traces Docs](https://developers.cloudflare.com/workers/observability/traces/)
+For broader product tasks, see [Analytics Engine docs](https://developers.cloudflare.com/analytics/analytics-engine/index.md), [GraphQL Analytics API docs](https://developers.cloudflare.com/analytics/graphql-api/index.md), and [Tail Workers](../tail-workers/README.md).

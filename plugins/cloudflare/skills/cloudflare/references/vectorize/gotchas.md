@@ -1,76 +1,15 @@
-# Vectorize Gotchas
+# Vectorize troubleshooting routes
 
-## Critical Warnings
+Fetch current documentation before diagnosing a numeric limit, API error, or delayed mutation. Do not infer batch sizes or result limits from old snippets.
 
-### Async Mutations
-Insert/upsert/delete return immediately but vectors aren't queryable for 5-10 seconds.
+| Symptom or decision | What to check | Current documentation |
+|---------------------|---------------|-----------------------|
+| A write succeeded but search has not changed | Mutations are asynchronous; acceptance does not guarantee query visibility | [Insert, upsert, and delete semantics](https://developers.cloudflare.com/vectorize/reference/client-api/index.md#operations) |
+| Ingestion is slow or a batch is rejected | Batch size depends on the interface; inspect throughput and payload constraints | [Write throughput](https://developers.cloudflare.com/vectorize/best-practices/insert-vectors/index.md#improve-write-throughput) and [limits](https://developers.cloudflare.com/vectorize/platform/limits/index.md) |
+| Query count is rejected or metadata is incomplete | Returned values and metadata affect query limits; indexed metadata can be truncated | [Query options](https://developers.cloudflare.com/vectorize/reference/client-api/index.md#query-vectors) |
+| Metadata filters return no matches | Confirm field type, operators, nesting, and index creation; re-upsert data written before the metadata index existed | [Metadata filtering](https://developers.cloudflare.com/vectorize/reference/metadata-filtering/index.md) |
+| Query has no matches or poor relevance | Check embedding model and dimensions, metric, namespace, filters, and mutation visibility | [Query vectors](https://developers.cloudflare.com/vectorize/best-practices/query-vectors/index.md) and [index configuration](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/index.md) |
+| Existing IDs or metadata behave unexpectedly on update | Insert preserves existing IDs; upsert replaces the full vector and metadata | [Mutation semantics](https://developers.cloudflare.com/vectorize/reference/client-api/index.md#operations) |
+| Capacity or model output no longer fits | Check current limits and model output dimensions; changing dimensions or metric requires another index | [Limits](https://developers.cloudflare.com/vectorize/platform/limits/index.md) and [create indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/index.md) |
 
-### Batch Size Limit
-**Workers API: 500 vectors max per call** (undocumented, silently truncates)
-
-```typescript
-// ✅ Chunk into 500
-for (let i = 0; i < vectors.length; i += 500) {
-  await env.VECTORIZE.upsert(vectors.slice(i, i + 500));
-}
-```
-
-### Metadata Truncation
-`returnMetadata: "indexed"` returns only first 64 bytes of strings. Use `"all"` for complete metadata (but max topK drops to 20).
-
-### topK Limits
-
-| returnMetadata | returnValues | Max topK |
-|----------------|--------------|----------|
-| `"none"` / `"indexed"` | `false` | 100 |
-| `"all"` | any | **20** |
-| any | `true` | **20** |
-
-### Metadata Indexes First
-Create BEFORE inserting - existing vectors not retroactively indexed.
-
-```bash
-# ✅ Create index FIRST
-wrangler vectorize create-metadata-index my-index --property-name=category --type=string
-wrangler vectorize insert my-index --file=data.ndjson
-```
-
-### Index Config Immutable
-Cannot change dimensions/metric after creation. Must create new index and migrate.
-
-## Limits (V2)
-
-| Resource | Limit |
-|----------|-------|
-| Vectors per index | 10,000,000 |
-| Max dimensions | 1536 |
-| Batch upsert (Workers) | **500** |
-| Indexed string metadata | **64 bytes** |
-| Metadata indexes | 10 |
-| Namespaces | 50,000 (paid) / 1,000 (free) |
-
-## Common Mistakes
-
-1. **Wrong embedding shape:** Extract `result.data[0]` from Workers AI
-2. **Metadata index after data:** Re-upsert all vectors
-3. **Insert vs upsert:** `insert` ignores duplicates, `upsert` overwrites
-4. **Not batching:** Individual inserts ~1K/min, batched ~200K+/min
-
-## Troubleshooting
-
-**No results?**
-- Wait 5-10s after insert
-- Check namespace spelling (case-sensitive)
-- Verify metadata index exists
-- Check dimension mismatch
-
-**Metadata filter not working?**
-- Index must exist before data insert
-- Strings >64 bytes truncated
-- Use dot notation for nested: `"product.category"`
-
-## Model Dimensions
-
-- `@cf/baai/bge-small-en-v1.5`: 384
-- `@cf/baai/bge-base-en-v1.5`: 768
-- `@cf/baai/bge-large-en-v1.5`: 1024
+For changes to embedding providers or tenant boundaries, also read [pattern decisions](patterns.md).

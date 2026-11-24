@@ -1,95 +1,26 @@
 # Cloudflare R2 Object Storage
 
-S3-compatible object storage with zero egress fees, optimized for large file storage and delivery.
+Use R2 for objects such as uploads, media, backups, and static assets. Fetch the linked documentation before implementing; API signatures, configuration, limits, and pricing belong in the current docs.
 
-## Overview
+## Choose an access path
 
-R2 provides:
-- S3-compatible API (Workers API + S3 REST)
-- Zero egress fees globally
-- Strong consistency for writes/deletes
-- Storage classes (Standard/Infrequent Access)
-- SSE-C encryption support
+- Use a Workers binding for object access inside a Worker: [Workers API setup](https://developers.cloudflare.com/r2/get-started/workers-api/index.md).
+- Use the S3-compatible API for existing S3 clients or direct client access through presigned URLs: [S3 setup](https://developers.cloudflare.com/r2/get-started/s3/index.md). Check supported operations rather than assuming full S3 parity.
+- Decide whether objects need application authorization, temporary access, or public delivery before exposing the bucket. See [patterns.md](./patterns.md).
 
-**Use cases:** Media storage, backups, static assets, user uploads, data lakes
+## Find the task
 
-## Quick Start
+| Task | Reference |
+|------|-----------|
+| Bindings, credentials, local development, bucket settings | [configuration.md](./configuration.md) |
+| Object operations, metadata, conditions, multipart, CLI | [api.md](./api.md) |
+| Uploads, streaming, caching, public delivery, event processing | [patterns.md](./patterns.md) |
+| Pagination, conditional responses, failed uploads, limits | [gotchas.md](./gotchas.md) |
 
-```bash
-wrangler r2 bucket create my-bucket --location=enam
-wrangler r2 object put my-bucket/file.txt --file=./local.txt
-```
+For other topics, discover pages through the [R2 documentation index](https://developers.cloudflare.com/r2/llms.txt). Check [pricing](https://developers.cloudflare.com/r2/pricing/index.md) before estimating costs.
 
-```typescript
-// Upload
-await env.MY_BUCKET.put(key, data, {
-  httpMetadata: { contentType: 'image/jpeg' }
-});
+## See also
 
-// Download
-const object = await env.MY_BUCKET.get(key);
-if (object) return new Response(object.body);
-```
-
-## Core Operations
-
-| Method | Purpose | Returns |
-|--------|---------|---------|
-| `put(key, value, options?)` | Upload object | `R2Object \| null` |
-| `get(key, options?)` | Download object | `R2ObjectBody \| R2Object \| null` |
-| `head(key)` | Get metadata only | `R2Object \| null` |
-| `delete(keys)` | Delete object(s) | `Promise<void>` |
-| `list(options?)` | List objects | `R2Objects` |
-
-## Storage Classes
-
-- **Standard**: Frequent access, low latency reads
-- **InfrequentAccess**: 30-day minimum storage, retrieval fees, lower storage cost
-
-## Event Notifications
-
-R2 integrates with Cloudflare Queues for reactive workflows:
-
-```typescript
-// wrangler.jsonc
-{
-  "event_notifications": [{
-    "queue": "r2-notifications",
-    "actions": ["PutObject", "DeleteObject"]
-  }]
-}
-
-// Consumer
-async queue(batch: MessageBatch, env: Env) {
-  for (const message of batch.messages) {
-    const event = message.body; // { action, bucket, object, timestamps }
-    if (event.action === 'PutObject') {
-      // Process upload: thumbnail generation, virus scan, etc.
-    }
-  }
-}
-```
-
-## Reading Order
-
-**First-time users:** README → configuration.md → api.md → patterns.md
-**Specific tasks:**
-- Setup: configuration.md
-- Client uploads: patterns.md (presigned URLs)
-- Public static site: patterns.md (public access + custom domain)
-- Processing uploads: README (event notifications) + queues reference
-- Debugging: gotchas.md
-
-## In This Reference
-
-- [configuration.md](./configuration.md) - Bindings, S3 SDK, CORS, lifecycles, token scopes
-- [api.md](./api.md) - Workers API, multipart, conditional requests, presigned URLs
-- [patterns.md](./patterns.md) - Streaming, caching, client uploads, public buckets
-- [gotchas.md](./gotchas.md) - List truncation, etag format, stream length, S3 SDK region
-
-## See Also
-
-- [workers](../workers/) - Worker runtime and fetch handlers
-- [kv](../kv/) - Metadata storage for R2 objects
-- [d1](../d1/) - Store R2 URLs in relational database
-- [queues](../queues/) - Process R2 uploads asynchronously
+- [Workers](https://developers.cloudflare.com/workers/index.md) for request handling.
+- [KV](../kv/) or [D1](../d1/) for application metadata associated with objects.
+- [Queues](../queues/) for asynchronous processing of object events.

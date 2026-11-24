@@ -1,65 +1,21 @@
-# Cloudflare Static Assets Skill Reference
+# Workers Static Assets
 
-Expert guidance for deploying and configuring static assets with Cloudflare Workers. This skill covers configuration patterns, routing architectures, asset binding usage, and best practices for SPAs, SSG sites, and full-stack applications.
+Use Workers Static Assets for new static sites, SPAs, generated sites, and applications combining assets with server logic. Inspect the framework, build output, and existing deployment configuration before changing routing.
 
-## Quick Start
+| Task | Documentation |
+|------|---------------|
+| Set up and deploy a static site or application | [Get started](https://developers.cloudflare.com/workers/static-assets/get-started/index.md) |
+| Choose configuration and an optional asset binding | [Configuration and bindings](https://developers.cloudflare.com/workers/static-assets/binding/index.md) |
+| Serve a client-rendered application | [SPA routing](https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/index.md) |
+| Serve generated HTML and custom error pages | [SSG routing](https://developers.cloudflare.com/workers/static-assets/routing/static-site-generation/index.md) |
+| Use a full-stack framework | [Full-stack application guides](https://developers.cloudflare.com/workers/static-assets/routing/full-stack-application/index.md) |
+| Evaluate moving an existing Pages project | [Pages migration guide](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/index.md) |
 
-```jsonc
-// wrangler.jsonc
-{
-  "name": "my-app",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-01-01",
-  "assets": {
-    "directory": "./dist"
-  }
-}
-```
-
-```typescript
-// src/index.ts
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    return env.ASSETS.fetch(request);
-  }
-};
-```
-
-Deploy: `wrangler deploy`
-
-## When to Use Workers Static Assets vs Pages
-
-| Factor | Workers Static Assets | Cloudflare Pages |
-|--------|----------------------|------------------|
-| **Use case** | Hybrid apps (static + dynamic API) | Static sites, SSG |
-| **Worker control** | Full control over routing | Limited (Functions) |
-| **Configuration** | Code-first, flexible | Git-based, opinionated |
-| **Dynamic routing** | Worker-first patterns | Functions (_functions/) |
-| **Best for** | Full-stack apps, SPAs with APIs | Jamstack, static docs |
-
-**Decision tree:**
-
-- Need custom routing logic? → Workers Static Assets
-- Pure static site or SSG? → Pages
-- API routes + SPA? → Workers Static Assets
-- Framework (Next, Nuxt, Remix)? → Pages
+Do not choose a platform solely from the framework name. For an existing Pages project, inspect its current features and migration requirements before proposing a move.
 
 ## Reading Order
 
-1. **configuration.md** - Setup, wrangler.jsonc options, routing patterns
-2. **api.md** - ASSETS binding API, request/response handling
-3. **patterns.md** - Common patterns (SPA, API routes, auth, A/B testing)
-4. **gotchas.md** - Limits, errors, performance tips
-
-## In This Reference
-
-- **[configuration.md](configuration.md)** - Setup, deployment, configuration
-- **[api.md](api.md)** - API endpoints, methods, interfaces
-- **[patterns.md](patterns.md)** - Common patterns, use cases, examples
-- **[gotchas.md](gotchas.md)** - Troubleshooting, best practices, limitations
-
-## See Also
-
-- [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
-- [Static Assets Docs](https://developers.cloudflare.com/workers/static-assets/)
-- [Cloudflare Pages](https://developers.cloudflare.com/pages/)
+1. [configuration.md](configuration.md) — build output and routing configuration.
+2. [api.md](api.md) — fetch assets and handle responses.
+3. [patterns.md](patterns.md) — choose a routing design.
+4. [gotchas.md](gotchas.md) — diagnose routing, caching, and deployment issues.

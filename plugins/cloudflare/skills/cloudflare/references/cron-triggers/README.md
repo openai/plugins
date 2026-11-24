@@ -1,99 +1,20 @@
 # Cloudflare Cron Triggers
 
-Schedule Workers execution using cron expressions. Runs on Cloudflare's global network during underutilized periods.
+Use Cron Triggers to start periodic Worker jobs. Fetch the relevant current documentation before implementing; configuration, API signatures, examples, and limits belong in the docs.
 
-## Key Features
-
-- **UTC-only execution** - All schedules run on UTC time
-- **5-field cron syntax** - Quartz scheduler extensions (L, W, #)
-- **Global propagation** - 15min deployment delay
-- **At-least-once delivery** - Rare duplicate executions possible
-- **Workflow integration** - Trigger long-running multi-step tasks
-- **Green Compute** - Optional carbon-aware scheduling during low-carbon periods
-
-## Cron Syntax
-
-```
- ┌─────────── minute (0-59)
- │ ┌───────── hour (0-23)
- │ │ ┌─────── day of month (1-31)
- │ │ │ ┌───── month (1-12, JAN-DEC)
- │ │ │ │ ┌─── day of week (1-7, SUN-SAT, 1=Sunday)
- * * * * *
-```
-
-**Special chars:** `*` (any), `,` (list), `-` (range), `/` (step), `L` (last), `W` (weekday), `#` (nth)
-
-## Common Schedules
-
-```bash
-*/5 * * * *        # Every 5 minutes
-0 * * * *          # Hourly
-0 2 * * *          # Daily 2am UTC (off-peak)
-0 9 * * MON-FRI    # Weekdays 9am UTC
-0 0 1 * *          # Monthly 1st midnight UTC
-0 9 L * *          # Last day of month 9am UTC
-0 10 * * MON#2     # 2nd Monday 10am UTC
-*/10 9-17 * * MON-FRI  # Every 10min, 9am-5pm weekdays
-```
-
-## Quick Start
-
-**wrangler.jsonc:**
-```jsonc
-{
-  "name": "my-cron-worker",
-  "triggers": {
-    "crons": ["*/5 * * * *", "0 2 * * *"]
-  }
-}
-```
-
-**Handler:**
-```typescript
-export default {
-  async scheduled(
-    controller: ScheduledController,
-    env: Env,
-    ctx: ExecutionContext,
-  ): Promise<void> {
-    console.log("Cron:", controller.cron);
-    console.log("Time:", new Date(controller.scheduledTime));
-
-    ctx.waitUntil(asyncTask(env)); // Non-blocking
-  },
-};
-```
-
-**Test locally:**
-```bash
-npx wrangler dev
-curl "http://localhost:8787/__scheduled?cron=*/5+*+*+*+*"
-```
-
-## Limits
-
-- **Free:** 3 triggers/worker, 10ms CPU
-- **Paid:** Unlimited triggers, 50ms CPU
-- **Propagation:** 15min global deployment
-- **Timezone:** UTC only
-
-## Reading Order
-
-**New to cron triggers?** Start here:
-1. This README - Overview and quick start
-2. [configuration.md](./configuration.md) - Set up your first cron trigger
-3. [api.md](./api.md) - Understand the handler API
-4. [patterns.md](./patterns.md) - Common use cases and examples
-
-**Troubleshooting?** Jump to [gotchas.md](./gotchas.md)
+- **Set up a recurring job:** [Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/index.md) covers scheduling, deployment, and execution history.
+- **Implement the job:** [Scheduled handler](https://developers.cloudflare.com/workers/runtime-apis/handlers/scheduled/index.md) covers controller properties, asynchronous work, and multiple schedules.
+- **Schedule durable work:** [Trigger Workflows](https://developers.cloudflare.com/workflows/build/trigger-workflows/index.md) covers direct Workflow schedules and starting instances from a Worker. Check this before introducing a Worker whose only job is to start a Workflow.
+- **Check capacity:** fetch [Workers limits](https://developers.cloudflare.com/workers/platform/limits/index.md) for the target plan and invocation type.
 
 ## In This Reference
-- [configuration.md](./configuration.md) - wrangler config, env-specific schedules, Green Compute
-- [api.md](./api.md) - ScheduledController, noRetry(), waitUntil, testing patterns
-- [patterns.md](./patterns.md) - Use cases, monitoring, queue integration, Durable Objects
-- [gotchas.md](./gotchas.md) - Timezone issues, idempotency, security, testing
+
+- [configuration.md](./configuration.md) — schedule setup, environments, removal, and Green Compute
+- [api.md](./api.md) — handler implementation, asynchronous completion, and tests
+- [patterns.md](./patterns.md) — choosing execution boundaries and integrations
+- [gotchas.md](./gotchas.md) — investigating timing, failures, and repeated work
 
 ## See Also
-- [workflows](../workflows/) - Alternative for long-running scheduled tasks
-- [workers](../workers/) - Worker runtime documentation
+
+- [Workflows](../workflows/README.md) — durable multi-step jobs
+- [Queues](../queues/README.md) — asynchronous message processing

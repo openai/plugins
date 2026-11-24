@@ -1,88 +1,15 @@
-# Browser Rendering Gotchas
+# Browser Run Troubleshooting
 
-## Tier Limits
+Identify the integration and observed failure before changing timeouts or concurrency. A request-rate limit, exhausted browser time, and a closed session require different responses.
 
-| Limit | Free | Paid |
-|-------|------|------|
-| Daily browser time | 10 min | Unlimited* |
-| Concurrent sessions | 3 | 30 |
-| Requests/minute | 6 | 180 |
-| Session keep-alive | 10 min max | 10 min max |
+| Concern | Documentation |
+|---------|---------------|
+| Quotas, launch rates, concurrency, and session timeouts | [Limits](https://developers.cloudflare.com/browser-run/limits/index.md) — check the current plan and integration-specific limits |
+| Browser hours and concurrent-browser charges | [Pricing](https://developers.cloudflare.com/browser-run/pricing/index.md) — distinguish Quick Actions from browser sessions |
+| Missing bindings, action failures, or unsupported behavior | [FAQ](https://developers.cloudflare.com/browser-run/faq/index.md) — diagnose the reported error and runtime constraints |
+| Puppeteer page evaluation cannot access outer variables | [JavaScript execution](https://pptr.dev/guides/javascript-execution) — browser execution context, passing arguments, and returned values |
+| Block resources or handle intercepted Puppeteer requests | [Request interception](https://pptr.dev/guides/network-interception) — continue, respond, or abort requests and avoid duplicate handling |
+| Unexpected disconnects or session loss | [Browser close reasons](https://developers.cloudflare.com/browser-run/reference/browser-close-reasons/index.md) — inspect the recorded close reason before choosing recovery |
+| Development or compatibility failures | [Wrangler reference](https://developers.cloudflare.com/browser-run/reference/wrangler/index.md) — verify binding configuration and interface-specific development support |
 
-*Subject to fair-use policy.
-
-**Check quota:**
-```typescript
-const limits = await puppeteer.limits(env.MYBROWSER);
-// { remaining: 540000, total: 600000, concurrent: 2 }
-```
-
-## Always Close Browsers
-
-```typescript
-const browser = await puppeteer.launch(env.MYBROWSER);
-try {
-  const page = await browser.newPage();
-  await page.goto("https://example.com");
-  return new Response(await page.content());
-} finally {
-  await browser.close(); // ALWAYS in finally
-}
-```
-
-**Workers vs REST:** REST auto-closes after timeout. Workers must call `close()` or session stays open until `keep_alive` expires.
-
-## Optimize Concurrency
-
-```typescript
-// ❌ 3 sessions (hits free tier limit)
-const browser1 = await puppeteer.launch(env.MYBROWSER);
-const browser2 = await puppeteer.launch(env.MYBROWSER);
-
-// ✅ 1 session, multiple pages
-const browser = await puppeteer.launch(env.MYBROWSER);
-const page1 = await browser.newPage();
-const page2 = await browser.newPage();
-```
-
-## Common Errors
-
-| Error | Cause | Fix |
-|-------|-------|-----|
-| Session limit exceeded | Too many concurrent | Close unused browsers, use pages not browsers |
-| Page navigation timeout | Slow page or `networkidle` on busy page | Increase timeout, use `waitUntil: "load"` |
-| Session not found | Expired session | Catch error, launch new session |
-| Evaluation failed | DOM element missing | Use `?.` optional chaining |
-| Protocol error: Target closed | Page closed during operation | Await all ops before closing |
-
-## page.evaluate() Gotchas
-
-```typescript
-// ❌ Outer scope not available
-const selector = "h1";
-await page.evaluate(() => document.querySelector(selector));
-
-// ✅ Pass as argument
-await page.evaluate((sel) => document.querySelector(sel)?.textContent, selector);
-```
-
-## Performance
-
-**waitUntil options (fastest to slowest):**
-1. `domcontentloaded` - DOM ready
-2. `load` - load event (default)
-3. `networkidle0` - no network for 500ms
-
-**Block unnecessary resources:**
-```typescript
-await page.setRequestInterception(true);
-page.on("request", (req) => {
-  if (["image", "stylesheet", "font"].includes(req.resourceType())) {
-    req.abort();
-  } else {
-    req.continue();
-  }
-});
-```
-
-**Session reuse:** Cold start ~1-2s, warm connect ~100-200ms. Store sessionId in KV for reuse.
+Before increasing concurrency, check session cleanup and whether the workload can reuse browsers with appropriate isolation; see [patterns.md](patterns.md). Retrieve current limits and pricing when sizing a workload rather than relying on fixed tier tables.

@@ -1,97 +1,16 @@
 # Workers AI Configuration
 
-## wrangler.jsonc
+Read the setup guide for the application's existing integration and installed SDK/Wrangler versions before adapting configuration.
 
-```jsonc
-{
-  "name": "my-ai-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-01-01",
-  "ai": {
-    "binding": "AI"
-  }
-}
-```
+| Task | Documentation |
+|------|---------------|
+| Create and develop a Worker with Workers AI | [Workers and Wrangler setup](https://developers.cloudflare.com/workers-ai/get-started/workers-wrangler/index.md) |
+| Add an AI binding to an existing Worker | [Workers bindings](https://developers.cloudflare.com/workers-ai/configuration/bindings/index.md) |
+| Generate environment and runtime types | [Workers TypeScript](https://developers.cloudflare.com/workers/languages/typescript/index.md) |
+| Call inference from outside Workers | [REST API setup and authentication](https://developers.cloudflare.com/workers-ai/get-started/rest-api/index.md) |
+| Use the Vercel AI SDK | [AI SDK integration](https://developers.cloudflare.com/workers-ai/configuration/ai-sdk/index.md) |
+| Adapt an existing OpenAI SDK client | [OpenAI compatible endpoints](https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/index.md) |
 
-## TypeScript
+Prefer the native binding for a Worker that does not need an SDK abstraction; use REST for external services. Preserve an existing SDK integration when it meets the task, and check its supported endpoints and model features before substituting providers.
 
-```bash
-npm install --save-dev @cloudflare/workers-types
-```
-
-```typescript
-interface Env {
-  AI: Ai;
-}
-
-export default {
-  async fetch(request: Request, env: Env) {
-    const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-      messages: [{ role: 'user', content: 'Hello' }]
-    });
-    return Response.json(response);
-  }
-};
-```
-
-## Local Development
-
-```bash
-wrangler dev --remote  # Required for AI - no local inference
-```
-
-## REST API
-
-```typescript
-const response = await fetch(
-  `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct`,
-  {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${API_TOKEN}` },
-    body: JSON.stringify({ messages: [{ role: 'user', content: 'Hello' }] })
-  }
-);
-```
-
-Create API token at: dash.cloudflare.com/profile/api-tokens (Workers AI - Read permission)
-
-## SDK Compatibility
-
-**OpenAI SDK:**
-```typescript
-import OpenAI from 'openai';
-const client = new OpenAI({
-  apiKey: env.CLOUDFLARE_API_TOKEN,
-  baseURL: `https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/ai/v1`
-});
-```
-
-## Multi-Model Setup
-
-```typescript
-const MODELS = {
-  chat: '@cf/meta/llama-3.1-8b-instruct',
-  embed: '@cf/baai/bge-base-en-v1.5',
-  image: '@cf/stabilityai/stable-diffusion-xl-base-1.0'
-};
-```
-
-## RAG Setup (with Vectorize)
-
-```jsonc
-{
-  "ai": { "binding": "AI" },
-  "vectorize": {
-    "bindings": [{ "binding": "VECTORIZE", "index_name": "embeddings-index" }]
-  }
-}
-```
-
-## Troubleshooting
-
-| Error | Fix |
-|-------|-----|
-| `env.AI is undefined` | Check `ai` binding in wrangler.jsonc |
-| Local AI doesn't work | Use `wrangler dev --remote` |
-| Type 'Ai' not found | Install `@cloudflare/workers-types` |
-| @cloudflare/ai package error | Don't install - use native binding |
+Local Worker execution and local inference are different: Workers AI inference uses the Cloudflare account even during local development and consumes usage. Follow the current setup guide for development configuration; do not assume the entire Worker must run remotely.

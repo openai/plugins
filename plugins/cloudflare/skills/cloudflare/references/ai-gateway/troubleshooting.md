@@ -1,88 +1,16 @@
 # AI Gateway Troubleshooting
 
-## Common Errors
+Identify the request path and whether the failure comes from gateway access, upstream provider authentication, or request policy before changing credentials or retry behavior. A status code alone does not establish the failing layer.
 
-| Error | Cause | Fix |
-|-------|-------|-----|
-| 401 | Missing `cf-aig-authorization` header | Add header with CF API token |
-| 403 | Invalid provider key / BYOK expired | Check provider key in dashboard |
-| 429 | Rate limit exceeded | Increase limit or implement backoff |
+| Symptom or task | Current documentation |
+|-----------------|-----------------------|
+| Authentication or provider errors, timeouts, DLP failures, or unexpected cache behavior | [Troubleshooting](https://developers.cloudflare.com/ai-gateway/reference/troubleshooting/index.md) |
+| Gateway authentication failure | [Authenticated Gateway](https://developers.cloudflare.com/ai-gateway/configuration/authentication/index.md) and [REST API authentication](https://developers.cloudflare.com/ai-gateway/usage/rest-api/index.md#authentication) |
+| Provider key or billing mismatch | [BYOK](https://developers.cloudflare.com/ai-gateway/configuration/bring-your-own-keys/index.md), [Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/index.md), and the [provider guide](https://developers.cloudflare.com/ai-gateway/usage/providers/index.md) |
+| Rate limits or repeated failures | [Rate limiting](https://developers.cloudflare.com/ai-gateway/features/rate-limiting/index.md) and [request handling](https://developers.cloudflare.com/ai-gateway/configuration/request-handling/index.md) |
+| Unexpected cache hit or miss, including streaming behavior | [Caching](https://developers.cloudflare.com/ai-gateway/features/caching/index.md) |
+| Missing logs, collection overrides, or storage limits | [Logging](https://developers.cloudflare.com/ai-gateway/observability/logging/index.md) and [limits](https://developers.cloudflare.com/ai-gateway/reference/limits/index.md) |
+| Inspect headers, request metadata, usage, or export logs | [Header glossary](https://developers.cloudflare.com/ai-gateway/glossary/index.md), [custom metadata](https://developers.cloudflare.com/ai-gateway/observability/custom-metadata/index.md), [analytics](https://developers.cloudflare.com/ai-gateway/observability/analytics/index.md), and [Logpush](https://developers.cloudflare.com/ai-gateway/observability/logging/logpush/index.md) |
+| Dynamic route failure | [Dynamic route usage](https://developers.cloudflare.com/ai-gateway/features/dynamic-routing/usage/index.md) |
 
-### 401 Fix
-
-```typescript
-const client = new OpenAI({
-  baseURL: `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`,
-  defaultHeaders: { 'cf-aig-authorization': `Bearer ${CF_API_TOKEN}` }
-});
-```
-
-### 429 Retry Pattern
-
-```typescript
-async function requestWithRetry(fn, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try { return await fn(); }
-    catch (e) {
-      if (e.status === 429 && i < maxRetries - 1) {
-        await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
-        continue;
-      }
-      throw e;
-    }
-  }
-}
-```
-
-## Gotchas
-
-| Issue | Reality |
-|-------|---------|
-| Metadata limits | Max 5 entries, flat only (no nesting) |
-| Cache key collision | Use unique keys per expected response |
-| BYOK + Unified Billing | Mutually exclusive |
-| Rate limit scope | Per-gateway, not per-user (use dynamic routing for per-user) |
-| Log delay | 30-60 seconds normal |
-| Streaming + caching | **Incompatible** |
-| Model name (unified API) | Prefix required: `openai/gpt-4o`, not `gpt-4o` |
-
-## Cache Not Working
-
-**Causes:**
-- Different request params (temperature, etc.)
-- Streaming enabled
-- Caching disabled in settings
-
-**Check:** `response.headers.get('cf-aig-cache-status')` → HIT or MISS
-
-## Logs Not Appearing
-
-1. Check logging enabled: Dashboard → Gateway → Settings
-2. Remove `cf-aig-collect-log: false` header
-3. Wait 30-60 seconds
-4. Check log limit (10M default)
-
-## Debugging
-
-```bash
-# Test connectivity
-curl -v https://gateway.ai.cloudflare.com/v1/{account}/{gateway}/openai/models \
-  -H "Authorization: Bearer $OPENAI_KEY" \
-  -H "cf-aig-authorization: Bearer $CF_TOKEN"
-```
-
-```typescript
-// Check response headers
-console.log('Cache:', response.headers.get('cf-aig-cache-status'));
-console.log('Request ID:', response.headers.get('cf-ray'));
-```
-
-## Analytics
-
-Dashboard → AI Gateway → Select gateway
-
-**Metrics:** Requests, tokens, latency (p50/p95/p99), cache hit rate, costs
-
-**Log filters:** `status: error`, `provider: openai`, `cost > 0.01`, `duration > 1000`
-
-**Export:** Logpush to S3/GCS/Datadog/Splunk
+Check the existing SDK and gateway retry settings together before adding another retry loop. Follow [SDK integration](./sdk-integration.md) when an endpoint or model format is suspect.

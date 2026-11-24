@@ -1,77 +1,20 @@
-# Gotchas
+# Hyperdrive troubleshooting
 
-See [README.md](./README.md), [configuration.md](./configuration.md), [api.md](./api.md), [patterns.md](./patterns.md).
+Start with the actual error and the affected configuration. Fetch [Troubleshoot and debug](https://developers.cloudflare.com/hyperdrive/observability/troubleshooting/index.md) for current error codes and diagnosis rather than guessing from a generic connection failure.
 
-## Common Errors
+| Symptom | What to inspect and where to read |
+|---------|----------------------------------|
+| Connection refused or authentication failure | Check origin reachability and credentials using [troubleshooting](https://developers.cloudflare.com/hyperdrive/observability/troubleshooting/index.md) and [firewall/networking configuration](https://developers.cloudflare.com/hyperdrive/configuration/firewall-and-networking-configuration/index.md). |
+| Private database or TLS failure | Follow the selected [Workers VPC](https://developers.cloudflare.com/hyperdrive/configuration/connect-to-private-database-vpc/index.md) or [Tunnel/Access](https://developers.cloudflare.com/hyperdrive/configuration/connect-to-private-database/index.md) path and its certificate prerequisites; see [SSL/TLS configuration](https://developers.cloudflare.com/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/index.md). |
+| Pool exhaustion or too many connections | Distinguish client connection lifetime from origin pool capacity. Read [connection lifecycle](https://developers.cloudflare.com/hyperdrive/concepts/connection-lifecycle/index.md), [pool tuning](https://developers.cloudflare.com/hyperdrive/configuration/tune-connection-pool/index.md), and [limits](https://developers.cloudflare.com/hyperdrive/platform/limits/index.md). |
+| Query timeout | Check the current [limits](https://developers.cloudflare.com/hyperdrive/platform/limits/index.md) and [metrics](https://developers.cloudflare.com/hyperdrive/observability/metrics/index.md) before changing query or transaction design. |
+| Stale reads or unexpectedly uncached queries | Inspect the binding's cache configuration and query eligibility in [query caching](https://developers.cloudflare.com/hyperdrive/concepts/query-caching/index.md). Writes do not purge cached reads; do not treat prepared-statement settings as cache controls. |
+| Slow multi-query requests | Inspect [metrics](https://developers.cloudflare.com/hyperdrive/observability/metrics/index.md) and check whether Worker placement matches the regional database. Follow [placement setup](./configuration.md#place-compute-near-the-database); a Hyperdrive binding alone does not place compute near the origin. |
+| Local connection failure, ignored environment variable, or absent cache behavior | Check binding names, local connection overrides, precedence, and remote testing in [local development](https://developers.cloudflare.com/hyperdrive/configuration/local-development/index.md). |
+| Unsupported driver or SQL feature | Check [supported databases and features](https://developers.cloudflare.com/hyperdrive/reference/supported-databases-and-features/index.md) and the selected [driver guide](./api.md). |
 
-### "Too many open connections" / "Connection limit exceeded"
+## Capacity and changes
 
-**Cause:** Workers have a hard limit of **6 concurrent connections per invocation**
-**Solution:** Set `max: 5` in driver config, reuse connections, ensure proper cleanup with `client.end()` or `ctx.waitUntil(conn.end())`
+Retrieve [limits](https://developers.cloudflare.com/hyperdrive/platform/limits/index.md) and [pricing](https://developers.cloudflare.com/hyperdrive/platform/pricing/index.md) for current plan allowances, connection and query bounds, and limit-increase guidance. Check [release notes](https://developers.cloudflare.com/hyperdrive/platform/release-notes/index.md) when behavior changes after an upgrade.
 
-### "Failed to acquire a connection (Pool exhausted)"
-
-**Cause:** All connections in pool are in use, often due to long-running transactions
-**Solution:** Reduce transaction duration, avoid queries >60s, don't hold connections during external calls, or upgrade to paid plan for more connections
-
-### "connection_refused"
-
-**Cause:** Database refusing connections due to firewall, connection limits, or service down
-**Solution:** Check firewall allows Cloudflare IPs, verify DB listening on port, confirm service running, and validate credentials
-
-### "Query timeout (deadline exceeded)"
-
-**Cause:** Query execution exceeding 60s timeout limit
-**Solution:** Optimize with indexes, reduce dataset with LIMIT, break into smaller queries, or use async processing
-
-### "password authentication failed"
-
-**Cause:** Invalid credentials in Hyperdrive configuration
-**Solution:** Check username and password in Hyperdrive config match database credentials
-
-### "SSL/TLS connection error"
-
-**Cause:** SSL/TLS configuration mismatch between Hyperdrive and database
-**Solution:** Add `sslmode=require` (Postgres) or `sslMode=REQUIRED` (MySQL), upload CA cert if self-signed, verify DB has SSL enabled, and check cert expiry
-
-### "Queries not being cached"
-
-**Cause:** Query is mutating (INSERT/UPDATE/DELETE), contains volatile functions (NOW(), RANDOM()), or caching disabled
-**Solution:** Verify query is non-mutating SELECT, avoid volatile functions, confirm caching enabled, use `wrangler dev --remote` to test, and set `prepare=true` for postgres.js
-
-### "Slow multi-query Workers despite Hyperdrive"
-
-**Cause:** Worker executing at edge, each query round-trips to DB region
-**Solution:** Enable Smart Placement (`"placement": {"mode": "smart"}` in wrangler.jsonc) to execute Worker near DB. See [patterns.md](./patterns.md) Multi-Query pattern.
-
-### "Local database connection failed"
-
-**Cause:** `localConnectionString` incorrect or database not running
-**Solution:** Verify `localConnectionString` correct, check DB running, confirm env var name matches binding, and test with psql/mysql client
-
-### "Environment variable not working"
-
-**Cause:** Environment variable format incorrect or not exported
-**Solution:** Use format `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING>`, ensure binding matches wrangler.jsonc, export variable in shell, and restart wrangler dev
-
-## Limits
-
-| Limit | Free | Paid | Notes |
-|-------|------|------|-------|
-| Max configs | 10 | 25 | Hyperdrive configurations per account |
-| Worker connections | 6 | 6 | Max concurrent connections per Worker invocation |
-| Username/DB name | 63 bytes | 63 bytes | Maximum length |
-| Connection timeout | 15s | 15s | Time to establish connection |
-| Idle timeout | 10 min | 10 min | Connection idle timeout |
-| Max origin connections | ~20 | ~100 | Connections to origin database |
-| Query duration max | 60s | 60s | Queries >60s terminated |
-| Cached response max | 50 MB | 50 MB | Responses >50MB returned but not cached |
-
-## Resources
-
-- [Docs](https://developers.cloudflare.com/hyperdrive/)
-- [Getting Started](https://developers.cloudflare.com/hyperdrive/get-started/)
-- [Wrangler Reference](https://developers.cloudflare.com/hyperdrive/reference/wrangler-commands/)
-- [Supported DBs](https://developers.cloudflare.com/hyperdrive/reference/supported-databases-and-features/)
-- [Discord #hyperdrive](https://discord.cloudflare.com)
-- [Limit Increase Form](https://forms.gle/ukpeZVLWLnKeixDu7)
+See [configuration.md](./configuration.md) to change a configuration and [patterns.md](./patterns.md) to revisit freshness or connection decisions.

@@ -1,181 +1,19 @@
-# Testing Patterns
+# Miniflare Testing Patterns
 
-## Choosing a Testing Approach
+Choose the test runtime before adapting an example. With direct Miniflare, the Worker runs in workerd while the test runner runs in Node.js; importing Worker functions into Node.js can change runtime-dependent behavior. See [writing tests](https://developers.cloudflare.com/workers/testing/miniflare/writing-tests/index.md).
 
-| Approach | Use Case | Speed | Setup | Runtime |
-|----------|----------|-------|-------|---------|
-| **getPlatformProxy** | Unit tests, logic testing | Fast | Low | Miniflare |
-| **Miniflare API** | Integration tests, full control | Medium | Medium | Miniflare |
-| **vitest-pool-workers** | Vitest runner integration | Medium | Medium | workerd |
+| Task | Documentation |
+|------|---------------|
+| Write unit tests in the Workers runtime | [Workers Vitest setup](https://developers.cloudflare.com/workers/testing/vitest-integration/write-your-first-test/index.md) |
+| Use event, Durable Object, or other runtime test helpers | [Vitest test APIs](https://developers.cloudflare.com/workers/testing/vitest-integration/test-apis/index.md) |
+| Test built Workers from an external runner | [Integration test harness](https://developers.cloudflare.com/workers/testing/test-harness/index.md) |
+| Build a custom runner with direct simulator control | [Miniflare writing tests](https://developers.cloudflare.com/workers/testing/miniflare/writing-tests/index.md) |
+| Access emulated bindings from Node.js | [getPlatformProxy](https://developers.cloudflare.com/workers/wrangler/api/index.md#getplatformproxy) |
+| Mock outbound requests in Workers Vitest tests | [Mock outbound requests](https://developers.cloudflare.com/workers/testing/vitest-integration/mock-outbound-requests/index.md) |
+| Understand Vitest runtime isolation and concurrency | [Isolation and concurrency](https://developers.cloudflare.com/workers/testing/vitest-integration/isolation-and-concurrency/index.md) |
+| Simulate inter-Worker calls and substitute services | [Multiple Workers](https://developers.cloudflare.com/workers/testing/miniflare/core/multiple-workers/index.md) |
+| Test WebSockets or access local storage | [API routing](./api.md) |
 
-**Quick guide:**
-- Unit tests → getPlatformProxy
-- Integration tests → Miniflare API
-- Vitest workflows → vitest-pool-workers
+`getPlatformProxy` is for Node.js callers. The Workers Vitest runtime modules require tests running in the Workers runtime; they are not a substitute for calling `getPlatformProxy` in a Node.js test.
 
-## getPlatformProxy
-
-Lightweight unit testing - provides bindings without full Worker runtime.
-
-```js
-// vitest.config.js
-export default { test: { environment: "node" } };
-```
-
-```js
-import { env } from "cloudflare:test";
-import { describe, it, expect } from "vitest";
-
-describe("Business logic", () => {
-  it("processes data with KV", async () => {
-    await env.KV.put("test", "value");
-    expect(await env.KV.get("test")).toBe("value");
-  });
-});
-```
-
-**Pros:** Fast, simple
-**Cons:** No full runtime, can't test fetch handler
-
-## vitest-pool-workers
-
-Full Workers runtime in Vitest. Reads `wrangler.toml`.
-
-```bash
-npm i -D @cloudflare/vitest-pool-workers
-```
-
-```js
-// vitest.config.js
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
-
-export default defineWorkersConfig({
-  test: {
-    poolOptions: { workers: { wrangler: { configPath: "./wrangler.toml" } } },
-  },
-});
-```
-
-```js
-import { env, SELF } from "cloudflare:test";
-import { it, expect } from "vitest";
-
-it("handles fetch", async () => {
-  const res = await SELF.fetch("http://example.com/");
-  expect(res.status).toBe(200);
-});
-```
-
-**Pros:** Full runtime, uses wrangler.toml
-**Cons:** Requires Wrangler config
-
-## Miniflare API (node:test)
-
-```js
-import assert from "node:assert";
-import test, { after, before } from "node:test";
-import { Miniflare } from "miniflare";
-
-let mf;
-before(() => {
-  mf = new Miniflare({ scriptPath: "src/index.js", kvNamespaces: ["TEST_KV"] });
-});
-
-test("fetch", async () => {
-  const res = await mf.dispatchFetch("http://localhost/");
-  assert.strictEqual(await res.text(), "Hello");
-});
-
-after(() => mf.dispose());
-```
-
-## Testing Durable Objects & Events
-
-```js
-// Durable Objects
-const ns = await mf.getDurableObjectNamespace("COUNTER");
-const stub = ns.get(ns.idFromName("test-counter"));
-await stub.fetch("http://localhost/increment");
-
-// Direct storage
-const storage = await mf.getDurableObjectStorage(ns.idFromName("test-counter"));
-const count = await storage.get("count");
-
-// Queue
-const worker = await mf.getWorker();
-await worker.queue("my-queue", [
-  { id: "msg1", timestamp: new Date(), body: { userId: 123 }, attempts: 1 },
-]);
-
-// Scheduled
-await worker.scheduled({ cron: "0 0 * * *" });
-```
-
-## Test Isolation & Mocking
-
-```js
-// Per-test isolation
-beforeEach(() => { mf = new Miniflare({ kvNamespaces: ["TEST"] }); });
-afterEach(() => mf.dispose());
-
-// Mock external APIs
-new Miniflare({
-  workers: [
-    { name: "main", serviceBindings: { API: "mock-api" }, script: `...` },
-    { name: "mock-api", script: `export default { async fetch() { return Response.json({mock: true}); } }` },
-  ],
-});
-```
-
-## Type Safety
-
-```ts
-import type { KVNamespace } from "@cloudflare/workers-types";
-
-interface Env {
-  KV: KVNamespace;
-  API_KEY: string;
-}
-
-const env = await mf.getBindings<Env>();
-await env.KV.put("key", "value"); // Typed!
-
-export default {
-  async fetch(req: Request, env: Env) {
-    return new Response(await env.KV.get("key"));
-  }
-} satisfies ExportedHandler<Env>;
-```
-
-## WebSocket Testing
-
-```js
-const res = await mf.dispatchFetch("http://localhost/ws", {
-  headers: { Upgrade: "websocket" },
-});
-assert.strictEqual(res.status, 101);
-```
-
-## Migration from unstable_dev
-
-```js
-// Old (deprecated)
-import { unstable_dev } from "wrangler";
-const worker = await unstable_dev("src/index.ts");
-
-// New
-import { Miniflare } from "miniflare";
-const mf = new Miniflare({ scriptPath: "src/index.ts" });
-```
-
-## CI/CD Tips
-
-```js
-// In-memory storage (faster)
-new Miniflare({ kvNamespaces: ["TEST"] }); // No persist = in-memory
-
-// Use dispatchFetch (no port conflicts)
-await mf.dispatchFetch("http://localhost/");
-```
-
-See [gotchas.md](./gotchas.md) for troubleshooting.
+For direct Miniflare, clean up instances after tests using the documented [lifecycle](https://developers.cloudflare.com/workers/testing/miniflare/get-started/index.md#watching-reloading-and-disposing). Choose persistence deliberately so tests do not inherit unintended state.

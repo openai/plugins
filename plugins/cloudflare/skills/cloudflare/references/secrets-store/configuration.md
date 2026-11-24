@@ -1,185 +1,25 @@
-# Configuration
+# Secrets Store configuration
 
-## Wrangler Config
+Fetch the guide for the operation you are performing before writing configuration or running management commands.
 
-### Basic Binding
+## Setup and management
 
-**wrangler.jsonc**:
+| Task | Documentation |
+|------|---------------|
+| Create a store and secret, then bind it through Wrangler or the dashboard | [Workers integration](https://developers.cloudflare.com/secrets-store/integrations/workers/index.md) |
+| Create, edit, duplicate, or delete account secrets | [Manage secrets](https://developers.cloudflare.com/secrets-store/manage-secrets/how-to/index.md) |
+| Look up current store/secret command syntax and local versus remote flags | [Wrangler Secrets Store commands](https://developers.cloudflare.com/workers/wrangler/commands/secrets-store/index.md) |
+| Configure bindings for each deployment environment | [Wrangler environments](https://developers.cloudflare.com/workers/wrangler/environments/index.md) |
+| Choose user roles, CI token permissions, and secret scopes | [Secrets Store access control](https://developers.cloudflare.com/secrets-store/access-control/index.md) |
 
-```jsonc
-{
-  "secrets_store_secrets": [
-    {
-      "binding": "API_KEY",
-      "store_id": "abc123",
-      "secret_name": "stripe_api_key"
-    }
-  ]
-}
-```
+Treat the store ID, secret ID, secret name, and Worker binding name as different identifiers. Use the identifier required by the documented operation; do not infer update or delete flags from the create command.
 
-**wrangler.toml** (alternative):
+## Local development and deployment
 
-```toml
-[[secrets_store_secrets]]
-binding = "API_KEY"
-store_id = "abc123"
-secret_name = "stripe_api_key"
-```
+Secrets Store management commands default to local state; production operations use the documented remote option. Local development needs separately provisioned local secrets. Follow the local-development notes in [Workers integration](https://developers.cloudflare.com/secrets-store/integrations/workers/index.md) and the [command reference](https://developers.cloudflare.com/workers/wrangler/commands/secrets-store/index.md).
 
-Fields:
-- `binding`: Variable name for `env` access
-- `store_id`: From `wrangler secrets-store store list`
-- `secret_name`: Identifier (no spaces)
+Check the selected account, deployment environment, secret scope, and binding configuration before deploying. In CI, distinguish permission to read metadata from permission to attach a secret to a Worker; use the [CI/CD access-control guidance](https://developers.cloudflare.com/secrets-store/access-control/index.md#api-token-permissions).
 
-### Environment-Specific
+Use protected secret input rather than putting credential values in command arguments, source files, or CI logs. For interactive CLI use, follow the command reference's secret-value prompt guidance. Keep local credentials out of version control.
 
-**wrangler.jsonc**:
-
-```jsonc
-{
-  "env": {
-    "production": {
-      "secrets_store_secrets": [
-        {
-          "binding": "API_KEY",
-          "store_id": "prod-store",
-          "secret_name": "prod_api_key"
-        }
-      ]
-    },
-    "staging": {
-      "secrets_store_secrets": [
-        {
-          "binding": "API_KEY",
-          "store_id": "staging-store",
-          "secret_name": "staging_api_key"
-        }
-      ]
-    }
-  }
-}
-```
-
-**wrangler.toml** (alternative):
-
-```toml
-[env.production]
-[[env.production.secrets_store_secrets]]
-binding = "API_KEY"
-store_id = "prod-store"
-secret_name = "prod_api_key"
-
-[env.staging]
-[[env.staging.secrets_store_secrets]]
-binding = "API_KEY"
-store_id = "staging-store"
-secret_name = "staging_api_key"
-```
-
-## Wrangler Commands
-
-### Store Management
-
-```bash
-wrangler secrets-store store list
-wrangler secrets-store store create my-store --remote
-wrangler secrets-store store delete <store-id> --remote
-```
-
-### Secret Management (Production)
-
-```bash
-# Create (interactive)
-wrangler secrets-store secret create <store-id> \
-  --name MY_SECRET --scopes workers --remote
-
-# Create (piped)
-cat secret.txt | wrangler secrets-store secret create <store-id> \
-  --name MY_SECRET --scopes workers --remote
-
-# List/get/update/delete
-wrangler secrets-store secret list <store-id> --remote
-wrangler secrets-store secret get <store-id> --name MY_SECRET --remote
-wrangler secrets-store secret update <store-id> --name MY_SECRET --new-value "val" --remote
-wrangler secrets-store secret delete <store-id> --name MY_SECRET --remote
-
-# Duplicate
-wrangler secrets-store secret duplicate <store-id> \
-  --name ORIG --new-name COPY --remote
-```
-
-### Local Development
-
-**CRITICAL**: Production secrets (`--remote`) NOT accessible in local dev.
-
-```bash
-# Create local-only (no --remote)
-wrangler secrets-store secret create <store-id> --name DEV_KEY --scopes workers
-
-wrangler dev    # Uses local secrets
-wrangler deploy # Uses production secrets
-```
-
-Best practice: Separate names for local/prod:
-
-```jsonc
-{
-  "env": {
-    "development": {
-      "secrets_store_secrets": [
-        { "binding": "API_KEY", "store_id": "store", "secret_name": "dev_api_key" }
-      ]
-    },
-    "production": {
-      "secrets_store_secrets": [
-        { "binding": "API_KEY", "store_id": "store", "secret_name": "prod_api_key" }
-      ]
-    }
-  }
-}
-```
-
-## Dashboard
-
-### Creating Secrets
-
-1. **Secrets Store** → **Create secret**
-2. Fill: Name (no spaces), Value, Scope (`Workers`), Comment
-3. **Save** (value hidden after)
-
-### Adding Bindings
-
-**Method 1**: Worker → Settings → Bindings → Add → Secrets Store
-**Method 2**: Create secret directly from Worker settings dropdown
-
-Deploy options:
-- **Deploy**: Immediate 100%
-- **Save version**: Gradual rollout
-
-## CI/CD
-
-### GitHub Actions
-
-```yaml
-- name: Create secret
-  env:
-    CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN }}
-  run: |
-    echo "${{ secrets.API_KEY }}" | \
-    npx wrangler secrets-store secret create $STORE_ID \
-      --name API_KEY --scopes workers --remote
-
-- name: Deploy
-  run: npx wrangler deploy
-```
-
-### GitLab CI
-
-```yaml
-script:
-  - echo "$API_KEY_VALUE" | npx wrangler secrets-store secret create $STORE_ID --name API_KEY --scopes workers --remote
-  - npx wrangler deploy
-```
-
-See: [api.md](./api.md), [patterns.md](./patterns.md)
+See [api.md](./api.md) for runtime access and [patterns.md](./patterns.md) before replacing a shared credential.

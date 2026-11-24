@@ -1,85 +1,15 @@
-# AI Search Patterns
+# AI Search Pattern Routes
 
-## search() vs aiSearch()
+Choose retrieval-only search when your application displays chunks or handles generation itself; choose chat completions when AI Search should also generate the answer. Read [Search Workers binding](https://developers.cloudflare.com/ai-search/api/search/workers-binding/index.md) for both paths and streaming behavior.
 
-| Use | Method | Returns |
-|-----|--------|---------|
-| Custom UI, analytics | `search()` | Raw chunks only (~100-300ms) |
-| Chatbots, Q&A | `aiSearch()` | AI response + chunks (~500-2000ms) |
+| Task | Documentation |
+|------|---------------|
+| Isolate tenants using separate instances or a shared filtered instance | [Multitenancy](https://developers.cloudflare.com/ai-search/how-to/per-tenant-search/index.md) |
+| Define built-in or custom metadata | [Metadata attributes](https://developers.cloudflare.com/ai-search/configuration/indexing/metadata/index.md) |
+| Filter by metadata, combine conditions, or match a folder and subfolders | [Filtering](https://developers.cloudflare.com/ai-search/configuration/retrieval/filtering/index.md) |
+| Tune result count and relevance thresholds | [Result controls](https://developers.cloudflare.com/ai-search/configuration/retrieval/result-controls/index.md) |
+| Resolve follow-up queries using conversation context | [Query rewriting](https://developers.cloudflare.com/ai-search/configuration/retrieval/query-rewriting/index.md) |
+| Improve result ordering with a second model | [Reranking](https://developers.cloudflare.com/ai-search/configuration/retrieval/reranking/index.md) |
+| Customize generation and query-rewriting instructions | [System prompt](https://developers.cloudflare.com/ai-search/configuration/retrieval/system-prompt/index.md) |
 
-## rewrite_query
-
-| Setting | Use When |
-|---------|----------|
-| `true` | User input (typos, vague queries) |
-| `false` | LLM-generated queries (already optimized) |
-
-## Multitenancy (Folder-Based)
-
-```typescript
-const answer = await env.AI.autorag("saas-docs").aiSearch({
-  query: "refund policy",
-  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-  filters: {
-    column: "folder",
-    operator: "gte",  // "starts with" pattern
-    value: `tenants/${tenantId}/`
-  }
-});
-```
-
-## Streaming
-
-```typescript
-const stream = await env.AI.autorag("docs").aiSearch({
-  query, model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", stream: true
-});
-return new Response(stream, { headers: { "Content-Type": "text/event-stream" } });
-```
-
-## Score Threshold
-
-| Threshold | Use |
-|-----------|-----|
-| 0.3 (default) | Broad recall, exploratory |
-| 0.5 | Balanced, production default |
-| 0.7 | High precision, critical accuracy |
-
-## System Prompt Template
-
-```typescript
-const systemPrompt = `You are a documentation assistant.
-- Answer ONLY based on provided context
-- If context doesn't contain answer, say "I don't have information"
-- Include code examples from context`;
-```
-
-## Compound Filters
-
-```typescript
-// OR: Multiple folders
-filters: {
-  operator: "or",
-  filters: [
-    { column: "folder", operator: "gte", value: "docs/api/" },
-    { column: "folder", operator: "gte", value: "docs/auth/" }
-  ]
-}
-
-// AND: Folder + date
-filters: {
-  operator: "and",
-  filters: [
-    { column: "folder", operator: "gte", value: "docs/" },
-    { column: "timestamp", operator: "gte", value: oneWeekAgoSeconds }
-  ]
-}
-```
-
-## Reranking
-
-Enable for high-stakes use cases (adds ~300ms latency):
-
-```typescript
-reranking: { enabled: true, model: "@cf/baai/bge-reranker-base" }
-```
+For tenant isolation, read the full multitenancy guide before choosing an approach. A lower-bound folder comparison alone does not establish a tenant boundary; use the documented filtering semantics.

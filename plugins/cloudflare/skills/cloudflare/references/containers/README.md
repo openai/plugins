@@ -1,85 +1,23 @@
-# Cloudflare Containers Skill Reference
+# Cloudflare Containers
 
-**APPLIES TO: Cloudflare Containers ONLY - NOT general Cloudflare Workers**
+Use this reference for containerized applications on the Workers platform, including container-enabled Durable Objects, lifecycle management, and request routing.
 
-Use when working with Cloudflare Containers: deploying containerized apps on Workers platform, configuring container-enabled Durable Objects, managing container lifecycle, or implementing stateful/stateless container patterns.
+## Choose the runtime
 
-## Beta Status
+Use [Containers](https://developers.cloudflare.com/containers/index.md) for existing container images, custom runtimes, system dependencies, full filesystem access, or workloads needing additional CPU and memory. Use [Workers](https://developers.cloudflare.com/workers/index.md) when the application fits the Workers runtime without those requirements.
 
-⚠️ Containers is currently in **beta**. API may change without notice. No SLA guarantees. Custom instance types added Jan 2026.
+Containers are controlled through [Durable Objects](https://developers.cloudflare.com/durable-objects/index.md). An instance's identity does not make its filesystem persistent: design for restarts and store durable data outside the container disk. Read [Container lifecycle](https://developers.cloudflare.com/containers/concepts/architecture/index.md) and [Container interface](https://developers.cloudflare.com/containers/api/container-class/index.md) for the relationship between the process, its Durable Object, and persistent storage.
 
-## Core Concepts
+## Find the documentation for the task
 
-**Container as Durable Object:** Each container is a Durable Object with persistent identity. Accessed via `getByName(id)` or `getRandom()`.
+Read the linked page before writing code or configuration; use its current API, examples, and constraints rather than reconstructing them from memory.
 
-**Image deployment:** Images pre-fetched globally. Deployments use rolling strategy (not instant like Workers).
+| Task | Start here |
+| --- | --- |
+| Create a project and deploy the first container | [Get started](https://developers.cloudflare.com/containers/get-started/index.md) |
+| Configure images, bindings, instance sizes, and deployments | [Configuration](configuration.md) |
+| Control startup, requests, lifecycle, and scheduling | [API](api.md) |
+| Choose routing or connect other services | [Patterns](patterns.md) |
+| Diagnose startup, persistence, capacity, or rollout issues | [Gotchas](gotchas.md) |
 
-**Lifecycle:** cold start (2-3s) → running → `sleepAfter` timeout → stopped. No autoscaling - manual load balancing via `getRandom()`.
-
-**Persistent identity, ephemeral disk:** Container ID persists, but disk resets on stop. Use Durable Object storage for persistence.
-
-## Quick Start
-
-```typescript
-import { Container } from "@cloudflare/containers";
-
-export class MyContainer extends Container {
-  defaultPort = 8080;
-  sleepAfter = "30m";
-}
-
-export default {
-  async fetch(request: Request, env: Env) {
-    const container = env.MY_CONTAINER.getByName("instance-1");
-    await container.startAndWaitForPorts();
-    return container.fetch(request);
-  }
-};
-```
-
-## Reading Order
-
-| Task | Files |
-|------|-------|
-| Setup new container project | README → configuration.md |
-| Implement container logic | README → api.md → patterns.md |
-| Choose routing pattern | patterns.md (routing section) |
-| Debug issues | gotchas.md |
-| Production hardening | gotchas.md → patterns.md (lifecycle) |
-
-## Routing Decision Tree
-
-**How should requests reach containers?**
-
-- **Same user/session → same container:** Use `getByName(sessionId)` for session affinity
-- **Stateless, spread load:** Use `getRandom()` for load balancing
-- **Job per container:** Use `getByName(jobId)` + explicit lifecycle management
-- **Single global instance:** Use `getByName("singleton")`
-
-## When to Use Containers vs Workers
-
-**Use Containers when:**
-- Need stateful, long-lived processes (sessions, WebSockets, games)
-- Running existing containerized apps (Node.js, Python, custom binaries)
-- Need filesystem access or specific system dependencies
-- Per-user/session isolation with dedicated compute
-
-**Use Workers when:**
-- Stateless HTTP handlers
-- Sub-millisecond cold starts required
-- Auto-scaling to zero critical
-- Simple request/response patterns
-
-## In This Reference
-
-- **[configuration.md](configuration.md)** - Wrangler config, instance types, Container class properties, environment variables, account limits
-- **[api.md](api.md)** - Container class API, startup methods, communication (HTTP/TCP/WebSocket), routing helpers, lifecycle hooks, scheduling, state inspection
-- **[patterns.md](patterns.md)** - Routing patterns (session affinity, load balancing, singleton), WebSocket forwarding, graceful shutdown, Workflow/Queue integration
-- **[gotchas.md](gotchas.md)** - Critical gotchas (WebSocket, startup methods), common errors with solutions, specific limits, beta caveats
-
-## See Also
-
-- [Durable Objects](../durable-objects/) - Containers extend Durable Objects
-- [Workflows](../workflows/) - Orchestrate container operations
-- [Queues](../queues/) - Trigger containers from queue messages
-- [Cloudflare Docs](https://developers.cloudflare.com/containers/)
+For additional topics, consult the [Containers documentation index](https://developers.cloudflare.com/containers/llms.txt).

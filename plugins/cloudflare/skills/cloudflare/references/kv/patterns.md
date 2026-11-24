@@ -1,196 +1,21 @@
 # KV Patterns & Best Practices
 
-## Multi-Tier Caching
+Read the guide for the pattern before implementing it, and confirm that [KV's consistency model](https://developers.cloudflare.com/kv/concepts/how-kv-works/index.md) fits the application.
 
-```typescript
-// Memory → KV → Origin (3-tier cache)
-const memoryCache = new Map<string, { data: any; expires: number }>();
+| Task | Documentation and design decision |
+|------|-----------------------------------|
+| Cache application data or API results | [Cache data with KV](https://developers.cloudflare.com/kv/examples/cache-data-with-workers-kv/index.md): decide acceptable staleness, expiration, and behavior when the origin fails. |
+| Cache eligible HTTP responses | [Workers Cache](https://developers.cloudflare.com/workers/cache/index.md): choose the HTTP caching mechanism based on response semantics. |
+| Store configuration or feature flags | [Distributed configuration](https://developers.cloudflare.com/kv/examples/distributed-configuration-with-workers-kv/index.md): choose defaults and rollout behavior that tolerate delayed updates. |
+| Coalesce related keys | [Read guidance](https://developers.cloudflare.com/kv/api/read-key-value-pairs/index.md): fewer reads can improve cache reuse, but combined values couple updates and can introduce write races. |
+| Organize and enumerate keys by prefix | [List keys](https://developers.cloudflare.com/kv/api/list-keys/index.md): use a consistent naming scheme and paginate every listing. |
+| Attach schema versions or other metadata | [Write metadata](https://developers.cloudflare.com/kv/api/write-key-value-pairs/index.md) and [read metadata](https://developers.cloudflare.com/kv/api/read-key-value-pairs/index.md): define compatibility and migration behavior for older records; migrations must account for concurrent writes. |
 
-async function getCached(env: Env, key: string): Promise<any> {
-  const now = Date.now();
+## Application-specific decisions
 
-  // L1: Memory cache (fastest)
-  const cached = memoryCache.get(key);
-  if (cached && cached.expires > now) {
-    return cached.data;
-  }
+The linked APIs are building blocks, not complete session or multi-tier cache implementations. Preserve these requirements when designing an application:
 
-  // L2: KV cache (fast)
-  const kvValue = await env.CACHE.get(key, "json");
-  if (kvValue) {
-    memoryCache.set(key, { data: kvValue, expires: now + 60000 }); // 1min in memory
-    return kvValue;
-  }
-
-  // L3: Origin (slow)
-  const origin = await fetch(`https://api.example.com/${key}`).then(r => r.json());
-
-  // Backfill caches
-  await env.CACHE.put(key, JSON.stringify(origin), { expirationTtl: 300 }); // 5min in KV
-  memoryCache.set(key, { data: origin, expires: now + 60000 });
-
-  return origin;
-}
-```
-
-## API Response Caching
-
-```typescript
-async function getCachedData(env: Env, key: string, fetcher: () => Promise<any>): Promise<any> {
-  const cached = await env.MY_KV.get(key, "json");
-  if (cached) return cached;
-
-  const data = await fetcher();
-  await env.MY_KV.put(key, JSON.stringify(data), { expirationTtl: 300 });
-  return data;
-}
-
-const apiData = await getCachedData(
-  env,
-  "cache:users",
-  () => fetch("https://api.example.com/users").then(r => r.json())
-);
-```
-
-## Session Management
-
-```typescript
-interface Session { userId: string; expiresAt: number; }
-
-async function createSession(env: Env, userId: string): Promise<string> {
-  const sessionId = crypto.randomUUID();
-  const expiresAt = Date.now() + (24 * 60 * 60 * 1000);
-
-  await env.SESSIONS.put(
-    `session:${sessionId}`,
-    JSON.stringify({ userId, expiresAt }),
-    { expirationTtl: 86400, metadata: { createdAt: Date.now() } }
-  );
-
-  return sessionId;
-}
-
-async function getSession(env: Env, sessionId: string): Promise<Session | null> {
-  const data = await env.SESSIONS.get<Session>(`session:${sessionId}`, "json");
-  if (!data || data.expiresAt < Date.now()) return null;
-  return data;
-}
-```
-
-## Coalesce Cold Keys
-
-```typescript
-// ❌ BAD: Many individual keys
-await env.KV.put("user:123:name", "John");
-await env.KV.put("user:123:email", "john@example.com");
-
-// ✅ GOOD: Single coalesced object
-await env.USERS.put("user:123:profile", JSON.stringify({
-  name: "John",
-  email: "john@example.com",
-  role: "admin"
-}));
-
-// Benefits: Hot key cache, single read, reduced operations
-// Trade-off: Harder to update individual fields
-```
-
-## Prefix-Based Namespacing
-
-```typescript
-// Logical partitioning within single namespace
-const PREFIXES = {
-  users: "user:",
-  sessions: "session:",
-  cache: "cache:",
-  features: "feature:"
-} as const;
-
-// Write with prefix
-async function setUser(env: Env, id: string, data: any) {
-  await env.KV.put(`${PREFIXES.users}${id}`, JSON.stringify(data));
-}
-
-// Read with prefix
-async function getUser(env: Env, id: string) {
-  return await env.KV.get(`${PREFIXES.users}${id}`, "json");
-}
-
-// List by prefix
-async function listUserIds(env: Env): Promise<string[]> {
-  const result = await env.KV.list({ prefix: PREFIXES.users });
-  return result.keys.map(k => k.name.replace(PREFIXES.users, ""));
-}
-
-// Example hierarchy
-"user:123:profile"
-"user:123:settings"
-"cache:api:users"
-"session:abc-def"
-"feature:flags:beta"
-```
-
-## Metadata Versioning
-
-```typescript
-interface VersionedData {
-  version: number;
-  data: any;
-}
-
-async function migrateIfNeeded(env: Env, key: string) {
-  const result = await env.DATA.getWithMetadata(key, "json");
-
-  if (!result.value) return null;
-
-  const currentVersion = result.metadata?.version || 1;
-  const targetVersion = 2;
-
-  if (currentVersion < targetVersion) {
-    // Migrate data format
-    const migrated = migrate(result.value, currentVersion, targetVersion);
-
-    // Store with new version
-    await env.DATA.put(key, JSON.stringify(migrated), {
-      metadata: { version: targetVersion, migratedAt: Date.now() }
-    });
-
-    return migrated;
-  }
-
-  return result.value;
-}
-
-function migrate(data: any, from: number, to: number): any {
-  if (from === 1 && to === 2) {
-    // V1 → V2: Rename field
-    return { ...data, userName: data.name };
-  }
-  return data;
-}
-```
-
-## Error Boundary Pattern
-
-```typescript
-// Resilient get with fallback
-async function resilientGet<T>(
-  env: Env,
-  key: string,
-  fallback: T
-): Promise<T> {
-  try {
-    const value = await env.KV.get<T>(key, "json");
-    return value ?? fallback;
-  } catch (err) {
-    console.error(`KV error for ${key}:`, err);
-    return fallback;
-  }
-}
-
-// Usage
-const config = await resilientGet(env, "config:app", {
-  theme: "light",
-  maxItems: 10
-});
-```
+- For a memory → KV → origin cache, define each layer's lifetime and refill behavior. Process memory is not shared durable state; KV adds its own stale-value and negative-lookup caching.
+- For sessions, decide how quickly creation, updates, and revocation must become visible. KV alone cannot provide immediate global revocation or guaranteed immediate reads after session creation. Use a store with suitable consistency when those are requirements, and define application expiration checks using the [write expiration guidance](https://developers.cloudflare.com/kv/api/write-key-value-pairs/index.md).
+- For counters, rate limits, or other atomic read-modify-write decisions, use coordination such as [Durable Objects](https://developers.cloudflare.com/durable-objects/index.md). Serializing writes through an object does not make separate KV reads strongly consistent.
+- Choose missing-data defaults separately from service-error handling. A fallback appropriate for display preferences may be inappropriate for authorization or session validation.

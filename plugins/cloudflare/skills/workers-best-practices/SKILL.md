@@ -1,127 +1,68 @@
 ---
 name: workers-best-practices
-description: Reviews and authors Cloudflare Workers code against production best practices. Load when writing new Workers, reviewing Worker code, configuring wrangler.jsonc, or checking for common Workers anti-patterns (streaming, floating promises, global state, secrets, bindings, observability). Biases towards retrieval from Cloudflare docs over pre-trained knowledge.
+description: Cloudflare Workers best practices for production applications. Use when writing, reviewing, or configuring Workers.
 ---
 
-Your knowledge of Cloudflare Workers APIs, types, and configuration may be outdated. **Prefer retrieval over pre-training** for any Workers code task — writing or reviewing.
+Your knowledge of Cloudflare Workers APIs, types, and configuration may be outdated. **Prefer retrieval over pre-training** when writing or reviewing Workers code.
 
-## Retrieval Sources
+Use the project's installed versions, generated types, and Wrangler compatibility settings as the baseline for existing code. Retrieve relevant Cloudflare documentation to verify API, configuration, runtime behavior, and limit claims.
 
-Fetch the **latest** versions before writing or reviewing Workers code. Do not rely on baked-in knowledge for API signatures, config fields, or binding shapes.
+## References
 
-| Source | How to retrieve | Use for |
-|--------|----------------|---------|
-| Workers best practices | Fetch `https://developers.cloudflare.com/workers/best-practices/workers-best-practices/` | Canonical rules, patterns, anti-patterns |
-| Workers types | See `references/review.md` for retrieval steps | API signatures, handler types, binding types |
-| Wrangler config schema | `node_modules/wrangler/config-schema.json` | Config fields, binding shapes, allowed values |
-| Cloudflare docs | Search tool or `https://developers.cloudflare.com/workers/` | API reference, compatibility dates/flags |
+Read the sections relevant to the task:
 
-## FIRST: Fetch Latest References
+| Reference | When to use it |
+|-----------|----------------|
+| [Configuration and observability](references/configuration.md) | Compatibility dates, bindings, generated types, secrets, logs, and traces |
+| [Runtime patterns](references/runtime-patterns.md) | Streaming, promise lifetime, request state, service calls, security, and runtime tests |
+| [Platform API checks](references/platform-apis.md) | Handler signatures, platform classes, binding access, and serialization |
 
-Before reviewing or writing Workers code, retrieve the current best practices page and relevant type definitions. If the project's `node_modules` has an older version, **prefer the latest published version**.
+For missing evidence, consult [Workers best practices](https://developers.cloudflare.com/workers/best-practices/workers-best-practices/index.md) or find the affected product in the [Cloudflare docs directory](https://developers.cloudflare.com/directory/index.md). Use the installed Wrangler schema for config fields. A newer type package does not supersede the project's configured target.
 
-```bash
-# Fetch latest workers types
-mkdir -p /tmp/workers-types-latest && \
-  npm pack @cloudflare/workers-types --pack-destination /tmp/workers-types-latest && \
-  tar -xzf /tmp/workers-types-latest/cloudflare-workers-types-*.tgz -C /tmp/workers-types-latest
-# Types at /tmp/workers-types-latest/package/index.d.ts
-```
+## Keep Compatibility Dates Current
 
-## Reference Documentation
+Use today's date for new Workers. Encourage periodic updates for existing Workers, reviewing compatibility changes and running relevant tests. Assess existing behavior against its configured date and flags; see [compatibility guidance](references/configuration.md#keep-compatibility_date-current).
 
-- `references/rules.md` — all best practice rules with code examples and anti-patterns
-- `references/review.md` — type validation, config validation, binding access patterns, review process
+## Enable Observability
 
-## Rules Quick Reference
+Enable [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md) and [Traces](https://developers.cloudflare.com/workers/observability/traces/index.md) when creating or preparing a Worker for production. Set `observability.enabled` and `observability.traces.enabled` to `true`; the top-level setting alone does not enable traces. Use structured JSON logging and configure sampling for the workload. During reviews, flag missing logs or traces. See the [configuration example](references/configuration.md#enable-workers-logs-and-traces).
 
-### Configuration
+## Place Compute Near Regional Databases
 
-| Rule | Summary |
-|------|---------|
-| Compatibility date | Set `compatibility_date` to today on new projects; update periodically on existing ones |
-| nodejs_compat | Enable the `nodejs_compat` flag — many libraries depend on Node.js built-ins |
-| wrangler types | Run `wrangler types` to generate `Env` — never hand-write binding interfaces |
-| Secrets | Use `wrangler secret put`, never hardcode secrets in config or source |
-| wrangler.jsonc | Use JSONC config for non-secret settings — newer features are JSON-only |
-
-### Request & Response Handling
-
-| Rule | Summary |
-|------|---------|
-| Streaming | Stream large/unknown payloads — never `await response.text()` on unbounded data |
-| waitUntil | Use `ctx.waitUntil()` for post-response work; do not destructure `ctx` |
-
-### Architecture
-
-| Rule | Summary |
-|------|---------|
-| Bindings over REST | Use in-process bindings (KV, R2, D1, Queues) — not the Cloudflare REST API |
-| Queues & Workflows | Move async/background work off the critical path |
-| Service bindings | Use service bindings for Worker-to-Worker calls — not public HTTP |
-| Hyperdrive | Always use Hyperdrive for external PostgreSQL/MySQL connections |
-
-### Observability
-
-| Rule | Summary |
-|------|---------|
-| Logs & Traces | Enable `observability` in config with `head_sampling_rate`; use structured JSON logging |
-
-### Code Patterns
-
-| Rule | Summary |
-|------|---------|
-| No global request state | Never store request-scoped data in module-level variables |
-| Floating promises | Every Promise must be `await`ed, `return`ed, `void`ed, or passed to `ctx.waitUntil()` |
-
-### Security
-
-| Rule | Summary |
-|------|---------|
-| Web Crypto | Use `crypto.randomUUID()` / `crypto.getRandomValues()` — never `Math.random()` for security |
-| No passThroughOnException | Use explicit try/catch with structured error responses |
+For Workers that make multiple sequential queries to one regional database, configure explicit placement matching the database's provider and region before deployment. Ask for missing location information, preserve existing placement choices, and verify handler eligibility and deployed request duration. See [database placement](references/configuration.md#place-compute-near-regional-databases).
 
 ## Anti-Patterns to Flag
 
-| Anti-pattern | Why it matters |
-|-------------|----------------|
-| `await response.text()` on unbounded data | Memory exhaustion — 128 MB limit |
-| Hardcoded secrets in source or config | Credential leak via version control |
-| `Math.random()` for tokens/IDs | Predictable, not cryptographically secure |
-| Bare `fetch()` without `await` or `waitUntil` | Floating promise — dropped result, swallowed error |
-| Module-level mutable variables for request state | Cross-request data leaks, stale state, I/O errors |
-| Cloudflare REST API from inside a Worker | Unnecessary network hop, auth overhead, added latency |
-| `ctx.passThroughOnException()` as error handling | Hides bugs, makes debugging impossible |
-| Hand-written `Env` interface | Drifts from actual wrangler config bindings |
-| Direct string comparison for secret values | Timing side-channel — use `crypto.subtle.timingSafeEqual` |
-| Destructuring `ctx` (`const { waitUntil } = ctx`) | Loses `this` binding — throws "Illegal invocation" at runtime |
-| `any` on `Env` or handler params | Defeats type safety for all binding access |
-| `as unknown as T` double-cast | Hides real type incompatibilities — fix the design |
-| `implements` on platform base classes (instead of `extends`) | Legacy — loses `this.ctx`, `this.env`. Applies to DurableObject, WorkerEntrypoint, Workflow |
-| `env.X` inside platform base class | Should be `this.env.X` in classes extending DurableObject, WorkerEntrypoint, etc. |
+| Anti-pattern | Consequence and preferred pattern |
+|-------------|-----------------------------------|
+| `await response.text()` or similar buffering on unbounded data | Can exhaust Worker memory; [stream large or unbounded bodies](references/runtime-patterns.md#stream-request-and-response-bodies). |
+| Hardcoded secrets in source or config | Leaks credentials through version control; use Wrangler secrets. |
+| `Math.random()` for security-sensitive tokens or IDs | Predictable values; use `crypto.randomUUID()` or `crypto.getRandomValues()`. |
+| Async work started without awaiting, returning, or attaching it to `ctx.waitUntil()` | Work can be dropped and errors missed; tie it to the request or background-work lifetime. |
+| Module-level mutable request state | Leaks data across requests and can cause I/O ownership errors; pass request state explicitly. |
+| Cloudflare REST API calls for operations available through Worker bindings | Adds network and authentication overhead; use the available binding. |
+| `ctx.passThroughOnException()` used as general error handling | Can conceal Worker failures by forwarding to the origin; use explicit error handling and structured error responses. |
+| Hand-written `Env` that duplicates Wrangler bindings | Can drift from configuration; generate binding types with `wrangler types`. |
+| Direct string comparison of secret values | Can expose timing differences; use the [Web Crypto comparison pattern](references/runtime-patterns.md#use-web-crypto-for-secure-token-generation). |
+| Destructuring `ctx` methods, such as `const { waitUntil } = ctx` | Loses the receiver; call `ctx.waitUntil(...)`. |
+| `any` on `Env` or handler parameters | Hides binding and handler contract errors; use the project's generated and platform types. |
+| `as unknown as T` to force a platform type match | Hides incompatibilities; fix the underlying contract. |
+| `implements` used in place of extending a platform base class | Does not inherit runtime behavior, `this.ctx`, or `this.env`; use the appropriate base class. |
+| Unbound `env.X` in a platform class method | Bindings are available through `this.env.X`; see [binding access patterns](references/platform-apis.md#binding-access--the-most-common-error). |
+| Applying one serialization rule across Queues, Workflow steps, storage, and WebSockets | Can reject valid payloads or accept unsupported ones; check the [specific API and encoding](references/platform-apis.md#serialization-boundaries). |
 
-## Review Workflow
+## Validation
 
-1. **Retrieve** — fetch latest best practices page, workers types, and wrangler schema
-2. **Read full files** — not just diffs; context matters for binding access patterns
-3. **Check types** — binding access, handler signatures, no `any`, no unsafe casts (see `references/review.md`)
-4. **Check config** — compatibility_date, nodejs_compat, observability, secrets, binding-code consistency
-5. **Check patterns** — streaming, floating promises, global state, serialization boundaries
-6. **Check security** — crypto usage, secret handling, timing-safe comparisons, error handling
-7. **Validate with tools** — `npx tsc --noEmit`, lint for `no-floating-promises`
-8. **Reference rules** — see `references/rules.md` for each rule's correct pattern
+Use the project's existing checks for affected Workers behavior: type-check binding or handler contract changes, and run relevant runtime tests for behavior changes. Preserve required repository checks; a narrow edit does not require a full Workers audit.
 
 ## Scope
 
 This skill covers Workers-specific best practices and code review. For related topics:
 
 - **Durable Objects**: load the `durable-objects` skill
-- **Workflows**: see [Rules of Workflows](https://developers.cloudflare.com/workflows/build/rules-of-workflows/)
-- **Wrangler CLI commands**: load the `wrangler` skill
+- **Workflows**: see [Rules of Workflows](https://developers.cloudflare.com/workflows/build/rules-of-workflows/index.md)
+- **CLI commands**: load the `cf-cli` skill, or the `wrangler` skill in a project with a Wrangler configuration file
 
-## Principles
+## Skill feedback
 
-- **Be certain.** Retrieve before flagging. If unsure about an API, config field, or pattern, fetch the docs first.
-- **Provide evidence.** Reference line numbers, tool output, or docs links.
-- **Focus on what developers will copy.** Workers code in examples and docs gets pasted into production.
-- **Correctness over completeness.** A concise example that works beats a comprehensive one with errors.
+If the user reports that this skill gave incorrect or outdated guidance, or is missing information, read [references/skill-feedback.md](references/skill-feedback.md).

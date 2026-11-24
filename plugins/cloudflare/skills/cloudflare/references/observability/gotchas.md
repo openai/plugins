@@ -1,115 +1,25 @@
-## Common Errors
+# Observability Troubleshooting and Constraints
 
-### "Logs not appearing"
+## Missing or incomplete data
 
-**Cause:** Observability disabled, Worker not redeployed, no traffic, low sampling rate, or log size exceeds 256 KB
-**Solution:**
-```bash
-# Verify config
-cat wrangler.jsonc | jq '.observability'
+| Symptom | Check and authoritative guide |
+| --- | --- |
+| Logs missing from the dashboard | Confirm the deployed Worker/environment, collection and persistence settings, recent traffic, query time range, and sampling. Follow [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md) and [Query Builder](https://developers.cloudflare.com/workers/observability/query-builder/index.md). |
+| Live logs differ from stored logs | Confirm which workflow is being inspected; live streams can sample under load. See [real-time logs](https://developers.cloudflare.com/workers/observability/logs/real-time-logs/index.md). |
+| Traces missing or incomplete | Check trace enablement and sampling separately from logs, then consult [tracing setup](https://developers.cloudflare.com/workers/observability/traces/index.md) and [known limitations](https://developers.cloudflare.com/workers/observability/traces/known-limitations/index.md). |
+| Export destination has no data | Check signal type, destination name, credentials, endpoint compatibility, and provider status using [OpenTelemetry export](https://developers.cloudflare.com/observability/export/opentelemetry/index.md) and, for a Worker, [Workers OpenTelemetry export](https://developers.cloudflare.com/workers/observability/opentelemetry-export/index.md). For a Logpush job, use [Workers Logpush](https://developers.cloudflare.com/workers/observability/logs/logpush/index.md). |
+| Tail consumer receives no events | Check the producer's consumer configuration and deployment using [Tail Workers](https://developers.cloudflare.com/workers/observability/logs/tail-workers/index.md). |
+| Analytics Engine totals or averages look wrong | Account for sample weights and consistent field meanings using [sampling guidance](https://developers.cloudflare.com/analytics/analytics-engine/sampling/index.md). Check [limits](https://developers.cloudflare.com/analytics/analytics-engine/limits/index.md) for missing writes or expired data. |
+| Very short operations appear to take no time | Read [performance and timers](https://developers.cloudflare.com/workers/runtime-apis/performance/index.md) and [trace limitations](https://developers.cloudflare.com/workers/observability/traces/known-limitations/index.md). Tracing does not eliminate the runtime's timing restrictions. |
 
-# Check deployment
-wrangler deployments list <WORKER_NAME>
+## Limits, retention, and cost
 
-# Test with curl
-curl https://your-worker.workers.dev
-```
-Ensure `observability.enabled = true`, redeploy Worker, check `head_sampling_rate`, verify traffic
+Fetch these pages when estimating cost or diagnosing truncation and missing data:
 
-### "Traces not being captured"
+- [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/index.md): log size, retention, sampling, and pricing.
+- [Workers Traces](https://developers.cloudflare.com/workers/observability/traces/index.md) and [known limitations](https://developers.cloudflare.com/workers/observability/traces/known-limitations/index.md): availability, propagation, and instrumentation constraints.
+- [Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/index.md): current observability and Tail Worker billing terms.
+- [Analytics Engine limits](https://developers.cloudflare.com/analytics/analytics-engine/limits/index.md) and [pricing](https://developers.cloudflare.com/analytics/analytics-engine/pricing/index.md): field/write limits, retention, query costs, and billing availability.
+- [Workers Logpush](https://developers.cloudflare.com/workers/observability/logs/logpush/index.md): Workers-specific eligibility, permissions, and pricing.
 
-**Cause:** Traces not enabled, incorrect sampling rate, Worker not redeployed, or destination unavailable
-**Solution:**
-```jsonc
-// Temporarily set to 100% sampling for debugging
-{
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1.0,
-    "traces": {
-      "enabled": true
-    }
-  }
-}
-```
-Ensure `observability.traces.enabled = true`, set `head_sampling_rate` to 1.0 for testing, redeploy, check destination status
-
-## Limits
-
-| Resource/Limit | Value | Notes |
-|----------------|-------|-------|
-| Max log size | 256 KB | Logs exceeding this are truncated |
-| Default sampling rate | 1.0 (100%) | Reduce for high-traffic Workers |
-| Max destinations | Varies by plan | Check dashboard |
-| Trace context propagation | 100 spans max | Deep call chains may lose spans |
-| Analytics Engine write rate | 25 writes/request | Excess writes dropped silently |
-
-## Performance Gotchas
-
-### Spectre Mitigation Timing
-
-**Problem:** `Date.now()` and `performance.now()` have reduced precision (coarsened to 100μs)
-**Cause:** Spectre vulnerability mitigation in V8
-**Solution:** Accept reduced precision or use Workers Traces for accurate timing
-```typescript
-// Date.now() is coarsened - trace spans are accurate
-export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    // For user-facing timing, Date.now() is fine
-    const start = Date.now();
-    const response = await processRequest(request);
-    const duration = Date.now() - start;
-
-    // For detailed performance analysis, use Workers Traces instead
-    return response;
-  }
-}
-```
-
-### Analytics Engine _sample_interval Aggregation
-
-**Problem:** Queries return incorrect totals when not multiplying by `_sample_interval`
-**Cause:** Analytics Engine stores sampled data points, each representing multiple events
-**Solution:** Always multiply counts/sums by `_sample_interval` in aggregations
-```sql
--- WRONG: Undercounts actual events
-SELECT blob1 AS customer_id, COUNT(*) AS total_calls
-FROM api_usage GROUP BY customer_id;
-
--- CORRECT: Accounts for sampling
-SELECT blob1 AS customer_id, SUM(_sample_interval) AS total_calls
-FROM api_usage GROUP BY customer_id;
-```
-
-### Trace Context Propagation Limits
-
-**Problem:** Deep call chains lose trace context after 100 spans
-**Cause:** Cloudflare limits trace depth to prevent performance impact
-**Solution:** Design for flatter architectures or use custom correlation IDs for deep chains
-```typescript
-// For deep call chains, add custom correlation ID
-const correlationId = crypto.randomUUID();
-console.log({ correlationId, event: 'request_start' });
-
-// Pass correlationId through headers to downstream services
-await fetch('https://api.example.com', {
-  headers: { 'X-Correlation-ID': correlationId }
-});
-```
-
-## Pricing (2026)
-
-### Workers Traces
-- **GA Pricing (starts March 1, 2026):**
-  - $0.10 per 1M trace spans captured
-  - Retention: 14 days included
-- **Free tier:** 10M trace spans/month
-- **Note:** Beta usage (before March 1, 2026) is free
-
-### Workers Logs
-- **Included:** Free for all Workers
-- **Logpush:** Requires Business/Enterprise plan
-
-### Analytics Engine
-- **Included:** 10M writes/month on Paid Workers plan
-- **Additional:** $0.25 per 1M writes beyond included quota
+Sampling reduces coverage as well as volume. Do not interpret the absence of a sampled event as proof that an error did not happen. Keep required diagnostic context while avoiding credentials, full sensitive URLs, and unnecessary personal data in logs, custom dimensions, and exported records.

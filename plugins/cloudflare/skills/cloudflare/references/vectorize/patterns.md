@@ -1,90 +1,24 @@
-# Vectorize Patterns
+# Vectorize pattern routes
 
-## Workers AI Integration
+| Task | Current documentation |
+|------|-----------------------|
+| Generate and query Workers AI embeddings | [Vectorize and Workers AI](https://developers.cloudflare.com/vectorize/get-started/embeddings/index.md) |
+| Query with embeddings from OpenAI | [OpenAI integration](https://developers.cloudflare.com/vectorize/best-practices/query-vectors/index.md#openai) |
+| Choose embedding dimensions and distance metric | [Create indexes](https://developers.cloudflare.com/vectorize/best-practices/create-indexes/index.md) |
+| Build a retrieval-augmented generation application | [Workers AI RAG tutorial](https://developers.cloudflare.com/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/index.md) |
+| Link search results to source documents | [Vector metadata](https://developers.cloudflare.com/vectorize/best-practices/insert-vectors/index.md#metadata) |
+| Partition vectors by tenant | [Namespaces](https://developers.cloudflare.com/vectorize/best-practices/insert-vectors/index.md#namespaces) and [namespace versus metadata filtering](https://developers.cloudflare.com/vectorize/reference/metadata-filtering/index.md#namespace-versus-metadata-filtering) |
+| Combine similarity search with categorical or range filters | [Metadata filtering](https://developers.cloudflare.com/vectorize/reference/metadata-filtering/index.md) |
+| Ingest or update vectors in batches | [Insert vectors](https://developers.cloudflare.com/vectorize/best-practices/insert-vectors/index.md) and [limits](https://developers.cloudflare.com/vectorize/platform/limits/index.md) |
 
-```typescript
-// Generate embedding + query
-const result = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] });
-const matches = await env.VECTORIZE.query(result.data[0], { topK: 5 }); // Pass data[0]!
-```
+## Embedding and retrieval decisions
 
-| Model | Dimensions |
-|-------|------------|
-| `@cf/baai/bge-small-en-v1.5` | 384 |
-| `@cf/baai/bge-base-en-v1.5` | 768 (recommended) |
-| `@cf/baai/bge-large-en-v1.5` | 1024 |
+Keep ingestion and query embeddings compatible: use the same model and preprocessing, and extract the individual vector from the provider's documented response shape. Fetch the selected model's current documentation for dimensions and input requirements.
 
-## OpenAI Integration
+For RAG, store a reliable reference to the source content and request the metadata needed to resolve it. Handle missing or deleted source documents before passing retrieved context to generation.
 
-```typescript
-const response = await openai.embeddings.create({ model: "text-embedding-ada-002", input: query });
-const matches = await env.VECTORIZE.query(response.data[0].embedding, { topK: 5 });
-```
+## Tenant scope
 
-## RAG Pattern
+Namespaces and metadata filters narrow searches; they do not authenticate the caller. Derive the permitted tenant scope from trusted identity and enforce it on every relevant read and write, including ID-based retrieval and deletion. Do not assume a namespace query option protects other operations.
 
-```typescript
-// 1. Embed query
-const emb = await env.AI.run("@cf/baai/bge-base-en-v1.5", { text: [query] });
-
-// 2. Search vectors
-const matches = await env.VECTORIZE.query(emb.data[0], { topK: 5, returnMetadata: "indexed" });
-
-// 3. Fetch full docs from R2/D1/KV
-const docs = await Promise.all(matches.matches.map(m => env.R2.get(m.metadata.key).then(o => o?.text())));
-
-// 4. Generate with context
-const answer = await env.AI.run("@cf/meta/llama-3-8b-instruct", {
-  prompt: `Context:\n${docs.filter(Boolean).join("\n\n")}\n\nQuestion: ${query}\n\nAnswer:`
-});
-```
-
-## Multi-Tenant
-
-### Namespaces (< 50K tenants, fastest)
-
-```typescript
-await env.VECTORIZE.upsert([{ id: "1", values: emb, namespace: `tenant-${id}` }]);
-await env.VECTORIZE.query(vec, { namespace: `tenant-${id}`, topK: 10 });
-```
-
-### Metadata Filter (> 50K tenants)
-
-```bash
-wrangler vectorize create-metadata-index my-index --property-name=tenantId --type=string
-```
-
-```typescript
-await env.VECTORIZE.upsert([{ id: "1", values: emb, metadata: { tenantId: id } }]);
-await env.VECTORIZE.query(vec, { filter: { tenantId: id }, topK: 10 });
-```
-
-## Hybrid Search
-
-```typescript
-const matches = await env.VECTORIZE.query(vec, {
-  topK: 20,
-  filter: {
-    category: { $in: ["tech", "science"] },
-    published: { $gte: lastMonthTimestamp }
-  }
-});
-```
-
-## Batch Ingestion
-
-```typescript
-const BATCH = 500;
-for (let i = 0; i < vectors.length; i += BATCH) {
-  await env.VECTORIZE.upsert(vectors.slice(i, i + BATCH));
-}
-```
-
-## Best Practices
-
-1. **Pass `data[0]`** not `data` or full response
-2. **Batch 500** vectors per upsert
-3. **Create metadata indexes** before inserting
-4. **Use namespaces** for tenant isolation (faster than filters)
-5. **`returnMetadata: "indexed"`** for best speed/data balance
-6. **Handle 5-10s mutation delay** in async operations
+Choose namespace or metadata partitioning based on the required query scope and current limits. Both narrow the search space; avoid assuming metadata filtering happens after vector search. If tenant IDs are stored in metadata, create the corresponding metadata index before ingestion.
