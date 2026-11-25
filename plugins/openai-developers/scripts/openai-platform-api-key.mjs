@@ -31,6 +31,7 @@ function usage() {
 Commands:
   prepare   Generate a local RSA-OAEP keypair and public connector request.
   decrypt   Decrypt connector ciphertext locally and upsert an env var file.
+            Removes the recipient private key after a successful write.
 
 The helper never prints the plaintext API key.`;
 }
@@ -464,8 +465,15 @@ async function decrypt(args) {
       ? args.workspace.trim()
       : process.cwd();
   const encryptedPayload = encryptedPayloadFromArgs(args);
-  const plaintextApiKey = await decryptPayload(path.resolve(args["private-key"]), encryptedPayload);
+  const privateKeyPath = path.resolve(args["private-key"]);
+  const plaintextApiKey = await decryptPayload(privateKeyPath, encryptedPayload);
   const writeResult = upsertEnvValue(args.target, envName, plaintextApiKey, workspacePath);
+
+  // The recipient key is single-use. Once the plaintext is written it has no
+  // remaining purpose, and leaving it on disk lets anyone who can read it
+  // recover the API key from the same ciphertext. Unlink only after a
+  // successful write so a refused or failed write stays retryable.
+  unlinkBestEffort(privateKeyPath);
 
   printJson({
     ...writeResult,
