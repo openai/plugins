@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "lotsofsounds": {
+      "type": "http",
+      "url": "https://api.lotsofsounds.com/mcp"
+    }
+  }
+}
