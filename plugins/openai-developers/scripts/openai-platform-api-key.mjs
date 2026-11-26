@@ -31,7 +31,8 @@ function usage() {
 Commands:
   prepare   Generate a local RSA-OAEP keypair and public connector request.
   decrypt   Decrypt connector ciphertext locally and upsert an env var file.
-            Removes the recipient private key after a successful write.
+            Removes the recipient private key after a successful write; fails
+            if the key cannot be removed.
 
 The helper never prints the plaintext API key.`;
 }
@@ -102,6 +103,22 @@ function unlinkBestEffort(target) {
     fs.unlinkSync(target);
   } catch {
     // Best effort cleanup for temporary files.
+  }
+}
+
+function removePrivateKey(privateKeyPath, targetPath) {
+  try {
+    fs.unlinkSync(privateKeyPath);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      // Already gone; the key has served its purpose either way.
+      return;
+    }
+    fail(
+      `Failed to remove the recipient private key: ${privateKeyPath} (${error.code ?? error.message}). ` +
+        `The API key was written to ${targetPath}, but the private key could not be deleted. ` +
+        "Delete it manually: together with the ciphertext it recovers the API key.",
+    );
   }
 }
 
@@ -472,8 +489,9 @@ async function decrypt(args) {
   // The recipient key is single-use. Once the plaintext is written it has no
   // remaining purpose, and leaving it on disk lets anyone who can read it
   // recover the API key from the same ciphertext. Unlink only after a
-  // successful write so a refused or failed write stays retryable.
-  unlinkBestEffort(privateKeyPath);
+  // successful write so a refused or failed write stays retryable, and fail
+  // loudly if the key cannot be removed so the caller can delete it by hand.
+  removePrivateKey(privateKeyPath, writeResult.target_path);
 
   printJson({
     ...writeResult,

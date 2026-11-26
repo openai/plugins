@@ -1038,3 +1038,38 @@ test("decrypt keeps the private key when the env write is refused", async () => 
   assert.equal(fs.existsSync(output.private_key_path), true);
   assert.equal(fs.existsSync(target), false);
 });
+
+test("decrypt fails when the private key cannot be removed", async () => {
+  if (process.platform === "win32" || process.getuid?.() === 0) {
+    // Root ignores directory write permissions, so the failure cannot be staged.
+    return;
+  }
+
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-helper-test-"));
+  const keyDir = path.join(workspace, "keys");
+  const output = JSON.parse(runScript(["prepare", "--dir", keyDir]));
+  const ciphertext = await encryptWithPublicJwk(output.recipient_public_key_jwk, SECRET);
+  const target = path.join(workspace, ".env.local");
+  fs.chmodSync(keyDir, 0o555);
+
+  const result = runScriptFailure([
+    "decrypt",
+    "--private-key",
+    output.private_key_path,
+    "--ciphertext",
+    ciphertext,
+    "--target",
+    target,
+    "--workspace",
+    workspace,
+  ]);
+
+  fs.chmodSync(keyDir, 0o755);
+
+  assert.notEqual(result.status, 0);
+  assert.equal(result.stdout, "");
+  assert.match(result.stderr, /Failed to remove the recipient private key/);
+  assert.match(result.stderr, /Delete it manually/);
+  assert.equal(fs.readFileSync(target, "utf8"), `OPENAI_API_KEY=${SECRET}\n`);
+  assert.equal(fs.existsSync(output.private_key_path), true);
+});
