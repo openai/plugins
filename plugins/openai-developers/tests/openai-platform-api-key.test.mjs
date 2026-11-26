@@ -959,3 +959,117 @@ test("decrypt accepts a structured connector result file", async () => {
   assert.equal(decryptOutput.includes(SECRET), false);
   assert.equal(fs.readFileSync(target, "utf8"), `OPENAI_API_KEY=${SECRET}\n`);
 });
+
+test("decrypt removes the single-use private key after writing the env file", async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-helper-test-"));
+  const output = JSON.parse(runScript(["prepare", "--dir", dir]));
+  const ciphertext = await encryptWithPublicJwk(output.recipient_public_key_jwk, SECRET);
+  const target = path.join(dir, ".env.local");
+
+  assert.equal(fs.existsSync(output.private_key_path), true);
+
+  const decryptOutput = runScript([
+    "decrypt",
+    "--private-key",
+    output.private_key_path,
+    "--ciphertext",
+    ciphertext,
+    "--target",
+    target,
+    "--workspace",
+    dir,
+  ]);
+
+  assert.equal(decryptOutput.includes(SECRET), false);
+  assert.equal(fs.readFileSync(target, "utf8"), `OPENAI_API_KEY=${SECRET}\n`);
+  assert.equal(fs.existsSync(output.private_key_path), false);
+});
+
+test("decrypt keeps the private key when decryption fails so the user can retry", async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-helper-test-"));
+  const otherDir = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-helper-test-"));
+  const output = JSON.parse(runScript(["prepare", "--dir", dir]));
+  const otherOutput = JSON.parse(runScript(["prepare", "--dir", otherDir]));
+  const ciphertext = await encryptWithPublicJwk(
+    otherOutput.recipient_public_key_jwk,
+    SECRET,
+  );
+  const target = path.join(dir, ".env.local");
+
+  const result = runScriptFailure([
+    "decrypt",
+    "--private-key",
+    output.private_key_path,
+    "--ciphertext",
+    ciphertext,
+    "--target",
+    target,
+    "--workspace",
+    dir,
+  ]);
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Failed to decrypt encrypted API key/);
+  assert.equal(fs.existsSync(output.private_key_path), true);
+  assert.equal(fs.existsSync(target), false);
+});
+
+test("decrypt keeps the private key when the env write is refused", async () => {
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-helper-test-"));
+  const outsideDir = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-outside-"));
+  const output = JSON.parse(runScript(["prepare", "--dir", workspace]));
+  const ciphertext = await encryptWithPublicJwk(output.recipient_public_key_jwk, SECRET);
+  const target = path.join(outsideDir, ".env.local");
+
+  const result = runScriptFailure([
+    "decrypt",
+    "--private-key",
+    output.private_key_path,
+    "--ciphertext",
+    ciphertext,
+    "--target",
+    target,
+    "--workspace",
+    workspace,
+  ]);
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /inside the workspace/);
+  assert.equal(fs.existsSync(output.private_key_path), true);
+  assert.equal(fs.existsSync(target), false);
+});
+
+test("decrypt fails when the private key cannot be removed", async () => {
+  if (process.platform === "win32" || process.getuid?.() === 0) {
+    // Root ignores directory write permissions, so the failure cannot be staged.
+    return;
+  }
+
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "openai-platform-helper-test-"));
+  const keyDir = path.join(workspace, "keys");
+  const output = JSON.parse(runScript(["prepare", "--dir", keyDir]));
+  const ciphertext = await encryptWithPublicJwk(output.recipient_public_key_jwk, SECRET);
+  const target = path.join(workspace, ".env.local");
+  fs.chmodSync(keyDir, 0o555);
+
+  const result = runScriptFailure([
+    "decrypt",
+    "--private-key",
+    output.private_key_path,
+    "--ciphertext",
+    ciphertext,
+    "--target",
+    target,
+    "--workspace",
+    workspace,
+  ]);
+
+  fs.chmodSync(keyDir, 0o755);
+
+  assert.notEqual(result.status, 0);
+  assert.equal(result.stdout, "");
+  assert.match(result.stderr, /Failed to remove the recipient private key/);
+  assert.match(result.stderr, /Delete it manually/);
+  assert.equal(fs.readFileSync(target, "utf8"), `OPENAI_API_KEY=${SECRET}\n`);
+  assert.equal(fs.existsSync(output.private_key_path), true);
+});
