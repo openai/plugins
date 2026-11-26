@@ -1,0 +1,47 @@
+{
+  "name": "lotsofsounds",
+  "version": "0.1.0",
+  "description": "Search, inspect, and download CC0 royalty-free sound effects, UI sounds, game audio, and ambience from Lots of Sounds.",
+  "author": {
+    "name": "Lots of Sounds",
+    "email": "team@lotsofsounds.com",
+    "url": "https://www.lotsofsounds.com"
+  },
+  "homepage": "https://www.lotsofsounds.com/docs/mcp",
+  "repository": "https://github.com/lotsofsounds/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "sound-effects",
+    "sfx",
+    "audio",
+    "cc0",
+    "royalty-free",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Lots of Sounds",
+    "shortDescription": "Find and download CC0 sound effects",
+    "longDescription": "Search and download 17,000+ CC0 royalty-free sound effects, UI cues, game audio, and ambience from Lots of Sounds. Free sample browsing works without an API key; full-catalog search and downloads use an API key.",
+    "developerName": "Elliott Labs Ltd",
+    "category": "Creativity",
+    "websiteURL": "https://www.lotsofsounds.com",
+    "supportURL": "https://www.lotsofsounds.com/contact",
+    "privacyPolicyURL": "https://www.lotsofsounds.com/privacy",
+    "termsOfServiceURL": "https://www.lotsofsounds.com/terms",
+    "capabilities": [
+      "Browse curated free CC0 sample sounds without an API key",
+      "Search the full catalog by keyword, tags, category, and duration",
+      "Inspect sound metadata and fetch time-limited signed download URLs"
+    ],
+    "defaultPrompt": [
+      "Find a short, calm notification chime for an AI assistant.",
+      "Find five ambient rain sounds under 10 seconds.",
+      "Add a CC0 button click sound to my project."
+    ],
+    "brandColor": "#1A1A1A",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png"
+  }
+}
