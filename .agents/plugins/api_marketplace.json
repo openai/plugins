@@ -680,6 +680,22 @@
       "interface": {
         "displayName": "AWS Core"
       }
+    },
+    {
+      "name": "orbiter-dev",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/orbiterdev-ai/codex-plugin.git",
+        "path": "plugins/orbiter-dev"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Security",
+      "interface": {
+        "displayName": "Orbiter Dev"
+      }
     }
   ]
 }
