@@ -680,6 +680,21 @@
       "interface": {
         "displayName": "AWS Core"
       }
+    },
+    {
+      "name": "devlog-poster",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Kirakila7/dsh-plugin-devlog-poster.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Devlog Poster"
+      }
     }
   ]
 }
