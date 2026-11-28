@@ -1,0 +1,7 @@
+# The main branch ruleset requires a plugins-maintainers review on every PR.
+# Add folder-specific reviewers below using /plugins/<name>/ to cover the whole
+# directory. GitHub requires each listed user or team to have repository Write.
+
+# Codex Security's OWNERS file names @openai/cyber-products. Use its release
+# maintainers until the team has Write access, then use the team handle here.
+/plugins/codex-security/ @mldangelo-oai @soyeon-oai

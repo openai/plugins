@@ -4,7 +4,7 @@
 
 ## Resolve
 
-Read `artifact-storage.md` for the applicable storage rules. When using its artifact MCP, request `--out -`, consume the result directly, and save the exact output as `security_guidance.md` through `save_codex_security_artifact` if required; do not pass the persistent artifact path to the helper.
+Read `artifact-storage.md` for the applicable storage rules. When using its artifact MCP, request `--out -`, consume the result directly, and save the exact output as `artifacts/01_context/security_guidance.md` through `save_codex_security_artifact` if required; do not pass the persistent artifact path to the helper.
 
 Compile the full `SECURITY.md` policy for a file or directory with:
 
@@ -12,9 +12,22 @@ Compile the full `SECURITY.md` policy for a file or directory with:
 <plugin_dir>/scripts/launch_codex_security_mcp --helper resolve-security-md --repo <repo_root> --scope <file_or_directory> --out <output_path_or_dash>
 ```
 
-On Windows, use `launch_codex_security_mcp.cmd` with the same arguments. The launcher reuses the plugin's configured or bundled Node runtime and preserves the working directory for relative helper paths.
+In Windows PowerShell, the SDK supplies `$env:CODEX_SECURITY_PLUGIN_ROOT` and `$env:CODEX_SECURITY_REPOSITORY`. For a standalone invocation, set them to the selected plugin and repository directories. Set `$env:scopePolicyPath` to the repository-relative file or directory without a trailing separator. Use `.` for the repository root. Run these lines in one shell command.
 
-For compatibility, the resolver retains the former Python helper's option abbreviations, help parsing, home expansion, and path resolution; prefer the full option names shown above.
+```powershell
+$global:LASTEXITCODE = $null
+& {
+  $PSNativeCommandArgumentPassing = 'Legacy'
+  $PSNativeCommandUseErrorActionPreference = $false
+  cmd.exe /d /v:off /s /c '""%CODEX_SECURITY_PLUGIN_ROOT%\scripts\launch_codex_security_mcp.cmd" --helper resolve-security-md --repo "%CODEX_SECURITY_REPOSITORY%\." --scope "%scopePolicyPath%" --out -"'
+}
+if ($null -eq $global:LASTEXITCODE) { throw 'PowerShell did not return a cmd.exe exit code. Check PATH and PATHEXT.' }
+if ($global:LASTEXITCODE -ne 0) { exit $global:LASTEXITCODE }
+```
+
+The quoted environment variables and disabled delayed expansion preserve literal `%` and `!` in paths. For file output, put the destination in `$env:scopePolicyOutput` and use `--out "%scopePolicyOutput%"` inside the same command string. The selected launcher uses its configured or bundled Node runtime and preserves the working directory for relative output paths.
+
+Use the full option names shown above. `--help` and `-h` show usage; abbreviated long option names are not accepted.
 
 Quote tilde paths so the helper expands them for `--repo` and `--scope`; `--out` keeps tildes literal, and `--out -` writes to stdout.
 

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import sqlite3
-from collections.abc import Callable
 from typing import Any
 
 from workbench_validation import optional_text, require_uuid
@@ -13,10 +12,37 @@ RECOVERY_HANDOFF_TOKEN_PREFIX = "recovery_"
 
 
 def require_handoff_claim_token(value: str) -> str:
+    """Normalize the claim UUID, retaining the prefix that marks a recovery handoff."""
     recovery_token = value.startswith(RECOVERY_HANDOFF_TOKEN_PREFIX)
     token = value.removeprefix(RECOVERY_HANDOFF_TOKEN_PREFIX) if recovery_token else value
     normalized = require_uuid(token, "claim-token")
     return f"{RECOVERY_HANDOFF_TOKEN_PREFIX}{normalized}" if recovery_token else normalized
+
+
+def require_tokenless_scan_owner(
+    connection: sqlite3.Connection,
+    scan: sqlite3.Row,
+    model_thread_id: str | None,
+) -> None:
+    """Check model callers against a recorded owner. Trusted local callers omit model_thread_id."""
+    if model_thread_id is None or scan["handoff_claim_token"] is not None:
+        return
+    if scan["handoff_status"] == "pending":
+        raise SystemExit(
+            "This Codex Security scan handoff has not been delivered. "
+            "Claim the pending Codex Security scan handoff before continuing."
+        )
+    owner = scan["continuation_thread_id"] or scan["deep_scan_owner_thread_id"]
+    if owner is None:
+        owner = connection.execute(
+            "SELECT thread_id FROM workspaces WHERE id = ?", (scan["workspace_id"],)
+        ).fetchone()[0]
+    if owner is None:
+        completed_import = scan["launch_kind"] == "import" and scan["status"] == "complete"
+        if not completed_import:
+            raise SystemExit("This scan is awaiting its owning Codex thread.")
+    elif owner != model_thread_id:
+        raise SystemExit("This scan requires its owning Codex thread.")
 
 
 def require_current_continuation(
@@ -25,6 +51,7 @@ def require_current_continuation(
     *,
     error_message: str,
 ) -> None:
+    """Require the current claim token, allowing a tokenless continuation for legacy delivered scans."""
     if (
         scan["handoff_status"] == "delivered"
         and scan["handoff_claim_token"] is None
@@ -42,6 +69,7 @@ def validate_handoff_delivery_thread(
     requesting_thread_id: str,
     claim_token: str,
 ) -> None:
+    """Require the owning thread for delivery unless the caller presents a recovery claim token."""
     if owning_thread_id != requesting_thread_id and not claim_token.startswith(
         RECOVERY_HANDOFF_TOKEN_PREFIX
     ):
@@ -51,21 +79,23 @@ def validate_handoff_delivery_thread(
 
 
 def claim_handoff_delivery(
+    wb: Any,
     connection: sqlite3.Connection,
     args: argparse.Namespace,
-    *,
-    now: Callable[[], str],
-    require_scan: Callable[[sqlite3.Connection, str], sqlite3.Row],
-    stale_claim_before: Callable[[], str],
-    workspace_state: Callable[[sqlite3.Connection, str], dict[str, Any]],
 ) -> dict[str, Any]:
+    """Claim a pending handoff and return the current workspace state.
+
+    The first claim wins. When take_over_stale is requested, replacing an expired
+    claim also clears the continuation and deep scan owner. Retrying the same claim
+    or losing a competing claim returns the workspace state without changing ownership.
+    """
     scan_id = require_uuid(args.scan_id, "scan-id")
     claim_token = require_handoff_claim_token(args.claim_token)
-    timestamp = now()
+    timestamp = wb.now()
     with connection:
-        scan = require_scan(connection, scan_id)
+        scan = wb.require_scan(connection, scan_id)
         if scan["handoff_status"] != "pending" or scan["handoff_claim_token"] == claim_token:
-            return workspace_state(connection, scan["workspace_id"])
+            return wb.workspace_state(connection, scan["workspace_id"])
         updated = connection.execute(
             """
             UPDATE scans
@@ -94,27 +124,25 @@ def claim_handoff_delivery(
                 timestamp,
                 scan["id"],
                 int(args.take_over_stale),
-                stale_claim_before(),
+                wb.stale_claim_before(),
             ),
         )
         if updated.rowcount != 1:
-            return workspace_state(connection, scan["workspace_id"])
-    return workspace_state(connection, scan["workspace_id"])
+            return wb.workspace_state(connection, scan["workspace_id"])
+    return wb.workspace_state(connection, scan["workspace_id"])
 
 
 def release_handoff_delivery(
+    wb: Any,
     connection: sqlite3.Connection,
     args: argparse.Namespace,
-    *,
-    now: Callable[[], str],
-    require_scan: Callable[[sqlite3.Connection, str], sqlite3.Row],
-    workspace_state: Callable[[sqlite3.Connection, str], dict[str, Any]],
 ) -> dict[str, Any]:
+    """Release a matching pending claim, detach its continuation, and return the workspace state."""
     scan_id = require_uuid(args.scan_id, "scan-id")
     claim_token = require_handoff_claim_token(args.claim_token)
-    timestamp = now()
+    timestamp = wb.now()
     with connection:
-        scan = require_scan(connection, scan_id)
+        scan = wb.require_scan(connection, scan_id)
         connection.execute(
             """
             UPDATE scans
@@ -126,26 +154,28 @@ def release_handoff_delivery(
             """,
             (timestamp, scan["id"], claim_token),
         )
-    return workspace_state(connection, scan["workspace_id"])
+    return wb.workspace_state(connection, scan["workspace_id"])
 
 
 def attach_scan_continuation_thread(
+    wb: Any,
     connection: sqlite3.Connection,
     args: argparse.Namespace,
-    *,
-    now: Callable[[], str],
-    require_scan: Callable[[sqlite3.Connection, str], sqlite3.Row],
-    workspace_state: Callable[[sqlite3.Connection, str], dict[str, Any]],
 ) -> dict[str, Any]:
+    """Bind the claimed scan to a continuation and return its workspace state.
+
+    An immediate transaction serializes ownership changes. Reattaching the same
+    thread is idempotent. A different thread or mismatched claim token raises SystemExit.
+    """
     scan_id = require_uuid(args.scan_id, "scan-id")
     claim_token = require_handoff_claim_token(args.claim_token)
     thread_id = optional_text(args.thread_id, maximum=512)
     if thread_id is None:
         raise SystemExit("Codex Security continuation thread ID is required.")
     connection.execute("BEGIN IMMEDIATE")
-    try:
-        timestamp = now()
-        scan = require_scan(connection, scan_id)
+    with connection:
+        timestamp = wb.now()
+        scan = wb.require_scan(connection, scan_id)
         if scan["handoff_claim_token"] != claim_token:
             raise SystemExit("Codex Security continuation thread claim token does not match.")
         if scan["continuation_thread_id"] is not None:
@@ -154,8 +184,8 @@ def attach_scan_continuation_thread(
                     "Codex Security scan continuation is owned by another continuation."
                 )
             connection.commit()
-            return workspace_state(connection, scan["workspace_id"])
-        updated = connection.execute(
+            return wb.workspace_state(connection, scan["workspace_id"])
+        connection.execute(
             """
             UPDATE scans
             SET continuation_thread_id = ?,
@@ -168,33 +198,28 @@ def attach_scan_continuation_thread(
             """,
             (thread_id, thread_id, timestamp, scan["id"], claim_token),
         )
-        if updated.rowcount != 1:
-            raise SystemExit("Codex Security continuation thread could not be attached.")
-        connection.commit()
-    except BaseException:
-        connection.rollback()
-        raise
-    return workspace_state(connection, scan["workspace_id"])
+    return wb.workspace_state(connection, scan["workspace_id"])
 
 
 def mark_handoff_delivered(
+    wb: Any,
     connection: sqlite3.Connection,
     args: argparse.Namespace,
-    *,
-    now: Callable[[], str],
-    require_scan: Callable[[sqlite3.Connection, str], sqlite3.Row],
-    require_workspace: Callable[[sqlite3.Connection, str], sqlite3.Row],
-    workspace_state: Callable[[sqlite3.Connection, str], dict[str, Any]],
 ) -> dict[str, Any]:
+    """Record delivery for the pending claim and return the workspace state.
+
+    For standard scans this resets preflight progress. The same claim can confirm
+    delivery again. A conflicting claim or invalid requesting thread raises SystemExit.
+    """
     scan_id = require_uuid(args.scan_id, "scan-id")
     claim_token = require_handoff_claim_token(args.claim_token)
     thread_id = optional_text(args.thread_id, maximum=512)
     connection.execute("BEGIN IMMEDIATE")
-    try:
-        timestamp = now()
-        scan = require_scan(connection, scan_id)
+    with connection:
+        timestamp = wb.now()
+        scan = wb.require_scan(connection, scan_id)
         if thread_id is not None:
-            workspace = require_workspace(connection, scan["workspace_id"])
+            workspace = wb.require_workspace(connection, scan["workspace_id"])
             validate_handoff_delivery_thread(
                 scan["continuation_thread_id"] or workspace["thread_id"],
                 thread_id,
@@ -205,34 +230,61 @@ def mark_handoff_delivered(
                 raise SystemExit(
                     "Codex Security handoff delivery is owned by another continuation."
                 )
-            connection.commit()
-            return workspace_state(connection, scan["workspace_id"])
-        updated = connection.execute(
-            """
-            UPDATE scans
-            SET handoff_status = 'delivered', handoff_claimed_at = NULL,
-                updated_at = ?
-            WHERE id = ? AND handoff_status = 'pending'
-                AND handoff_claim_token = ?
-            """,
-            (timestamp, scan["id"], claim_token),
-        )
-        if updated.rowcount != 1:
-            raise SystemExit("Codex Security handoff delivery could not be recorded.")
-        if scan["mode"] != "deep":
-            connection.execute(
+        else:
+            updated = connection.execute(
                 """
-                UPDATE scan_progress
-                SET phase_items_total = 0, phase_items_completed = 0,
-                    phase_progress_unit = 'checks',
-                    preflight_checks_total = 0, preflight_checks_completed = 0,
+                UPDATE scans
+                SET handoff_status = 'delivered', handoff_claimed_at = NULL,
                     updated_at = ?
-                WHERE scan_id = ?
+                WHERE id = ? AND handoff_status = 'pending'
+                    AND handoff_claim_token = ?
                 """,
-                (timestamp, scan["id"]),
+                (timestamp, scan["id"], claim_token),
             )
-        connection.commit()
-    except BaseException:
-        connection.rollback()
-        raise
-    return workspace_state(connection, scan["workspace_id"])
+            if updated.rowcount != 1:
+                raise SystemExit("Codex Security handoff delivery could not be recorded.")
+            if scan["mode"] != "deep":
+                connection.execute(
+                    """
+                    UPDATE scan_progress
+                    SET phase_items_total = 0, phase_items_completed = 0,
+                        phase_progress_unit = 'checks',
+                        preflight_checks_total = 0, preflight_checks_completed = 0,
+                        updated_at = ?
+                    WHERE scan_id = ?
+                    """,
+                    (timestamp, scan["id"]),
+                )
+        began_review = (
+            args.return_context
+            and thread_id is not None
+            and args.occurrence_id is None
+            and scan["mode"] == "standard"
+            and scan["status"] == "running"
+            and scan["canceled_at"] is None
+            and scan["phase"] == "preflight"
+        )
+        if began_review:
+            connection.execute(
+                "UPDATE scans SET phase = 'threat_model', updated_at = ? WHERE id = ?",
+                (timestamp, scan_id),
+            )
+            connection.execute(
+                """UPDATE scan_progress SET phase_items_total = 0, phase_items_completed = 0,
+                   phase_progress_unit = NULL, updated_at = ? WHERE scan_id = ?""",
+                (timestamp, scan_id),
+            )
+    if not args.return_context:
+        return wb.workspace_state(connection, scan["workspace_id"])
+    context = wb.get_scan(
+        connection,
+        argparse.Namespace(
+            scan_id=scan_id,
+            occurrence_id=args.occurrence_id,
+            model_thread_id=thread_id or "",
+            context_claim_token=claim_token,
+        ),
+    )
+    if began_review:
+        context["beganStandardReview"] = True
+    return context
